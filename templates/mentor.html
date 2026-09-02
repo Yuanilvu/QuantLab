@@ -117,19 +117,29 @@
       headers: { 'X-CSRF-Token': document.getElementById('csrf').value },
       body: body
     })
-    .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+    .then(async function (r) {
+      let j = null, txt = '';
+      try { j = await r.json(); } catch (e) { txt = await r.text().catch(function () { return ''; }); }
+      return { ok: r.ok, status: r.status, j: j, txt: txt };
+    })
     .then(function (res) {
       wait.remove();
-      if (res.ok && res.j.reply) {
+      if (res.ok && res.j && res.j.reply) {
         addMsg('m', res.j.reply);
         inp.value = '';
-      } else {
-        addMsg('m', '⚠️ ' + (res.j.error || 'Gagal — coba lagi.'));
+        return;
       }
+      let msg = (res.j && res.j.error) || 'Gagal — coba lagi.';
+      if (res.txt.indexOf('Daftar gratis') !== -1 || res.status === 302) {
+        msg = 'Sesi berakhir. Muat ulang halaman ini lalu kirim lagi.';
+      } else if (!res.j) {
+        msg = 'Server error (HTTP ' + res.status + '). Muat ulang halaman lalu coba lagi.';
+      }
+      addMsg('m', '⚠️ ' + msg);
     })
     .catch(function () {
       wait.remove();
-      addMsg('m', '⚠️ Jaringan bermasalah — coba lagi.');
+      addMsg('m', '⚠️ Koneksi gagal — periksa internetmu, lalu coba lagi.');
     })
     .finally(function () {
       busy = false;
