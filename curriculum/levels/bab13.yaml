@@ -227,3 +227,45 @@ skenario:
     petunjuk:
       - "Berapa porsi entry-mu dari transaksi harian saham itu?"
       - "Siapa pembelimu saat kamu mau keluar?"
+  - id: "s13-5"
+    judul: "Tembus Tanpa Tenaga"
+    emoji: "🚦"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      CUAN tiga bulan terakhir mentok di resistance 4.800. Resistance = batas atas yang menahan kenaikan. Hari ini harga 4.835, tembus tipis. Volume cuma 0,7x rata-rata. Breakout sebelumnya selalu dengan volume di atas 1,5x. Kamu mau entry?
+    pilihan:
+      - "Beli sekarang. Tembus resistance itu fakta, jangan ragu"
+      - "Tunggu. Volume rendah = penembusan lemah. Tunggu harga bertahan atau breakout ulang dengan volume naik"
+      - "Short. Penembusan tanpa volume pasti gagal, ambil arah balik"
+      - "Beli besar. Kalau tembus beneran, kecil-kecilan rugi"
+    jawaban: 1
+    penjelasan: |
+      Penembusan resistance yang sehat butuh volume. Volume 0,7x = di bawah rata-rata. Artinya sedikit yang mau beli di harga baru. Ini penembusan tanpa tenaga, sering jadi fakeout (penembusan palsu). Beli sekarang = bayar di titik paling rawan. Beli besar = melipat risiko di sinyal lemah. Short juga menebak: harga bisa bertahan di atas 4.800 beberapa hari, lalu breakout beneran. Harga 4.835 baru +0,7% di atas resistance. Tipis. Tunggu bukti: harga bertahan di atas 4.800, atau breakout ulang dengan volume di atas 1,5x. Menunggu tidak membuatmu kehilangan apa-apa.
+    kode: |
+      harga = 4835
+      resist = 4800
+      volume = 0.7        # di bawah rata-rata (1.0)
+      if harga > resist and volume < 1.0:
+          print("Tembus tipis, volume lemah - tunggu konfirmasi")
+    hasil:
+      - ret: -5.8
+        dd: 6.0
+        win: 25
+        note: "Harga balik ke 4.650. Stop 6% kena. Penembusan tanpa volume = jebakan."
+      - ret: 7.5
+        dd: 2.0
+        win: 74
+        note: "Harga bertahan 3 hari, lalu breakout dengan volume 2,1x. Entry 4.900 saat uji ulang. +7,5%."
+      - ret: -4.5
+        dd: 4.5
+        win: 22
+        note: "Short duluan: harga bertahan 3 hari di atas 4.800, lalu breakout. Stop kena."
+      - ret: -11.6
+        dd: 11.6
+        win: 10
+        note: "Posisi 2x di sinyal lemah: fakeout -5,8% jadi -11,6% equity."
+    petunjuk:
+      - "Volume 0,7x artinya di bawah atau di atas normal?"
+      - "Apa bukti penembusan yang sehat?"

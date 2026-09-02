@@ -218,3 +218,45 @@ skenario:
     petunjuk:
       - "Stop awal dibuat untuk apa? Tugasnya sudah selesai?"
       - "Geser stop = berapa poin di bawah harga sekarang?"
+  - id: "s17-5"
+    judul: "Target yang Tidak Layak"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      BTC di 60.000. ATR 14 hari = 1.200, sekitar 2%. Sinyal long muncul. Stop standarmu 2×ATR = 2.400. Dari 40 sinyal sejenis: 55% profit. Harga jarang sampai lebih dari 1,5×ATR = 1.800. Trade ini layak?
+    pilihan:
+      - "Entry. Win rate 55% lebih tinggi dari lempar koin"
+      - "Skip. Target maks 1.800, stop 2.400. Hadiah lebih kecil dari risiko"
+      - "Entry, target 1.200. Profit kecil tapi sering"
+      - "Entry besar. ATR 2% kecil, risiko tetap terkendali"
+    jawaban: 1
+    penjelasan: |
+      RR (rasio hadiah ÷ risiko) = 1.800 ÷ 2.400 = 0,75. Hadiah lebih kecil dari risiko. EV (ekspektasi per trade: win% × hadiah - loss% × risiko) = 0,55 × 1.800 - 0,45 × 2.400 = 990 - 1.080 = -90. Negatif. Tiap trade rata-rata rugi 90 poin. Win rate 55% butuh RR minimal 0,82 agar EV nol. 0,75 di bawah garis itu. Target 1.200? RR 0,5, makin parah. Entry besar di EV negatif = memperbesar luka. Setup ini tidak layak. Skip, atau tunggu entry dengan stop lebih dekat. Contoh: pullback dengan stop 1×ATR dan target 2×ATR. Itu rasio yang sehat.
+    kode: |
+      atr = 1200
+      stop = 2 * atr        # 2.400
+      target = 1.5 * atr    # 1.800, maks historis
+      ev = 0.55 * target - 0.45 * stop
+      print(f"RR {target / stop:.2f} | EV {ev:+.0f} poin")
+    hasil:
+      - ret: -4.2
+        dd: 6.0
+        win: 30
+        note: "20 trade dijalankan: net -4,2%. EV negatif terbukti di live."
+      - ret: 0.0
+        dd: 0.0
+        win: 68
+        note: "Skip. Seminggu kemudian ada pullback: stop 1×ATR, target 2×ATR. Entry di situ, +6,4%."
+      - ret: -5.0
+        dd: 5.5
+        win: 25
+        note: "Target 1.200: RR 0,5. 20 trade: -5%. Target kecil tidak menolong EV negatif."
+      - ret: -8.0
+        dd: 8.0
+        win: 12
+        note: "Size besar di EV negatif: 20 trade -8%. Risiko terkendali, tapi arahnya salah."
+    petunjuk:
+      - "Bandingkan target maksimum dengan jarak stop."
+      - "Win rate 55% butuh RR minimal berapa agar EV positif?"

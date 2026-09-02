@@ -211,3 +211,44 @@ skenario:
     petunjuk:
       - "Kalau tanggalnya pasti, instrumen apa yang nilainya pasti?"
       - "Berapa return deposito untuk 6 bulan?"
+  - id: "s10-5"
+    judul: "Rata-Rata yang Menipu"
+    emoji: "🌀"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua reksa dana untuk uang Rp10 juta, jangka 2 tahun. Fund A berisi saham agresif. Pola 5 tahun terakhir: tahun naik +100%, tahun turun -50%. Fund B konsisten +10% per tahun. Manajer Fund A promosi: rata-rata 25% per tahun, jauh di atas Fund B. Kamu pilih yang mana?
+    pilihan:
+      - "Fund A. Rata-rata 25% per tahun jauh di atas Fund B"
+      - "Fund B. Fund A jungkat-jungkit, hasil akhirnya bisa nol"
+      - "Fund A, asal jual duluan setelah naik 100%"
+      - "Bagi dua 50:50. Separuh A, separuh B"
+    jawaban: 1
+    penjelasan: |
+      Hitung hasil nyata 2 tahun. Fund A: Rp10 juta × 2 = Rp20 juta saat naik. Lalu × 0,5 = Rp10 juta saat turun. Return 0%. Fund B: Rp10 juta × 1,1 × 1,1 = Rp12,1 juta. Return +21%. Rata-rata 25% itu rata-rata aritmetik: (100 - 50) ÷ 2. Angka itu menipu. Loss 50% menghapus profit 100% sebelumnya. Itu asimetri loss-gain. Makin ekstrem naik-turunnya, makin jauh hasil nyata dari rata-rata aritmetik. Jual setelah naik 100%? Kamu tidak tahu kapan turun mulai. Itu menebak, hasilnya tetap 0%. Bagi 50:50: A jadi Rp5 juta, B jadi Rp6,05 juta. Total Rp11,05 juta, return +10,5%. Lebih aman, tapi tetap kalah dari Fund B murni. Return stabil mengalahkan return tinggi yang jungkat-jungkit.
+    kode: |
+      dana = 10_000_000
+      a = dana * 2.0 * 0.5     # Fund A: +100% lalu -50%
+      b = dana * 1.1 * 1.1     # Fund B: +10% dua tahun
+      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
+    hasil:
+      - ret: 0.0
+        dd: 50.0
+        win: 25
+        note: "Fund A: 10jt naik ke 20jt, lalu turun ke 10jt. Dua tahun kerja, hasil nol."
+      - ret: 21.0
+        dd: 0.0
+        win: 78
+        note: "Fund B: 12,1jt. Stabil dan tenang, hasil justru lebih besar."
+      - ret: 0.0
+        dd: 50.0
+        win: 18
+        note: "Kamu tunggu tanda turun. Crash datang sekali jalan. Jual tetap di 10jt."
+      - ret: 10.5
+        dd: 28.7
+        win: 52
+        note: "Separuh A jadi 5jt, separuh B jadi 6,05jt. Total 11,05jt, tapi sempat turun 28,7% dari puncak."
+    petunjuk:
+      - "Fund A: 10jt × 2 lalu × 0,5 = berapa?"
+      - "Rata-rata (100 - 50) ÷ 2 = 25%. Hasil nyata segitu juga?"

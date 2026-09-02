@@ -223,3 +223,45 @@ skenario:
     petunjuk:
       - "ADX 38 bilang pasar sedang apa?"
       - "Apa bukti yang harus muncul sebelum beli saham yang jatuh?"
+  - id: "s18-5"
+    judul: "Dua Saham, Dua Regime"
+    emoji: "🧭"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Modal $1.000 untuk dua saham, $500 masing-masing. TLKM: puncak-puncak lebih tinggi, MA20 di atas MA50, ADX 31. MPPA: 4 bulan memantul di 2.000-2.200, ADX 12. Kamu mau pasang strategi yang cocok per saham. Apa rencanamu?
+    pilihan:
+      - "Momentum di dua-duanya. Momentum paling menguntungkan"
+      - "TLKM momentum. MPPA main range: beli dekat 2.020, stop di bawah 1.980"
+      - "Main range di dua-duanya. Win rate tinggi lebih nyaman"
+      - "Lewati semua. Regimenya beda, sinyal tidak konsisten"
+    jawaban: 1
+    penjelasan: |
+      TLKM: ADX 31, puncak lebih tinggi = trending. Momentum cocok. MPPA: ADX 12 = tidak ada trend. Range 2.000-2.200 teruji 4 bulan. Momentum di MPPA = whipsaw di range, sinyal palsu beruntun. Main range di TLKM = menjual kuda yang sedang lari. Jawaban: sesuaikan strategi dengan regime tiap saham. Tanya dulu: pasar ini sedang apa? Baru pilih strategi. Hasilnya: TLKM momentum +8%. MPPA main range +6%. Total: 540 + 530 = $1.070, return +7%. Satu strategi untuk semua saham = memaksakan baju yang sama ke tubuh yang beda.
+    kode: |
+      modal = 1000
+      tlkm = 500 * 1.08      # momentum: +8%
+      mppa = 500 * 1.06      # main range: +6%
+      total = tlkm + mppa
+      print(f"Total: ${total:.0f} (+{(total - modal) / modal * 100:.1f}%)")
+    hasil:
+      - ret: 2.0
+        dd: 5.0
+        win: 35
+        note: "TLKM untung 8% (kontribusi +4%), MPPA kena 3 stop palsu di range (kontribusi -2%). Total +2%."
+      - ret: 7.0
+        dd: 2.5
+        win: 74
+        note: "TLKM +8%, MPPA +6%. Dua-duanya untung. Total +7%."
+      - ret: 4.0
+        dd: 2.0
+        win: 45
+        note: "Range play di TLKM: jual terlalu dini di trend, cuma +2% di sana. MPPA +6%. Total +4%."
+      - ret: 0.0
+        dd: 0.0
+        win: 40
+        note: "Tidak trading: 0%. Aman, tapi dua peluang jelas terlewat."
+    petunjuk:
+      - "ADX 31 dan ADX 12 bilang apa tentang tiap saham?"
+      - "Strategi apa yang hidup di regime trending dan di regime range?"

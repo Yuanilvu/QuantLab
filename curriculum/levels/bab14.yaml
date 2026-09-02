@@ -219,3 +219,45 @@ skenario:
     petunjuk:
       - "Bisakah kamu entry tepat di harga close yang baru terjadi?"
       - "Kapan ordermu benar-benar terisi?"
+  - id: "s14-5"
+    judul: "Dua Kandidat Strategi"
+    emoji: "🧪"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Hasil riset dua strategi, data 2021-2023. Strategi A: 34 trade, profit factor 2,2, return 48% per tahun. Strategi B: 520 trade, profit factor 1,35, return 17% per tahun. Keduanya lalu diuji di 2024, data yang tidak disentuh saat riset. A: -6%. B: +14%. Kamu danai yang mana?
+    pilihan:
+      - "A. PF 2,2 dan return 48% jauh lebih unggul"
+      - "B. 520 trade dan hasil 2024 positif = bukti lebih kuat"
+      - "Bagi 50:50. Dua-duanya hasil riset, risiko terbagi"
+      - "A dengan modal kecil dulu. Kalau jalan, naikkan"
+    jawaban: 1
+    penjelasan: |
+      Strategi A menunjukkan pola overfit klasik. In-sample 48%, out-of-sample -6%. Edge hilang di data yang belum pernah dilihat. Dengan 34 trade, PF 2,2 bisa muncul dari keberuntungan. Strategi B konsisten: 17% di data riset, 14% di data baru. 520 trade = sampel cukup untuk mulai percaya. Danai B. A dengan modal kecil tetap salah: kamu memberi uang ke strategi yang buktinya menolak. Bagi 50:50 = setengah modal di strategi tanpa bukti. Ujian paling jujur: out-of-sample. Hasil bagus di data lama saja tidak cukup. Kalau edge hilang di data baru, edge itu tidak pernah ada.
+    kode: |
+      # A: in-sample bagus, out-of-sample jeblok = overfit
+      a = {"n": 34, "pf": 2.2, "is": 48, "oos": -6}
+      b = {"n": 520, "pf": 1.35, "is": 17, "oos": 14}
+      print("A: 48% vs -6% - tidak konsisten")
+      print("B: 17% vs +14% - konsisten, sampel besar")
+    hasil:
+      - ret: -6.0
+        dd: 8.0
+        win: 22
+        note: "A live 6 bulan: -6%. Out-of-sample tidak bohong. Kamu berhenti."
+      - ret: 14.0
+        dd: 3.5
+        win: 76
+        note: "B live setahun: +14%. Mirip hasil uji 2024. Bukti konsisten bisa dipercaya."
+      - ret: 4.0
+        dd: 5.5
+        win: 50
+        note: "Separuh A -6%, separuh B +14%. Total +4%. Strategi tanpa bukti tetap menggerus."
+      - ret: -1.5
+        dd: 2.5
+        win: 30
+        note: "Modal kecil mengecilkan luka jadi -1,5%. Tapi alokasi ke A tetap salah."
+    petunjuk:
+      - "Bandingkan in-sample dan out-of-sample tiap strategi."
+      - "Mana yang lebih bisa dipercaya: 34 trade atau 520 trade?"

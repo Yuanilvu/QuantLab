@@ -232,3 +232,44 @@ skenario:
     petunjuk:
       - "Tidak ada error ≠ tidak ada masalah."
       - "Urutan yang benar: diagnosa dulu, baru tindakan."
+  - id: "s20-5"
+    judul: "Sinyal Basi Setelah Restart"
+    emoji: "📡"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Botmu maintenance 30 menit untuk update versi. Saat nyala lagi, log menunjukkan: pukul 10.00 ada sinyal SHORT (funding tinggi, harga 10.000). Itu terjadi persis saat bot mati. Sekarang 10.30, harga sudah 10.250. Aturan entry tetap terpenuhi kalau dihitung dari data lama. Eksekusi sekarang?
+    pilihan:
+      - "Eksekusi sekarang: sinyalnya sah, aturan terpenuhi"
+      - "Lewati sinyal lama. Tunggu sinyal baru dari harga terkini. Sinyal basi = data basi"
+      - "Eksekusi setengah ukuran: kompromi yang aman"
+      - "Eksekusi di 10.250, anggap saja slippage"
+    jawaban: 1
+    penjelasan: |
+      Sinyal itu dihitung dari data pukul 10.00. Harga sudah bergerak 2,5% (10.000 → 10.250). Sinyalnya BASI: aturan entry-mu dibuat untuk harga nyata, bukan harga masa lalu. Eksekusi sekarang = masuk tanpa sinyal yang valid, di harga lebih buruk. Beda dengan idempotency (Bab 20-2): di sana order sudah sah, tinggal dikirim ulang dengan aman. Di sini order-nya belum pernah ada. Bot yang benar: setelah restart, sync posisi dulu, lalu tunggu sinyal BARU. Kalau harga terus naik ke 10.300, sinyal short dari 10.000 itu sudah salah arah. Satu sinyal basi yang dieksekusi = satu trade tanpa aturan.
+    kode: |
+      harga_sinyal = 10000
+      harga_kini = 10250
+      if harga_kini != harga_sinyal:
+          print("SKIP: sinyal basi, tunggu sinyal baru")
+    hasil:
+      - ret: -2.8
+        dd: 3.0
+        win: 18
+        note: "Short dari 10.250: harga lanjut ke 10.500. Stop 2% kena. −2,8%."
+      - ret: 1.9
+        dd: 0.8
+        win: 74
+        note: "Skip benar: sejam kemudian muncul sinyal baru valid. Bulan itu +1,9%."
+      - ret: -1.4
+        dd: 1.6
+        win: 30
+        note: "Setengah ukuran tetap rugi. Sinyal basi tetap sinyal basi."
+      - ret: -2.0
+        dd: 2.4
+        win: 22
+        note: "Sama saja entry tanpa aturan. Harga melawan, stop kena. −2,0%."
+    petunjuk:
+      - "Sinyal itu dihitung dari harga jam berapa?"
+      - "Harga sudah beda. Apakah aturan entry masih berlaku?"

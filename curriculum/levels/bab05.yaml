@@ -279,6 +279,63 @@ skenario:
     petunjuk:
       - "Lihat baris `if harga = 4000`. Satu `=` atau dua `==`?"
       - "Satu = menyimpan. Dua = membandingkan."
+
+  - id: "s5-5"
+    judul: "Batas Cut Loss yang Lolos"
+    emoji: "🚨"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kamu beli TLKM 4.500.
+      Aturan cut loss (potong rugi otomatis): harga sampai 4.000, langsung jual.
+      Kode bot:
+      ```python
+      if harga < 4000:
+          print("CUT")
+      ```
+      Harga sekarang tepat 4.000. Apa yang bot lakukan?
+    pilihan:
+      - "CUT — harga sudah sampai batas 4.000"
+      - "Tidak CUT — 4.000 tidak memenuhi `< 4000`. Bot tahan, padahal harus jual"
+      - "Error — kondisi salah tulis"
+      - "CUT dua kali — bot panik"
+    jawaban: 1
+    penjelasan: |
+      `< 4000` hanya benar untuk harga di bawah 4.000 (3.999 ke bawah).
+      Harga tepat 4.000? Kondisi salah. Bot tidak cut.
+      Rugi 500 per lembar (−11%). Bot tetap tahan.
+      Harga bisa terus turun. Kerugian membesar.
+      Aturan "sampai 4.000" artinya 4.000 ikut. Harus pakai `<=`.
+      `if harga <= 4000:` → CUT.
+      Satu tanda berbeda = beda antara terlindungi dan jebol.
+    kode: |
+      harga = 4000
+      if harga <= 4000:      # <= menyertakan 4.000
+          print("CUT")
+      else:
+          print("TAHAN")
+      # CUT
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot tidak CUT. Syaratnya `< 4000`, bukan `<= 4000`. Kamu mengira sudah terlindungi."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Benar: 4.000 lolos dari `< 4000`. Kamu ganti ke `<=` — batas tidak bisa ditembus."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error. Python menjalankan logika apa pun, termasuk yang meleset satu tanda."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Bot tidak panik. Dia cuma mengikuti kondisi — dan kondisinya salah."
+    petunjuk:
+      - "Cek: apakah 4.000 memenuhi `harga < 4000`?"
+      - "Kalau mau 4.000 ikut, operator apa yang dipakai?"
 soal:
   - id: "p5-1"
     judul: "Positif atau Negatif"

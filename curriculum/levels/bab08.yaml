@@ -239,3 +239,54 @@ skenario:
     petunjuk:
       - "1,02 pangkat 12, bukan dikali 12."
       - "Bandingkan hasilnya dengan 24% yang naif. Mana lebih besar?"
+
+  - id: "s8-5"
+    judul: "Pinjaman Setengah Tahun"
+    emoji: "🤝"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu pinjam Rp2.000.000 untuk modal.
+      Bunga sederhana 12% per tahun.
+      Kamu lunas setelah 6 bulan.
+      Berapa total yang harus kamu bayar?
+    pilihan:
+      - "Rp2.240.000 — bunga setahun penuh 240.000"
+      - "Rp2.120.000 — bunga 6 bulan = 120.000"
+      - "Rp2.000.000 — 6 bulan belum kena bunga"
+      - "Rp2.024.000 — 12% ditulis 0,012"
+    jawaban: 1
+    penjelasan: |
+      Bunga 1 tahun = 2.000.000 × 12% = 240.000.
+      Dipinjam 6 bulan = setengah tahun.
+      Bunga = 240.000 ÷ 2 = 120.000.
+      Total = 2.000.000 + 120.000 = **Rp2.120.000**.
+      Bunga sederhana sebanding dengan lama waktu.
+      6 bulan = setengah bunga tahunan.
+      Hitung bunganya dulu, baru jumlahkan ke pokok (pinjaman awal).
+    kode: |
+      pinjam = 2_000_000
+      bunga_1thn = pinjam * 0.12
+      bunga_6bln = bunga_1thn / 2
+      print(f"Total: Rp{pinjam + bunga_6bln:,.0f}")   # Rp2,120,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Kamu bayar bunga setahun penuh. Kelebihan 120.000 — uang keluar tanpa perlu."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "2.120.000 benar. Bunga 6 bulan = setengah bunga tahunan. Rencana bayarmu pas."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Bank tetap memungut bunga 6 bulan. Tidak ada utang gratis."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0,012 = 1,2%. 12% = 0,12. Bunga asli 120.000, bukan 24.000."
+    petunjuk:
+      - "Bunga setahun berapa? Lalu bagi dua untuk 6 bulan."
+      - "Total = pokok + bunga."

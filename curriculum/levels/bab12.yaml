@@ -219,3 +219,44 @@ skenario:
     petunjuk:
       - "Kalau tiga posisi jatuh bersamaan, total risikonya berapa?"
       - "Bandingkan dengan batas total 3% equity."
+  - id: "s12-5"
+    judul: "Profit, Lalu Naik Kelas"
+    emoji: "💹"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Equity kamu $1.000. Aturan: risiko 2% per trade, stop 5%. Tiga bulan patuh aturan. Equity sekarang $1.500. Berapa risiko per trade yang benar sekarang?
+    pilihan:
+      - "Tetap $20. Konservatif itu tidak pernah salah"
+      - "$30. Dua persen dari equity sekarang, $1.500"
+      - "$45. Sebagian dari uang profit, biar cepat besar"
+      - "$60. Equity sudah besar, wajar berani lebih"
+    jawaban: 1
+    penjelasan: |
+      Risiko dihitung dari equity terkini, bukan angka kemarin. Equity sekarang $1.500. 2% × $1.500 = $30. Stop tetap 5%. Ukuran = $30 ÷ 0,05 = $600. Tetap $20 artinya risiko cuma 1,3%. Aman, tapi pertumbuhan melambat. Itu bukan disiplin, itu takut. $45 = 3% equity. $60 = 4%. Menaikkan risiko pakai uang profit = mental accounting, memperlakukan uang profit beda dari modal. Padahal uangnya sama. 3 loss beruntun dengan risiko 3% = 9% equity hilang. Dengan 2% cuma 6%. Hitung dari equity hari ini, patuh terus.
+    kode: |
+      equity = 1500
+      risk = equity * 0.02       # 2% dari equity terkini
+      size = risk / 0.05         # stop 5%
+      print(f"Risk: ${risk:.0f} | Ukuran: ${size:.0f}")
+    hasil:
+      - ret: 4.1
+        dd: 1.4
+        win: 58
+        note: "Risiko cuma 1,3%: 3 bulan berikutnya +4,1%. Aman, tapi potensi tertinggal."
+      - ret: 6.2
+        dd: 2.1
+        win: 76
+        note: "$30 per trade: 3 bulan berikutnya +6,2%. Aturan berjalan di equity baru."
+      - ret: -9.0
+        dd: 9.0
+        win: 15
+        note: "3 loss beruntun = 9% equity. Profit 3 bulan menyusut. Uang profit tidak beda dari modal."
+      - ret: -12.0
+        dd: 12.0
+        win: 8
+        note: "Risiko 4% per trade: 3 loss = 12%. Tanpa batas risiko, profit cepat menguap."
+    petunjuk:
+      - "Dua persen dari $1.500 berapa?"
+      - "Risiko dihitung dari equity sekarang atau yang dulu?"

@@ -249,6 +249,59 @@ skenario:
     petunjuk:
       - "-1 artinya elemen terakhir — ingat index negatif."
       - "Index terakhir = len(list) − 1."
+
+  - id: "s7-5"
+    judul: "Baca Kode: Tertinggi dan Terendah"
+    emoji: "🏔️"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Harga TLKM 5 hari: 4.000, 4.100, 3.900, 4.200, 4.050.
+      Bot mencetak laporan:
+      ```python
+      harga = [4000, 4100, 3900, 4200, 4050]
+      print(max(harga))
+      print(min(harga))
+      ```
+      Apa yang tercetak di baris 1 dan baris 2?
+    pilihan:
+      - "4.200 lalu 3.900 — max dulu, min kedua"
+      - "3.900 lalu 4.200 — urutan terbalik"
+      - "4.050 lalu 4.050 — rata-ratanya"
+      - "4.000 lalu 4.200 — pertama dan terbesar"
+    jawaban: 0
+    penjelasan: |
+      `max(harga)` = angka terbesar = 4.200.
+      `min(harga)` = angka terkecil = 3.900.
+      Baris 1 cetak 4.200. Baris 2 cetak 3.900.
+      max dan min membaca SEMUA isi list. Tidak perlu urutkan manual.
+      Bot memakai keduanya untuk tahu rentang pergerakan harga.
+      Beli dekat terendah dan jual dekat tertinggi butuh dua angka ini.
+    kode: |
+      harga = [4000, 4100, 3900, 4200, 4050]
+      print(max(harga))   # 4200
+      print(min(harga))   # 3900
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "4.200 lalu 3.900 benar. max dan min membaca seluruh list."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Terbalik. Baris 1 cetak max (4.200), baris 2 cetak min (3.900)."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4.050 itu rata-rata (sum ÷ 5). max dan min tidak menghitung rata-rata."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4.000 itu elemen pertama. max melihat semua angka, bukan yang awal."
+    petunjuk:
+      - "max = terbesar, min = terkecil."
+      - "Cari angka terbesar dan terkecil dari kelima harga."
 soal:
   - id: "p7-1"
     judul: "Jumlah Tiga Angka"

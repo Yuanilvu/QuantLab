@@ -246,6 +246,51 @@ skenario:
     petunjuk:
       - "Tanpa kurung = hanya menyebut nama fungsi."
       - "Kurung = 'jalankan sekarang'."
+  - id: "s24-5"
+    judul: "Baris Rusak di Tengah Data"
+    emoji: "🧹"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Analyzer portofoliomu membaca 1.000 baris dari file broker. Tujuh baris rusak: "TLKM ???", baris kosong, format aneh. Sisanya 993 baris valid dengan total Rp 9.930.000. Analyzer harus tetap dipakai hari ini. Perlakuan terbaik untuk baris rusak?
+    pilihan:
+      - "Hentikan program: data jelek harus menghentikan semuanya"
+      - "Lewati baris rusak, LAPORKAN jumlahnya, lanjut analisis. Kalau rusak lebih dari 5%, hentikan dan periksa sumber data"
+      - "Tebak isinya dari rata-rata harga: biar tetap 1.000 baris"
+      - "Lewati diam-diam: yang penting analisis jalan"
+    jawaban: 1
+    penjelasan: |
+      Data dari luar selalu bisa rusak (Bab 23). 7 dari 1.000 = 0,7%. Kecil, sisanya bisa dipercaya. Analyzer yang baik: lewati baris rusak dengan try/except, TAPI laporkan: "7 baris dilewati". Transparan. Kalau yang rusak 80 baris (8%), itu bukan noise lagi. Sumber datanya bermasalah: hentikan dan periksa. Menghentikan program untuk 0,7% = analisis hari ini hilang. Menebak nilai = mencemari data dengan angka palsu. Lewati diam-diam = laporan bisa salah tanpa kamu tahu. Aturan praktis: baris rusak dilewati dan dihitung. Kalau rasionya lewat 5%, curigai sumbernya.
+    kode: |
+      data = ["TLKM 4000", "???", "BBRI 4500"]
+      total, rusak = 0, 0
+      for b in data:
+          try:
+              total += int(b.split()[1])
+          except (ValueError, IndexError):
+              rusak += 1
+      print(total, "| baris dilewati:", rusak)
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Stop total: 7 baris rusak menghentikan 993 baris valid. Produktivitas hari itu nol."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 0,7% dilewati dan dilaporkan, analisis jalan. Transparan dan efisien."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tebakan rata-rata = angka palsu masuk laporan. Lebih bahaya dari baris rusak."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Diam-diam: kalau rusaknya 8%, laporan tetap mulus padahal sumber data rusak."
+    petunjuk:
+      - "0,7% baris rusak: apakah 993 baris lainnya masih bisa dipercaya?"
+      - "Yang dilarang: berhenti total, menebak, atau lewat diam-diam."
 soal:
   - id: "p24-1"
     judul: "Rata-rata Tahan Banting"

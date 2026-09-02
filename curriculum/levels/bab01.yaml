@@ -232,3 +232,55 @@ skenario:
     petunjuk:
       - "Bagi kenaikan dengan harga awal tiap saham."
       - "150 dari 3.000 berapa persen? 100 dari 1.000 berapa persen?"
+
+  - id: "s1-5"
+    judul: "Butuh Naik Berapa untuk Balik Modal?"
+    emoji: "🔄"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Sahammu turun 20%. Harga dari 10.000 ke 8.000.
+      Kamu yakin sahamnya bagus.
+      Mau tahan sampai balik modal.
+      Berapa persen kenaikan yang dibutuhkan dari 8.000?
+    pilihan:
+      - "20% — turun 20%, naik 20% sudah balik"
+      - "25% — harus naik 2.000 dari 8.000"
+      - "40% — butuh 2x lipat penurunan"
+      - "12,5% — setengah dari penurunan"
+    jawaban: 1
+    penjelasan: |
+      Balik modal butuh naik 2.000 rupiah (dari 8.000 ke 10.000).
+      Persen dihitung dari harga SEKARANG, yaitu 8.000.
+      2.000 ÷ 8.000 × 100 = **25%**.
+      Naik 20% dari 8.000 cuma ke 9.600. Masih rugi 400.
+      Turun 20% butuh naik 25%. Angka naik selalu lebih besar dari angka turun.
+      Rumus: `turun ÷ (100 − turun) × 100` → 20 ÷ 80 × 100 = 25.
+      Rugi besar butuh kenaikan lebih besar lagi.
+      Itu sebabnya potong rugi lebih awal itu penting.
+    kode: |
+      harga = 8000
+      target = 10000
+      butuh = (target - harga) / harga * 100
+      print(f"Perlu naik {butuh:.1f}%")   # 25.0%
+    hasil:
+      - ret: -4.0
+        dd: 0.0
+        win: 35
+        note: "Target 20%: jual di 9.600. Masih rugi 400 (4%). Naik 20% belum cukup."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: tunggu naik 25%, jual di 10.000. Balik modal utuh."
+      - ret: -8.0
+        dd: 0.0
+        win: 20
+        note: "Target 40% terlalu tinggi. Harga cuma sempat naik 25% lalu turun. Jual di 9.200, rugi 8%."
+      - ret: -10.0
+        dd: 0.0
+        win: 25
+        note: "12,5% cuma ke 9.000. Masih rugi 1.000 (10%). Setengah jalan bukan balik modal."
+    petunjuk:
+      - "Balik modal artinya naik 2.000 rupiah."
+      - "2.000 dibagi harga sekarang (8.000), bukan harga awal."

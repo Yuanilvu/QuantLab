@@ -216,3 +216,44 @@ skenario:
     petunjuk:
       - "Antrian 1.000 cuma Rp5 juta. Sisanya Rp35 juta terisi di mana?"
       - "Bagaimana cara jual besar tanpa menggerakkan harga?"
+  - id: "s15-5"
+    judul: "Jurnal yang Jujur"
+    emoji: "📋"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Jurnal 50 trade terakhirmu: 30 menang, 20 kalah. Win rate 60%, tapi total minus. Polanya: win rata-rata +0,4% equity. Kamu potong manual sebelum target +1%. Loss rata-rata -1%. Stop sistem -0,5% sering kamu abaikan. Sistemnya sendiri: target +1%, stop -0,5%. Apa yang salah?
+    pilihan:
+      - "Tidak apa-apa. Menang 60% sudah bagus, profit kecil lebih aman"
+      - "Perilaku yang salah, bukan sistem. Patuhi target +1% dan stop -0,5%"
+      - "Ganti sistem. Win rate 60% tapi tetap rugi = sistem jelek"
+      - "Hapus target. Biarkan win jalan terus, jangan dipotong"
+    jawaban: 1
+    penjelasan: |
+      Hitung ekspektasi per trade. Perilakumu: 0,6 × 0,4 - 0,4 × 1,0 = -0,16% per trade. Rugi. Sistem asli: 0,6 × 1,0 - 0,4 × 0,5 = +0,4% per trade. Untung. Sistemmu positif, eksekusimu yang negatif. Kamu memotong win sebelum target karena takut profit hilang. Kamu menahan loss karena berharap balik. Ini disposition effect: potong profit cepat, pelihara loss. 25 trade dengan perilaku lama = -4%. Dengan patuh = +10%. Perbaikan: pasang target dan stop otomatis sejak entry, jangan intervensi manual. Ganti sistem = membuang sistem yang sebenarnya untung. Hapus target = win yang balik arah berubah jadi loss.
+    kode: |
+      exp_lama = 0.6 * 0.4 - 0.4 * 1.0     # potong win, tahan loss
+      exp_sistem = 0.6 * 1.0 - 0.4 * 0.5   # patuh target dan stop
+      print(f"Perilaku: {exp_lama:.2f}% per trade")
+      print(f"Sistem:   {exp_sistem:+.2f}% per trade")
+    hasil:
+      - ret: -4.0
+        dd: 4.0
+        win: 25
+        note: "25 trade berikutnya: -4%. Kebiasaan sama, hasil sama."
+      - ret: 10.0
+        dd: 2.5
+        win: 78
+        note: "Target dan stop dipatuhi: 25 trade = +10%. Konsistensi mengubah rugi jadi profit."
+      - ret: -4.0
+        dd: 5.0
+        win: 30
+        note: "Sistem baru, perilaku lama. Win tetap dipotong, loss tetap ditahan. -4% lagi."
+      - ret: -7.0
+        dd: 8.0
+        win: 15
+        note: "Tanpa target: win yang sempat +1% balik arah jadi loss. Lebih parah."
+    petunjuk:
+      - "Hitung ekspektasi: peluang menang × hasil menang, dikurangi peluang kalah × hasil kalah."
+      - "Sistem positif tapi hasilmu negatif. Siapa yang salah?"

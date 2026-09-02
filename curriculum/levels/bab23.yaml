@@ -230,6 +230,46 @@ skenario:
     petunjuk:
       - "KeyError artinya: kunci itu tidak ada di dict."
       - "Jangan sembunyikan error — buat dia terlihat dan terdengar."
+  - id: "s23-5"
+    judul: "Hasil Salah, Tanpa Error"
+    emoji: "🩺"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Bot portofoliomu menghitung TOTAL nilai 5 saham: [4000, 4100, 3900, 4200, 4050]. Bot mencetak 16.250. Tidak ada error sama sekali. Kamu hitung manual: 20.250. Selisihnya persis 4.000, yaitu harga saham pertama. Langkah terbaikmu?
+    pilihan:
+      - "Bungkus semua dengan try/except supaya aman"
+      - "Debug bertahap: cek nilai tengah baris per baris. Ketemu: loop mulai dari indeks 1, saham pertama terlewat"
+      - "Jalankan ulang: mungkin hilang sendiri"
+      - "Anggap bot benar: mungkin kamu yang salah hitung"
+    jawaban: 1
+    penjelasan: |
+      Kode jalan tanpa error, tapi hasil salah = bug logika. Ini bug paling berbahaya: tidak ada pesan error yang menolong. Caranya: bandingkan hasil bot dengan hitungan manual, lalu telusuri kode baris per baris. Selisih persis 4.000 = harga elemen pertama. Penyebabnya: loop `for h in harga[1:]`. Potongan [1:] MEMBUANG elemen pertama. Python menganggapnya normal, tidak ada error. try/except tidak menolong: tidak ada error yang dilempar. Menjalankan ulang = hasil sama. Menyangkal = berbahaya. Bot yang baik menguji hasilnya dengan nilai yang sudah diketahui (test), supaya bug logika ketahuan lebih awal.
+    kode: |
+      harga = [4000, 4100, 3900, 4200, 4050]
+      print("bot:", sum(harga[1:]))   # 16250, elemen pertama hilang
+      print("manual:", sum(harga))    # 20250
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "try/except menangkap error, bukan logika salah. Hasil tetap 16.250."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: harga[1:] membuang elemen pertama. Perbaiki, hasil jadi 20.250."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Jalankan ulang: hasilnya sama. Bug tidak hilang sendiri."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Hitung manualmu benar. Bot yang perlu diperiksa."
+    petunjuk:
+      - "Tidak ada error. Apa yang bisa membedakan benar dan salah?"
+      - "Cek potongan [1:]: mulai dari elemen ke berapa?"
 soal:
   - id: "p23-1"
     judul: "Angka atau Bukan?"

@@ -249,6 +249,47 @@ skenario:
     petunjuk:
       - "Ubah nilai dict: s['harga'] = nilai baru."
       - "int() membuang desimal dari hasil kali 1,1."
+  - id: "s22-5"
+    judul: "Cari Cepat dengan Kunci"
+    emoji: "🔑"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Bot alert-mu memegang data 1.000 saham (nama + harga). Tiap detik ia cek harga 5 saham tertentu: TLKM, BBRI, CUAN, MPPA, UNVR. Kalau ada yang bergerak 1%, kirim alert. Cek ini diulang ribuan kali sehari. Operasi yang paling sering: CARI harga satu saham dari namanya. Struktur data mana yang tercepat?
+    pilihan:
+      - "List of dict: standar untuk data portofolio"
+      - "Dict nama ke harga: harga['TLKM'] langsung, tanpa scan"
+      - "String panjang berisi semua nama dan harga"
+      - "List harga saja: urutan = kode saham"
+    jawaban: 1
+    penjelasan: |
+      List of dict bagus untuk HITUNG (total, rata-rata, Bab 22-2). Tapi untuk CARI satu saham, list harus di-scan dari awal: rata-rata 500 langkah tiap cek. Dict nama ke harga memberi akses LANGSUNG: harga['TLKM'] = 1 langkah, berapa pun isinya. Untuk 5 saham × ribuan cek per hari, bedanya sangat besar. 1.000 saham di list = sampai 500 langkah per cek. Di dict = selalu 1 langkah. Ini pola nyata: data yang sering DICARI pakai kunci; data yang sering DIHITUNG boleh list of dict. Pilih struktur dari operasi yang paling sering, bukan dari kebiasaan.
+    kode: |
+      saham = {"TLKM": 4000, "BBRI": 4500, "CUAN": 1500}
+      target = "TLKM"
+      print(saham[target])   # 1 langkah, langsung
+      print(len(saham), "saham: tetap 1 langkah")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "List of dict: tiap cek scan rata-rata 500 elemen. Ribuan cek per hari = lambat."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: dict kunci = 1 langkah per cek. Cocok untuk alert realtime."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "String panjang: harus di-parse ulang tiap cek. Paling lambat."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "List harga tanpa nama: kamu tidak tahu TLKM ada di indeks berapa."
+    petunjuk:
+      - "Operasi paling sering: hitung semua, atau cari satu?"
+      - "Dict: akses lewat label, langsung. List: harus scan."
 soal:
   - id: "p22-1"
     judul: "Kamus Saham"

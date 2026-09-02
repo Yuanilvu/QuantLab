@@ -236,6 +236,46 @@ skenario:
     petunjuk:
       - "Kalikan dua kolom dulu, lalu jumlahkan."
       - "Vol saja = lembar. Harga × vol = rupiah."
+  - id: "s26-5"
+    judul: "Harga Terakhir untuk Keputusan Hari Ini"
+    emoji: "🏁"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      DataFrame TLKM berisi 200 baris. Urutannya: data LAMA di atas (awal 2025, harga 2.500), data BARU di bawah (kemarin, harga 4.050). Aturan bot: BELI kalau harga kemarin di atas 4.000. Harga kemarin 4.050. Cara mengambil harga kemarin (baris terakhir)?
+    pilihan:
+      - "`df['close'].head(1)`"
+      - "`df['close'].tail(1)`"
+      - "`df['close'][0]`"
+      - "`df['close'].mean()`"
+    jawaban: 1
+    penjelasan: |
+      Baris terakhir = data TERBARU = harga kemarin. `tail(1)` mengambil 1 baris dari AKHIR: 4.050. Bot memberi sinyal BELI. `head(1)` dan `[0]` mengambil baris PERTAMA: 2.500, harga tahun 2025. Bot tidak beli padahal harga sekarang 4.050. Sinyal terlewat. `mean()` = rata-rata 200 hari (± 3.300), bukan harga kemarin. Ini salah satu bug bot paling umum: keputusan hari ini memakai data lama karena salah ujung. Ingat: df diurutkan lama ke baru. Keputusan pakai tail, bukan head.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"close": [2500, 3000, 4050]})
+      print(df["close"].tail(1).values)   # [4050] = data terbaru
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "head(1) = baris PERTAMA: 2.500. Bot tidak beli, sinyal terlewat."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: tail(1) = baris terakhir = 4.050. Sinyal BELI."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "[0] juga baris pertama: data lama."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "mean = rata-rata, bukan harga kemarin. Keputusan butuh harga terkini."
+    petunjuk:
+      - "Data urut: lama di atas, baru di bawah. Harga kemarin ada di ujung mana?"
+      - "tail = ekor = akhir = terbaru."
 soal:
   - id: "p26-1"
     judul: "DataFrame Pertamamu"

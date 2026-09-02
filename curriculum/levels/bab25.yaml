@@ -232,6 +232,47 @@ skenario:
     petunjuk:
       - "True dihitung 1, False dihitung 0."
       - "Bandingkan dulu, lalu jumlahkan dengan .sum()."
+  - id: "s25-5"
+    judul: "Kurva Ekuitas: Modal Tumbuh Berlapis"
+    emoji: "💹"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Return harian strategimu (dalam desimal): `r = np.array([0.01, -0.02, 0.015, 0.01])`. Modal awal $10.000. Ekuitas (modal berjalan) memakai compounding: tiap hari hasil kemarin DIKALI (1 + return), bukan ditambah. Berapa ekuitas setelah hari ke-2 (return -2%)?
+    pilihan:
+      - "$10.100: hasil hari pertama"
+      - "$9.898: 10.000 × 1,01 × 0,98"
+      - "$9.900: 10.000 × 0,99"
+      - "$10.146,9: hasil hari keempat"
+    jawaban: 1
+    penjelasan: |
+      Ekuitas berjalan = modal awal dikali (1 + return) BERUNTUN. Hari 1: 10.000 × 1,01 = 10.100. Hari 2: 10.100 × 0,98 = 9.898. Bukan 9.900. 9.900 = 10.000 × 0,99, seolah rugi 2% dihitung dari modal awal. Padahal rugi 2% terjadi SETELAH untung 1%: dihitung dari 10.100. Compounding = tiap hari dikali ke hasil kemarin. Di NumPy: `np.cumprod(1 + r)` menghitung semua langkah sekaligus. Hasilnya [1,01; 0,9898; 1,0046; 1,0147]. Dikali 10.000: [10.100; 9.898; 10.046,5; 10.146,9]. Inilah kurva ekuitas, dasar semua laporan performa.
+    kode: |
+      import numpy as np
+      r = np.array([0.01, -0.02, 0.015, 0.01])
+      ekuitas = 10000 * np.cumprod(1 + r)
+      print(ekuitas.astype(int))   # [10100  9898 10046 10146]
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "10.100 = ekuitas hari ke-1. Kamu minta hari ke-2."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 10.000 × 1,01 × 0,98 = 9.898. Dikali berlapis."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "9.900 salah: rugi 2% dihitung dari 10.100, bukan dari 10.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "10.146,9 = ekuitas hari ke-4, setelah semua return."
+    petunjuk:
+      - "Hari 1: 10.000 × 1,01 = ? Hari 2: hasil itu dikali 0,98."
+      - "Compounding: kali beruntun, bukan tambah."
 soal:
   - id: "p25-1"
     judul: "Rata-rata & Tertinggi"

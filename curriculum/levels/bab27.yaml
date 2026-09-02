@@ -225,6 +225,47 @@ skenario:
     petunjuk:
       - "Cek dulu: kedua kurva pakai skala yang sama?"
       - "Kalau B butuh trik biar terlihat bagus, ceritanya bagaimana?"
+  - id: "s27-5"
+    judul: "Jendela yang Menipu"
+    emoji: "🗓️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Iklan sebuah bot: "Strategi kami +40% dalam 3 bulan terakhir!" Kamu minta data penuh. Ternyata: awal 2024 modal $1.000 turun ke $500 di akhir 2024 (minus 50%). Lalu Januari-Maret 2025 naik dari $500 ke $700 (+40%). Kesimpulan yang benar?
+    pilihan:
+      - "Botnya bagus: +40% dalam 3 bulan itu nyata"
+      - "Menipu: jendela 3 bulan mulai dari titik terendah. Dari modal awal: $1.000 ke $700 = minus 30%. Butuh +43% lagi cuma untuk balik modal"
+      - "+40% lebih besar dari minus 50%, jadi tetap untung"
+      - "Tidak masalah: yang penting 3 bulan terakhir positif"
+    jawaban: 1
+    penjelasan: |
+      Ini trik jendela waktu (Bab 27-2): tampilkan periode yang membuat angka terlihat bagus. +40% dihitung dari $500, dasar setelah minus 50%. Bukan dari modal awalmu. Hitung dari awal: $1.000 ke $700 = minus 30%. Balik modal butuh naik dari 700 ke 1.000 = +42,9%. Belum tercapai. "3 bulan terakhir positif" memang benar, tapi tidak menceritakan posisimu. Trader yang sehat selalu minta: periode penuh, modal awal, dan drawdown terbesar. Kalau bot hanya berani menunjukkan jendela terbaiknya, tanyakan apa yang terjadi di luar jendela itu.
+    kode: |
+      modal_awal = 1000
+      sekarang = 700
+      print(f"Total: {(sekarang/modal_awal-1)*100:.0f}%")       # -30%
+      print(f"Butuh +{(modal_awal/sekarang-1)*100:.1f}% lagi")  # +42.9%
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "+40% dari $500 itu nyata, tapi kamu masih rugi 30% dari modal awal."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: total minus 30%. Jendela 3 bulan menyembunyikan kejatuhan setahun sebelumnya."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Persen tidak bisa dijumlah begitu saja. +40% dari dasar yang sudah minus 50% bukan untung."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Positif 3 bulan tidak membatalkan minus 50% sebelumnya. Minta periode penuh."
+    petunjuk:
+      - "+40% itu dihitung dari angka berapa: 500 atau 1.000?"
+      - "Balik modal: dari 700 naik ke 1.000 = berapa persen?"
 soal:
   - id: "p27-1"
     judul: "Persiapan Chart: Rentang"

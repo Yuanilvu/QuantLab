@@ -219,3 +219,44 @@ skenario:
     petunjuk:
       - "Hitung dulu: A harusnya berapa dari total $1.110?"
       - "Kelebihan A dijual → dibelikan B yang murah."
+  - id: "s19-5"
+    judul: "Batas Risiko & Porsi Kebalik Vol"
+    emoji: "📐"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Modal $10.000. Targetmu: return maksimal dengan batas risiko. Volatilitas portofolio (seberapa liar naik-turun) tidak boleh lewat 12%. Strategi A: vol 10%, return tahun ini diperkirakan +11%. Strategi B: vol 30%, return bisa +16% tapi jalannya liar. Korelasi A dan B = 0. Berapa porsi A dan B?
+    pilihan:
+      - "A 50%, B 50%: bagi rata, paling adil"
+      - "A 75%, B 25%: porsi kebalik volatilitas (risk parity)"
+      - "A 25%, B 75%: B returnnya lebih tinggi"
+      - "100% A: paling tenang, batas risiko pasti aman"
+    jawaban: 1
+    penjelasan: |
+      Batas vol 12% menyaring pilihan. Risk parity = porsi kebalik volatilitas. A: 1/10 = 10. B: 1/30 = 3,3. Total 13,3. Porsi A = 10/13,3 = 75%. Porsi B = 25%. Tiap aset menyumbang risiko sama: A = 0,75 × 10% = 7,5%; B = 0,25 × 30% = 7,5%. Vol portofolio (korelasi 0) = √(0,75² × 10² + 0,25² × 30²) ≈ 10,6%. Lolos batas 12%. Return ≈ 0,75 × 11 + 0,25 × 16 = 12,3%. Opsi lain: 50/50 vol-nya 15,8%, lewat batas. Saat B koreksi −20%, porto −10%, panik jual di dasar. 25/75 vol 22,6%: risiko dikuasai B, koreksi B −25% bikin margin call. 100% A aman, tapi return B hilang: cuma 11%. Risk parity memberi return terbaik dalam batas risiko yang kamu tetapkan.
+    kode: |
+      def vol(wA):
+          return (wA**2*0.10**2 + (1-wA)**2*0.30**2)**0.5
+      print(f"A 75%: vol {vol(0.75)*100:.1f}%")   # 10.6%
+      print(f"A 50%: vol {vol(0.50)*100:.1f}%")   # 15.8% lewat batas
+    hasil:
+      - ret: 8.0
+        dd: 16.0
+        win: 30
+        note: "50/50: vol 15,8% lewat batas. B koreksi −20%, porto −10%. Panik, jual 40% di dasar. Realisasi 8%."
+      - ret: 12.3
+        dd: 6.5
+        win: 78
+        note: "75/25 benar: vol 10,6%. B koreksi −20% cuma −5% ke porto. Hold penuh: A +11%, B +16% = 12,3%."
+      - ret: 4.5
+        dd: 21.0
+        win: 15
+        note: "25/75: B mendominasi risiko. B −25% = porto −18,75%. Margin call. Realisasi 4,5%."
+      - ret: 11.0
+        dd: 7.0
+        win: 45
+        note: "100% A: aman, tapi return B +16% hilang. 11% kalah dari 12,3% risk parity."
+    petunjuk:
+      - "Hitung vol tiap alokasi (korelasi 0). Mana yang ≤ 12%?"
+      - "Porsi kebalik vol: 1/10 berbanding 1/30 = 75:25."

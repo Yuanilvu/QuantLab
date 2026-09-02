@@ -214,3 +214,44 @@ skenario:
     petunjuk:
       - "Berapa kali funding dibayar dalam 4 hari?"
       - "Bandingkan biaya total dengan target profit."
+  - id: "s11-5"
+    judul: "Funding Mahal, Trend Kuat"
+    emoji: "🐂"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      BTC naik 12% dalam 5 hari. Harga membentuk puncak-puncak lebih tinggi, volume naik. Funding rate +0,12% per 8 jam. Normalnya 0,01%. Sudah 3 hari begini. Open interest ikut naik. Kamu belum punya posisi. Sebagian trader bilang: funding ekstrem = sinyal koreksi. Keputusanmu?
+    pilihan:
+      - "Short. Funding positif: long yang bayar, short yang terima. Sambil nunggu koreksi, kamu dibayar"
+      - "Long kecil ikut trend. Funding itu biaya, hitung dulu. Stop di bawah puncak terakhir"
+      - "Flat. Funding ekstrem = pasar overheat, jangan ikut"
+      - "Long besar. Funding tinggi = pasar yakin, ikut arus"
+    jawaban: 1
+    penjelasan: |
+      Funding positif artinya long bayar short. +0,12% per 8 jam = 12x normal. Tapi harga sudah membuktikan arahnya: naik 12% dalam 5 hari. Crowd long kuat dan benar. Funding ekstrem bisa bertahan lebih lama dari posisimu. Short demi funding 0,36% per hari = melawan trend kuat. Hitung 3 minggu, harga +9%. Biaya long: 5 hari ekstrem (0,12% × 3 × 5 = 1,8%) ditambah 16 hari normal (0,01% × 3 × 16 = 0,48%). Total 2,28%. Long: +9 - 2,28 = +6,7%. Short: -9 + 2,28 = -6,7%. Funding tidak menutup loss harga. Long besar tanpa stop? Koreksi normal -6% di minggu 2 bikin panik. Ikut trend dengan ukuran wajar, hitung funding sebagai biaya, stop terpasang.
+    kode: |
+      harga = 0.09          # trend +9% dalam 3 minggu
+      biaya = 0.0012*3*5 + 0.0001*3*16   # 5 hari ekstrem, lalu normal
+      print(f"Biaya: {biaya*100:.2f}%")
+      print(f"Long: {(harga-biaya)*100:+.1f}% | Short: {(-harga+biaya)*100:+.1f}%")
+    hasil:
+      - ret: -3.1
+        dd: 5.0
+        win: 20
+        note: "Harga terus naik. Stop -5% kena di hari ke-9. Funding diterima 1,9%. Net -3,1%."
+      - ret: 6.7
+        dd: 3.5
+        win: 70
+        note: "Harga +9% dalam 3 minggu. Biaya funding 2,28%. Net +6,7%. Koreksi -3,5% tidak menyentuh stop."
+      - ret: 0.0
+        dd: 0.0
+        win: 45
+        note: "Flat: aman dari biaya dan koreksi. Tapi trend +9% lewat tanpa kamu."
+      - ret: -8.0
+        dd: 8.0
+        win: 10
+        note: "Posisi 3x. Koreksi -6% di minggu 2 bikin panik, cut. Funding 2% terlanjur dibayar. Total -8%."
+    petunjuk:
+      - "Berapa biaya funding 3 minggu (5 hari ekstrem + 16 hari normal)?"
+      - "Kalau short, kamu terima 2,28%. Tapi harga naik 9%. Net berapa?"

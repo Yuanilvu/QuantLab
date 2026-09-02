@@ -226,3 +226,44 @@ skenario:
     petunjuk:
       - "Berapa z-score dari -9.9%?"
       - "Pergerakan 5 sigma biasanya karena apa?"
+  - id: "s16-5"
+    judul: "Satu Trade Menentukan Semua"
+    emoji: "⚡"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Backtest 6 bulan strategimu: 80 trade, return +15%. Satu trade menyumbang +11%. Trade itu terjadi saat berita besar, harga gap, untung sekali jalan. Tanpa trade itu, return tinggal +4%. Kamu mau pasang modal dari angka ini. Keputusanmu?
+    pilihan:
+      - "Pasang normal. +15% itu hasil nyata, trade beruntung tetap sah"
+      - "Jangan andalkan trade itu. Edge inti cuma +4%. Selidiki dulu bisa berulang atau tidak"
+      - "Buang hari-hari berita dari backtest. Angka jadi bersih"
+      - "Perbesar posisi. Satu trade bisa +11%, itu potensi strategi"
+    jawaban: 1
+    penjelasan: |
+      Satu angka ekstrem bisa menggeser rata-rata. Ini outlier, titik data ekstrem yang jauh dari kumpulan lainnya. 11 dari 15 = 73% profit berasal dari satu trade. Itu bukan edge harian. Itu kejadian langka: berita besar, gap, likuidasi beruntun. Hitung ulang: 15 - 11 = 4%. Edge inti cuma +4% per 6 bulan. Kecil. Perbesar posisi karena satu outlier = bertaruh pada kejadian yang tidak bisa direncanakan. Buang hari berita = bias baru. Hari itu tetap datang di live. Evaluasi yang benar: pisahkan return rutin dan return outlier. Tanya: pemicunya bisa berulang? Sizing pakai angka yang rutin. Outlier dihitung sebagai bonus, bukan dasar.
+    kode: |
+      total = 15.0      # return 6 bulan (%)
+      outlier = 11.0    # satu trade terbaik
+      inti = total - outlier
+      print(f"Edge inti: {inti:.1f}% dari {total:.0f}%")
+    hasil:
+      - ret: 1.8
+        dd: 6.5
+        win: 35
+        note: "6 bulan berikutnya cuma +1,8%. Outlier tidak terulang, ekspektasi keliru."
+      - ret: 8.0
+        dd: 2.2
+        win: 74
+        note: "Size moderat dari edge inti 4%. 6 bulan: +8%, termasuk satu trade berita yang terulang."
+      - ret: 3.0
+        dd: 3.0
+        win: 45
+        note: "Backtest bersih, tapi live tetap kena hari berita. Angka bersih menipu. +3%."
+      - ret: -12.0
+        dd: 12.0
+        win: 12
+        note: "Sizing 3x: dua loss beruntun saat volatil = -12%. Kamu berhenti."
+    petunjuk:
+      - "Berapa return tanpa satu trade terbesar?"
+      - "Bisakah kamu mengandalkan kejadian yang tidak bisa direncanakan?"

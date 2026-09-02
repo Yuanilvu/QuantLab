@@ -218,3 +218,45 @@ skenario:
     petunjuk:
       - "Bandingkan EV dua band pakai angka dari cerita."
       - "Bosan bukan alasan mengubah aturan — data yang berhak."
+  - id: "s21-5"
+    judul: "Aturan Exit Berbunyi"
+    emoji: "🚪"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Bot carry-mu masuk SHORT saat funding 22%. Aturan exit yang kamu tulis: funding turun di bawah 15%, ATAU target +2% tercapai, ATAU stop kena. Hari ini funding 11%. Posisi masih +1,2%. Aturan exit sudah berbunyi. Apa yang kamu lakukan?
+    pilihan:
+      - "Tahan dulu: target +2% tinggal sedikit lagi"
+      - "Exit sekarang: aturan exit sudah berbunyi (funding di bawah 15%)"
+      - "Longgarkan aturan: exit kalau funding di bawah 5%"
+      - "Tutup setengah, sisanya biarkan jalan"
+    jawaban: 1
+    penjelasan: |
+      Aturan exit berbunyi karena funding 11% lebih kecil dari 15%. Artinya alasan posisi dibuka sudah hilang. Carry (pendapatan funding) sekarang tipis, tapi risiko harga tetap penuh. Exit sekarang = +1,2% terkunci. "Tunggu target" = mengubah aturan di tengah jalan. Setelah exit, funding terus turun ke 6% dan harga naik 1,8%. Yang tahan: profit menguap, stop kena di −1,0%. Melonggarkan aturan = aturanmu tidak pernah dipatuhi. Tutup setengah = kompromi yang tidak ada di aturan. Bot = aturan ditulis, diuji, lalu DIJALANKAN. Aturan diubah hanya dengan data baru, bukan perasaan "tinggal dikit".
+    kode: |
+      funding = 11
+      if funding < 15:
+          print("EXIT: +1.2% terkunci")
+      else:
+          print("Tahan")
+    hasil:
+      - ret: 0.4
+        dd: 2.6
+        win: 25
+        note: "Tahan: funding turun ke 6%, harga naik. Stop kena. Profit +1,2% menguap jadi +0,4%."
+      - ret: 1.2
+        dd: 0.0
+        win: 80
+        note: "Exit benar di +1,2%. Sebulan kemudian funding 20% lagi, bot entry baru. Disiplin utuh."
+      - ret: -0.6
+        dd: 1.8
+        win: 20
+        note: "Aturan dilonggarkan diam-diam: exit baru terjadi di funding 5%, posisi sudah −0,6%."
+      - ret: 0.8
+        dd: 1.2
+        win: 35
+        note: "Setengah posisi tetap kena stop: cuma +0,8%. Aturan exit tidak setengah-setengah."
+    petunjuk:
+      - "Aturan exit berbunyi. Apa isi aturan yang kamu tulis sendiri?"
+      - "Mengubah aturan di tengah posisi = keputusan emosi."

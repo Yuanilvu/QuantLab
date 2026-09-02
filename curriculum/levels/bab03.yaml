@@ -223,3 +223,55 @@ skenario:
     petunjuk:
       - "EV = (peluang menang × hadiah) − (peluang kalah × kerugian)."
       - "Hitung EV kedua bot, baru bandingkan."
+
+  - id: "s3-5"
+    judul: "EV Kalah oleh Biaya"
+    emoji: "💸"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Bot sinyal kripto: 60% menang, 40% kalah.
+      Menang +2%, kalah −1,5%.
+      EV kotor +0,6% per trade.
+      Tiap trade kena biaya 0,75%.
+      Pasang bot ini?
+    pilihan:
+      - "Pasang — EV positif berarti layak"
+      - "Jangan — EV kotor 0,6% lebih kecil dari biaya 0,75%. Bersih −0,15%"
+      - "Pasang — untung 2% jauh lebih besar dari biaya"
+      - "Pasang setengah dana — biar aman sambil coba"
+    jawaban: 1
+    penjelasan: |
+      EV kotor = 0,6 × 2 − 0,4 × 1,5 = 1,2 − 0,6 = **+0,6%**.
+      Biaya 0,75% dipotong dari tiap trade.
+      EV bersih = 0,6 − 0,75 = **−0,15% per trade**.
+      Rata-rata tiap trade rugi 0,15%. EV bersih negatif.
+      Bot "menang" di kertas bisa kalah asli karena biaya.
+      Biaya adalah bagian dari EV. Hitung selalu setelah biaya.
+      Solusi: cari biaya lebih murah, atau perbaiki strategi dulu.
+    kode: |
+      ev_kotor = 0.6 * 2 - 0.4 * 1.5
+      biaya = 0.75
+      print(f"EV kotor {ev_kotor:+.2f}% | bersih {ev_kotor - biaya:+.2f}%")
+      # EV kotor +0.60% | bersih -0.15%
+    hasil:
+      - ret: -3.0
+        dd: 3.0
+        win: 25
+        note: "Bot jalan 20 trade. Untung kecil tergerus biaya, total rugi. EV negatif bekerja pelan-pelan."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Tidak pasang. Danamu utuh. EV bersih negatif = kalah pelan."
+      - ret: -6.0
+        dd: 6.0
+        win: 20
+        note: "Kamu anggap untung 2% bersih. Padahal biaya 0,75% tiap trade — modal tergerus cepat."
+      - ret: -1.5
+        dd: 1.5
+        win: 30
+        note: "Setengah dana tetap rugi 0,15% per trade. Mengecilkan ukuran tidak memperbaiki EV negatif."
+    petunjuk:
+      - "Hitung EV kotor dulu. Lalu kurangi biaya 0,75%."
+      - "EV bersih negatif atau positif?"

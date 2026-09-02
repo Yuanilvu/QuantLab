@@ -249,6 +249,65 @@ skenario:
     petunjuk:
       - "`range(1, 4)` berisi angka apa saja?"
       - "Jumlahkan i × 100.000 untuk tiap i."
+
+  - id: "s6-5"
+    judul: "Hitung Hari Menang"
+    emoji: "🏆"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Profit harian bot 3 hari: +5%, −2%, +3%.
+      Kamu mau tahu berapa hari bot MENANG (profit positif).
+      Kode:
+      ```python
+      menang = 0
+      for p in [5, -2, 3]:
+          if p > 0:
+              menang += 1
+      print(menang)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "2 — hari +5 dan +3 dihitung"
+      - "3 — semua hari dihitung"
+      - "5 — profit terbesar"
+      - "1 — cuma +5 yang dihitung"
+    jawaban: 0
+    penjelasan: |
+      Loop memeriksa tiap angka satu per satu.
+      `if p > 0` hanya menghitung angka positif.
+      +5 → menang 1. −2 → dilewati. +3 → menang 2.
+      Hasil: **2**.
+      Hari minus bukan hari menang. Dia tidak dihitung.
+      Pola ini dipakai menghitung win rate (persentase menang) bot:
+      menang dibagi total hari.
+    kode: |
+      menang = 0
+      for p in [5, -2, 3]:
+          if p > 0:
+              menang += 1
+      print(menang)   # 2
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "2 benar. Hanya hari positif yang dihitung. Dasar hitung win rate bot."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3 itu semua hari. Hari −2 tidak menang — dilewati `if`."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "5 itu angka profit terbesar, bukan jumlah hari menang."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "+3 juga positif. `if p > 0` berlaku untuk semua angka."
+    petunjuk:
+      - "Angka mana saja yang lebih besar dari 0?"
+      - "Hitung berapa angka yang lolos `if p > 0`."
 soal:
   - id: "p6-1"
     judul: "Cetak 1 Sampai N"

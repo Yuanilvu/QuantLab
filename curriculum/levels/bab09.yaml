@@ -219,3 +219,53 @@ skenario:
     petunjuk:
       - "Jam bursa IDX: 09:00–15:30 WIB, Senin–Jumat."
       - "Order di luar jam jalan kapan?"
+
+  - id: "s9-5"
+    judul: "Naik 5 Poin, Kok Rugi?"
+    emoji: "📏"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      TLKM: bid 4.995, ask 5.005.
+      Kamu beli 1 lot di ask (5.005 × 100 = 500.500).
+      Harga naik 5 poin. Bid jadi 5.000.
+      Kamu jual sekarang. Untung atau rugi?
+    pilihan:
+      - "Untung — harga sudah naik 5 poin"
+      - "Rugi Rp500 — jual di bid 5.000, dapat 500.000"
+      - "Impas — naik ya naik, tidak rugi"
+      - "Untung Rp500 — 5 poin × 100 lembar"
+    jawaban: 1
+    penjelasan: |
+      Beli di ask 5.005. Jual di bid 5.000.
+      Rugi 5 poin per lembar. 5 × 100 lembar = **Rp500**.
+      Harga naik 5 poin, tapi belum menutup spread (10 poin).
+      Harga harus naik lebih dari 10 poin dulu baru untung.
+      Spread = biaya masuk yang harus dikejar harga.
+      Target untung kecil + spread lebar = sering rugi.
+      Pilih saham likuid dengan spread tipis.
+    kode: |
+      beli = 5005 * 100
+      jual = 5000 * 100
+      print(f"Hasil: Rp{jual - beli:,}")   # Hasil: Rp-500
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Kamu jual di 5.000? Rugi 500. Naik 5 poin belum menutup spread 10 poin."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Benar: rugi 500. Kamu paham spread = biaya tersembunyi yang harus dikejar harga."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak impas. Beli di ask, jual di bid — minus selama kenaikan di bawah spread."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "5 poin × 100 = 500 memang. Tapi arahnya rugi — jual di bawah harga beli."
+    petunjuk:
+      - "Beli di harga berapa? Jual dapat harga berapa?"
+      - "Bandingkan: naik 5 poin vs spread 10 poin."

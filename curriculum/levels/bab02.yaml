@@ -238,3 +238,56 @@ skenario:
     petunjuk:
       - "Hitung untung rupiah tiap saham dulu."
       - "Total untung dibagi total dana Rp1.000.000."
+
+  - id: "s2-5"
+    judul: "Data Baru, Rata-rata Baru"
+    emoji: "🎚️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Harga TLKM 4 hari: 3.900, 4.000, 4.100, 4.000.
+      Rata-ratanya 4.000.
+      Hari ke-5 tutup di 4.400.
+      Kamu mau tahu rata-rata 5 hari untuk patokan beli.
+      Berapa rata-ratanya sekarang?
+    pilihan:
+      - "4.400 — harga terbaru, itu yang penting"
+      - "4.080 — total 20.400, dibagi 5 hari"
+      - "4.100 — rata-rata 4.000 dan 4.400"
+      - "4.000 — data lama tidak usah diubah"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata 4.000 = total 16.000 dibagi 4 hari.
+      Hari ke-5 masuk: total = 16.000 + 4.400 = 20.400.
+      20.400 ÷ 5 = **4.080**.
+      Data lama TETAP ikut dihitung.
+      Harga terbaru cuma satu dari lima angka.
+      Makin banyak hari, makin kecil pengaruh satu harga baru.
+      Rata-rata 5 hari lebih stabil dari harga harian.
+      Ini dasar moving average.
+    kode: |
+      total_lama = 16000
+      harga_baru = 4400
+      total = total_lama + harga_baru
+      print(total / 5)   # 4080.0
+    hasil:
+      - ret: 2.0
+        dd: 0.0
+        win: 30
+        note: "Kamu pakai 4.400 sebagai patokan. Terlalu tinggi — target beli meleset."
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "4.080 benar. Patokanmu akurat, keputusan beli tepat waktu."
+      - ret: 3.0
+        dd: 0.0
+        win: 35
+        note: "4.100 = rata-rata dua angka saja. Empat hari lama ikut menentukan rata-rata."
+      - ret: 1.0
+        dd: 0.0
+        win: 25
+        note: "Rata-rata tetap 4.000? Data baru diabaikan. Kamu meremehkan harga wajar."
+    petunjuk:
+      - "Total harga 4 hari dulu berapa? Lalu tambah harga hari ke-5."
+      - "Bagi total baru dengan 5 hari."
