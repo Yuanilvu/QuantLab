@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+{% block title %}Cari Materi — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <span class="kicker">Pencarian</span>
+  <h1>🔍 Cari materi belajar</h1>
+  <p class="sub meta">Temukan bab, pelajaran, skenario, atau soal coding — dari seluruh 27 bab.</p>
+  <form action="{{ url_for('cari') }}" method="get" role="search" style="margin-top:14px;display:flex;gap:8px;max-width:520px">
+    <input type="search" name="q" value="{{ q }}" placeholder="contoh: funding, drawdown, loop…" maxlength="60" autofocus style="flex:1">
+    <button class="btn primary" type="submit">Cari</button>
+  </form>
+</section>
+
+{% if q and q|length < 2 %}
+<p class="note">Ketik minimal 2 huruf.</p>
+{% elif q %}
+  {% set total = res.bab|length + res.pelajaran|length + res.skenario|length + res.soal|length %}
+  {% if total == 0 %}
+  <div class="casebox">
+    <h3>😕 Tidak ditemukan</h3>
+    <p class="meta">Tidak ada materi cocok dengan <b>"{{ q }}"</b>. Coba kata lain, atau tanyakan ke 🤖 Mentor.</p>
+  </div>
+  {% else %}
+  <p class="meta">{{ total }} hasil untuk <b>"{{ q }}"</b></p>
+
+  {% if res.bab %}
+  <section class="scenlist" style="margin-top:16px">
+    <h3>📚 Bab</h3>
+    {% for b in res.bab %}
+    <a class="scenrow" href="{{ url_for('bab_page', n=b.bab) }}">
+      <span class="scenemoji">{{ b.emoji }}</span>
+      <span class="scenmain"><b>Bab {{ b.bab }}: {{ b.judul }}</b><span class="meta">{{ b.deskripsi }}</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if res.pelajaran %}
+  <section class="scenlist" style="margin-top:16px">
+    <h3>📖 Pelajaran</h3>
+    {% for b, pel in res.pelajaran %}
+    <a class="scenrow" href="{{ url_for('bab_page', n=b.bab) }}">
+      <span class="scenemoji">📖</span>
+      <span class="scenmain"><b>{{ pel.judul }}</b><span class="meta">Bab {{ b.bab }} — {{ b.judul }} · ±{{ pel.menit }} menit</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if res.skenario %}
+  <section class="scenlist" style="margin-top:16px">
+    <h3>🎯 Skenario</h3>
+    {% for b, s in res.skenario %}
+    <a class="scenrow" href="{{ url_for('scenario_page', sid=s.id) }}">
+      <span class="scenemoji">{{ s.emoji }}</span>
+      <span class="scenmain"><b>{{ s.judul }}</b><span class="meta">Bab {{ b.bab }} · {{ s.sulit }} · {{ s.xp }} XP</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+
+  {% if res.soal %}
+  <section class="scenlist" style="margin-top:16px">
+    <h3>⌨️ Soal Coding</h3>
+    {% for b, so in res.soal %}
+    <a class="scenrow" href="{{ url_for('soal_page', qid=so.id) }}">
+      <span class="scenemoji">⌨️</span>
+      <span class="scenmain"><b>{{ so.judul }}</b><span class="meta">Bab {{ b.bab }} · {{ so.tingkat }} · {{ so.xp }} XP</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% endfor %}
+  </section>
+  {% endif %}
+  {% endif %}
+{% else %}
+<div class="casebox">
+  <h3>💡 Ide pencarian</h3>
+  <p class="meta">Funding · drawdown · leverage · likuidasi · moving average · breakout · numpy · jurnal — atau istilah apa pun yang muncul di materi.</p>
+</div>
+{% endif %}
+{% endblock %}

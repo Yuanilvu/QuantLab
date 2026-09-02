@@ -307,3 +307,19 @@ textarea, input, select, button { font-family: inherit; }
   .stat { min-width: 0; flex: 1 1 44%; }
   .dashcol, .toolcard, .casebox { padding: 15px; }
 }
+
+/* ---------- Topbar search ---------- */
+.topsearch { margin-left: auto; }
+.topsearch input {
+  width: 170px; background: var(--bg2); border: 1px solid var(--line2);
+  color: var(--txt); border-radius: 999px; padding: 6px 14px; font-size: .84rem;
+  transition: width .2s, border-color .15s, box-shadow .15s;
+}
+.topsearch input:focus { outline: none; width: 230px; border-color: var(--brand);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, .15); }
+.topsearch input::placeholder { color: var(--faint); }
+@media (max-width: 860px) {
+  .topsearch { order: 11; width: 100%; margin: 0; }
+  .topsearch input { width: 100%; }
+  .topsearch input:focus { width: 100%; }
+}

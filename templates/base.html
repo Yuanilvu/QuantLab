@@ -36,6 +36,9 @@
     <a class="{{ 'active' if p.startswith('/badges') }}" href="{{ url_for('badges_page') }}">Badges</a>
     <a class="{{ 'active' if p.startswith('/profil') }}" href="{{ url_for('profile') }}">Profil</a>
   </nav>
+  <form class="topsearch" action="{{ url_for('cari') }}" method="get" role="search">
+    <input type="search" name="q" placeholder="Cari materi…" aria-label="Cari materi" maxlength="60">
+  </form>
   <div class="userchip">
     <span class="chip xp" title="Poin pengalamanmu">{{ user.xp }} XP</span>
     <span class="chip streak" title="Hari aktif beruntun">🔥 {{ user.streak }}</span>

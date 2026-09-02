@@ -27,6 +27,9 @@ app.config["SECRET_KEY"] = os.environ.get(
     "SECRET_KEY", secrets.token_hex(32)
 )
 app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
+app.config["SESSION_COOKIE_HTTPONLY"] = True
+app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
+app.config["SESSION_COOKIE_NAME"] = "ql_session"
 
 db.init_db()
 
@@ -315,6 +318,8 @@ def login():
                                    request.form.get("password", ""))
             if user:
                 db.login_failures_reset(key)
+                session.clear()  # anti session-fixation
+                session["_csrf"] = secrets.token_hex(16)
                 session["uid"] = user["id"]
                 return redirect(request.args.get("next") or url_for("index"))
             err = "Username atau password salah."
@@ -332,6 +337,8 @@ def register():
         p = request.form.get("password", "")
         ok, msg = db.register_user(u, p)
         if ok:
+            session.clear()  # anti session-fixation
+            session["_csrf"] = secrets.token_hex(16)
             session["uid"] = db.get_user_by_name(u.strip())["id"]
             return redirect(url_for("index"))
         err = msg
@@ -435,6 +442,8 @@ def soal_page(qid):
             result = {"passed": q["xp"], "total": q["xp"], "already": True,
                       "results": []}
         else:
+            if not _heavy_ok(f"soal:{user['id']}"):
+                abort(429)
             r = judge.run_tests(code, q["tes"])
             if r["passed"] == r["total"] and r["total"] > 0:
                 xp = SOAL_XP.get(q.get("tingkat"), 25)
@@ -677,6 +686,8 @@ def playground():
                 else:
                     result = {"mode": "backtest", "error": "Fast harus < slow dan ≥ 2."}
             elif mode == "run":
+                if not _heavy_ok(f"pg:{_user()['id']}"):
+                    abort(429)
                 code = request.form.get("code", "")[:8000]
                 r = judge.run_code(code, request.form.get("stdin", ""))
                 result = {"mode": "run", "ok": r["ok"], "stdout": r["stdout"],
@@ -732,7 +743,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v4';
+    sw = """const CACHE = 'quantlab-v5';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1155,6 +1166,55 @@ def bad_request(e):
     return render_template("error.html", code=400, msg=str(e)), 400
 
 
+@app.errorhandler(429)
+def too_many(e):
+    return render_template("error.html", code=429,
+                           msg="Terlalu cepat — tunggu sebentar lalu coba lagi."), 429
+
+
+# ---------- Rate limit aksi berat (jalankan kode user) ----------
+
+_heavy_rl: dict[str, list[float]] = {}
+
+
+def _heavy_ok(key: str, per_min: int = 6) -> bool:
+    """In-memory per worker: maks per_min request dalam 60 detik."""
+    now = time.time()
+    ts = _heavy_rl.setdefault(key, [])
+    ts[:] = [x for x in ts if now - x < 3600]
+    if len([x for x in ts if now - x < 60]) >= per_min:
+        return False
+    ts.append(now)
+    return True
+
+
+# ---------- Pencarian kurikulum (ala Khan Academy) ----------
+
+@app.route("/cari")
+@login_required
+def cari():
+    q = (request.args.get("q") or "").strip().lower()
+    res = {"bab": [], "pelajaran": [], "skenario": [], "soal": []}
+    if len(q) >= 2:
+        for b in (curriculum.get_babs() or []):
+            bab_key = f"{b.get('judul', '')} {b.get('deskripsi', '')}".lower()
+            if q in bab_key:
+                res["bab"].append(b)
+            for pel in b.get("pelajaran") or []:
+                if q in f"{pel.get('judul', '')} {pel.get('materi', '')}".lower():
+                    res["pelajaran"].append((b, pel))
+            for s in b.get("skenario") or []:
+                if q in f"{s.get('judul', '')} {s.get('cerita', '')} {s.get('penjelasan', '')}".lower():
+                    res["skenario"].append((b, s))
+            for so in b.get("soal") or []:
+                if q in f"{so.get('judul', '')} {so.get('cerita', '')}".lower():
+                    res["soal"].append((b, so))
+    for k in res:
+        res[k] = res[k][:12]
+    return render_template("cari.html", q=(request.args.get("q") or "").strip(),
+                           res=res)
+
+
 # ---------- Mentor AI ----------
 
 _mentor_rl: dict[int, list[float]] = {}
@@ -1273,6 +1333,22 @@ class SubPathMiddleware:
                     (k, self.prefix + v)
                     if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
                     else (k, v)
+                    for k, v in headers
+                ]
+            # Security headers (semua respons)
+            has = {k.lower() for k, _ in headers}
+            for name, val in (
+                ("X-Content-Type-Options", "nosniff"),
+                ("X-Frame-Options", "DENY"),
+                ("Referrer-Policy", "strict-origin-when-cross-origin"),
+                ("Permissions-Policy", "camera=(), microphone=(), geolocation=()"),
+            ):
+                if name.lower() not in has:
+                    headers = headers + [(name, val)]
+            # Cookie session hanya via HTTPS funnel diberi flag Secure
+            if via_funnel:
+                headers = [
+                    (k, v + "; Secure") if (k.lower() == "set-cookie" and "secure" not in v.lower()) else (k, v)
                     for k, v in headers
                 ]
             return start_response(status, headers, exc_info)

@@ -51,7 +51,7 @@ def _clean(content: str) -> str:
     return content.strip()
 
 
-def _call_api(system: str, history: list[dict], user_msg: str, timeout: int = 55) -> str | None:
+def _call_api(system: str, history: list[dict], user_msg: str, timeout: int = 40) -> str | None:
     messages = [{"role": "system", "content": system}]
     messages += history[-8:]
     messages.append({"role": "user", "content": user_msg})
@@ -80,7 +80,7 @@ def _call_hermes(system: str, user_msg: str) -> str | None:
     try:
         proc = subprocess.run(
             ["hermes", "-z", prompt],
-            capture_output=True, text=True, timeout=90,
+            capture_output=True, text=True, timeout=45,
         )
         out = (proc.stdout or "").strip()
         return out or None
@@ -88,16 +88,25 @@ def _call_hermes(system: str, user_msg: str) -> str | None:
         return None
 
 
+def _log(msg: str) -> None:
+    print(f"[mentor] {msg}", flush=True)
+
+
 def call_mentor(system: str, history: list[dict], user_msg: str) -> str | None:
-    """DeepSeek dulu; kalau gagal/tidak ada key, fallback hermes -z."""
+    """DeepSeek dulu (≤40 dtk); kalau gagal, fallback hermes -z (≤45 dtk)."""
+    import time
+    t0 = time.time()
     if _get_key():
         try:
             reply = _call_api(system, history, user_msg)
+            _log(f"deepseek ok in {time.time()-t0:.1f}s")
             if reply:
                 return reply
-        except (urllib.error.HTTPError, urllib.error.URLError, OSError, KeyError, json.JSONDecodeError):
-            pass
-    return _call_hermes(system, user_msg)
+        except Exception as e:
+            _log(f"deepseek gagal ({type(e).__name__}), fallback hermes")
+    reply = _call_hermes(system, user_msg)
+    _log(f"hermes fallback in {time.time()-t0:.1f}s: {'ok' if reply else 'gagal'}")
+    return reply
 
 
 def build_context(bab: dict | None, scenario: dict | None, scenario_solved: bool) -> str:
