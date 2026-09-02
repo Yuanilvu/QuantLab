@@ -71,5 +71,6 @@
     <a class="btn primary" href="{{ url_for('index') }}">Selesai semua! 🎉 → Dashboard</a>
     {% endif %}
   </div>
+  <p class="note"><a href="{{ url_for('mentor_page', bab=bab.bab, sid=scen.id) }}">🤖 Masih bingung kenapa jawabannya begitu? Tanya Mentor.</a></p>
 </section>
 {% endblock %}

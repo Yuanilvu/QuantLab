@@ -6,6 +6,7 @@
 <section class="babhero">
   <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
   <p>{{ bab.deskripsi }}</p>
+  <p><a class="btn small ghost" href="{{ url_for('mentor_page', bab=bab.bab) }}">🤖 Tanya Mentor soal bab ini</a></p>
 </section>
 
 {% if lessons %}

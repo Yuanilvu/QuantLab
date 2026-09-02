@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+{% block title %}Mentor AI — QuantLab{% endblock %}
+{% block content %}
+<input type="hidden" id="csrf" value="{{ csrf_token() }}">
+<input type="hidden" id="ctx_bab" value="{{ ctx_bab or '' }}">
+<input type="hidden" id="ctx_sid" value="{{ ctx_sid or '' }}">
+
+<section class="mentorwrap">
+  <div class="mentorhead">
+    <h1>🤖 Mentor — pembimbing belajarmu</h1>
+    <p class="meta">Tanya konsep, minta dijelaskan pakai angka, atau bahas kasus yang lagi kamu pelajari. Jawaban singkat & langsung.</p>
+  </div>
+
+  {% if ctx_name %}
+  <div class="ctxbar">
+    <span>🎯 Sedang dibahas: <b>{{ ctx_name }}</b></span>
+    <a class="btn tiny ghost" href="{{ url_for('mentor_page') }}">Lepas konteks ✕</a>
+  </div>
+  {% endif %}
+
+  <div class="chatbox" id="chat">
+    {% if not history %}
+    <div class="chatempty">
+      <p>Halo! 👋 Aku mentor belajarmu. Contoh yang bisa kamu tanya:</p>
+      <button class="chipq" data-q="Jelaskan funding rate pakai analogi sehari-hari">💬 Jelaskan funding rate pakai analogi</button>
+      <button class="chipq" data-q="Apa itu drawdown? Kasih contoh dengan angka">💬 Apa itu drawdown? Kasih contoh angka</button>
+      {% if ctx_name %}
+      <button class="chipq" data-q="Bahas kasus yang sedang aku pelajari ini — bimbing aku langkah demi langkah">💬 Bimbing aku menyelesaikan kasus ini</button>
+      {% endif %}
+      <button class="chipq" data-q="Kasih aku 1 soal hitung cepat tentang materi barusan">💬 Kasih 1 soal hitung cepat</button>
+    </div>
+    {% else %}
+    {% for m in history %}
+    <div class="msg {{ 'user' if m.role == 'user' else 'm' }}">
+      <div class="who">{{ 'Kamu' if m.role == 'user' else '🤖 Mentor' }}</div>
+      <div class="txt">{{ m.content }}</div>
+    </div>
+    {% endfor %}
+    {% endif %}
+  </div>
+
+  <div class="chatinput">
+    <textarea id="inp" rows="2" maxlength="500" placeholder="Tanya apa saja… (Enter untuk kirim)"></textarea>
+    <button class="btn primary" id="sendbtn">Kirim ➤</button>
+  </div>
+  <div class="chatfoot">
+    <button class="btn tiny ghost" id="clearbtn">🗑 Hapus riwayat</button>
+    <span class="meta">Mentor AI untuk bantuan belajar — bukan saran investasi. Maks 500 karakter.</span>
+  </div>
+</section>
+
+<script>
+(function () {
+  const chat = document.getElementById('chat');
+  const inp = document.getElementById('inp');
+  const btn = document.getElementById('sendbtn');
+  const base = window.QL_BASE || '';
+  let busy = false;
+
+  function esc(s) {
+    return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+  }
+  function md(s) {
+    s = esc(s);
+    // blok kode
+    const blocks = [];
+    s = s.replace(/```(\w*)\n?([\s\S]*?)```/g, function (_, lg, code) {
+      blocks.push('<pre class="block-code"><code>' + code.trim() + '</code></pre>');
+      return '\u0000B' + (blocks.length - 1) + '\u0000';
+    });
+    let out = '';
+    s.split('\n').forEach(function (line) {
+      const t = line.trim();
+      if (t === '') { out += '<br>'; return; }
+      if (/^[-*] /.test(t)) { out += '• ' + t.replace(/^[-*] /, '') + '<br>'; return; }
+      out += t + '<br>';
+    });
+    out = out.replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>');
+    out = out.replace(/`([^`]+)`/g, '<code>$1</code>');
+    out = out.replace(/\u0000B(\d+)\u0000/g, function (_, i) { return blocks[+i]; });
+    return out;
+  }
+
+  function addMsg(role, text) {
+    const div = document.createElement('div');
+    div.className = 'msg ' + (role === 'user' ? 'user' : 'm');
+    const who = document.createElement('div');
+    who.className = 'who';
+    who.textContent = role === 'user' ? 'Kamu' : '🤖 Mentor';
+    const txt = document.createElement('div');
+    txt.className = 'txt';
+    txt.innerHTML = role === 'user' ? esc(text).replace(/\n/g, '<br>') : md(text);
+    div.appendChild(who); div.appendChild(txt);
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function send(text) {
+    if (busy) return;
+    text = (text || inp.value).trim();
+    if (!text) return;
+    busy = true;
+    btn.disabled = true;
+    addMsg('user', text);
+    const empty = chat.querySelector('.chatempty');
+    if (empty) empty.remove();
+    const wait = addMsg('m', '_mengetik…_');
+    const body = new URLSearchParams({
+      _csrf: document.getElementById('csrf').value,
+      msg: text,
+      bab: document.getElementById('ctx_bab').value,
+      sid: document.getElementById('ctx_sid').value
+    });
+    fetch(base + '/mentor/send', {
+      method: 'POST',
+      headers: { 'X-CSRF-Token': document.getElementById('csrf').value },
+      body: body
+    })
+    .then(function (r) { return r.json().then(function (j) { return { ok: r.ok, j: j }; }); })
+    .then(function (res) {
+      wait.remove();
+      if (res.ok && res.j.reply) {
+        addMsg('m', res.j.reply);
+        inp.value = '';
+      } else {
+        addMsg('m', '⚠️ ' + (res.j.error || 'Gagal — coba lagi.'));
+      }
+    })
+    .catch(function () {
+      wait.remove();
+      addMsg('m', '⚠️ Jaringan bermasalah — coba lagi.');
+    })
+    .finally(function () {
+      busy = false;
+      btn.disabled = false;
+      inp.focus();
+    });
+  }
+
+  btn.addEventListener('click', function () { send(); });
+  inp.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); send(); }
+  });
+  document.querySelectorAll('.chipq').forEach(function (c) {
+    c.addEventListener('click', function () { send(c.dataset.q); });
+  });
+  document.getElementById('clearbtn').addEventListener('click', function () {
+    if (!confirm('Hapus semua riwayat chat mentor?')) return;
+    fetch(base + '/mentor/clear', {
+      method: 'POST',
+      headers: { 'X-CSRF-Token': document.getElementById('csrf').value },
+      body: new URLSearchParams({ _csrf: document.getElementById('csrf').value })
+    }).then(function () { location.reload(); });
+  });
+})();
+</script>
+{% endblock %}

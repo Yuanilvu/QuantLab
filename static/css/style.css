@@ -429,3 +429,43 @@ form textarea {
 .labform .labrow label { margin: 0; min-width: 90px; }
 .labform .labrow input, .labform .labrow select { width: 130px; }
 .labchart { width: 100%; height: auto; background: #0a0f14; border: 1px solid var(--line); border-radius: 10px; margin-top: 8px; }
+
+/* ===== Mentor AI ===== */
+.mentorwrap { display: flex; flex-direction: column; gap: 10px; }
+.mentorhead h1 { font-size: 1.35rem; }
+.ctxbar {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  background: var(--panel); border: 1px solid var(--blue); border-radius: 10px;
+  padding: 8px 12px; color: var(--txt); font-size: .92rem;
+}
+.chatbox {
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px; min-height: 320px; max-height: 55vh; overflow-y: auto;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.chatempty { color: var(--dim); display: flex; flex-direction: column; gap: 8px; align-items: flex-start; }
+.chatempty p { margin-bottom: 4px; }
+.chipq {
+  background: var(--panel2); color: var(--txt); border: 1px solid var(--line);
+  border-radius: 999px; padding: 7px 14px; font-size: .88rem; cursor: pointer; text-align: left;
+}
+.chipq:hover { border-color: var(--blue); }
+.msg { max-width: 88%; }
+.msg.user { align-self: flex-end; }
+.msg.m { align-self: flex-start; }
+.who { font-size: .74rem; color: var(--dim); margin-bottom: 2px; }
+.msg .txt {
+  background: var(--panel2); border: 1px solid var(--line); border-radius: 12px;
+  padding: 9px 13px; font-size: .93rem; line-height: 1.5;
+}
+.msg.user .txt { background: #12314a; border-color: #1d4a6e; }
+.msg .txt code { background: #0b0f14; padding: 1px 5px; border-radius: 5px; font-family: var(--mono); font-size: .85em; }
+.msg .txt .block-code { margin-top: 6px; }
+.chatinput { display: flex; gap: 8px; }
+.chatinput textarea {
+  flex: 1; background: var(--panel); border: 1px solid var(--line); border-radius: 10px;
+  color: var(--txt); padding: 10px 12px; font: inherit; resize: none; min-height: 46px;
+}
+.chatinput textarea:focus { outline: none; border-color: var(--blue); }
+.chatfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+.btn.tiny { padding: 4px 10px; font-size: .8rem; border-radius: 8px; }

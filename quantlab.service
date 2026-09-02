@@ -7,7 +7,7 @@ Type=simple
 User=yuan
 WorkingDirectory=/home/yuan/quantlab
 EnvironmentFile=/home/yuan/quantlab/.env
-ExecStart=/home/yuan/quantlab/.venv/bin/gunicorn -w 2 --worker-class gthread --threads 4 -b 0.0.0.0:5200 "app:app" --timeout 30 --max-requests 2000 --max-requests-jitter 200
+ExecStart=/home/yuan/quantlab/.venv/bin/gunicorn -w 2 --worker-class gthread --threads 4 -b 0.0.0.0:5200 "app:app" --timeout 120 --max-requests 2000 --max-requests-jitter 200
 Restart=always
 RestartSec=5
 

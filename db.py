@@ -75,6 +75,14 @@ CREATE TABLE IF NOT EXISTS review_schedule (
     last_correct INTEGER NOT NULL DEFAULT 0,
     PRIMARY KEY (user_id, scenario_id)
 );
+CREATE TABLE IF NOT EXISTS mentor_messages (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    role TEXT NOT NULL,
+    content TEXT NOT NULL,
+    bab INTEGER,
+    created_at TEXT DEFAULT (datetime('now'))
+);
 """
 
 
@@ -489,3 +497,31 @@ def review_answer(user_id, scenario_id, correct):
             (due, user_id, scenario_id),
         )
         return False, 1
+
+
+# ---------- Mentor AI ----------
+
+def mentor_add(user_id, role, content, bab=None):
+    """Simpan 1 pesan mentor (role: 'user' | 'mentor')."""
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT INTO mentor_messages (user_id, role, content, bab) VALUES (?, ?, ?, ?)",
+            (user_id, role, content[:2000], bab),
+        )
+        return cur.lastrowid
+
+
+def mentor_history(user_id, limit=40):
+    """Riwayat chat mentor terbaru (ascending)."""
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT id, role, content, bab FROM mentor_messages WHERE user_id = ? ORDER BY id DESC LIMIT ?",
+            (user_id, limit),
+        ).fetchall()
+    return [dict(r) for r in reversed(rows)]
+
+
+def mentor_clear(user_id):
+    """Hapus semua riwayat chat mentor user."""
+    with get_conn() as conn:
+        conn.execute("DELETE FROM mentor_messages WHERE user_id = ?", (user_id,))

@@ -8,6 +8,7 @@ import os
 import random
 import re
 import secrets
+import time
 from datetime import datetime, timedelta
 
 from flask import (
@@ -19,6 +20,7 @@ import curriculum
 import db
 import judge
 import market
+import mentor
 
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
@@ -719,7 +721,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v1';
+    sw = """const CACHE = 'quantlab-v2';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1140,6 +1142,92 @@ def not_found(e):
 @app.errorhandler(400)
 def bad_request(e):
     return render_template("error.html", code=400, msg=str(e)), 400
+
+
+# ---------- Mentor AI ----------
+
+_mentor_rl: dict[int, list[float]] = {}
+
+
+def _mentor_rl_ok(uid: int) -> bool:
+    """Rate limit per user (in-memory, per worker): 8/menit, 40/jam."""
+    now = time.time()
+    ts = _mentor_rl.setdefault(uid, [])
+    ts[:] = [x for x in ts if now - x < 3600]
+    if len([x for x in ts if now - x < 60]) >= 8 or len(ts) >= 40:
+        return False
+    ts.append(now)
+    return True
+
+
+def _ctx_from_args():
+    """Parse ?bab=N&sid=sX-Y dari GET/POST. Return (bab_n, sid, bab, scen, scen_solved)."""
+    bab_n = 0
+    sid = None
+    try:
+        bab_n = int(request.args.get("bab") or request.form.get("bab") or 0)
+    except (TypeError, ValueError):
+        bab_n = 0
+    sid = request.args.get("sid") or request.form.get("sid") or None
+    bab = curriculum.get_bab(bab_n) if bab_n else None
+    scen = curriculum.get_scenario(sid) if sid else None
+    scen_solved = False
+    if scen and bab_n:
+        uid = _user()["id"]
+        scen_solved = sid in db.solved_ids(uid)
+    return bab_n, sid, bab, scen, scen_solved
+
+
+@app.route("/mentor")
+@login_required
+def mentor_page():
+    bab_n, sid, bab, scen, _ = _ctx_from_args()
+    ctx_name = None
+    if scen:
+        ctx_name = f"Bab {bab_n}: {scen['data']['judul']}"
+    elif bab:
+        ctx_name = f"{bab.get('emoji', '')} Bab {bab_n}: {bab.get('judul', '')}"
+    history = db.mentor_history(_user()["id"], 40)
+    return render_template("mentor.html", ctx_bab=bab_n, ctx_sid=sid,
+                           ctx_name=ctx_name, history=history)
+
+
+@app.route("/mentor/send", methods=["POST"])
+@login_required
+def mentor_send():
+    user = _user()
+    uid = user["id"]
+    if not _mentor_rl_ok(uid):
+        return {"error": "Santai dulu — maksimal 8 pesan per menit."}, 429
+    msg = (request.form.get("msg") or "").strip()
+    if not msg:
+        return {"error": "Tulis pesan dulu."}, 400
+    if len(msg) > 500:
+        return {"error": "Pesan maksimal 500 karakter."}, 400
+
+    bab_n, sid, bab, scen, scen_solved = _ctx_from_args()
+    if sid and not scen:
+        return {"error": "Skenario tidak ditemukan."}, 400
+
+    db.mentor_add(uid, "user", msg, bab_n or None)
+    rows = db.mentor_history(uid, 12)
+    history = [
+        {"role": "assistant" if r["role"] == "mentor" else "user", "content": r["content"]}
+        for r in rows
+    ]
+    system = mentor.build_system(bab, scen, scen_solved)
+    reply = mentor.call_mentor(system, history, msg)
+    if not reply:
+        return {"error": "Mentor sedang sibuk — coba lagi sebentar lagi."}, 503
+    db.mentor_add(uid, "mentor", reply, bab_n or None)
+    return {"reply": reply}
+
+
+@app.route("/mentor/clear", methods=["POST"])
+@login_required
+def mentor_clear():
+    db.mentor_clear(_user()["id"])
+    return {"ok": True}
 
 
 # ---------- Middleware subpath — akses via https://yan.tail51a905.ts.net/quant (Funnel 443) ----------
