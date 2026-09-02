@@ -180,6 +180,51 @@ skenario:
     petunjuk:
       - "Apa yang disembunyikan chart manipulatif?"
       - "Kalau strategi bagus, apa cukup dengan data jujur?"
+  - id: "s27-4"
+    judul: "Dua Strategi, Satu Skala"
+    emoji: "🎭"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Kamu mau bandingkan hasil dua strategi dalam satu chart. Strategi A: naik dari 0 ke +30%. Strategi B: naik dari 0 ke +3%. Alatmu menawarkan dual axis (dua sumbu Y: kiri untuk A, kanan untuk B, skala beda). Dengan dual axis, B terlihat sama curamnya dengan A. Kamu tahu itu menipu. Chart mana yang kamu buat?
+    pilihan:
+      - "Dual axis — dua kurva sama-sama terlihat jelas"
+      - "Satu sumbu Y bersama — B boleh terlihat datar, itu fakta"
+      - "Satu sumbu Y tapi mulai dari 25% — biar B tetap kelihatan naik"
+      - "Tampilkan hanya 3 bulan terbaik dari keduanya"
+    jawaban: 1
+    penjelasan: |
+      Dual axis = dua skala berbeda dalam satu chart. B (+3%) dapat sumbu sendiri → terlihat sebesar A (+30%). Itu trik 'skala berbeda' dari Bab 27-2. Satu sumbu Y bersama itu jujur: B memang hampir datar. Mau B terlihat detail? Pakai dua panel terpisah (subplot = dua chart kecil dalam satu gambar). Tiap panel skala sendiri, label sumbu jelas. Memotong sumbu dari 25% = truncated axis — kenaikan kecil tampak besar. Memilih jendela terbaik = menyembunyikan risiko. Kalau B butuh trik biar terlihat bagus, ceritanya memang belum bagus.
+    kode: |
+      import matplotlib.pyplot as plt
+      hari = [1, 2, 3, 4]
+      a = [0, 10, 20, 30]   # +30%
+      b = [0, 1, 2, 3]      # +3% — datar? Itu fakta
+      plt.plot(hari, a, label="A")
+      plt.plot(hari, b, label="B")
+      plt.legend()
+      plt.savefig("/tmp/banding.png")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "B terlihat curam padahal cuma +3%. Perbandingan bohong."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — satu skala untuk dua kurva. Datar itu fakta."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Sumbu dipotong (truncated axis) = drama palsu."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Jendela terbaik menyembunyikan risiko (Bab 27-2)."
+    petunjuk:
+      - "Cek dulu: kedua kurva pakai skala yang sama?"
+      - "Kalau B butuh trik biar terlihat bagus, ceritanya bagaimana?"
 soal:
   - id: "p27-1"
     judul: "Persiapan Chart: Rentang"

@@ -192,6 +192,50 @@ skenario:
     petunjuk:
       - "Agregasi: .mean(), .sum(), .max()."
       - "Hitung baris hasil filter dengan len()."
+  - id: "s26-4"
+    judul: "Total Nilai Portofolio"
+    emoji: "💰"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      DataFrame portofoliomu punya kolom nama, harga, dan vol (jumlah lembar). TLKM harga 4000, vol 100. BBRI harga 4500, vol 80. CUAN harga 1500, vol 50. Kamu mau tahu TOTAL nilai portofolio dalam rupiah (harga × volume untuk tiap saham, lalu dijumlah). Kode mana yang benar?
+    pilihan:
+      - "`df['harga'] * df['vol']`"
+      - "`(df['harga'] * df['vol']).sum()`"
+      - "`df.sum()`"
+      - "`df['vol'].sum()`"
+    jawaban: 1
+    penjelasan: |
+      Kolom dikali kolom = satu hasil per baris: TLKM 400.000, BBRI 360.000, CUAN 75.000. Itu nilai tiap saham. Belum total. Tambah `.sum()` → 835.000. Itulah total nilai portofolio. `df.sum()` menjumlahkan tiap kolom SENDIRI: harga 10.000 dan vol 230. Bukan nilai rupiah. `df['vol'].sum()` = 230 lembar — jumlah saham, bukan uang. Pola pandas: operasi kolom dulu, agregasi terakhir.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "CUAN"],
+                         "harga": [4000, 4500, 1500],
+                         "vol": [100, 80, 50]})
+      nilai = df["harga"] * df["vol"]
+      print(nilai)         # 400000 360000 75000
+      print(nilai.sum())   # 835000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Series nilai per saham — belum dijumlahkan."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 400.000 + 360.000 + 75.000 = 835.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Jumlah per kolom: harga 10.000, vol 230. Bukan total nilai."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "230 = total lembar. Nilai uang butuh harga × vol."
+    petunjuk:
+      - "Kalikan dua kolom dulu, lalu jumlahkan."
+      - "Vol saja = lembar. Harga × vol = rupiah."
 soal:
   - id: "p26-1"
     judul: "DataFrame Pertamamu"

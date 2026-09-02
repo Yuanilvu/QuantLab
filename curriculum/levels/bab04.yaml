@@ -191,6 +191,60 @@ skenario:
     petunjuk:
       - "Hitung dulu isi variabel `untung`."
       - "Lalu `untung / beli * 100`."
+
+  - id: "s4-4"
+    judul: "Berapa Kali Bisa Trade?"
+    emoji: "✂️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Danamu Rp1.000.000.
+      Satu trade butuh Rp300.000.
+      Botmu ingin trade sebanyak mungkin. Tanpa utang.
+      Berapa trade maksimal? Berapa sisa danamu?
+    pilihan:
+      - "3 trade, sisa Rp100.000"
+      - "3,33 trade — hasil bagi 1.000.000 ÷ 300.000"
+      - "4 trade — biar maksimal, utang sedikit tidak apa-apa"
+      - "2 trade, sisa Rp400.000 — sisanya untuk jaga-jaga"
+    jawaban: 0
+    penjelasan: |
+      1.000.000 ÷ 300.000 = 3,33.
+      Trade tidak bisa pecahan. 0,33 trade tidak ada di dunia nyata.
+
+      Python punya alat pas: `//` membagi lalu membulatkan ke bawah.
+      1.000.000 // 300.000 = 3.
+      `%` memberi sisanya. 1.000.000 % 300.000 = 100.000.
+
+      4 trade butuh 1.200.000. Dana kurang 200.000. Itu jalan ke utang.
+      Bot memakai pola ini untuk sizing (menentukan ukuran posisi).
+      Jumlah trade selalu dibulatkan ke bawah.
+    kode: |
+      dana = 1_000_000
+      butuh = 300_000
+      print(dana // butuh)   # 3 trade
+      print(dana % butuh)    # 100000 sisa
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "3 trade, sisa 100.000. Bot jalan tanpa utang. `//` dan `%` jadi alat sizing."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "3,33 trade tidak ada. Trade tidak bisa pecahan — bulatkan ke bawah."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4 trade butuh 1,2 juta. Dana kurang 200 ribu — kamu masuk utang."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Masih muat 3 trade. 2 trade = 400 ribu dana menganggur."
+    petunjuk:
+      - "1.000.000 dibagi 300.000: berapa utuh, berapa sisa?"
+      - "`//` = hasil bulat ke bawah. `%` = sisa bagi."
 soal:
   - id: "p4-1"
     judul: "Cetak Dua Kali Lipat"

@@ -191,6 +191,47 @@ skenario:
     petunjuk:
       - "harga[1:] = 3 angka terakhir; harga[:-1] = 3 angka pertama."
       - "Bagi berpasangan: 4100/4000, 3900/4100, 4200/3900."
+  - id: "s25-4"
+    judul: "Berapa Hari Rugi?"
+    emoji: "🎯"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Return harian strategimu (dalam persen): `r = np.array([1.2, -0.5, 0.8, -1.1, 0.3])`. Lima hari return. Kamu mau bot menghitung sendiri berapa hari RUGI (return negatif). Kode mana yang benar?
+    pilihan:
+      - "`r < 0`"
+      - "`(r < 0).sum()`"
+      - "`r.sum()`"
+      - "`r[r < 0]`"
+    jawaban: 1
+    penjelasan: |
+      `r < 0` membandingkan SEMUA elemen sekaligus: hasilnya `[False, True, False, True, False]`. Di Python, True = 1 dan False = 0. `.sum()` menjumlahkan semua True → 2. Berarti 2 hari rugi. Pola ini dipakai untuk win rate, hari hijau/merah, dan syarat lain. `r[r < 0]` mengambil NILAI hari rugi (−0,5 dan −1,1). Gunanya beda: untuk rata-rata kerugian. `r.sum()` = +0,7%, total return — bukan jumlah hari. Urutan bacanya: bandingkan dulu, jumlahkan setelahnya.
+    kode: |
+      import numpy as np
+      r = np.array([1.2, -0.5, 0.8, -1.1, 0.3])
+      print(r < 0)          # [False  True False  True False]
+      print((r < 0).sum())  # 2 hari rugi
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Deretan True/False — belum dijumlahkan."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 2 hari rugi (−0,5 dan −1,1)."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "+0,7% = total return semua hari, bukan jumlah hari rugi."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Itu mengambil NILAI hari rugi — bukan menghitungnya."
+    petunjuk:
+      - "True dihitung 1, False dihitung 0."
+      - "Bandingkan dulu, lalu jumlahkan dengan .sum()."
 soal:
   - id: "p25-1"
     judul: "Rata-rata & Tertinggi"

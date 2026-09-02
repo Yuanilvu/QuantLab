@@ -182,3 +182,59 @@ skenario:
     petunjuk:
       - "Urutkan datanya: berapa angka tengahnya (median)?"
       - "Satu hari -50% itu outlier atau pola?"
+
+  - id: "s2-4"
+    judul: "Return Portofolio"
+    emoji: "💼"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Kamu pegang dua saham.
+      BBRI: Rp600.000, hari ini naik 5%.
+      MPPA: Rp400.000, hari ini naik 10%.
+      Total danamu Rp1.000.000.
+      Berapa persen keuntungan portofoliomu (kumpulan semua sahammu) hari ini?
+      Hati-hati: dana kedua saham tidak sama besar.
+    pilihan:
+      - "7,5% — rata-rata 5% dan 10%"
+      - "7% — untung 30.000 + 40.000 = 70.000. Bagi 1.000.000 = 7%"
+      - "5% — BBRI posisi terbesarmu"
+      - "10% — MPPA yang paling cuan"
+    jawaban: 1
+    penjelasan: |
+      Hitung lewat rupiah dulu.
+      BBRI: 600.000 × 5% = 30.000.
+      MPPA: 400.000 × 10% = 40.000.
+      Total untung = 70.000.
+      70.000 ÷ 1.000.000 = **7%**.
+
+      Rata-rata biasa (7,5%) salah. Dia menganggap dua saham sama besar.
+      Padahal dana BBRI 1,5x lipat MPPA.
+      Dana besar pengaruhnya lebih besar.
+      Ini cara menghitung return portofolio. Bot dan reksa dana memakainya tiap hari.
+    kode: |
+      bbri = 600_000 * 0.05
+      mppa = 400_000 * 0.10
+      untung = bbri + mppa
+      print(f"{untung / 1_000_000 * 100:.1f}%")   # 7.0%
+    hasil:
+      - ret: 6.0
+        dd: 0.0
+        win: 30
+        note: "Kamu yakin 7,5%. Padahal 7%. Targetmu meleset — keputusan berikutnya ikut salah."
+      - ret: 7.0
+        dd: 0.0
+        win: 78
+        note: "7% benar. Hitung rupiah dulu, baru bagi total dana."
+      - ret: 4.0
+        dd: 0.0
+        win: 35
+        note: "Fokus BBRI saja. Kamu lupa untung MPPA 40.000 — itu 4% dari total danamu."
+      - ret: 3.0
+        dd: 0.0
+        win: 25
+        note: "Fokus MPPA saja. Untung BBRI 30.000 = 3% dari total. Porsi terbesar terlewat."
+    petunjuk:
+      - "Hitung untung rupiah tiap saham dulu."
+      - "Total untung dibagi total dana Rp1.000.000."

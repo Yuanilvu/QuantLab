@@ -197,6 +197,58 @@ skenario:
     petunjuk:
       - "Pecah dulu dengan split()."
       - "Lalu ambil indeks 1, lalu ubah dengan int()."
+  - id: "s22-4"
+    judul: "Update Semua Harga"
+    emoji: "🔄"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Data portofoliomu:
+      ```python
+      porto = [
+          {"nama": "TLKM", "harga": 4000},
+          {"nama": "BBRI", "harga": 4500},
+          {"nama": "CUAN", "harga": 1500},
+      ]
+      ```
+      Semua harga naik 10%. Kamu mau data ikut berubah: TLKM 4400, BBRI 4950, CUAN 1650. Kode mana yang benar?
+    pilihan:
+      - "`porto * 1.1`"
+      - "`for s in porto: s['harga'] = int(s['harga'] * 1.1)`"
+      - "`harga = 4000 * 1.1`"
+      - "`for s in porto: print(s['harga'])`"
+    jawaban: 1
+    penjelasan: |
+      List of dict bisa di-loop (diulang satu per satu). `for s in porto` membaca satu dict per putaran. `s['harga'] = ...` mengubah nilai di dalam dict itu. int() membuang desimal, jadi 4400,0 → 4400. Hasilnya: TLKM 4400, BBRI 4950, CUAN 1650. Total naik dari 10.000 ke 11.000 (+10%). `porto * 1.1` error — list tidak bisa dikali angka. `harga = 4000 * 1.1` hanya mengubah variabel baru; data asli tidak tersentuh. print hanya menampilkan, tidak mengubah apa pun.
+    kode: |
+      porto = [{"nama": "TLKM", "harga": 4000},
+               {"nama": "BBRI", "harga": 4500},
+               {"nama": "CUAN", "harga": 1500}]
+      for s in porto:
+          s["harga"] = int(s["harga"] * 1.1)
+      print(porto[1]["harga"])              # 4950
+      print(sum(s["harga"] for s in porto)) # 11000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "List biasa dikali 1,1 → error. Itu perilaku array, bukan list."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — semua dict berubah: 4400, 4950, 1650. Total 11.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Hanya variabel baru yang berubah. Data di porto tetap 4000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "print hanya menampilkan. Perubahan butuh assignment (=)."
+    petunjuk:
+      - "Ubah nilai dict: s['harga'] = nilai baru."
+      - "int() membuang desimal dari hasil kali 1,1."
 soal:
   - id: "p22-1"
     judul: "Kamus Saham"

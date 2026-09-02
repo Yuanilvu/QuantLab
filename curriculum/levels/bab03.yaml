@@ -171,3 +171,55 @@ skenario:
     petunjuk:
       - "Hitung peluang 2 loss beruntun (0,4 × 0,4)."
       - "Apakah 2 loss mengubah EV strategi?"
+
+  - id: "s3-4"
+    judul: "Pilih Bot: EV Dulu"
+    emoji: "🧭"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua bot minta dipasang di akunmu.
+      Bot X: menang 80% trade. Untung +2%, kalah −4%.
+      Bot Y: menang 40% trade. Untung +12%, kalah −4%.
+      Danamu cukup untuk satu bot.
+      Bot mana yang nilai harapannya (EV) lebih besar?
+    pilihan:
+      - "Bot X — menang 8 dari 10, pasti lebih baik"
+      - "Bot Y — EV X = 0,8% per trade. EV Y = 2,4% per trade"
+      - "Bot X — kerugiannya sama-sama −4%, X lebih sering menang"
+      - "Sama saja — menang dan kalah saling menghapus"
+    jawaban: 1
+    penjelasan: |
+      EV X = 0,8 × 2 − 0,2 × 4 = 1,6 − 0,8 = **+0,8% per trade**.
+      EV Y = 0,4 × 12 − 0,6 × 4 = 4,8 − 2,4 = **+2,4% per trade**.
+      Bot Y 3x lebih baik, walau cuma menang 40%.
+
+      Win rate tinggi tidak selalu menang. Hitung EV dulu.
+      Dalam 10 trade: ekspektasi Y = +24%. X cuma +8%.
+      Bot Y kalah lebih sering. Siapkan mentalmu — lihat pelajaran 3-1.
+    kode: |
+      ev_x = 0.8 * 2 - 0.2 * 4
+      ev_y = 0.4 * 12 - 0.6 * 4
+      print(f"X {ev_x:+.1f}% | Y {ev_y:+.1f}%")
+      # Y 3x lebih besar → pasang Bot Y
+    hasil:
+      - ret: 8.0
+        dd: 2.0
+        win: 80
+        note: "Bot X jalan: untung 8% dalam 10 trade. Aman, tapi kamu meninggalkan EV 3x lebih besar."
+      - ret: 24.0
+        dd: 8.0
+        win: 40
+        note: "Bot Y jalan: +24% dalam 10 trade. Kalah 6 kali, reward besar menutup semuanya."
+      - ret: 8.0
+        dd: 3.0
+        win: 78
+        note: "Tetap Bot X: hasil 8%. Alasanmu keliru — reward Y 6x lipat dari X."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak memasang bot. Dana menganggur — melewatkan EV positif juga biaya."
+    petunjuk:
+      - "EV = (peluang menang × hadiah) − (peluang kalah × kerugian)."
+      - "Hitung EV kedua bot, baru bandingkan."

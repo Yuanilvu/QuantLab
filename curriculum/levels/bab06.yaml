@@ -191,6 +191,64 @@ skenario:
     petunjuk:
       - "Apa yang dilakukan loop terhadap setiap harga?"
       - "Berapa kode yang dibutuhkan untuk 250 data vs 5 data?"
+
+  - id: "s6-4"
+    judul: "Profit Naik Tiap Hari"
+    emoji: "💰"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Bot mencatat profit 3 hari.
+      Profit hari ke-1 = 1 × 100.000.
+      Hari ke-2 = 2 × 100.000. Hari ke-3 = 3 × 100.000.
+      ```python
+      total = 0
+      for i in range(1, 4):
+          total += i * 100_000
+      print(total)
+      ```
+      Berapa total profit yang tercetak?
+    pilihan:
+      - "600.000 — 100.000 + 200.000 + 300.000"
+      - "300.000 — 3 hari × 100.000"
+      - "1.000.000 — 100.000 + 200.000 + 300.000 + 400.000"
+      - "100.000 — total tidak pernah bertambah"
+    jawaban: 0
+    penjelasan: |
+      `range(1, 4)` berisi 1, 2, 3. Angka 4 tidak masuk.
+      Tiap putaran, `i` ikut dihitung:
+      1 × 100.000 = 100.000. 2 × 100.000 = 200.000. 3 × 100.000 = 300.000.
+      Total = **600.000**.
+
+      `i` bukan sekadar penghitung putaran. Nilainya dipakai dalam hitungan.
+      Hari ke-4 mau ikut? Ubah jadi `range(1, 5)`.
+      Pola ini dasar profit kumulatif (total yang terus ditimbun).
+    kode: |
+      total = 0
+      for i in range(1, 4):
+          total += i * 100_000
+      print(f"Rp{total:,}")   # Rp600,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "600 ribu benar: 100 + 200 + 300 ribu. `i` ikut menentukan jumlah."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "300 ribu = `i` diabaikan. Padahal i = 1, 2, 3 — bukan 1 terus."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "1 juta itu kalau `range(1, 5)`. Di sini berhenti di 3."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "total bertambah tiap putaran: 0, lalu 100, 300, 600 ribu."
+    petunjuk:
+      - "`range(1, 4)` berisi angka apa saja?"
+      - "Jumlahkan i × 100.000 untuk tiap i."
 soal:
   - id: "p6-1"
     judul: "Cetak 1 Sampai N"

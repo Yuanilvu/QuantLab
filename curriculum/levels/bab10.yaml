@@ -170,3 +170,44 @@ skenario:
     petunjuk:
       - "30% itu di atas atau di bawah rata-rata historis?"
       - "Satu tahun baik = jaminan tahun depan?"
+  - id: "s10-4"
+    judul: "Enam Bulan Lagi"
+    emoji: "⏳"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kamu menabung Rp30 juta untuk DP rumah. Uang itu kamu pakai 6 bulan lagi, tanggalnya pasti. Teman menawarkan saham yang katanya naik 10% sebulan. Deposito memberi 4% per tahun. Mana keputusan yang tepat?
+    pilihan:
+      - "All-in saham — kalau naik 10% sebulan, DP makin besar"
+      - "Deposito — uang berjangka pendek tidak boleh di aset berisiko"
+      - "Setengah saham, setengah deposito — kompromi"
+      - "Pinjam dulu untuk DP — biar uang tetap di saham"
+    jawaban: 1
+    penjelasan: |
+      Uangmu harus cair 6 bulan lagi. Deposito 4% per tahun = 2% per 6 bulan. Rp30 juta jadi Rp30,6 juta. Pasti dan tepat waktu. Saham bisa naik, tapi bisa juga turun 20% dalam 6 bulan. Rp30 juta jadi Rp24 juta. DP gagal. Janji "naik 10% sebulan" itu bendera merah. Return sebesar itu selalu punya risiko besar. Makin pendek waktumu, makin kecil risiko yang boleh diambil. Harga butuh waktu untuk pulih kalau jatuh. Enam bulan terlalu singkat. Dana berjangka pendek: instrumen aman. Dana panjang: baru aset berisiko.
+    kode: |
+      dana = 30_000_000
+      deposito = dana * 1.02      # 4% per tahun → 2% per 6 bulan
+      saham_jelek = dana * 0.80   # bisa turun 20%
+      print(f"Deposito: Rp{deposito:,.0f} | Saham buruk: Rp{saham_jelek:,.0f}")
+    hasil:
+      - ret: -18.0
+        dd: 25.0
+        win: 15
+        note: "All-in saham: 2 bulan naik, lalu turun 18%. Uang DP menyusut, tanggal tetap datang."
+      - ret: 2.0
+        dd: 0.0
+        win: 80
+        note: "Deposito: profit 2% terkunci. DP cair utuh tepat waktu."
+      - ret: -9.0
+        dd: 12.0
+        win: 35
+        note: "Separuh kena -18%: total -9%. Uang DP kurang."
+      - ret: -12.0
+        dd: 15.0
+        win: 10
+        note: "Pinjaman berbunga, saham ikut turun. Dua beban sekaligus."
+    petunjuk:
+      - "Kalau tanggalnya pasti, instrumen apa yang nilainya pasti?"
+      - "Berapa return deposito untuk 6 bulan?"

@@ -175,3 +175,47 @@ skenario:
     petunjuk:
       - "Gabungkan return, kurangi DD lewat korelasi rendah."
       - "50/50 + leverage kecil bisa kalahkan juara tunggal."
+  - id: "s19-4"
+    judul: "Rebalancing Tahunan"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Target portofoliomu: 60% Aset A + 40% Aset B. Setahun lalu kamu taruh $1.000: A $600, B $400. Kini A naik 25% jadi $750. B turun 10% jadi $360. Total $1.110. Aturanmu: rebalancing tahunan (jual yang naik, beli yang turun) supaya proporsi kembali ke target. Apa keputusanmu?
+    pilihan:
+      - "Biarkan saja — rebalancing cuma tambah biaya"
+      - "Jual sebagian A, beli B — kembali ke 60/40"
+      - "Jual semua A — pegang cash, lebih aman"
+      - "Jual B, pindahkan semua ke A — A yang terbukti menang"
+    jawaban: 1
+    penjelasan: |
+      Total sekarang $1.110. Target A = 60% × 1.110 = $666. A ada $750 → jual $84. Hasilnya dipakai beli B → B jadi $444 (40%). Ini rebalancing: jual yang naik, beli yang turun. Setahun berikutnya A +2%, B +30% (B bangkit dari harga murah). Dengan rebalancing: 666 × 1,02 + 444 × 1,30 = $1.256 → +13,2%. Dibiarakan: 750 × 1,02 + 360 × 1,30 = $1.233 → +11,1%. Rebalancing menang karena porsi B cukup saat B bangkit. Cash: +0,5%. All-in A: +2%. Rebalancing = disiplin proporsi, bukan tebak arah.
+    kode: |
+      total = 1110
+      a, b = 750, 360
+      target_a = 0.60 * total
+      jual = a - target_a          # $84
+      a2 = (a - jual) * 1.02
+      b2 = (b + jual) * 1.30
+      print(f"Jual A ${jual:.0f} → akhir ${a2 + b2:.0f} (+{((a2+b2)/total-1)*100:.1f}%)")
+    hasil:
+      - ret: 11.1
+        dd: 9.0
+        win: 30
+        note: "Tanpa rebalancing: A jadi 67,6% portofolio. B +30% tapi porsinya kecil → cuma +11,1%."
+      - ret: 13.2
+        dd: 6.5
+        win: 75
+        note: "Rebalance: jual A $84, beli B $84. B bangkit +30% → +13,2% dengan DD kecil."
+      - ret: 0.5
+        dd: 0.5
+        win: 45
+        note: "Cash aman tapi cuma +0,5%. Pemulihan B +30% terlewat semua."
+      - ret: 2.0
+        dd: 8.0
+        win: 20
+        note: "All-in A: A datar (+2%) tahun itu. Konsentrasi = risiko tersembunyi."
+    petunjuk:
+      - "Hitung dulu: A harusnya berapa dari total $1.110?"
+      - "Kelebihan A dijual → dibelikan B yang murah."

@@ -197,6 +197,58 @@ skenario:
     petunjuk:
       - "Bot butuh: data + aturan (if) + keputusan (return)."
       - "Cari potongan yang punya ketiganya."
+
+  - id: "s7-4"
+    judul: "Ambil Harga Paling Baru"
+    emoji: "📍"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      List harga TLKM bertambah tiap hari:
+      `harga = [4000, 4100, 3900, 4200]`
+      Besok masuk satu angka baru lagi.
+      Bot butuh harga PALING BARU untuk sinyal.
+      Kode mana yang paling aman dipakai?
+    pilihan:
+      - "`harga[-1]` — index negatif, hitung dari belakang"
+      - "`harga[3]` — index ke-4, angka terakhir hari ini"
+      - "`harga[len(harga)]` — pakai panjang list sebagai index"
+      - "`harga[0]` — ambil dari awal list"
+    jawaban: 0
+    penjelasan: |
+      `harga[-1]` selalu data terakhir.
+      Index negatif dihitung dari belakang. −1 = terakhir. −2 = sebelum terakhir.
+
+      `harga[3]` hari ini memang 4.200. Besok list bertambah — `harga[3]` jadi data kemarin. Bot membaca data basi.
+      `harga[len(harga)]`? Index terakhir = len − 1. `len(harga)` melewati batas → IndexError. Bot crash.
+      `harga[0]` data terlama.
+
+      Sinyal butuh harga terbaru. Pakai `[-1]`. Aman untuk list sepanjang apa pun.
+    kode: |
+      harga = [4000, 4100, 3900, 4200, 4300]
+      print(harga[-1])   # 4300 — selalu data terbaru
+      print(harga[0])    # 4000 — data terlama
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "-1 benar. Data terakhir selalu keambil, list bertambah pun aman."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Besok list bertambah, `harga[3]` bukan data terbaru lagi. Bot membaca data basi."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Index terakhir itu len − 1. `len(harga)` di luar batas — IndexError, bot crash."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Itu data terlama. Sinyal jadi salah arah."
+    petunjuk:
+      - "-1 artinya elemen terakhir — ingat index negatif."
+      - "Index terakhir = len(list) − 1."
 soal:
   - id: "p7-1"
     judul: "Jumlah Tiga Angka"

@@ -177,3 +177,45 @@ skenario:
     petunjuk:
       - "Hitung EV keduanya: win% × reward − loss% × risk."
       - "Kalau EV sama, apa pembeda sebenarnya?"
+  - id: "s12-4"
+    judul: "Tiga Posisi Satu Arah"
+    emoji: "🔗"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Equity $1.000. Aturanmu: risiko maksimal 2% per trade, total maksimal 3% kalau semua kena bersamaan. Kamu pasang tiga posisi: long BTC, long ETH, long SOL. Tiap posisi risiko $20. Ketiganya bergerak searah (korelasi tinggi = geraknya hampir sama). Apa yang perlu kamu ubah?
+    pilihan:
+      - "Tidak ada — tiap posisi sudah patuh aturan 2%"
+      - "Total risiko maksimal 3%. Tiga posisi × 1% ($10), atau satu posisi penuh saja"
+      - "Tambah SOL lagi — kalau koreksi, harganya murah"
+      - "Pakai tiga akun terpisah — biar risiko tidak dihitung bersama"
+    jawaban: 1
+    penjelasan: |
+      Aturan 2% per trade berlaku untuk posisi yang tidak saling bergantung. BTC, ETH, SOL jatuh bersamaan. Koreksi kripto 5%? Tiga stop kena dalam jam yang sama. Rugi 3 × $20 = $60 = 6% equity dalam sehari. Dua kali batas total 3%. Solusinya: hitung posisi searah sebagai satu posisi besar. Total risiko = $30. Bagi ke tiga posisi: $10 per posisi. Masing-masing 1% equity. Atau ambil satu posisi terbaik saja. Stop tetap di tempatnya. Korelasi mengubah tiga posisi "aman" jadi satu posisi raksasa.
+    kode: |
+      equity = 1000
+      total = 20 * 3                # 3 posisi terkorelasi x 2%
+      batas = equity * 0.03         # aturan total 3%
+      print(f"Risiko gabungan: ${total} | Batas: ${batas:.0f}")   # $60 > $30
+      print(f"Ukuran aman per posisi: ${30 / 3:.0f}")             # $10
+    hasil:
+      - ret: -6.0
+        dd: 6.0
+        win: 20
+        note: "Koreksi 5%: tiga stop kena bersamaan. Rugi $60 = 6% equity dalam sehari."
+      - ret: 6.5
+        dd: 3.0
+        win: 74
+        note: "Total risiko $30. Koreksi kena $30 — masih dalam batas. Bulan itu +6.5%."
+      - ret: -8.0
+        dd: 8.0
+        win: 10
+        note: "Empat posisi kena bersamaan: rugi $80 = 8% equity. 'Diskon' itu pisau jatuh."
+      - ret: -6.0
+        dd: 6.0
+        win: 15
+        note: "Akun terpisah tidak mengubah korelasi. Harga tetap jatuh bersama. Total tetap -$60."
+    petunjuk:
+      - "Kalau tiga posisi jatuh bersamaan, total risikonya berapa?"
+      - "Bandingkan dengan batas total 3% equity."

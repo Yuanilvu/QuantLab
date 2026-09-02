@@ -176,3 +176,45 @@ skenario:
     petunjuk:
       - "Squeeze memberi tahu ENERGI, bukan ARAH."
       - "Entry breakout + stop di luar squeeze = risiko terukur."
+  - id: "s17-4"
+    judul: "Stop yang Ikut Naik"
+    emoji: "🧭"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Entry CUAN 1.000, stop awal 960 (2×ATR, ATR 2%). Harga naik ke 1.200 (+20%). Kamu yakin trend belum selesai, tapi tidak mau profit hilang. Stop yang bagaimana sekarang?
+    pilihan:
+      - "Jual semua sekarang — +20% sudah besar"
+      - "Geser stop naik ke 1.152 (2×ATR dari harga sekarang) — profit terkunci 15%, ruang naik terbuka"
+      - "Biarkan stop di 960 — jangan ganggu rencana awal"
+      - "Tambah posisi — trend sudah terbukti"
+    jawaban: 1
+    penjelasan: |
+      Stop awal 960 dibuat saat entry. Fungsinya: membatasi rugi. Sekarang fungsinya selesai — posisi sudah profit 20%. Stop yang sama sekarang membiarkan profit hilang. Koreksi 18% akan mengembalikan harga ke 960. Profit lenyap, kamu keluar impas setelah perjalanan naik. Jawabannya: geser stop mengikuti harga (trailing = stop yang ikut naik). ATR sekarang 2% dari 1.200 = 24 poin. Stop baru = 1.200 − 48 = 1.152. Koreksi? Kamu keluar +15.2%. Trend lanjut? Stop ikut naik, profit makin besar. Jual semua = menutup trend yang masih sehat. Tambah posisi di +20% tanpa rencana = risiko membesar di harga tinggi. ATR untuk exit sama pentingnya dengan ATR untuk entry.
+    kode: |
+      harga = 1200
+      atr = harga * 0.02          # ATR 2% dari harga
+      stop_baru = harga - 2 * atr
+      print(f"Stop baru: {stop_baru:.0f}")    # 1152
+      print(f"Profit terkunci: {((stop_baru - 1000) / 1000) * 100:.1f}%")   # 15.2%
+    hasil:
+      - ret: 20.0
+        dd: 0.0
+        win: 40
+        note: "Jual di 1.200. Harga lanjut ke 1.380 tanpa kamu. Profit aman, potensi terpotong."
+      - ret: 27.0
+        dd: 4.0
+        win: 76
+        note: "Harga lanjut ke 1.320, lalu koreksi. Stop geser keluar di 1.270: +27% terkunci."
+      - ret: -4.0
+        dd: 20.0
+        win: 22
+        note: "Koreksi dalam ke 950. Stop awal kena di 960. Profit 20% sempat ada, lalu hilang."
+      - ret: 6.0
+        dd: 16.0
+        win: 18
+        note: "Tambah di 1.200: koreksi menghantam posisi baru. Sisa profit cuma +6%."
+    petunjuk:
+      - "Stop awal dibuat untuk apa? Tugasnya sudah selesai?"
+      - "Geser stop = berapa poin di bawah harga sekarang?"

@@ -174,3 +174,45 @@ skenario:
     petunjuk:
       - "6/7 sinyal profit = masalahnya di mana?"
       - "Kalau sinyal valid tapi tidak dieksekusi, apa namanya?"
+  - id: "s15-4"
+    judul: "Order Besar, Harga Ikut"
+    emoji: "🐋"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu pegang saham tipis senilai Rp40 juta. Harga terlihat 1.000. Antrian beli tipis: tiap level cuma Rp5 juta. Kamu pasang market sell Rp40 juta. Berapa kira-kira harga eksekusimu?
+    pilihan:
+      - "1.000 — market sell selalu dapat harga yang terlihat"
+      - "Sekitar 982 — order makan antrian sampai habis, harga eksekusi turun (slippage)"
+      - "Ditolak — terlalu besar untuk pasar tipis"
+      - "Di atas 1.000 — order besar menarik pembeli baru"
+    jawaban: 1
+    penjelasan: |
+      Market sell dieksekusi dari antrian terbaik ke bawah. Level 1.000 cuma Rp5 juta. Sisanya Rp35 juta makan level 995, 990, dan seterusnya. Terisi semua? Harga sudah turun ke 965. Harga rata-rata ≈ 982. Rugi slippage ≈ 1.8% dari Rp40 juta = Rp700 ribu. Belum fee. Ini pajak likuiditas untuk order besar. Solusi: pecah jadi order limit kecil di zona wajar. Contoh: 8 order Rp5 juta di 995-1.000. Terisi bertahap, slippage nol. Butuh waktu 1-2 hari — itu harga yang wajar. Takut harga turun? Jual bertahap sambil pantau. Jangan market sekali jalan. Slippage tidak terlihat di chart, tapi dia makan profit nyata.
+    kode: |
+      nilai = 40_000_000
+      slippage = (1000 - 982.5) / 1000     # ~1.75%
+      rugi = nilai * slippage
+      print(f"Rugi slippage: Rp{rugi:,.0f}")    # Rp700.000
+      print("Limit bertahap → slippage nol")
+    hasil:
+      - ret: -1.8
+        dd: 2.0
+        win: 20
+        note: "Fill rata-rata 982: rugi Rp700 ribu. Harga lalu naik — kamu jual di dasar."
+      - ret: 0.0
+        dd: 0.0
+        win: 72
+        note: "Order limit bertahap terisi di 995-1.000 dalam 2 hari. Slippage nol."
+      - ret: -1.8
+        dd: 2.0
+        win: 12
+        note: "Market sell tidak pernah ditolak. Dia tetap jalan dan menekan harga."
+      - ret: -1.8
+        dd: 2.0
+        win: 14
+        note: "Sell besar menekan harga, bukan menarik pembeli. Slippage tetap terjadi."
+    petunjuk:
+      - "Antrian 1.000 cuma Rp5 juta. Sisanya Rp35 juta terisi di mana?"
+      - "Bagaimana cara jual besar tanpa menggerakkan harga?"

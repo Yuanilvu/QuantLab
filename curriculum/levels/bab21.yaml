@@ -176,3 +176,45 @@ skenario:
     petunjuk:
       - "Apa yang ditemukan paper trade? Dua masalah nyata."
       - "Deviasi < 20% dari ekspektasi = layak lanjut dengan perbaikan."
+  - id: "s21-4"
+    judul: "Sabar atau Paksa?"
+    emoji: "⏳"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Bot carry-mu jalan 4 bulan. Profit +7%. Aturan entry: short saat annualized funding > 15%. Dua bulan terakhir funding cuma 8-12%. Bot flat terus — tidak ada satu pun entry. Kamu mulai tidak sabar. Catatan backtest: 60 trade dengan funding 8-15% rata-rata −0,3% per trade. 45 trade dengan funding > 15% rata-rata +1,1% per trade. Keputusanmu?
+    pilihan:
+      - "Turunkan threshold ke 8% — bot harus tetap bekerja"
+      - "Pertahankan 15% — biarkan flat. Aturan dibuat dari data, bukan dari bosan"
+      - "Short manual sekarang — 'sekali ini saja', 12% masih lumayan"
+      - "Balik arah: long besar — funding rendah artinya pasar mau naik"
+    jawaban: 1
+    penjelasan: |
+      Data bicara lebih keras dari rasa bosan. Band 8-15%: −0,3% per trade. Itu ekspektasi negatif setelah fee — main di sana berarti sengaja rugi. Band > 15%: +1,1% per trade. Simulasi 100 trade: band rendah −30%; band tinggi +110%. Flat bukan kegagalan. Modal utuh, siap dipakai saat funding naik lagi. Funding itu siklus; dua bulan kering itu normal. Ubah aturan hanya kalau ada data baru (evaluasi kuartalan). Bukan karena tidak sabar. Long saat funding rendah = menebak arah pasar — di luar keahlian carry.
+    kode: |
+      ev_rendah = -0.3 * 100     # 100 trade di funding 8-15%
+      ev_tinggi = 1.1 * 100      # 100 trade di funding >15%
+      print(f"EV band rendah: {ev_rendah:.0f}%")
+      print(f"EV band tinggi: {ev_tinggi:.0f}%")
+      print("Keputusan: tetap 15% — flat itu valid")
+    hasil:
+      - ret: -1.5
+        dd: 2.0
+        win: 22
+        note: "Threshold 8%: 5 trade di band lemah (rata-rata −0,3%) → −1,5%."
+      - ret: 3.3
+        dd: 0.8
+        win: 80
+        note: "Flat 5 minggu. Funding naik ke 19% → 3 trade +1,1% → +3,3%."
+      - ret: -2.4
+        dd: 2.4
+        win: 15
+        note: "'Sekali ini saja': harga naik 2%, stop kena → −2,4%. Disiplin mulai retak."
+      - ret: -5.5
+        dd: 5.5
+        win: 12
+        note: "Long paksa 2x: harga turun 2,8%. Stop kena → −5,5%."
+    petunjuk:
+      - "Bandingkan EV dua band pakai angka dari cerita."
+      - "Bosan bukan alasan mengubah aturan — data yang berhak."

@@ -166,3 +166,56 @@ skenario:
     petunjuk:
       - "IHSG = rata-rata pasar. TLKM = satu perusahaan."
       - "Volume naik + harga naik = tanda apa?"
+
+  - id: "s9-4"
+    judul: "Jumat Sore, Pasar Tutup"
+    emoji: "🕐"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Jumat, pukul 15:45 WIB.
+      Berita bagus soal TLKM baru keluar.
+      Kamu langsung pasang order beli 1 lot.
+      Tapi bursa saham tutup pukul 15:30 WIB.
+      Apa yang terjadi dengan ordermu?
+    pilihan:
+      - "Langsung terisi — aplikasi broker jalan terus"
+      - "Masuk antrean. Eksekusi Senin 09:00 WIB saat bursa buka"
+      - "Dibatalkan otomatis, danamu kembali"
+      - "Terisi pukul 15:45 dengan harga penutupan Jumat"
+    jawaban: 1
+    penjelasan: |
+      Bursa saham buka Senin–Jumat, 09:00–15:30 WIB.
+      Order di luar jam masuk antrean.
+      Eksekusi saat bursa buka lagi, Senin 09:00.
+      Harga eksekusi = harga saat itu. Bisa beda dari Jumat.
+      Loncatan itu namanya gap (harga melompat saat bursa buka).
+
+      Berita bagus akhir pekan bisa bikin harga buka lebih tinggi. Atau sebaliknya.
+      Saham bukan kripto yang 24 jam.
+      TLKM Jumat tutup 4.000. Senin buka 4.080? Ordermu tetap jalan — dengan harga baru.
+    kode: |
+      # Jumat 15:45 → order antre → Senin 09:00 eksekusi
+      print("Order masuk antrean")
+      print("Eksekusi Senin 09:00 WIB, harga pembukaan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak terisi Jumat. Kamu kira sudah kebeli — Senin harga sudah naik 2%."
+      - ret: 2.0
+        dd: 0.0
+        win: 75
+        note: "Order terisi Senin di 4.080 (+2%). Kamu paham jadwal bursa — tidak ada kejutan."
+      - ret: -2.0
+        dd: 0.0
+        win: 20
+        note: "Order tidak dibatalkan. Kamu pikir gagal, lalu beli lebih mahal saat panik."
+      - ret: -1.0
+        dd: 0.0
+        win: 25
+        note: "Tidak ada eksekusi 15:45. Hitungan posisi dan danamu jadi kacau."
+    petunjuk:
+      - "Jam bursa IDX: 09:00–15:30 WIB, Senin–Jumat."
+      - "Order di luar jam jalan kapan?"

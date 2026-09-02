@@ -190,3 +190,45 @@ skenario:
     petunjuk:
       - "Apa bahaya terbesar saat bot error? (bukan bug-nya)"
       - "Bot produksi butuh: kill switch + alert + reconciliation."
+  - id: "s20-4"
+    judul: "Bot Senyap"
+    emoji: "🔇"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Botmu profit 2 bulan (+6%). Seminggu ini: nol trade. Log bersih, tanpa error. Padahal biasanya entry 3-4 kali seminggu. Equity datar. Harga di chart terlihat sama 3 hari — mungkin pasar sepi, mungkin feed (aliran data harga) mati. Langkah pertama yang paling benar?
+    pilihan:
+      - "Biarkan — tidak ada error berarti tidak ada masalah"
+      - "Audit dulu: cek feed harga & log sinyal, cari tahu kenapa tidak ada sinyal"
+      - "Paksa entry manual — bot harus tetap bekerja"
+      - "Turunkan threshold entry — biar lebih sering trading"
+    jawaban: 1
+    penjelasan: |
+      Bot tanpa error ≠ bot sehat. Penyebab senyap ada dua. Pertama: memang tidak ada sinyal — itu normal. Kedua: feed mati atau state salah — bot jadi buta, tidak bisa melihat harga. Audit dulu, baru bertindak: cek harga feed terkini, cek log sinyal (kenapa aturan tidak terpenuhi), cek posisi vs state. Di kasus ini feed beku 4 hari. Perbaiki → bot menangkap 3 sinyal valid. Memaksa entry = main tanpa aturan. Menurunkan threshold = melemahkan standar yang sudah teruji. Bot yang baik juga memantau dirinya sendiri: alert kalau nol trade beberapa hari.
+    kode: |
+      hari_senyap = 4
+      if hari_senyap >= 3:
+          print("ALERT: bot senyap — cek feed & log sinyal")
+      else:
+          print("Wajar — pasar sepi")
+    hasil:
+      - ret: -3.5
+        dd: 1.0
+        win: 18
+        note: "Feed ternyata beku 4 hari. Empat sinyal bagus terlewat → potensi +3,5% hilang."
+      - ret: 2.1
+        dd: 0.6
+        win: 74
+        note: "Audit 1 jam: feed mati, diperbaiki. Minggu itu 3 sinyal tertangkap → +2,1%."
+      - ret: -1.9
+        dd: 2.2
+        win: 20
+        note: "Entry paksa tanpa sinyal: pasar turun pelan, stop kena. −1,9%. Manual = emosi masuk."
+      - ret: -0.8
+        dd: 1.2
+        win: 25
+        note: "Threshold diturunkan: 2 trade lemah → −0,8%. Standar entry terkikis diam-diam."
+    petunjuk:
+      - "Tidak ada error ≠ tidak ada masalah."
+      - "Urutan yang benar: diagnosa dulu, baru tindakan."

@@ -199,6 +199,53 @@ skenario:
     petunjuk:
       - "Rata-rata harus memakai BOBOT porsi masing-masing."
       - "0,8 × 22% + 0,2 × (−30%) = ?"
+  - id: "s24-4"
+    judul: "Fungsi Tidak Dipanggil"
+    emoji: "📞"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Fungsi analyze sudah kamu tulis:
+      ```python
+      def analyze(baris):
+          return sum(int(b.split()[1]) for b in baris)
+      ```
+      Data: `["TLKM 4000", "BBRI 4500"]`. Kamu jalankan `print(analyze)`. Hasilnya aneh: `<function analyze at 0x7f...>`, bukan 8500. Apa yang salah?
+    pilihan:
+      - "return harus diganti print di dalam fungsi"
+      - "Fungsi belum dipanggil — tulis analyze(data) dengan tanda kurung"
+      - "Fungsi harus ditulis ulang setiap kali dipakai"
+      - "Fungsi tidak bisa menerima list"
+    jawaban: 1
+    penjelasan: |
+      def hanya MEMBUAT fungsi. Memakainya = tulis nama + tanda kurung: `analyze(data)`. Tanpa kurung, Python tidak menjalankan isi fungsi. Ia memberi 'objek fungsi' — itulah yang tercetak (`<function analyze ...>`). `analyze(data)` menjalankan isinya: 4000 + 4500 = 8500. Bug ini berbahaya di bot: `if analyze:` selalu dianggap benar, padahal kamu mau cek HASILNYA. Kebiasaan yang benar: setiap memakai fungsi, cek tanda kurungnya ada.
+    kode: |
+      def analyze(baris):
+          return sum(int(b.split()[1]) for b in baris)
+      data = ["TLKM 4000", "BBRI 4500"]
+      print(analyze(data))   # kurung! → 8500
+      print(analyze)         # tanpa kurung → <function ...>
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "return sudah benar — fungsi harus mengembalikan angka, bukan mencetak."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: kurung = perintah menjalankan. analyze(data) → 8500."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "def cukup sekali. Yang salah: cara memanggilnya."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Fungsi ini memang menerima list — analyze(data) membuktikannya."
+    petunjuk:
+      - "Tanpa kurung = hanya menyebut nama fungsi."
+      - "Kurung = 'jalankan sekarang'."
 soal:
   - id: "p24-1"
     judul: "Rata-rata Tahan Banting"

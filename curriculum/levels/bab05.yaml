@@ -224,6 +224,61 @@ skenario:
     petunjuk:
       - "Cek kondisi pertama: 4300 > 4500?"
       - "Kalau salah, lanjut ke elif berikutnya."
+
+  - id: "s5-4"
+    judul: "Satu Sama Dengan atau Dua?"
+    emoji: "🪤"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kode botmu:
+      ```python
+      harga = 4000
+      if harga = 4000:
+          print("JUAL")
+      ```
+      Bot mau jual saat harga tepat 4.000.
+      Kamu jalankan kodenya. Apa yang terjadi?
+    pilihan:
+      - "Error — satu `=` untuk menyimpan. Perbandingan pakai `==`"
+      - "Mencetak JUAL — 4000 memang sama dengan 4000"
+      - "Tidak mencetak apa-apa — kondisi tidak cocok"
+      - "Error — variabel `harga` belum diisi"
+    jawaban: 0
+    penjelasan: |
+      Baris `if harga = 4000` membuat Python error.
+      Satu `=` artinya menyimpan nilai. Itu tugas variabel.
+      Di dalam kondisi, Python butuh perbandingan. Perbandingan pakai dua `==`.
+
+      Program langsung berhenti dengan pesan error.
+      Tidak ada JUAL yang tercetak.
+      Ini bug paling umum di Python.
+      Hafalkan: satu `=` untuk menyimpan, dua `==` untuk membandingkan.
+    kode: |
+      harga = 4000
+      if harga == 4000:   # == untuk membandingkan
+          print("JUAL")   # JUAL
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Kamu lihat SyntaxError di log. Ganti `=` jadi `==`. Bot jalan benar."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot tidak jalan sama sekali. Log-nya error — bukan mencetak JUAL."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Bukan diam — programnya error total dan berhenti."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "`harga` sudah diisi 4.000 di baris atas. Masalahnya di `=`."
+    petunjuk:
+      - "Lihat baris `if harga = 4000`. Satu `=` atau dua `==`?"
+      - "Satu = menyimpan. Dua = membandingkan."
 soal:
   - id: "p5-1"
     judul: "Positif atau Negatif"

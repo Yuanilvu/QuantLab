@@ -185,3 +185,44 @@ skenario:
     petunjuk:
       - "CI 95% ≈ mean ± 2×SE."
       - "Kalau 50% masih di dalam interval, edge belum terbukti."
+  - id: "s16-4"
+    judul: "Jatuh 5 Sigma"
+    emoji: "🚨"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      BTC: return harian rata-rata +0.1%, std 2%. Hari ini BTC turun 9.9%. Berarti z = −5 (lima standar deviasi di bawah rata-rata). Kamu melihat harga "diskon 10%". Apa langkah terbaik?
+    pilihan:
+      - "Beli besar — diskon 10%, pasti balik"
+      - "Jangan beli dulu — z = −5 hampir mustahil dari gerak normal. Pasti ada kabar besar. Cari tahu dulu"
+      - "Short — ikut momentum jatuh"
+      - "Abaikan — besok normal lagi"
+    jawaban: 1
+    penjelasan: |
+      z = (−9.9 − 0.1) ÷ 2 = −5. Kejadian di luar 3 sigma cuma sekitar 0.3%. z = −5 hampir mustahil dari gerak normal harian. Pasar punya ekor gemuk, tapi tetap: jatuh sebesar itu hampir selalu ada pemicunya. Kabar buruk, kepanikan, atau likuidasi beruntun. Beli "diskon" tanpa tahu pemicunya = menangkap pisau jatuh. Bisa turun 10% lagi. Short juga berbahaya: setelah jatuh ekstrem, bounce 5% dalam sejam itu biasa. Stop short bisa tersapu. Langkah benar: cari tahu kabarnya dulu. Tunggu harga stabil 1-2 hari. Baru nilai entry dengan stop yang jelas.
+    kode: |
+      mean, std = 0.1, 2.0
+      z = (-9.9 - mean) / std
+      print(f"z = {z:.1f}")    # -5.0
+      print("z di bawah -4 → ada kabar besar, bukan noise")
+    hasil:
+      - ret: -8.0
+        dd: 8.0
+        win: 15
+        note: "Kabar ternyata berat. Harga turun 8% lagi. Diskon berubah jadi pisau jatuh."
+      - ret: 2.0
+        dd: 0.5
+        win: 74
+        note: "Kamu menunggu 2 hari, harga stabil. Entry kecil dengan stop. Rebound +2%."
+      - ret: -4.0
+        dd: 5.0
+        win: 20
+        note: "Bounce 6% dalam sehari. Stop short kena. Dua arah berbahaya tanpa kabar."
+      - ret: -3.0
+        dd: 6.0
+        win: 25
+        note: "Besok turun 3% lagi. 'Besok normal' = meremehkan ekor gemuk."
+    petunjuk:
+      - "Berapa z-score dari -9.9%?"
+      - "Pergerakan 5 sigma biasanya karena apa?"

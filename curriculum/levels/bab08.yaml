@@ -185,3 +185,57 @@ skenario:
     petunjuk:
       - "A: modal + (modal × 0,12 × 5)."
       - "B: modal × 1,1 pangkat 5."
+
+  - id: "s8-4"
+    judul: "Utang Kartu Kredit"
+    emoji: "💳"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Saldo kartu kreditmu Rp5.000.000.
+      Bunganya 2% per bulan. Bunga dihitung majemuk tiap bulan.
+      Kamu tidak bayar selama 12 bulan.
+      Kira-kira total utangmu sekarang?
+    pilihan:
+      - "Rp5.100.000 — bunga 2% dibayar sekali saja"
+      - "Rp6.200.000 — bunga 24% setahun, dihitung sekali"
+      - "Rp6.341.000 — 5.000.000 × 1,02 pangkat 12"
+      - "Rp61.200.000 — 5.000.000 × 1,02 × 12"
+    jawaban: 2
+    penjelasan: |
+      Bunga dibungakan tiap bulan.
+      5.000.000 × 1,02¹² = 5.000.000 × 1,2682 = **Rp6.341.209**.
+      Bunga setahun ≈ 26,8%. Bukan 24%.
+
+      Kok bisa? Bunga bulan ke-2 dihitung dari utang yang sudah termasuk bunga bulan ke-1.
+      Begitu terus sampai 12 bulan.
+      Selisih 141.000 dari perkiraan naif. Makin lama tidak dibayar, makin besar selisihnya.
+
+      Deposito memakai majemuk untuk menguntungkanmu.
+      Kartu kredit memakai majemuk untuk merugikanmu. Rumusnya sama. Arahnya beda.
+    kode: |
+      utang = 5_000_000
+      total = utang * (1 + 0.02) ** 12
+      print(f"Rp{total:,.0f}")   # Rp6,341,209
+      print(f"{(total/utang - 1)*100:.1f}% setahun")   # 26.8%
+    hasil:
+      - ret: 2.0
+        dd: 0.0
+        win: 25
+        note: "Bunga datang tiap bulan, bukan sekali. Utangmu membengkak — kamu kaget."
+      - ret: 24.0
+        dd: 0.0
+        win: 35
+        note: "24% = lupa bunga berbunga tiap bulan. Tagihan 6,34 juta, bukan 6,2 juta."
+      - ret: 26.8
+        dd: 0.0
+        win: 80
+        note: "Kamu hitung majemuk: 26,8% setahun. Sadar utang 6,34 juta — kamu lunasi lebih cepat."
+      - ret: -50.0
+        dd: 0.0
+        win: 15
+        note: "1,02 dikali 12? Harusnya dipangkatkan 12. Kamu salah operasi besar-besaran."
+    petunjuk:
+      - "1,02 pangkat 12, bukan dikali 12."
+      - "Bandingkan hasilnya dengan 24% yang naif. Mana lebih besar?"

@@ -178,3 +178,44 @@ skenario:
     petunjuk:
       - "200 percobaan, ambil terbaik — berapa yang 'hebat' karena kebetulan?"
       - "Cara menguji: parameter dari masa lalu, diuji di masa depan."
+  - id: "s14-4"
+    judul: "Sinyal yang Melihat Masa Depan"
+    emoji: "🔮"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Backtest BTC 3 tahun: sinyal MA dihitung dari harga close hari ini. Backtest menganggap entry terjadi di close yang sama. Hasilnya: +46% per tahun, Sharpe 2.4. Live? Kamu baru bisa entry setelah close — harga besok. Strategi ini layak?
+    pilihan:
+      - "Layak — close dan entry di hari yang sama itu normal"
+      - "Tidak layak — look-ahead bias (pakai data masa depan). Sinyal dari close T harus dieksekusi T+1"
+      - "Layak — pakai leverage kecil saja"
+      - "Tidak layak — kurangi jumlah parameter dulu"
+    jawaban: 1
+    penjelasan: |
+      Sinyal dihitung dari close hari ini. Order masuk setelah close. Eksekusi nyata terjadi di harga berikutnya. Backtest yang entry di close yang sama memakai harga yang belum bisa kamu raih. Itu look-ahead bias: strategi diam-diam melihat masa depan. Buktinya: entry di open hari berikutnya, return turun dari 46% ke 11% per tahun. Sharpe 2.4 jadi 0.8. Edge 46% itu palsu. Yang nyata hanya 11%. Perbaikan: sinyal dari close T, entry di open atau close T+1. Data sinyal harus selalu lebih tua dari data eksekusi. Kalau edge hilang setelah diperbaiki, edge itu memang tidak pernah ada.
+    kode: |
+      # Sinyal dari close T → eksekusi baru bisa T+1
+      bias = 46       # entry di close yang sama (mustahil live)
+      jujur = 11      # entry di open hari berikutnya
+      print(f"{bias}%/tahun (bias) vs {jujur}%/tahun (jujur)")
+    hasil:
+      - ret: -6.5
+        dd: 8.0
+        win: 20
+        note: "Live dipasang tanpa perbaikan: 4 bulan -6.5%. Return 46% tidak pernah nyata."
+      - ret: 12.0
+        dd: 4.5
+        win: 74
+        note: "Backtest diperbaiki: +11% per tahun asli. Dengan sizing disiplin, live +12%."
+      - ret: -3.0
+        dd: 4.0
+        win: 28
+        note: "Leverage memperbesar loss. Masalah waktu eksekusi tidak terselesaikan."
+      - ret: -2.5
+        dd: 4.0
+        win: 22
+        note: "Parameter bukan akar masalah. Masalahnya: entry memakai harga masa depan."
+    petunjuk:
+      - "Bisakah kamu entry tepat di harga close yang baru terjadi?"
+      - "Kapan ordermu benar-benar terisi?"

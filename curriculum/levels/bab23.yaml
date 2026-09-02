@@ -188,6 +188,48 @@ skenario:
     petunjuk:
       - "Data dari luar = selalu mencurigakan."
       - "try/except menangkap error sebelum mematikan program."
+  - id: "s23-4"
+    judul: "Kunci yang Hilang"
+    emoji: "🔑"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Botmu kemarin jalan: `data = {"nama": "BTC", "harga": 77221}`, lalu `print(data["harga"])` → 77221. Pagi ini muncul: `KeyError: 'harga'`. Kode tidak diubah siapa pun. Apa penyebab paling mungkin, dan perbaikan terbaik?
+    pilihan:
+      - "Python-nya rusak — install ulang"
+      - "Isi data dari API berubah: kunci 'harga' hilang. Fix: cek kunci dulu, kalau hilang → log + alert, jangan eksekusi"
+      - "Ganti semua kunci ke bahasa Inggris — 'price' lebih standar"
+      - "Bungkus dengan except kosong — biar tidak pernah error"
+    jawaban: 1
+    penjelasan: |
+      KeyError = kunci yang diminta tidak ada di dict. Kode sama, kemarin jalan → yang berubah adalah datanya. API bisa mengubah format. Bisa juga mengirim response error tanpa field harga. Perbaikan yang benar: cek dulu apakah kunci ada. Kalau tidak ada → log + alert, jangan eksekusi dengan data kosong. Ganti nama kunci tanpa bukti = menebak. Except kosong = menyembunyikan error. Bot yang error diam-diam itu bom waktu (Bab 23-1). Error yang terlihat = cepat diperbaiki.
+    kode: |
+      data = {"nama": "BTC"}     # kunci 'harga' hilang dari API
+      if "harga" in data:
+          print("harga:", data["harga"])
+      else:
+          print("ALERT: data tanpa 'harga' — jangan eksekusi")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Python baik-baik saja — pesannya jelas: kunci tidak ada."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — format API berubah. Cek kunci dulu; kalau hilang: log + alert."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Menebak ganti nama tanpa bukti = menambah bug baru."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Error disembunyikan = bot buta. Itu bom waktu."
+    petunjuk:
+      - "KeyError artinya: kunci itu tidak ada di dict."
+      - "Jangan sembunyikan error — buat dia terlihat dan terdengar."
 soal:
   - id: "p23-1"
     judul: "Angka atau Bukan?"

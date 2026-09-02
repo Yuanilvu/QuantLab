@@ -185,3 +185,45 @@ skenario:
     petunjuk:
       - "Apa kata ADX tentang keberadaan trend?"
       - "11 sinyal gagal beruntun — apa namanya?"
+  - id: "s13-4"
+    judul: "Sinyal di Saham Tipis"
+    emoji: "🔎"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Saham lapis bawah (harga Rp150) baru golden cross: MA5 memotong MA20, harga naik 12% dalam 2 hari. Volume 4x rata-rata. Tapi nilai transaksi harian cuma Rp300 juta. Spread-nya 4% (spread = selisih harga beli-jual). Kamu mau entry Rp20 juta. Aman?
+    pilihan:
+      - "Entry Rp20 juta — sinyal jelas dan volume 4x"
+      - "Lewati — MA di saham tipis mudah digerakkan sedikit order besar"
+      - "Short — naik 12% dalam 2 hari pasti koreksi"
+      - "Entry Rp5 juta tanpa stop — kecil, tidak apa-apa"
+    jawaban: 1
+    penjelasan: |
+      Golden cross baru berarti di saham likuid. Di saham tipis, satu dua transaksi besar bisa menaikkan harga 12% dan membuat MA bersilangan. Itu bukan sinyal pasar. Itu ulah segelintir order. Volume 4x di nilai Rp300 juta tetap kecil. Entry Rp20 juta = 7% dari transaksi harian. Masuk gampang, keluar susah. Siapa pembeli saat kamu jual? Spread 4% berarti kamu rugi 4% sebelum harga bergerak. Saham gorengan naik cepat, turun lebih cepat. Kalau tetap ingin: tunggu likuiditas membaik, atau entry kecil dengan stop ketat. Pilihan terbaik: lewati. Saham sehat lain banyak.
+    kode: |
+      nilai_transaksi = 300_000_000
+      entry = 20_000_000
+      porsi = entry / nilai_transaksi
+      print(f"Entry = {porsi*100:.1f}% transaksi harian")   # 6.7%
+      print("Spread 4% — rugi sebelum harga bergerak")
+    hasil:
+      - ret: -18.0
+        dd: 18.0
+        win: 15
+        note: "Naik 1 hari lagi (umpan), lalu turun 20% dalam 3 hari. Kamu jual jauh di bawah entry."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Kamu lewati. Seminggu kemudian saham itu -30%. Sinyal sehat lain tetap terbuka."
+      - ret: -9.0
+        dd: 9.0
+        win: 20
+        note: "Gorengan naik 2 hari lagi sebelum jatuh. Stop short kena lebih dulu."
+      - ret: -4.0
+        dd: 6.0
+        win: 35
+        note: "Entry kecil tanpa stop: turun terus. Kamu jual panik di -4%."
+    petunjuk:
+      - "Berapa porsi entry-mu dari transaksi harian saham itu?"
+      - "Siapa pembelimu saat kamu mau keluar?"

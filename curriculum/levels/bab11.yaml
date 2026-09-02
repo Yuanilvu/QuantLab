@@ -172,3 +172,45 @@ skenario:
     petunjuk:
       - "Funding ekstrem + OI naik = siapa lawan transaksimu?"
       - "Kontrarian itu benar tapi harus dengan sizing kecil."
+  - id: "s11-4"
+    judul: "Biaya Tiap 8 Jam"
+    emoji: "⏱️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kamu long BTC senilai $2.000 di Bybit. Funding positif 0.05% per 8 jam — long bayar short. Rencanamu: tahan 4 hari, target profit $8. Berapa total biaya funding? Layakkah rencanamu?
+    pilihan:
+      - "Abaikan — 0.05% itu kecil, tidak terasa"
+      - "Biaya = 0.05% × 12 = 0.6% = $12. Lebih besar dari target $8 — rencana tidak layak"
+      - "Tutup sekarang — long di funding positif pasti rugi"
+      - "Balik short — biar sekalian menerima funding"
+    jawaban: 1
+    penjelasan: |
+      Funding dibayar 3x sehari. Empat hari = 12 kali. Biaya = 0.05% × 12 = 0.6%. Dari posisi $2.000 = $12. Targetmu cuma $8. Bersih = $8 − $12 = −$4. Rugi walau harga naik sesuai rencana. Funding positif adalah biaya tahan posisi long. Dia harus masuk hitungan target, bukan diabaikan. Aturan praktis: target profit minimal 3-5x total biaya. Kalau tidak, posisi tidak layak. Tutup semua karena funding? Salah. Kalau arah benar, pergerakan harga jauh lebih besar dari funding. Balik posisi cuma karena funding = melawan analisamu sendiri.
+    kode: |
+      posisi = 2000
+      biaya = posisi * 0.0005 * 3 * 4      # 0.05% x 12 pembayaran
+      target = 8
+      print(f"Biaya funding: ${biaya:.0f} | Target: ${target}")   # $12 vs $8
+      print("Target < biaya — rencana tidak layak")
+    hasil:
+      - ret: -0.2
+        dd: 0.6
+        win: 28
+        note: "Harga sampai target $8. Bersih -$4. Profit kecil habis oleh biaya."
+      - ret: 0.9
+        dd: 0.8
+        win: 76
+        note: "Rencana diubah: target $30. Bersih = 30 - 12 = $18 (+0.9%)."
+      - ret: 0.0
+        dd: 0.0
+        win: 34
+        note: "Kamu tutup. Harga naik 3% setelahnya. Biaya terhindar, profit utama hilang."
+      - ret: -1.4
+        dd: 2.0
+        win: 12
+        note: "Balik short: harga naik sesuai analisamu. Rugi 2%, funding 0.6% tidak menolong."
+    petunjuk:
+      - "Berapa kali funding dibayar dalam 4 hari?"
+      - "Bandingkan biaya total dengan target profit."

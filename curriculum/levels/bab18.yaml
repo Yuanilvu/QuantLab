@@ -181,3 +181,45 @@ skenario:
     petunjuk:
       - "Apa kata ADX 12-15 tentang regime?"
       - "Strategi salah regime ≠ strategi rusak."
+  - id: "s18-4"
+    judul: "Pisau yang Jatuh"
+    emoji: "🗡️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Saham IDX turun dari 2.000 ke 1.400 dalam 3 bulan (−30%). ADX 38: trend turun kuat. RSI 25, volume naik saat jatuh. Kamu pikir "murah — pasti rebound". Apa kata data?
+    pilihan:
+      - "Beli — sudah turun 30%, pasti murah"
+      - "Beli kecil bertahap — kalau turun lagi, harga rata-rata turun"
+      - "Jangan beli — ADX 38 = downtrend kuat, bukan range. Tunggu bukti reversal: higher low dan ADX turun"
+      - "Short — ikut trend turun"
+    jawaban: 2
+    penjelasan: |
+      Turun 30% tidak membuat saham murah. Pasar tidak punya memori harga beli. ADX 38 = trend turun sangat kuat. Itu regime momentum, bukan rumah mean reversion. RSI 25 di downtrend bisa bertahan berminggu-minggu. "Beli bertahap" = menambah posisi rugi tanpa bukti reversal. Saham turun 30% bisa turun 30% lagi. Yang benar: tunggu struktur berubah. Higher low, ADX turun di bawah 25, harga bertahan. Baru entry dengan stop. Short? Telat. Setelah jatuh 30%, bounce teknis 10% itu biasa. Momentum yang baik dimulai di awal trend, bukan setelah 30%.
+    kode: |
+      adx = 38
+      if adx > 25:
+          print("Downtrend kuat — mean reversion off")
+          print("Tunggu higher low + ADX turun")
+      print("RSI 25 bisa bertahan rendah di downtrend")
+    hasil:
+      - ret: -14.0
+        dd: 15.0
+        win: 12
+        note: "Turun 18% lagi dalam sebulan. Stop kena. 'Murah' bukan alasan entry."
+      - ret: -9.0
+        dd: 12.0
+        win: 15
+        note: "Averaging down tiga kali. Rugi 9% — kamu menyerah tepat di dasar."
+      - ret: 6.5
+        dd: 1.5
+        win: 73
+        note: "Reversal datang: harga bertahan di 1.450 (higher low), ADX turun ke 20. Entry 1.450, stop 1.380. +6.5%."
+      - ret: -3.5
+        dd: 4.5
+        win: 20
+        note: "Short telat: bounce 7% dalam 3 hari. Stop kena."
+    petunjuk:
+      - "ADX 38 bilang pasar sedang apa?"
+      - "Apa bukti yang harus muncul sebelum beli saham yang jatuh?"

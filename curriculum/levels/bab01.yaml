@@ -179,3 +179,56 @@ skenario:
     petunjuk:
       - "Hitung modal setelah naik 20% dulu."
       - "Lalu kalikan dengan 0,80 (bukan kurangi 20% dari modal awal)."
+
+  - id: "s1-4"
+    judul: "Poin vs Persen"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua saham pantauanmu naik hari ini.
+      BBRI: dari 3.000 ke 3.150. Naik 150 poin.
+      MPPA: dari 1.000 ke 1.100. Naik 100 poin.
+      Danamu cukup untuk beli satu saham.
+      Kenaikan mana yang lebih besar dalam persen?
+    pilihan:
+      - "BBRI — naik 150 poin, lebih banyak dari MPPA"
+      - "MPPA — 100 dari 1.000 = 10%. BBRI cuma 150 dari 3.000 = 5%"
+      - "Sama besar — sama-sama saham yang naik hari ini"
+      - "BBRI — harganya lebih tinggi, berarti kenaikannya lebih hebat"
+    jawaban: 1
+    penjelasan: |
+      Persen = kenaikan dibagi harga awal, dikali 100.
+      BBRI: 150 ÷ 3.000 = 5%. MPPA: 100 ÷ 1.000 = 10%.
+      Kenaikan MPPA 2x lebih besar, walau poinnya lebih kecil.
+
+      Poin mentah menyesatkan. Saham mahal bisa naik banyak poin, tapi persennya kecil.
+      Harga tinggi bukan tanda kenaikan hebat.
+      Selalu pakai persen untuk membandingkan. Persen bahasa yang adil antar saham.
+      Keputusanmu: MPPA.
+    kode: |
+      bbri = 150 / 3000 * 100
+      mppa = 100 / 1000 * 100
+      print(f"BBRI {bbri:.0f}% | MPPA {mppa:.0f}%")
+      # MPPA 10% — lebih besar dari BBRI 5%
+    hasil:
+      - ret: 5.0
+        dd: 0.0
+        win: 45
+        note: "Kamu pilih BBRI. Untung 5% — benar, tapi kamu meninggalkan kenaikan 2x lebih besar."
+      - ret: 10.0
+        dd: 0.0
+        win: 80
+        note: "Kamu pilih MPPA. Untung 10%. Persen bicara lebih jujur daripada poin."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak sama. 5% vs 10% — beda dua kali lipat. Kamu tidak bertindak."
+      - ret: 5.0
+        dd: 0.0
+        win: 35
+        note: "Harga tinggi bukan kenaikan hebat. BBRI cuma naik 5%, lebih kecil dari MPPA."
+    petunjuk:
+      - "Bagi kenaikan dengan harga awal tiap saham."
+      - "150 dari 3.000 berapa persen? 100 dari 1.000 berapa persen?"
