@@ -1,20 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Bab {{ bab.bab }} — {{ bab.judul }} — QuantLab{% endblock %}
 {% block content %}
-<nav class="crumb"><a href="{{ url_for('index') }}">← Dashboard</a></nav>
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <span aria-current="page">Bab {{ bab.bab }}: {{ bab.judul }}</span>
+</nav>
 <input type="hidden" name="_csrf" id="csrf" value="{{ csrf_token() }}">
-<section class="babhero">
+
+<section class="pagehead">
   <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
-  <p>{{ bab.deskripsi }}</p>
-  <p><a class="btn small ghost" href="{{ url_for('mentor_page', bab=bab.bab) }}">🤖 Tanya Mentor soal bab ini</a></p>
+  <p class="sub">{{ bab.deskripsi }}</p>
+  <div class="scenactions">
+    <a class="btn small ghost" href="{{ url_for('mentor_page', bab=bab.bab) }}">🤖 Tanya Mentor soal bab ini</a>
+  </div>
 </section>
 
 {% if lessons %}
+{% set ldone = lessons | selectattr('id', 'in', lessons_done) | list | length %}
 <section class="lessons">
-  <h3>📚 Materi Singkat <span class="meta">(baca → "Saya Paham" = +5 XP, sekali per pelajaran)</span></h3>
+  <h3>📚 Materi Singkat <span class="meta">{{ ldone }}/{{ lessons | length }} selesai</span></h3>
+  <p class="note">Baca pelan-pelan, lalu tekan <b>“Saya Paham”</b> di tiap pelajaran — +5 XP, sekali per pelajaran.</p>
   {% for l in lessons %}
   <details class="lesson" data-lid="{{ l.id }}">
-    <summary>Pelajaran {{ l.id }} — {{ l.judul }} <span class="meta">{{ l.menit }} menit</span>
+    <summary>Pelajaran {{ l.id }} — {{ l.judul }} <span class="meta">· {{ l.menit }} menit</span>
       {% if l.id in lessons_done %}<span class="donebadge">✓ +5 XP</span>{% endif %}
     </summary>
     <div class="lessonbody">
@@ -32,8 +41,11 @@
 </section>
 {% endif %}
 
+{% if scens %}
+{% set sdone = scens | selectattr('done') | list | length %}
 <section class="scenlist">
-  <h3>🎯 Latihan Skenario <span class="meta">(kasus pasar → kamu pilih keputusan → langsung lihat hasilnya. XP = poin belajar.)</span></h3>
+  <h3>🎯 Latihan Skenario <span class="meta">{{ sdone }}/{{ scens | length }} selesai</span></h3>
+  <p class="note">Kasus pasar → kamu pilih keputusan → langsung lihat hasil tiap pilihan + pembahasannya. XP = poin belajarmu.</p>
   {% for s in scens %}
   <a class="scenrow {{ 'done' if s.done }}" href="{{ url_for('scenario_page', sid=s.data.id) if not s.done else url_for('scenario_result', sid=s.data.id) }}">
     <span class="scenemoji">{{ s.data.emoji }}</span>
@@ -48,10 +60,13 @@
   </a>
   {% endfor %}
 </section>
+{% endif %}
 
 {% if soals %}
+{% set qdone = soals | selectattr('id', 'in', soal_solved) | list | length %}
 <section class="scenlist">
-  <h3>⌨️ Soal Coding <span class="meta">(kamu tulis kode Python sendiri — dinilai komputer otomatis)</span></h3>
+  <h3>⌨️ Soal Coding <span class="meta">{{ qdone }}/{{ soals | length }} lolos</span></h3>
+  <p class="note">Kamu menulis kode Python sendiri — komputer menjalankan dan menilainya otomatis lewat tes rahasia.</p>
   {% for q in soals %}
   <a class="scenrow {{ 'done' if q.id in soal_solved }}" href="{{ url_for('soal_page', qid=q.id) }}">
     <span class="scenemoji">⌨️</span>

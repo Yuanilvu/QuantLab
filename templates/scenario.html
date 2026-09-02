@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ scen.judul }} — QuantLab{% endblock %}
 {% block content %}
-<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('bab_page', n=bab.bab) }}">Bab {{ bab.bab }}: {{ bab.judul }}</a>
+</nav>
 
 <section class="scenario">
   <div class="scenhead">
@@ -21,11 +25,12 @@
   <form method="post" id="scenform">
     <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
     <h3>🤔 Keputusanmu?</h3>
-    <div class="opts">
+    <p class="note">Pilih satu dari {{ scen.pilihan | length }} keputusan — tidak ada pilihan yang “bodoh”, semuanya jadi pelajaran.</p>
+    <div class="opts" role="radiogroup" aria-label="Pilihan keputusan">
       {% for p in scen.pilihan %}
       <label class="opt">
         <input type="radio" name="choice" value="{{ loop.index0 }}" required>
-        <span class="optlabel">{{ loop.index0 + 1 }}. {{ p }}</span>
+        <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
       </label>
       {% endfor %}
     </div>
@@ -36,7 +41,7 @@
     </div>
   </form>
 
-  <div class="hints hidden" id="hints">
+  <div class="hints hidden" id="hints" aria-live="polite">
     {% for h in scen.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
   </div>
 </section>

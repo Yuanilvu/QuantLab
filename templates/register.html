@@ -3,17 +3,28 @@
 {% block content %}
 <div class="authwrap">
   <div class="authcard">
-    <h1>Buat Akun</h1>
-    {% if err %}<div class="alert">{{ err }}</div>{% endif %}
+    <div class="brand">
+      <span class="brandmark" aria-hidden="true">⚡</span>
+      <span class="logo">QuantLab<small>Trading Academy</small></span>
+    </div>
+    <h1>Buat Akun Gratis</h1>
+    <p class="sub">Langsung praktik: dalam hitungan menit kamu mengerjakan skenario trading pertamamu. Gratis, tanpa kartu kredit — cukup username dan password.</p>
+    {% if err %}<div class="alert" role="alert">{{ err }}</div>{% endif %}
     <form method="post">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-      <label>Username (3-20 karakter)</label>
-      <input name="username" required autocomplete="username" placeholder="trader_pemula">
-      <label>Password (min 6 karakter)</label>
-      <input type="password" name="password" required autocomplete="new-password" placeholder="••••••••">
-      <button class="btn primary" type="submit">Daftar</button>
+      <label for="username">Username</label>
+      <input id="username" name="username" required autofocus autocomplete="username"
+             minlength="3" maxlength="20" pattern="[A-Za-z0-9_]{3,20}"
+             title="3-20 karakter: huruf, angka, atau underscore (tanpa spasi)"
+             aria-describedby="hint-username" placeholder="trader_pemula">
+      <p class="meta" id="hint-username" style="margin-top:6px">3-20 karakter: huruf, angka, atau underscore.</p>
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required autocomplete="new-password"
+             minlength="6" aria-describedby="hint-password" placeholder="••••••••">
+      <p class="meta" id="hint-password" style="margin-top:6px">Minimal 6 karakter.</p>
+      <button class="btn primary" type="submit">Buat Akun &amp; Mulai</button>
     </form>
-    <p class="alt">Sudah punya akun? <a href="{{ url_for('login') }}">Masuk</a></p>
+    <p class="alt">Sudah punya akun? <a href="{{ url_for('login') }}">Masuk →</a></p>
   </div>
 </div>
 {% endblock %}

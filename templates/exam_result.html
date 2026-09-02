@@ -10,6 +10,12 @@
     {% else %}
     <div class="xppop dim">Lulus = +50 XP (sekali per track)</div>
     {% endif %}
+    <div class="statrow">
+      <div class="stat"><b class="good">{{ correct }}</b><span>benar</span></div>
+      <div class="stat"><b>{{ total - correct }}</b><span>salah / kosong</span></div>
+      <div class="stat"><b class="{{ 'good' if passed else 'bad' }}">{{ pct }}%</b><span>skor akhir</span></div>
+      <div class="stat"><b>70%</b><span>batas lulus</span></div>
+    </div>
   </div>
 
   <div class="casebox">
@@ -31,5 +37,6 @@
     <a class="btn primary" href="{{ url_for('ujian', track=track) }}">Ulangi Ujian 🔄</a>
     <a class="btn ghost" href="{{ url_for('peta') }}">← Peta Belajar</a>
   </div>
+  <p class="note">🔄 Mengulang ujian = dapat kumpulan soal baru yang diacak ulang. Bonus XP hanya diberikan sekali per track.</p>
 </section>
 {% endblock %}

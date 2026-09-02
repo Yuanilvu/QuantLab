@@ -1,33 +1,47 @@
 {% extends "base.html" %}
 {% block title %}Sertifikat — {{ t.name }} — QuantLab{% endblock %}
 {% block content %}
-<section class="certwrap">
+<div class="crumb">
+  <a href="{{ url_for('index') }}">Dashboard</a> <span aria-hidden="true">›</span>
+  <a href="{{ url_for('peta') }}">Peta Belajar</a> <span aria-hidden="true">›</span>
+  <span>Sertifikat {{ t.name }}</span>
+</div>
+<section class="certwrap" aria-labelledby="cert-title">
   {% if complete %}
   <div class="cert">
     <div class="certhead">
       <span class="certlogo">⚡ QuantLab</span>
-      <span class="certbadge">{{ t.emoji }}</span>
+      <span class="certbadge" aria-hidden="true">{{ t.emoji }}</span>
     </div>
-    <h1>Sertifikat Penyelesaian</h1>
+    <h1 id="cert-title">Sertifikat Penyelesaian</h1>
     <p class="certsub">diberikan kepada</p>
     <h2 class="certname">{{ user.username }}</h2>
     <p class="certbody">atas keberhasilan menyelesaikan seluruh materi track</p>
     <h3 class="certtrack">{{ t.emoji }} {{ t.name }}</h3>
-    <p class="meta">Total {{ t.total }} aktivitas (skenario & soal coding) — {{ tanggal }}</p>
+    <p class="meta" style="margin-top:14px; color:#78716c">Total {{ t.total }} aktivitas (skenario &amp; soal coding) · Diterbitkan {{ tanggal }}</p>
     <div class="certfoot">
-      <span>QuantLab — belajar quant lewat skenario</span>
+      <span>⚡ QuantLab — belajar quant lewat skenario</span>
       <span>Total XP: {{ user.xp }}</span>
+      <span>No. QL-{{ '%03d' % user.id }}-{{ t.code | upper }}</span>
     </div>
   </div>
   <div class="scenactions" style="justify-content:center; margin-top:16px">
     <button class="btn primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
     <a class="btn ghost" href="{{ url_for('peta') }}">← Kembali ke Peta</a>
   </div>
+  <p class="note" style="text-align:center">Tip: di dialog cetak pilih <b>“Simpan sebagai PDF”</b> untuk menyimpan sertifikat digitalmu.</p>
   {% else %}
   <div class="authcard center">
-    <h1>🔒 Belum Lengkap</h1>
-    <p>Track <b>{{ t.name }}</b> baru {{ t.done }}/{{ t.total }} aktivitas ({{ t.pct }}%).<br>Selesaikan semua skenario & soal di track ini untuk membuka sertifikat.</p>
-    <a class="btn primary" href="{{ url_for('peta') }}">Lanjut Belajar →</a>
+    <div aria-hidden="true" style="font-size:2.4rem; line-height:1; margin-bottom:8px">🔒</div>
+    <h1 id="cert-title">Belum Lengkap</h1>
+    <p>Track <b>{{ t.name }}</b> baru {{ t.done }}/{{ t.total }} aktivitas ({{ t.pct }}%).</p>
+    <div class="progress" role="progressbar" aria-label="Progres {{ t.name }}"
+         aria-valuenow="{{ t.pct }}" aria-valuemin="0" aria-valuemax="100"
+         style="margin:18px auto 4px; max-width:260px">
+      <div class="bar"><div class="fill" style="width: {{ t.pct }}%"></div></div>
+    </div>
+    <p class="note" style="text-align:center; margin-top:14px">Tuntaskan semua skenario &amp; soal coding di track ini untuk membuka sertifikat.</p>
+    <a class="btn primary" style="margin-top:8px" href="{{ url_for('peta') }}">Lanjut Belajar →</a>
   </div>
   {% endif %}
 </section>

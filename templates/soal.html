@@ -1,7 +1,11 @@
 {% extends "base.html" %}
 {% block title %}{{ q.judul }} — QuantLab{% endblock %}
 {% block content %}
-<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('bab_page', n=bab.bab) }}">Bab {{ bab.bab }}: {{ bab.judul }}</a>
+</nav>
 
 <section class="soalpage">
   <div class="scenhead">
@@ -9,7 +13,7 @@
     <span class="badge coding">⌨️ soal coding</span>
     {% if done %}<span class="badge solved">✓ selesai +{{ q.xp }} XP</span>{% endif %}
     <h1>{{ q.emoji }} {{ q.judul }}</h1>
-    <span class="meta">{{ q.xp }} XP · {{ q.menit }} menit</span>
+    <span class="meta">{{ q.xp }} XP · ±{{ q.menit }} menit · {{ q.tes | length }} tes rahasia</span>
   </div>
 
   <div class="casebox">
@@ -18,21 +22,24 @@
   </div>
 
   <div class="casebox">
-    <h3>📥 Input</h3>
-    <pre class="block-code"><code>{{ q.input_spec }}</code></pre>
-    <h3>📤 Output</h3>
-    <pre class="block-code"><code>{{ q.output_spec }}</code></pre>
+    <h3>📐 Format Soal</h3>
+    <div class="io">
+      <div><b>Input:</b><pre class="block-code"><code>{{ q.input_spec }}</code></pre></div>
+      <div><b>Output:</b><pre class="block-code"><code>{{ q.output_spec }}</code></pre></div>
+    </div>
   </div>
 
+  {% if q.contoh %}
   <div class="casebox">
-    <h3>🧪 Contoh</h3>
+    <h3>🧪 Contoh{% if q.contoh | length > 1 %} <span class="meta">({{ q.contoh | length }} kasus)</span>{% endif %}</h3>
     {% for c in q.contoh %}
     <div class="io">
-      <div><b>Input:</b><pre class="block-code"><code>{{ c.input }}</code></pre></div>
-      <div><b>Output:</b><pre class="block-code"><code>{{ c.output }}</code></pre></div>
+      <div><b>Input{% if q.contoh | length > 1 %} {{ loop.index }}{% endif %}:</b><pre class="block-code"><code>{{ c.input }}</code></pre></div>
+      <div><b>Output{% if q.contoh | length > 1 %} {{ loop.index }}{% endif %}:</b><pre class="block-code"><code>{{ c.output }}</code></pre></div>
     </div>
     {% endfor %}
   </div>
+  {% endif %}
 
   {% if result %}
   <div class="casebox {{ 'rpass' if result.ac or result.already else 'rfail' }}">
@@ -59,10 +66,10 @@
   </div>
   {% endif %}
 
-  <form method="post" class="codeform">
+  <form method="post" class="codeform casebox">
     <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
     <h3>💻 Kode Python-mu</h3>
-    <textarea name="code" rows="12" spellcheck="false" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code }}</textarea>
+    <textarea name="code" rows="12" spellcheck="false" aria-label="Editor kode Python" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code }}</textarea>
     <div class="scenactions">
       <button class="btn primary" type="submit">▶ Jalankan & Uji</button>
       <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
@@ -70,7 +77,7 @@
     </div>
   </form>
 
-  <div class="hints hidden" id="hints">
+  <div class="hints hidden" id="hints" aria-live="polite">
     {% for h in q.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
   </div>
 </section>

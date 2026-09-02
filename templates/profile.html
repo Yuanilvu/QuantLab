@@ -2,11 +2,14 @@
 {% block title %}Profil — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Akun &amp; Aktivitas</span>
   <h1>👤 Profil {{ user.username }}</h1>
+  <p class="sub meta">{% if user.created_at %}Anggota sejak {{ user.created_at[:10] }} · {% endif %}{{ solved_n }} skenario dikerjakan · {{ correct_n }} benar · streak 🔥 {{ user.streak }} hari</p>
 </section>
 
 <section class="dashcols">
   <div class="dashcol">
+    <h3>📊 Ringkasan</h3>
     <div class="statrow">
       <div class="stat"><b>{{ user.xp }}</b><span>Total XP</span></div>
       <div class="stat"><b>🔥 {{ user.streak }}</b><span>Streak</span></div>
@@ -24,14 +27,14 @@
 
   <div class="dashcol">
     <h3>🔑 Ganti Password</h3>
-    {% if err %}<div class="alert">{{ err }}</div>{% endif %}
-    {% if msg %}<div class="okbox">{{ msg }}</div>{% endif %}
-    <form method="post">
+    {% if err %}<div class="alert" role="alert">{{ err }}</div>{% endif %}
+    {% if msg %}<div class="okbox" role="status">{{ msg }}</div>{% endif %}
+    <form method="post" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-      <label>Password lama</label>
-      <input type="password" name="oldpass" required autocomplete="current-password">
-      <label>Password baru (min 6 karakter)</label>
-      <input type="password" name="newpass" required autocomplete="new-password">
+      <label for="pf-oldpass">Password lama</label>
+      <input id="pf-oldpass" type="password" name="oldpass" required autocomplete="current-password">
+      <label for="pf-newpass">Password baru (min 6 karakter)</label>
+      <input id="pf-newpass" type="password" name="newpass" minlength="6" required autocomplete="new-password">
       <button class="btn primary" type="submit">Simpan Password</button>
     </form>
   </div>

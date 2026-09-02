@@ -1,14 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Hasil — {{ scen.judul }} — QuantLab{% endblock %}
 {% block content %}
-<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('bab_page', n=bab.bab) }}">Bab {{ bab.bab }}: {{ bab.judul }}</a>
+</nav>
 
 <section class="result">
   <div class="verdict {{ 'good' if solve.correct else 'bad' }}">
     <h1>{{ '🎯 Keputusan Tepat!' if solve.correct else '❌ Keputusan Melenceng' }}</h1>
     <p class="meta">
-      Jawabanmu: <strong>{{ scen.pilihan[solve.choice] }}</strong><br>
-      Keputusan optimal: <strong>{{ scen.pilihan[scen.jawaban] }}</strong>
+      Keputusanmu: <strong>{{ scen.pilihan[solve.choice] }}</strong><br>
+      Keputusan optimal: <strong{% if not solve.correct %} class="good"{% endif %}>{{ scen.pilihan[scen.jawaban] }}</strong>
     </p>
     {% if solve.correct %}
     <div class="xppop">+{{ solve.xp }} XP{% if got_bonus %} <span class="bonuspop">+{{ got_bonus }} bonus ⚡</span>{% endif %}</div>
@@ -70,6 +74,7 @@
     {% else %}
     <a class="btn primary" href="{{ url_for('index') }}">Selesai semua! 🎉 → Dashboard</a>
     {% endif %}
+    <a class="btn ghost" href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a>
   </div>
   <p class="note"><a href="{{ url_for('mentor_page', bab=bab.bab, sid=scen.id) }}">🤖 Masih bingung kenapa jawabannya begitu? Tanya Mentor.</a></p>
 </section>

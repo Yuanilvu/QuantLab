@@ -706,22 +706,33 @@ def manifest_route():
     import json
     base = request.script_root
     data = {
-        "name": "QuantLab — Belajar Quant Trading",
+        "name": "QuantLab — Akademi Trading Kuantitatif",
         "short_name": "QuantLab",
+        "description": "Belajar trading kuantitatif lewat skenario keputusan nyata: kasus pasar, keputusan, terjemahan Python, dan hasilnya.",
         "start_url": base + "/",
         "scope": base + "/",
         "display": "standalone",
-        "background_color": "#0b0f14",
-        "theme_color": "#0b0f14",
-        "icons": [{"src": base + "/static/icon.svg", "sizes": "any",
-                   "type": "image/svg+xml", "purpose": "any"}],
+        "background_color": "#070b10",
+        "theme_color": "#070b10",
+        "categories": ["education", "finance"],
+        "lang": "id",
+        "icons": [
+            {"src": base + "/static/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+            {"src": base + "/static/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"},
+            {"src": base + "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any"},
+        ],
+        "shortcuts": [
+            {"name": "Dashboard", "short_name": "Beranda", "url": base + "/"},
+            {"name": "Mentor AI", "short_name": "Mentor", "url": base + "/mentor"},
+            {"name": "Backtest Lab", "short_name": "Lab", "url": base + "/lab"},
+        ],
     }
     return app.response_class(json.dumps(data), mimetype="application/manifest+json")
 
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v2';
+    sw = """const CACHE = 'quantlab-v3';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));

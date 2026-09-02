@@ -2,8 +2,9 @@
 {% block title %}Analitik Belajar — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Kebiasaan Belajar</span>
   <h1>📊 Analitik Belajar</h1>
-  <p class="meta">Angka jujur tentang perjalanan belajarmu — akurasi, ritme, dan ketahanan.</p>
+  <p class="sub meta">Angka jujur tentang perjalanan belajarmu — akurasi, ritme, dan ketahanan.</p>
 </section>
 
 <section class="dashcols">
@@ -24,7 +25,8 @@
     <h3>📈 Aktivitas 14 Hari Terakhir</h3>
     <div class="xpchart">
       {% set maxn = days | map(attribute='n') | max %}
-      <svg viewBox="0 0 280 90" class="radar">
+      <svg viewBox="0 0 280 90" class="radar" role="img" aria-label="Grafik batang aktivitas belajar 14 hari terakhir">
+        <title>Aktivitas harian 14 hari terakhir — tinggi batang = jumlah aktivitas</title>
         {% for d in days %}
         {% set h = (d.n / maxn * 60) if maxn else 0 %}
         <rect x="{{ 8 + loop.index0 * 19 }}" y="{{ 70 - h }}" width="12" height="{{ h }}"

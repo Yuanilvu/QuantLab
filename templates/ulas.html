@@ -2,13 +2,14 @@
 {% block title %}Ulasan Cerdas — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <p class="kicker">Pengulangan Terjadwal</p>
   <h1>📚 Ulasan Cerdas</h1>
-  <p class="meta">Spaced repetition: skenario yang kamu jawab dijadwalkan ulang setelah 1, 3, dan 7 hari. Jawab benar 3 tahap beruntun = <b class="good">mahir</b> dan keluar dari daftar.</p>
+  <p class="sub">Skenario yang kamu jawab dijadwalkan ulang setelah 1, 3, dan 7 hari. Jawab benar 3 tahap beruntun = <b class="good">mahir</b> dan keluar dari daftar.</p>
 </section>
 
-{% if msg == 'graduated' %}<div class="okbox">🎓 Skenario dinyatakan MAHIR — selesai dari daftar ulasan!</div>
-{% elif msg == 'ok' %}<div class="okbox">✅ Benar! Tahap ulasan berikutnya dijadwalkan.</div>
-{% elif msg == 'wrong' %}<div class="alert">❌ Belum tepat — ulasan diulang dari tahap 1 besok. Cek lagi materinya!</div>
+{% if msg == 'graduated' %}<div class="okbox" role="status">🎓 Skenario dinyatakan MAHIR — selesai dari daftar ulasan!</div>
+{% elif msg == 'ok' %}<div class="okbox" role="status">✅ Benar! Tahap ulasan berikutnya dijadwalkan.</div>
+{% elif msg == 'wrong' %}<div class="alert" role="status">❌ Belum tepat — ulasan diulang dari tahap 1 besok. Cek lagi materinya!</div>
 {% endif %}
 
 {% if items %}
@@ -26,7 +27,11 @@
 </div>
 {% else %}
 <div class="casebox">
-  <p class="note">Tidak ada ulasan yang jatuh tempo hari ini. 🎉 Selesaikan skenario baru untuk menjadwalkan ulasan pertamanya (muncul besok).</p>
+  <h3>🎉 Semua ulasan beres!</h3>
+  <p class="note">Tidak ada ulasan yang jatuh tempo hari ini. Selesaikan skenario baru untuk menjadwalkan ulasan pertamanya (muncul besok).</p>
+  <div class="scenactions">
+    <a class="btn ghost" href="{{ url_for('peta') }}">Cari skenario baru di Peta Belajar →</a>
+  </div>
 </div>
 {% endif %}
 {% endblock %}

@@ -2,61 +2,62 @@
 {% block title %}Backtest Lab — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
-  <h1>🔬 Backtest Lab — Data Pasar Nyata</h1>
-  <p class="meta">Uji strategi pada <b>harga historis sungguhan</b> (Yahoo Finance, 1 tahun harian): TLKM, BBRI, BRPT, CUAN, IHSG, BTC. Bukan simulasi — ini data pasar. Hasil untuk edukasi, bukan saran investasi.</p>
+  <span class="kicker">Riset Data Nyata</span>
+  <h1>🔬 Backtest Lab</h1>
+  <p class="sub meta">Uji strategi pada <b>harga historis sungguhan</b> (Yahoo Finance, 1 tahun harian): TLKM, BBRI, BRPT, CUAN, IHSG, BTC. Bukan simulasi — ini data pasar. Hasil untuk edukasi, bukan saran investasi.</p>
 </section>
 
 <section class="tools">
-  <div class="toolcard wide">
-    <h3>⚙️ Atur Eksperimen</h3>
-    <form method="post" class="labform">
+  <article class="toolcard wide" aria-labelledby="lab-setup-title">
+    <h3 id="lab-setup-title">⚙️ Atur Eksperimen</h3>
+    <form method="post" class="labform" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <div class="labrow">
-        <label>Aset</label>
-        <select name="asset">
+        <label for="lb-asset">Aset</label>
+        <select id="lb-asset" name="asset">
           {% for a in assets %}
           <option value="{{ a.sym }}" {{ 'selected' if form.asset == a.sym }}>{{ a.sym }} — {{ a.n }} hari, terakhir {{ '%.0f' % a.last }}</option>
           {% endfor %}
         </select>
-        <label>Strategi</label>
-        <select name="strategy" id="stratselect">
+        <label for="stratselect">Strategi</label>
+        <select id="stratselect" name="strategy">
           {% for code, name, _ in strategies %}
           <option value="{{ code }}" {{ 'selected' if form.strategy == code }}>{{ name }}</option>
           {% endfor %}
         </select>
-        <label>Fee/sisi (%)</label>
-        <input type="number" step="0.01" min="0" max="5" name="fee" value="{{ form.fee }}">
+        <label for="lb-fee">Fee/sisi (%)</label>
+        <input id="lb-fee" type="number" step="0.01" min="0" max="5" name="fee" value="{{ form.fee }}">
       </div>
       <div class="labrow params" data-s="ma">
-        <label>MA cepat</label><input type="number" min="2" max="100" name="fast" value="{{ form.fast }}">
-        <label>MA lambat</label><input type="number" min="3" max="200" name="slow" value="{{ form.slow }}">
+        <label for="ma-fast">MA cepat</label><input id="ma-fast" type="number" min="2" max="100" name="fast" value="{{ form.fast }}">
+        <label for="ma-slow">MA lambat</label><input id="ma-slow" type="number" min="3" max="200" name="slow" value="{{ form.slow }}">
       </div>
       <div class="labrow params hidden" data-s="rsi">
-        <label>Periode RSI</label><input type="number" min="2" max="50" name="period" value="{{ form.period }}">
-        <label>Beli jika RSI &lt;</label><input type="number" min="1" max="99" name="buy" value="{{ form.buy }}">
-        <label>Jual jika RSI &gt;</label><input type="number" min="1" max="99" name="sell" value="{{ form.sell }}">
+        <label for="rsi-period">Periode RSI</label><input id="rsi-period" type="number" min="2" max="50" name="period" value="{{ form.period }}">
+        <label for="rsi-buy">Beli jika RSI &lt;</label><input id="rsi-buy" type="number" min="1" max="99" name="buy" value="{{ form.buy }}">
+        <label for="rsi-sell">Jual jika RSI &gt;</label><input id="rsi-sell" type="number" min="1" max="99" name="sell" value="{{ form.sell }}">
       </div>
       <div class="labrow params hidden" data-s="boll">
-        <label>Periode</label><input type="number" min="2" max="100" name="period" value="{{ form.period }}">
-        <label>Jumlah std (k)</label><input type="number" step="0.1" min="0.5" max="5" name="k" value="{{ form.k }}">
+        <label for="boll-period">Periode</label><input id="boll-period" type="number" min="2" max="100" name="period" value="{{ form.period }}">
+        <label for="boll-k">Jumlah std (k)</label><input id="boll-k" type="number" step="0.1" min="0.5" max="5" name="k" value="{{ form.k }}">
       </div>
       <div class="labrow params hidden" data-s="breakout">
-        <label>Jendela (hari)</label><input type="number" min="2" max="120" name="window" value="{{ form.window }}">
+        <label for="brk-window">Jendela (hari)</label><input id="brk-window" type="number" min="2" max="120" name="window" value="{{ form.window }}">
       </div>
       <div class="scenactions">
         <button class="btn primary" type="submit">▶ Jalankan Backtest</button>
       </div>
     </form>
-  </div>
+  </article>
 </section>
 
 {% if result %}
 {% if result.error %}
-<div class="alert">{{ result.error }}</div>
+<div class="alert" role="alert">{{ result.error }}</div>
 {% else %}
 <section class="tools">
-  <div class="toolcard wide">
-    <h3>📊 Hasil — {{ result.sym }} · {{ result.strategy }} <span class="meta">({{ result.start }} → {{ result.end }}, {{ result.n_days }} hari, fee {{ result.fee_pct }}%/sisi)</span></h3>
+  <article class="toolcard wide" aria-labelledby="lab-result-title">
+    <h3 id="lab-result-title">📊 Hasil — {{ result.sym }} · {{ result.strategy }} <span class="meta">({{ result.start }} → {{ result.end }}, {{ result.n_days }} hari, fee {{ result.fee_pct }}%/sisi)</span></h3>
     <div class="statrow">
       <div class="stat"><b class="{{ 'pos' if result.ret >= 0 else 'neg' }}">{{ '%+.2f' % result.ret }}%</b><span>Return strategi</span></div>
       <div class="stat"><b class="neg">{{ result.maxdd }}%</b><span>Max DD</span></div>
@@ -76,7 +77,8 @@
 {% set y = 170 - (v - lo) / span * 150 %}{% if loop.first %}{% set _ = pts.append('M' ~ x ~ ',' ~ y) %}{% else %}{% set _ = pts.append('L' ~ x ~ ',' ~ y) %}{% endif %}{% endfor %}
     {% for v in result.bh_eq %}{% set x = loop.index0 / (result.bh_eq | length - 1) * 560 %}
 {% set y = 170 - (v - lo) / span * 150 %}{% if loop.first %}{% set _ = bhp.append('M' ~ x ~ ',' ~ y) %}{% else %}{% set _ = bhp.append('L' ~ x ~ ',' ~ y) %}{% endif %}{% endfor %}
-    <svg viewBox="0 0 580 190" class="labchart">
+    <svg viewBox="0 0 580 190" class="labchart" role="img" aria-label="Kurva ekuitas strategi {{ result.strategy }} pada {{ result.sym }} dibandingkan buy and hold">
+      <title>Kurva ekuitas: garis hijau = strategi, garis abu-abu putus-putus = buy and hold</title>
       <line x1="0" y1="170" x2="580" y2="170" stroke="#26313d" stroke-width="1"/>
       <path d="{{ pts | join(' ') }}" fill="none" stroke="#22c55e" stroke-width="2"/>
       <path d="{{ bhp | join(' ') }}" fill="none" stroke="#64748b" stroke-width="1.5" stroke-dasharray="5 4"/>
@@ -86,13 +88,15 @@
 
     {% if result.trades %}
     <h3 style="margin-top:18px">🧾 Trade Terakhir ({{ result.trades | length }} ditampilkan)</h3>
-    <div class="scantable">
-      <div class="othead"><span>Masuk</span><span>Keluar</span><span>Harga masuk</span><span>Harga keluar</span><span>Return</span></div>
+    <div class="scantable" role="table" aria-label="Daftar trade strategi {{ result.strategy }} pada {{ result.sym }}">
+      <div class="othead" role="row">
+        <span role="columnheader">Masuk</span><span role="columnheader">Keluar</span><span role="columnheader">Harga</span><span role="columnheader">Return</span>
+      </div>
       {% for t in result.trades %}
-      <div class="otrow">
-        <span>{{ t.entry }}</span><span>{{ t.exit }}</span>
-        <span>{{ '%.0f' % t.entry_px }}</span><span>{{ '%.0f' % t.exit_px }}</span>
-        <span class="{{ 'pos' if t.ret >= 0 else 'neg' }}">{{ '%+.2f' % t.ret }}%</span>
+      <div class="otrow" role="row">
+        <span role="cell">{{ t.entry }}</span><span role="cell">{{ t.exit }}</span>
+        <span role="cell">{{ '%.0f' % t.entry_px }} → {{ '%.0f' % t.exit_px }}</span>
+        <span role="cell" class="{{ 'pos' if t.ret >= 0 else 'neg' }}">{{ '%+.2f' % t.ret }}%</span>
       </div>
       {% endfor %}
     </div>
@@ -101,10 +105,10 @@
     {% endif %}
 
     <div class="scenactions">
-      <a class="btn ghost" href="{{ url_for('lab_export', asset=result.sym, strategy=result.strategy, fast=result.params.get('fast', 10), slow=result.params.get('slow', 30), period=result.params.get('period', 14), buy=result.params.get('buy', 30), sell=result.params.get('sell', 70), k=result.params.get('k', 2), window=result.params.get('window', 20), fee=result.fee_pct) }}">📤 Export Trade (CSV)</a>
+      <a class="btn ghost" download href="{{ url_for('lab_export', asset=result.sym, strategy=result.strategy, fast=result.params.get('fast', 10), slow=result.params.get('slow', 30), period=result.params.get('period', 14), buy=result.params.get('buy', 30), sell=result.params.get('sell', 70), k=result.params.get('k', 2), window=result.params.get('window', 20), fee=result.fee_pct) }}">📤 Export Trade (CSV)</a>
     </div>
-    <p class="note">💡 Latihan: coba aset & strategi berbeda. Strategi mana yang menang KONSISTEN? Cek juga Max DD dan jumlah trade — jangan cuma lihat return (Bab 14).</p>
-  </div>
+    <p class="note">💡 Latihan: coba aset &amp; strategi berbeda. Strategi mana yang menang KONSISTEN? Cek juga Max DD dan jumlah trade — jangan cuma lihat return (Bab 14).</p>
+  </article>
 </section>
 {% endif %}
 {% endif %}

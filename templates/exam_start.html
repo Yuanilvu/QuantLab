@@ -2,15 +2,27 @@
 {% block title %}Ujian — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
-  <h1>🏁 Ujian Track: {{ track }}</h1>
   {% if not_enough %}
+  <h1>🏁 Ujian Track: {{ track }}</h1>
   <p class="alert">Track ini belum punya cukup skenario untuk ujian (minimal 8).</p>
+  <div class="scenactions">
+    <a class="btn ghost" href="{{ url_for('peta') }}">← Peta Belajar</a>
+  </div>
   {% else %}
-  <p class="meta">8 soal acak dari semua bab track ini · waktu 12 menit · lulus ≥ 70% → bonus <b class="pos">+50 XP</b> (sekali per track).</p>
+  <p class="kicker">Ujian Akhir Track</p>
+  <h1>🏁 Ujian: {{ track }}</h1>
+  <p class="sub">Soal keputusan acak dari semua bab track ini — jawab minimal 70% benar untuk dapat bonus <b class="pos">+50 XP</b> (sekali per track).</p>
+  <div class="statrow">
+    <div class="stat"><b>8</b><span>soal acak</span></div>
+    <div class="stat"><b>12</b><span>menit waktu</span></div>
+    <div class="stat"><b>70%</b><span>batas lulus</span></div>
+    <div class="stat"><b>+50 XP</b><span>hadiah lulus</span></div>
+  </div>
   <div class="scenactions">
     <a class="btn primary" href="{{ url_for('ujian', track=track) }}">Mulai Ujian →</a>
     <a class="btn ghost" href="{{ url_for('peta') }}">← Peta Belajar</a>
   </div>
+  <p class="note">⏱ Begitu mulai, timer 12 menit langsung berjalan dan tidak bisa dijeda. Kalau habis, ujian dikumpulkan otomatis.</p>
   {% endif %}
 </section>
 {% endblock %}

@@ -2,23 +2,34 @@
 {% block title %}Badges — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Prestasi</span>
   <h1>🎖️ Badges</h1>
-  <p class="meta">Progress kamu: {{ solved_n }}/{{ total }} skenario · {{ correct_n }} benar · streak {{ streak }} hari · {{ bab_clear }} bab clear</p>
+  <p class="sub meta">Setiap skenario tuntas, streak yang terjaga, dan track yang dilunasi mengukir badge di dinding prestasimu. Badge yang belum terbuka tampil redup — teruskan!</p>
 </section>
-<section class="badgegrid">
+
+<section class="statrow" aria-label="Ringkasan progres badge">
+  <div class="stat"><b>{{ solved_n }}/{{ total }}</b><span>Skenario selesai</span></div>
+  <div class="stat"><b>{{ correct_n }}</b><span>Jawaban benar</span></div>
+  <div class="stat"><b>🔥 {{ streak }}</b><span>Streak (hari)</span></div>
+  <div class="stat"><b>{{ bab_clear }}</b><span>Bab tuntas</span></div>
+</section>
+
+<section class="badgegrid" aria-label="Koleksi badge" style="margin-top:22px">
   {% for b in earned %}
   <div class="badgecard earned">
-    <span class="bicon">{{ b.icon }}</span>
+    <span class="bicon" aria-hidden="true">{{ b.icon }}</span>
     <b>{{ b.name }}</b>
     <span class="meta">{{ b.desc }}</span>
   </div>
   {% endfor %}
   {% for icon, _, name, desc in locked %}
   <div class="badgecard locked">
-    <span class="bicon dim">{{ icon }}</span>
+    <span class="bicon dim" aria-hidden="true">{{ icon }}</span>
     <b>{{ name }}</b>
     <span class="meta">{{ desc }}</span>
   </div>
   {% endfor %}
 </section>
+
+<p class="note">Total {{ earned | length }} badge diraih{% if locked %} · {{ locked | length }} badge masih terkunci{% endif %}. Semua tercatat otomatis — tidak ada yang perlu diklaim.</p>
 {% endblock %}

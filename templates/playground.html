@@ -2,90 +2,92 @@
 {% block title %}Playground — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Alat Eksperimen</span>
   <h1>🧪 Playground</h1>
-  <p class="meta">Mainkan angkanya sendiri. Data backtest = seri harga sintetis deterministik (seed tetap) — semua hasil reproducible.</p>
+  <p class="sub meta">Mainkan angkanya sendiri. Data backtest = seri harga sintetis deterministik (seed tetap) — semua hasil reproducible.</p>
 </section>
 
 <section class="tools">
-  <div class="toolcard wide">
-    <h3>💻 Live Runner Python <span class="meta">— coba-coba kode bebas, tanpa dinilai</span></h3>
+  <article class="toolcard wide" aria-labelledby="pg-run-title">
+    <h3 id="pg-run-title">💻 Live Runner Python <span class="meta">— coba-coba kode bebas, tanpa dinilai</span></h3>
     <p class="meta">Latihan sebelum mengerjakan Soal Coding. Jalankan kode Python apa pun (sandbox aman, timeout 3 detik).</p>
     <form method="post" class="runnerform">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <input type="hidden" name="mode" value="run">
-      <textarea name="code" rows="8" spellcheck="false" placeholder="# contoh:&#10;harga = 1000&#10;kenaikan = 0.05&#10;print(harga * (1 + kenaikan))">{{ result.code if result and result.mode == 'run' else '' }}</textarea>
-      <label>Input (stdin) — optional</label>
-      <input type="text" name="stdin" placeholder="5 10 20" value="{{ result.stdin if result and result.mode == 'run' else '' }}">
-      <button class="btn primary">▶ Jalankan</button>
+      <label for="pg-code">Kode Python</label>
+      <textarea id="pg-code" name="code" rows="8" spellcheck="false" autocapitalize="off" autocorrect="off" placeholder="# contoh:&#10;harga = 1000&#10;kenaikan = 0.05&#10;print(harga * (1 + kenaikan))">{{ result.code if result and result.mode == 'run' else '' }}</textarea>
+      <label for="pg-stdin">Input (stdin) — optional</label>
+      <input id="pg-stdin" type="text" name="stdin" placeholder="5 10 20" value="{{ result.stdin if result and result.mode == 'run' else '' }}">
+      <button class="btn primary" type="submit">▶ Jalankan</button>
     </form>
     {% if result and result.mode == 'run' %}
-    <div class="runresult {{ 'ok' if result.ok else 'no' }}">
+    <div class="runresult {{ 'ok' if result.ok else 'no' }}" role="status">
       <b>{{ '✅ Berhasil' if result.ok else '❌ Error' }}</b>
-      {% if result.friendly %}<div class="alert">{{ result.friendly }}</div>{% endif %}
+      {% if result.friendly %}<div class="alert" role="alert">{{ result.friendly }}</div>{% endif %}
       {% if result.stdout %}<pre class="block-code">{{ result.stdout }}</pre>{% endif %}
       {% if result.stderr and not result.friendly %}<pre class="block-code err">{{ result.stderr }}</pre>{% endif %}
     </div>
     {% endif %}
-  </div>
+  </article>
 </section>
 
 <section class="tools">
-  <div class="toolcard">
-    <h3>📈 Annualisasi Funding</h3>
+  <article class="toolcard" aria-labelledby="pg-funding-title">
+    <h3 id="pg-funding-title">📈 Annualisasi Funding</h3>
     <p class="meta">Funding perp dibayar 3x sehari. Berapa itu per tahun?</p>
-    <form method="post">
+    <form method="post" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <input type="hidden" name="mode" value="funding">
-      <label>Funding rate per 8 jam (%)</label>
-      <input type="number" step="0.001" name="rate" value="0.02" required>
-      <button class="btn primary">Hitung</button>
+      <label for="pg-rate">Funding rate per 8 jam (%)</label>
+      <input id="pg-rate" type="number" step="0.001" min="0" name="rate" value="0.02" required>
+      <button class="btn primary" type="submit">Hitung</button>
     </form>
     {% if result and result.mode == 'funding' %}
-    <div class="calcresult">
+    <div class="calcresult" role="status">
       <div>Per hari: <b>{{ '%.3f' % result.daily }}%</b></div>
       <div>Per tahun: <b class="pos">{{ '%.2f' % result.annual }}%</b></div>
     </div>
     {% endif %}
-  </div>
+  </article>
 
-  <div class="toolcard">
-    <h3>📐 Ukuran Posisi</h3>
+  <article class="toolcard" aria-labelledby="pg-size-title">
+    <h3 id="pg-size-title">📐 Ukuran Posisi</h3>
     <p class="meta">Risiko dulu, baru hitung notional: equity × risk% ÷ stop%.</p>
-    <form method="post">
+    <form method="post" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <input type="hidden" name="mode" value="size">
-      <label>Equity ($)</label>
-      <input type="number" step="1" name="equity" value="1000" required>
-      <label>Risiko per trade (%)</label>
-      <input type="number" step="0.1" name="risk" value="2" required>
-      <label>Jarak stop loss (%)</label>
-      <input type="number" step="0.1" name="stop" value="5" required>
-      <button class="btn primary">Hitung</button>
+      <label for="pg-equity">Equity ($)</label>
+      <input id="pg-equity" type="number" step="1" min="1" name="equity" value="1000" required>
+      <label for="pg-risk">Risiko per trade (%)</label>
+      <input id="pg-risk" type="number" step="0.1" min="0.1" name="risk" value="2" required>
+      <label for="pg-stop">Jarak stop loss (%)</label>
+      <input id="pg-stop" type="number" step="0.1" min="0.1" name="stop" value="5" required>
+      <button class="btn primary" type="submit">Hitung</button>
     </form>
     {% if result and result.mode == 'size' %}
-    <div class="calcresult">
+    <div class="calcresult" role="status">
       <div>Notional: <b class="pos">${{ '%.0f' % result.notional }}</b></div>
       <div class="meta">Stop kena = rugi {{ result.risk }}% equity (${{ '%.0f' % (result.equity * result.risk / 100) }})</div>
     </div>
     {% endif %}
-  </div>
+  </article>
 
-  <div class="toolcard wide">
-    <h3>🔬 Mini Backtest: MA Crossover</h3>
+  <article class="toolcard wide" aria-labelledby="pg-bt-title">
+    <h3 id="pg-bt-title">🔬 Mini Backtest: MA Crossover</h3>
     <p class="meta">Sinyal: long saat MA cepat &gt; MA lambat (fee 0.1%/sisi). Coba berbagai parameter — mana yang menang, mana yang overfit?</p>
-    <form method="post" class="inlineform">
+    <form method="post" class="inlineform" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <input type="hidden" name="mode" value="backtest">
-      <label>MA cepat</label>
-      <input type="number" min="2" max="50" name="fast" value="{{ result.fast if result and result.mode == 'backtest' else 5 }}" required>
-      <label>MA lambat</label>
-      <input type="number" min="3" max="100" name="slow" value="{{ result.slow if result and result.mode == 'backtest' else 20 }}" required>
-      <button class="btn primary">Jalankan</button>
+      <label for="pg-fast">MA cepat</label>
+      <input id="pg-fast" type="number" min="2" max="50" name="fast" value="{{ result.fast if result and result.mode == 'backtest' else 5 }}" required>
+      <label for="pg-slow">MA lambat</label>
+      <input id="pg-slow" type="number" min="3" max="100" name="slow" value="{{ result.slow if result and result.mode == 'backtest' else 20 }}" required>
+      <button class="btn primary" type="submit">Jalankan</button>
     </form>
     {% if result and result.mode == 'backtest' and result.error %}
-    <div class="alert">{{ result.error }}</div>
+    <div class="alert" role="alert">{{ result.error }}</div>
     {% elif result and result.mode == 'backtest' %}
-    <div class="btresult">
+    <div class="btresult" role="status">
       <div class="stat"><b class="{{ 'pos' if result.ret >= 0 else 'neg' }}">{{ '%+.1f' % result.ret }}%</b><span>Return</span></div>
       <div class="stat"><b class="neg">{{ result.maxdd }}%</b><span>Max DD</span></div>
       <div class="stat"><b>{{ result.trades }}</b><span>Trade</span></div>
@@ -94,39 +96,39 @@
     </div>
     <p class="note">Pertanyaan latihan: coba (5,20), (10,50), (20,100), lalu (2,3). Yang return-nya paling tinggi — apakah itu yang paling bisa dipercaya? (Ingat Bab 4.)</p>
     {% endif %}
-  </div>
+  </article>
 
-  <div class="toolcard wide">
-    <h3>🧮 Parameter Scan <span class="meta">— pelajaran Bab 4 dalam praktik</span></h3>
+  <article class="toolcard wide" aria-labelledby="pg-scan-title">
+    <h3 id="pg-scan-title">🧮 Parameter Scan <span class="meta">— pelajaran Bab 4 dalam praktik</span></h3>
     <p class="meta">Jalankan 16 kombinasi MA sekaligus. Perhatikan: juara scan sering overfit — cek juga Max DD dan jumlah trade-nya.</p>
-    <form method="post" class="inlineform">
+    <form method="post" class="inlineform" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <input type="hidden" name="mode" value="scan">
-      <label>MA cepat (koma)</label>
-      <input type="text" name="fasts" value="3,5,10,20" required>
-      <label>MA lambat (koma)</label>
-      <input type="text" name="slows" value="10,20,50,100" required>
-      <button class="btn primary">Scan {{ 16 }} Kombinasi</button>
+      <label for="pg-fasts">MA cepat (koma)</label>
+      <input id="pg-fasts" type="text" name="fasts" value="3,5,10,20" placeholder="3,5,10,20" required>
+      <label for="pg-slows">MA lambat (koma)</label>
+      <input id="pg-slows" type="text" name="slows" value="10,20,50,100" placeholder="10,20,50,100" required>
+      <button class="btn primary" type="submit">▶ Scan Kombinasi</button>
     </form>
     {% if result and result.mode == 'scan' %}
-    <div class="scantable">
-      <div class="othead"><span>#</span><span>MA</span><span>Return</span><span>Max DD</span><span>Trade</span><span>Win</span></div>
+    <div class="scantable" role="table" aria-label="Hasil scan {{ result.total }} kombinasi MA, diurutkan dari return tertinggi">
+      <div class="othead" role="row">
+        <span role="columnheader">Kombinasi</span><span role="columnheader">Return</span><span role="columnheader">Max DD</span><span role="columnheader">Trade · Win</span>
+      </div>
       {% for r in result.rows %}
-      <div class="otrow {{ 'bestpick' if loop.index == 1 }}">
-        <span class="rank">{{ loop.index }}{% if loop.index == 1 %} 👑{% endif %}</span>
-        <span>{{ r.fast }}/{{ r.slow }}</span>
-        <span class="{{ 'pos' if r.ret >= 0 else 'neg' }}">{{ '%+.1f' % r.ret }}%</span>
-        <span class="neg">{{ r.maxdd }}%</span>
-        <span>{{ r.trades }}</span>
-        <span>{{ r.win }}%</span>
+      <div class="otrow {{ 'bestpick' if loop.index == 1 }}" role="row">
+        <span role="cell">#{{ loop.index }}{% if loop.index == 1 %} 👑{% endif %} · {{ r.fast }}/{{ r.slow }}</span>
+        <span role="cell" class="{{ 'pos' if r.ret >= 0 else 'neg' }}">{{ '%+.1f' % r.ret }}%</span>
+        <span role="cell" class="neg">{{ r.maxdd }}%</span>
+        <span role="cell" title="Jumlah trade & win rate">{{ r.trades }} · {{ r.win }}%</span>
       </div>
       {% endfor %}
     </div>
-    <div class="alert scanwarn">
-      ⚠️ Juara dari {{ result.total }} kombinasi itu **belum tentu yang terbaik** — kamu melakukan multiple testing (Bab 4, s4-3).
+    <div class="alert scanwarn" role="note">
+      ⚠️ Juara dari {{ result.total }} kombinasi itu <b>belum tentu yang terbaik</b> — kamu melakukan multiple testing (Bab 4, s4-3).
       Kombinasi yang menang karena kebetulan biasanya punya trade sedikit dan DD besar. Parameter yang stabil: return bagus + DD kecil + trade banyak.
     </div>
     {% endif %}
-  </div>
+  </article>
 </section>
 {% endblock %}

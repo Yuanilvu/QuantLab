@@ -1,20 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Login — QuantLab{% endblock %}
+{% block title %}Masuk — QuantLab{% endblock %}
 {% block content %}
 <div class="authwrap">
   <div class="authcard">
-    <h1>⚡ QuantLab</h1>
+    <div class="brand">
+      <span class="brandmark" aria-hidden="true">⚡</span>
+      <span class="logo">QuantLab<small>Trading Academy</small></span>
+    </div>
+    <h1>Masuk ke Akun</h1>
     <p class="sub">Belajar quant trading lewat <strong>skenario</strong>: baca kasus pasar → ambil keputusan → lihat terjemahan Python → lihat hasil backtest.</p>
-    {% if err %}<div class="alert">{{ err }}</div>{% endif %}
+    {% if err %}<div class="alert" role="alert">{{ err }}</div>{% endif %}
     <form method="post">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-      <label>Username</label>
-      <input name="username" required autofocus autocomplete="username" placeholder="trader_pemula">
-      <label>Password</label>
-      <input type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
+      <label for="username">Username</label>
+      <input id="username" name="username" required autofocus autocomplete="username" maxlength="20" placeholder="trader_pemula">
+      <label for="password">Password</label>
+      <input id="password" type="password" name="password" required autocomplete="current-password" placeholder="••••••••">
       <button class="btn primary" type="submit">Masuk</button>
     </form>
-    <p class="alt">Belum punya akun? <a href="{{ url_for('register') }}">Daftar gratis</a></p>
+    <p class="alt">Belum punya akun? <a href="{{ url_for('register') }}">Daftar gratis →</a></p>
   </div>
 </div>
 {% endblock %}

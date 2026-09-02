@@ -5,7 +5,7 @@
   <div class="scenhead">
     <span class="badge">🏁 ujian {{ track }}</span>
     <h1>Soal {{ no }} dari {{ total }}</h1>
-    <span class="badge challenge" id="timer">⏱ {{ sisa }}s</span>
+    <span class="badge challenge" id="timer" title="Waktu tersisa">⏱ {{ sisa }}s</span>
   </div>
 
   <div class="casebox">
@@ -17,11 +17,11 @@
     <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
     <input type="hidden" name="qid" value="{{ q.id }}">
     <h3>🤔 Pilih jawaban</h3>
-    <div class="opts">
+    <div class="opts" role="radiogroup" aria-label="Pilihan jawaban">
       {% for p in q.pilihan %}
       <label class="opt">
         <input type="radio" name="choice" value="{{ loop.index0 }}" required>
-        <span class="optlabel">{{ loop.index0 + 1 }}. {{ p }}</span>
+        <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
       </label>
       {% endfor %}
     </div>
@@ -30,6 +30,7 @@
       <button class="btn ghost" type="submit" name="finish" value="1">Selesai Sekarang</button>
     </div>
   </form>
+  <p class="note">💾 Jawabanmu tersimpan tiap kali menekan <b>Jawaban Berikutnya</b>. Kalau waktu habis, ujian dikumpulkan otomatis — soal yang belum dijawab dihitung salah.</p>
 </section>
 <script>
 const deadline = {{ sisa }};

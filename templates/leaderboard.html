@@ -2,19 +2,33 @@
 {% block title %}Leaderboard — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Papan Skor</span>
   <h1>🏆 Leaderboard</h1>
-  <p class="meta">Peringkat berdasarkan XP. Streak sebagai tie-breaker.</p>
+  <p class="sub meta">Peringkat seluruh trader berdasarkan XP, dengan streak sebagai tie-breaker. Konsisten setiap hari — dan papan ini bisa jadi milikmu.</p>
 </section>
-<section class="board">
-  <div class="othead"><span>#</span><span>Trader</span><span>Streak</span><span>XP</span></div>
+
+{% if rows %}
+<section class="board" aria-label="Papan peringkat trader">
+  <div class="othead" style="grid-template-columns:60px 1fr 90px 80px">
+    <span title="Peringkat">#</span><span>Trader</span><span title="Hari aktif beruntun">Streak</span><span>XP</span>
+  </div>
+  {% set myrank = namespace(idx=0, xp=0) %}
   {% for r in rows %}
+  {% if r.id == me_id %}{% set myrank.idx = loop.index %}{% set myrank.xp = r.xp %}{% endif %}
   <div class="otrow {{ 'me' if r.id == me_id }}">
     <span class="rank">{{ loop.index }}{% if loop.index == 1 %} 🥇{% elif loop.index == 2 %} 🥈{% elif loop.index == 3 %} 🥉{% endif %}</span>
     <span class="otlabel">{{ r.username }}{% if r.id == me_id %} <b>(kamu)</b>{% endif %}</span>
     <span>🔥 {{ r.streak }}</span>
-    <span class="pos">{{ r.xp }}</span>
+    <span class="pos">{{ r.xp }} XP</span>
   </div>
   {% endfor %}
-  {% if not rows %}<p class="meta">Belum ada trader. Jadilah yang pertama!</p>{% endif %}
+  {% if myrank.idx %}
+  <p class="note" role="status">Posisimu: <b>#{{ myrank.idx }}</b> dari {{ rows | length }} trader{% if myrank.idx > 1 %} · kurang <b>{{ rows[0].xp - myrank.xp }} XP</b> dari peringkat 1{% endif %}.</p>
+  {% endif %}
 </section>
+{% else %}
+<section class="board" aria-label="Papan peringkat trader">
+  <p class="meta" role="status">Belum ada trader lain. Jadilah yang pertama! 🚀</p>
+</section>
+{% endif %}
 {% endblock %}

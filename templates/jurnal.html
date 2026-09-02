@@ -2,11 +2,12 @@
 {% block title %}Jurnal Trading — QuantLab{% endblock %}
 {% block content %}
 <section class="pagehead">
+  <span class="kicker">Refleksi &amp; Disiplin</span>
   <h1>📓 Jurnal Trading</h1>
-  <p class="meta">Pelajaran Bab 5 dalam praktik: tulis setiap trade — angka DAN emosi. Setelah 20 entri, pola loss terbesarmu akan terlihat.</p>
+  <p class="sub meta">Pelajaran Bab 5 dalam praktik: tulis setiap trade — angka DAN emosi. Setelah 20 entri, pola loss terbesarmu akan terlihat.</p>
 </section>
 
-{% if err %}<div class="alert">{{ err }}</div>{% endif %}
+{% if err %}<div class="alert" role="alert">{{ err }}</div>{% endif %}
 
 <section class="dashcols">
   <div class="dashcol">
@@ -26,28 +27,28 @@
   </div>
   <div class="dashcol">
     <h3>➕ Entri Baru</h3>
-    <form method="post">
+    <form method="post" autocomplete="off">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <div class="jr2">
-        <div><label>Tanggal</label><input type="date" name="tanggal" value="{{ today }}"></div>
-        <div><label>Aset (contoh: BTC, TLKM)</label><input type="text" name="aset" placeholder="BTC" required maxlength="20"></div>
-        <div><label>Arah</label>
-          <select name="arah">
+        <div><label for="jr-tanggal">Tanggal</label><input id="jr-tanggal" type="date" name="tanggal" value="{{ today }}"></div>
+        <div><label for="jr-aset">Aset (contoh: BTC, TLKM)</label><input id="jr-aset" type="text" name="aset" placeholder="BTC" required maxlength="20"></div>
+        <div><label for="jr-arah">Arah</label>
+          <select id="jr-arah" name="arah">
             {% for a in arah_list %}<option value="{{ a }}">{{ a }}</option>{% endfor %}
           </select>
         </div>
       </div>
       <div class="jr3">
-        <div><label>Harga entry</label><input type="number" step="any" name="entry" placeholder="1000" required></div>
-        <div><label>Harga exit</label><input type="number" step="any" name="exit" placeholder="1050" required></div>
-        <div><label>Ukuran (lot/porsi)</label><input type="number" step="any" name="size" value="1"></div>
+        <div><label for="jr-entry">Harga entry</label><input id="jr-entry" type="number" step="any" min="0" name="entry" placeholder="1000" required></div>
+        <div><label for="jr-exit">Harga exit</label><input id="jr-exit" type="number" step="any" min="0" name="exit" placeholder="1050" required></div>
+        <div><label for="jr-size">Ukuran (lot/porsi)</label><input id="jr-size" type="number" step="any" name="size" value="1"></div>
       </div>
-      <label>Emosi saat trade</label>
-      <select name="emosi">
+      <label for="jr-emosi">Emosi saat trade</label>
+      <select id="jr-emosi" name="emosi">
         {% for e in emosi_list %}<option value="{{ e }}">{{ e }}</option>{% endfor %}
       </select>
-      <label>Catatan (rencana, kesalahan, pelajaran)</label>
-      <textarea name="catatan" rows="3" maxlength="1000" placeholder="Kenapa masuk? Apa yang terjadi? Apa yang bisa diperbaiki?"></textarea>
+      <label for="jr-catatan">Catatan (rencana, kesalahan, pelajaran)</label>
+      <textarea id="jr-catatan" name="catatan" rows="3" maxlength="1000" placeholder="Kenapa masuk? Apa yang terjadi? Apa yang bisa diperbaiki?"></textarea>
       <button class="btn primary" type="submit">Simpan Entri</button>
     </form>
   </div>
@@ -69,7 +70,7 @@
         <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
         <input type="hidden" name="action" value="delete">
         <input type="hidden" name="id" value="{{ e.id }}">
-        <button type="submit" title="Hapus">🗑️</button>
+        <button type="submit" title="Hapus" aria-label="Hapus entri {{ e.aset }} tanggal {{ e.tanggal }}">🗑️</button>
       </form>
     </div>
     {% endfor %}

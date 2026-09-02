@@ -1,11 +1,22 @@
 {% extends "base.html" %}
-{% block title %}{{ code }} — QuantLab{% endblock %}
+{% block title %}Error {{ code }} — QuantLab{% endblock %}
 {% block content %}
+{% set erricon = {400: '⚠️', 403: '🔒', 404: '🔍', 429: '⏳', 500: '🔥', 503: '🔧'} %}
 <section class="authwrap">
   <div class="authcard center">
-    <h1>{{ code }}</h1>
-    <p>{{ msg }}</p>
-    <a class="btn primary" href="{{ url_for('index') }}">Kembali ke Dashboard</a>
+    <span class="kicker">Error {{ code }}</span>
+    <h1>{{ erricon.get(code, '⚠️') }} {{ msg }}</h1>
+    {% if user %}
+    <p class="sub">Halaman ini sedang tidak bisa diakses. Muat ulang, atau kembali ke halaman yang kamu kenal.</p>
+    {% else %}
+    <p class="sub">Halaman ini sedang tidak bisa diakses. Muat ulang, atau kembali ke beranda.</p>
+    {% endif %}
+    <div class="scenactions" style="justify-content:center">
+      <a class="btn primary" href="{{ url_for('index') }}">← Kembali ke Beranda</a>
+      <button class="btn ghost" type="button" onclick="location.reload()">⟳ Muat Ulang</button>
+      {% if user %}<a class="btn ghost" href="{{ url_for('peta') }}">Peta Belajar</a>{% endif %}
+    </div>
+    <p class="meta" style="margin-top:14px">Kalau masalah berulang, coba beberapa menit lagi.</p>
   </div>
 </section>
 {% endblock %}
