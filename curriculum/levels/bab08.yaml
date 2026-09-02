@@ -1,0 +1,187 @@
+# ============================================================
+# BAB 8 — UANG & BUNGA (TRACK: FINANCE DASAR)
+# Bunga sederhana vs majemuk, aturan 72, time value of money.
+# ============================================================
+bab: 8
+track: finance
+judul: "Uang & Bunga"
+emoji: "💰"
+deskripsi: "Bunga itu 'gaji' dari uang. Paham beda bunga sederhana vs majemuk = paham kenapa menabung lebih awal itu ajaib."
+pelajaran:
+  - id: "8-1"
+    judul: "Bunga Sederhana"
+    menit: 5
+    materi: |
+      **Bunga** = imbalan karena meminjamkan atau meminjam uang. Dihitung dalam persen per tahun.
+
+      Bunga sederhana: dihitung hanya dari modal awal. Jumlahnya sama tiap tahun.
+
+      Tabung Rp1.000.000 dengan bunga 5% per tahun:
+      - Tahun 1: bunga = 1.000.000 × 5% = 50.000 → total 1.050.000
+      - Tahun 2: bunga = 1.000.000 × 5% = 50.000 → total 1.100.000
+      - Tahun 3: total 1.150.000
+      - Setelah 10 tahun: 1.000.000 + (10 × 50.000) = **1.500.000**
+
+      Rumus: `total = modal + (modal × bunga × tahun)`.
+
+      Dipakai di mana? Deposito, obligasi (surat utang), pinjaman. Sederhana dan mudah ditebak.
+    kode: |
+      modal = 1_000_000
+      bunga = 0.05
+      tahun = 10
+      total = modal * (1 + bunga * tahun)
+      print(f"Setelah 10 tahun: Rp{total:,.0f}")   # 1,500,000
+    penjelasan: "Bunga sederhana = modal × bunga × tahun. Hasilnya lurus dan mudah ditebak."
+  - id: "8-2"
+    judul: "Bunga Majemuk: Bunga Menghasilkan Bunga"
+    menit: 5
+    materi: |
+      **Bunga majemuk** = bunga dihitung dari total yang SUDAH termasuk bunga sebelumnya. Bunga ikut menghasilkan bunga.
+
+      Tabung Rp1.000.000, bunga 5% per tahun (majemuk):
+      - Tahun 1: 1.000.000 × 1,05 = 1.050.000
+      - Tahun 2: 1.050.000 × 1,05 = 1.102.500 (bunga 52.500 — lebih besar dari tahun 1!)
+      - Tahun 3: 1.102.500 × 1,05 = 1.157.625
+      - Setelah 10 tahun: 1.000.000 × 1,05¹⁰ = **1.628.895**
+
+      Bandingkan: sederhana 1,5 juta vs majemuk 1,63 juta. Selisihnya makin besar kalau waktunya makin panjang. Inilah "keajaiban" menabung sejak muda.
+
+      **Aturan 72**: 72 ÷ bunga = perkiraan tahun uangmu berlipat dua. Bunga 6% → dobel dalam 12 tahun. Bunga 12% → dobel dalam 6 tahun.
+
+      Di kripto/trading, konsepnya sama: return (hasil investasi) majemuk. Untung 10% bulan ini dihitung dari modal yang sudah termasuk untung bulan lalu. Compounding (profit yang digabung) = kekuatan terbesar trader.
+    kode: |
+      modal = 1_000_000
+      bunga = 0.05
+      tahun = 10
+      total = modal * (1 + bunga) ** tahun
+      print(f"Majemuk 10 tahun: Rp{total:,.0f}")     # 1,628,895
+      print(f"Aturan 72: dobel dalam {72/5:.0f} tahun")  # ~14 tahun
+    penjelasan: "Majemuk = modal × (1+bunga)^tahun. Bunga berbunga. Aturan 72 = estimasi cepat penggandaan."
+skenario:
+  - id: "s8-1"
+    judul: "Bunga Deposito"
+    emoji: "🏦"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Bibi taruh Rp10.000.000 di deposito. Bunganya **6% per tahun** (sederhana, dibayar tiap tahun). Berapa bunga yang dia terima setelah 1 tahun?
+    pilihan:
+      - "Rp60.000"
+      - "Rp600.000"
+      - "Rp6.000.000"
+      - "Rp10.600.000"
+    jawaban: 1
+    penjelasan: |
+      10.000.000 × 6% = 10.000.000 × 0,06 = **Rp600.000** per tahun. Opsi lain salah: 60.000 = salah desimal. 6.000.000 = 60%, bukan 6%. 10.600.000 = modal + bunga, bukan bunganya saja. Bunga deposito = "gaji" uang yang menganggur. Kecil tapi pasti.
+    kode: |
+      modal = 10_000_000
+      bunga = 0.06
+      print(f"Bunga 1 tahun: Rp{modal * bunga:,.0f}")   # 600,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "60.000 itu 0,6% bukan 6%. Periksa desimal: 10jt × 0,06."
+      - ret: 6.0
+        dd: 0.0
+        win: 80
+        note: "600.000 benar: 10jt × 6%."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "6jt = 60% — terlalu besar. 6% itu 6 per seratus."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "10,6jt = modal + bunga. Pertanyaannya bunga SAJA."
+    petunjuk:
+      - "Bunga = modal × persen."
+      - "10.000.000 × 0,06 = ?"
+  - id: "s8-2"
+    judul: "Aturan 72"
+    emoji: "⏰"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Investasi dengan return **9% per tahun** (majemuk). Pakai Aturan 72: kira-kira berapa tahun sampai uangmu berlipat dua?
+    pilihan:
+      - "72 tahun"
+      - "8 tahun"
+      - "9 tahun"
+      - "4 tahun"
+    jawaban: 1
+    penjelasan: |
+      Aturan 72: `72 ÷ bunga` = tahun untuk dobel. 72 ÷ 9 = **8 tahun**. Opsi lain: 72 tahun = lupa dibagi. 9 tahun = mengira return sama dengan waktu. 4 tahun = 72 ÷ 18, salah angka.
+
+      Ini perkiraan cepat yang berguna: return 12% → 6 tahun. Return 6% → 12 tahun. Makin tinggi return, makin cepat dobel. Return kecil tapi konsisten pun akhirnya besar karena compounding.
+    kode: |
+      print(f"72 / 9 = {72 / 9:.0f} tahun")   # 8 tahun
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "72 tahun itu kalau bunganya 1% — di sini 9%."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "8 tahun benar: 72 ÷ 9 = 8."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "9 itu bunganya, bukan tahunnya. Bagilah 72 dengan 9."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4 tahun itu 72 ÷ 18 — kamu salah ambil angka."
+    petunjuk:
+      - "Aturan 72: 72 dibagi persen bunga."
+      - "72 ÷ 9 = ?"
+  - id: "s8-3"
+    judul: "Sederhana vs Majemuk"
+    emoji: "⚔️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Dua tawaran untuk Rp10.000.000 selama 5 tahun:
+      - **A**: bunga sederhana 12% per tahun
+      - **B**: bunga majemuk 10% per tahun
+
+      Mana yang lebih banyak di akhir tahun ke-5? Berapa selisihnya?
+    pilihan:
+      - "A — 12% lebih besar dari 10%"
+      - "B — majemuk 10%: 10jt × 1,1⁵ ≈ 16,1jt vs A: 10jt + (5×1,2jt) = 16jt. B menang tipis ~110rb"
+      - "Sama saja — bedanya cuma cara hitung"
+      - "A — sederhana lebih aman pasti menang"
+    jawaban: 1
+    penjelasan: |
+      A: 10jt + (10jt × 0,12 × 5) = 10 + 6 = **16jt**. B: 10jt × 1,1⁵ = 10 × 1,6105 = **16,105jt**. B menang ~110 ribu.
+
+      Ajaibnya: bunga B LEBIH KECIL (10% vs 12%), tapi menang karena bunga berbunga. Makin lama waktunya, makin telak kemenangan majemuk. Contoh 10 tahun: A 22jt vs B 25,9jt. Pelajaran: jangan cuma lihat angka persen. Tanya juga: "majemuk atau sederhana?" dan "berapa lama?".
+    kode: |
+      a = 10_000_000 * (1 + 0.12 * 5)
+      b = 10_000_000 * (1 + 0.10) ** 5
+      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
+      print(f"Selisih: Rp{(b-a):,.0f}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "12% > 10% memang, tapi hitung dulu: A = 16jt, B = 16,1jt. Persen bukan satu-satunya."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Benar: B menang tipis di tahun ke-5, dan selisihnya membesar seiring waktu."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak sama: majemuk menghitung bunga dari bunga — hasil akhir berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "'Lebih aman' bukan berarti hasil lebih besar — hitung angkanya."
+    petunjuk:
+      - "A: modal + (modal × 0,12 × 5)."
+      - "B: modal × 1,1 pangkat 5."

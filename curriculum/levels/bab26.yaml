@@ -1,0 +1,312 @@
+# ============================================================
+# BAB 26 — PANDAS (TRACK: PYTHON LIBRARIES)
+# Series & DataFrame — analisis data saham ala data scientist.
+# ============================================================
+bab: 26
+track: libs
+judul: "Pandas: Analisis Data Saham"
+emoji: "🐼"
+deskripsi: "Pandas = Excel versi Python: tabel data dengan filter, statistik, dan agregasi. Library (paket kode siap pakai) paling dipakai untuk analisis keuangan."
+pelajaran:
+  - id: "26-1"
+    judul: "Series & DataFrame"
+    menit: 5
+    materi: |
+      **Pandas** memberi dua struktur utama:
+      - **Series** = satu kolom data berlabel (seperti list + nama).
+      - **DataFrame** = tabel: beberapa kolom, seperti spreadsheet.
+
+      ```python
+      import pandas as pd
+      saham = pd.DataFrame({
+          "nama": ["TLKM", "BBRI", "CUAN"],
+          "harga": [4000, 4500, 1500],
+          "vol": [120000, 80000, 25000],
+      })
+      print(saham["harga"])        # ambil satu kolom → Series
+      print(saham["harga"].mean()) # 3333.33
+      print(saham[saham["harga"] > 2000])  # filter baris
+      ```
+
+      Bedanya dengan dict/list: data tersusun rapi per KOLOM. Operasi statistik tinggal `.mean()`, `.max()`, `.describe()`. Filter juga satu baris: `df[df.kolom > nilai]`.
+
+      Di quant: satu baris data = satu hari/aset; kolom = tanggal, harga, volume, return. DataFrame = cara standar menyimpan data pasar.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"harga": [4000, 4500, 1500]})
+      print(df.describe())   # statistik lengkap!
+    penjelasan: "Series = 1 kolom; DataFrame = tabel. Filter & statistik satu baris — ini Excel yang bisa diprogram."
+  - id: "26-2"
+    judul: "Baca Data & Filter"
+    menit: 5
+    materi: |
+      Data sungguhan di QuantLab ada di `data/market/*.csv` (TLKM, BBRI, IHSG, BTC...). Membacanya:
+
+      ```python
+      import pandas as pd
+      df = pd.read_csv("/home/yuan/quantlab/data/market/TLKM.csv")
+      print(df.head())        # 5 baris pertama
+      print(df["close"].mean())
+      ```
+
+      (Di Live Runner kamu bisa coba ini — file CSV-nya terbaca read-only di dalam sandbox.)
+
+      Filter ala Excel tapi satu baris:
+      ```python
+      di_atas_3000 = df[df["close"] > 3000]   # baris harga > 3000
+      print(len(di_atas_3000))                 # berapa hari
+      terakhir_5 = df.tail(5)                  # 5 baris terakhir
+      ```
+
+      Ini persis pekerjaan analis: baca data → filter → statistik → keputusan. Tanpa pandas: 20 baris loop; dengan pandas: 3 baris.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/home/yuan/quantlab/data/market/TLKM.csv")
+      print(len(df[df["close"] > 3000]))   # hari di atas 3000
+    penjelasan: "read_csv → DataFrame. Filter df[df.kolom > x]. Semua analisis data pasar dimulai dari sini."
+skenario:
+  - id: "s26-1"
+    judul: "Baca Kode: DataFrame"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.DataFrame({"harga": [4000, 4500, 1500]})
+      print(df["harga"].mean())
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "4000"
+      - "3333.33"
+      - "10000"
+      - "Error — kolom harga tidak ada"
+    jawaban: 1
+    penjelasan: |
+      `df["harga"]` = kolom harga = Series([4000, 4500, 1500]). `.mean()` = (4000+4500+1500)/3 = **3333.33**. Ini pola inti pandas: ambil kolom → operasi statistik. DataFrame = tabel. Kolom diakses dengan `df["nama"]`. Setiap kolom punya `.mean()`, `.max()`, `.describe()`.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"harga": [4000, 4500, 1500]})
+      print(df["harga"].mean())   # 3333.33
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "4000 = elemen pertama, bukan rata-rata."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "3333.33 benar — mean kolom."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "10000 = jumlahnya (4000+4500+1500), bukan rata-rata."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Kolom 'harga' ada — DataFrame dibuat dengan kolom itu."
+    petunjuk:
+      - "df[\"harga\"] mengambil kolom."
+      - ".mean() = jumlah ÷ banyak."
+  - id: "s26-2"
+    judul: "Filter Data"
+    emoji: "🔎"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      DataFrame `df` berisi 200 hari harga TLKM (kolom `close`). Kamu mau tahu: berapa hari harga di atas 3.000? Kode yang benar?
+    pilihan:
+      - "`df.close > 3000`"
+      - "`len(df[df[\"close\"] > 3000])`"
+      - "`df[3000]`"
+      - "`df.mean() > 3000`"
+    jawaban: 1
+    penjelasan: |
+      `df[df["close"] > 3000]` = ambil baris yang memenuhi kondisi → DataFrame hasil filter. Lalu `len()` menghitung barisnya. Opsi lain: `df.close > 3000` hanya memberi rangkaian True/False — belum dihitung. `df[3000]` = salah indeks. `df.mean() > 3000` = membandingkan rata-rata, bukan menghitung hari. Filter + len = pola dasar analisis.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/home/yuan/quantlab/data/market/TLKM.csv")
+      print(len(df[df["close"] > 3000]))
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Itu baru deretan True/False — belum jumlahnya."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: filter + len = jumlah hari."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "df[3000] bukan cara mengakses — itu indeks baris."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Itu membandingkan rata-rata, bukan menghitung hari di atas 3000."
+    petunjuk:
+      - "Filter: df[df['close'] > 3000]."
+      - "len() menghitung baris hasil filter."
+  - id: "s26-3"
+    judul: "Pandas vs Manual"
+    emoji: "⚔️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Data 10.000 baris (tanggal, harga, volume). Tugas: (1) rata-rata harga, (2) total volume, (3) hari dengan harga > 5.000. Tanpa pandas butuh ~30 baris loop. Dengan pandas?
+    pilihan:
+      - "Tetap 30 baris — pandas tidak membantu tugas ini"
+      - "3 baris: df['harga'].mean(), df['vol'].sum(), len(df[df['harga'] > 5000])"
+      - "Pandas error untuk data 10.000 baris"
+      - "Harus pakai NumPy dulu, baru pandas"
+    jawaban: 1
+    penjelasan: |
+      Tiga tugas, tiga baris: `mean()`, `sum()`, dan filter+len. Pandas menghapus loop manual. Makin besar datanya, makin terasa bedanya. NumPy tidak wajib dulu — pandas memakainya di dalam secara otomatis. Itulah kenapa pandas jadi standar analisis keuangan: baca → filter → agregasi (meringkas data), semua singkat.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/home/yuan/quantlab/data/market/BTC.csv")
+      print(df["close"].mean())
+      print(df["close"].sum())
+      print(len(df[df["close"] > 50000]))
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Pandas justru MEMBUANG loop — 3 baris cukup."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: mean, sum, filter+len — 3 baris untuk 3 tugas."
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "10rb baris itu kecil untuk pandas — jutaan pun lancar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Pandas memakai NumPy di dalamnya — tidak perlu manual."
+    petunjuk:
+      - "Agregasi: .mean(), .sum(), .max()."
+      - "Hitung baris hasil filter dengan len()."
+soal:
+  - id: "p26-1"
+    judul: "DataFrame Pertamamu"
+    emoji: "🐼"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Gunakan pandas! Baca dua baris: nama saham dan harga. Buat DataFrame dengan kolom `nama` dan `harga`, lalu cetak harga dari baris pertama: `df['harga'][0]`.
+    input_spec: |
+      Baris 1: nama. Baris 2: harga (angka bulat).
+    output_spec: |
+      Satu baris: harga (angka).
+    contoh:
+      - input: "TLKM\n4000"
+        output: "4000"
+      - input: "BBRI\n4500"
+        output: "4500"
+    tes:
+      - input: "TLKM\n4000"
+        output: "4000"
+      - input: "BBRI\n4500"
+        output: "4500"
+      - input: "CUAN\n1500"
+        output: "1500"
+      - input: "BTC\n77221"
+        output: "77221"
+    solusi: |
+      import pandas as pd
+      nama = input()
+      harga = int(input())
+      df = pd.DataFrame({"nama": [nama], "harga": [harga]})
+      print(df["harga"][0])
+    petunjuk:
+      - "pd.DataFrame({'nama': [..], 'harga': [..]})."
+      - "Akses kolom df['harga'], elemen [0]."
+  - id: "p26-2"
+    judul: "Statistik Portofolio"
+    emoji: "📊"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Pandas! Baca N, lalu N baris `nama harga`. Buat DataFrame dengan kolom `nama` & `harga`. Cetak: baris 1 = harga tertinggi (`int`), baris 2 = rata-rata harga (`int`).
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama harga`.
+    output_spec: |
+      Baris 1: max (int). Baris 2: mean (int).
+    contoh:
+      - input: "3\nTLKM 4000\nBBRI 4500\nCUAN 1500"
+        output: "4500\n3333"
+      - input: "2\nA 100\nB 200"
+        output: "200\n150"
+    tes:
+      - input: "3\nTLKM 4000\nBBRI 4500\nCUAN 1500"
+        output: "4500\n3333"
+      - input: "2\nA 100\nB 200"
+        output: "200\n150"
+      - input: "1\nX 777"
+        output: "777\n777"
+      - input: "4\nA 1000\nB 2000\nC 3000\nD 4000"
+        output: "4000\n2500"
+    solusi: |
+      import pandas as pd
+      n = int(input())
+      nama, harga = [], []
+      for _ in range(n):
+          p = input().split()
+          nama.append(p[0])
+          harga.append(int(p[1]))
+      df = pd.DataFrame({"nama": nama, "harga": harga})
+      print(int(df["harga"].max()))
+      print(int(df["harga"].mean()))
+    petunjuk:
+      - "Kumpulkan list dulu, lalu DataFrame."
+      - "max() dan mean() pada kolom harga."
+  - id: "p26-3"
+    judul: "Filter di Atas Rata-rata"
+    emoji: "🎯"
+    tingkat: sulit
+    xp: 55
+    menit: 10
+    cerita: |
+      Pandas! Baca N, lalu N baris `nama harga`. Cetak NAMA-NAMA yang harganya DI ATAS rata-rata, satu nama per baris (urutan kemunculan).
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama harga`.
+    output_spec: |
+      Nama-nama dengan harga > rata-rata, satu per baris.
+    contoh:
+      - input: "3\nTLKM 4000\nBBRI 4500\nCUAN 1500"
+        output: "TLKM\nBBRI"
+      - input: "2\nA 100\nB 200"
+        output: "B"
+    tes:
+      - input: "3\nTLKM 4000\nBBRI 4500\nCUAN 1500"
+        output: "TLKM\nBBRI"
+      - input: "2\nA 100\nB 200"
+        output: "B"
+      - input: "4\nA 10\nB 20\nC 30\nD 40"
+        output: "C\nD"
+      - input: "2\nX 50\nY 50"
+        output: ""
+    solusi: |
+      import pandas as pd
+      n = int(input())
+      nama, harga = [], []
+      for _ in range(n):
+          p = input().split()
+          nama.append(p[0])
+          harga.append(int(p[1]))
+      df = pd.DataFrame({"nama": nama, "harga": harga})
+      rata = df["harga"].mean()
+      atas = df[df["harga"] > rata]
+      for _, row in atas.iterrows():
+          print(row["nama"])
+    petunjuk:
+      - "Filter: df[df['harga'] > rata]."
+      - "Loop hasil filter dengan iterrows() atau zip kolom."

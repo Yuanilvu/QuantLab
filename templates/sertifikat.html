@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Sertifikat — {{ t.name }} — QuantLab{% endblock %}
+{% block content %}
+<section class="certwrap">
+  {% if complete %}
+  <div class="cert">
+    <div class="certhead">
+      <span class="certlogo">⚡ QuantLab</span>
+      <span class="certbadge">{{ t.emoji }}</span>
+    </div>
+    <h1>Sertifikat Penyelesaian</h1>
+    <p class="certsub">diberikan kepada</p>
+    <h2 class="certname">{{ user.username }}</h2>
+    <p class="certbody">atas keberhasilan menyelesaikan seluruh materi track</p>
+    <h3 class="certtrack">{{ t.emoji }} {{ t.name }}</h3>
+    <p class="meta">Total {{ t.total }} aktivitas (skenario & soal coding) — {{ tanggal }}</p>
+    <div class="certfoot">
+      <span>QuantLab — belajar quant lewat skenario</span>
+      <span>Total XP: {{ user.xp }}</span>
+    </div>
+  </div>
+  <div class="scenactions" style="justify-content:center; margin-top:16px">
+    <button class="btn primary" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+    <a class="btn ghost" href="{{ url_for('peta') }}">← Kembali ke Peta</a>
+  </div>
+  {% else %}
+  <div class="authcard center">
+    <h1>🔒 Belum Lengkap</h1>
+    <p>Track <b>{{ t.name }}</b> baru {{ t.done }}/{{ t.total }} aktivitas ({{ t.pct }}%).<br>Selesaikan semua skenario & soal di track ini untuk membuka sertifikat.</p>
+    <a class="btn primary" href="{{ url_for('peta') }}">Lanjut Belajar →</a>
+  </div>
+  {% endif %}
+</section>
+
+<style>
+@media print {
+  .topbar, .foot, .certwrap .scenactions, .crumb { display: none !important; }
+  body { background: #fff; }
+  .cert { box-shadow: none !important; border-color: #ccc !important; color: #111 !important; }
+  .cert * { color: #111 !important; }
+  main { max-width: 100%; padding: 0; }
+}
+</style>
+{% endblock %}

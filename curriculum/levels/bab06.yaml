@@ -1,0 +1,339 @@
+# ============================================================
+# BAB 6 — PYTHON: PERULANGAN (TRACK: PYTHON DARI NOL)
+# for/range, akumulasi — memproses banyak data harga.
+# ============================================================
+bab: 6
+track: python
+judul: "Python: Perulangan"
+emoji: "🔁"
+deskripsi: "Data pasar = ribuan angka. Perulangan (loop) membuat komputer memproses semuanya tanpa lelah."
+pelajaran:
+  - id: "6-1"
+    judul: "Ulangi dengan for"
+    menit: 5
+    materi: |
+      Data harga saham: ratusan ribu angka. Manusia tidak mungkin membaca satu-satu. Komputer bisa, pakai **loop** (perulangan).
+
+      ```python
+      for i in range(5):
+          print(i)
+      ```
+      Mencetak 0, 1, 2, 3, 4. `range(5)` = daftar angka 0 sampai 4 (mulai dari 0!).
+
+      Mau mulai dari 1? `range(1, 6)` = 1, 2, 3, 4, 5. Mau sampai n? `range(1, n + 1)`.
+
+      Bayangkan untuk data: "untuk setiap hari, cetak harganya". Loop + data = kekuatan quant. Kamu tidak perlu melihat 1.000 harga. Python yang melihat semuanya untukmu.
+    kode: |
+      for i in range(1, 6):
+          print(f"Hari {i}")
+      # Hari 1, Hari 2, ... Hari 5
+    penjelasan: "for i in range(...) mengulang. range(a, b) = a sampai b-1. Indentasi menentukan isi loop."
+  - id: "6-2"
+    judul: "Menjumlah dalam Loop"
+    menit: 5
+    materi: |
+      Pekerjaan paling umum di quant: **menjumlahkan banyak angka**. Polanya:
+
+      ```python
+      total = 0
+      for i in range(5):
+          harga = int(input())   # baca 5 harga, satu per baris
+          total = total + harga  # timbun ke total
+      rata2 = total / 5
+      print(rata2)
+      ```
+
+      `total = total + harga` artinya: ambil total lama, tambah harga baru, simpan lagi. Bisa ditulis pendek: `total += harga`. Ini namanya **akumulasi**.
+
+      Kenapa penting? Rata-rata harga, total profit, jumlah trade, volume — semua pakai pola ini. Setelah bisa loop, kamu bisa hitung moving average (rata-rata harga n hari terakhir, Bab 13) dari data nyata: jumlahkan n harga terakhir, bagi n.
+    kode: |
+      total = 0
+      for i in range(3):
+          total += 100   # 3x tambah 100
+      print(total)       # 300
+    penjelasan: "Akumulasi: total += nilai. Loop + akumulasi = rata-rata, total, dan semua statistik."
+skenario:
+  - id: "s6-1"
+    judul: "Baca Kode: Loop Sederhana"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      for i in range(3):
+          print("HITUNG")
+      ```
+      Berapa kali kata "HITUNG" tercetak?
+    pilihan:
+      - "1 kali"
+      - "3 kali"
+      - "2 kali"
+      - "Error — i belum didefinisikan"
+    jawaban: 1
+    penjelasan: |
+      `range(3)` = daftar [0, 1, 2] — ada 3 angka. Loop menjalankan `print("HITUNG")` untuk setiap angka → **3 kali**. `i` diisi otomatis oleh Python (0, lalu 1, lalu 2). Tidak perlu didefinisikan manual. Loop = perintah "ulangi sebanyak n kali". Ini fondasi memproses data besar.
+    kode: |
+      for i in range(3):
+          print("HITUNG")
+      # HITUNG
+      # HITUNG
+      # HITUNG
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "1 kali itu kalau tanpa loop. range(3) artinya ulangi 3x."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "3 kali benar: range(3) = 3 putaran."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "2 kali itu kalau range(2). Range(3) berisi 0,1,2 = tiga angka."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error — i dibuat otomatis oleh for."
+    petunjuk:
+      - "range(3) berisi berapa angka?"
+      - "Setiap angka = satu kali print."
+  - id: "s6-2"
+    judul: "Baca Kode: Akumulasi"
+    emoji: "➕"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      ```python
+      total = 0
+      for i in range(3):
+          total += 50
+      print(total)
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "50"
+      - "150"
+      - "3"
+      - "0"
+    jawaban: 1
+    penjelasan: |
+      Loop 3 putaran. Tiap putaran `total += 50` (total = total + 50): 0 → 50 → 100 → **150**. Ini akumulasi. Pola yang sama dipakai menghitung total profit 3 trade (+50 masing-masing), total volume, atau jumlah apa pun. Bisa baca ini? Kamu bisa baca logika penghitung di bot mana pun.
+    kode: |
+      total = 0
+      for i in range(3):
+          total += 50
+      print(total)   # 150
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "50 itu hasil 1 putaran saja. Loop-nya 3 putaran."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "150 benar: 50 × 3, ditimbun lewat total += 50."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3 itu banyaknya putaran, bukan hasil akumulasi."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0 itu nilai awal — tapi sudah ditambah 3x."
+    petunjuk:
+      - "Berapa kali total ditambah 50?"
+      - "50 × 3 = ?"
+  - id: "s6-3"
+    judul: "Kenapa Loop Itu Penting"
+    emoji: "💡"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Kamu punya data harga TLKM 250 hari (satu angka per hari). Mau hitung rata-rata 250 hari itu. Tanpa loop, kamu harus menulis `harga1 + harga2 + ... + harga250` — 250 variabel! Apa cara yang benar?
+    pilihan:
+      - "Tulis semua 250 variabel manual — biar jelas"
+      - "Pakai loop: total = 0; untuk tiap harga: total += harga; lalu total / 250"
+      - "Pakai kalkulator — lebih cepat"
+      - "Tidak mungkin — Python tidak bisa pegang data sebanyak itu"
+    jawaban: 1
+    penjelasan: |
+      Loop memproses 250 angka, bahkan 250.000, dengan kode sama pendeknya: `total = 0`, lalu `for setiap harga: total += harga`, akhirnya `total / 250`. Inilah kekuatan quant: **kode tidak peduli datanya 250 atau 2,5 juta.** Polanya sama. Ini juga dasar moving average (Bab 13).
+
+      Menulis 250 variabel manual = rawan salah ketik. Kalkulator = harus salin satu-satu. "Tidak mungkin"? Salah. Python justru dibuat untuk ini.
+    kode: |
+      # 250 harga (contoh 5):
+      harga = [1000, 1100, 900, 1200, 1050]
+      total = 0
+      for h in harga:
+          total += h
+      print(total / len(harga))   # 1050.0
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Manual 250 variabel = 250x peluang salah ketik. Itu bukan 'jelas', itu rentan bug."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Loop benar: kode pendek, berlaku untuk data berapa pun. Inilah cara kerja quant sungguhan."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Kalkulator = salin 250 angka manual, 1 jam kerja + salah hitung. Komputer ada untuk ini."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Python justru paling jago di data besar. Loop + list = standar industri."
+    petunjuk:
+      - "Apa yang dilakukan loop terhadap setiap harga?"
+      - "Berapa kode yang dibutuhkan untuk 250 data vs 5 data?"
+soal:
+  - id: "p6-1"
+    judul: "Cetak 1 Sampai N"
+    emoji: "🔢"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Baca satu angka N. Cetak angka 1 sampai N, satu angka per baris. (Pakai `range(1, n + 1)` supaya mulai dari 1.)
+    input_spec: |
+      Satu baris berisi angka bulat N.
+    output_spec: |
+      N baris: angka 1, 2, 3, ..., N — masing-masing di baris sendiri.
+    contoh:
+      - input: "3"
+        output: "1\n2\n3"
+      - input: "1"
+        output: "1"
+    tes:
+      - input: "3"
+        output: "1\n2\n3"
+      - input: "1"
+        output: "1"
+      - input: "5"
+        output: "1\n2\n3\n4\n5"
+      - input: "2"
+        output: "1\n2"
+    solusi: |
+      n = int(input())
+      for i in range(1, n + 1):
+          print(i)
+    petunjuk:
+      - "range(1, n+1) membuat angka 1 sampai n."
+      - "Print i di dalam loop, satu per baris."
+  - id: "p6-2"
+    judul: "Jumlah 1 Sampai N"
+    emoji: "➕"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Baca angka N. Hitung jumlah 1 + 2 + 3 + ... + N, lalu cetak hasilnya. (Gunakan akumulasi `total += i` di dalam loop.)
+    input_spec: |
+      Satu baris berisi angka bulat N.
+    output_spec: |
+      Satu baris: jumlah 1 sampai N.
+    contoh:
+      - input: "5"
+        output: "15"
+      - input: "10"
+        output: "55"
+    tes:
+      - input: "5"
+        output: "15"
+      - input: "10"
+        output: "55"
+      - input: "1"
+        output: "1"
+      - input: "100"
+        output: "5050"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(1, n + 1):
+          total += i
+      print(total)
+    petunjuk:
+      - "Mulai dengan total = 0."
+      - "Di dalam loop: total += i."
+  - id: "p6-3"
+    judul: "Rata-rata Harga"
+    emoji: "📊"
+    tingkat: sulit
+    xp: 55
+    menit: 10
+    cerita: |
+      Baca angka N (berapa hari), lalu N baris harga (satu harga per baris). Cetak TOTAL semua harga, lalu RATA-RATA-nya (pembulatan ke bawah / bilangan bulat).
+    input_spec: |
+      Baris 1: N (jumlah hari). N baris berikutnya: harga harian (angka bulat, satu per baris).
+    output_spec: |
+      Baris 1: total semua harga. Baris 2: rata-rata (total // N).
+    contoh:
+      - input: "3\n1000\n2000\n3000"
+        output: "6000\n2000"
+      - input: "2\n500\n700"
+        output: "1200\n600"
+    tes:
+      - input: "3\n1000\n2000\n3000"
+        output: "6000\n2000"
+      - input: "4\n1000\n1100\n900\n1000"
+        output: "4000\n1000"
+      - input: "2\n500\n700"
+        output: "1200\n600"
+      - input: "1\n999"
+        output: "999\n999"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          total += int(input())
+      print(total)
+      print(total // n)
+    petunjuk:
+      - "Baca n dulu, lalu loop n kali membaca harga."
+      - "Rata-rata = total // n (pembulatan ke bawah)."
+  - id: "p6-4"
+    judul: "Harga Tertinggi & Terendah"
+    emoji: "📊"
+    tingkat: sulit
+    xp: 55
+    menit: 10
+    cerita: |
+      Baca N (jumlah hari), lalu N baris harga. Cetak harga TERTINGGI dan TERENDAH, masing-masing di baris sendiri. (Kerjakan dengan loop — jangan pakai list dulu, nanti di Bab 17 ada cara lebih singkat.)
+    input_spec: |
+      Baris 1: N. N baris berikutnya: harga harian.
+    output_spec: |
+      Baris 1: harga tertinggi. Baris 2: harga terendah.
+    contoh:
+      - input: "4\n1000\n2000\n500\n1500"
+        output: "2000\n500"
+      - input: "3\n700\n700\n700"
+        output: "700\n700"
+    tes:
+      - input: "4\n1000\n2000\n500\n1500"
+        output: "2000\n500"
+      - input: "3\n700\n700\n700"
+        output: "700\n700"
+      - input: "1\n999"
+        output: "999\n999"
+      - input: "5\n50\n80\n20\n60\n90"
+        output: "90\n20"
+    solusi: |
+      n = int(input())
+      tertinggi = -1
+      terendah = 10 ** 9
+      for i in range(n):
+          h = int(input())
+          if h > tertinggi:
+              tertinggi = h
+          if h < terendah:
+              terendah = h
+      print(tertinggi)
+      print(terendah)
+    petunjuk:
+      - "Mulai dengan tertinggi = -1 dan terendah = angka sangat besar."
+      - "Di tiap loop, bandingkan dan perbarui keduanya."

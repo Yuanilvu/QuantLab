@@ -1,0 +1,172 @@
+# ============================================================
+# BAB 10 — RISIKO & RETURN (TRACK: FINANCE DASAR)
+# Hubungan risiko-imbalan, diversifikasi sederhana.
+# ============================================================
+bab: 10
+track: finance
+judul: "Risiko & Return"
+emoji: "🎭"
+deskripsi: "Return tinggi selalu datang dengan risiko tinggi. Paham ini = tidak gampang tertipu tawaran 'untung besar tanpa risiko'."
+pelajaran:
+  - id: "10-1"
+    judul: "High Return = High Risk"
+    menit: 5
+    materi: |
+      Aturan paling dasar di keuangan: **imbalan tinggi selalu datang dengan risiko tinggi.** Ada tawaran return besar "tanpa risiko"? Itu penipuan.
+
+      Spektrumnya:
+      - **Deposito**: return ~4-6%/tahun, risiko nyaris nol (dijamin LPS). Return rendah = aman.
+      - **Obligasi**: return ~7-9%, risiko kecil (bisa gagal bayar).
+      - **Saham**: return jangka panjang ~10-15%/tahun, tapi bisa -30% dalam setahun.
+      - **Kripto/leverage** (pinjaman untuk perbesar posisi): bisa +100% setahun... dan -90%.
+
+      Kenapa? Orang tidak mau menanggung risiko tanpa dibayar. Makin berisiko asetnya, makin besar "harga" yang ditawarkan. Ini disebut **risk premium** — upah atas risiko yang kamu pikul.
+
+      Di trading: strategi yang menjanjikan 5% per HARI (bukan per tahun) itu bendera merah. Return 10% per bulan konsisten juga patut dicurigai. Biasanya ada leverage tersembunyi di baliknya — siap meledak. Lihat return besar? Tanya dulu: "risikonya apa, seberapa besar?"
+    kode: |
+      # Return tinggi selalu punya risiko — cek drawdown-nya
+      strategi = {"return": 40, "max_dd": 55}
+      if strategi["max_dd"] > 30:
+          print("Waspada: return tinggi, risiko ekstrem")
+    penjelasan: "Return dan risiko dua sisi koin. Tawaran 'return tinggi tanpa risiko' = penipuan."
+  - id: "10-2"
+    judul: "Jangan Satu Keranjang"
+    menit: 5
+    materi: |
+      Pepatah: **jangan taruh semua telur di satu keranjang.** Keranjang jatuh? Semua telur pecah. Uang pun begitu.
+
+      Diversifikasi = menyebar uang ke beberapa aset yang TIDAK bergerak sama. Satu jatuh, yang lain menahan.
+
+      Contoh sederhana:
+      - 100% saham bank → krisis bank = hancur semua.
+      - 50% saham bank + 30% saham konsumer + 20% deposito → krisis cuma kena 50% portofoliomu.
+
+      Syarat penting: asetnya harus **beda arah/beda sektor** (Bab 9). Dua saham bank = tetap satu keranjang. Saham + deposito + emas = keranjang beda-beda.
+
+      Di quant: jangan pasang semua modal di SATU strategi. Dua strategi yang tidak berkorelasi (momentum + carry) lebih tahan banting. Satu strategi bisa jeblok berbulan-bulan.
+    kode: |
+      modal = 10_000_000
+      alokasi = {"bank": 0.5, "konsumer": 0.3, "deposito": 0.2}
+      for nama, porsi in alokasi.items():
+          print(f"{nama}: Rp{modal * porsi:,.0f}")
+    penjelasan: "Sebar ke aset yang tidak bergerak sama. Satu keranjang = satu titik kegagalan."
+skenario:
+  - id: "s10-1"
+    judul: "Tawaran Menggiurkan"
+    emoji: "🪤"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Ada aplikasi menjanjikan "return 2% PER HARI, dijamin, tanpa risiko, modal aman 100%". Kamu lihat teman sudah dapat profit. Responsmu?
+    pilihan:
+      - "Coba modal kecil dulu — kalau benar, naikkan"
+      - "Waspada: return 2%/hari ≈ 730%/tahun — itu tidak masuk akal; 'dijamin tanpa risiko' = ciri penipuan"
+      - "Langsung pasang semua — kesempatan langka"
+      - "Tunggu teman dapat lebih banyak lagi, baru ikut"
+    jawaban: 1
+    penjelasan: |
+      2% per hari = 2% × 365 ≈ **730% per tahun**. Mustahil konsisten — return terbaik di pasar nyata saja < 50%/tahun. Lalu "dijamin tanpa risiko" melanggar hukum keuangan nomor satu (Bab 20-1). Ini pola penipuan klasik (investasi bodong): korban awal dibayar pakai uang korban baru (skema ponzi). Teman dapat profit? Itu umpan, bukan bukti. Terlalu bagus untuk jadi kenyataan? Biasanya memang bukan kenyataan.
+    kode: |
+      print(f"2% x 365 = {2 * 365}%/tahun")   # 730% — tidak masuk akal
+    hasil:
+      - ret: -100.0
+        dd: 100.0
+        win: 5
+        note: "Modal kecil 'nyoba': profit 2 minggu, lalu aplikasi hilang + uang ikut hilang. Skema ponzi klasik."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Benar — kamu hindari. 6 bulan kemudian aplikasi itu kolaps dan korban kehilangan semuanya."
+      - ret: -100.0
+        dd: 100.0
+        win: 3
+        note: "All-in: semuanya hilang. 'Kesempatan langka' = jebakan."
+      - ret: -50.0
+        dd: 50.0
+        win: 10
+        note: "Tunggu teman kaya dulu: kamu masuk di fase akhir, dapat 1x profit, lalu hilang 50%+."
+    petunjuk:
+      - "2% per hari setahun jadi berapa persen?"
+      - "'Dijamin tanpa risiko' itu ada di dunia nyata?"
+  - id: "s10-2"
+    judul: "Dua Keranjang"
+    emoji: "🧺"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Kamu punya Rp10 juta. Opsi: (A) semua ke saham bank BBRI; (B) Rp5 juta BBRI + Rp3 juta saham konsumer (UNVR) + Rp2 juta deposito. Terjadi krisis perbankan: BBRI -25%, UNVR -3%, deposito 0%. Mana hasil akhir yang lebih baik?
+    pilihan:
+      - "A — BBRI yang naik juga paling besar kalau pasar bagus"
+      - "B — krisis: A jadi Rp7,5jt; B jadi 3,75 + 2,91 + 2 = Rp8,66jt"
+      - "Sama saja — semua kena krisis"
+      - "A — bank selalu pulih"
+    jawaban: 1
+    penjelasan: |
+      A: 10jt × (1 − 0,25) = **Rp7,5jt**. B: BBRI 5jt → 3,75jt; UNVR 3jt → 2,91jt; deposito 2jt → 2jt. Total **Rp8,66jt**. Selisih 1,16jt (~15%) — cuma dari menyebar. Diversifikasi tidak bikin kamu kaya lebih cepat di pasar naik. Tapi dia MENYELAMATKANMU di pasar jatuh. Masih punya modal = masih bisa beli saat pasar naik lagi.
+    kode: |
+      a = 10_000_000 * 0.75
+      b = 5_000_000 * 0.75 + 3_000_000 * 0.97 + 2_000_000
+      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
+    hasil:
+      - ret: -25.0
+        dd: 25.0
+        win: 25
+        note: "A benar-benar jadi 7,5jt. 'Pulih' butuh naik 33% — setahun lebih."
+      - ret: -13.4
+        dd: 13.4
+        win: 74
+        note: "B benar: 8,66jt, rugi cuma 13%. Kamu selamat + punya amunisi beli saat murah."
+      - ret: -25.0
+        dd: 25.0
+        win: 20
+        note: "Tidak sama: UNVR & deposito nyaris tidak kena. Itulah gunanya beda keranjang."
+      - ret: -25.0
+        dd: 25.0
+        win: 15
+        note: "'Bank selalu pulih' = harapan, bukan strategi. Sambil pulih, kamu kehilangan peluang lain."
+    petunjuk:
+      - "Hitung A: 10jt × 0,75."
+      - "Hitung B bagian per bagian, lalu jumlahkan."
+  - id: "s10-3"
+    judul: "Tahun Lalu 30%"
+    emoji: "🎰"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Sahammu naik 30% tahun ini — jauh di atas rata-rata historis 10%/tahun. Temanmu bilang "tahun depan pasti naik lagi, tambah semua uangmu". Pikiran yang paling sehat?
+    pilihan:
+      - "Benar — momentum, tambah semua"
+      - "Waspada: 30% itu di atas rata-rata (mean reversion/siklus); jangan asumsikan berulang — tetap patuh rencana alokasi"
+      - "Jual semua sekarang — pasti akan turun"
+      - "Tambah dengan pinjaman — kalau 30% lagi, cepat kaya"
+    jawaban: 1
+    penjelasan: |
+      Return 30% sekali tidak mengubah probabilitas tahun depan. Rata-rata pasar ~10%, dengan variasi besar. Asumsi "pasti naik lagi" = **recency bias** (Bab 4/8) — menganggap yang baru terjadi akan terus terjadi. Tambah semua uang = naikkan risiko di titik valuasi tinggi. Jual semua = panik menjual aset bagus. Pinjaman = leverage di puncak optimisme — paling berbahaya. Jawaban sehat: syukuri tahun baik, tetap patuh rencana (alokasi, rebalancing Bab 9). Ingat: tahun baik sering diikuti koreksi.
+    kode: |
+      rata2 = 0.10
+      tahun_ini = 0.30
+      print("Return historis ≠ jaminan tahun depan")
+      print("Tetap patuh rencana alokasi & rebalancing")
+    hasil:
+      - ret: -18.0
+        dd: 22.0
+        win: 15
+        note: "Tambah semua: tahun berikutnya -15%. Kamu kehilangan sebagian profit + modal di puncak."
+      - ret: 8.0
+        dd: 4.0
+        win: 72
+        note: "Patuh rencana: tahun berikutnya -4% (koreksi ringan), tapi portofolio seimbang tetap +8% karena rebalancing."
+      - ret: 12.0
+        dd: 0.0
+        win: 30
+        note: "Jual semua: pasar naik lagi 12% sebelum koreksi. Timing market = menebak."
+      - ret: -35.0
+        dd: 35.0
+        win: 5
+        note: "Pinjaman di puncak: koreksi 20% = margin call + utang. Hancur."
+    petunjuk:
+      - "30% itu di atas atau di bawah rata-rata historis?"
+      - "Satu tahun baik = jaminan tahun depan?"

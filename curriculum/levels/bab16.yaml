@@ -1,0 +1,187 @@
+# ============================================================
+# BAB 16 — STATISTIK TRADING
+# Mean, volatilitas (std dev), z-score, interval kepercayaan.
+# Bahasa angka yang dipakai semua strategi kuantitatif.
+# ============================================================
+bab: 16
+track: quant
+judul: "Statistik Trading"
+emoji: "📐"
+deskripsi: "Semua strategi quant pada akhirnya bicara angka. Rata-rata, volatilitas, seberapa yakin kamu pada sampelmu. Ini bahasa ibunya."
+pelajaran:
+  - id: "16-1"
+    judul: "Rata-rata & Volatilitas"
+    menit: 5
+    materi: |
+      Dua angka pertama dari SERANGKAIAN return:
+
+      - **Mean (rata-rata)**: return tipikal per periode. Positif = strategi menghasilkan.
+      - **Std dev / volatilitas**: seberapa lebar return menyebar dari rata-rata. Ini ukuran RISIKO.
+
+      Contoh: strategi dengan return harian rata-rata +0.1%, std 1.5%. Mayoritas hari return-nya antara -1.4% sampai +1.6% (mean ± 1 std ≈ 68% kejadian). Hari lebih ekstrem dari ±2 std cuma ~5% dari waktu.
+
+      Gabungan keduanya = **Sharpe ratio** (return ÷ std). Mean sama, std lebih kecil = lebih baik. Yang std-nya kecil bisa kamu leverage tanpa risiko hancur. Volatilitas menentukan segalanya: sizing, stop, ekspektasi drawdown.
+
+      Aturan praktis: angka rata-rata bagus? SELALU tanya "berapa std-nya?". Strategi +2%/bulan dengan std 8% sangat beda dari +2%/bulan std 2%.
+    kode: |
+      returns = [0.3, -0.2, 0.5, 0.1, -0.4, 0.6, 0.2]
+      mean = sum(returns) / len(returns)
+      var = sum((r - mean) ** 2 for r in returns) / len(returns)
+      std = var ** 0.5
+      print(f"mean {mean:.2f}% | std {std:.2f}%")
+    penjelasan: "Mean = harapan, std = risiko. Dua-duanya wajib dilaporkan bareng, tidak bisa sendiri-sendiri."
+  - id: "16-2"
+    judul: "Z-Score: Berapa Langka Kejadian Ini?"
+    menit: 5
+    materi: |
+      Z-score menjawab: "return hari ini (atau pergerakan harga) berapa standar deviasi dari normal?"
+
+      `z = (nilai - mean) / std`
+
+      - z = 1 → kejadian normal (~68% data di dalam ±1)
+      - z = 2 → agak langka (~95% di dalam ±2)
+      - z = 3 → SANGAT langka (~99.7% di dalam ±3) — terjadi ~1 dari 333 hari
+      - z = 4+ → hampir mustahil di distribusi normal. Tapi pasar punya ekor gemuk (kejadian ekstrem lebih sering dari perkiraan) — tetap bisa terjadi
+
+      Guna praktis:
+      1. **Deteksi anomali**: pergerakan z=4 kemungkinan ada kabar besar, bukan noise.
+      2. **Mean reversion** (harga cenderung balik ke rata-rata): z=-3 dari mean jangka panjang sering memantul. Tapi hati-hati — bisa terus menjauh.
+      3. **Konfirmasi regime**: volatilitas tinggi = std besar = z-score kecil untuk pergerakan yang sama.
+
+      Jangan overreact pada z=2 — itu masih wajar (5%). Pasar tiap hari punya puluhan z=2.
+    kode: |
+      mean, std = 0.05, 1.2
+      z = (3.6 - mean) / std
+      print(f"z = {z:.1f}")        # 2.96 — langka, tapi bukan mustahil
+    penjelasan: "Z-score memberi konteks: 2σ = wajar, 3σ = langka, 4σ+ = ada kabar. Jangan overreact sebelum 3σ."
+skenario:
+  - id: "s16-1"
+    judul: "Dua Saham, Return Sama"
+    emoji: "⚖️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Dua kandidat untuk modal kecil kamu (data 6 bulan):
+      - **ALII**: return harian rata-rata +0.10%, std 1.5%
+      - **BRPT**: return harian rata-rata +0.10%, std 4.2%
+      Rata-rata sama persis. Mana yang lebih menarik secara risk-adjusted?
+    pilihan:
+      - "ALII — return sama, risiko jauh lebih kecil (Sharpe lebih tinggi)"
+      - "BRPT — volatilitas tinggi = peluang besar"
+      - "Sama saja — rata-rata return-nya identik"
+      - "BRPT — std besar artinya bisa naik lebih cepat"
+    jawaban: 0
+    penjelasan: |
+      Sharpe ALII = 0.10/1.5 = **0.067**. BRPT = 0.10/4.2 = **0.024**. Return sama, tapi ALII 2.8x lebih efisien. Lebih penting: dengan std 1.5%, ALII bisa di-leverage 2x → return 0.20%/hari dengan std 3%. Masih lebih kecil dari BRPT. Volatilitas bukan peluang. Volatilitas = RISIKO yang harus dibayar. BRPT cuma "lebih seru" — sampai drawdown-nya datang.
+    kode: |
+      sharpe_a = 0.10 / 1.5
+      sharpe_b = 0.10 / 4.2
+      print(f"ALII {sharpe_a:.3f} vs BRPT {sharpe_b:.3f}")
+      # ALII + leverage 2x: return 0.20, std 3.0 → masih menang
+    hasil:
+      - ret: 12.4
+        dd: 4.2
+        win: 68
+        note: "ALII + leverage 1.5x: return 12.4% dengan DD 4.2% — efisien dan tidur nyenyak."
+      - ret: 9.8
+        dd: 18.7
+        win: 44
+        note: "BRPT: return 9.8% tapi DD 18.7% — setengah jalan kamu menyerah di DD 12%. Efisiensi buruk."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "'Sama saja' = mengabaikan risiko. Kamu pilih BRPT secara acak dan dapat DD 18.7%."
+      - ret: -6.5
+        dd: 22.0
+        win: 30
+        note: "'Std besar = naik cepat' salah arah: BRPT turun 8% dalam 2 minggu di bulan 3. Volatilitas dua arah."
+    petunjuk:
+      - "Hitung return ÷ std untuk keduanya."
+      - "Strategi std kecil bisa di-leverage; std besar tidak."
+  - id: "s16-2"
+    judul: "Return 3-Sigma Hari Ini"
+    emoji: "📡"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Bot strategimu: 200 hari terakhir, return harian mean +0.05%, std 1.2%. Hari ini bot mencetak **+3.6%** — itu z-score ≈ 3 (hampir 3 std di atas rata-rata). Kamu lihat dan berpikir "ini sinyal ajaib, perbesar posisi besok!"
+    pilihan:
+      - "Perbesar posisi — z=3 artinya edge besar sedang terjadi"
+      - "Jangan ubah apa pun — z=3 terjadi ~1 dari 333 hari; dengan 200 hari sampel, ini masih dalam kewajaran"
+      - "Kurangi posisi — pasti ada yang salah"
+      - "Matikan bot — strategi sudah tidak normal"
+    jawaban: 1
+    penjelasan: |
+      Di distribusi normal, z=3 muncul dengan probabilitas ~0.3% ≈ **1 dari 333 hari**. Sampel 200 hari kamu bahkan BELUM cukup untuk melihat z=3. Jadi kemunculan hari ini wajar secara statistik — bukan bukti strategi berubah. Overreact = sizing naik di titik risiko tertinggi. Mean reversion bisa memukul besok. Evaluasi strategi pakai sampel panjang + out-of-sample, bukan satu hari ekstrem. (Kecuali z=4+ atau berulang — itu baru perlu diselidiki.)
+    kode: |
+      mean, std = 0.05, 1.2
+      today = 3.6
+      z = (today - mean) / std
+      print(f"z = {z:.1f}")          # 2.96
+      # P(z>3) ≈ 0.13% → ~1 dari 769 hari (satu sisi)
+      # Kesimpulan: wajar, jangan ubah strategi
+    hasil:
+      - ret: -3.2
+        dd: 5.5
+        win: 28
+        note: "Perbesar posisi 3x: besok -1.1% (mean reversion). Kamu kehilangan 3.2% dalam 2 hari dari satu keputusan emosional."
+      - ret: 6.8
+        dd: 2.1
+        win: 72
+        note: "Tidak mengubah apa pun: bot lanjut normal, +6.8% sebulan berikutnya. Hari ekstrem itu cuma noise."
+      - ret: 1.2
+        dd: 2.0
+        win: 40
+        note: "Kurangi posisi di hari terbaik = memotong keuntungan yang sah. +1.2% saja, ketinggalan rally."
+      - ret: -1.5
+        dd: 1.5
+        win: 20
+        note: "Mematikan bot karena satu hari bagus = reaksi terbalik. Bot yang konsisten justru perlu dipertahankan."
+    petunjuk:
+      - "Berapa frekuensi kejadian z=3?"
+      - "Satu hari ekstrem ≠ bukti strategi berubah."
+  - id: "s16-3"
+    judul: "Interval Kepercayaan Win Rate"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Strategi barumu: 30 trade, 18 menang (**60% win rate**). Kamu mau klaim "strategi ini menang lebih sering daripada kalah". Standar error win rate = √(0.6×0.4÷30) ≈ 8.9%. Interval kepercayaan = rentang di mana nilai asli kemungkinan besar berada. Berapa interval kepercayaan 95% dari win rate asli, dan apakah klaimmu valid?
+    pilihan:
+      - "60% ± 8.9% → 51-69%; klaim valid, 50% di luar interval"
+      - "60% ± 17.8% → 42-78%; klaim BELUM valid — 50% masih ada di dalam interval"
+      - "60% ± 4.5% → 55-65%; sangat valid"
+      - "60% ± 30% → 30-90%; tidak ada yang bisa disimpulkan dari apa pun"
+    jawaban: 1
+    penjelasan: |
+      Interval kepercayaan 95% ≈ mean ± 2×SE = 60% ± 17.8% = **42% - 78%**. 50% (tidak punya edge) MASIH ada di dalam interval. Artinya kamu **belum bisa membuktikan** strategi ini menang lebih sering dari kalah. Butuh sampel lebih besar. Dengan 30 trade, butuh win rate ≥ 68% untuk keluar dari interval (SE 8.9% → 68% − 2×8.9% = 50.2%). Ini alasan kenapa backtest 30 trade tidak bisa dijual sebagai bukti. Statistik butuh ratusan trade.
+    kode: |
+      n, wr = 30, 0.6
+      se = (wr * (1 - wr) / n) ** 0.5
+      lo = (wr - 2 * se) * 100
+      hi = (wr + 2 * se) * 100
+      print(f"CI 95%: {lo:.0f}% - {hi:.0f}%")   # 42% - 78%
+      print("50% dalam CI → belum ada bukti edge")
+    hasil:
+      - ret: -8.0
+        dd: 8.0
+        win: 25
+        note: "Kamu all-in dengan 'strategi 60%': win rate asli 52% (kebetulan sampel). 6 bulan kemudian -8%."
+      - ret: 5.5
+        dd: 3.0
+        win: 70
+        note: "Kamu tahu belum terbukti: jalanin modal kecil sambil kumpulkan 100 trade lagi. Win rate asli 58% → terbukti, sizing naik."
+      - ret: -5.0
+        dd: 5.0
+        win: 30
+        note: "SE 4.5% itu salah hitung (SE = √(p(1-p)/n), bukan p(1-p)/n). Kepercayaan palsu = modal dipertaruhkan tanpa bukti."
+      - ret: 0.0
+        dd: 0.0
+        win: 45
+        note: "30-90% itu interval satu std (68%), bukan 95% — tapi kesimpulan 'belum bisa disimpulkan' sebenarnya benar arahnya."
+    petunjuk:
+      - "CI 95% ≈ mean ± 2×SE."
+      - "Kalau 50% masih di dalam interval, edge belum terbukti."

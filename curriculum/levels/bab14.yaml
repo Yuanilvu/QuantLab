@@ -1,0 +1,180 @@
+# ============================================================
+# BAB 14 — BACKTEST & EVALUASI
+# Sample size, overfitting, risk-adjusted return,
+# in-sample vs out-of-sample.
+# ============================================================
+bab: 14
+track: quant
+judul: "Backtest & Evaluasi"
+emoji: "🔬"
+deskripsi: "Backtest yang bagus itu eksperimen ilmiah. Waspadai jebakan overfitting, sample kecil, dan metrik yang menipu."
+pelajaran:
+  - id: "14-1"
+    judul: "Metrik yang Jujur"
+    menit: 5
+    materi: |
+      Laporan backtest yang menipu cuma menyebut **return**. Laporan jujur menyebut:
+
+      - **Return %** — berapa hasilnya
+      - **Max drawdown** — luka terdalam
+      - **Win rate** — frekuensi menang
+      - **Profit factor** — total win ÷ total loss (>1 = untung)
+      - **Sharpe ratio** — return ÷ volatilitas. >1 bagus, >2 luar biasa untuk strategi harian
+      - **Jumlah trade** — berapa banyak sampel
+
+      Dua strategi return sama 40%/tahun? Satu maxDD 5%, satu lagi 35%. Yang pertama bisa dipasang leverage 3x → 120% dengan DD 15%. Yang kedua sudah di ujung kemampuan. **Risk-adjusted return** (Sharpe, Calmar = return/maxDD) yang membandingkan dengan adil.
+
+      Aturan jempol: strategi dengan < 30 trade = anekdot, bukan bukti. < 100 trade = masih ngarang. Butuh ratusan trade + out-of-sample (uji di data yang belum pernah dipakai) untuk mulai percaya.
+    kode: |
+      trades = [120, -45, 80, -30, 200]     # hasil per trade (Rp)
+      wins = [t for t in trades if t > 0]
+      pf = sum(wins) / abs(sum(t for t in trades if t < 0))
+      print(f"Profit factor: {pf:.2f} | n={len(trades)}")
+    penjelasan: "Profit factor > 1 = untung. Tapi n=5 trade terlalu kecil untuk disimpulkan apa-apa."
+  - id: "14-2"
+    judul: "Overfitting: Menghafal vs Belajar"
+    menit: 5
+    materi: |
+      Overfitting = strategi yang **menghafal data lampau**, bukan menangkap pola sebenarnya. Gejalanya: backtest in-sample (di data yang dipakai menyetel) luar biasa — return 300%. Out-of-sample (data baru) atau live trading? Jeblok.
+
+      Penyebab umum:
+      1. **Terlalu banyak parameter** — 5 parameter × 10 nilai = 100.000 kombinasi. Salah satunya pasti cocok dengan masa lalu secara kebetulan.
+      2. **Memilih kombinasi terbaik** — memilah 1.000 backtest, ambil yang terbaik = multiple testing. Makin banyak dicoba, makin besar peluang juara palsu. Yang terbaik sering yang paling overfit.
+      3. **Look-ahead bias** — memakai data yang belum tersedia di titik sinyal (misal close hari ini untuk keputusan intraday, atau revisi data).
+
+      Pertahanan: **walk-forward** (train 2 tahun, test 1 tahun berikutnya, geser), parameter minimal, dan **out-of-sample wajib**. Strategi cuma jalan di data yang dipakai menyetelnya? Strategi itu tidak ada — cuma kebetulan.
+    kode: |
+      # Overfit: parameter dipilih dari data yang sama
+      # Walk-forward: train 2019-2021, test 2022, geser...
+      print("Kalau cuma jalan di data latih → overfit")
+    penjelasan: "Backtest yang terlalu bagus = tanda bahaya. Walk-forward + out-of-sample adalah pengawalnya."
+skenario:
+  - id: "s14-1"
+    judul: "20 Trade, 80% Win Rate"
+    emoji: "🎯"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Strategi baru kamu: backtest 20 trade, win rate 80%, return +34% dalam 3 bulan. Kamu mau langsung pasang modal besar. Evaluasimu?
+    pilihan:
+      - "Langsung all-in — 80% win rate itu luar biasa"
+      - "Pasang modal kecil dulu — 20 trade terlalu sedikit untuk dipercaya"
+      - "Tolak total — win rate di atas 70% pasti overfit"
+      - "Naikkan leverage — biar profit makin besar"
+    jawaban: 1
+    penjelasan: |
+      20 trade = sampel terlalu kecil. Standar error win rate = √(0.8×0.2/20) ≈ 9%. Win rate asli bisa 71% atau 89%. Plus: 20 trade itu dari 1 kombinasi parameter, dipilih dari ratusan. Kemungkinan besar kebetulan. Langkah benar: **modal kecil (paper/1-2% risk) dulu**. Kumpulkan 50-100 trade lagi sebelum menaikkan ukuran. All-in di 20 trade = judi. "Pasti overfit" juga asumsi berlebihan. Leverage = mempercepat kehancuran kalau sampelnya bias.
+    kode: |
+      n = 20
+      wr = 0.8
+      se = (wr * (1 - wr) / n) ** 0.5
+      print(f"SE win rate: {se*100:.1f}%")   # 8.9%
+      # interval 95%: 62% - 98% → terlalu lebar untuk all-in
+    hasil:
+      - ret: -18.5
+        dd: 21.0
+        win: 15
+        note: "All-in: ternyata win rate asli 55% (keberuntungan sampel). 4 bulan kemudian equity -18.5%."
+      - ret: 6.2
+        dd: 4.0
+        win: 71
+        note: "Modal kecil: strategi ternyata valid (win rate asli 62%). Kamu naikkan sizing bertahap, hasil 6.2% dengan DD terkontrol."
+      - ret: 0.0
+        dd: 0.0
+        win: 45
+        note: "Menolak total: strategi ini sebenarnya punya edge kecil. Kamu kehilangan peluang karena skeptis berlebihan."
+      - ret: -31.0
+        dd: 35.0
+        win: 10
+        note: "Leverage 3x di sampel kecil: drawdown asli 21% jadi 63% equity. Hampir margin call."
+    petunjuk:
+      - "Berapa standar error win rate dari 20 trade?"
+      - "Sampel kecil + memilih parameter terbaik = apa namanya?"
+  - id: "s14-2"
+    judul: "Return vs Drawdown"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua strategi untuk modal $1.000:
+      - **A**: return 40%/tahun, max drawdown 35%
+      - **B**: return 25%/tahun, max drawdown 8%
+      Mana yang lebih baik secara risk-adjusted?
+    pilihan:
+      - "A — return lebih tinggi, itu yang penting"
+      - "B — Calmar ratio (return/maxDD) jauh lebih baik: 3.1 vs 1.1"
+      - "Sama saja — keduanya untung"
+      - "A — drawdown 35% masih normal untuk trader kripto"
+    jawaban: 1
+    penjelasan: |
+      Calmar A = 40/35 = **1.14**. Calmar B = 25/8 = **3.13**. B memberi 3x return per unit drawdown. Lebih penting: B bisa dipasang leverage 2x → return 50% dengan DD 16%. Masih jauh lebih kecil dari DD A. Drawdown bukan hiasan. Dia menentukan risiko kehancuran dan biaya psikologis. Strategi DD 35% butuh recovery 54% setelah puncak DD. Sebagian besar trader menyerah di tengah jalan.
+    kode: |
+      calmar_a = 40 / 35     # 1.14
+      calmar_b = 25 / 8      # 3.13
+      print(f"A: {calmar_a:.2f} | B: {calmar_b:.2f}")
+    hasil:
+      - ret: 40.0
+        dd: 35.0
+        win: 30
+        note: "A dijalankan: return 40% tercapai, tapi kamu nyerah di DD 28% di bulan 7 (butuh recovery 39%). Realisasi cuma +8%."
+      - ret: 50.0
+        dd: 15.9
+        win: 78
+        note: "B + leverage 2x: return 50% dengan DD cuma 16%. Risk-adjusted menang telak, dan kamu bisa tidur nyenyak."
+      - ret: 25.0
+        dd: 8.0
+        win: 60
+        note: "Kamu pilih B tanpa leverage: 25% dengan DD 8% — solid, tapi kamu meninggalkan 25% lagi di meja dengan leverage moderat."
+      - ret: 12.0
+        dd: 35.0
+        win: 25
+        note: "A dengan mental 'kripto emang gitu': DD 35% terjadi, kamu diamond-hand sampai recovery 9 bulan. Efisiensi modal buruk."
+    petunjuk:
+      - "Bandingkan return ÷ maxDD untuk keduanya."
+      - "Strategi DD kecil bisa di-leverage; DD besar tidak bisa."
+  - id: "s14-3"
+    judul: "200 Kombinasi Parameter"
+    emoji: "🕳️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kamu otomasi pencarian parameter: 200 kombinasi MA cepat/lambat di-backtest data 5 tahun IHSG, lalu ambil yang return tertinggi (95%/tahun, Sharpe 3.1). Kamu pasang live dengan parameter itu. Tiga bulan kemudian: return -4%, Sharpe 0.2. Apa yang terjadi?
+    pilihan:
+      - "Market berubah — bukan salah strategi, tunggu aja"
+      - "Parameter overfit: 200 percobaan, yang terbaik = kebetulan statistik"
+      - "Backtest-nya salah hitung — cek ulang kodenya"
+      - "Strategi butuh waktu lebih lama untuk bekerja"
+    jawaban: 1
+    penjelasan: |
+      Multiple testing: coba 200 kombinasi, ambil terbaik. Dengan 5% false-positive per percobaan (hasil hebat palsu), kamu HARUS dapat beberapa kombinasi yang tampak hebat murni kebetulan. Expected false positives ≈ 200 × 5% = 10. Sharpe 3.1 dari seleksi 200 percobaan ≈ Sharpe 1.0-1.5 yang jujur. Ini bukan "market berubah" — edge-nya tidak pernah ada. Perbaikan: **walk-forward** (tiap periode test pakai parameter dari periode SEBELUMNYA), kurangi parameter, dan sisihkan out-of-sample 30% data paling akhir yang TIDAK pernah dipakai untuk seleksi.
+    kode: |
+      import random
+      random.seed(42)
+      # 200 percobaan → beberapa pasti 'hebat' karena kebetulan
+      trials = [random.uniform(-2, 2) for _ in range(200)]
+      best = max(trials)
+      print(f"Sharpe terbaik dari 200 cobaan: {best:.2f}")
+      # padahal distribusi aslinya nol (tidak ada edge)
+    hasil:
+      - ret: -4.0
+        dd: 6.5
+        win: 30
+        note: "Menunggu 'market kembali': 9 bulan kemudian tetap -6%. Tidak ada yang kembali — edge-nya memang tidak pernah ada."
+      - ret: 0.0
+        dd: 0.0
+        win: 68
+        note: "Diagnosis benar: kamu berhenti, audit parameter dengan walk-forward, dan menemukan parameter stabil yang return-nya 12%/thn (jujur)."
+      - ret: -4.0
+        dd: 6.5
+        win: 25
+        note: "Kode backtest sudah benar — justru itu masalahnya: 200 percobaan MEMANG menghasilkan juara palsu. Cek ulang tidak menyelesaikan apa-apa."
+      - ret: -7.8
+        dd: 9.2
+        win: 20
+        note: "'Tunggu lebih lama' = membuang modal pada strategi tanpa edge. 6 bulan kemudian -7.8%."
+    petunjuk:
+      - "200 percobaan, ambil terbaik — berapa yang 'hebat' karena kebetulan?"
+      - "Cara menguji: parameter dari masa lalu, diuji di masa depan."

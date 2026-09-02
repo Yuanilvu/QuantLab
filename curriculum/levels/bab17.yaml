@@ -1,0 +1,178 @@
+# ============================================================
+# BAB 17 — VOLATILITAS & ATR
+# Average True Range untuk stop, regime volatilitas,
+# Bollinger squeeze & breakout.
+# ============================================================
+bab: 17
+track: quant
+judul: "Volatilitas & ATR"
+emoji: "🎢"
+deskripsi: "Stop loss asal-asalan = sering kena stop palsu, atau rugi besar. ATR kasih stop yang mengikuti ritme pasar — bukan angka asal."
+pelajaran:
+  - id: "17-1"
+    judul: "ATR: Ukuran Nafas Pasar"
+    menit: 5
+    materi: |
+      **ATR (Average True Range)** = rata-rata pergerakan harga (high-low, termasuk gap) 14 hari terakhir. Angka ini = "seberapa jauh harga biasanya bergerak per hari".
+
+      Guna terbesar ATR: **set stop loss yang menyesuaikan volatilitas**.
+
+      - Stop 1×ATR → terlalu ketat. Noise harian normal saja bisa menyentuhnya. Kena stop palsu terus.
+      - Stop 2×ATR → zona nyaman. Harga harus benar-benar melawanmu sejauh 2 hari pergerakan normal. Ini standar umum.
+      - Stop 5×ATR → terlalu longgar. Risiko per trade membengkak tanpa alasan.
+
+      Rumus sizing dengan ATR: `ukuran = risiko ÷ (2 × ATR%)`. Saham ATR 2% → stop 4%. ATR 5% → stop 10%, dan ukuran posisi otomatis lebih kecil. **ATR menyeimbangkan risiko antar saham**: saham liar dan saham tenang jadi punya risiko per trade yang SAMA.
+
+      Bonus: ATR juga pembaca regime. ATR menyusut di range (energi terkumpul). Membesar saat harga menembus level penting (breakout) atau panic.
+    kode: |
+      equity, risk_pct = 1000, 0.02
+      atr_pct = 0.025          # ATR 2.5% dari harga
+      stop_pct = 2 * atr_pct   # 2x ATR
+      size = equity * risk_pct / stop_pct
+      print(f"Stop {stop_pct*100:.0f}% | Ukuran ${size:.0f}")
+    penjelasan: "Stop 2×ATR + risiko tetap 2% → ukuran posisi menyesuaikan volatilitas otomatis."
+  - id: "17-2"
+    judul: "Regime Volatilitas & Sizing"
+    menit: 5
+    materi: |
+      Pasar berganti kepribadian: kadang tenang (ATR 1%), kadang liar (ATR 4%). Strategi yang sama harus diperlakukan beda di dua regime ini.
+
+      **Prinsip: risiko per trade TETAP, ukuran menyesuaikan.** Risiko 2% equity (modal akun), stop 2×ATR:
+
+      - ATR 1% → stop 2% → ukuran = 100% equity (1x)
+      - ATR 4% → stop 8% → ukuran = 25% equity (0.25x)
+
+      Trader yang tidak menyesuaikan? Ukuran tetap sama. Di regime liar, stop 8% × ukuran penuh = risiko 4x lipat dari aturan. Satu minggu liar bisa menghapus sebulan profit.
+
+      Cara deteksi regime: bandingkan ATR sekarang dengan ATR 50-100 hari (ATR ratio). Atau ukur lebar band Bollinger (pita harga di sekitar rata-rata) — pita sempit = low vol. ATR naik 2x? Otomatis turunkan ukuran 2x.
+    kode: |
+      atr_sekarang, atr_normal = 0.04, 0.01
+      ukuran = 250 / (atr_sekarang / atr_normal)   # turun 4x
+      print(f"Ukuran baru: ${ukuran:.0f}")          # $62
+    penjelasan: "ATR naik 4x → ukuran turun 4x. Risiko per trade selalu tetap di semua regime."
+skenario:
+  - id: "s17-1"
+    judul: "Stop untuk Saham Liar"
+    emoji: "🛑"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      CUAN: harga 1.500, ATR(14) = 3% per hari. Aturanmu: risiko maksimal 2% equity per trade. Equity $1.000. Berapa jarak stop yang masuk akal dan ukuran posisinya?
+    pilihan:
+      - "Stop 1% — ketat, biar cepat cut kalau salah"
+      - "Stop 6% (2×ATR), ukuran $333 — risiko tetap 2% equity"
+      - "Stop 15% — biar tidak gampang kena stop"
+      - "Stop 3% (1×ATR), ukuran $667"
+    jawaban: 1
+    penjelasan: |
+      Stop 2×ATR = 6%. Ukuran = risiko ÷ stop% = $20 ÷ 0.06 = **$333**. Stop kena? Rugi = 6% × $333 = $20 = 2% equity — persis aturan. Stop 1%? Kena noise harian. CUAN bisa gerak 3% sehari tanpa alasan. Stop 3% (1×ATR) masih terlalu ketat. Stop 15% tanpa mengecilkan size? Risiko per trade jadi $50 = 5% equity. ATR kasih jawaban: biarkan pasar bernafas 2 hari, ukur risikonya.
+    kode: |
+      equity, risk = 1000, 20       # $20 = 2%
+      atr = 0.03
+      stop = 2 * atr                # 6%
+      size = risk / stop
+      print(f"Stop {stop*100:.0f}% | size ${size:.0f} | risk ${size*stop:.0f}")
+    hasil:
+      - ret: -3.6
+        dd: 3.6
+        win: 22
+        note: "Stop 1%: kena stop palsu 6x dalam sebulan (noise harian 3%!). -3.6% padahal arah benar."
+      - ret: 7.5
+        dd: 2.0
+        win: 71
+        note: "Stop 6%, size $333: 3 dari 4 trade profit, yang loss kena persis $20. Total +7.5%."
+      - ret: -2.8
+        dd: 4.5
+        win: 45
+        note: "Stop 15% tanpa kurangi size: risiko per trade $50 (5% equity). 2 loss berturut = -10%. Diam-diam bocor."
+      - ret: 2.1
+        dd: 4.4
+        win: 40
+        note: "Stop 3% (1×ATR): masih sering kena noise. 4 stop palsu, profit cuma +2.1%."
+    petunjuk:
+      - "Stop = 2 × ATR."
+      - "Ukuran = risiko ÷ stop (desimal)."
+  - id: "s17-2"
+    judul: "Regime Berubah, Ukuran Ikut"
+    emoji: "🌊"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Strategimu disetel di pasar tenang: ATR 1%, ukuran posisi $2.000 (risiko 2% equity $1.000, stop 2%). Tiba-tiba ATR naik ke **4%** (berita besar, pasar liar). Kamu tetap pakai ukuran $2.000 dengan stop 8% (2×ATR baru). Apa yang terjadi?
+    pilihan:
+      - "Aman — stop sudah disesuaikan 8%"
+      - "Risiko per trade melonjak ke 8% equity — ukuran harus turun ke $500"
+      - "Tidak masalah — ATR tinggi artinya peluang besar, perbesar ukuran"
+      - "Hentikan trading sampai ATR normal lagi"
+    jawaban: 1
+    penjelasan: |
+      Ukuran $2.000 × stop 8% = **$160 = 16% equity**. Jauh di atas aturan 2%! Stop naik 4x, ukuran tidak turun → risiko ikut naik 4x. Yang benar: risiko tetap $20. Ukuran = 20 ÷ 0.08 = **$250**. ATR naik 4x? Ukuran harus turun 4x. Bukan berhenti trading — regime liar juga kasih peluang. Tapi sesuaikan ukuran.
+    kode: |
+      risk = 20
+      atr_old, atr_new = 0.01, 0.04
+      stop_new = 2 * atr_new
+      size_new = risk / stop_new
+      print(f"Size baru: ${size_new:.0f} (dari $2000)")   # $250
+    hasil:
+      - ret: -14.5
+        dd: 16.0
+        win: 20
+        note: "Ukuran tetap: 1 loss = -8% equity, 2 loss = -16%. Sebulan kemudian kamu nyerah di -14.5%."
+      - ret: 6.2
+        dd: 2.0
+        win: 66
+        note: "Size turun ke $250: risiko tetap $20. Regime liar justru kasih 2 trade besar, +6.2%."
+      - ret: -21.0
+        dd: 22.0
+        win: 12
+        note: "Perbesar ukuran di volatilitas tinggi = menggandakan risiko saat risiko sudah naik. -21%."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Berhenti total = aman tapi kehilangan peluang. Regime liar tetap bisa ditradingkan dengan ukuran kecil."
+    petunjuk:
+      - "Hitung risiko aktual: size × stop baru."
+      - "ATR naik 4x → ukuran turun 4x agar risiko tetap."
+  - id: "s17-3"
+    judul: "Bollinger Squeeze"
+    emoji: "💥"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      TPIA: Bollinger bandwidth (lebar band ÷ MA20; MA20 = rata-rata harga 20 hari) **terendah dalam 2 tahun** — band menyempit ekstrem. Volume juga turun 30% dari rata-rata. Harga 3.800, tepat di tengah band. Kamu tahu squeeze sering diikuti breakout besar. Keputusan terbaik?
+    pilihan:
+      - "Beli sekarang — squeeze = breakout pasti naik"
+      - "Short sekarang — kalau breakout, biasanya turun"
+      - "Pasang order beli breakout di atas band atas (3.950) dengan stop di bawah squeeze low (3.700), ukuran kecil"
+      - "Tunggu sampai bandwidth normal lagi, baru trade"
+    jawaban: 2
+    penjelasan: |
+      Squeeze = energi terkumpul. Tapi ARAH breakout tidak bisa ditebak dari squeeze saja. Jawaban profesional: **trade the breakout, jangan tebak arah**. Entry saat harga menembus band atas. Stop di bawah low squeeze — risiko terukur. Breakout palsu (fakeout)? Stop ketat membatasi luka. Ukuran kecil — ini event berisiko. Beli/short di tengah = menebak. Menunggu bandwidth normal = kehilangan momentum breakout. Breakout besar biasanya muncul di awal ekspansi.
+    kode: |
+      entry = 3950      # breakout band atas
+      stop = 3700       # di bawah low squeeze
+      risk = (entry - stop) / entry
+      print(f"Risiko per unit: {risk*100:.1f}%")   # 6.3% → size kecil
+    hasil:
+      - ret: -4.8
+        dd: 5.5
+        win: 30
+        note: "Beli di tengah: breakout malah ke BAWAH (fakeout ke atas dulu). Kamu kena dua arah, -4.8%."
+      - ret: -3.9
+        dd: 4.5
+        win: 28
+        note: "Short di tengah: breakout ke atas. Teka-teki arah tanpa bukti = judi. -3.9%."
+      - ret: 8.4
+        dd: 1.2
+        win: 74
+        note: "Breakout ke atas terjadi (4.050 dalam 3 hari). Entry 3.950, stop 3.700. 1 fakeout kecil dulu, stop aman, +8.4%."
+      - ret: 1.8
+        dd: 0.0
+        win: 40
+        note: "Menunggu bandwidth normal: breakout sudah terjadi duluan (+9% dalam seminggu). Kamu ketinggalan momentum."
+    petunjuk:
+      - "Squeeze memberi tahu ENERGI, bukan ARAH."
+      - "Entry breakout + stop di luar squeeze = risiko terukur."

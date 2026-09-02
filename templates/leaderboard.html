@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Leaderboard — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>🏆 Leaderboard</h1>
+  <p class="meta">Peringkat berdasarkan XP. Streak sebagai tie-breaker.</p>
+</section>
+<section class="board">
+  <div class="othead"><span>#</span><span>Trader</span><span>Streak</span><span>XP</span></div>
+  {% for r in rows %}
+  <div class="otrow {{ 'me' if r.id == me_id }}">
+    <span class="rank">{{ loop.index }}{% if loop.index == 1 %} 🥇{% elif loop.index == 2 %} 🥈{% elif loop.index == 3 %} 🥉{% endif %}</span>
+    <span class="otlabel">{{ r.username }}{% if r.id == me_id %} <b>(kamu)</b>{% endif %}</span>
+    <span>🔥 {{ r.streak }}</span>
+    <span class="pos">{{ r.xp }}</span>
+  </div>
+  {% endfor %}
+  {% if not rows %}<p class="meta">Belum ada trader. Jadilah yang pertama!</p>{% endif %}
+</section>
+{% endblock %}

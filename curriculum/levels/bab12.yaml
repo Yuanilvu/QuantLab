@@ -1,0 +1,179 @@
+# ============================================================
+# BAB 12 — RISK MANAGEMENT
+# Position sizing, stop loss, drawdown & recovery math,
+# expected value, risk of ruin.
+# ============================================================
+bab: 12
+track: quant
+judul: "Risk Management"
+emoji: "🛡️"
+deskripsi: "Yang membedakan trader bertahan vs bangkrut bukan sinyal — tapi ukuran posisi. Hitung risiko dulu, baru hitung profit."
+pelajaran:
+  - id: "12-1"
+    judul: "Position Sizing: Risiko Dulu, Bukan Modal"
+    menit: 5
+    materi: |
+      Trader amatir nanya "berapa banyak saya bisa beli?". Trader profesional nanya "**berapa banyak saya siap rugi?**".
+
+      Rumus dasar: **ukuran posisi = risiko (Rp) ÷ jarak stop (%)**. **Stop loss** = level harga untuk memotong rugi otomatis.
+
+      Contoh: modal $100, risiko $2 per trade (2%), stop 5% dari entry. Ukuran = $2 ÷ 0.05 = **$40 notional** (nilai total posisi). Stop kena? Rugi persis $2, bukan lebih.
+
+      Kenapa 1-2% per trade? Loss beruntun itu normal. 10 loss beruntun dengan risiko 2% = drawdown ~18% (saldo turun dari puncaknya). Risiko 10% per trade? 10 loss = ~65% equity (modal akun) hilang — butuh gain 180% untuk balik. Satu hal yang konsisten di semua trader sukses: **mereka mengontrol kerugian per trade**.
+
+      Hitungan wajib: equity turun X%, butuh gain berapa untuk balik? Rumus: `gain = X / (1 - X)`. Turun 20% → butuh 25%. Turun 50% → butuh 100%.
+    kode: |
+      equity = 100
+      risk_pct = 0.02        # 2% per trade
+      stop_pct = 0.05        # stop 5% dari entry
+      size = (equity * risk_pct) / stop_pct
+      print(f"Ukuran posisi: ${size:.0f}")   # $40
+    penjelasan: "Risiko ditentukan dulu (2% equity), lalu ukuran posisi dihitung dari jarak stop. Stop ketat → posisi besar; stop longgar → posisi kecil. Total risiko selalu sama."
+  - id: "12-2"
+    judul: "Drawdown & Recovery Math"
+    menit: 5
+    materi: |
+      Drawdown punya **memori asimetris**: loss 50% butuh gain 100% untuk balik modal. Loss 80% butuh gain 400%. Makanya melindungi modal = pekerjaan nomor satu.
+
+      Rumus recovery: `gain_needed = dd / (1 - dd)`.
+
+      - DD 10% → butuh 11.1%
+      - DD 20% → butuh 25%
+      - DD 30% → butuh 42.9%
+      - DD 50% → butuh 100%
+      - DD 80% → butuh 400%
+
+      Implikasi: strategi dengan drawdown besar harus punya return jauh lebih besar untuk tetap unggul. Makanya **max drawdown** (drawdown terbesar) lebih penting dari return kotor. Dua strategi bisa punya return sama — risiko kehancurannya beda total.
+
+      Leverage (pinjaman untuk perbesar posisi) memperbesar drawdown cepat. Loss 10% dengan leverage 5x = 50% equity hilang.
+    kode: |
+      dd = 0.20          # drawdown 20%
+      gain_needed = dd / (1 - dd)
+      print(f"Butuh gain {gain_needed*100:.1f}% untuk balik modal")  # 25.0%
+    penjelasan: "Asimetri loss-gain: persentase loss dihitung dari modal yang lebih besar, gain dari modal yang lebih kecil. Makin dalam drawdown, makin sulit balik."
+skenario:
+  - id: "s12-1"
+    judul: "Ukuran Posisi"
+    emoji: "📐"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Equity kamu $500. Aturanmu: maksimal rugi **$10 per trade** (2%). Kamu mau entry CUAN di 1.000, stop loss di 950 (5% di bawah entry). Berapa notional yang boleh kamu pasang?
+    pilihan:
+      - "$500 (semua modal)"
+      - "$200"
+      - "$250"
+      - "$100"
+    jawaban: 1
+    penjelasan: |
+      Ukuran = risiko ÷ jarak stop = $10 ÷ 0.05 = **$200 notional**. Stop kena? Rugi = 5% × $200 = $10 — persis batas. ($500 = tanpa sizing: stop kena = rugi $25. $250/$100 = salah hitung atau terlalu kecil.)
+    kode: |
+      equity = 500
+      risk = 10          # $10 max loss
+      stop = 0.05        # 5%
+      size = risk / stop
+      print(f"${size:.0f} notional")   # $200
+    hasil:
+      - ret: -2.5
+        dd: 2.5
+        win: 30
+        note: "All-in $500: stop kena → rugi $25 = 5% equity dalam satu trade. Dua kali begini = -10%."
+      - ret: -2.0
+        dd: 2.0
+        win: 62
+        note: "$200 notional: stop kena → rugi persis $10 (2% equity). Disiplin terjaga."
+      - ret: -2.0
+        dd: 2.0
+        win: 55
+        note: "$250 → risiko $12.5, sedikit di atas batas. Lama-lama bocor."
+      - ret: -1.0
+        dd: 1.0
+        win: 50
+        note: "$100 terlalu kecil: risiko cuma 1%. Aman tapi tidak efisien — opportunity cost."
+    petunjuk:
+      - "Ukuran = risiko ÷ jarak stop (dalam desimal)."
+      - "Target: stop kena = rugi persis $10."
+  - id: "s12-2"
+    judul: "Balik Modal"
+    emoji: "📉"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Akun kamu turun dari $1.000 ke $800 (drawdown 20%). Berapa persen gain yang harus kamu cetak dari $800 untuk kembali ke $1.000?
+    pilihan:
+      - "20%"
+      - "22%"
+      - "25%"
+      - "18%"
+    jawaban: 2
+    penjelasan: |
+      Gain yang dibutuhkan = dd ÷ (1 − dd) = 0.20 ÷ 0.80 = **25%**. Dari $800, gain 20% cuma bawa ke $960 — masih minus. Inilah asimetri loss-gain: rugi 20%, tapi harus gain 25% untuk balik. Makin dalam DD, makin curam gunung yang harus didaki.
+    kode: |
+      dd = (1000 - 800) / 1000   # 0.20
+      gain = dd / (1 - dd)
+      print(f"{gain*100:.0f}%")   # 25%
+    hasil:
+      - ret: -5.0
+        dd: 5.0
+        win: 40
+        note: "Kamu pikir simetris: gain 20% dari $800 = $960. Masih rugi $40. Salah paham asimetri = overconfidence."
+      - ret: -2.0
+        dd: 2.0
+        win: 52
+        note: "22% ≈ 0.20/0.90? Bukan itu rumusnya. $800 × 1.22 = $976 — belum balik."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "25%: $800 × 1.25 = $1.000. Balik modal persis. Recovery = dd/(1-dd)."
+      - ret: -1.5
+        dd: 1.5
+        win: 48
+        note: "18%: $800 × 1.18 = $944. Masih jauh dari $1.000."
+    petunjuk:
+      - "Gain dihitung dari modal yang TERSISA ($800), bukan modal awal."
+      - "Rumus: dd ÷ (1 − dd)."
+  - id: "s12-3"
+    judul: "EV dan Risiko Kehancuran"
+    emoji: "🎲"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Dua strategi kandidat:
+      - **A**: win rate 60%, risk:reward 1:1, 10 trade/bulan
+      - **B**: win rate 30%, risk:reward 3:1, 10 trade/bulan
+      Kamu punya $1.000 dan bisa pilih salah satu. Mana yang kamu ambil, dan kenapa?
+    pilihan:
+      - "A — win rate lebih tinggi, pasti lebih aman"
+      - "B — reward besar, 30% win rate cukup"
+      - "Sama saja — EV keduanya identik, pilih yang drawdown-nya lebih kecil"
+      - "Tidak keduanya — butuh backtest lebih panjang dulu"
+    jawaban: 2
+    penjelasan: |
+      EV = rata-rata hasil per trade kalau diulang berkali-kali. Hasil dihitung pakai satuan R (R = 1x risiko normal per trade). EV A = 0.6×1 − 0.4×1 = **+0.2R**. EV B = 0.3×3 − 0.7×1 = **+0.2R**. EV identik! Jadi keputusannya bukan "mana lebih profit", tapi "mana yang nyaman kamu jalani". B punya streak loss lebih panjang (30% win rate — 5 loss beruntun itu biasa). A loss lebih sering tapi dangkal. Keduanya valid. Pilih yang drawdown psikologisnya bisa kamu tahan, lalu jalankan konsisten. "Cari backtest (uji strategi di data lama) dulu" benar secara prinsip — tapi di sini EV sudah terhitung.
+    kode: |
+      ev_a = 0.60 * 1.0 - 0.40 * 1.0   # +0.2R
+      ev_b = 0.30 * 3.0 - 0.70 * 1.0   # +0.2R
+      print(f"A: {ev_a:+.1f}R | B: {ev_b:+.1f}R")
+    hasil:
+      - ret: 8.4
+        dd: 6.2
+        win: 68
+        note: "A dijalankan 6 bulan: return 8.4% — solid, drawdown dangkal, tapi ada 9 loss beruntun di bulan 4 yang menguji mental."
+      - ret: 8.4
+        dd: 14.1
+        win: 32
+        note: "B dijalankan 6 bulan: return sama 8.4%, tapi max DD 14% — ada 7 loss beruntun. Kamu menyerah di bulan 3? Maka B = gagal untukmu."
+      - ret: 8.4
+        dd: 8.9
+        win: 75
+        note: "Benar: EV sama (+0.2R). Kamu pilih berdasarkan drawdown yang bisa ditahan — kuncinya konsistensi, bukan strategi 'ajaib'."
+      - ret: 0.0
+        dd: 0.0
+        win: 40
+        note: "Analisis lagi itu bagus, tapi di sini datanya sudah cukup: EV keduanya +0.2R. Menunda = opportunity cost."
+    petunjuk:
+      - "Hitung EV keduanya: win% × reward − loss% × risk."
+      - "Kalau EV sama, apa pembeda sebenarnya?"

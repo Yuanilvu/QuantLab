@@ -1,0 +1,192 @@
+# ============================================================
+# BAB 20 — LIVE TRADING & BOT
+# Paper trading, dari backtest ke live, idempotency order,
+# monitoring & kill switch.
+# ============================================================
+bab: 20
+track: quant
+judul: "Live Trading & Bot"
+emoji: "🤖"
+deskripsi: "Backtest yang bagus adalah prasyarat, bukan jaminan. Menjembatani kertas dan uang nyata butuh disiplin eksekusi, kontrol error, dan rencana darurat."
+pelajaran:
+  - id: "20-1"
+    judul: "Dari Backtest ke Live"
+    menit: 5
+    materi: |
+      Gap backtest → live adalah kuburan strategi. Yang sering berbeda:
+
+      1. **Slippage & fee** — backtest sering terlalu optimistis. Di live, order besar menggeser harga (slippage = harga isi lebih buruk dari minta). Fee juga makan profit.
+      2. **Latency & eksekusi** — sinyal muncul, tapi order terisi harga lebih buruk.
+      3. **Data** — backtest pakai close; live keputusan di harga berjalan.
+      4. **Emosi & disiplin** — manusia ikut campur di live (ragu, FOMO, revenge).
+
+      Protokol naik level yang benar:
+      - **Paper trade** (simulasi) 2-4 minggu: verifikasi sinyal, ukur slippage nyata.
+      - **Live dengan ukuran 1/4 - 1/2** selama 4-8 minggu: bandingkan vs backtest.
+      - **Naikkan ukuran** hanya kalau deviasi hasil < 20% dari ekspektasi.
+
+      Aturan praktis: kalau hasil live 3 bulan jauh lebih buruk dari backtest, jangan menunggu "balik". Kembali ke ukuran kecil, lalu audit. Strategi yang benar bertahan di ukuran kecil. Yang salah kelihatan lebih cepat — tanpa menghancurkanmu.
+    kode: |
+      # Protokol naik level
+      level = 0  # 0=paper, 1=quarter, 2=full
+      deviasi = 0.18   # hasil live vs backtest
+      if level == 0:   level = 1
+      elif deviasi < 0.20: level = 2
+      else:            level = 1  # audit dulu
+      print(f"Level: {level}")
+    penjelasan: "Naik level bertahap dengan ambang deviasi yang jelas — bukan berdasarkan perasaan."
+  - id: "20-2"
+    judul: "Bot = Disiplin yang Terotomasi"
+    menit: 5
+    materi: |
+      Bot menghapus emosi, tapi menambah jenis kesalahan baru: **kesalahan teknis**. Dua aturan emas:
+
+      1. **Idempotency**: kalau bot ragu apakah order terkirim (timeout), mengirim ulang order yang sama bisa jadi **dua posisi**. Solusi: client order ID unik — exchange menolak duplikat dengan ID yang sama. Selalu kirim ID order sendiri.
+
+      2. **State yang bisa dipulihkan**: bot crash di tengah posisi terbuka → saat restart, bot harus tahu posisinya. Jangan mulai dari nol — sync posisi dari exchange (query open positions) sebelum logic jalan.
+
+      Juga: **jangan retry tanpa batas** — retry 3x dengan backoff, lalu alarm. **Timeout semua request** — bot tidak boleh menggantung selamanya. **Log semua keputusan**: sinyal, order, fill, error. Kalau terjadi yang aneh, log adalah saksi.
+
+      Bot yang baik = bot yang gagal dengan aman. Gagal → posisi terkunci aman → manusia diberi tahu. Bukan posisi menggantung tanpa pengawasan.
+    kode: |
+      def kirim(order_id, side, qty):
+          # order_id sama → exchange tolak duplikat (idempotent)
+          api.place_order(side, qty, clientOrderId=order_id)
+      try:
+          kirim("ord-001", "buy", 0.01)
+      except TimeoutError:
+          kirim("ord-001", "buy", 0.01)   # aman diulang
+    penjelasan: "Idempotency + state recoverable + timeout + log = bot yang gagal dengan aman."
+skenario:
+  - id: "s20-1"
+    judul: "Backtest 300% — Langsung Live?"
+    emoji: "🤑"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Bot barumu: backtest 3 tahun, return **300%**, Sharpe 2.8, drawdown 12%. Kamu punya $5.000 siap dipasang. Langkah paling bijak?
+    pilihan:
+      - "Pasang $5.000 semua — backtest sudah membuktikan"
+      - "Paper trade 2-4 minggu dulu, lalu live ukuran kecil (1/4), naik bertahap kalau deviasi < 20%"
+      - "$5.000 dengan leverage 2x — biar makin cepat kaya"
+      - "Tunda 6 bulan — takut, biar orang lain yang uji dulu"
+    jawaban: 1
+    penjelasan: |
+      Backtest 300% = hipotesis yang menjanjikan, bukan bukti live. Gap backtest→live (slippage, latency, data, eksekusi) bisa mengubah segalanya. Protokolnya: paper trade 2-4 minggu (verifikasi sinyal & slippage), lalu live 1/4 ukuran 4-8 minggu. Naik kalau deviasi < 20%. All-in = menguji hipotesis dengan seluruh modal. Leverage = menguji dengan modal pinjaman. Menunda 6 bulan = membuang waktu — paper trade menjawab keraguan tanpa risiko.
+    kode: |
+      def sizing(deviasi, level):
+          if level == 0: return "paper"
+          if deviasi < 0.20: return "naik level"
+          return "tetap kecil, audit"
+      print(sizing(0.18, 1))
+    hasil:
+      - ret: -22.0
+        dd: 24.0
+        win: 15
+        note: "All-in: ternyata slippage live 3x asumsi backtest. 3 bulan: -22%. Hipotesis salah diuji dengan modal penuh."
+      - ret: 18.0
+        dd: 4.0
+        win: 72
+        note: "Paper 3 minggu → live 1/4 ukuran: deviasi 15%, naik ke 1/2. Setahun: +18% (vs backtest 24% — realistis)."
+      - ret: -41.0
+        dd: 41.0
+        win: 6
+        note: "Leverage 2x di backtest yang belum teruji live: slippage + margin call di drawdown. -41%."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Menunda 6 bulan: strategi ini VALID (18%/thn di live). Kamu kehilangan 6 bulan karena takut tanpa data."
+    petunjuk:
+      - "Backtest = hipotesis. Apa protokol mengujinya?"
+      - "Naikkan ukuran bertahap, ukur deviasi."
+  - id: "s20-2"
+    judul: "Order Ganda karena Timeout"
+    emoji: "⏱️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Bot kamu mengirim order beli BTC. Koneksi timeout 5 detik — bot tidak tahu order terkirim atau tidak. Kode lama: retry langsung kirim order yang sama. Hasilnya kamu punya **2 posisi** padahal mau 1. Fix yang benar?
+    pilihan:
+      - "Naikkan timeout jadi 60 detik — biar tidak pernah timeout"
+      - "Pakai client order ID unik: kirim ulang dengan ID yang SAMA, exchange tolak duplikat"
+      - "Jangan pernah retry — kalau timeout, dianggap gagal"
+      - "Retry dengan ID baru setiap kali — biar pasti keisi"
+    jawaban: 1
+    penjelasan: |
+      Masalahnya bukan timeout-nya. Masalahnya: bot tidak bisa membedakan 'terkirim' vs 'gagal'. Client order ID (mis. `ord_20260901_001`) membuat request idempotent. Kalau order dengan ID itu sudah diterima exchange, kiriman ulang ditolak. Bot bisa retry dengan aman. Naikkan timeout = bot menggantung lebih lama (lebih buruk). Jangan retry = order sah bisa hilang (missed trade). Retry ID baru = duplikat posisi (masalah asli). Ini bug klasik bot trading — selalu idempotent.
+    kode: |
+      def kirim_order(side, qty, client_id):
+          # client_id sama → exchange tolak duplikat
+          return api.place_order(side, qty, clientOrderId=client_id)
+      oid = f"ord_{datetime.now():%Y%m%d%H%M%S}"
+      try:
+          kirim_order("buy", 0.01, oid)
+      except TimeoutError:
+          kirim_order("buy", 0.01, oid)   # aman: ID sama
+    hasil:
+      - ret: -3.2
+        dd: 3.2
+        win: 30
+        note: "Timeout 60s: koneksi exchange lagi down, bot menggantung 60 detik, posisi terlewat. -3.2% dari missed trade."
+      - ret: 2.4
+        dd: 0.0
+        win: 78
+        note: "Client order ID: retry aman, exchange balas 'duplicate', bot sync posisi dan lanjut normal."
+      - ret: -1.8
+        dd: 1.8
+        win: 40
+        note: "'Jangan retry': order SEBENARNYA terkirim tapi dianggap gagal — posisi tidak tercatat di state bot. Kekacauan kecil."
+      - ret: -5.5
+        dd: 5.5
+        win: 15
+        note: "Retry ID baru: 2 posisi di harga sama. BTC turun 2.7% → loss dobel. Bug klasik terulang."
+    petunjuk:
+      - "Bagaimana membedakan 'terkirim' vs 'gagal' saat timeout?"
+      - "Kunci: idempotency lewat ID order unik."
+  - id: "s20-3"
+    judul: "Bot Jalan, Posisi Nyangkut"
+    emoji: "🪤"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Botmu profit 3 bulan (return 9%). Tiba-tiba log penuh error "rate limit exceeded" — bot GAGAL mengeksekusi exit, tapi posisi long tetap terbuka. Harga mulai turun. Bot tidak sadar posisinya nyangkut. Prioritas pertama kamu?
+    pilihan:
+      - "Perbaiki bug rate limit dulu, baru urus posisi"
+      - "Kill switch: tutup posisi manual / perintah darurat bot, lalu audit bug"
+      - "Tunggu — rate limit biasanya hilang sendiri"
+      - "Restart bot — biasanya beres sendiri"
+    jawaban: 1
+    penjelasan: |
+      Saat bot tidak bisa dipercaya, **posisi terbuka adalah bahaya nomor satu** — bukan bug-nya. Prioritas: 1) hentikan bot, 2) tutup/sync posisi (manual atau perintah kill), 3) baru audit bug. Karena itu bot produksi WAJIB punya tiga alat. **Kill switch**: perintah darurat untuk flat semua posisi. **Alert**: error harus memanggil manusia (ntfy/Telegram), bukan cuma log. **Reconciliation**: cek berkala posisi di exchange vs state bot — kalau beda, alarm. Bot yang baik gagal dengan aman dan berisik.
+    kode: |
+      # Disain darurat bot
+      def reconciliation():
+          ex = exchange_positions()
+          bot = state_positions()
+          if ex != bot:
+              alert("POSISI TIDAK SYNC", ex, bot)
+              kill_switch()   # flat semua + pause trading
+      # jalankan tiap 5 menit
+    hasil:
+      - ret: -11.0
+        dd: 11.0
+        win: 15
+        note: "Fokus fix bug dulu: 40 menit debugging, harga turun 4.5%. Posisi long: -11% equity. Bug ketemu, modal sudah kena."
+      - ret: -2.2
+        dd: 2.2
+        win: 68
+        note: "Kill switch langsung: posisi ditutup -2.2%. Audit ketemu bug retry loop → diperbaiki + reconciliation ditambah. Bot aman lagi."
+      - ret: -8.5
+        dd: 8.5
+        win: 20
+        note: "Menunggu: rate limit reda 2 jam kemudian — posisi sudah -8.5%. Error tidak pernah 'hilang sendiri' tanpa penanganan."
+      - ret: -12.0
+        dd: 12.0
+        win: 12
+        note: "Restart bot: bot baru lupa posisi lama (state tidak persist), lalu OPEN posisi baru di arah sama. Nyangkut dobel."
+    petunjuk:
+      - "Apa bahaya terbesar saat bot error? (bukan bug-nya)"
+      - "Bot produksi butuh: kill switch + alert + reconciliation."

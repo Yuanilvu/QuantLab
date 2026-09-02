@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Peta Belajar — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>🗺️ Peta Belajar</h1>
+  <p class="meta">Empat jalur berurutan: dari angka dan koding, sampai bot quant. Selesaikan semua bab + soal di satu jalur untuk dapat sertifikat.</p>
+</section>
+
+{% for t in tracks %}
+<section class="track {{ 'complete' if t.pct == 100 }}">
+  <div class="trackhead">
+    <span class="trackemoji">{{ t.emoji }}</span>
+    <div class="trackinfo">
+      <h2>{{ t.name }}</h2>
+      <p class="meta">{{ t.desc }}</p>
+    </div>
+    <div class="trackstat">
+      <b>{{ t.pct }}%</b>
+      <span class="meta">{{ t.done }}/{{ t.total }} aktivitas</span>
+      {% if t.pct == 100 %}
+      <a class="btn small" href="{{ url_for('sertifikat', track=t.code) }}">🎓 Sertifikat</a>
+      {% endif %}
+    </div>
+  </div>
+  <div class="progress"><div class="bar"><div class="fill" style="width: {{ t.pct }}%"></div></div></div>
+  <div class="trackbabs">
+    {% for b in t.babs %}
+    <a class="trackbab {{ 'done' if (b.skenario | selectattr('id', 'in', solved) | list | length) == (b.skenario | length) and (b.soal | default([]) | selectattr('id', 'in', soal_solved) | list | length) == (b.soal | default([]) | length) and (b.skenario | length) > 0 }}" href="{{ url_for('bab_page', n=b.bab) }}">
+      <span class="babe">{{ b.emoji }}</span>
+      <span class="tbname"><b>{{ b.judul }}</b>
+        <span class="meta">Bab {{ b.bab }} · {{ b.skenario | length }} skenario{% if b.soal %} + {{ b.soal | length }} soal{% endif %}</span>
+      </span>
+      {% set bdone = b.skenario | selectattr('id', 'in', solved) | list | length %}
+      {% set qdone = b.soal | default([]) | selectattr('id', 'in', soal_solved) | list | length %}
+      <span class="tbpct">{{ bdone + qdone }}/{{ b.skenario | length + (b.soal | default([]) | length) }}</span>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endfor %}
+{% endblock %}

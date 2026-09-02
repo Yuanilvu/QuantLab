@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Ulasan: {{ scen.judul }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb"><a href="{{ url_for('ulas') }}">← Ulasan Cerdas</a></nav>
+
+<section class="scenario">
+  <div class="scenhead">
+    <span class="badge">📚 ulasan tahap {{ stage }}/3</span>
+    <h1>{{ scen.emoji }} {{ scen.judul }}</h1>
+    {% if my_answer is not none %}<span class="meta">Jawabanmu dulu: {{ scen.pilihan[my_answer] }}</span>{% endif %}
+  </div>
+
+  <div class="casebox">
+    <h3>📋 Situasi Pasar</h3>
+    <div class="case">{{ scen.cerita | replace('\n', '<br>') | safe }}</div>
+  </div>
+
+  <form method="post" id="scenform">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h3>🤔 Ingat-ingat: keputusan terbaik?</h3>
+    <div class="opts">
+      {% for p in scen.pilihan %}
+      <label class="opt">
+        <input type="radio" name="choice" value="{{ loop.index0 }}" required>
+        <span class="optlabel">{{ loop.index0 + 1 }}. {{ p }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="scenactions">
+      <button class="btn primary" type="submit">Periksa Jawaban</button>
+      <a class="btn ghost" href="{{ url_for('ulas') }}">Nanti saja</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

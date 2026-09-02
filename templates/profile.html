@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}Profil — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>👤 Profil {{ user.username }}</h1>
+</section>
+
+<section class="dashcols">
+  <div class="dashcol">
+    <div class="statrow">
+      <div class="stat"><b>{{ user.xp }}</b><span>Total XP</span></div>
+      <div class="stat"><b>🔥 {{ user.streak }}</b><span>Streak</span></div>
+      <div class="stat"><b>{{ solved_n }}</b><span>Skenario</span></div>
+      <div class="stat"><b>{{ correct_n }}</b><span>Benar</span></div>
+    </div>
+    <h3 style="margin-top:20px">📅 Aktivitas 30 Hari</h3>
+    <div class="heatmap">
+      {% for d in heat %}
+      <span class="heatcell l{{ d.n }}" title="{{ d.date }}: {{ d.n }} solve">{{ '·' if d.n == 0 else d.n }}</span>
+      {% endfor %}
+    </div>
+    <p class="note">Semakin hijau, semakin rajin. Streak harian dihitung dari menyelesaikan minimal 1 skenario per hari.</p>
+  </div>
+
+  <div class="dashcol">
+    <h3>🔑 Ganti Password</h3>
+    {% if err %}<div class="alert">{{ err }}</div>{% endif %}
+    {% if msg %}<div class="okbox">{{ msg }}</div>{% endif %}
+    <form method="post">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <label>Password lama</label>
+      <input type="password" name="oldpass" required autocomplete="current-password">
+      <label>Password baru (min 6 karakter)</label>
+      <input type="password" name="newpass" required autocomplete="new-password">
+      <button class="btn primary" type="submit">Simpan Password</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

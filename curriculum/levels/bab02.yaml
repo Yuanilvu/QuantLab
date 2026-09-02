@@ -1,0 +1,184 @@
+# ============================================================
+# BAB 2 — STATISTIK DASAR (TRACK: FONDASI MATEMATIKA)
+# Rata-rata, median, dan sebaran — versi paling sederhana,
+# tanpa rumus menakutkan.
+# ============================================================
+bab: 2
+track: math
+judul: "Statistik Dasar"
+emoji: "📊"
+deskripsi: "Dua angka merangkum harga saham, return (hasil investasi), dan risiko: rata-rata dan sebaran. Mulai dari yang paling sederhana."
+pelajaran:
+  - id: "2-1"
+    judul: "Rata-rata: Bagi Rata Saja"
+    menit: 5
+    materi: |
+      **Rata-rata (mean)** = jumlah semua angka, dibagi banyaknya angka.
+
+      Harga TLKM 5 hari: 4.000, 4.100, 3.900, 4.200, 4.050. Jumlah = 20.250. Ada 5 hari. Rata-rata = 20.250 ÷ 5 = **4.050**.
+
+      Gampang, kan? Tapi hati-hati: **rata-rata bisa menipu kalau ada angka ekstrem (outlier).** Contoh gaji di kantor: 4 orang dapat 5 juta, 1 bos dapat 100 juta. Rata-rata = (4×5 + 100) ÷ 5 = 24 juta. Padahal mayoritas cuma 5 juta. Rata-rata 24 juta itu "bohong".
+
+      Solusinya: **median** = angka paling tengah setelah diurutkan. Data tadi: 5, 5, 5, 5, 100 → median = 5 juta. Lebih jujur.
+
+      Di trading: satu hari return -40% (crash) bikin rata-rata return harian tampak buruk. Padahal 99% hari normal. Percaya rata-rata? Tanya dulu: "ada outlier nggak?".
+    kode: |
+      harga = [4000, 4100, 3900, 4200, 4050]
+      rata2 = sum(harga) / len(harga)
+      print(f"Rata-rata: {rata2:.0f}")   # 4050
+    penjelasan: "Rata-rata = jumlah ÷ banyak. Kalau ada angka ekstrem, cek median sebagai pembanding."
+  - id: "2-2"
+    judul: "Sebaran: Seberapa Jauh Angka-angka Itu?"
+    menit: 5
+    materi: |
+      Dua saham sama-sama rata-rata naik 1.000 per bulan. Tapi:
+      - **Saham A**: 1.000, 1.000, 1.000, 1.000 — mulus, tidak pernah turun.
+      - **Saham B**: 1.500, 500, 1.400, 600 — naik turun liar. Rata-rata juga 1.000.
+
+      Angka "seberapa jauh dari rata-rata" ini namanya **sebaran (volatilitas)**. Saham B sebarannya besar = risikonya lebih besar.
+
+      Cara paling sederhana memahaminya: **rata-rata jarak setiap angka ke rata-rata.** Saham A: semua jaraknya 0. Saham B: jarak ke 1.000 = 500, 500, 400, 400 → rata-rata 450. Versi formal dari "rata-rata jarak" ini adalah **standar deviasi**. Makin besar, makin liar.
+
+      Kenapa penting? Dua strategi return sama. Yang sebarannya kecil LEBIH BAIK. Hasilnya bisa diprediksi. Ukuran bisa dinaikkan dengan aman. Yang sebarannya besar: kadang +10%, kadang -10%. Sulit ditahan. Berbahaya kalau pakai leverage (pinjaman untuk posisi lebih besar).
+    kode: |
+      a = [1000, 1000, 1000, 1000]
+      b = [1500, 500, 1400, 600]
+      def sebaran(xs):
+          m = sum(xs) / len(xs)
+          return sum(abs(x - m) for x in xs) / len(xs)
+      print(f"A: {sebaran(a):.0f} | B: {sebaran(b):.0f}")   # 0 vs 450
+    penjelasan: "Rata-rata menjawab 'berapa hasilnya?', sebaran menjawab 'seberapa yakin?'. Dua-duanya wajib."
+skenario:
+  - id: "s2-1"
+    judul: "Hitung Rata-rata"
+    emoji: "🧮"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Harga BRPT 4 hari: 1.000, 1.100, 900, 1.000. Berapa rata-rata harga 4 hari itu?
+    pilihan:
+      - "1.050"
+      - "1.000"
+      - "950"
+      - "1.100"
+    jawaban: 1
+    penjelasan: |
+      Jumlah = 1.000 + 1.100 + 900 + 1.000 = 4.000. Bagi 4 hari = **1.000**.
+
+      Ini harga "tipikal" BRPT 4 hari terakhir. Nanti jadi dasar moving average (rata-rata harga beberapa hari).
+    kode: |
+      harga = [1000, 1100, 900, 1000]
+      print(sum(harga) / len(harga))   # 1000.0
+    hasil:
+      - ret: 5.0
+        dd: 0.0
+        win: 40
+        note: "1.050 itu rata-rata 3 angka pertama saja. Semua 4 hari harus dihitung."
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "1.000 benar: 4.000 ÷ 4. Rata-rata sederhana dan jujur."
+      - ret: -5.0
+        dd: 0.0
+        win: 35
+        note: "950 itu rata-rata 2 angka terakhir saja. Jangan pilih-pilih data."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "1.100 itu angka tertinggi, bukan rata-rata. Rata-rata = jumlah ÷ banyak."
+    petunjuk:
+      - "Jumlahkan keempat harga."
+      - "Bagi dengan 4."
+  - id: "s2-2"
+    judul: "Sama Rata, Beda Getaran"
+    emoji: "🌊"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Dua strategi, return bulanan rata-rata SAMA (+2%/bulan):
+      - **A**: +2%, +2%, +2%, +2%, +2%, +2%
+      - **B**: +8%, -4%, +7%, -3%, +6%, -2%
+      Modal kamu cuma cukup untuk satu strategi. Pilih mana?
+    pilihan:
+      - "B — kadang naik 8%, lebih seru"
+      - "A — return sama, tapi hasilnya stabil (sebaran kecil)"
+      - "Tidak bisa dibandingkan — rata-ratanya sama"
+      - "B — yang naik 8% berarti lebih pintar"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata sama (+2%), tapi sebarannya beda total. A nol getaran, B liar.
+
+      Strategi A lebih baik: hasilnya bisa diprediksi. Drawdown (turun dari harga puncak) kecil — B sempat -4% dan -3%. Aman di-leverage 2x → +4%/bulan dengan risiko terkendali.
+
+      "Lebih seru" = lebih berisiko, bukan lebih pintar. Ini versi sederhana Sharpe ratio (return ÷ sebaran), ukuran yang dipakai seluruh industri.
+    kode: |
+      a = [2, 2, 2, 2, 2, 2]
+      b = [8, -4, 7, -3, 6, -2]
+      print(f"A: {sum(a)/len(a):.0f}% | B: {sum(b)/len(b):.0f}%")
+      # sama-sama 2% — tapi siapa yang bisa kamu tiduri?  → A
+    hasil:
+      - ret: 12.0
+        dd: 0.0
+        win: 75
+        note: "A + leverage 2x: +4%/bulan stabil, DD nyaris nol. Tidur nyenyak tiap malam."
+      - ret: 9.0
+        dd: 7.5
+        win: 45
+        note: "B: total +9% (1,08×0,96×1,07×0,97×1,06×0,98 = 1,09) dengan DD 7,5%. Kamu deg-degan tiap bulan."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "'Sama rata-rata' = mengabaikan sebaran. Padahal sebaran itulah RISIKO."
+      - ret: -2.0
+        dd: 8.0
+        win: 30
+        note: "B dipasang dengan leverage: bulan -4% jadi -8%, bulan -3% jadi -6%. Getaran besar × leverage = bahaya."
+    petunjuk:
+      - "Return sama, apa yang berbeda?"
+      - "Strategi mana yang drawdown-nya lebih kecil?"
+  - id: "s2-3"
+    judul: "Rata-rata yang Bohong"
+    emoji: "🕳️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Bot kamu 10 hari. Sembilan hari pertama: return +1% per hari. Hari ke-10: **-50%** (crash). Rata-rata = (9×1 - 50) ÷ 10 = **-4,1%**. Tapi lihat datanya baik-baik. Kesimpulan yang BENAR?
+    pilihan:
+      - "Bot ini jelek — rata-rata -4,1% per hari"
+      - "Bot normal 9 hari (+1%), 1 hari crash (-50%). Median lebih jujur: +1%. Masalahnya satu outlier, bukan strategi"
+      - "Bot bagus — 9 dari 10 hari profit"
+      - "Hitung ulang — rata-rata harusnya +1%"
+    jawaban: 1
+    penjelasan: |
+      Satu hari -50% mendominasi rata-rata. Itu outlier. Median = angka tengah setelah diurutkan: -50, 1, 1, 1, 1, 1, 1, 1, 1, 1 → tengah = **+1%**. Jauh lebih jujur untuk hari-hari normal.
+
+      Dua pelajaran: (1) selalu cek outlier sebelum percaya rata-rata. (2) Satu crash -50% menghapus 50 hari profit +1%. Karena itu, melindungi diri dari kejadian langka (stop loss, posisi kecil) lebih penting daripada mengejar return harian.
+    kode: |
+      data = [1]*9 + [-50]
+      mean = sum(data) / len(data)
+      med = sorted(data)[len(data)//2]
+      print(f"mean {mean:.1f}% | median {med}%")
+      # mean menyesatkan, median jujur
+    hasil:
+      - ret: -30.0
+        dd: 30.0
+        win: 15
+        note: "Kamu matikan bot karena rata-rata -4,1%. Padahal strateginya bagus — kamu kehilangan bot yang 9 dari 10 hari profit."
+      - ret: 4.0
+        dd: 0.0
+        win: 72
+        note: "Diagnosis benar: 1 crash -50% itu outlier. Kamu audit stop loss bot, bukan membuang strateginya."
+      - ret: -12.0
+        dd: 12.0
+        win: 30
+        note: "'9 dari 10 profit' tanpa lihat -50% = optimisme buta. Satu hari itu menghapus 50 hari kerja."
+      - ret: -8.0
+        dd: 8.0
+        win: 25
+        note: "Rata-rata -4,1% itu benar hitungannya — masalahnya bukan aritmatika, tapi interpretasi."
+    petunjuk:
+      - "Urutkan datanya: berapa angka tengahnya (median)?"
+      - "Satu hari -50% itu outlier atau pola?"

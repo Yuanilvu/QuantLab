@@ -1,0 +1,290 @@
+# ============================================================
+# BAB 27 — MATPLOTLIB & VISUALISASI (TRACK: PYTHON LIBRARIES)
+# Membaca & membuat chart — dan waspada chart yang menipu.
+# ============================================================
+bab: 27
+track: libs
+judul: "Matplotlib & Visualisasi"
+emoji: "📉"
+deskripsi: "Chart adalah bahasa kedua trader. Belajar memilih chart yang tepat — dan tidak tertipu chart yang dirancang menyesatkan."
+pelajaran:
+  - id: "27-1"
+    judul: "Gambar Data dengan Matplotlib"
+    menit: 5
+    materi: |
+      **Matplotlib** = library (paket kode siap pakai) chart standar Python. Konsepnya sederhana: beri x dan y, minta digambar.
+
+      ```python
+      import matplotlib.pyplot as plt
+      hari = [1, 2, 3, 4, 5]
+      harga = [4000, 4100, 3900, 4200, 4050]
+      plt.plot(hari, harga)          # garis
+      plt.xlabel("Hari"); plt.ylabel("Harga")
+      plt.title("TLKM 5 Hari")
+      plt.savefig("chart.png")       # simpan
+      ```
+
+      Jenis chart dan kapan memakainya:
+      - **Line plot** (`plt.plot`) → deret waktu: harga harian, kurva ekuitas.
+      - **Histogram** (`plt.hist`) → distribusi: sebaran return harian (Bab 12 — bentuknya memberi tahu risiko).
+      - **Bar chart** (`plt.bar`) → perbandingan antar kategori: return per saham.
+
+      Di QuantLab: semua chart di **Backtest Lab** dibuat dengan konsep persis ini. Di Live Runner, output-nya teks (chart disimpan ke file di sandbox) — gunakan Lab untuk melihat chart penuh.
+    kode: |
+      import matplotlib.pyplot as plt
+      plt.plot([1, 2, 3], [100, 110, 105])
+      plt.savefig("/tmp/chart.png")
+      print("Chart tersimpan")
+    penjelasan: "plt.plot(x, y) + label + savefig = chart. Line untuk waktu, hist untuk distribusi, bar untuk perbandingan."
+  - id: "27-2"
+    judul: "Baca Chart, Jangan Tertipu"
+    menit: 5
+    materi: |
+      Chart bisa jujur — dan bisa menipu. Waspadai trik umum:
+
+      1. **Sumbu dipotong (truncated axis)**: chart mulai dari 3.900 padahal harga 3.900-4.100 — pergerakan kecil terlihat dramatis. Selalu cek angka di sumbu Y.
+      2. **Skala berbeda**: dua saham di chart yang sama dengan skala Y berbeda = perbandingan bohong.
+      3. **Memilih jendela**: "return +40% dalam 3 bulan" padahal 2 tahun sebelumnya -50%. Selalu minta periode penuh.
+      4. **Rata-rata tanpa sebaran**: garis rata-rata mulus tanpa band volatilitas menyembunyikan risiko.
+
+      Aturan membaca chart yang sehat: cek sumbu → cek periode → cek apa yang TIDAK ditampilkan. Chart yang jujur menampilkan drawdown, bukan cuma puncak.
+    kode: |
+      # Trik: sumbu Y dipotong bikin kenaikan 2% terlihat 20%
+      import matplotlib.pyplot as plt
+      plt.ylim(3900, 4100)   # sumbu mulai 3900 — drama!
+      plt.plot([1, 2, 3], [4000, 4040, 4080])
+    penjelasan: "Chart menipu lewat sumbu, skala, jendela waktu, dan yang disembunyikan. Baca angka, bukan hanya garis."
+skenario:
+  - id: "s27-1"
+    judul: "Pilih Chart yang Tepat"
+    emoji: "🖼️"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kamu mau menunjukkan **sebaran return harian** strategimu (berapa hari +1%, berapa hari -2%, dst) untuk menilai risiko. Chart mana yang paling tepat?
+    pilihan:
+      - "Line plot — return harian dihubungkan garis"
+      - "Histogram — frekuensi tiap nilai return"
+      - "Bar chart — return per hari sebagai batang"
+      - "Pie chart — persentase total return"
+    jawaban: 1
+    penjelasan: |
+      **Histogram** = jawaban untuk pertanyaan "bagaimana SEBARANNYA?" — sumbu X = nilai return, sumbu Y = berapa sering. Bentuknya langsung menunjukkan risiko: sempit = tenang, lebar = liar, ekor panjang = bahaya (Bab 12). Line plot bagus untuk deret waktu (harga), bar untuk perbandingan kategori, pie tidak cocok untuk distribusi.
+    kode: |
+      import numpy as np
+      import matplotlib.pyplot as plt
+      ret = np.array([1.2, -0.5, 0.8, -1.1, 0.3, -2.0, 1.5])
+      plt.hist(ret, bins=5)
+      plt.savefig("/tmp/hist.png")
+      print("Histogram tersimpan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Line plot untuk deret WAKTU, bukan distribusi nilai."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Histogram benar — frekuensi tiap nilai return."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Bar chart membandingkan kategori — 200 hari = 200 batang, bukan distribusi."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Pie chart untuk proporsi total — tidak menunjukkan sebaran risiko."
+    petunjuk:
+      - "Pertanyaan: seberapa sering tiap nilai terjadi?"
+      - "Itu definisi histogram."
+  - id: "s27-2"
+    judul: "Chart Mencurigakan"
+    emoji: "🕵️"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Sebuah aplikasi bot menampilkan chart "profit +35% bulan ini!". Garisnya menanjak curam dari 3.950 ke 4.050. Tapi cek detail: sumbu Y dimulai dari 3.940. Kesimpulanmu?
+    pilihan:
+      - "Botnya hebat — +35% itu nyata"
+      - "Mencurigakan: sumbu Y dipotong (mulai 3.940) membuat kenaikan 2,5% terlihat 35% — minta data mentah & periode penuh"
+      - "Garis naik = pasti bagus, tidak perlu cek"
+      - "Itu normal — semua chart bot begitu"
+    jawaban: 1
+    penjelasan: |
+      Kenaikan 3.950→4.050 = **+2,5%**, bukan +35% — tapi sumbu yang dimulai di 3.940 membuat garis tampak menanjak curam. Ini trik truncated axis klasik — sumbu Y dipotong supaya kenaikan kecil tampak besar (Bab 27-2). Trader yang sehat: cek sumbu Y, minta angka mentah, minta periode penuh (berapa drawdown di periode itu?). "Garis naik pasti bagus" = cara termudah tertipu.
+    kode: |
+      # Angka jujurnya:
+      print(f"{(4050 - 3950) / 3950 * 100:.1f}%")   # 2.5%, bukan 35%
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "+35% itu ilusi sumbu. Angka asli +2,5%."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — truncated axis. Minta data mentah."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "'Pasti bagus' tanpa cek sumbu = resep tertipu."
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "Tidak normal — chart sehat memulai sumbu dari nol atau menyatakan potongannya."
+    petunjuk:
+      - "Cek titik awal & akhir sumbu Y."
+      - "Hitung return asli: (4050−3950)/3950."
+  - id: "s27-3"
+    judul: "Integritas Visualisasi"
+    emoji: "🧭"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Tim pemasaran minta chart "biar return strategimu keliatan gede". Saran mereka: potong sumbu Y, tampilkan cuma 3 bulan terbaik, dan pakai skala ganda biar kurva lebih curam. Responsmu?
+    pilihan:
+      - "Ikuti — marketing yang paham cara menjual"
+      - "Tolak: chart harus jujur (sumbu utuh, periode penuh, skala konsisten) — kalau strateginya bagus, data jujur sudah cukup; kalau tidak, chart bohong = bom waktu"
+      - "Potong sumbu saja, sisanya jujur"
+      - "Tampilkan 3 bulan terbaik saja"
+    jawaban: 1
+    penjelasan: |
+      Chart manipulatif = menipu orang yang mempercayaimu (investor, keluargamu sendiri). Kalau strategi benar-benar bagus, **data jujur cukup** — termasuk drawdown-nya. Kalau cuma bisa dijual dengan chart bohong, strateginya tidak layak. Ini selaras dengan pelajaran integrity di Bab 24 (jangan menghapus saham merah dari laporan). Trader profesional: angka jujur, periode penuh, sumbu utuh — reputasi lebih mahal dari kesan sesaat.
+    kode: |
+      # Chart jujur: sumbu dari 0 atau baseline jelas
+      import matplotlib.pyplot as plt
+      plt.ylim(bottom=0)
+      plt.plot([1, 2, 3], [100, 108, 105])
+      plt.savefig("/tmp/jujur.png")
+      print("Chart jujur tersimpan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "Marketing yang menyarankan manipulasi = marketing yang berbahaya."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — integritas data > kesan. Strategi jujur tidak butuh trik."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Potong sumbu = sudah berbohong, sedikit atau banyak tetap bohong."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Memilih jendela terbaik = menyembunyikan risiko (Bab 27-2)."
+    petunjuk:
+      - "Apa yang disembunyikan chart manipulatif?"
+      - "Kalau strategi bagus, apa cukup dengan data jujur?"
+soal:
+  - id: "p27-1"
+    judul: "Persiapan Chart: Rentang"
+    emoji: "📐"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Sebelum menggambar chart harga, kamu perlu tahu rentangnya. Baca N, lalu N baris harga. Cetak `min=X max=Y` (harga terendah dan tertinggi) — supaya sumbu Y bisa disetel jujur dari nol.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: harga.
+    output_spec: |
+      Satu baris: `min=X max=Y`.
+    contoh:
+      - input: "3\n4000\n4100\n3900"
+        output: "min=3900 max=4100"
+      - input: "2\n100\n200"
+        output: "min=100 max=200"
+    tes:
+      - input: "3\n4000\n4100\n3900"
+        output: "min=3900 max=4100"
+      - input: "2\n100\n200"
+        output: "min=100 max=200"
+      - input: "1\n777"
+        output: "min=777 max=777"
+      - input: "4\n50\n80\n20\n60"
+        output: "min=20 max=80"
+    solusi: |
+      import numpy as np
+      n = int(input())
+      harga = np.array([int(input()) for _ in range(n)])
+      print(f"min={int(harga.min())} max={int(harga.max())}")
+    petunjuk:
+      - "np.array + .min()/.max()."
+      - "Format f-string: f\"min={...} max={...}\"."
+  - id: "p27-2"
+    judul: "Data Histogram Return"
+    emoji: "📊"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Untuk histogram return (Bab 27-1), kamu perlu data: berapa hari return POSITIF dan berapa hari NEGATIF (abaikan yang 0). Baca N (≥2), lalu N baris harga. Hitung return harian, cetak `positif=X negatif=Y`.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: harga.
+    output_spec: |
+      Satu baris: `positif=X negatif=Y`.
+    contoh:
+      - input: "4\n1000\n1100\n1050\n1200"
+        output: "positif=2 negatif=1"
+      - input: "3\n100\n100\n100"
+        output: "positif=0 negatif=0"
+    tes:
+      - input: "4\n1000\n1100\n1050\n1200"
+        output: "positif=2 negatif=1"
+      - input: "3\n100\n100\n100"
+        output: "positif=0 negatif=0"
+      - input: "3\n100\n90\n80"
+        output: "positif=0 negatif=2"
+      - input: "5\n10\n20\n10\n30\n20"
+        output: "positif=2 negatif=2"
+    solusi: |
+      import numpy as np
+      n = int(input())
+      harga = np.array([int(input()) for _ in range(n)])
+      r = harga[1:] / harga[:-1] - 1
+      print(f"positif={int((r > 0).sum())} negatif={int((r < 0).sum())}")
+    petunjuk:
+      - "Return: harga[1:] / harga[:-1] - 1."
+      - "Hitung: (r > 0).sum() dan (r < 0).sum()."
+  - id: "p27-3"
+    judul: "Data Bar Chart Portofolio"
+    emoji: "📊"
+    tingkat: sulit
+    xp: 55
+    menit: 9
+    cerita: |
+      Untuk bar chart return per saham, siapkan datanya: baca N, lalu N baris `nama return` (return bisa negatif). Cetak tiap baris `nama:X` (X = return), diurutkan dari return TERTINGGI ke TERENDAH.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama return`.
+    output_spec: |
+      N baris: `nama:return`, urut return menurun.
+    contoh:
+      - input: "3\nTLKM 10\nBBRI 5\nCUAN -3"
+        output: "TLKM:10\nBBRI:5\nCUAN:-3"
+      - input: "2\nA -10\nB 20"
+        output: "B:20\nA:-10"
+    tes:
+      - input: "3\nTLKM 10\nBBRI 5\nCUAN -3"
+        output: "TLKM:10\nBBRI:5\nCUAN:-3"
+      - input: "2\nA -10\nB 20"
+        output: "B:20\nA:-10"
+      - input: "4\nX 1\nY 5\nZ 3\nW -2"
+        output: "Y:5\nZ:3\nX:1\nW:-2"
+      - input: "1\nSOLO 0"
+        output: "SOLO:0"
+    solusi: |
+      n = int(input())
+      data = []
+      for _ in range(n):
+          p = input().split()
+          data.append((p[0], int(p[1])))
+      data.sort(key=lambda x: x[1], reverse=True)
+      for nama, ret in data:
+          print(f"{nama}:{ret}")
+    petunjuk:
+      - "Simpan pasangan (nama, return) di list."
+      - "Urutkan menurun: sort(key=lambda x: x[1], reverse=True)."

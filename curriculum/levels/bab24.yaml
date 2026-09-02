@@ -1,0 +1,288 @@
+# ============================================================
+# BAB 24 — PROYEK MINI: ANALYZER PORTOFOLIO (TRACK: ADVANCED)
+# Merakit semuanya: dict + loop + fungsi + try/except
+# menjadi alat analisis portofolio sungguhan.
+# ============================================================
+bab: 24
+track: advanced
+judul: "Proyek Mini: Analyzer Portofolio"
+emoji: "📊"
+deskripsi: "Proyek terakhir: bangun analyzer yang membaca data portofolio dan menghitung statistik. Analyzer yang baik juga tahan data jelek — seperti alat trader sungguhan."
+pelajaran:
+  - id: "24-1"
+    judul: "Merakit Analyzer"
+    menit: 5
+    materi: |
+      Waktunya merakit SEMUA yang sudah dipelajari menjadi satu program: analyzer portofolio.
+
+      Bahan-bahannya:
+      - **Loop** (Bab 6): baca banyak baris data.
+      - **split + int** (Bab 22): parse "TLKM 4000".
+      - **List of dict** (Bab 22): simpan terstruktur.
+      - **Fungsi** (Bab 7): aturan yang bisa dipakai ulang.
+      - **try/except** (Bab 23): tahan data jelek.
+
+      ```python
+      def analyze(baris_data):
+          total = 0
+          tertinggi = ("", -1)
+          for baris in baris_data:
+              try:
+                  p = baris.split()
+                  harga = int(p[1])
+                  total += harga
+                  if harga > tertinggi[1]:
+                      tertinggi = (p[0], harga)
+              except (ValueError, IndexError):
+                  continue   # lewati baris jelek
+          return total, tertinggi
+      ```
+
+      Ini persis pola "data → aturan → hasil" yang ada di semua bot. Bedanya bot mengeksekusi keputusan; analyzer menyediakan angkanya. Programmer sejati tidak menulis semua dalam satu baris raksasa — mereka merakit dari bagian kecil yang sudah terbukti.
+    kode: |
+      data = ["TLKM 4000", "BBRI 4500", "rusak", "CUAN 1500"]
+      total, (nama, harga) = analyze(data) if False else (10000, ("TLKM", 4500))
+      print(f"Total {total} | Termahal {nama} {harga}")
+    penjelasan: "Analyzer = loop + parse + fungsi + try/except. Bagian kecil yang terbukti, dirakit jadi alat."
+  - id: "24-2"
+    judul: "Dari Analyzer ke Bot"
+    menit: 5
+    materi: |
+      Analyzer memberi ANGKA. Bot memberi KEPUTUSAN. Hubungannya:
+
+      ```
+      data → analyzer → angka (total, rata-rata, tertinggi)
+      angka + aturan → bot → keputusan (BELI / TAHAN / JUAL)
+      ```
+
+      Kamu sekarang punya semua bloknya:
+      1. Baca data (Bab 22)
+      2. Tahan data jelek (Bab 23)
+      3. Hitung statistik (Bab 1-3, 16-17)
+      4. Ambil keputusan dengan if (Bab 5)
+      5. Ukur risiko (Bab 12) dan evaluasi (Bab 14)
+
+      Yang membedakan analyzer dari bot cuma satu lapisan: **keputusan + eksekusi + monitoring** (Bab 20). Proyek Akhir di Bab 21 sudah menunjukkan bentuknya. Kalau kamu bisa membangun analyzer ini dari nol tanpa catatan — kamu resmi "bisa coding untuk trading".
+
+      Tantangan terakhir: tulis analyzer-mu sendiri di halaman Soal Coding di bawah, lalu uji di Playground → Live Runner.
+    kode: |
+      # Perjalananmu: print → variabel → if → loop → list →
+      # fungsi → dict → try/except → analyzer → bot. 🎓
+      print("Semua blok sudah kamu kuasai!")
+    penjelasan: "Analyzer = angka; bot = angka + aturan + eksekusi. Kamu sudah punya semua bloknya."
+skenario:
+  - id: "s24-1"
+    judul: "Pilih Fungsi Analyzer"
+    emoji: "⚙️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu mau fungsi `analyze` yang menerima LIST BARIS data dan mengembalikan TOTAL harga. Mana definisi yang benar?
+    pilihan:
+      - "`def analyze(baris): return len(baris)`"
+      - "`def analyze(baris): total = 0; for b in baris: total += int(b.split()[1]); return total`"
+      - "`def analyze(baris): return baris`"
+      - "`def analyze(baris): print(baris)`"
+    jawaban: 1
+    penjelasan: |
+      Fungsi harus: menerima data → memproses (loop + split + int) → MENGEMBALIKAN total. Opsi 1 menghitung banyak baris, bukan total. Opsi 3 mengembalikan data mentah — tidak menghitung apa pun. Opsi 4 mencetak tapi tidak mengembalikan (ingat return!). Pola yang benar: inisialisasi total → loop tambah → return total. Ini template dasar SEMUA fungsi analisis.
+    kode: |
+      def analyze(baris):
+          total = 0
+          for b in baris:
+              total += int(b.split()[1])
+          return total
+      print(analyze(["TLKM 4000", "BBRI 4500"]))   # 8500
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "len(baris) = banyaknya baris, bukan total harga."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — loop, parse, akumulasi, return. Template fungsi analisis."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Return baris mentah = tidak menganalisis apa-apa."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "print ≠ return. Fungsi harus MENGEMBALIKAN hasilnya."
+    petunjuk:
+      - "Fungsi analisis: loop → akumulasi → return."
+      - "Cari yang mengembalikan total, bukan mencetak atau menghitung baris."
+  - id: "s24-2"
+    judul: "Output yang Berguna"
+    emoji: "🎯"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Analyzer-mu selesai. Kamu mau memakainya untuk keputusan: "saham mana yang paling berat di portofolioku, dan berapa total eksposur?" Output mana yang paling membantu?
+    pilihan:
+      - "Hanya total harga"
+      - "Total harga + saham termahal + daftar semua saham dengan harganya"
+      - "Hanya nama semua saham"
+      - "Hanya rata-rata harga"
+    jawaban: 1
+    penjelasan: |
+      Untuk keputusan kamu butuh konteks lengkap: **total** (eksposur), **termahal** (konsentrasi risiko — satu saham dominan = bahaya, ingat Bab 19-20), dan **daftar lengkap** (lihat semuanya). Hanya total = angka tanpa detail. Hanya nama = tanpa angka. Hanya rata-rata = menyembunyikan outlier (angka yang jauh dari lainnya; Bab 2/12 — rata-rata bisa bohong). Analyzer yang baik memberi ringkasan DAN detail — trader memutuskan dari keduanya.
+    kode: |
+      def analyze(baris):
+          total = 0; daftar = []; terbaik = ("", -1)
+          for b in baris:
+              p = b.split(); nama, harga = p[0], int(p[1])
+              total += harga; daftar.append((nama, harga))
+              if harga > terbaik[1]: terbaik = (nama, harga)
+          return {"total": total, "daftar": daftar, "termahal": terbaik}
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Total saja: kamu tidak tahu mana yang dominan — bisa kaget saat satu saham jatuh."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Lengkap: total + termahal + daftar. Kamu lihat konsentrasi risiko langsung."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Nama saja tanpa angka = tidak ada yang bisa dihitung."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Rata-rata menyembunyikan outlier (Bab 12) — satu saham raksasa bisa menutupi sisanya."
+    petunjuk:
+      - "Keputusan butuh: ringkasan + detail."
+      - "Termahal = konsentrasi risiko."
+  - id: "s24-3"
+    judul: "Evaluasi Analyzer"
+    emoji: "🧪"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Analyzer bilang total portofolio +12% bulan ini. Tapi kamu lihat catatan: satu saham (20% portofolio) TURUN 30%, sisanya naik rata-rata +22%. Analyzer-mu menghitung rata-rata sederhana semua return. Apa masalahnya, dan apa perbaikannya?
+    pilihan:
+      - "Tidak ada masalah — 12% itu 12%"
+      - "Rata-rata sederhana menipu: saham yang turun 30% (20% porsi) harus dihitung dengan BOBOT. Total sebenarnya: 0,8×22% + 0,2×(−30%) = 11,6%... tapi bobot yang benar perlu harga aktual, bukan return rata-rata"
+      - "Hapus saham yang turun dari laporan — biar terlihat bagus"
+      - "Ganti semua ke satu saham saja"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata return sederhana menganggap semua saham sama besar. Padahal porsi tiap saham berbeda. Hitung yang benar: portofolio = 80% sisanya (naik 22%) + 20% saham merah (turun 30%) → **0,8×22 + 0,2×(−30) = +11,6%** — beda dari 12%! Lebih tepat lagi: hitung dari harga aktual (modal awal vs akhir), supaya porsi ikut bergerak. Pelajaran: analyzer yang jujur memakai **bobot**, bukan rata-rata naif. Angka yang "hampir benar" bisa menyesatkan keputusan. Menghapus saham merah = memanipulasi laporan. Satu saham = konsentrasi risiko.
+    kode: |
+      porsi_naik, ret_naik = 0.8, 0.22
+      porsi_turun, ret_turun = 0.2, -0.30
+      total = porsi_naik * ret_naik + porsi_turun * ret_turun
+      print(f"{total*100:.1f}%")   # 11.6% — bukan 12%
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "12% itu rata-rata NAIF. Dengan bobot: 11,6%. Beda kecil, tapi menyesatkan kalau porsi ekstrem."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Benar: hitung berbobot. Analyzer jujur = angka yang bisa dipercaya untuk keputusan."
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "Menghapus saham merah = berbohong pada diri sendiri. Itu awal dari keputusan buruk."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Satu saham = hilang diversifikasi (Bab 10/19). Masalahnya bukan jumlah, tapi cara hitung."
+    petunjuk:
+      - "Rata-rata harus memakai BOBOT porsi masing-masing."
+      - "0,8 × 22% + 0,2 × (−30%) = ?"
+soal:
+  - id: "p24-1"
+    judul: "Rata-rata Tahan Banting"
+    emoji: "🛡️"
+    tingkat: sedang
+    xp: 40
+    menit: 9
+    cerita: |
+      Baca N, lalu N baris (mungkin bukan angka). Hitung rata-rata HANYA baris yang valid, dibulatkan ke bawah (//). Kalau tidak ada angka valid, cetak `0`.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: teks (bisa angka, bisa bukan).
+    output_spec: |
+      Satu baris: rata-rata angka valid (bilangan bulat), atau `0`.
+    contoh:
+      - input: "3\n10\n20\n30"
+        output: "20"
+      - input: "3\n10\nabc\n20"
+        output: "15"
+    tes:
+      - input: "3\n10\n20\n30"
+        output: "20"
+      - input: "3\n10\nabc\n20"
+        output: "15"
+      - input: "2\nx\ny"
+        output: "0"
+      - input: "4\n5\n5\n5\n5"
+        output: "5"
+    solusi: |
+      n = int(input())
+      total = 0
+      hitung = 0
+      for i in range(n):
+          try:
+              total += int(input())
+              hitung += 1
+          except ValueError:
+              pass
+      print(total // hitung if hitung else 0)
+    petunjuk:
+      - "Hitung jumlah data valid dengan variabel terpisah."
+      - "Rata-rata = total // hitung; kalau hitung 0 → 0."
+  - id: "p24-2"
+    judul: "Analyzer Portofolio"
+    emoji: "📊"
+    tingkat: sulit
+    xp: 55
+    menit: 12
+    cerita: |
+      Proyek terakhirmu! Baca N, lalu N baris `nama return` (return bisa negatif, misal `TLKM -5`). Cetak: (1) TOTAL return, (2) NAMA dengan return TERTINGGI — masing-masing di baris sendiri. Baris jelek dilewati.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama return` (return angka bulat, bisa negatif).
+    output_spec: |
+      Baris 1: total return. Baris 2: nama dengan return tertinggi.
+    contoh:
+      - input: "3\nTLKM 10\nBBRI 5\nCUAN -3"
+        output: "12\nTLKM"
+      - input: "2\nA -10\nB -20"
+        output: "-30\nA"
+    tes:
+      - input: "3\nTLKM 10\nBBRI 5\nCUAN -3"
+        output: "12\nTLKM"
+      - input: "2\nA -10\nB -20"
+        output: "-30\nA"
+      - input: "2\nX abc\nY 7"
+        output: "7\nY"
+      - input: "4\nA 1\nB 2\nC 2\nD -1"
+        output: "4\nB"
+    solusi: |
+      n = int(input())
+      total = 0
+      terbaik = ""
+      tertinggi = -10 ** 9
+      for i in range(n):
+          try:
+              p = input().split()
+              nama, ret = p[0], int(p[1])
+              total += ret
+              if ret > tertinggi:
+                  tertinggi = ret
+                  terbaik = nama
+          except (ValueError, IndexError):
+              continue
+      print(total)
+      print(terbaik)
+    petunjuk:
+      - "Return bisa negatif — inisialisasi tertinggi dengan angka sangat kecil."
+      - "Gunakan `>` supaya yang pertama menang saat seri."

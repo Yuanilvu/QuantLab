@@ -1,0 +1,173 @@
+# ============================================================
+# BAB 3 — PROBABILITAS & NILAI HARAPAN (TRACK: FONDASI MATEMATIKA)
+# Peluang, EV, dan kenapa kasino selalu menang.
+# ============================================================
+bab: 3
+track: math
+judul: "Probabilitas & Nilai Harapan"
+emoji: "🎲"
+deskripsi: "Trading itu dunia peluang. Tidak ada yang pasti. Nilai harapan (EV) = kompasmu di tengah ketidakpastian."
+pelajaran:
+  - id: "3-1"
+    judul: "Peluang: Bagian dari Kemungkinan"
+    menit: 5
+    materi: |
+      **Peluang** = seberapa mungkin sesuatu terjadi. Ditulis 0 sampai 1, atau 0% sampai 100%.
+
+      - Koin: peluang kepala = 1/2 = 0,5 = 50%.
+      - Dadu: peluang angka 6 = 1/6 ≈ 0,167 ≈ 16,7%.
+      - Harga naik besok: tidak ada yang tahu persis. Makanya kita pakai peluang.
+
+      Aturan penting: **peluang tidak menjamin hasil jangka pendek.** Koin 50% bisa keluar kepala 5x berturut. Itu bukan bukti koin rusak. Cuma kebetulan. Makin banyak lemparan, makin mendekati 50%.
+
+      Di trading: strategi win rate (persentase menang) 60% bisa kalah 5x beruntun. Tidak paham peluang? 5 loss beruntun bikin panik. Kamu bisa membuang strategi yang sebenarnya bagus. Paham peluang = tetap tenang saat sedang kurang beruntung.
+    kode: |
+      # Peluang menang 60% = 0.6
+      win_rate = 0.6
+      # 5 loss beruntun? Peluangnya kecil TAPI mungkin:
+      p_5_loss = (1 - win_rate) ** 5
+      print(f"P(5 loss beruntun) = {p_5_loss*100:.1f}%")   # 1.0%
+    penjelasan: "Peluang 60% bukan jaminan — tapi dalam ratusan trade, pola 60% akan terlihat. Sabar adalah bagian dari statistik."
+  - id: "3-2"
+    judul: "Nilai Harapan: Rata-rata Semua Kemungkinan"
+    menit: 5
+    materi: |
+      **Nilai Harapan (Expected Value / EV)** = rata-rata hasil kalau kejadian diulang berkali-kali.
+
+      Rumus: `EV = (peluang menang × hadiah) − (peluang kalah × kerugian)`
+
+      Contoh koin: kepala dapat 100 ribu, ekor bayar 50 ribu. EV = (0,5 × 100.000) − (0,5 × 50.000) = 50.000 − 25.000 = **+25.000**. Main terus, rata-rata untung 25 ribu per lemparan. Taruhan BAGUS.
+
+      Contoh kasino: roulette, taruhan merah. 18 angka merah, 18 hitam, 1 hijau (nol). Peluang menang = 18/37 = 48,6%. EV = (0,486 × 1) − (0,514 × 1) = **−0,027**. Setiap 100 ribu dipasang, kasino rata-rata kantongi 2.700. Kasino selalu menang jangka panjang. Bukan sihir. Cuma EV negatif untukmu.
+
+      **Golden rule trading: hanya ambil trade dengan EV positif.** Hitung dulu: peluang menang, reward kalau menang, loss kalau kalah. EV negatif? Lewati. Sekalipun "rasanya" pasti untung.
+    kode: |
+      p_win, reward, loss = 0.6, 5, 5   # 60% menang +5, 40% kalah -5
+      ev = p_win * reward - (1 - p_win) * loss
+      print(f"EV: {ev:+.2f}R per trade")   # +1.00R
+    penjelasan: "EV positif = layak diulang. EV negatif = judi, berapa pun 'perasaannya'. Hitung dulu, baru eksekusi."
+skenario:
+  - id: "s3-1"
+    judul: "Lempar Koin yang Menguntungkan"
+    emoji: "🪙"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Tawaran: lempar koin. Kepala → kamu dapat Rp100.000. Ekor → kamu bayar Rp50.000. Kamu boleh main 10 kali. Main atau tidak?
+    pilihan:
+      - "Tidak — judi itu jelek"
+      - "Main — EV = (0,5×100rb) − (0,5×50rb) = +25rb per lemparan"
+      - "Main sekali saja — kalau kalah berhenti"
+      - "Tidak — 50% peluang rugi terlalu besar"
+    jawaban: 1
+    penjelasan: |
+      EV = 0,5 × 100.000 − 0,5 × 50.000 = **+25.000 per lemparan**. Dalam 10 lemparan, ekspektasi untung = 250.000. Bisa lebih atau kurang. Rata-ratanya tetap positif.
+
+      Ini analogi trade bagus: win rate 50%, reward 2x risk (RR 2:1), EV tetap positif. "Judi itu jelek" salah besar kalau EV positif. Trader pro cari EV+. Penjudi cari sensasi.
+    kode: |
+      ev = 0.5 * 100000 - 0.5 * 50000
+      print(f"EV = {ev:+,} per lemparan")   # +25,000
+    hasil:
+      - ret: 12.5
+        dd: 3.0
+        win: 70
+        note: "Main 10x: kamu kebagian 7 kepala — untung 450rb. EV positif bekerja (kali ini berpihak)."
+      - ret: 25.0
+        dd: 5.0
+        win: 55
+        note: "Dalam 20 lemparan kamu untung rata-rata 500rb. Naik turun wajar, trennya naik — itulah EV."
+      - ret: -2.5
+        dd: 2.5
+        win: 40
+        note: "Main sekali: kalah 50rb dan berhenti. EV positif tapi kamu menyerah sebelum rata-rata bekerja — salah strategi."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "50% peluang rugi memang ada — tapi reward 2x lipat membuat EV positif. Takut 50% tanpa hitung EV = melewatkan peluang bagus."
+    petunjuk:
+      - "Hitung: peluang menang × hadiah, dikurangi peluang kalah × kerugian."
+      - "EV positif = layak diulang berkali-kali."
+  - id: "s3-2"
+    judul: "Tiket Lotere"
+    emoji: "🎟️"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Lotere: tiket Rp10.000, hadiah utama Rp1.000.000, peluang menang 1 dari 1.000. Temanmu beli 10 tiket: "peluangku jadi 10x lipat!". Evaluasimu?
+    pilihan:
+      - "Benar — 10 tiket = peluang 10x, makin banyak makin baik"
+      - "EV per tiket = 0,001×1jt − 10rb = −Rp9.000. 10 tiket tetap EV negatif — jangan ikut"
+      - "Beli 100 tiket — pasti menang"
+      - "Ikut 1 tiket saja, buat seru-seruan"
+    jawaban: 1
+    penjelasan: |
+      EV per tiket = (1/1000 × 1.000.000) − 10.000 = 1.000 − 10.000 = **−9.000**. Tiap tiket rata-rata membuang 9 ribu. 10 tiket = ekspektasi rugi 90 ribu. Peluang menang naik ke 1%, tapi tetap 99% kalah. "Makin banyak tiket" cuma memperbesar kerugian rata-rata.
+
+      Jebakan klasik: orang fokus ke hadiah besar, lupa peluangnya. Di trading: jangan masuk trade cuma karena "kalau menang, besar banget". Hitung EV-nya dulu.
+    kode: |
+      ev = (1/1000) * 1_000_000 - 10_000
+      print(f"EV per tiket: {ev:+,}")   # -9,000
+    hasil:
+      - ret: -9.0
+        dd: 0.0
+        win: 20
+        note: "Kamu beli 10 tiket: tidak menang, rugi 100rb. '10x peluang' tetap 99% kalah."
+      - ret: -9.0
+        dd: 0.0
+        win: 78
+        note: "Benar: EV −9rb/tiket. Tidak ikut = hemat 90rb — itu keputusan EV positif."
+      - ret: -90.0
+        dd: 0.0
+        win: 10
+        note: "100 tiket = 100rb melayang. Peluang 10% menang 1jt tetap EV −900rb. Bukan 'pasti menang'."
+      - ret: -0.9
+        dd: 0.0
+        win: 35
+        note: "1 tiket 'buat seru' = buang 9rb rata-rata. Sadar EV itu bagus, tapi 'seru-seruan' tetap membuang uang."
+    petunjuk:
+      - "EV = (peluang × hadiah) − harga tiket."
+      - "Berapa EV 10 tiket? Lebih besar atau lebih kecil ruginya?"
+  - id: "s3-3"
+    judul: "Dua Loss Beruntun"
+    emoji: "😤"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Strategimu: 60% menang +5%, 40% kalah −5%. EV = +1% per trade. Hari ini kalah 2x berturut (−10% total). Sinyal ke-3 yang sama valid muncul. Temanmu bilang: "udah 2 kali kalah, jangan main lagi — lagi sial". Keputusanmu?
+    pilihan:
+      - "Berhenti — 2 loss berarti sedang sial"
+      - "Main tapi ukuran 2x — biar cepat balik"
+      - "Main ukuran normal — 2 loss beruntun itu wajar (peluang 16%), EV tetap positif"
+      - "Ganti strategi — sudah terbukti gagal"
+    jawaban: 2
+    penjelasan: |
+      Peluang 2 loss beruntun = 0,4 × 0,4 = **16%**. Itu wajar. Bukan "sial", bukan bukti strategi rusak. EV strategi tidak berubah: tetap +1% per trade. Keputusan benar: eksekusi sinyal ke-3 dengan ukuran NORMAL.
+
+      Berhenti = menyerah pada kebetulan jangka pendek. Ukuran 2x = menggandakan risiko saat emosi. Itu revenge trading (balas dendam pasar, Bab 15). Ganti strategi = terlalu bereaksi pada noise. Disiplin pada EV = sabar sampai statistik bekerja.
+    kode: |
+      p_2_loss = 0.4 ** 2
+      print(f"P(2 loss beruntun) = {p_2_loss*100:.0f}%")   # 16%
+      # wajar — tetap eksekusi sinyal ke-3 dengan ukuran normal
+    hasil:
+      - ret: 4.5
+        dd: 0.0
+        win: 75
+        note: "Sinyal ke-3 menang +5%. Kamu patuh EV, total hari itu −5% → balik pelan-pelan. Benar."
+      - ret: -15.0
+        dd: 15.0
+        win: 20
+        note: "Ukuran 2x di sinyal ke-3 yang TERNyata loss: total −20%. Revenge trading menghancurkan."
+      - ret: -10.0
+        dd: 10.0
+        win: 25
+        note: "Berhenti: sinyal ke-3 ternyata MENANG +5%. Kamu kehilangan 5% + kepercayaan pada strategi yang benar."
+      - ret: -18.0
+        dd: 18.0
+        win: 15
+        note: "Ganti strategi setelah 2 loss: strategi baru belum teruji, kalah lagi. Kamu buang edge karena noise."
+    petunjuk:
+      - "Hitung peluang 2 loss beruntun (0,4 × 0,4)."
+      - "Apakah 2 loss mengubah EV strategi?"

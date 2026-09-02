@@ -1,0 +1,174 @@
+# ============================================================
+# BAB 11 — FUNDING RATE CARRY
+# Dasar perpetual futures: funding tiap 8 jam (3x/hari),
+# annualisasi, kapan long/short yang bayar, carry vs price risk.
+# ============================================================
+bab: 11
+track: quant
+judul: "Funding Rate Carry"
+emoji: "📈"
+deskripsi: "Mesin uang pertama = selisih funding rate di perpetual futures (kontrak kripto tanpa tanggal jatuh tempo). Pahami annualisasi, arah aliran uang, dan jebakan harga yang melawan carry."
+pelajaran:
+  - id: "11-1"
+    judul: "Apa Itu Funding Rate?"
+    menit: 5
+    materi: |
+      **Perpetual futures (perp)** = kontrak kripto tanpa tanggal jatuh tempo. Harganya harus dekat dengan harga aslinya (harga spot). Biar tidak melenceng jauh, bursa memakai **funding rate** — pembayaran rutin antara long dan short, biasanya **tiap 8 jam** (3x sehari).
+
+      Funding **positif**? → **long membayar short**. Biasanya saat mayoritas trader long dan harga perp di atas spot. Funding **negatif**? → **short membayar long** (pasar ramai short).
+
+      Kuncinya: funding dibayar **3x sehari**. Biaya/income per hari = `rate × 3`. Per tahun = `rate × 3 × 365`. Angka kecil 0.01% per 8 jam kalau di-annualisasi = ~11% per tahun. Bukan receh.
+
+      Strategi **carry** = pegang posisi yang **menerima** funding. Kamu dapat "bunga" tiap 8 jam. Risiko: harga bergerak kencang melawan posisi. Loss harga bisa jauh lebih besar dari funding yang diterima.
+    kode: |
+      rate_per_8h = 0.0001      # 0.01% tiap 8 jam
+      daily = rate_per_8h * 3    # 3x funding per hari
+      annual = daily * 365       # annualisasi
+      print(f"{annual*100:.1f}% per tahun")
+    penjelasan: "Funding dibayar 3x sehari (setiap 8 jam). Annualisasi = rate × 3 × 365. 0.01% per 8 jam ≈ 10.95% per tahun."
+  - id: "11-2"
+    judul: "Arah Aliran Uang"
+    menit: 5
+    materi: |
+      Siapa bayar siapa? Lihat tanda funding:
+
+      - **Funding positif** → long bayar short. Pasar lagi ramai beli (bullish crowd). Kamu **short**? Kamu **terima** uang tiap 8 jam selama funding positif.
+      - **Funding negatif** → short bayar long. Pasar lagi ramai jual. Kamu **long**? Kamu **terima** uang.
+
+      Aliran uang ini bisa jadi "gaji sampingan". Syaratnya: posisimu searah dengan kerumunan yang bayar. Tapi ingat: kerumunan sering salah arah. Funding ekstrem sering jadi **sinyal kontrarian** (crowded trade = semua orang sudah di satu sisi).
+
+      Aturan praktis: jangan lihat besaran funding saja. Lihat juga **trend harga**. Funding tinggi + harga naik = crowd long kuat (bahaya short). Funding tinggi + harga sudah turun = bisa jadi puncak kepanikan beli.
+    kode: |
+      funding = 0.0005   # positif: long bayar short
+      posisi = "short"   # kamu menerima
+      # income per hari kalau funding bertahan:
+      income_daily = funding * 3
+      print(f"Terima {income_daily*100:.3f}%/hari")
+    penjelasan: "Tanda funding menentukan arah pembayaran. Posisi yang menerima funding = lawan dari kerumunan yang bayar."
+skenario:
+  - id: "s11-1"
+    judul: "Annualisasi Funding"
+    emoji: "🧮"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu lihat BTC perpetual di Bybit: funding rate **0.02% per 8 jam**, stabil sudah seminggu. Kamu penasaran — kalau kondisi ini bertahan setahun, berapa kira-kira return tahunan dari carry doang?
+    pilihan:
+      - "0.73% per tahun"
+      - "21.9% per tahun"
+      - "7.3% per tahun"
+      - "2.19% per tahun"
+    jawaban: 1
+    penjelasan: |
+      Funding dibayar 3x sehari. 0.02% × 3 = 0.06% per hari. 0.06% × 365 = **21.9% per tahun**. Funding kecil tiap 8 jam = besar kalau diakumulasi setahun. Semua itu murni dari funding, tanpa leverage. (0.73% = 0.02×365 tanpa ×3; 7.3% = salah faktor; 2.19% = salah desimal.)
+    kode: |
+      rate = 0.0002          # 0.02% per 8 jam
+      annual = rate * 3 * 365
+      print(f"{annual*100:.2f}% per tahun")   # 21.90%
+    hasil:
+      - ret: 0.7
+        dd: 0.2
+        win: 60
+        note: "Kamu underestimate: menganggap funding cuma 1x/hari. Carry nyata 21.9%/thn — kamu melewatkan peluang tanpa sadar."
+      - ret: 21.9
+        dd: 2.1
+        win: 72
+        note: "Benar. 3x sehari × 365. Carry murni tanpa leverage."
+      - ret: 7.3
+        dd: 1.1
+        win: 64
+        note: "Kamu pakai 0.02×365 tapi lupa ×3 (3x funding per hari)."
+      - ret: 2.2
+        dd: 0.5
+        win: 55
+        note: "Kamu salah desimal — 0.002% bukan 0.02%."
+    petunjuk:
+      - "Berapa kali funding dibayar dalam sehari?"
+      - "Kalikan 0.02% dengan 3, lalu dengan 365."
+  - id: "s11-2"
+    judul: "Carry vs Pergerakan Harga"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu short BTC (menerima funding positif 0.03% per 8 jam). Tiga hari kemudian: harga BTC **naik 1.5%** dari entry-mu, funding masih positif. Selama 3 hari itu kamu menerima 9x pembayaran funding. Posisimu?
+    pilihan:
+      - "Tahan short — funding masih mengalir"
+      - "Tutup short — loss harga sudah 1.5%, jauh di atas funding yang diterima"
+      - "Tambah short — funding positif berarti pasar salah"
+      - "Balik long — harga naik, ikut arah pasar"
+    jawaban: 1
+    penjelasan: |
+      Hitung dulu. Funding diterima = 0.03% × 9 = **0.27%**. Loss harga = **-1.5%**. Net = **-1.23%**. Carry tidak bisa menutup pergerakan harga yang melawan. Aturan emas: **carry itu bonus, bukan alasan memegang posisi yang salah arah**. Tutup, cari entry carry baru yang lebih baik. (Menambah short di posisi loss tanpa alasan = averaging down — menambah posisi rugi biar rata-rata entry turun. Balik long = FOMO, takut ketinggalan.)
+    kode: |
+      funding_received = 0.0003 * 9      # 0.27%
+      price_loss = 0.015                 # -1.5%
+      net = funding_received - price_loss
+      print(f"Net: {net*100:+.2f}%")     # -1.23% → cut
+    hasil:
+      - ret: -1.23
+        dd: 3.4
+        win: 30
+        note: "Ditahan: harga lanjut naik 2.4% lagi sebelum funding akhirnya turun. Total loss ~3.6%."
+      - ret: -1.23
+        dd: 1.5
+        win: 65
+        note: "Cut loss disiplin di -1.5%. Funding 0.27% tidak menutup loss. Benar: carry bukan alasan melawan trend."
+      - ret: -3.8
+        dd: 5.2
+        win: 22
+        note: "Averaging down di posisi melawan trend = loss membengkak. Funding tidak menyelamatkanmu."
+      - ret: -0.6
+        dd: 2.8
+        win: 41
+        note: "FOMO balik long di puncak: harga pullback 1.1% setelah kamu entry. Kamu kena dua arah."
+    petunjuk:
+      - "Hitung total funding 3 hari vs loss harga."
+      - "Carry tidak menutup loss trend yang melawan."
+  - id: "s11-3"
+    judul: "Funding Negatif Ekstrem"
+    emoji: "🔄"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      ETH funding **-0.09% per 8 jam** — sangat negatif, rekor terendah tahun ini. Harga ETH sudah turun 18% dalam 2 minggu. Dua hari terakhir datar. Semua orang bilang "jual terus". Data on-chain: open interest (OI = total posisi terbuka) naik 22% — banyak yang baru buka short. Keputusanmu?
+    pilihan:
+      - "Short juga — ikut kerumunan, trend masih turun"
+      - "Flat — funding ekstrem + OI naik = risiko squeeze, tapi jangan melawan trend tanpa bukti"
+      - "Long — funding negatif ekstrem = sinyal kontrarian klasik, langsung all-in"
+      - "Long kecil dengan stop ketat — kerumunan short crowded, squeeze potensial; risiko terukur"
+    jawaban: 3
+    penjelasan: |
+      Funding negatif ekstrem + OI naik = **crowded short** — semua orang sudah di satu sisi. Siapa lagi yang akan menjual? Short yang ke-likuidasi beruntun bisa memicu **squeeze** (harga naik cepat). Tapi jangan all-in. Funding ekstrem bisa bertahan — pasar bisa tetap irasional. **Long kecil + stop ketat + tetap terima funding** = trade dengan asimetri bagus. Flat = aman, tapi kehilangan peluang. Short = ikut kerumunan di titik rawan. All-in = risk of ruin (modal bisa habis total).
+    kode: |
+      # Crowded short: siapa yang tersisa untuk menjual?
+      oi = 1.22          # open interest +22%
+      funding = -0.0009  # sangat negatif
+      # posisi: long kecil, stop ketat
+      size = 0.02        # 2% equity
+      stop = 0.015       # stop 1.5%
+      risk = size * stop
+      print(f"Risk terukur: {risk*100:.2f}% equity")
+    hasil:
+      - ret: -6.4
+        dd: 7.8
+        win: 18
+        note: "Short di titik crowded: squeeze terjadi, harga naik 9.2% dalam 4 hari. Loss besar + funding yang kamu bayar."
+      - ret: 0.0
+        dd: 0.0
+        win: 50
+        note: "Flat = aman, tapi kamu kehilangan squeeze + funding yang bisa kamu terima. Opportunity cost."
+      - ret: -11.8
+        dd: 11.8
+        win: 12
+        note: "All-in long: squeeze memang datang (harga +9.2%), tapi stop kamu terlalu jauh, dan sebelum squeeze sempat turun 3.5% dulu. Margin call."
+      - ret: 6.8
+        dd: 2.1
+        win: 71
+        note: "Long 2% equity, stop 1.5%: kena drawdown kecil dulu, lalu squeeze +9.2% → profit 6.8% equity dengan risk maksimal 2%."
+    petunjuk:
+      - "Funding ekstrem + OI naik = siapa lawan transaksimu?"
+      - "Kontrarian itu benar tapi harus dengan sizing kecil."

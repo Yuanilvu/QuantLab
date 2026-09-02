@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Ujian {{ no }}/{{ total }} — QuantLab{% endblock %}
+{% block content %}
+<section class="scenario">
+  <div class="scenhead">
+    <span class="badge">🏁 ujian {{ track }}</span>
+    <h1>Soal {{ no }} dari {{ total }}</h1>
+    <span class="badge challenge" id="timer">⏱ {{ sisa }}s</span>
+  </div>
+
+  <div class="casebox">
+    <h3>📋 Situasi</h3>
+    <div class="case">{{ q.judul }}</div>
+  </div>
+
+  <form method="post" id="examform">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <input type="hidden" name="qid" value="{{ q.id }}">
+    <h3>🤔 Pilih jawaban</h3>
+    <div class="opts">
+      {% for p in q.pilihan %}
+      <label class="opt">
+        <input type="radio" name="choice" value="{{ loop.index0 }}" required>
+        <span class="optlabel">{{ loop.index0 + 1 }}. {{ p }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="scenactions">
+      <button class="btn primary" type="submit">{{ 'Selesai & Nilai →' if no == total else 'Jawaban Berikutnya →' }}</button>
+      <button class="btn ghost" type="submit" name="finish" value="1">Selesai Sekarang</button>
+    </div>
+  </form>
+</section>
+<script>
+const deadline = {{ sisa }};
+const timer = document.getElementById('timer');
+const start = Date.now();
+setInterval(() => {
+  const left = deadline - Math.floor((Date.now() - start) / 1000);
+  if (left <= 0) { location.href = '{{ url_for('ujian_hasil', track=track) }}'; return; }
+  timer.textContent = '⏱ ' + left + 's';
+}, 1000);
+</script>
+{% endblock %}

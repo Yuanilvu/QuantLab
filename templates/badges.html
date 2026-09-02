@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Badges — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>🎖️ Badges</h1>
+  <p class="meta">Progress kamu: {{ solved_n }}/{{ total }} skenario · {{ correct_n }} benar · streak {{ streak }} hari · {{ bab_clear }} bab clear</p>
+</section>
+<section class="badgegrid">
+  {% for b in earned %}
+  <div class="badgecard earned">
+    <span class="bicon">{{ b.icon }}</span>
+    <b>{{ b.name }}</b>
+    <span class="meta">{{ b.desc }}</span>
+  </div>
+  {% endfor %}
+  {% for icon, _, name, desc in locked %}
+  <div class="badgecard locked">
+    <span class="bicon dim">{{ icon }}</span>
+    <b>{{ name }}</b>
+    <span class="meta">{{ desc }}</span>
+  </div>
+  {% endfor %}
+</section>
+{% endblock %}

@@ -1,0 +1,326 @@
+# ============================================================
+# BAB 4 — PYTHON: ANGKA & VARIABEL (TRACK: PYTHON DARI NOL)
+# print, angka, aritmatika, variabel, f-string.
+# Bahasa paling sederhana — tidak perlu pengalaman coding.
+# ============================================================
+bab: 4
+track: python
+judul: "Python: Angka & Variabel"
+emoji: "🐍"
+deskripsi: "Langkah pertama koding: bikin komputer menghitung. Bisa hitung persen? Suruh Python saja."
+pelajaran:
+  - id: "4-1"
+    judul: "Cetak & Angka"
+    menit: 5
+    materi: |
+      Program Python paling sederhana: `print("halo")` — mencetak kata ke layar.
+
+      Python juga jago hitung:
+      - `print(2 + 3)` → 5
+      - `print(10 - 4)` → 6
+      - `print(6 * 7)` → 42
+      - `print(10 / 4)` → 2.5
+      - `print(10 // 4)` → 2 (pembagian, hasil dibulatkan ke bawah)
+      - `print(10 % 4)` → 2 (sisa bagi)
+
+      Urutan hitung sama seperti matematika. Kali/bagi dulu, baru tambah/kurang. `print(2 + 3 * 4)` → 14, bukan 20. Mau paksa urutan? Pakai kurung: `print((2 + 3) * 4)` → 20.
+
+      Di dunia quant, angka = bahan bakar: harga, persen, profit, loss. Python menghitungnya cepat dan tidak pernah salah hitung.
+    kode: |
+      print(2 + 3)        # 5
+      print(6 * 7)        # 42
+      print(10 / 4)       # 2.5
+      print((2 + 3) * 4)  # 20
+    penjelasan: "print menampilkan hasil. Operator: + − * / // %. Kurung mengontrol urutan."
+  - id: "4-2"
+    judul: "Variabel: Kotak Penyimpan Angka"
+    menit: 5
+    materi: |
+      **Variabel** = kotak yang menyimpan angka (atau teks). Isi kotak bisa dipakai berkali-kali.
+
+      ```python
+      harga = 4000          # kotak 'harga' berisi 4000
+      kenaikan = 0.05       # 5% ditulis 0.05
+      harga_baru = harga * (1 + kenaikan)
+      print(harga_baru)     # 4200.0
+      ```
+
+      Kenapa penting? Di quant kamu menghitung hal yang sama berulang-ulang dengan angka berbeda. Tulis rumusnya sekali. Ganti isi kotaknya. Selesai.
+
+      **f-string** = cara rapi mencampur teks dan angka: `print(f"Harga baru: {harga_baru}")`. Huruf `f` di depan. Angka di dalam kurung kurawal `{}`.
+
+      Aturan nama variabel: huruf kecil dan garis bawah (underscore). Contoh: `harga_beli`, `total_loss`. Jangan pakai spasi.
+    kode: |
+      harga = 4000
+      kenaikan = 0.05
+      harga_baru = harga * (1 + kenaikan)
+      print(f"Harga baru: {harga_baru}")   # Harga baru: 4200.0
+    penjelasan: "Variabel = kotak angka. f-string = cetak rapi. Rumus ditulis sekali, dipakai terus."
+skenario:
+  - id: "s4-1"
+    judul: "Baca Kode: Berapa Hasilnya?"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kamu lihat kode ini di bot seseorang:
+      ```python
+      harga = 1000
+      print(harga * 3)
+      ```
+      Apa yang tercetak di layar?
+    pilihan:
+      - "1000"
+      - "3000"
+      - "1003"
+      - "Error — harga belum didefinisikan"
+    jawaban: 1
+    penjelasan: |
+      `harga = 1000` mengisi kotak dengan 1000. `harga * 3` = 1000 × 3 = **3000**. Ini pola dasar semua bot: simpan angka di variabel, hitung, cetak. Sudah bisa membaca kode begini? Berarti kamu mulai bicara bahasa komputer.
+    kode: |
+      harga = 1000
+      print(harga * 3)   # 3000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "1000 itu isi kotak, bukan hasil kali. `harga * 3` mengalikan isinya."
+      - ret: 3.0
+        dd: 0.0
+        win: 80
+        note: "3000 benar — variabel dipakai dalam hitungan. Dasar semua kode quant."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "1003 itu kalau perintahnya `harga + 3`. Simbol * artinya kali."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error — variabel sudah diisi di baris pertama. Python membaca dari atas ke bawah."
+    petunjuk:
+      - "Baris 1 mengisi variabel harga dengan 1000."
+      - "Baris 2 mencetak harga dikali 3."
+  - id: "s4-2"
+    judul: "Rumus Kenaikan Harga"
+    emoji: "📈"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Kamu mau menulis program kecil: harga awal 4.000, naik 10%. Kode mana yang benar untuk menghitung harga baru?
+    pilihan:
+      - "`print(4000 + 10)`"
+      - "`harga = 4000` lalu `print(harga * 1.10)`"
+      - "`harga = 4000` lalu `print(harga * 10)`"
+      - "`print(4000 * 0.10)`"
+    jawaban: 1
+    penjelasan: |
+      Naik 10% = harga × 1,10 (100% + 10%). Jadi: `harga = 4000`, lalu `print(harga * 1.10)` → **4400**.
+
+      Opsi lain salah: `+10` = tambah 10 rupiah, bukan persen. `* 10` = 40.000, 10x lipat. `* 0.10` = 400, cuma besarannya. Pola yang dipakai terus: `harga * (1 + persen/100)`. Kenaikan 5% → `harga * 1.05`.
+    kode: |
+      harga = 4000
+      print(harga * 1.10)   # 4400.0 — harga setelah naik 10%
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4000 + 10 = 4010. Itu menambah 10 rupiah, bukan 10 persen."
+      - ret: 10.0
+        dd: 0.0
+        win: 78
+        note: "harga * 1.10 = 4400. Benar: 1.10 = 100% + 10%."
+      - ret: 900.0
+        dd: 0.0
+        win: 20
+        note: "harga * 10 = 40.000. Itu 10x lipat, bukan naik 10 persen!"
+      - ret: -90.0
+        dd: 0.0
+        win: 30
+        note: "4000 * 0.10 = 400 — itu cuma BESARAN kenaikannya, bukan harga barunya."
+    petunjuk:
+      - "Naik 10% artinya harga × 110/100 = × 1,10."
+      - "Cari opsi yang mengalikan harga dengan 1.10."
+  - id: "s4-3"
+    judul: "Baca Kode: Untung Berapa?"
+    emoji: "🧾"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Kode bot:
+      ```python
+      beli = 5000
+      jual = 5500
+      untung = jual - beli
+      persen = untung / beli * 100
+      print(persen)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "500"
+      - "10.0"
+      - "5500"
+      - "50.0"
+    jawaban: 1
+    penjelasan: |
+      `untung` = 5500 − 5000 = 500. `persen` = 500 ÷ 5000 × 100 = **10.0**. Ini rumus untung persen dari Bab 1, sekarang dalam kode. Variabel menampung angka, lalu dihitung berurutan. Bisa membaca kode begini? Kamu bisa memeriksa logika bot orang lain tanpa menjalankannya.
+    kode: |
+      beli, jual = 5000, 5500
+      untung = jual - beli
+      persen = untung / beli * 100
+      print(persen)   # 10.0
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "500 itu untung dalam rupiah, bukan persen. Baris terakhir mencetak `persen`."
+      - ret: 10.0
+        dd: 0.0
+        win: 80
+        note: "10.0 benar: 500/5000×100. Rumus persen (Bab 1)."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "5500 itu harga jual, bukan hasil akhir. Ikuti alur kode baris demi baris."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "50.0 itu kalau untungnya 2500. Cek lagi: 5500 − 5000 = 500."
+    petunjuk:
+      - "Hitung dulu isi variabel `untung`."
+      - "Lalu `untung / beli * 100`."
+soal:
+  - id: "p4-1"
+    judul: "Cetak Dua Kali Lipat"
+    emoji: "⌨️"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Kamu punya saham yang harganya dua kali lipat dari harga kemarin. Program harus membaca satu angka (harga kemarin) lalu mencetak harga hari ini: **dua kali lipatnya**.
+    input_spec: |
+      Satu baris berisi satu angka bulat (harga kemarin).
+    output_spec: |
+      Satu baris berisi harga hari ini (angka dikali 2).
+    contoh:
+      - input: "10"
+        output: "20"
+      - input: "25"
+        output: "50"
+    tes:
+      - input: "10"
+        output: "20"
+      - input: "0"
+        output: "0"
+      - input: "150"
+        output: "300"
+      - input: "7"
+        output: "14"
+    solusi: |
+      n = int(input())
+      print(n * 2)
+    petunjuk:
+      - "Baca angka dengan `n = int(input())`."
+      - "Cetak `n * 2`."
+  - id: "p4-2"
+    judul: "Harga Setelah Diskon"
+    emoji: "🏷️"
+    tingkat: mudah
+    xp: 25
+    menit: 8
+    cerita: |
+      Toko saham mainan lagi diskon! Program membaca dua angka: harga asli (baris 1) dan persen diskon (baris 2). Cetak harga setelah diskon, dibulatkan ke bawah.
+    input_spec: |
+      Baris 1: harga asli (angka bulat). Baris 2: persen diskon (angka bulat).
+    output_spec: |
+      Satu baris: harga setelah diskon (angka bulat, pembulatan ke bawah).
+    contoh:
+      - input: "1000\n10"
+        output: "900"
+      - input: "5000\n20"
+        output: "4000"
+    tes:
+      - input: "1000\n10"
+        output: "900"
+      - input: "5000\n20"
+        output: "4000"
+      - input: "250\n5"
+        output: "237"
+      - input: "999\n90"
+        output: "99"
+    solusi: |
+      harga = int(input())
+      diskon = int(input())
+      print(harga * (100 - diskon) // 100)
+    petunjuk:
+      - "Harga setelah diskon = harga × (100 − diskon) ÷ 100."
+      - "Gunakan `//` supaya hasilnya bilangan bulat."
+  - id: "p4-3"
+    judul: "Harga Naik Persen"
+    emoji: "🚀"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Sahammu naik! Program membaca harga awal (baris 1) dan persen kenaikan (baris 2). Cetak harga barunya, dibulatkan ke bawah.
+    input_spec: |
+      Baris 1: harga awal (angka bulat). Baris 2: persen kenaikan (angka bulat).
+    output_spec: |
+      Satu baris: harga baru (angka bulat, pembulatan ke bawah).
+    contoh:
+      - input: "1000\n5"
+        output: "1050"
+      - input: "2000\n10"
+        output: "2200"
+    tes:
+      - input: "1000\n5"
+        output: "1050"
+      - input: "2000\n10"
+        output: "2200"
+      - input: "350\n15"
+        output: "402"
+      - input: "500\n50"
+        output: "750"
+    solusi: |
+      harga = int(input())
+      persen = int(input())
+      print(harga * (100 + persen) // 100)
+    petunjuk:
+      - "Harga baru = harga × (100 + persen) ÷ 100."
+      - "Contoh: 1000 × 105 ÷ 100 = 1050."
+  - id: "p4-4"
+    judul: "Total Biaya Beli Saham"
+    emoji: "🧾"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Kamu mau beli saham. Baca tiga angka: harga per lembar, jumlah lot, dan harga per lot... eh, maksudnya: baca harga per lembar (baris 1), jumlah lot (baris 2), dan fee dalam rupiah per transaksi (baris 3). Cetak TOTAL biaya: (harga × lot × 100) + fee.
+    input_spec: |
+      Baris 1: harga per lembar. Baris 2: jumlah lot. Baris 3: fee (rupiah).
+    output_spec: |
+      Satu baris: total biaya (angka bulat).
+    contoh:
+      - input: "4000\n1\n10000"
+        output: "410000"
+      - input: "1000\n2\n5000"
+        output: "205000"
+    tes:
+      - input: "4000\n1\n10000"
+        output: "410000"
+      - input: "1000\n2\n5000"
+        output: "205000"
+      - input: "500\n1\n0"
+        output: "50000"
+      - input: "2000\n3\n15000"
+        output: "615000"
+    solusi: |
+      harga = int(input())
+      lot = int(input())
+      fee = int(input())
+      print(harga * lot * 100 + fee)
+    petunjuk:
+      - "1 lot = 100 lembar."
+      - "Total = (harga × lot × 100) + fee."

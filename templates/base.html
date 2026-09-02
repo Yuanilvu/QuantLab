@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}QuantLab{% endblock %}</title>
+<link rel="manifest" href="{{ url_for('manifest_route') }}">
+<link rel="icon" href="{{ url_for('static', filename='icon.svg') }}" type="image/svg+xml">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<meta name="theme-color" content="#0b0f14">
+</head>
+<body>
+{% if user %}
+<header class="topbar">
+  <a class="logo" href="{{ url_for('index') }}">⚡ QuantLab</a>
+  <nav>
+    <a href="{{ url_for('index') }}">Dashboard</a>
+    <a href="{{ url_for('peta') }}">Peta Belajar</a>
+    <a href="{{ url_for('playground') }}">Playground</a>
+    <a href="{{ url_for('lab') }}">Lab</a>
+    <a href="{{ url_for('jurnal') }}">Jurnal</a>
+    <a href="{{ url_for('ulas') }}">Ulasan{% if user %}<span class="navbadge">{{ user._review_due }}</span>{% endif %}</a>
+    <a href="{{ url_for('analitik') }}">Analitik</a>
+    <a href="{{ url_for('leaderboard_page') }}">Leaderboard</a>
+    <a href="{{ url_for('badges_page') }}">Badges</a>
+    <a href="{{ url_for('profile') }}">Profil</a>
+  </nav>
+  <div class="userchip">
+    <span class="chip xp">{{ user.xp }} XP</span>
+    <span class="chip streak" title="Streak harian">🔥 {{ user.streak }}</span>
+    <span class="chip name">{{ user.username }}</span>
+    <a class="chip logout" href="{{ url_for('logout') }}">Keluar</a>
+  </div>
+</header>
+{% endif %}
+<main>
+{% block content %}{% endblock %}
+</main>
+<footer class="foot">
+  <span>QuantLab — belajar quant lewat skenario, bukan teori kosong. Data backtest = simulasi deterministik untuk edukasi, bukan saran investasi.</span>
+</footer>
+<script src="{{ url_for('static', filename='js/app.js') }}"></script>
+<script>
+window.QL_BASE = '{{ request.script_root }}';
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('{{ url_for("sw_js") }}').catch(() => {});
+}
+</script>
+</body>
+</html>

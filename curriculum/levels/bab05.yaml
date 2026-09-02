@@ -1,0 +1,374 @@
+# ============================================================
+# BAB 5 — PYTHON: LOGIKA & KEPUTUSAN (TRACK: PYTHON DARI NOL)
+# if/elif/else, perbandingan — cara komputer mengambil keputusan.
+# ============================================================
+bab: 5
+track: python
+judul: "Python: Logika & Keputusan"
+emoji: "🤔"
+deskripsi: "Komputer tidak 'merasa' — dia membandingkan angka dan mengambil keputusan. Ini dasar semua bot trading."
+pelajaran:
+  - id: "5-1"
+    judul: "Bandingkan Angka"
+    menit: 5
+    materi: |
+      Komputer mengambil keputusan dengan MEMBANDINGKAN angka. Hasilnya selalu `True` (benar) atau `False` (salah):
+
+      - `10 > 5` → True (10 lebih besar dari 5)
+      - `3 < 3` → False (3 TIDAK lebih kecil dari 3)
+      - `4 >= 4` → True (lebih besar ATAU sama dengan)
+      - `5 == 5` → True (sama dengan — pakai DUA tanda sama dengan!)
+      - `5 != 3` → True (tidak sama dengan)
+
+      Hati-hati: satu `=` untuk menyimpan (`harga = 4000`). Dua `==` untuk membandingkan (`harga == 4000`).
+
+      Di trading: "harga >= target" → True artinya saatnya eksekusi. Bot tiap detik membandingkan harga pasar dengan aturanmu. Aturan jelas? Bot bisa mengambil keputusan sendiri.
+    kode: |
+      harga = 4050
+      target = 4000
+      print(harga >= target)   # True — target tercapai!
+      print(harga == 4000)     # False — 4050 bukan 4000
+    penjelasan: "Perbandingan menghasilkan True/False. Bot = kumpulan perbandingan + keputusan."
+  - id: "5-2"
+    judul: "Jika-Maka: Keputusan Komputer"
+    menit: 5
+    materi: |
+      Struktur `if` (jika) membuat program memilih:
+
+      ```python
+      harga = 4100
+      target_jual = 4000
+      if harga >= target_jual:
+          print("JUAL")       # ini jalan kalau kondisi True
+      else:
+          print("TAHAN")      # ini jalan kalau False
+      ```
+
+      Aturan penting Python: baris di dalam `if` harus **menjorok ke dalam (indentasi)** — biasanya 4 spasi. Python sangat tegas soal ini.
+
+      Bisa juga berantai dengan `elif` (else if):
+      ```python
+      if harga > 4200:
+          print("OVER TARGET")
+      elif harga >= 4000:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+
+      Ini persis cara trader berpikir. Bedanya: sekarang bisa dijalankan bot 24 jam tanpa emosi. Aturan = kondisi. Disiplin = selalu menjalankan `if` yang sudah disepakati.
+    kode: |
+      harga = 4100
+      if harga >= 4000:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      # JUAL
+    penjelasan: "if/elif/else = aturan keputusan. Indentasi 4 spasi wajib. Bot = aturan yang dijalankan konsisten."
+skenario:
+  - id: "s5-1"
+    judul: "Baca Kode: Keputusan Bot"
+    emoji: "🤖"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kode bot:
+      ```python
+      harga = 3900
+      if harga >= 4000:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "JUAL"
+      - "TAHAN"
+      - "Error"
+      - "JUAL dan TAHAN"
+    jawaban: 1
+    penjelasan: |
+      `harga` = 3900. Cek: 3900 >= 4000? **False**. 3900 lebih kecil dari 4000. Karena False, blok `else` yang jalan → cetak **TAHAN**.
+
+      Bot hanya menjalankan SATU cabang. Kondisi benar → `if`. Salah → `else`. Tidak pernah dua-duanya. Ini logika dasar semua sistem trading otomatis.
+    kode: |
+      harga = 3900
+      if harga >= 4000:
+          print("JUAL")    # tidak jalan
+      else:
+          print("TAHAN")   # jalan → TAHAN
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "JUAL butuh harga >= 4000. 3900 belum sampai target."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "TAHAN benar: kondisi False → blok else dieksekusi."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error — if/else selalu punya satu jawaban."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak mungkin dua-duanya: if dan else saling eksklusif."
+    petunjuk:
+      - "Apakah 3900 >= 4000?"
+      - "False → blok else yang jalan."
+  - id: "s5-2"
+    judul: "Logika Terbalik"
+    emoji: "🙃"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Bot jualanmu:
+      ```python
+      harga = 4500
+      if harga < 4000:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+      Harga 4.500, target jualmu 4.000. Bot mencetak apa, dan apa masalahnya?
+    pilihan:
+      - "TAHAN — bot benar, jual di atas target itu salah"
+      - "JUAL — dan itu salah: 4.500 > 4.000, seharusnya JUAL tapi logikanya terbalik"
+      - "TAHAN — dan itu SALAH: harga sudah lewat target 4.000, seharusnya JUAL"
+      - "Error — harga tidak valid"
+    jawaban: 2
+    penjelasan: |
+      Cek: 4500 < 4000? **False** → else → **TAHAN**. Tapi ini bug. Target jualmu 4.000, harga sudah 4.500. Harusnya JUAL! Kondisinya terbalik. Seharusnya: `if harga >= 4000: JUAL`.
+
+      Bug logika itu diam-diam. Bot tidak protes. Dia menjalankan aturan yang salah dengan percaya diri. Makanya kamu harus bisa membaca kode. Makanya backtest (uji strategi pakai data lama) wajib sebelum bot dipasang dengan uang sungguhan.
+    kode: |
+      harga = 4500
+      if harga >= 4000:     # kondisi yang BENAR
+          print("JUAL")     # → JUAL
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 40
+        note: "TAHAN-nya bot memang 'konsisten', tapi konsisten dengan aturan yang SALAH. 4.500 sudah lewat target!"
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot mencetak TAHAN, bukan JUAL (4500 < 4000 itu False). Masalahnya: seharusnya JUAL."
+      - ret: 0.0
+        dd: 0.0
+        win: 75
+        note: "Benar: bot TAHAN padahal harus JUAL. Kondisi `<` membuat logika terbalik — bug klasik."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error — Python menjalankan logika apa pun, termasuk logika yang salah."
+    petunjuk:
+      - "Jalankan kondisi di kepala: 4500 < 4000 itu True atau False?"
+      - "Target jual 4000, harga 4500 — seharusnya apa?"
+  - id: "s5-3"
+    judul: "Rantai Keputusan"
+    emoji: "⛓️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Kode bot dengan tiga level:
+      ```python
+      harga = 4300
+      if harga > 4500:
+          print("OVER")
+      elif harga >= 4000:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+      Apa yang tercetak, dan kenapa?
+    pilihan:
+      - "OVER — 4300 mendekati 4500"
+      - "JUAL — cek berurutan: 4300 > 4500 salah, lanjut elif: 4300 >= 4000 benar → JUAL"
+      - "TAHAN — tidak ada yang cocok"
+      - "Error — elif tidak boleh setelah if"
+    jawaban: 1
+    penjelasan: |
+      Python cek berurutan dari atas: (1) 4300 > 4500? **False** → lanjut. (2) elif: 4300 >= 4000? **True** → cetak **JUAL**, lalu BERHENTI. Blok else tidak dicek.
+
+      Rantai if/elif memilih SATU cabang pertama yang benar. Urutan itu penting! Kalau kondisi pertama terlalu luas, cabang berikutnya tidak pernah jalan. Desain aturan trading = desain urutan prioritas.
+    kode: |
+      harga = 4300
+      if harga > 4500:
+          print("OVER")      # False, lewati
+      elif harga >= 4000:
+          print("JUAL")      # True → JUAL, berhenti
+      else:
+          print("TAHAN")     # tidak dicek
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "OVER butuh harga > 4500. 4300 belum — dan elif menangkapnya lebih dulu."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "JUAL benar: cek berurutan, cabang pertama yang True yang jalan."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Ada yang cocok: elif kedua (4300 >= 4000)."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "elif setelah if itu sah — justru pola standar."
+    petunjuk:
+      - "Cek kondisi pertama: 4300 > 4500?"
+      - "Kalau salah, lanjut ke elif berikutnya."
+soal:
+  - id: "p5-1"
+    judul: "Positif atau Negatif"
+    emoji: "🔢"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Tulis program: baca satu angka. Kalau lebih besar dari 0 cetak `POSITIF`, kalau lebih kecil dari 0 cetak `NEGATIF`, kalau persis 0 cetak `NOL`.
+    input_spec: |
+      Satu baris berisi satu angka bulat.
+    output_spec: |
+      Satu baris: `POSITIF`, `NEGATIF`, atau `NOL`.
+    contoh:
+      - input: "5"
+        output: "POSITIF"
+      - input: "-3"
+        output: "NEGATIF"
+    tes:
+      - input: "5"
+        output: "POSITIF"
+      - input: "-3"
+        output: "NEGATIF"
+      - input: "0"
+        output: "NOL"
+      - input: "1000"
+        output: "POSITIF"
+    solusi: |
+      n = int(input())
+      if n > 0:
+          print("POSITIF")
+      elif n < 0:
+          print("NEGATIF")
+      else:
+          print("NOL")
+    petunjuk:
+      - "Baca angka: `n = int(input())`."
+      - "if n > 0, elif n < 0, else untuk 0."
+  - id: "p5-2"
+    judul: "Jual atau Tahan"
+    emoji: "📤"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Bot jualan: baca harga pasar (baris 1) dan target jualmu (baris 2). Kalau harga sudah mencapai ATAU melewati target, cetak `JUAL`. Kalau belum, cetak `TAHAN`.
+    input_spec: |
+      Baris 1: harga pasar. Baris 2: target jual. Keduanya angka bulat.
+    output_spec: |
+      Satu baris: `JUAL` atau `TAHAN`.
+    contoh:
+      - input: "1050\n1000"
+        output: "JUAL"
+      - input: "999\n1000"
+        output: "TAHAN"
+    tes:
+      - input: "1050\n1000"
+        output: "JUAL"
+      - input: "1000\n1000"
+        output: "JUAL"
+      - input: "999\n1000"
+        output: "TAHAN"
+      - input: "5000\n5200"
+        output: "TAHAN"
+    solusi: |
+      harga = int(input())
+      target = int(input())
+      if harga >= target:
+          print("JUAL")
+      else:
+          print("TAHAN")
+    petunjuk:
+      - "Kondisi: `harga >= target`."
+      - ">= artinya 'sama dengan atau lebih besar'."
+  - id: "p5-3"
+    judul: "Genap atau Ganjil"
+    emoji: "⚖️"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Baca satu angka. Cetak `GENAP` kalau angkanya habis dibagi 2, cetak `GANJIL` kalau tidak. Petunjuk: operator `%` memberi sisa bagi — kalau `n % 2 == 0` berarti genap.
+    input_spec: |
+      Satu baris berisi satu angka bulat.
+    output_spec: |
+      Satu baris: `GENAP` atau `GANJIL`.
+    contoh:
+      - input: "4"
+        output: "GENAP"
+      - input: "7"
+        output: "GANJIL"
+    tes:
+      - input: "4"
+        output: "GENAP"
+      - input: "7"
+        output: "GANJIL"
+      - input: "0"
+        output: "GENAP"
+      - input: "101"
+        output: "GANJIL"
+    solusi: |
+      n = int(input())
+      if n % 2 == 0:
+          print("GENAP")
+      else:
+          print("GANJIL")
+    petunjuk:
+      - "Sisa bagi n dengan 2: `n % 2`."
+      - "Sisa 0 = genap, sisa 1 = ganjil."
+  - id: "p5-4"
+    judul: "Klasifikasi Sinyal"
+    emoji: "🚦"
+    tingkat: sulit
+    xp: 55
+    menit: 9
+    cerita: |
+      Bot butuh tiga level keputusan. Baca harga pasar (baris 1), lalu target ambil untung (baris 2) dan batas rugi (baris 3). Cetak `JUAL` kalau harga sudah ≥ target; `CUT` kalau harga ≤ batas rugi; selain itu `TAHAN`.
+    input_spec: |
+      Baris 1: harga. Baris 2: target jual. Baris 3: batas cut loss.
+    output_spec: |
+      Satu baris: `JUAL`, `CUT`, atau `TAHAN`.
+    contoh:
+      - input: "1050\n1000\n900"
+        output: "JUAL"
+      - input: "850\n1000\n900"
+        output: "CUT"
+    tes:
+      - input: "1050\n1000\n900"
+        output: "JUAL"
+      - input: "1000\n1000\n900"
+        output: "JUAL"
+      - input: "850\n1000\n900"
+        output: "CUT"
+      - input: "950\n1000\n900"
+        output: "TAHAN"
+    solusi: |
+      harga = int(input())
+      target = int(input())
+      cut = int(input())
+      if harga >= target:
+          print("JUAL")
+      elif harga <= cut:
+          print("CUT")
+      else:
+          print("TAHAN")
+    petunjuk:
+      - "Cek target dulu (if), lalu cut (elif), sisanya TAHAN."
+      - "Gunakan >= dan <= supaya sama dengan ikut masuk."

@@ -1,0 +1,298 @@
+# ============================================================
+# BAB 25 — NUMPY (TRACK: PYTHON LIBRARIES)
+# Array & statistik cepat — cara profesional memproses data angka.
+# ============================================================
+bab: 25
+track: libs
+judul: "NumPy: Array & Statistik Cepat"
+emoji: "🔢"
+deskripsi: "List Python lambat untuk ribuan angka. NumPy = array super cepat dengan statistik satu baris — standar industri quant."
+pelajaran:
+  - id: "25-1"
+    judul: "Array: List yang Lebih Kuat"
+    menit: 5
+    materi: |
+      **NumPy** = library (paket kode siap pakai) paling dasar untuk angka di Python. Intinya: **array** — seperti list, tapi lebih cepat dan bisa dioperasikan sekaligus.
+
+      ```python
+      import numpy as np
+      harga = np.array([4000, 4100, 3900, 4200])
+      print(harga * 1.10)      # semua dikali sekaligus!
+      # [4400. 4510. 4290. 4620.]
+      ```
+
+      Perhatikan: `harga * 1.10` mengalikan SEMUA elemen tanpa loop. List biasa: `[4000, 4100] * 1.10` malah error atau menggandakan isi. Ini disebut **operasi vektor** — satu perintah untuk semua angka.
+
+      Bisa juga operasi antar array. Contoh: `harga[1:] / harga[:-1] - 1` menghitung return harian SEMUA hari dalam satu baris. (`harga[1:]` = mulai elemen kedua; `harga[:-1]` = tanpa elemen terakhir.) Coba dengan list Python — butuh loop panjang.
+
+      Kenapa penting? Data pasar = ratusan ribu angka. NumPy memprosesnya dalam milidetik; loop Python bisa berdetik-detikan. Library lain (pandas, sklearn) dibangun di atas NumPy.
+    kode: |
+      import numpy as np
+      harga = np.array([4000, 4100, 3900, 4200, 4050])
+      print(harga.mean())     # 4050.0
+      print(harga.max())      # 4200
+      print(harga.std())      # sebaran (Bab 2!)
+    penjelasan: "np.array = list super. Operasi vektor: satu baris, semua elemen. mean/max/std: statistik instan."
+  - id: "25-2"
+    judul: "Statistik Satu Baris"
+    menit: 5
+    materi: |
+      Semua statistik yang kamu pelajari di Bab 2 & 12 tersedia dalam satu baris:
+
+      ```python
+      import numpy as np
+      ret = np.array([1.2, -0.5, 0.8, -1.1, 0.3])
+      print(ret.mean())    # rata-rata: 0.14
+      print(ret.std())     # standar deviasi: 0.88
+      print(ret.max())     # 1.2
+      print(ret.min())     # -1.1
+      print(ret.sum())     # 0.7
+      ```
+
+      Yang paling berguna untuk quant: RETURN HARIAN lewat pembagian array berpasangan:
+
+      ```python
+      harga = np.array([4000, 4100, 3900, 4200])
+      ret_harian = harga[1:] / harga[:-1] - 1
+      # array([0.025, -0.0488, 0.0769])  → +2.5%, -4.9%, +7.7%
+      ```
+
+      Return harian = bahan bakar SEMUA analisis: Sharpe (Bab 6), volatilitas (Bab 12), drawdown. Satu baris NumPy menggantikan loop 10 baris — dan lebih cepat.
+    kode: |
+      import numpy as np
+      harga = np.array([4000, 4100, 3900, 4200])
+      r = harga[1:] / harga[:-1] - 1
+      print(np.round(r * 100, 2))   # [ 2.5  -4.88  7.69]
+    penjelasan: "Potong array berpasangan (`harga[1:]` vs `harga[:-1]`): return harian semua hari dalam satu baris. Statistik: mean/std/max/min/sum."
+skenario:
+  - id: "s25-1"
+    judul: "Baca Kode: Operasi Array"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      import numpy as np
+      a = np.array([100, 200, 300])
+      print(a * 2)
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "[100, 200, 300, 100, 200, 300]"
+      - "[200, 400, 600]"
+      - "Error — array tidak bisa dikali"
+      - "[102, 202, 302]"
+    jawaban: 1
+    penjelasan: |
+      Operasi vektor: `a * 2` mengalikan SEMUA elemen → **[200, 400, 600]**. List Python `[100,200,300]*2` memang jadi dobel. NumPy array beda — justru itulah gunanya. Kekuatan NumPy: satu operasi untuk semua data, tanpa loop. Di quant, `harga * 1.10` = "semua posisi naik 10%" dalam satu baris.
+    kode: |
+      import numpy as np
+      a = np.array([100, 200, 300])
+      print(a * 2)   # [200 400 600]
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Itu perilaku LIST python (menggandakan isi). Array NumPy mengalikan nilainya."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: semua elemen dikali 2 — operasi vektor."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error — array justru DIRANCANG untuk dikali."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "102/202/302 itu kalau ditambah 2. Tanda * artinya kali."
+    petunjuk:
+      - "Operasi vektor berlaku ke SEMUA elemen."
+      - "* 2 = kali dua, bukan tambah dua."
+  - id: "s25-2"
+    judul: "Loop atau NumPy?"
+    emoji: "⚡"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Kamu punya 100.000 harga harian dan mau hitung rata-rata. Dua cara: (A) loop Python `total += h` selama 100.000 iterasi; (B) `harga.mean()` dengan NumPy. Mana yang benar?
+    pilihan:
+      - "A — loop lebih jelas dan bisa dibaca"
+      - "B — satu baris, jauh lebih cepat, dan hasilnya sama persis"
+      - "Keduanya sama cepatnya"
+      - "A — NumPy tidak bisa pegang 100.000 data"
+    jawaban: 1
+    penjelasan: |
+      `harga.mean()` = satu baris, jalan di level C (super cepat). Loop Python = 100.000 iterasi interpreter — ratusan kali lebih lambat. Hasilnya identik, tapi untuk data besar bedanya detik vs milidetik. Aturan praktis: **kalau datanya deret angka dan butuh statistik massal, pakai NumPy.** Loop tetap berguna untuk logika (keputusan per elemen). Tapi jangan untuk menghitung.
+    kode: |
+      import numpy as np
+      harga = np.random.RandomState(7).randint(1000, 5000, 100000)
+      print(harga.mean())   # satu baris, cepat
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Loop 100rb iterasi jalan (dan benar), tapi ~100x lebih lambat dari mean() NumPy."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: satu baris + cepat + hasil sama. Standar industri."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak sama cepat — loop Python jauh lebih lambat untuk data besar."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "NumPy justru dibuat untuk jutaan angka — 100rb itu kecil baginya."
+    petunjuk:
+      - "NumPy menghitung di level C, bukan interpreter Python."
+      - "Data besar → operasi vektor, bukan loop."
+  - id: "s25-3"
+    judul: "Return Harian Satu Baris"
+    emoji: "📉"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Harga 4 hari: [4000, 4100, 3900, 4200]. Kode: `r = harga[1:] / harga[:-1] - 1`. Berapa return hari ke-2 (dari 4100 ke 3900)?
+    pilihan:
+      - "0.025"
+      - "-0.0488"
+      - "0.0769"
+      - "0.05"
+    jawaban: 1
+    penjelasan: |
+      `harga[1:]` = [4100, 3900, 4200]; `harga[:-1]` = [4000, 4100, 3900]. Pembagian elemen-per-elemen: 4100/4000−1 = **+2,5%**; 3900/4100−1 = **−4,88%** (inilah return hari ke-2); 4200/3900−1 = +7,69%. Satu baris = semua return harian sekaligus. Teknik ini dipakai di mana-mana: hitung Sharpe, volatilitas, drawdown dari return harian.
+    kode: |
+      import numpy as np
+      harga = np.array([4000, 4100, 3900, 4200])
+      r = harga[1:] / harga[:-1] - 1
+      print(np.round(r * 100, 2))   # [ 2.5  -4.88  7.69]
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "0.025 = return hari PERTAMA (4000→4100). Kamu minta hari ke-2."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "-4.88% benar: 3900/4100 − 1. Hari ke-2."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0.0769 = return hari ke-3 (3900→4200)."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "0.05 = 200/4000 — itu pakai harga awal, bukan pasangan yang benar."
+    petunjuk:
+      - "harga[1:] = 3 angka terakhir; harga[:-1] = 3 angka pertama."
+      - "Bagi berpasangan: 4100/4000, 3900/4100, 4200/3900."
+soal:
+  - id: "p25-1"
+    judul: "Rata-rata & Tertinggi"
+    emoji: "📈"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Gunakan NumPy! Baca N, lalu N baris harga ke dalam `np.array`. Cetak RATA-RATA (dibulatkan ke bawah, `int()`) di baris 1 dan harga TERTINGGI di baris 2.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: harga.
+    output_spec: |
+      Baris 1: rata-rata (int). Baris 2: harga tertinggi.
+    contoh:
+      - input: "4\n1000\n2000\n3000\n4000"
+        output: "2500\n4000"
+      - input: "3\n500\n700\n900"
+        output: "700\n900"
+    tes:
+      - input: "4\n1000\n2000\n3000\n4000"
+        output: "2500\n4000"
+      - input: "3\n500\n700\n900"
+        output: "700\n900"
+      - input: "1\n777"
+        output: "777\n777"
+      - input: "5\n100\n200\n300\n400\n500"
+        output: "300\n500"
+    solusi: |
+      import numpy as np
+      n = int(input())
+      harga = np.array([int(input()) for _ in range(n)])
+      print(int(harga.mean()))
+      print(int(harga.max()))
+    petunjuk:
+      - "np.array([...]) dari list input."
+      - "harga.mean() dan harga.max(), bungkus int()."
+  - id: "p25-2"
+    judul: "Volatilitas (Std Dev)"
+    emoji: "📊"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      NumPy! Baca N, lalu N baris harga. Cetak standar deviasi (`np.std`) dengan 2 angka desimal. Std dev = ukuran risiko (Bab 12).
+    input_spec: |
+      Baris 1: N. N baris berikutnya: harga.
+    output_spec: |
+      Satu baris: std dev dengan 2 desimal (format `%.2f`).
+    contoh:
+      - input: "3\n100\n200\n300"
+        output: "81.65"
+      - input: "4\n4000\n4000\n4000\n4000"
+        output: "0.00"
+    tes:
+      - input: "3\n100\n200\n300"
+        output: "81.65"
+      - input: "4\n4000\n4000\n4000\n4000"
+        output: "0.00"
+      - input: "2\n10\n20"
+        output: "5.00"
+      - input: "5\n1\n2\n3\n4\n5"
+        output: "1.41"
+    solusi: |
+      import numpy as np
+      n = int(input())
+      harga = np.array([int(input()) for _ in range(n)])
+      print(f"{harga.std():.2f}")
+    petunjuk:
+      - "np.std menghitung standar deviasi populasi."
+      - "Format: f\"{nilai:.2f}\"."
+  - id: "p25-3"
+    judul: "Rata-rata Return Harian"
+    emoji: "📉"
+    tingkat: sulit
+    xp: 55
+    menit: 9
+    cerita: |
+      NumPy! Baca N, lalu N baris harga. Hitung return harian: `r = harga[1:] / harga[:-1] - 1`. Cetak RATA-RATA return harian dalam PERSEN dengan 2 desimal (format `%.2f`, misal `1.25` artinya 1.25%).
+    input_spec: |
+      Baris 1: N (≥ 2). N baris berikutnya: harga.
+    output_spec: |
+      Satu baris: rata-rata return harian (%) dengan 2 desimal.
+    contoh:
+      - input: "3\n1000\n1100\n1210"
+        output: "10.00"
+      - input: "4\n4000\n4100\n3900\n4200"
+        output: "1.77"
+    tes:
+      - input: "3\n1000\n1100\n1210"
+        output: "10.00"
+      - input: "4\n4000\n4100\n3900\n4200"
+        output: "1.77"
+      - input: "2\n100\n90"
+        output: "-10.00"
+      - input: "5\n100\n100\n100\n100\n100"
+        output: "0.00"
+    solusi: |
+      import numpy as np
+      n = int(input())
+      harga = np.array([int(input()) for _ in range(n)])
+      r = harga[1:] / harga[:-1] - 1
+      print(f"{r.mean() * 100:.2f}")
+    petunjuk:
+      - "Return harian = harga[1:] / harga[:-1] - 1."
+      - "Rata-rata × 100 untuk persen, format %.2f."

@@ -1,0 +1,310 @@
+# ============================================================
+# BAB 22 — DATA & FILE (TRACK: ADVANCED)
+# Dict (data berlabel) & parsing baris data — cara komputer
+# menyimpan dan membaca data pasar sungguhan.
+# ============================================================
+bab: 22
+track: advanced
+judul: "Data & File"
+emoji: "📁"
+deskripsi: "Data pasar datang sebagai baris-baris teks: 'TLKM 4000'. Belajar menyimpan, membaca, dan merangkumnya dengan dict."
+pelajaran:
+  - id: "22-1"
+    judul: "Dict: Kotak dengan Label"
+    menit: 5
+    materi: |
+      Dict (dictionary) = kotak penyimpan yang setiap isinya punya LABEL (kunci). List menyimpan angka berurutan. Dict menyimpan data yang punya nama.
+
+      ```python
+      saham = {"nama": "TLKM", "harga": 4000, "lot": 2}
+      print(saham["nama"])    # TLKM
+      print(saham["harga"])   # 4000
+      saham["harga"] = 4100   # ubah nilai
+      ```
+
+      Beda dengan list: di list kamu ambil dengan nomor (`harga[0]`). Di dict, dengan label (`saham["harga"]`). Jauh lebih jelas — kamu tidak perlu ingat "kolom ke berapa".
+
+      Di quant, dict = format data paling umum untuk data pasar: satu dict per saham, satu list berisi banyak dict untuk portofolio:
+      ```python
+      porto = [
+          {"nama": "TLKM", "harga": 4000},
+          {"nama": "BBRI", "harga": 4500},
+      ]
+      print(porto[0]["harga"])   # 4000
+      ```
+    kode: |
+      saham = {"nama": "TLKM", "harga": 4000}
+      print(saham["nama"], saham["harga"])   # TLKM 4000
+    penjelasan: "Dict = data berlabel. List of dict = cara standar menyimpan banyak data pasar."
+  - id: "22-2"
+    judul: "Baca Baris Data"
+    menit: 5
+    materi: |
+      Data dari exchange/broker biasanya berupa baris teks:
+      ```
+      TLKM 4000 120000
+      BBRI 4500 80000
+      ```
+
+      Setiap baris = satu data: nama, harga, volume — dipisah spasi. Cara membacanya di Python:
+
+      ```python
+      baris = "TLKM 4000 120000"
+      bagian = baris.split()          # ['TLKM', '4000', '120000']
+      nama = bagian[0]                # 'TLKM'
+      harga = int(bagian[1])          # 4000 (ubah ke angka!)
+      ```
+
+      Lalu kamu bisa menyimpan ke dict dan mengumpulkan banyak baris dalam list:
+      ```python
+      data = []
+      for baris in teks:
+          p = baris.split()
+          data.append({"nama": p[0], "harga": int(p[1])})
+      ```
+
+      Pola ini ada di SEMUA bot sungguhan: baca baris → parse (pecah & ubah ke angka) → simpan → analisis. Setelah ini, kamu bisa membaca file CSV (tabel berbasis teks) dari broker mana pun.
+    kode: |
+      baris = "TLKM 4000"
+      p = baris.split()
+      print(p[0], int(p[1]))   # TLKM 4000
+    penjelasan: "split() memecah baris, int() mengubah teks jadi angka. Parse = baca → ubah → simpan."
+skenario:
+  - id: "s22-1"
+    judul: "Baca Kode: Dict"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      saham = {"nama": "TLKM", "harga": 4000}
+      print(saham["harga"])
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "TLKM"
+      - "4000"
+      - "nama"
+      - "Error — dict tidak bisa diakses"
+    jawaban: 1
+    penjelasan: |
+      `saham["harga"]` mengambil nilai dengan LABEL "harga" = **4000**. TLKM? Itu `saham["nama"]`. "nama" = label (kunci), bukan nilai. Dict memang dirancang untuk diakses lewat label. Kodenya lebih jelas: `saham["harga"]` jauh lebih terbaca daripada `data[1]`.
+    kode: |
+      saham = {"nama": "TLKM", "harga": 4000}
+      print(saham["harga"])   # 4000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "TLKM itu isi kunci 'nama'. Kamu minta kunci 'harga'."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "4000 benar — dict diakses lewat label."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "'nama' adalah label (kunci), bukan nilainya."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error — dict memang diakses dengan kurung siku + label."
+    petunjuk:
+      - "Kunci di dalam tanda kutip: 'harga'."
+      - "Cari nilai yang berpasangan dengan label itu."
+  - id: "s22-2"
+    judul: "Pilih Struktur Data"
+    emoji: "🗂️"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Kamu punya 5 saham (nama + harga) yang harus dihitung total dan rata-ratanya. Cara penyimpanan mana yang paling tepat?
+    pilihan:
+      - "5 variabel terpisah: harga1 = 4000, harga2 = 4500, ..."
+      - "Satu list berisi 5 dict: [{'nama': 'TLKM', 'harga': 4000}, ...]"
+      - "Satu string panjang: 'TLKM 4000 BBRI 4500 ...'"
+      - "Satu dict dengan angka: {1: 4000, 2: 4500, ...}"
+    jawaban: 1
+    penjelasan: |
+      **List of dict** = pilihan standar. Loop bisa memproses semuanya (`for s in porto:`). Tiap saham punya label jelas (nama & harga). Mudah ditambah/dihapus. 5 variabel = kode berulang, tidak bisa di-loop. String panjang = harus di-parse manual tiap kali. Dict bernomor = kehilangan nama saham. Ini keputusan penyimpanan data yang diambil programmer quant setiap hari.
+    kode: |
+      porto = [
+          {"nama": "TLKM", "harga": 4000},
+          {"nama": "BBRI", "harga": 4500},
+          {"nama": "UNVR", "harga": 3000},
+      ]
+      total = sum(s["harga"] for s in porto)
+      print(total)   # 11500
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "5 variabel = 5x kode yang sama. Mau hitung 100 saham? 100 variabel? Tidak masuk akal."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "List of dict benar — standar industri untuk data terstruktur."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "String panjang = data tanpa struktur. Setiap hitungan harus parse ulang."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Dict bernomor = list yang lebih ribet. Nama sahamnya hilang!"
+    petunjuk:
+      - "Yang bisa di-loop + punya label = apa?"
+      - "Bagaimana cara menyimpan 5 objek serupa?"
+  - id: "s22-3"
+    judul: "Parse Baris Data"
+    emoji: "✂️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Satu baris data dari broker: `"CUAN 1500 25000"` (nama, harga, volume). Kamu mau ambil HARGA-nya sebagai angka. Kode yang benar?
+    pilihan:
+      - "`harga = baris[1]`"
+      - "`harga = int(baris.split()[1])`"
+      - "`harga = int(baris)`"
+      - "`harga = baris.split()`"
+    jawaban: 1
+    penjelasan: |
+      `baris.split()` memecah jadi `['CUAN', '1500', '25000']`, lalu `[1]` mengambil elemen kedua ('1500'), lalu `int()` mengubah teks jadi angka → **1500**. Opsi lain: `baris[1]` = huruf kedua ('U')!; `int(baris)` = error (seluruh baris bukan angka); `baris.split()` = list teks, belum angka. Urutan parse: pecah → pilih → ubah tipe. Ini baris paling penting di dunia data quant.
+    kode: |
+      baris = "CUAN 1500 25000"
+      harga = int(baris.split()[1])
+      print(harga, type(harga))   # 1500 <class 'int'>
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "baris[1] mengambil KARAKTER kedua = 'U'. String di-index per huruf!"
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: split → [1] → int. Parse standar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "int(baris) error — 'CUAN 1500 25000' bukan angka."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "split() hasilnya list teks ['CUAN','1500','25000'] — belum diambil & belum jadi angka."
+    petunjuk:
+      - "Pecah dulu dengan split()."
+      - "Lalu ambil indeks 1, lalu ubah dengan int()."
+soal:
+  - id: "p22-1"
+    judul: "Kamus Saham"
+    emoji: "📖"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Baca dua baris: nama saham (baris 1) dan harga (baris 2). Simpan ke dict dengan kunci `nama` dan `harga`, lalu cetak dengan format `nama: harga`.
+    input_spec: |
+      Baris 1: nama saham. Baris 2: harga (angka bulat).
+    output_spec: |
+      Satu baris: `nama: harga`.
+    contoh:
+      - input: "TLKM\n4000"
+        output: "TLKM: 4000"
+      - input: "BBRI\n4500"
+        output: "BBRI: 4500"
+    tes:
+      - input: "TLKM\n4000"
+        output: "TLKM: 4000"
+      - input: "BBRI\n4500"
+        output: "BBRI: 4500"
+      - input: "CUAN\n1500"
+        output: "CUAN: 1500"
+      - input: "AAPL\n30000"
+        output: "AAPL: 30000"
+    solusi: |
+      nama = input()
+      harga = int(input())
+      saham = {"nama": nama, "harga": harga}
+      print(f"{saham['nama']}: {saham['harga']}")
+    petunjuk:
+      - "Simpan dengan dict: saham = {'nama': ..., 'harga': ...}."
+      - "Cetak dengan f-string memakai kunci dict."
+  - id: "p22-2"
+    judul: "Total Harga Portofolio"
+    emoji: "🧮"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Baca N (jumlah saham), lalu N baris berisi `nama harga` (dipisah spasi). Cetak TOTAL semua harga. Petunjuk: `baris.split()` memecah, `int(...)` mengubah ke angka.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama harga`.
+    output_spec: |
+      Satu baris: total harga (angka bulat).
+    contoh:
+      - input: "2\nTLKM 4000\nBBRI 4500"
+        output: "8500"
+      - input: "3\nCUAN 1500\nBRPT 1000\nMPPA 500"
+        output: "3000"
+    tes:
+      - input: "2\nTLKM 4000\nBBRI 4500"
+        output: "8500"
+      - input: "3\nCUAN 1500\nBRPT 1000\nMPPA 500"
+        output: "3000"
+      - input: "1\nUNVR 3000"
+        output: "3000"
+      - input: "4\nA 100\nB 200\nC 300\nD 400"
+        output: "1000"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          p = input().split()
+          total += int(p[1])
+      print(total)
+    petunjuk:
+      - "split() memberi [nama, harga]."
+      - "Harga ada di indeks 1 — jangan lupa int()."
+  - id: "p22-3"
+    judul: "Saham Termahal"
+    emoji: "👑"
+    tingkat: sulit
+    xp: 55
+    menit: 9
+    cerita: |
+      Baca N, lalu N baris `nama harga`. Cetak NAMA saham dengan harga TERTINGGI. (Kalau ada yang sama, cetak yang pertama muncul.)
+    input_spec: |
+      Baris 1: N. N baris berikutnya: `nama harga`.
+    output_spec: |
+      Satu baris: nama saham termahal.
+    contoh:
+      - input: "3\nTLKM 4000\nBBRI 4500\nUNVR 3000"
+        output: "BBRI"
+      - input: "2\nCUAN 1500\nBRPT 1000"
+        output: "CUAN"
+    tes:
+      - input: "3\nTLKM 4000\nBBRI 4500\nUNVR 3000"
+        output: "BBRI"
+      - input: "2\nCUAN 1500\nBRPT 1000"
+        output: "CUAN"
+      - input: "1\nMPPA 500"
+        output: "MPPA"
+      - input: "4\nA 100\nB 500\nC 500\nD 200"
+        output: "B"
+    solusi: |
+      n = int(input())
+      terbaik = ""
+      tertinggi = -1
+      for i in range(n):
+          p = input().split()
+          nama, harga = p[0], int(p[1])
+          if harga > tertinggi:
+              tertinggi = harga
+              terbaik = nama
+      print(terbaik)
+    petunjuk:
+      - "Simpan nama terbaik + harga tertingginya."
+      - "Pakai `>` supaya yang pertama menang saat seri."

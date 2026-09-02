@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Ulasan Cerdas — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>📚 Ulasan Cerdas</h1>
+  <p class="meta">Spaced repetition: skenario yang kamu jawab dijadwalkan ulang setelah 1, 3, dan 7 hari. Jawab benar 3 tahap beruntun = <b class="good">mahir</b> dan keluar dari daftar.</p>
+</section>
+
+{% if msg == 'graduated' %}<div class="okbox">🎓 Skenario dinyatakan MAHIR — selesai dari daftar ulasan!</div>
+{% elif msg == 'ok' %}<div class="okbox">✅ Benar! Tahap ulasan berikutnya dijadwalkan.</div>
+{% elif msg == 'wrong' %}<div class="alert">❌ Belum tepat — ulasan diulang dari tahap 1 besok. Cek lagi materinya!</div>
+{% endif %}
+
+{% if items %}
+<div class="scenlist">
+  {% for it in items %}
+  <a class="scenrow" href="{{ url_for('ulas_soal', sid=it.id) }}">
+    <span class="scenemoji">{{ it.emoji }}</span>
+    <span class="scenmain">
+      <b>{{ it.judul }}</b>
+      <span class="meta">{{ it.track }} · Bab {{ it.bab }} · ulasan tahap {{ it.stage }}/3</span>
+    </span>
+    <span class="arrow">→</span>
+  </a>
+  {% endfor %}
+</div>
+{% else %}
+<div class="casebox">
+  <p class="note">Tidak ada ulasan yang jatuh tempo hari ini. 🎉 Selesaikan skenario baru untuk menjadwalkan ulasan pertamanya (muncul besok).</p>
+</div>
+{% endif %}
+{% endblock %}

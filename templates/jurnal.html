@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block title %}Jurnal Trading — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>📓 Jurnal Trading</h1>
+  <p class="meta">Pelajaran Bab 5 dalam praktik: tulis setiap trade — angka DAN emosi. Setelah 20 entri, pola loss terbesarmu akan terlihat.</p>
+</section>
+
+{% if err %}<div class="alert">{{ err }}</div>{% endif %}
+
+<section class="dashcols">
+  <div class="dashcol">
+    <h3>📊 Ringkasan</h3>
+    <div class="statrow">
+      <div class="stat"><b>{{ stats.n }}</b><span>Entri</span></div>
+      <div class="stat"><b>{{ stats.win_rate }}%</b><span>Win rate</span></div>
+      <div class="stat"><b class="{{ 'pos' if stats.total_pnl >= 0 else 'neg' }}">{{ '%+.2f' % stats.total_pnl }}%</b><span>Total PnL</span></div>
+      <div class="stat"><b class="pos">{{ '%+.2f' % stats.avg_win }}%</b><span>Rata-rata win</span></div>
+      <div class="stat"><b class="neg">{{ '%+.2f' % stats.avg_loss }}%</b><span>Rata-rata loss</span></div>
+      <div class="stat"><b class="pos">{{ '%+.1f' % stats.best }}%</b><span>Terbaik</span></div>
+      <div class="stat"><b class="neg">{{ '%+.1f' % stats.worst }}%</b><span>Terburuk</span></div>
+    </div>
+    {% if stats.n >= 10 and stats.win_rate < 50 %}
+    <p class="note">⚠️ Win rate di bawah 50% — cek jurnalmu: apakah loss terbesar datang dari trade di luar aturan?</p>
+    {% endif %}
+  </div>
+  <div class="dashcol">
+    <h3>➕ Entri Baru</h3>
+    <form method="post">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <div class="jr2">
+        <div><label>Tanggal</label><input type="date" name="tanggal" value="{{ today }}"></div>
+        <div><label>Aset (contoh: BTC, TLKM)</label><input type="text" name="aset" placeholder="BTC" required maxlength="20"></div>
+        <div><label>Arah</label>
+          <select name="arah">
+            {% for a in arah_list %}<option value="{{ a }}">{{ a }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="jr3">
+        <div><label>Harga entry</label><input type="number" step="any" name="entry" placeholder="1000" required></div>
+        <div><label>Harga exit</label><input type="number" step="any" name="exit" placeholder="1050" required></div>
+        <div><label>Ukuran (lot/porsi)</label><input type="number" step="any" name="size" value="1"></div>
+      </div>
+      <label>Emosi saat trade</label>
+      <select name="emosi">
+        {% for e in emosi_list %}<option value="{{ e }}">{{ e }}</option>{% endfor %}
+      </select>
+      <label>Catatan (rencana, kesalahan, pelajaran)</label>
+      <textarea name="catatan" rows="3" maxlength="1000" placeholder="Kenapa masuk? Apa yang terjadi? Apa yang bisa diperbaiki?"></textarea>
+      <button class="btn primary" type="submit">Simpan Entri</button>
+    </form>
+  </div>
+</section>
+
+<section>
+  <h3>📜 Riwayat</h3>
+  {% if entries %}
+  <div class="jrlist">
+    {% for e in entries %}
+    <div class="jrrow">
+      <span class="jrdate">{{ e.tanggal }}</span>
+      <span class="jrasset"><b>{{ e.aset }}</b> {{ e.arah }}</span>
+      <span class="jrpx">{{ '%.0f' % e.entry_price }} → {{ '%.0f' % e.exit_price }}</span>
+      <span class="jrres {{ 'pos' if e.hasil >= 0 else 'neg' }}">{{ '%+.2f' % e.hasil }}%</span>
+      <span class="jremosi">{{ e.emosi }}</span>
+      <span class="jrnote">{{ e.catatan | e | replace('\n', '<br>') | safe }}</span>
+      <form method="post" class="jrdel" onsubmit="return confirm('Hapus entri ini?')">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <input type="hidden" name="action" value="delete">
+        <input type="hidden" name="id" value="{{ e.id }}">
+        <button type="submit" title="Hapus">🗑️</button>
+      </form>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <p class="note">Belum ada entri. Trade pertamamu yang dicatat = awal dari data pribadimu.</p>
+  {% endif %}
+</section>
+{% endblock %}

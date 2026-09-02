@@ -1,0 +1,300 @@
+# ============================================================
+# BAB 23 — ERROR & DEBUGGING (TRACK: ADVANCED)
+# Membaca pesan error, try/except, dan menemukan bug logika.
+# ============================================================
+bab: 23
+track: advanced
+judul: "Error & Debugging"
+emoji: "🐞"
+deskripsi: "Error bukan kegagalan — itu pesan dari komputer. Belajar membacanya dan membuat bot yang tahan banting."
+pelajaran:
+  - id: "23-1"
+    judul: "Error Itu Pesan, Bukan Musuh"
+    menit: 5
+    materi: |
+      Programmer pemula panik lihat error. Programmer pro justru BERSYUKUR — error memberi tahu persis apa yang salah. Kenali yang paling umum:
+
+      - `NameError: name 'harga' is not defined` → variabel `harga` belum dibuat / salah eja.
+      - `TypeError: can't multiply sequence by non-int` → kamu mengalikan teks dengan angka (lupa `int()`).
+      - `ValueError: invalid literal for int()` → `int()` diberi teks yang bukan angka.
+      - `IndexError: list index out of range` → indeks melebihi panjang list.
+      - `KeyError: 'harga'` → kunci tidak ada di dict.
+      - `ZeroDivisionError` → membagi dengan nol.
+
+      Cara membaca: lihat **baris paling bawah** pesan — itulah inti masalahnya. Baris di atasnya hanya jejak panggilan (traceback).
+
+      Di trading: bot yang error dengan pesan jelas = mudah diperbaiki. Bot yang error diam-diam = bom waktu. Selalu buat error TERLIHAT (log + alert).
+    kode: |
+      # Error umum — coba tebak sebelum menjalankan!
+      # print(harga * 2)      → NameError
+      # print("5" * 2)        → '55' (teks! bukan 10)
+      print(int("5") * 2)     # 10 — pakai int() dulu
+    penjelasan: "Error = diagnosis gratis. Baca baris bawah, cari variabel/tipe/indeks yang bermasalah."
+  - id: "23-2"
+    judul: "try/except: Jaring Pengaman"
+    menit: 5
+    materi: |
+      Bot harus bertahan menghadapi data jelek: input kosong, angka salah format, koneksi putus. **try/except** = jaring pengaman.
+
+      ```python
+      try:
+          harga = int(input("Harga: "))
+          print(harga * 2)
+      except ValueError:
+          print("Input bukan angka — pakai angka dong!")
+      ```
+
+      Cara kerja: Python COBA menjalankan blok `try`. Kalau muncul error yang cocok dengan `except ValueError`, blok except yang jalan. Program TIDAK mati. Kalau tidak ada error, except dilewati.
+
+      Bisa menangkap banyak jenis sekaligus: `except (ValueError, TypeError):`. Ada juga `except Exception:` — jaring terakhir. Tapi hati-hati: itu menyembunyikan semua error.
+
+      Di bot: setiap titik yang menerima data dari luar (input user, API, file) WAJIB punya jaring pengaman. Bot yang baik: data jelek → pesan jelas → tetap jalan. Bukan crash diam-diam.
+    kode: |
+      try:
+          n = int(input())
+          print(n * 2)
+      except ValueError:
+          print("BUKAN ANGKA — bot tetap hidup!")
+    penjelasan: "try/except = coba dulu, tangkap errornya, lanjut hidup. Data jelek tidak boleh mematikan bot."
+skenario:
+  - id: "s23-1"
+    judul: "Baca Pesan Error"
+    emoji: "🔎"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Bot kamu error:
+      ```
+      NameError: name 'harga' is not defined
+      ```
+      Di baris `print(harga * 2)`. Apa yang paling mungkin salah?
+    pilihan:
+      - "Angka 2 salah"
+      - "Variabel `harga` belum diisi atau salah eja sebelum dipakai"
+      - "print tidak bisa menampilkan angka"
+      - "Python-nya bermasalah"
+    jawaban: 1
+    penjelasan: |
+      `NameError ... is not defined` = Python tidak mengenal nama `harga`. Artinya variabel itu **belum pernah diisi** atau **ejaannya beda** (misal tulis `harga_jual`, dipakai `harga`). Ini error paling umum pemula — dan paling gampang diperbaiki: cek baris-baris sebelumnya. Di bot, ini sering terjadi karena logika terpotong (variabel diisi di dalam `if` yang tidak pernah True).
+    kode: |
+      harga = 4000        # ← lupa baris ini?
+      print(harga * 2)    # NameError kalau baris di atas hilang
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Angka 2 tidak masalah — errornya soal NAMA 'harga', bukan angkanya."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar — NameError = variabel belum ada/salah eja."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "print bisa menampilkan apa pun — masalahnya variabelnya yang tidak ada."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Python baik-baik saja — dia justru memberi tahu kamu apa yang salah."
+    petunjuk:
+      - "NameError = nama tidak dikenal."
+      - "Variabel harus DIISI dulu sebelum DIPAKAI."
+  - id: "s23-2"
+    judul: "IndexError di Bot"
+    emoji: "📏"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Bot membaca data harga 5 hari:
+      ```python
+      harga = [4000, 4100, 3900, 4200, 4050]
+      print(harga[5])    # IndexError: list index out of range
+      ```
+      Kenapa error, dan apa perbaikannya?
+    pilihan:
+      - "List-nya rusak — hapus dan buat ulang"
+      - "Indeks 5 tidak ada: list punya indeks 0-4 (5 elemen). Pakai harga[4] untuk elemen terakhir"
+      - "Tambahkan angka lagi ke list supaya indeks 5 ada"
+      - "Error karena harga harus dikali 2"
+    jawaban: 1
+    penjelasan: |
+      List 5 elemen berindeks **0 sampai 4** — `harga[5]` menanyakan elemen ke-6 yang tidak ada → IndexError. Elemen terakhir = `harga[4]` atau lebih aman `harga[-1]` (indeks negatif = dari belakang). Ini bug klasik bot: data hari ini "tidak kebaca" padahal cuma salah indeks. Selalu ingat: **index mulai dari 0**, jadi indeks terakhir = jumlah elemen − 1.
+    kode: |
+      harga = [4000, 4100, 3900, 4200, 4050]
+      print(harga[-1])   # 4050 — elemen terakhir, aman
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "List tidak rusak — kamu minta elemen yang tidak ada."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: indeks 0-4, terakhir = harga[4] atau harga[-1]."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Menambah elemen = mengubah data asli supaya cocok dengan bug. Salah arah!"
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak ada hubungannya dengan perkalian — murni soal indeks."
+    petunjuk:
+      - "5 elemen = indeks berapa sampai berapa?"
+      - "Indeks terakhir = len − 1."
+  - id: "s23-3"
+    judul: "Bot vs Input Jelek"
+    emoji: "🛡️"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Bot jualan membaca harga dari user: `harga = int(input())`. User iseng mengetik "abc" → bot CRASH (ValueError). Semua posisi terbengkalai. Solusi terbaik?
+    pilihan:
+      - "Minta user jangan salah ketik"
+      - "Bungkus dengan try/except: kalau error, minta input ulang (atau log + abort dengan aman)"
+      - "Ganti int() dengan float()"
+      - "Matikan bot saja"
+    jawaban: 1
+    penjelasan: |
+      User (dan API, dan file) SELALU bisa memberi data jelek. Itu bukan "kesalahan user" — itu KENYATAAN. Bot yang benar: `try/except ValueError` → minta ulang, atau log + hentikan dengan aman. Jangan lanjut dengan data sampah. Ganti int→float tidak menolong ("abc" tetap error). "Minta jangan salah ketik" = berharap, bukan desain. Matikan bot = menyerah. Bot profesional: **asumsikan input selalu jelek, desain agar tetap aman.**
+    kode: |
+      while True:
+          try:
+              harga = int(input("Harga: "))
+              break
+          except ValueError:
+              print("Ulangi — pakai angka.")
+      print(f"Harga diterima: {harga}")
+    hasil:
+      - ret: -4.0
+        dd: 4.0
+        win: 20
+        note: "'Jangan salah ketik' tidak berfungsi: user tetap bisa salah. Bot crash lagi seminggu kemudian."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "Try/except benar: input jelek → minta ulang; di produksi → log + abort aman."
+      - ret: -2.0
+        dd: 2.0
+        win: 30
+        note: "float() tidak menolong: 'abc' tetap ValueError. Masalahnya bukan tipe, tapi validasi."
+      - ret: -6.0
+        dd: 6.0
+        win: 15
+        note: "Mematikan bot = membuang mesin yang bisa diperbaiki dengan 3 baris try/except."
+    petunjuk:
+      - "Data dari luar = selalu mencurigakan."
+      - "try/except menangkap error sebelum mematikan program."
+soal:
+  - id: "p23-1"
+    judul: "Angka atau Bukan?"
+    emoji: "🔢"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Baca satu baris. Kalau isinya ANGKA, cetak angka itu dikali 2. Kalau BUKAN angka, cetak `BUKAN ANGKA`. (Pakai try/except ValueError!)
+    input_spec: |
+      Satu baris (bisa angka, bisa bukan).
+    output_spec: |
+      Satu baris: hasil kali 2, atau `BUKAN ANGKA`.
+    contoh:
+      - input: "21"
+        output: "42"
+      - input: "abc"
+        output: "BUKAN ANGKA"
+    tes:
+      - input: "21"
+        output: "42"
+      - input: "abc"
+        output: "BUKAN ANGKA"
+      - input: "0"
+        output: "0"
+      - input: "100"
+        output: "200"
+    solusi: |
+      try:
+          n = int(input())
+          print(n * 2)
+      except ValueError:
+          print("BUKAN ANGKA")
+    petunjuk:
+      - "Bungkus int(input()) dengan try."
+      - "except ValueError → cetak BUKAN ANGKA."
+  - id: "p23-2"
+    judul: "Bagi yang Aman"
+    emoji: "➗"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Baca dua angka (dua baris). Cetak hasil bagi baris 1 ÷ baris 2. Kalau terjadi ZeroDivisionError (pembagi nol), cetak `TAK TERDEFINISI`.
+    input_spec: |
+      Baris 1: pembilang. Baris 2: penyebut. Keduanya angka bulat.
+    output_spec: |
+      Satu baris: hasil bagi (boleh desimal), atau `TAK TERDEFINISI`.
+    contoh:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "7\n0"
+        output: "TAK TERDEFINISI"
+    tes:
+      - input: "10\n2"
+        output: "5.0"
+      - input: "7\n0"
+        output: "TAK TERDEFINISI"
+      - input: "9\n4"
+        output: "2.25"
+      - input: "0\n5"
+        output: "0.0"
+    solusi: |
+      a = int(input())
+      b = int(input())
+      try:
+          print(a / b)
+      except ZeroDivisionError:
+          print("TAK TERDEFINISI")
+    petunjuk:
+      - "a / b di dalam try."
+      - "except ZeroDivisionError → TAK TERDEFINISI."
+  - id: "p23-3"
+    judul: "Jumlah yang Valid"
+    emoji: "🧹"
+    tingkat: sulit
+    xp: 55
+    menit: 10
+    cerita: |
+      Baca N, lalu N baris (masing-masing MUNGKIN bukan angka). Jumlahkan HANYA baris yang valid (bisa diubah jadi angka), lewati yang error. Cetak totalnya.
+    input_spec: |
+      Baris 1: N. N baris berikutnya: teks (bisa angka, bisa bukan).
+    output_spec: |
+      Satu baris: total angka yang valid.
+    contoh:
+      - input: "3\n10\nabc\n20"
+        output: "30"
+      - input: "2\nx\ny"
+        output: "0"
+    tes:
+      - input: "3\n10\nabc\n20"
+        output: "30"
+      - input: "2\nx\ny"
+        output: "0"
+      - input: "4\n5\n5\n5\n5"
+        output: "20"
+      - input: "3\n100\n-50\n7"
+        output: "57"
+    solusi: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          try:
+              total += int(input())
+          except ValueError:
+              pass
+      print(total)
+    petunjuk:
+      - "int(input()) di dalam try, tambahkan ke total."
+      - "except ValueError: pass → lewati yang jelek."

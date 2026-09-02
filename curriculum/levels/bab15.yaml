@@ -1,0 +1,176 @@
+# ============================================================
+# BAB 15 — EKSEKUSI & PSIKOLOGI
+# Fee & slippage, revenge trading, konsistensi eksekusi,
+# jurnal trading.
+# ============================================================
+bab: 15
+track: quant
+judul: "Eksekusi & Psikologi"
+emoji: "🧠"
+deskripsi: "Strategi terbaik bisa mati di eksekusi yang buruk. Hitung biaya tersembunyi, kendalikan emosi, bangun konsistensi."
+pelajaran:
+  - id: "15-1"
+    judul: "Biaya Tersembunyi: Fee, Slippage, Spread"
+    menit: 5
+    materi: |
+      Setiap trade punya biaya yang jarang dihitung:
+
+      - **Fee**: saham IDX ~0.15-0.3% per transaksi (beli + jual = 0.3-0.6% roundtrip). Kripto di Bybit: maker 0.02-0.1%, taker 0.05-0.1%. Maker = order yang menunggu di antrian. Taker = order yang langsung eksekusi. Lebih murah dari saham, tapi tetap ada.
+      - **Spread**: selisih harga beli-jual. Saham tipis bisa spread 1-2% — kamu rugi di situ bahkan sebelum harga bergerak.
+      - **Slippage**: order besar di pasar tipis — harga eksekusi lebih buruk dari yang diharapkan.
+
+      Hitungan jujur: profit 0.25% per trade − fee roundtrip 0.3% = **strategi rugi** setelah biaya. Backtest (uji strategi di data lama) tanpa biaya = fiksi.
+
+      Aturan: **backtest selalu hitung bersih setelah biaya (net of fees)**. Target profit per trade minimal 2-3x total biaya roundtrip. Frekuensi tinggi = biaya menumpuk. 100 trade/tahun × 0.5% = 50% modal akun menguap untuk biaya doang.
+    kode: |
+      profit_per_trade = 0.0025     # 0.25%
+      fee_roundtrip = 0.003         # 0.30%
+      net = profit_per_trade - fee_roundtrip
+      print(f"Net: {net*100:+.2f}%/trade")   # -0.05% → rugi
+    penjelasan: "Profit kotor tanpa fee bukan profit. 0.25% − 0.30% = negatif. Strategi mati di biaya."
+  - id: "15-2"
+    judul: "Revenge Trading & Jurnal"
+    menit: 5
+    materi: |
+      Pola klasik: loss → emosi → entry lagi untuk "balas dendam" → loss lagi → ukuran naik → hancur.
+
+      **Revenge trading** = trading balas dendam. Pembunuh #1 akun kecil. Tandanya: entry tanpa sinyal, sizing lebih besar dari aturan, force trade setelah loss, melanggar aturan sendiri.
+
+      Dua pertahanan terbaik:
+      1. **Aturan hard-stop harian** (stop keras): setelah loss X (misal 3% modal atau 2 loss beruntun), trading selesai hari itu. Fisiknya: tutup chart, jalan.
+      2. **Jurnal trading**: tulis setiap trade — alasan entry, ekspektasi, hasil, emosi. Setelah 20 trade, polanya kelihatan. Loss terbesar selalu datang dari trade di luar aturan.
+
+      Konsistensi > genius. Trader dengan eksekusi 90% sesuai aturan dan strategi biasa — mengalahkan trader jenius yang eksekusinya cuma 60% sesuai aturan.
+    kode: |
+      daily_stop = -0.03          # aturan harian
+      today = -0.045
+      if today <= daily_stop:
+          print("SELESAI HARI INI — tutup chart")
+    penjelasan: "Aturan harian + jurnal mengubah emosi jadi data. Konsistensi eksekusi adalah edge kedua."
+skenario:
+  - id: "s15-1"
+    judul: "Fee Memakan Profit"
+    emoji: "💸"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Strategi scalping kamu (trade cepat, ambil profit kecil-kecil): profit rata-rata **0.25% per trade** sebelum biaya, 4 trade/hari. Biaya roundtrip saham IDX (beli+jual, termasuk pajak) = **0.4%**. Backtest kamu tidak menghitung biaya. Sebulan live = 80 trade. Hasilnya?
+    pilihan:
+      - "Untung kecil — 0.25% × 80 = 20% kotor"
+      - "Rugi — tiap trade net -0.15%, biaya makan semuanya"
+      - "Impas — profit dan biaya saling menghapus"
+      - "Untung besar — volume tinggi bikin fee makin kecil"
+    jawaban: 1
+    penjelasan: |
+      Net per trade = 0.25% − 0.4% = **-0.15%**. 80 trade = -12% modal, bukan +20%. Backtest tanpa biaya = optimisme palsu. Scalping saham IDX dengan fee 0.4% roundtrip butuh profit kotor minimal ~0.8% per trade (2x biaya) supaya layak. Pelajaran: **selalu hitung bersih setelah biaya**. Strategi dengan edge kecil? Pindah ke aset/venue fee rendah (kripto maker, atau swing yang jarang trade).
+    kode: |
+      gross = 0.0025
+      fee = 0.004
+      net = gross - fee
+      total = net * 80
+      print(f"Net/trade: {net*100:.2f}% | 80 trade: {total*100:.1f}%")  # -12.0%
+    hasil:
+      - ret: -12.0
+        dd: 12.0
+        win: 20
+        note: "Kenyataan: 80 trade × -0.15% = -12%. Backtest 20% kotor ternyata fiksi. Bulan kedua kamu berhenti."
+      - ret: -12.0
+        dd: 12.0
+        win: 35
+        note: "Benar. Ini kenapa 'strategi profit 0.25%' bisa jadi bencana di venue berbiaya tinggi."
+      - ret: -6.0
+        dd: 6.0
+        win: 30
+        note: "Tidak impas: 0.25% < 0.4%, selisihnya negatif konsisten. Setiap trade = -0.15%."
+      - ret: -12.0
+        dd: 12.0
+        win: 22
+        note: "Volume tidak menurunkan fee persentase di IDX. Lebih banyak trade = lebih banyak biaya."
+    petunjuk:
+      - "Kurangkan 0.4% dari 0.25%."
+      - "Kalikan net negatif dengan 80 trade."
+  - id: "s15-2"
+    judul: "Tiga Stop Berturut"
+    emoji: "🔥"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Hari ini kamu kena stop loss 3x berturut — total -4.5% modal. Jam masih 14:00 WIB. Chart ALII mulai terlihat "mau naik". Dorongan kuat untuk entry lagi, ukuran 2x, biar cepat balik. Apa yang kamu lakukan?
+    pilihan:
+      - "Entry 2x — kalau benar, loss balik cepat"
+      - "Berhenti trading hari ini — aturan harian tercapai, evaluasi besok"
+      - "Entry normal 1x — biar tidak ketinggalan"
+      - "Pindah ke saham lain dan entry di sana"
+    jawaban: 1
+    penjelasan: |
+      Tiga loss = sinyal. Bisa jadi market hari ini tidak cocok dengan strategimu (harga bergerak sideways, news, dll). Melanjutkan = **revenge trading**. Menaikkan ukuran = mempercepat kehancuran. Aturan hard-stop harian (misal -3% modal = selesai) ada justru untuk momen ini. Berhenti. Evaluasi jurnal: 3 loss itu karena aturan dilanggar, atau strategi kalah di kondisi ini? Besok market masih ada — peluang tidak pernah habis. (Entry "normal" tetap melanggar aturan harian. Pindah saham = revenge dengan wajah baru.)
+    kode: |
+      daily_stop = -0.03          # aturan: berhenti di -3%
+      today = -0.045
+      if today <= daily_stop:
+          print("TRADING DONE — tutup chart")
+    hasil:
+      - ret: -9.5
+        dd: 9.5
+        win: 18
+        note: "Entry 2x: kena stop lagi (-3%). Total hari itu -7.5%, dan emosi makin panas. Bulan itu -9.5%."
+      - ret: -4.5
+        dd: 4.5
+        win: 74
+        note: "Berhenti di -4.5%: besok market trend normal lagi, kamu entry sesuai aturan dan pulihkan 3.1%. Disiplin menyelamatkan."
+      - ret: -6.8
+        dd: 6.8
+        win: 30
+        note: "Entry normal tetap melanggar aturan harian. Kena stop ke-4. Total -6.8%."
+      - ret: -7.4
+        dd: 7.4
+        win: 26
+        note: "Pindah saham = revenge trading dengan wajah baru. Saham baru itu juga turun. -7.4%."
+    petunjuk:
+      - "Apa aturan harianmu? 3 loss sudah lewat batas?"
+      - "Market besok masih buka. Peluang tidak habis."
+  - id: "s15-3"
+    judul: "Sinyal Bagus, Eksekusi Nol"
+    emoji: "📭"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Sebulan terakhir, 7 sinyal valid (sesuai sistem) kamu lewatkan: 3 karena "tunggu harga lebih murah", 2 karena ragu, 2 karena sibuk. 6 dari 7 sinyal itu ternyata profit (rata-rata +6%). Sinyal ke-8 muncul sekarang. Sistemmu jelas: entry. Apa masalah terbesarmu? Apa yang harus diperbaiki?
+    pilihan:
+      - "Sistem entry-nya kurang presisi — cari harga masuk yang lebih baik"
+      - "Eksekusi tidak konsisten — sinyal valid harus dieksekusi, pasang order limit otomatis"
+      - "Tidak masalah — yang penting tidak loss"
+      - "Strategi perlu diubah — 6/7 profit berarti overfit"
+    jawaban: 1
+    penjelasan: |
+      Masalahnya bukan strategi (6/7 profit = edge nyata). Masalahnya **eksekusi**: kamu kehilangan ~36% potensi profit sebulan. Penyebabnya ragu dan nunggu harga sempurna. "Tunggu lebih murah" = market timing tanpa dasar. Ragu = melanggar sistem sendiri. Perbaikan: **otomasi eksekusi** (order limit di zona entry sistem), batasi jumlah missed trade per minggu, dan jurnal "sinyal vs eksekusi" untuk mengukur kebocoran. Sinyal ke-8: eksekusi sekarang, size sesuai aturan, stop terpasang. Konsistensi eksekusi = edge kedua setelah strategi.
+    kode: |
+      # Ukur leakage: sinyal vs eksekusi
+      signals = 7
+      executed = 0
+      missed_profit = 6 * 0.06      # 6 sinyal profit rata2 6%
+      print(f"Leakage bulan ini: {missed_profit*100:.0f}% potensi")
+      # fix: order limit otomatis di zona entry
+    hasil:
+      - ret: 12.4
+        dd: 5.0
+        win: 78
+        note: "Fix eksekusi: 8 sinyal berikutnya dieksekusi semua, 6 profit. Bulan itu +12.4% — leakage ditutup."
+      - ret: 0.0
+        dd: 0.0
+        win: 65
+        note: "Kamu cari 'harga lebih baik': sinyal ke-8 jalan tanpa kamu, +5.8%. Analisis benar tapi tidak mengubah perilaku — leakage lanjut."
+      - ret: -2.1
+        dd: 2.1
+        win: 40
+        note: "'Tidak masalah' = normalisasi kebocoran. Bulan berikutnya 5 sinyal lagi dilewatkan. Opportunity cost terus."
+      - ret: -1.0
+        dd: 1.0
+        win: 30
+        note: "Strategi yang 6/7 profit bukan overfit — itu bagus! Mengubah strategi justru membuang edge yang sudah terbukti."
+    petunjuk:
+      - "6/7 sinyal profit = masalahnya di mana?"
+      - "Kalau sinyal valid tapi tidak dieksekusi, apa namanya?"

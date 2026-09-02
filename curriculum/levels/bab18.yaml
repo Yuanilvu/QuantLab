@@ -1,0 +1,183 @@
+# ============================================================
+# BAB 18 — MOMENTUM vs MEAN REVERSION
+# Dua keluarga strategi, regime masing-masing,
+# dan bahaya memaksakan strategi di regime yang salah.
+# ============================================================
+bab: 18
+track: quant
+judul: "Momentum vs Mean Reversion"
+emoji: "⚔️"
+deskripsi: "Dua cara baca pasar yang bertolak belakang. Dua-duanya benar — asal regime-nya tepat. Salah regime = salah segalanya."
+pelajaran:
+  - id: "18-1"
+    judul: "Dua Keluarga Strategi"
+    menit: 5
+    materi: |
+      Semua strategi masuk dua keluarga:
+
+      **1. Momentum / Trend Following** — "yang naik akan terus naik"
+      - Beli saat breakout (harga menembus level), higher highs, MA naik.
+      - Hidup di TRENDING. Mati di range (whipsaw = sinyal palsu).
+      - Contoh: MA crossover, breakout 52-week high (tertinggi 1 tahun).
+      - Ciri: win rate rendah (~35-45%), profit per trade besar (ikut tren panjang).
+
+      **2. Mean Reversion** — "yang naik terlalu jauh akan balik"
+      - Beli saat oversold, jual saat overbought, RSI ekstrem.
+      - Hidup di RANGE. Mati di trending (melawan tren = pisau jatuh).
+      - Contoh: RSI < 30 beli, Bollinger lower band, z-score ekstrem.
+      - Ciri: win rate tinggi (~60-70%), profit kecil. Sekali salah arah bisa parah.
+
+      Aturan emas: **strategi harus cocok dengan regime**. Pertanyaan pertama: bukan "strategi apa?", tapi "**pasar ini sedang apa?**" — trending atau ranging? ADX (pengukur kekuatan trend), slope MA, dan struktur harga — itu jawabannya.
+    kode: |
+      def pilih_strategi(adx, rsi):
+          if adx > 25:
+              return "MOMENTUM"      # trending
+          return "MEAN REVERSION"    # ranging
+      print(pilih_strategi(30, 70))
+      print(pilih_strategi(12, 70))
+    penjelasan: "ADX tinggi = trending → momentum. ADX rendah = range → mean reversion. Indikator sama, keputusan beda."
+  - id: "18-2"
+    judul: "Kenali Regime-mu"
+    menit: 5
+    materi: |
+      Bagaimana tahu pasar trending atau ranging? Tiga alat murah:
+
+      1. **ADX**: > 25 = trending kuat; < 20 = tidak ada trend (range). Naik = trend menguat.
+      2. **Slope MA**: MA50 naik/turun konsisten = trend. Datar = range.
+      3. **Struktur harga**: higher highs + higher lows = uptrend. Harga bolak-balik di zona sama = range.
+
+      Trik visual: gambar dua garis horizontal di high & low 3 bulan terakhir. Harga memantul di antara keduanya? → RANGE. Menembus ke arah baru? → TREND.
+
+      Jebakan psikologis: trader momentum di market range mengeluh "strategiku rusak". Padahal strateginya fine — REGIME-nya yang berubah. Jawabannya bukan ganti strategi tiap minggu (itu = overfitting ke noise). Jawabannya: punya **dua strategi + filter regime** yang jelas.
+    kode: |
+      adx = 14
+      if adx < 20:
+          print("MODE RANGE — momentum di-pause")
+      else:
+          print("MODE TREND — momentum aktif")
+    penjelasan: "ADX, slope MA, dan struktur harga menjawab pertanyaan pertama: pasar sedang apa?"
+skenario:
+  - id: "s18-1"
+    judul: "Kenali Momentum"
+    emoji: "🚀"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      TLKM: harga baru cetak 52-week high. MA20 di atas MA50, keduanya slope naik. Volume 2x rata-rata, ADX 32. Kamu belum punya posisi. Mana langkah paling masuk akal?
+    pilihan:
+      - "Short — sudah terlalu tinggi, pasti koreksi"
+      - "Tunggu koreksi dulu baru beli — jangan ngejar harga"
+      - "Beli breakout dengan stop di bawah level breakout — ikut momentum"
+      - "Tidak usah trading — harga tinggi itu mahal"
+    jawaban: 2
+    penjelasan: |
+      Semua sinyal konsisten: 52-week high + MA slope naik + volume naik + ADX 32 = **trend kuat**. Melawan trend (short) = melawan bukti. "Tunggu koreksi" = opportunity cost — trend kuat jarang koreksi dalam. "Harga tinggi = mahal" = bias psikologis. Di momentum, harga tinggi bisa jauh lebih tinggi. Jawaban profesional: beli breakout, stop di bawah level breakout terakhir (risiko terukur). Trail saat trend berlanjut. Momentum tidak peduli "sudah naik berapa". Dia peduli "masih naik atau tidak".
+    kode: |
+      adx, vol = 32, 2.0
+      if adx > 25 and vol > 1.5:
+          print("MOMENTUM: buy breakout, stop di bawah breakout")
+    hasil:
+      - ret: -5.8
+        dd: 6.0
+        win: 22
+        note: "Short di 52-week high: trend lanjut +12% dalam 3 minggu. Stop kena, kamu belajar mahal."
+      - ret: 4.1
+        dd: 0.0
+        win: 35
+        note: "Tunggu koreksi: koreksi cuma 1.5% lalu lanjut. Kamu masuk sebagian, dapat 4.1% (vs 9.2% kalau full)."
+      - ret: 9.2
+        dd: 1.8
+        win: 74
+        note: "Buy breakout + stop ketat: trend lanjut 9.2%. Stop naik (trailing) di tengah jalan, aman."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak trading = aman, tapi momentum seperti ini cuma muncul beberapa kali setahun."
+    petunjuk:
+      - "ADX 32 + 52-week high + volume naik = apa namanya?"
+      - "Di trend kuat, 'ngejar harga' dengan stop ketat itu wajar."
+  - id: "s18-2"
+    judul: "Anak Rangenya Mean Reversion"
+    emoji: "🔄"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      MPPA: 4 bulan terakhir range ketat 1.400-1.700 (ADX 14). Hari ini harga 1.445, RSI 32 — sudah 3 hari turun dari 1.600. Zona support 1.400-1.430 belum pernah ditembus. Strategimu?
+    pilihan:
+      - "Breakdown — RSI 32 berarti mau jatuh terus, short"
+      - "Beli di zona support 1.400-1.430, stop di bawah 1.390, target 1.650 — mainkan range"
+      - "Tunggu breakout range dulu, baru ikut arahnya"
+      - "Beli besar sekarang — RSI 32 = oversold pasti balik"
+    jawaban: 1
+    penjelasan: |
+      ADX 14 = tidak ada trend = **regime range**. Ini rumah mean reversion. Harga di dekat support yang sudah teruji 4 bulan → beli di support, stop di bawahnya (risiko ~3%), target resistance 1.650. Short breakdown? Melawan support yang belum pernah gagal. Tunggu breakout? Sah, tapi lama — range bisa bertahan berbulan-bulan. 4 bulan data sudah cukup untuk main range. Beli besar tanpa stop? Melanggar aturan risiko kalau support jebol.
+    kode: |
+      # Range play
+      entry = 1430; stop = 1390; target = 1650
+      risk = (entry - stop) / entry
+      reward = (target - entry) / entry
+      print(f"RR {reward/risk:.1f}:1 | risk {risk*100:.1f}%")
+    hasil:
+      - ret: -4.2
+        dd: 4.2
+        win: 25
+        note: "Short breakdown: harga nyentuh 1.410 lalu balik ke 1.650. Support bertahan lagi. -4.2%."
+      - ret: 12.8
+        dd: 1.5
+        win: 72
+        note: "Beli 1.430, stop 1.390: 2 minggu kemudian 1.650 (target). +12.8% dengan risiko 2.8%."
+      - ret: 3.5
+        dd: 0.0
+        win: 40
+        note: "Menunggu breakout: range bertahan 5 minggu lagi. Kamu masuk saat breakout, dapat 3.5% — ketinggalan putaran range."
+      - ret: -2.2
+        dd: 3.0
+        win: 35
+        note: "Beli besar tanpa stop: harga sempat 1.405 (nyaris jebol), floating loss besar dulu, untung tipis. Keberuntungan, bukan sistem."
+    petunjuk:
+      - "ADX 14 → regime apa?"
+      - "Di range, beli dekat support teruji, stop di bawahnya."
+  - id: "s18-3"
+    judul: "Strategi di Regime Salah"
+    emoji: "🌪️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Strategi momentum kamu (breakout + MA ribbon) sudah profit 3 tahun. 6 bulan terakhir: **7 loss beruntun**, return -12%, ADX stuck di 12-15 sepanjang periode, volume menyusut. Tim bilang "strateginya rusak, ganti total". Analisismu?
+    pilihan:
+      - "Strategi rusak — ganti strategi baru secepatnya"
+      - "Regime berubah ke range (ADX < 20) — pause strategi momentum, aktifkan mode range/mean reversion, jangan ganti strategi total"
+      - "Tambah leverage — biar cepat balik kalau trend datang"
+      - "Ikuti saja — 7 loss beruntun itu normal dalam momentum"
+    jawaban: 1
+    penjelasan: |
+      ADX 12-15 + volume menyusut 6 bulan = **pasar sedang range**. Strategi momentum memang kalah di range. Bukan strateginya yang rusak — regime-nya. Jawaban: **pause momentum, aktifkan mode range** (atau trading tipis). Tunggu ADX naik lagi. Ganti strategi total = membuang 3 tahun edge karena salah baca regime. Leverage = mempercepat kehancuran di kondisi yang tidak cocok. "Ikuti saja" = membiarkan bleeding tanpa batas. Perlu batas drawdown tahunan — misal stop strategi di -15%.
+    kode: |
+      adx = 14
+      drawdown = -0.12
+      if adx < 20 and drawdown < -0.10:
+          print("PAUSE momentum → mode range")
+          print("Tunggu ADX > 25 untuk reaktivasi")
+    hasil:
+      - ret: -18.0
+        dd: 18.0
+        win: 20
+        note: "Ganti strategi total: strategi baru belum teruji, kalah lagi. Kamu kehilangan 3 tahun edge + 6% tambahan."
+      - ret: 2.5
+        dd: 0.0
+        win: 68
+        note: "Pause momentum, mode range: ADX naik lagi di bulan 7, momentum diaktifkan ulang, dapat 2.5% plus sisa tahun solid."
+      - ret: -27.0
+        dd: 27.0
+        win: 8
+        note: "Leverage 2x di kondisi salah regime: -12% jadi -27%. Hampir blow up."
+      - ret: -19.0
+        dd: 19.0
+        win: 15
+        note: "'Biasa saja': 7 loss beruntun memang mungkin, tapi ADX 14 = bukan bad luck, ini regime. -19% sebelum sadar."
+    petunjuk:
+      - "Apa kata ADX 12-15 tentang regime?"
+      - "Strategi salah regime ≠ strategi rusak."

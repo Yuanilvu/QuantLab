@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Daftar — QuantLab{% endblock %}
+{% block content %}
+<div class="authwrap">
+  <div class="authcard">
+    <h1>Buat Akun</h1>
+    {% if err %}<div class="alert">{{ err }}</div>{% endif %}
+    <form method="post">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <label>Username (3-20 karakter)</label>
+      <input name="username" required autocomplete="username" placeholder="trader_pemula">
+      <label>Password (min 6 karakter)</label>
+      <input type="password" name="password" required autocomplete="new-password" placeholder="••••••••">
+      <button class="btn primary" type="submit">Daftar</button>
+    </form>
+    <p class="alt">Sudah punya akun? <a href="{{ url_for('login') }}">Masuk</a></p>
+  </div>
+</div>
+{% endblock %}

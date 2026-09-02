@@ -1,0 +1,11 @@
+{
+  "name": "QuantLab — Belajar Quant Trading",
+  "short_name": "QuantLab",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0b0f14",
+  "theme_color": "#0b0f14",
+  "icons": [
+    { "src": "/static/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

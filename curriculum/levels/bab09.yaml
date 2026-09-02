@@ -1,0 +1,168 @@
+# ============================================================
+# BAB 9 — PASAR MODAL & SAHAM (TRACK: FINANCE DASAR)
+# Saham, IHSG, lot, bid-ask spread, jam bursa.
+# ============================================================
+bab: 9
+track: finance
+judul: "Pasar Modal & Saham"
+emoji: "🏦"
+deskripsi: "Apa itu saham, gimana belinya, kenapa harga beli-jual bisa beda. Bekal wajib sebelum menyentuh pasar."
+pelajaran:
+  - id: "9-1"
+    judul: "Saham Itu Apa?"
+    menit: 5
+    materi: |
+      **Saham** = bukti kepemilikan sebagian kecil sebuah perusahaan. Beli saham TLKM = ikut memiliki (sedikit) Telkom. Perusahaan untung? Nilai saham bisa naik, kadang bagi dividen (bagian laba). Perusahaan rugi? Bisa turun.
+
+      **IHSG** = Indeks Harga Saham Gabungan. Rata-rata harga banyak saham besar di Bursa Efek Indonesia. IHSG naik = mayoritas pasar bagus. IHSG turun = sebaliknya. Saham di daftar pantauanmu (ALII, BRPT, TPIA, CUAN, MPPA, TLKM) bisa beda arah dari IHSG.
+
+      Beli saham lewat **broker** (aplikasi seperti Ajaib, Stockbit, Bibit). Satuannya **lot** = 100 lembar. Beli 1 lot TLKM di 4.000 = 100 × 4.000 = Rp400.000 (plus fee).
+
+      Harga bergerak karena **permintaan & penawaran**. Banyak yang mau beli → naik. Banyak yang mau jual → turun. Berita, laba, dan sentimen pasar masuk lewat mekanisme ini.
+    kode: |
+      lot = 100
+      harga = 4000
+      print(f"1 lot = {lot * harga:,} rupiah")   # 400,000
+    penjelasan: "Saham = kepemilikan. 1 lot = 100 lembar. Harga = hasil permintaan & penawaran."
+  - id: "9-2"
+    judul: "Beli & Jual: Bid, Ask, Spread"
+    menit: 5
+    materi: |
+      Saat buka aplikasi broker, ada DUA harga untuk satu saham:
+      - **Bid** = harga tertinggi yang ditawarkan PEMBELI. Ini harga jual cepatmu.
+      - **Ask** = harga terendah yang diminta PENJUAL. Ini harga beli cepatmu.
+      - **Spread** = selisih keduanya.
+
+      Contoh TLKM: bid 3.995, ask 4.005. Mau beli sekarang? Bayar 4.005 (ask). Mau jual? Dapat 3.995 (bid). Selisih 10 poin = "biaya masuk". Begitu masuk posisi, kamu langsung rugi 0,25%.
+
+      Kenapa penting? Saham likuid (banyak diperjualbelikan, contoh TLKM, BBRI) spread-nya tipis. Saham sepi spread-nya bisa 1-2%. Itu biaya tersembunyi pemakan profit. Di kripto sama: beli di ask, jual di bid.
+
+      Jam bursa IDX: Senin-Jumat 09:00-15:30 WIB. Istirahat 12:00-13:30. Di luar jam itu, pesanan masuk tapi tidak langsung dieksekusi.
+    kode: |
+      bid, ask = 3995, 4005
+      spread = ask - bid
+      print(f"Spread {spread} ({spread/ask*100:.2f}%)")   # 10 (0.25%)
+    penjelasan: "Bid = harga pembeli, ask = harga penjual. Spread = biaya masuk yang langsung terasa."
+skenario:
+  - id: "s9-1"
+    judul: "Hitung 1 Lot"
+    emoji: "🧮"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kamu mau beli 1 lot TLKM di harga 4.000. Berapa rupiah yang harus kamu siapkan (belum termasuk fee)?
+    pilihan:
+      - "Rp400.000"
+      - "Rp4.000.000"
+      - "Rp40.000"
+      - "Rp4.000"
+    jawaban: 0
+    penjelasan: |
+      1 lot = 100 lembar. 100 × 4.000 = **Rp400.000**. Opsi lain: 4.000.000 = 1.000 lembar (10 lot). 40.000 = 10 lembar. 4.000 = 1 lembar. Di IDX, semua transaksi saham pakai kelipatan lot. Paham ini sebelum order. Biar tidak kaget jumlah dananya.
+    kode: |
+      print(100 * 4000)   # 400000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "400.000 benar: 100 lembar × 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4jt = 10 lot. 1 lot cuma 100 lembar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "40.000 = 10 lembar. Satu lot = 100 lembar."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4.000 = harga 1 lembar saja. Lot = 100 lembar."
+    petunjuk:
+      - "1 lot = berapa lembar?"
+      - "Kalikan dengan harga per lembar."
+  - id: "s9-2"
+    judul: "Bid atau Ask?"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      TLKM: bid 3.995, ask 4.005. Kamu MAU BELI sekarang (market order). Berapa harga yang kamu bayar?
+    pilihan:
+      - "3.995 — harga pembeli kan?"
+      - "4.005 — beli selalu di harga ask (permintaan penjual)"
+      - "4.000 — rata-rata bid dan ask"
+      - "Tergantung — harga mana yang lebih menguntungkan"
+    jawaban: 1
+    penjelasan: |
+      Beli = ambil dari penjual → bayar **ask** (4.005). Jual = jual ke pembeli → dapat **bid** (3.995). Selisih 10 poin = spread = biaya langsung.
+
+      Opsi lain: 3.995 itu kalau kamu JUAL. 4.000 cuma angka tengah, tidak tersedia di pasar. "Cari yang lebih untung" tidak ada pilihannya: market order selalu kena spread. Trader cerdas menghitung spread sebelum masuk. Target profit cuma 0,2%? Spread 0,25% sudah membuat trade mustahil untung.
+    kode: |
+      bid, ask = 3995, 4005
+      print(f"Beli di {ask}, jual di {bid}")   # Beli di 4005
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3.995 itu harga kalau kamu JUAL. Beli = bayar ask."
+      - ret: 0.0
+        dd: 0.0
+        win: 78
+        note: "4.005 benar: beli selalu di harga ask."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4.000 cuma angka tengah — di order book tidak ada yang jual di 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Market order tidak bisa pilih: beli = ask, jual = bid. Itulah spread."
+    petunjuk:
+      - "Beli dari siapa? Penjual — dan penjual minta berapa?"
+      - "Ask = harga yang diminta penjual."
+  - id: "s9-3"
+    judul: "IHSG vs Sahammu"
+    emoji: "📉"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      IHSG hari ini TURUN 1,2%. Kabar buruk di berita. Tapi TLKM (sahammu) malah NAIK 0,8%. Volume (jumlah saham yang diperdagangkan) ikut naik. Mana kesimpulan yang benar?
+    pilihan:
+      - "IHSG turun = semua saham turun, TLKM besok pasti ikut turun"
+      - "IHSG cuma rata-rata pasar — saham individual bisa beda arah; TLKM naik dengan volume = ada alasan spesifik"
+      - "Jual TLKM sekarang sebelum ikut IHSG turun"
+      - "IHSG tidak penting — abaikan saja selamanya"
+    jawaban: 1
+    penjelasan: |
+      IHSG = rata-rata BANYAK saham. Bukan cermin tiap saham. TLKM naik saat IHSG turun itu NORMAL. Perusahaan punya berita dan kondisi sendiri (laba, dividen, sektor). TLKM naik + volume naik = minat nyata. Cek alasannya. Jangan panik karena IHSG.
+
+      Tapi "abaikan IHSG" juga salah. IHSG memberi konteks pasar: sentimen dan likuiditas (mudahnya jual-beli). Saat pasar crash berat, hampir semua saham ikut turun. Baca keduanya: IHSG = cuaca. Saham individual = kondisi rumahmu.
+    kode: |
+      ihsg = -1.2
+      tlkm = +0.8
+      print("Kontek: pasar turun, tapi TLKM naik + volume naik")
+      print("→ Cek alasan spesifik TLKM, jangan panik")
+    hasil:
+      - ret: -4.5
+        dd: 4.5
+        win: 20
+        note: "Jual panik: TLKM lanjut naik 3% seminggu (dividen bagus). Kamu jual di momen terburuk."
+      - ret: 8.2
+        dd: 1.5
+        win: 72
+        note: "Benar: TLKM naik karena laba kuartal bagus. Kamu tahan dan cuan 8,2%."
+      - ret: -6.0
+        dd: 6.0
+        win: 18
+        note: "Jual karena IHSG: TLKM tidak ikut turun. Kamu kehilangan 6% upside."
+      - ret: 2.0
+        dd: 3.5
+        win: 40
+        note: "Abaikan IHSG total: bulan berikutnya IHSG crash 8% dan TLKM ikut turun 3,5% — kamu tidak siap."
+    petunjuk:
+      - "IHSG = rata-rata pasar. TLKM = satu perusahaan."
+      - "Volume naik + harga naik = tanda apa?"

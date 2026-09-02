@@ -1,0 +1,187 @@
+# ============================================================
+# BAB 13 — SINYAL & INDIKATOR
+# MA crossover, RSI, momentum — dan jebakan sinyal di pasar
+# Indonesia (jam bursa, likuiditas, saham gorengan).
+# ============================================================
+bab: 13
+track: quant
+judul: "Sinyal & Indikator"
+emoji: "📊"
+deskripsi: "Indikator bukan bola kristal. Mereka cuma membaca kondisi pasar. Belajar bedakan trend vs range, dan sinyal valid vs noise."
+pelajaran:
+  - id: "13-1"
+    judul: "Moving Average: Trend atau Noise?"
+    menit: 5
+    materi: |
+      Moving average (MA) = rata-rata harga N hari terakhir. MA pendek (5-20) merespons cepat, tapi sering noise. MA panjang (50-200) lebih halus, tapi telat.
+
+      Dua cara baca MA:
+      1. **Harga vs MA**: harga di atas MA yang naik = bias bullish. Harga di bawah MA yang turun = bias bearish.
+      2. **Crossover**: MA cepat memotong MA lambat ke atas = golden cross (bullish). Ke bawah = death cross (bearish).
+
+      Jebakan klasik: pasar **sideways/range** (harga menyamping) — MA saling silang terus tanpa arah. Setiap sinyal salah. Indikator arah bisa menyaring: slope MA, atau ADX (pengukur kekuatan trend). **Hanya trade crossover saat slope MA jelas trending.**
+
+      Di IDX banyak saham likuiditas tipis (volume kecil). MA di saham seperti itu gampang dimanipulasi beberapa lot besar. Selalu cek volume. TLKM, BRPT, TPIA, CUAN relatif likuid. Saham lapis bawah jangan dipercaya polos.
+    kode: |
+      closes = [100, 101, 102, 101, 103]   # 5 hari TLKM
+      ma5 = sum(closes) / len(closes)
+      slope = closes[-1] - closes[-3]       # arah 3 hari
+      print(f"MA5={ma5:.1f} slope={slope:+d}")
+    penjelasan: "MA memberi konteks, bukan perintah. Cek slope untuk membedakan trend vs sideways."
+  - id: "13-2"
+    judul: "RSI: Jangan Beli Oversold di Downtrend"
+    menit: 5
+    materi: |
+      RSI (0-100) mengukur kecepatan perubahan harga. Di atas 70 = overbought (kebeli berlebihan). Di bawah 30 = oversold (kejual berlebihan). Aturan populer: beli saat oversold, jual saat overbought.
+
+      **Tapi konteks mengubah segalanya:**
+
+      - **Uptrend**: RSI bisa tinggal di 60-80 berbulan-bulan. RSI 72 di uptrend = kuat, bukan sinyal jual. Pullback ke RSI 40-50 = entry bagus.
+      - **Downtrend**: RSI bisa tinggal di 20-40. RSI 28 di downtrend = masih bisa turun terus. "Oversold" bukan alasan beli di pasar yang sedang jatuh — ada alasan kenapa jatuh.
+
+      Cara baca yang benar: **RSI untuk konfirmasi arah, bukan sinyal arah**. Di uptrend, RSI turun ke 40-50 = koreksi sehat (entry). Di downtrend, RSI naik ke 60-70 = rally palsu (exit/kesempatan short).
+
+      Momentum + konteks: sinyal valid = indikator searah struktur harga. Higher highs di uptrend, lower lows di downtrend.
+    kode: |
+      rsi = 68
+      trend = "up"    # higher highs
+      if trend == "up" and 55 <= rsi <= 75:
+          print("Kuat, bukan overbought — tahan")
+      elif trend == "down" and rsi <= 35:
+          print("Oversold di downtrend = bisa jatuh lagi")
+    penjelasan: "RSI tanpa konteks trend = noise. RSI + struktur harga = sinyal."
+skenario:
+  - id: "s13-1"
+    judul: "Golden Cross TLKM"
+    emoji: "🐟"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      TLKM: MA20 baru memotong MA50 ke atas (golden cross). Harga di atas kedua MA, slope MA20 naik, volume 2x rata-rata. IHSG sedang sideways. Apa langkah terbaik?
+    pilihan:
+      - "Beli sekarang, golden cross = sinyal kuat"
+      - "Tunggu konfirmasi: harga pullback ke MA20 dan bertahan dulu"
+      - "Jual — golden cross sering palsu"
+      - "Short TLKM — IHSG sideways berarti semua saham turun"
+    jawaban: 1
+    penjelasan: |
+      Golden cross + harga di atas MA + slope naik + volume naik = setup bullish yang layak. Tapi IHSG sideways = risiko market drag. Entry terbaik = **buy on pullback ke MA20** (harga uji support) — kamu dapat harga lebih baik dan konfirmasi support. Beli ngejar harga = bayar premium; jual = melawan bukti; short = salah logika (sideways ≠ bearish).
+    kode: |
+      # Entry plan: tunggu pullback
+      harga = 4020
+      ma20 = 3980
+      if harga <= ma20 * 1.005:      # sentuh MA20 +0.5%
+          print("Entry zone")
+          print("Stop di bawah MA50, target +8%")
+    hasil:
+      - ret: 1.2
+        dd: 4.8
+        win: 45
+        note: "Beli ngejar: harga pullback 3.1% ke MA20 dua hari kemudian. Kamu floating loss dulu, banyak yang cut di situ."
+      - ret: 8.2
+        dd: 1.8
+        win: 74
+        note: "Pullback ke MA20 terjadi (3.1% lebih rendah), kamu entry di support, stop ketat, harga lanjut +8.2%."
+      - ret: -3.0
+        dd: 3.0
+        win: 30
+        note: "Jual di sinyal bullish = melawan bukti. TLKM naik 8% tanpa kamu."
+      - ret: -4.5
+        dd: 5.1
+        win: 25
+        note: "Short di saham yang baru golden cross dengan volume naik. IHSG sideways ≠ semua saham turun."
+    petunjuk:
+      - "Sinyal bullish tapi market datar — kapan entry paling aman?"
+      - "Support terdekat setelah golden cross = MA20."
+  - id: "s13-2"
+    judul: "RSI di Dua Dunia"
+    emoji: "🌗"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua saham, dua situasi:
+      - **BRPT**: uptrend jelas (higher highs), RSI 72.
+      - **MPPA**: downtrend (lower lows), RSI 28.
+      Bot otomatismu punya aturan "jual kalau RSI > 70, beli kalau RSI < 30". Kamu biarkan bot jalan. Apa yang terjadi?
+    pilihan:
+      - "Bagus — aturan RSI klasik sudah terbukti"
+      - "BRPT kejual lebih awal (masih kuat), MPPA kebeli di pisau jatuh — dua-duanya salah arah"
+      - "Hanya MPPA yang bermasalah; BRPT aman"
+      - "Hanya BRPT yang bermasalah; MPPA aman"
+    jawaban: 1
+    penjelasan: |
+      Aturan RSI tanpa konteks = dua kesalahan sekaligus. BRPT RSI 72 di uptrend = kuat. Dia kejual prematur, lalu naik lagi 9%. MPPA RSI 28 di downtrend = pisau jatuh. Dia kebeli, lalu turun lagi 12%. Bot butuh filter trend. Di uptrend, pakai RSI 40-50 sebagai trigger beli (bukan 30). Di downtrend, jangan beli oversold sama sekali — atau tunggu struktur reversal dulu.
+    kode: |
+      # Filter trend sebelum RSI
+      def signal(rsi, trend):
+          if trend == "up" and 40 <= rsi <= 55:
+              return "BUY"      # pullback sehat
+          if trend == "down":
+              return "SKIP"     # pisau jatuh
+          return "HOLD"
+      print(signal(72, "up"))    # HOLD
+      print(signal(28, "down"))  # SKIP
+    hasil:
+      - ret: -4.2
+        dd: 6.5
+        win: 33
+        note: "Bot polos: BRPT kejual di 72 lalu naik 9% (missed), MPPA kebeli di 28 lalu turun 12%. Net -4.2%."
+      - ret: -4.2
+        dd: 6.5
+        win: 33
+        note: "Dua-duanya salah — persis diagnosis di atas. Ini contoh nyata kenapa indikator butuh konteks."
+      - ret: -7.9
+        dd: 7.9
+        win: 26
+        note: "BRPT juga bermasalah: jual di 72 = potong kuda yang sedang lari kencang. Kamu meremehkan kesalahan pertama."
+      - ret: 5.1
+        dd: 3.2
+        win: 58
+        note: "MPPA justru yang lebih parah (pisau jatuh -12%). BRPT cuma missed opportunity. Diagnosis terbalik."
+    petunjuk:
+      - "RSI 72 di uptrend itu apa artinya? RSI 28 di downtrend?"
+      - "Indikator harus dibaca dengan arah trend."
+  - id: "s13-3"
+    judul: "Sideways: Kuburan Crossover"
+    emoji: "⚰️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      CUAN 3 bulan terakhir range 1.400-1.600 (sideways). MA5 vs MA20 sudah saling silang 11 kali dalam 3 bulan. Sistem kamu memberi sinyal beli (golden cross MA5/MA20) hari ini. Data tambahan: ADX 14 (di bawah 20 = no trend), volume menurun. Keputusanmu?
+    pilihan:
+      - "Ikuti sinyal — 11 silangan sebelumnya, yang ke-12 pasti benar"
+      - "Skip trade — ADX < 20 + range jelas = jebakan crossover, tunggu breakout"
+      - "Beli besar — harga di bawah tengah range, upside ke 1.600 besar"
+      - "Short — range akan ditembus ke bawah"
+    jawaban: 1
+    penjelasan: |
+      ADX 14 = tidak ada trend yang bisa diikuti. Crossover di range = **whipsaw beruntun** (sinyal palsu, harga bolak-balik). Setiap golden cross langsung diikuti death cross. 11 silangan dalam 3 bulan = bukti empiris: sinyal ini gagal di regime ini. Keputusan profesional: **skip**, tunggu breakout (harga menembus batas range, dengan volume) atau ADX naik > 20. "Sinyal ke-12 pasti benar" = gambler's fallacy (percaya: sudah sering gagal, pasti sebentar lagi menang). Beli di tengah range tanpa bukti breakout = menebak.
+    kode: |
+      adx = 14
+      range_width = 1600 - 1400
+      if adx < 20:
+          print("NO TRADE — regime range")
+      # filter regime dulu, sinyal menyusul
+    hasil:
+      - ret: -2.8
+        dd: 4.0
+        win: 35
+        note: "Ikut sinyal: harga naik 1% dulu lalu balik. Golden cross palsu ke-12. Cut loss."
+      - ret: 0.0
+        dd: 0.0
+        win: 72
+        note: "Skip = 0%. Dua minggu kemudian CUAN breakout 1.610 DENGAN volume. Kamu entry di breakout, bukan menebak."
+      - ret: -1.9
+        dd: 3.3
+        win: 40
+        note: "Beli di tengah range tanpa sinyal breakout: harga turun ke 1.410 dulu. Floating loss panjang."
+      - ret: -3.4
+        dd: 4.4
+        win: 28
+        note: "Short tanpa bukti: range bertahan 3 minggu lagi, lalu breakout ke ATAS. Stop kena."
+    petunjuk:
+      - "Apa kata ADX tentang keberadaan trend?"
+      - "11 sinyal gagal beruntun — apa namanya?"

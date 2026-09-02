@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %}{{ q.judul }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+
+<section class="soalpage">
+  <div class="scenhead">
+    <span class="badge {{ q.tingkat }}">{{ q.tingkat }}</span>
+    <span class="badge coding">⌨️ soal coding</span>
+    {% if done %}<span class="badge solved">✓ selesai +{{ q.xp }} XP</span>{% endif %}
+    <h1>{{ q.emoji }} {{ q.judul }}</h1>
+    <span class="meta">{{ q.xp }} XP · {{ q.menit }} menit</span>
+  </div>
+
+  <div class="casebox">
+    <h3>📋 Cerita</h3>
+    <div class="case">{{ q.cerita | replace('\n', '<br>') | safe }}</div>
+  </div>
+
+  <div class="casebox">
+    <h3>📥 Input</h3>
+    <pre class="block-code"><code>{{ q.input_spec }}</code></pre>
+    <h3>📤 Output</h3>
+    <pre class="block-code"><code>{{ q.output_spec }}</code></pre>
+  </div>
+
+  <div class="casebox">
+    <h3>🧪 Contoh</h3>
+    {% for c in q.contoh %}
+    <div class="io">
+      <div><b>Input:</b><pre class="block-code"><code>{{ c.input }}</code></pre></div>
+      <div><b>Output:</b><pre class="block-code"><code>{{ c.output }}</code></pre></div>
+    </div>
+    {% endfor %}
+  </div>
+
+  {% if result %}
+  <div class="casebox {{ 'rpass' if result.ac or result.already else 'rfail' }}">
+    <h3>
+      {% if result.already %}{{ '✅ Sudah pernah lolos — +' ~ result.xp ~ ' XP dulu' }}
+      {% elif result.ac %}{{ '🎉 LOLOS SEMUA TES! +' ~ result.xp ~ ' XP' }}
+      {% else %}{{ '❌ Belum lolos (' ~ result.passed ~ '/' ~ result.total ~ ' tes)' }}{% endif %}
+    </h3>
+    {% if result.friendly %}<div class="alert">{{ result.friendly }}</div>{% endif %}
+    {% if result.results %}
+    <div class="testgrid">
+      {% for t in result.results %}
+      <div class="testcase {{ 'ok' if t.ok else 'no' }}">
+        <b>{{ '✓' if t.ok else '✗' }} Tes {{ loop.index }}</b>
+        {% if not t.ok %}
+        <div class="tt"><span>input:</span><pre>{{ t.input }}</pre></div>
+        <div class="tt"><span>diharapkan:</span><pre>{{ t.expected }}</pre></div>
+        <div class="tt"><span>kode-mu:</span><pre>{{ t.got or '(tidak ada output / error)' }}</pre></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  {% endif %}
+
+  <form method="post" class="codeform">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h3>💻 Kode Python-mu</h3>
+    <textarea name="code" rows="12" spellcheck="false" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code }}</textarea>
+    <div class="scenactions">
+      <button class="btn primary" type="submit">▶ Jalankan & Uji</button>
+      <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
+      <span class="meta">Tes rahasia: {{ q.tes | length }} kasus. Bisa coba-coba pakai Playground → Live Runner dulu.</span>
+    </div>
+  </form>
+
+  <div class="hints hidden" id="hints">
+    {% for h in q.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+  </div>
+</section>
+{% endblock %}

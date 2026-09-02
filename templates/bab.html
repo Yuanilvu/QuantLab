@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Bab {{ bab.bab }} — {{ bab.judul }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb"><a href="{{ url_for('index') }}">← Dashboard</a></nav>
+<input type="hidden" name="_csrf" id="csrf" value="{{ csrf_token() }}">
+<section class="babhero">
+  <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
+  <p>{{ bab.deskripsi }}</p>
+</section>
+
+{% if lessons %}
+<section class="lessons">
+  <h3>📚 Materi Singkat <span class="meta">(baca → "Saya Paham" = +5 XP, sekali per pelajaran)</span></h3>
+  {% for l in lessons %}
+  <details class="lesson" data-lid="{{ l.id }}">
+    <summary>Pelajaran {{ l.id }} — {{ l.judul }} <span class="meta">{{ l.menit }} menit</span>
+      {% if l.id in lessons_done %}<span class="donebadge">✓ +5 XP</span>{% endif %}
+    </summary>
+    <div class="lessonbody">
+      {{ render_md(l.materi) | safe }}
+      {% if l.kode %}
+      <pre class="block-code"><code>{{ l.kode }}</code></pre>
+      {% endif %}
+      {% if l.penjelasan %}<p class="note">💡 {{ l.penjelasan }}</p>{% endif %}
+      <button class="btn paham {{ 'done' if l.id in lessons_done }}" data-lid="{{ l.id }}">
+        {{ '✓ Selesai (+5 XP)' if l.id in lessons_done else 'Saya Paham — +5 XP' }}
+      </button>
+    </div>
+  </details>
+  {% endfor %}
+</section>
+{% endif %}
+
+<section class="scenlist">
+  <h3>🎯 Latihan Skenario <span class="meta">(kasus pasar → kamu pilih keputusan → langsung lihat hasilnya. XP = poin belajar.)</span></h3>
+  {% for s in scens %}
+  <a class="scenrow {{ 'done' if s.done }}" href="{{ url_for('scenario_page', sid=s.data.id) if not s.done else url_for('scenario_result', sid=s.data.id) }}">
+    <span class="scenemoji">{{ s.data.emoji }}</span>
+    <span class="scenmain">
+      <b>{{ s.data.judul }}</b>
+      <span class="meta">
+        {{ s.data.sulit }} · {{ s.data.menit }} menit · {{ s.data.xp }} XP
+        {% if s.done %} · <span class="good">✓ selesai</span>{% endif %}
+      </span>
+    </span>
+    <span class="arrow">{{ '✓' if s.done else '→' }}</span>
+  </a>
+  {% endfor %}
+</section>
+
+{% if soals %}
+<section class="scenlist">
+  <h3>⌨️ Soal Coding <span class="meta">(kamu tulis kode Python sendiri — dinilai komputer otomatis)</span></h3>
+  {% for q in soals %}
+  <a class="scenrow {{ 'done' if q.id in soal_solved }}" href="{{ url_for('soal_page', qid=q.id) }}">
+    <span class="scenemoji">⌨️</span>
+    <span class="scenmain">
+      <b>{{ q.judul }}</b>
+      <span class="meta">
+        {{ q.tingkat }} · {{ q.menit }} menit · {{ q.xp }} XP
+        {% if q.id in soal_solved %} · <span class="good">✓ lolos</span>{% endif %}
+      </span>
+    </span>
+    <span class="arrow">{{ '✓' if q.id in soal_solved else '→' }}</span>
+  </a>
+  {% endfor %}
+</section>
+{% endif %}
+{% endblock %}

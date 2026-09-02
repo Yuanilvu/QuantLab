@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Analitik Belajar — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>📊 Analitik Belajar</h1>
+  <p class="meta">Angka jujur tentang perjalanan belajarmu — akurasi, ritme, dan ketahanan.</p>
+</section>
+
+<section class="dashcols">
+  <div class="dashcol">
+    <h3>🎯 Ringkasan</h3>
+    <div class="statrow">
+      <div class="stat"><b>{{ solved_n }}</b><span>Skenario</span></div>
+      <div class="stat"><b>{{ correct_n }}</b><span>Benar</span></div>
+      <div class="stat"><b>{{ acc }}%</b><span>Akurasi</span></div>
+      <div class="stat"><b>{{ soal_n }}</b><span>Soal coding</span></div>
+      <div class="stat"><b>{{ lessons_n }}</b><span>Pelajaran</span></div>
+      <div class="stat"><b>{{ exam_n }}</b><span>Ujian lulus</span></div>
+      <div class="stat"><b>{{ journal_n }}</b><span>Jurnal</span></div>
+      <div class="stat"><b>🔥 {{ best_streak }}</b><span>Best streak</span></div>
+    </div>
+  </div>
+  <div class="dashcol">
+    <h3>📈 Aktivitas 14 Hari Terakhir</h3>
+    <div class="xpchart">
+      {% set maxn = days | map(attribute='n') | max %}
+      <svg viewBox="0 0 280 90" class="radar">
+        {% for d in days %}
+        {% set h = (d.n / maxn * 60) if maxn else 0 %}
+        <rect x="{{ 8 + loop.index0 * 19 }}" y="{{ 70 - h }}" width="12" height="{{ h }}"
+              fill="{{ '#22c55e' if d.n > 0 else '#1a232e' }}" rx="2">
+          <title>{{ d.date }}: {{ d.n }} aktivitas</title>
+        </rect>
+        {% endfor %}
+        <line x1="4" y1="70" x2="276" y2="70" stroke="#26313d" stroke-width="1"/>
+      </svg>
+    </div>
+    <p class="note">Hijau = hari aktif. Konsistensi kecil setiap hari mengalahkan ledakan seminggu sekali.</p>
+  </div>
+</section>
+
+<section class="dashcols">
+  <div class="dashcol">
+    <h3>🎓 Akurasi per Track</h3>
+    {% for t in tracks %}
+    <div class="accline">
+      <span class="aclname">{{ t.emoji }} {{ t.name }} <span class="meta">({{ t.done }} dikerjakan)</span></span>
+      <div class="progress"><div class="bar">
+        <div class="fill {{ 'warn' if t.acc is not none and t.acc < 60 }}" style="width: {{ t.acc or 0 }}%"></div>
+      </div></div>
+      <span class="aclval {{ 'dim' if t.acc is none }}">{{ t.acc ~ '%' if t.acc is not none else '—' }}</span>
+    </div>
+    {% endfor %}
+  </div>
+  <div class="dashcol">
+    <h3>⚖️ Akurasi per Kesulitan</h3>
+    {% for d in diffs %}
+    <div class="accline">
+      <span class="aclname">{{ d.name }} <span class="meta">({{ d.done }} dikerjakan)</span></span>
+      <div class="progress"><div class="bar">
+        <div class="fill {{ 'warn' if d.acc is not none and d.acc < 60 }}" style="width: {{ d.acc or 0 }}%"></div>
+      </div></div>
+      <span class="aclval {{ 'dim' if d.acc is none }}">{{ d.acc ~ '%' if d.acc is not none else '—' }}</span>
+    </div>
+    {% endfor %}
+    <p class="note">Akurasi rendah di tingkat tertentu = petunjuk materi mana yang perlu diulas (Bab 12, 14, 18, dst).</p>
+  </div>
+</section>
+{% endblock %}

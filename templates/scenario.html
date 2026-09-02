@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}{{ scen.judul }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+
+<section class="scenario">
+  <div class="scenhead">
+    <span class="badge {{ scen.sulit }}">{{ scen.sulit }}</span>
+    {% if is_challenge %}<span class="badge challenge">⚡ tantangan harian +{{ bonus }} XP</span>{% endif %}
+    <h1>{{ scen.emoji }} {{ scen.judul }}</h1>
+    <span class="meta">{{ scen.xp }} XP{% if is_challenge %} + {{ bonus }} bonus{% endif %} · ±{{ scen.menit }} menit</span>
+  </div>
+
+  <p class="note">🧭 <b>Cara main:</b> baca situasi pasar di bawah → pilih 1 keputusan → klik <b>“Lihat Hasil Keputusan”</b>. Kamu langsung lihat hasil tiap pilihan + kenapa keputusan terbaik itu yang benar.</p>
+
+  <div class="casebox">
+    <h3>📋 Situasi Pasar</h3>
+    <div class="case">{{ scen.cerita | replace('\n', '<br>') | safe }}</div>
+  </div>
+
+  <form method="post" id="scenform">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <h3>🤔 Keputusanmu?</h3>
+    <div class="opts">
+      {% for p in scen.pilihan %}
+      <label class="opt">
+        <input type="radio" name="choice" value="{{ loop.index0 }}" required>
+        <span class="optlabel">{{ loop.index0 + 1 }}. {{ p }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="scenactions">
+      <button class="btn primary" type="submit">Lihat Hasil Keputusan →</button>
+      <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
+    </div>
+  </form>
+
+  <div class="hints hidden" id="hints">
+    {% for h in scen.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+  </div>
+</section>
+{% endblock %}

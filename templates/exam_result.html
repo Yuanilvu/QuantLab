@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Hasil Ujian — QuantLab{% endblock %}
+{% block content %}
+<section class="result">
+  <div class="verdict {{ 'good' if passed else 'bad' }}">
+    <h1>{{ '🎉 LULUS!' if passed else '❌ Belum Lulus' }}</h1>
+    <p class="meta">Skor: <strong>{{ correct }}/{{ total }}</strong> ({{ pct }}%) — batas lulus 70%</p>
+    {% if passed %}
+    <div class="xppop">{% if bonus %}+{{ bonus }} XP 🏁{% else %}(sudah pernah lulus){% endif %}</div>
+    {% else %}
+    <div class="xppop dim">Lulus = +50 XP (sekali per track)</div>
+    {% endif %}
+  </div>
+
+  <div class="casebox">
+    <h3>🔍 Pembahasan</h3>
+    <div class="testgrid">
+      {% for r in rows %}
+      <div class="testcase {{ 'ok' if r.ok else 'no' }}">
+        <b>{{ '✓' if r.ok else '✗' }} {{ r.judul }}</b>
+        {% if not r.ok %}
+        <div class="tt"><span>jawabanmu:</span><pre>{{ r.pilihan[r.user] if r.user is not none else '(tidak dijawab)' }}</pre></div>
+        <div class="tt"><span>benar:</span><pre>{{ r.pilihan[r.jawaban] }}</pre></div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="scenactions">
+    <a class="btn primary" href="{{ url_for('ujian', track=track) }}">Ulangi Ujian 🔄</a>
+    <a class="btn ghost" href="{{ url_for('peta') }}">← Peta Belajar</a>
+  </div>
+</section>
+{% endblock %}

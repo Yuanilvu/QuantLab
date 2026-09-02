@@ -1,0 +1,181 @@
+# ============================================================
+# BAB 1 — ANGKA & PERSEN (TRACK: FONDASI MATEMATIKA)
+# Persen, untung/rugi, perubahan harga — bahasa paling dasar
+# yang dipakai di SEMUA keputusan keuangan.
+# ============================================================
+bab: 1
+track: math
+judul: "Angka & Persen"
+emoji: "🧮"
+deskripsi: "Persen ada di mana-mana: untung, rugi, fee, kenaikan harga. Belum lancar persen? Materi berikut terasa berat."
+pelajaran:
+  - id: "1-1"
+    judul: "Persen Itu Gampang"
+    menit: 5
+    materi: |
+      **Persen artinya 'per seratus'.** 50% = 50 dari 100 = setengah. 100% = semuanya.
+
+      Cara hitung persen dari sebuah angka:
+      - 10% dari 1.000 = 1.000 × 10 ÷ 100 = **100**
+      - 5% dari 1.000 = 1.000 × 5 ÷ 100 = **50**
+      - 0,3% dari 1.000 = 1.000 × 0,3 ÷ 100 = **3**
+
+      Di Python, persen ditulis desimal: 10% = 0.10, 5% = 0.05, 0,3% = 0.003. Jadi "1.000 × 10%" = `1000 * 0.10`.
+
+      Guna terpenting di trading: **untung/rugi dalam persen**. Beli saham 4.000, jual 4.400 → untung 400. Persen untung = 400 ÷ 4.000 × 100 = **10%**. Rumus: `(harga_jual - harga_beli) / harga_beli × 100`.
+
+      Kenapa persen penting? Untung 1.000 di saham 10.000 = 10%. Di saham 100.000 = 1%. Angka sama, makna beda jauh. Persen bikin semua bisa dibandingkan secara adil.
+    kode: |
+      harga_beli = 4000
+      harga_jual = 4400
+      untung = harga_jual - harga_beli
+      persen = untung / harga_beli * 100
+      print(f"Untung {untung} = {persen:.1f}%")
+    penjelasan: "Persen = untung dibagi modal awal, dikali 100. Selalu ukur dengan persen, bukan angka mentah."
+  - id: "1-2"
+    judul: "Perubahan Persen Itu Asimetris"
+    menit: 5
+    materi: |
+      Jebakan klasik: **naik 10% lalu turun 10% TIDAK balik ke harga semula.**
+
+      Coba: harga 100 naik 10% → 110. Lalu turun 10% dari 110 → 99. **Sisa 99, bukan 100!**
+
+      Kenapa? Turun 10% dihitung dari angka yang SUDAH lebih besar (110), bukan dari 100.
+
+      Contoh nyata: IHSG (indeks saham utama Indonesia) turun 30%. Butuh naik **42,9%** untuk balik modal. Rumus: `butuh_naik = turun / (1 - turun)`. Turun 50% butuh naik 100%!
+
+      Pelajaran besar: **rugi lebih sakit daripada untung yang menyenangkan.** Sekali -50%, butuh +100% untuk balik. Mencegah turun lebih mudah daripada mengejar naik.
+    kode: |
+      harga = 100
+      harga = harga * 1.10   # naik 10%
+      harga = harga * 0.90   # turun 10%
+      print(harga)           # 99.0, bukan 100!
+    penjelasan: "Naik dan turun persen tidak simetris karena dihitung dari angka berbeda. Rugi lebih berat daripada untung."
+skenario:
+  - id: "s1-1"
+    judul: "Berapa Persen Kenaikannya?"
+    emoji: "📈"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      TLKM kemarin ditutup di 4.000. Hari ini naik ke 4.200. Kamu pemegang saham. Mau tahu kenaikannya berapa persen?
+    pilihan:
+      - "5%"
+      - "2%"
+      - "20%"
+      - "0,5%"
+    jawaban: 0
+    penjelasan: |
+      Naik 200 dari 4.000. Persen = 200 ÷ 4.000 × 100 = **5%**.
+
+      Rumus selalu: `(harga_baru - harga_lama) / harga_lama × 100`. Opsi lain salah: 20% kalau naik 800, 2% kalau naik 80, 0,5% kalau naik 20.
+    kode: |
+      lama, baru = 4000, 4200
+      pct = (baru - lama) / lama * 100
+      print(f"{pct:.1f}%")   # 5.0%
+    hasil:
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "Benar: +200/4000 = 5%. Kamu bisa membandingkan kenaikan TLKM dengan saham lain secara adil."
+      - ret: 2.0
+        dd: 0.0
+        win: 40
+        note: "2% itu kalau naiknya 80, bukan 200. Salah hitung persen = salah ukur kinerja."
+      - ret: 20.0
+        dd: 0.0
+        win: 25
+        note: "20% itu kalau naiknya 800. Kamu membagi dengan 2100-an? Hati-hati: selalu bagi dengan harga LAMA (4.000)."
+      - ret: 0.5
+        dd: 0.0
+        win: 30
+        note: "0,5% terlalu kecil — itu kalau naiknya cuma 20. Periksa lagi desimalnya."
+    petunjuk:
+      - "Berapa rupiah kenaikannya?"
+      - "Bagi kenaikan dengan harga awal, kali 100."
+  - id: "s1-2"
+    judul: "Naik 50%, Turun 50%"
+    emoji: "🎢"
+    sulit: "sedang"
+    xp: 35
+    menit: 4
+    cerita: |
+      Saham CUAN naik 50% dari 1.000, lalu turun 50% dari harga tertingginya. Berapa harga akhirnya?
+    pilihan:
+      - "1.000 — naik dan turun sama besar, balik lagi"
+      - "750"
+      - "1.250"
+      - "500"
+    jawaban: 1
+    penjelasan: |
+      1.000 naik 50% → 1.500. Turun 50% dari 1.500 → **750**.
+
+      Naik 50% lalu turun 50% = rugi bersih 25%! Turun selalu dihitung dari angka yang lebih besar. Paham ini? Kamu tidak akan merasa "aman" setelah naik besar. Satu koreksi 50% menghapus kenaikan 100% sebelumnya.
+    kode: |
+      harga = 1000 * 1.50   # naik 50%
+      harga = harga * 0.50  # turun 50%
+      print(harga)          # 750.0
+    hasil:
+      - ret: -25.0
+        dd: 0.0
+        win: 35
+        note: "Balik ke 1.000? Sayangnya tidak: 1.500 × 0.5 = 750. Asimetri persen = -25% dari modal awal."
+      - ret: -25.0
+        dd: 0.0
+        win: 78
+        note: "750 benar. Naik 50% lalu turun 50% = -25% bersih. Itulah bahaya drawdown (turun dari harga puncak)."
+      - ret: 25.0
+        dd: 0.0
+        win: 20
+        note: "1.250 itu kalau turun 50% dihitung dari 1.000 — salah. Turun selalu dihitung dari harga SEKARANG."
+      - ret: -50.0
+        dd: 0.0
+        win: 25
+        note: "500 itu kalau naik dan turunnya dihitung dari modal awal — bukan itu caranya. Urutan hitung: 1000→1500→750."
+    petunjuk:
+      - "Hitung dulu harga setelah naik 50%."
+      - "Lalu turunkan 50% dari angka itu."
+  - id: "s1-3"
+    judul: "Modal 1 Juta, Naik Lalu Turun"
+    emoji: "🪙"
+    sulit: "sulit"
+    xp: 50
+    menit: 5
+    cerita: |
+      Modal kamu Rp1.000.000. Bulan 1: saham naik 20%. Bulan 2: turun 20% dari nilai akhir bulan 1. Berapa modal kamu sekarang?
+    pilihan:
+      - "Rp1.000.000 — naik 20% lalu turun 20% = impas"
+      - "Rp960.000"
+      - "Rp1.040.000"
+      - "Rp800.000"
+    jawaban: 1
+    penjelasan: |
+      1.000.000 × 1,20 = 1.200.000. Lalu × 0,80 = **960.000**. Rugi bersih 4% (40 ribu), bukan impas!
+
+      Pola: naik X% lalu turun X% = selalu rugi `X²/100` persen. Di sini: 20×20/100 = 4%. Setelah untung besar, hati-hati. Persen turun yang sama menghapus lebih dari yang kamu kira. Trader pro mengunci sebagian profit justru saat untung besar.
+    kode: |
+      modal = 1_000_000
+      modal = modal * 1.20   # +20%
+      modal = modal * 0.80   # -20%
+      print(modal)           # 960000.0
+    hasil:
+      - ret: -4.0
+        dd: 0.0
+        win: 30
+        note: "Impas? Tidak — 1,2 × 0,8 = 0,96 = -4%. Perasaan 'sudah balik' itu ilusi matematika."
+      - ret: -4.0
+        dd: 0.0
+        win: 75
+        note: "960.000 benar. Naik 20% lalu turun 20% = -4%. Rumus cepat: rugi = X²/100 persen."
+      - ret: 4.0
+        dd: 0.0
+        win: 25
+        note: "1.040.000 itu kalau naik dan turun dihitung dari angka berbeda — urutan hitungnya salah."
+      - ret: -20.0
+        dd: 0.0
+        win: 20
+        note: "800.000 itu kalau keduanya dihitung dari modal awal. Yang benar: 1jt → 1,2jt → 960rb."
+    petunjuk:
+      - "Hitung modal setelah naik 20% dulu."
+      - "Lalu kalikan dengan 0,80 (bukan kurangi 20% dari modal awal)."

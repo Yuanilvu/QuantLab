@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}Hasil — {{ scen.judul }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb"><a href="{{ url_for('bab_page', n=bab.bab) }}">← Bab {{ bab.bab }}</a></nav>
+
+<section class="result">
+  <div class="verdict {{ 'good' if solve.correct else 'bad' }}">
+    <h1>{{ '🎯 Keputusan Tepat!' if solve.correct else '❌ Keputusan Melenceng' }}</h1>
+    <p class="meta">
+      Jawabanmu: <strong>{{ scen.pilihan[solve.choice] }}</strong><br>
+      Keputusan optimal: <strong>{{ scen.pilihan[scen.jawaban] }}</strong>
+    </p>
+    {% if solve.correct %}
+    <div class="xppop">+{{ solve.xp }} XP{% if got_bonus %} <span class="bonuspop">+{{ got_bonus }} bonus ⚡</span>{% endif %}</div>
+    {% else %}
+    <div class="xppop dim">+0 XP (jawaban benar = +{{ solve.xp }} XP{% if scen.id == challenge_id %} + 10 bonus{% endif %})</div>
+    {% endif %}
+  </div>
+
+  <div class="casebox">
+    <h3>📖 Kenapa?</h3>
+    <div class="case">{{ render_md(scen.penjelasan) | safe }}</div>
+  </div>
+
+  <div class="casebox">
+    <h3>🐍 Terjemahan Python</h3>
+    <pre class="block-code"><code>{{ scen.kode }}</code></pre>
+    <p class="note">💡 Ini bentuk logika keputusanmu dalam kode — pelan-pelan, pola ini yang akan kamu pakai bikin bot.</p>
+  </div>
+
+  {% if has_outcomes %}
+  <div class="casebox">
+    <h3>📉 Perbandingan Hasil 4 Keputusan</h3>
+    <p class="note">💡 <b>Return</b> = untung/rugi akhir (%). <b>Max DD</b> = penurunan terbesar dari puncak (%). <b>Win</b> = seberapa sering menang. Simulasi untuk belajar — angka dibuat konsisten dengan logika tiap keputusan, bukan data pasar asli.</p>
+    <div class="outcometable">
+      <div class="othead"><span>Keputusan</span><span>Return</span><span>Max DD</span><span>Win</span></div>
+      {% for o in outcomes %}
+      <div class="otrow {{ 'userpick' if o.is_user }} {{ 'bestpick' if o.is_best }}">
+        <span class="otlabel">
+          {% if o.is_user %}<b>KAMU:</b> {% endif %}
+          {% if o.is_best %}<b>⭐ OPTIMAL:</b> {% endif %}
+          {{ scen.pilihan[o.index] }}
+        </span>
+        <span class="{{ 'pos' if o.ret >= 0 else 'neg' }}">{{ '%+.1f' % o.ret }}%</span>
+        <span class="neg">{{ o.dd }}%</span>
+        <span>{{ o.win }}%</span>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="retbars">
+      {% set minr = outcomes | map(attribute='ret') | min %}
+      {% set maxr = outcomes | map(attribute='ret') | max %}
+      {% set span = (maxr - minr) or 1 %}
+      {% for o in outcomes %}
+      <div class="retbar {{ 'userpick' if o.is_user }} {{ 'bestpick' if o.is_best }}">
+        <span class="rblabel">{{ loop.index }}. {{ scen.pilihan[o.index] | truncate(34) }}</span>
+        <div class="rbtrack">
+          <div class="rbfill {{ 'pos' if o.ret >= 0 else 'neg' }}" style="width: {{ ((o.ret - minr) / span * 100) | round }}%"></div>
+        </div>
+        <span class="rbval {{ 'pos' if o.ret >= 0 else 'neg' }}">{{ '%+.1f' % o.ret }}%</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="scenactions">
+    {% if next_s %}
+    <a class="btn primary" href="{{ url_for('scenario_page', sid=next_s.id) }}">Lanjut: {{ next_s.judul }} →</a>
+    {% else %}
+    <a class="btn primary" href="{{ url_for('index') }}">Selesai semua! 🎉 → Dashboard</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

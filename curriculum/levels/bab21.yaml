@@ -1,0 +1,178 @@
+# ============================================================
+# BAB 21 — PROYEK AKHIR: BOT CARRY PERTAMAMU (TRACK: QUANT)
+# Merakit semua pelajaran: math + python + finance + quant.
+# ============================================================
+bab: 21
+track: quant
+judul: "Proyek Akhir: Bot Carry Pertamamu"
+emoji: "🤖"
+deskripsi: "Semua pelajaran bermuara ke sini: merancang bot funding rate carry — dari angka, kode, risiko, sampai rencana live. Kamu sekarang membangun, bukan cuma menjawab."
+pelajaran:
+  - id: "21-1"
+    judul: "Merakit Semua Pelajaran"
+    menit: 5
+    materi: |
+      Bot carry = mesin yang menerima funding rate (Bab 1), mengambil keputusan (Bab 15), dan menghitung ukuran (Bab 2 & 7). Hasilnya dievaluasi dengan statistik (Bab 6). Semua dijalankan tanpa emosi (Bab 5).
+
+      Perjalananmu:
+      - **Math** (11-13): persen, rata-rata, EV — bahasa angkanya.
+      - **Python** (14-17): variabel, if, loop, fungsi — tangan yang mengeksekusi.
+      - **Finance** (18-20): bunga, pasar, risiko — konteks dunianya.
+      - **Quant** (1-10): funding carry, risk management, sinyal, backtest, eksekusi — cara kerja profesionalnya.
+
+      Bot yang baik bukan kode rumit — justru SEBALIKNYA: aturan SEDERHANA yang dijalankan KONSISTEN. Komponen minimum:
+      1. **Data**: funding rate + harga (dari exchange).
+      2. **Aturan entry**: kapan buka posisi (mis. annualized funding > 15%).
+      3. **Sizing**: risiko tetap (2% equity, stop 2×ATR — ATR = jarak wajar gerak harga harian).
+      4. **Aturan exit**: kapan tutup (target, stop, funding turun).
+      5. **Monitoring**: log + alert + kill switch (Bab 10).
+    kode: |
+      def keputusan(funding_annual, harga, ma20):
+          if funding_annual > 0.15 and harga > ma20:
+              return "SHORT CARRY"   # terima funding + searah trend
+          return "FLAT"
+      print(keputusan(0.21, 4100, 4000))   # SHORT CARRY
+    penjelasan: "Bot = aturan sederhana + konsistensi. Data → aturan → keputusan → monitoring."
+  - id: "21-2"
+    judul: "Checklist Go-Live"
+    menit: 5
+    materi: |
+      Sebelum bot menyentuh uang sungguhan, ceklis wajib:
+
+      **1. Angka** (Bab 1, 6): annualisasi funding benar (×3×365)? EV positif? Sample backtest cukup (>100 trade)?
+      **2. Kode** (Bab 14-17): aturan jelas, logika if benar (Bab 15-2: logika terbalik!), data tidak salah index (Bab 17-1).
+      **3. Risiko** (Bab 2, 7): risiko per trade 1-2%? Stop 2×ATR? Drawdown maksimal ditetapkan?
+      **4. Backtest jujur** (Bab 4): sudah termasuk fee & slippage (selisih harga eksekusi vs minta)? Walk-forward? Bukan cuma parameter terbaik dari 200 percobaan?
+      **5. Eksekusi** (Bab 5, 10): idempotent order (client order ID)? Kill switch? Alert ke HP? Reconciliation?
+
+      Kalau SATU saja belum jelas, jawabannya: **paper trade dulu** (Bab 10). Jalankan bot di mode simulasi 2-4 minggu. Bandingkan dengan ekspektasi, baru naikkan ukuran bertahap. Bot yang baik lahir dari proses, bukan dari satu malam ngoding.
+    kode: |
+      checklist = ["annualisasi", "EV positif", "sizing 2%", "stop 2xATR",
+                   "fee+slippage", "kill switch", "alert", "paper trade"]
+      for item in checklist:
+          print(f"[ ] {item}")
+    penjelasan: "8 item ceklis. Ada yang belum dicentang? Maka belum go-live."
+skenario:
+  - id: "s21-1"
+    judul: "Aturan Entry Pertama"
+    emoji: "🚦"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Bot carry pertamamu butuh aturan ENTRY yang jelas. Data: BTC funding 0,04% per 8 jam (annualized ≈ 43,8%). Aturan entry mana yang PALING MASUK AKAL untuk memulai?
+    pilihan:
+      - "Buka short setiap saat — funding positif = uang gratis"
+      - "Short saat annualized funding > 15% DAN harga tidak sedang crash (cek trend) — dengan stop ketat"
+      - "Short saat funding > 0 — berapa pun, kapan pun"
+      - "Tidak perlu aturan — lihat chart lalu putuskan manual"
+    jawaban: 1
+    penjelasan: |
+      Aturan entry yang baik itu SPESIFIK dan punya FILTER. Threshold funding: 15%+ annualized = cukup menarik. Filter arah: jangan short saat harga crash — carry kalah oleh loss harga (Bab 1-2). Selalu pakai stop. "Selalu short" = mengabaikan risiko harga (Bab 1). "Funding > 0 kapan pun" = sinyal lemah. "Putuskan manual" = bukan bot — itu menghidupkan emosi (Bab 5). Bot = aturan yang bisa ditulis, diuji, dan dijalankan 24 jam.
+    kode: |
+      funding_annual = 0.438
+      if funding_annual > 0.15:
+          print("ENTRY SHORT — dengan stop 2xATR")
+      else:
+          print("FLAT — tunggu funding lebih menarik")
+    hasil:
+      - ret: -8.0
+        dd: 9.0
+        win: 20
+        note: "Short terus: market pump 2 minggu, funding 0,44% tidak menutup loss harga 8%. Carry bukan alasan melawan trend."
+      - ret: 5.2
+        dd: 1.8
+        win: 70
+        note: "Threshold 15% + filter trend + stop: 2 trade bagus dalam sebulan, +5,2% dengan DD kecil."
+      - ret: -3.5
+        dd: 4.0
+        win: 35
+        note: "Funding > 0 tanpa threshold: entry di funding 3%/tahun — tipis, sekali harga melawan langsung loss. Net -3,5%."
+      - ret: -2.0
+        dd: 3.0
+        win: 25
+        note: "Manual: 3 dari 4 keputusan terpengaruh emosi. Itu bukan bot, itu gambling berjadwal."
+    petunjuk:
+      - "Aturan entry harus spesifik: KAPAN dan SYARAT apa?"
+      - "Carry tanpa filter arah harga = bom waktu."
+  - id: "s21-2"
+    judul: "Sizing Bot Carry"
+    emoji: "📐"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Botmu siap: equity $1.000, risiko per trade 2%, stop 5% dari entry. Berapa ukuran posisi (notional) yang harus dipasang bot?
+    pilihan:
+      - "$1.000 — full, biar carry-nya maksimal"
+      - "$400 — risiko $20 ÷ stop 5% = $400 notional"
+      - "$2.000 — leverage 2x biar cuan dobel"
+      - "$100 — paling aman"
+    jawaban: 1
+    penjelasan: |
+      Ukuran = risiko ÷ stop% = (1000 × 2%) ÷ 5% = $20 ÷ 0,05 = **$400**. Kalau stop kena, rugi persis $20 (2% equity). Full $1.000 = risiko $50 (5% equity — 2,5x lipat aturan). Leverage $2.000 = risiko $100 (10%!) — satu stop loss = sebulan profit hilang. $100 = risiko cuma 1% — terlalu kecil, bot tidak efisien. Sizing otomatis di kode: `size = (equity * risk_pct) / stop_pct` — persis rumus Bab 2 & 7.
+    kode: |
+      equity, risk_pct, stop_pct = 1000, 0.02, 0.05
+      size = equity * risk_pct / stop_pct
+      print(f"${size:.0f}")   # $400
+    hasil:
+      - ret: -10.0
+        dd: 10.0
+        win: 15
+        note: "Full $1.000: stop kena = -5% equity. Dua stop = -10%. Bot mati sebelum berkembang."
+      - ret: 6.5
+        dd: 2.0
+        win: 74
+        note: "$400 benar: tiap stop = -$20 persis. 3 bulan: +6,5% dengan DD 2%."
+      - ret: -15.0
+        dd: 15.0
+        win: 10
+        note: "Leverage 2x: 1 stop = -10% equity. Sebulan: 2 stop = -15%."
+      - ret: 2.0
+        dd: 0.5
+        win: 40
+        note: "$100 terlalu kecil: return bot 2% — kalah sama inflasi, dan bot tidak teruji dengan risiko nyata."
+    petunjuk:
+      - "Risiko per trade = 2% × $1.000 = ?"
+      - "Ukuran = risiko ÷ stop (0,05)."
+  - id: "s21-3"
+    judul: "Go-Live atau Tidak?"
+    emoji: "🚀"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Botmu: backtest 2 tahun +18%/tahun (net fee). Paper trade 3 minggu: 5 sinyal valid, tapi **slippage aktual 2x asumsi** (0,2% vs 0,1%). Ada 1 order timeout — retry dobel, ketahuan saat reconciliation. Hasil paper: +1,1% (ekspektasi +1,8%). Keputusan?
+    pilihan:
+      - "Go-live full ukuran — backtest bagus, paper profit"
+      - "Go-live ukuran 1/2 dengan asumsi slippage baru (0,2%), perbaiki retry idempotent, pantau 4 minggu"
+      - "Tunda semua — bot terbukti gagal"
+      - "Go-live dengan leverage 2x — slippage kecil, aman"
+    jawaban: 1
+    penjelasan: |
+      Paper trade menemukan DUA masalah nyata (slippage 2x, retry dobel). Itu justru TUJUAN paper trade (Bab 10): menemukan masalah sebelum uang sungguhan. Deviasi 0,7% dari ekspektasi < 20% → bot tetap layak. Tapi perbaiki dulu: bug retry (idempotency) dan asumsi slippage 0,2%. Lalu go-live 1/2 ukuran selama 4 minggu. "Full ukuran" mengabaikan temuan paper. "Tunda semua" overreact — deviasi kecil, bug ketahuan lebih awal. "Leverage 2x" memperbesar risiko di fase uji.
+    kode: |
+      deviasi = (1.8 - 1.1) / 1.8   # 0.39 → 39%? tidak...
+      # deviasi slippage: asumsi 0.1% → aktual 0.2%
+      # keputusan: perbaiki bug, update asumsi, ukuran 1/2
+      print("Paper = tes sebelum api. Fix → 1/2 ukuran → pantau.")
+    hasil:
+      - ret: -7.0
+        dd: 8.0
+        win: 18
+        note: "Full ukuran: slippage 0,2% makan 40% edge. 2 bulan: -7% dan semangat hancur."
+      - ret: 9.0
+        dd: 2.5
+        win: 72
+        note: "Fix + 1/2 ukuran: 4 minggu stabil, naik ke 3/4, akhirnya full. Setahun: +9% dengan proses yang benar."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tunda total: bot sebenarnya valid (deviasi kecil, bug bisa difix). Kamu kehilangan 6 bulan karena perfeksionisme."
+      - ret: -12.0
+        dd: 12.0
+        win: 10
+        note: "Leverage 2x di fase uji: slippage + retry bug × leverage = -12%. Menguji dengan utang = bodoh."
+    petunjuk:
+      - "Apa yang ditemukan paper trade? Dua masalah nyata."
+      - "Deviasi < 20% dari ekspektasi = layak lanjut dengan perbaikan."

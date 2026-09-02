@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Ujian — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <h1>🏁 Ujian Track: {{ track }}</h1>
+  {% if not_enough %}
+  <p class="alert">Track ini belum punya cukup skenario untuk ujian (minimal 8).</p>
+  {% else %}
+  <p class="meta">8 soal acak dari semua bab track ini · waktu 12 menit · lulus ≥ 70% → bonus <b class="pos">+50 XP</b> (sekali per track).</p>
+  <div class="scenactions">
+    <a class="btn primary" href="{{ url_for('ujian', track=track) }}">Mulai Ujian →</a>
+    <a class="btn ghost" href="{{ url_for('peta') }}">← Peta Belajar</a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}

@@ -1,0 +1,177 @@
+# ============================================================
+# BAB 19 — PORTOFOLIO & DIVERSIFIKASI
+# Korelasi, diversifikasi sejati vs palsu,
+# alokasi & rebalancing sederhana.
+# ============================================================
+bab: 19
+track: quant
+judul: "Portofolio & Diversifikasi"
+emoji: "🧺"
+deskripsi: "Satu strategi bisa hancur. Dua strategi yang tidak saling korelatif bisa saling menyelamatkan. Matematika portofolio, bukan cuma jumlah ticker."
+pelajaran:
+  - id: "19-1"
+    judul: "Korelasi: Bahasa Hubungan Antar Aset"
+    menit: 5
+    materi: |
+      Korelasi (dari -1 sampai +1) mengukur seberapa searah dua aset bergerak:
+
+      - **+1**: naik bareng, turun bareng (dua saham perbankan besar, misalnya).
+      - **0**: tidak ada hubungan.
+      - **-1**: bergerak berlawanan (jarang murni terjadi; emas vs USD kadang mendekati).
+
+      Kenapa penting? **Risiko portofolio tidak dijumlah, dikorelasikan.** Contoh: dua aset sama-sama volatil 20% (volatilitas = seberapa liar harga naik-turun). Kalau korelasi +1, portofolio tetap volatil 20% — tidak ada manfaat. Kalau korelasi 0, volatilitas gabungan ~14%. Risiko turun ~30%, return tetap sama. Kalau -0.5, hasilnya lebih baik lagi.
+
+      Rumus volatilitas portofolio 2 aset (weight w, w2=1-w):
+      `σp = √(w²σ1² + w2²σ2² + 2·w·w2·ρ·σ1·σ2)`
+
+      Takeaway: diversifikasi = menambah aset dengan **korelasi rendah**, bukan sekadar menambah jumlah. Korelasi tidak permanen. Saat krisis, korelasi cenderung naik ke 1 — semua jatuh bareng. Karena itu siapkan bantalan: cash, atau strategi yang benar-benar beda.
+    kode: |
+      import math
+      w, s1, s2, rho = 0.5, 0.20, 0.20, 0.0
+      vp = (w**2 * s1**2 + (1-w)**2 * s2**2 + 2*w*(1-w)*rho*s1*s2) ** 0.5
+      print(f"Vol portofolio: {vp*100:.0f}% (vs 20% sendirian)")
+    penjelasan: "Korelasi 0 + dua aset vol 20% → portofolio vol 14%. Diversifikasi nyata."
+  - id: "19-2"
+    judul: "Alokasi & Rebalancing"
+    menit: 5
+    materi: |
+      Setelah tahu korelasi, bagaimana membagi modal? Dua pendekatan sederhana:
+
+      **1. Equal weight** — bagi rata. Sederhana, sulit salah besar, otomatis diversifikasi. Cocok kalau tidak punya alasan kuat untuk lebih berat ke satu aset.
+
+      **2. Risk-based (risk parity sederhana)** — alokasi terbalik dengan volatilitas. Aset volatil dapat porsi kecil; aset tenang dapat porsi besar. Tujuannya: tiap aset menyumbang RISIKO yang sama. Contoh: aset A vol 10%, B vol 30% → alokasi 75/25 (bukan 50/50) supaya risiko 50/50.
+
+      **Rebalancing**: sekali periode (bulanan/kuartalan), jual yang naik, beli yang turun, kembali ke target. Ini memaksa "beli murah jual mahal" secara sistematis. Risiko pun tetap di level yang direncanakan.
+
+      Jebakan umum: menambah aset yang KORELASINYA TINGGI dengan yang sudah dimiliki = diversifikasi palsu (hanya rasa aman, risiko tetap sama). 10 saham perbankan ≠ diversifikasi.
+    kode: |
+      def vol_porto(w, s1, s2, rho):
+          return (w**2*s1**2 + (1-w)**2*s2**2 + 2*w*(1-w)*rho*s1*s2)**0.5
+      print(f"rho 0.85 → {vol_porto(0.5,0.18,0.18,0.85)*100:.0f}%")
+      print(f"rho -0.2 → {vol_porto(0.5,0.18,0.18,-0.2)*100:.0f}%")
+    penjelasan: "Equal weight untuk kesederhanaan, risk-based untuk efisiensi; rebalancing memaksa beli murah jual mahal."
+skenario:
+  - id: "s19-1"
+    judul: "Pilih Pasangan"
+    emoji: "💞"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu punya Strategi A (vol 18%). Mau tambah Strategi B untuk menurunkan risiko portofolio. Dua kandidat: **B1** (korelasi +0.85 dengan A) dan **B2** (korelasi -0.20 dengan A). Return jangka panjang keduanya mirip. Pilih mana?
+    pilihan:
+      - "B1 — korelasinya tinggi, berarti sama-sama terbukti"
+      - "B2 — korelasi rendah/negatif, gabungannya lebih halus"
+      - "Keduanya — makin banyak strategi makin aman"
+      - "Tidak usah — satu strategi saja cukup"
+    jawaban: 1
+    penjelasan: |
+      Tujuan menambah B adalah MENURUNKAN risiko → yang relevan cuma korelasi. B1 (+0.85) hampir bergerak sama dengan A → portofolio vol ~17.5% (nyaris tidak berubah). B2 (-0.20) → vol gabungan ~11.8% — turun 35% dengan return yang sama. Ini diversifikasi SEJATI: kurva equity lebih halus, drawdown lebih dangkal, dan kamu bisa pasang leverage moderat. "Makin banyak makin aman" salah kalau semua berkorelasi tinggi.
+    kode: |
+      import math
+      def vol_p(w, s1, s2, rho):
+          return (w**2*s1**2 + (1-w)**2*s2**2 + 2*w*(1-w)*rho*s1*s2)**0.5
+      print(f"dengan B1: {vol_p(0.5,0.18,0.18,0.85)*100:.1f}%")
+      print(f"dengan B2: {vol_p(0.5,0.18,0.18,-0.20)*100:.1f}%")
+    hasil:
+      - ret: 14.0
+        dd: 14.5
+        win: 50
+        note: "A+B1: return mirip tapi DD tetap ~14.5% — tidak ada yang berubah. Diversifikasi palsu."
+      - ret: 13.5
+        dd: 6.8
+        win: 74
+        note: "A+B2: return 13.5%, DD cuma 6.8%. Kurva halus — leverage 1.5x → 20% dengan DD 10%."
+      - ret: 13.2
+        dd: 13.8
+        win: 48
+        note: "A+B1+B3 (semua high-correlated): tiga strategi tapi risiko tetap tinggi. Jumlah bukan diversifikasi."
+      - ret: 12.0
+        dd: 14.0
+        win: 40
+        note: "Satu strategi saja: kamu menanggung semua volatilitas A tanpa manfaat penggabungan."
+    petunjuk:
+      - "Tujuan menambah aset: turunkan RISIKO."
+      - "Yang menentukan: korelasi, bukan jumlah."
+  - id: "s19-2"
+    judul: "Diversifikasi Palsu"
+    emoji: "🪞"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Portfolio kamu: BBRI, BMRI, BBNI, BBTN — empat saham bank besar. Kata teman: "wah, sudah diversifikasi, 4 saham!" Korelasi pairwise mereka 0.7-0.9. Evaluasi portofoliomu?
+    pilihan:
+      - "Bagus — 4 saham sudah cukup diversifikasi"
+      - "Diversifikasi palsu — semua bank bergerak sama (korelasi tinggi); risiko sebenarnya = 1 sektor"
+      - "Tambah 2 saham bank lagi biar makin aman"
+      - "Jual semua dan taruh di 1 saham terbaik saja"
+    jawaban: 1
+    penjelasan: |
+      Empat saham dengan korelasi 0.7-0.9 = satu taruhan besar: **sektor perbankan**. Kalau ada krisis kredit, keempatnya jatuh bareng — portofolio vol hampir sama dengan 1 saham. Diversifikasi sejati butuh aset dengan korelasi rendah: beda sektor (energi, konsumer, teknologi), beda kelas (obligasi, emas, cash), atau strategi yang tidak terkait (momentum + carry + arbitrase). Uji cepat: kalau satu berita bisa menjatuhkan semua posisimu, kamu tidak terdiversifikasi.
+    kode: |
+      # Uji: satu kabar buruk perbankan → semua turun?
+      banks = [0.85, 0.90, 0.78, 0.82]   # korelasi rata-rata
+      avg = sum(banks) / len(banks)
+      print(f"Korelasi antar posisi: {avg:.2f} → 1 taruhan, bukan 4")
+    hasil:
+      - ret: 4.2
+        dd: 22.0
+        win: 40
+        note: "Krisis kredit kecil di Q3: keempat bank -15% bareng. DD 22% — sama seperti main 1 bank saja."
+      - ret: 11.0
+        dd: 7.5
+        win: 72
+        note: "Rebalance ke bank 25% + energi 25% + konsumer 25% + obligasi 25%: krisis kredit cuma kena 25% portofolio."
+      - ret: 3.8
+        dd: 21.0
+        win: 38
+        note: "Tambah bank lagi: 6 bank = tetap 1 sektor. DD 21%, tidak ada bedanya."
+      - ret: 5.0
+        dd: 19.0
+        win: 35
+        note: "Konsentrasi 1 saham: risiko idiosinkratik penuh (kasus korupsi, salah lapor, dll). -19% DD."
+    petunjuk:
+      - "Korelasi 0.7-0.9 antar bank = apa artinya untuk risiko?"
+      - "Satu berita menjatuhkan semua posisi = belum diversifikasi."
+  - id: "s19-3"
+    judul: "50/50 atau Pilih Juara?"
+    emoji: "🧮"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Dua strategi hasil backtest 2 tahun: **A** return 30%/thn, maxDD 22%, korelasi dengan **B** = 0.15. **B** return 18%/thn, maxDD 9%. Kamu punya $10.000. Pilih alokasi mana?
+    pilihan:
+      - "100% ke A — return lebih tinggi, itu yang penting"
+      - "100% ke B — DD kecil, lebih aman"
+      - "50/50 A+B — return gabungan ~24%, DD jauh lebih kecil dari 22% (korelasi rendah)"
+      - "Rotasi: A 3 bulan, B 3 bulan, ganti-ganti"
+    jawaban: 2
+    penjelasan: |
+      Karena korelasi rendah (0.15), 50/50 memberi return gabungan ≈ (30+18)/2 = **24%** dengan maxDD ≈ **12-13%** (jauh di bawah 22% A). Risk-adjusted (Calmar): A=1.36, B=2.0, 50/50≈1.9. Plus, kamu bisa leverage portofolio 1.5x → return 36% dengan DD ~19% — mengalahkan A murni dengan risiko lebih kecil. Rotasi waktu = timing noise (kamu tidak bisa tahu kapan ganti); 100% A/B = membuang manfaat korelasi. Kalau mau lebih halus, risk parity (A lebih kecil karena lebih volatil).
+    kode: |
+      ret = (30 + 18) / 2          # 24%
+      dd_5050 = 13                 # estimasi dari korelasi 0.15
+      print(f"50/50: {ret}%/thn, DD ~{dd_5050}%")
+      print(f"Calmar: A 1.4 | 50/50 {ret/dd_5050:.1f} + leverage")
+    hasil:
+      - ret: 30.0
+        dd: 22.0
+        win: 35
+        note: "100% A: return 30% tercapai, tapi kamu menyerah di DD 18% bulan ke-9 (recovery butuh 22%). Realisasi +12%."
+      - ret: 18.0
+        dd: 9.0
+        win: 50
+        note: "100% B: aman, tapi kamu meninggalkan 6% return yang bisa diambil tanpa risiko sebanding."
+      - ret: 35.0
+        dd: 13.5
+        win: 71
+        note: "50/50 + leverage 1.5x: return 35% dengan DD 13.5% — menang telak secara risk-adjusted."
+      - ret: 20.0
+        dd: 16.0
+        win: 42
+        note: "Rotasi manual: timing salah 2x (pindah pas A lagi naik). Return 20%, kalah dari 50/50 statis."
+    petunjuk:
+      - "Gabungkan return, kurangi DD lewat korelasi rendah."
+      - "50/50 + leverage kecil bisa kalahkan juara tunggal."

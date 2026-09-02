@@ -1,0 +1,121 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — QuantLab{% endblock %}
+{% block content %}
+<section class="hero">
+  <h1>Selamat datang, <span class="accent">{{ user.username }}</span> 👋</h1>
+  <p>Kamu sudah menyelesaikan <strong>{{ solved_count }}/{{ total }}</strong> skenario
+     {% if solved_count == total %}— <span class="good">Quant Master! 🎉</span>{% endif %}
+  </p>
+  <div class="statrow">
+    <div class="stat"><b>{{ user.xp }}</b><span>Poin (XP)</span></div>
+    <div class="stat"><b>🔥 {{ user.streak }}</b><span>Streak (hari)</span></div>
+    <div class="stat"><b>{{ solved_count }}</b><span>Skenario selesai</span></div>
+    <div class="stat"><b>{{ stats.skenario }}</b><span>Total tersedia</span></div>
+  </div>
+</section>
+
+{% if challenge %}
+<section class="challenge">
+  <a href="{{ url_for('scenario_page', sid=challenge.id) }}" class="challengecard">
+    <div class="chleft">
+      <span class="chlabel">⚡ TANTANGAN HARIAN</span>
+      <h2>{{ challenge.emoji }} {{ challenge.judul }}</h2>
+      <span class="meta">{{ challenge.sulit }} · bonus <b class="pos">+{{ challenge.xp }} XP</b> (termasuk bonus +10)</span>
+    </div>
+    <span class="chbtn">Kerjakan →</span>
+  </a>
+</section>
+{% else %}
+<section class="challenge">
+  <div class="challengecard done">
+    <div class="chleft">
+      <span class="chlabel">⚡ TANTANGAN HARIAN</span>
+      <h2>Semua skenario sudah dikerjakan! 🎉</h2>
+      <span class="meta">Tantangan hari ini sudah beres — mampir besok lagi.</span>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if review_n %}
+<section class="challenge">
+  <a href="{{ url_for('ulas') }}" class="challengecard review">
+    <div class="chleft">
+      <span class="chlabel">📚 ULASAN CERDAS</span>
+      <h2>{{ review_n }} ulasan jatuh tempo hari ini</h2>
+      <span class="meta">Jawab benar 3 tahap beruntun (1/3/7 hari) = mahir. Klik untuk mulai →</span>
+    </div>
+    <span class="chbtn">Ulas →</span>
+  </a>
+</section>
+{% endif %}
+
+<section class="dashcols">
+  <div class="dashcol">
+    <h3>🧭 Peta Kemampuan</h3>
+    <div class="radarwrap">{{ radar | safe }}</div>
+    <p class="note">Tujuh kelompok skill quant. Skenario tiap bab mengisi satu atau dua area — makin penuh, makin seimbang kamu.</p>
+  </div>
+  <div class="dashcol">
+    <h3>🏆 Posisi Leaderboard</h3>
+    {% if leader %}
+    <div class="mini-leader">
+      <span class="rank">#1</span>
+      <span class="mini-name">{{ leader[0].username }}</span>
+      <span class="pos">{{ leader[0].xp }} XP</span>
+    </div>
+    <p class="note">Kamu: <b>{{ user.xp }} XP</b> — {{ 'Pemimpin! 🥇' if leader[0].id == user.id else 'kejar ' ~ leader[0].username ~ '!' }}</p>
+    {% else %}
+    <p class="note">Belum ada trader lain. Jadilah yang pertama!</p>
+    {% endif %}
+    <h3 style="margin-top:18px">🚀 Lanjutkan Belajar</h3>
+    {% if nxt %}
+    {% if nxt.kind == 'soal' %}
+    <a class="scenrow" href="{{ url_for('soal_page', qid=nxt.id) }}">
+      <span class="scenemoji">⌨️</span>
+      <span class="scenmain"><b>{{ nxt.judul }}</b><span class="meta">{{ nxt.track }} · Bab {{ nxt.bab }} · soal coding</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% else %}
+    <a class="scenrow" href="{{ url_for('scenario_page', sid=nxt.id) }}">
+      <span class="scenemoji">{{ nxt.emoji }}</span>
+      <span class="scenmain"><b>{{ nxt.judul }}</b><span class="meta">{{ nxt.track }} · Bab {{ nxt.bab }}</span></span>
+      <span class="arrow">→</span>
+    </a>
+    {% endif %}
+    {% else %}
+    <p class="note good">Semua materi selesai — kamu sudah Quant Master penuh! 🎉</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="trackstrip">
+  {% for t in tracks %}
+  <a class="trackmini {{ 'complete' if t.pct == 100 }}" href="{{ url_for('peta') }}">
+    <span class="trackemoji">{{ t.emoji }}</span>
+    <div class="tminfo">
+      <b>{{ t.name }}</b>
+      <div class="progress"><div class="bar"><div class="fill" style="width: {{ t.pct }}%"></div></div></div>
+      <span class="meta">{{ t.pct }}% · {{ t.done }}/{{ t.total }}</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<section class="babgrid">
+  {% for b in bab_cards %}
+  <a class="babcard {{ 'done' if b.complete }}" href="{{ url_for('bab_page', n=b.bab) }}">
+    <div class="babhead"><span class="babe">{{ b.emoji }}</span>
+      <span class="babnum">BAB {{ b.bab }}</span>
+      {% if b.complete %}<span class="tick">✓</span>{% endif %}
+    </div>
+    <h2>{{ b.judul }}</h2>
+    <p>{{ b.deskripsi }}</p>
+    <div class="progress">
+      <div class="bar"><div class="fill" style="width: {{ (b.done / b.n * 100) if b.n else 0 }}%"></div></div>
+      <span>{{ b.done }}/{{ b.n }} skenario</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+{% endblock %}
