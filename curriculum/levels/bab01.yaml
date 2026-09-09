@@ -29,8 +29,8 @@ pelajaran:
       harga_beli = 4000
       harga_jual = 4400
       untung = harga_jual - harga_beli
-      persen = untung / harga_beli * 100
-      print(f"Untung {untung} = {persen:.1f}%")
+      persen_untung = untung / harga_beli * 100
+      print(f"Untung = Rp{untung} | Persen = {persen_untung:.1f}%")
     penjelasan: "Persen = untung dibagi modal awal, dikali 100. Selalu ukur dengan persen, bukan angka mentah."
   - id: "1-2"
     judul: "Perubahan Persen Itu Asimetris"
@@ -47,9 +47,9 @@ pelajaran:
       Pelajaran besar: **rugi lebih sakit daripada untung yang menyenangkan.** Sekali -50%, butuh +100% untuk balik. Mencegah turun lebih mudah daripada mengejar naik.
     kode: |
       harga = 100
-      harga = harga * 1.10   # naik 10%
-      harga = harga * 0.90   # turun 10%
-      print(harga)           # 99.0, bukan 100!
+      harga = harga * 1.10      # naik 10%
+      harga = harga * 0.90      # turun 10%
+      print(f"Harga akhir = {harga:.1f}")   # 99.0, bukan 100!
     penjelasan: "Naik dan turun persen tidak simetris karena dihitung dari angka berbeda. Rugi lebih berat daripada untung."
 skenario:
   - id: "s1-1"
@@ -71,9 +71,10 @@ skenario:
 
       Rumus selalu: `(harga_baru - harga_lama) / harga_lama × 100`. Opsi lain salah: 20% kalau naik 800, 2% kalau naik 80, 0,5% kalau naik 20.
     kode: |
-      lama, baru = 4000, 4200
-      pct = (baru - lama) / lama * 100
-      print(f"{pct:.1f}%")   # 5.0%
+      harga_lama = 4000
+      harga_baru = 4200
+      kenaikan = (harga_baru - harga_lama) / harga_lama * 100
+      print(f"Kenaikan TLKM = {kenaikan:.1f}%")   # 5.0%
     hasil:
       - ret: 5.0
         dd: 0.0
@@ -113,9 +114,9 @@ skenario:
 
       Naik 50% lalu turun 50% = rugi bersih 25%! Turun selalu dihitung dari angka yang lebih besar. Paham ini? Kamu tidak akan merasa "aman" setelah naik besar. Satu koreksi 50% menghapus kenaikan 100% sebelumnya.
     kode: |
-      harga = 1000 * 1.50   # naik 50%
-      harga = harga * 0.50  # turun 50%
-      print(harga)          # 750.0
+      harga = 1000 * 1.50     # naik 50%
+      harga = harga * 0.50    # turun 50%
+      print(f"Harga akhir CUAN = {harga:.0f}")   # 750
     hasil:
       - ret: -25.0
         dd: 0.0
@@ -156,9 +157,9 @@ skenario:
       Pola: naik X% lalu turun X% = selalu rugi `X²/100` persen. Di sini: 20×20/100 = 4%. Setelah untung besar, hati-hati. Persen turun yang sama menghapus lebih dari yang kamu kira. Trader pro mengunci sebagian profit justru saat untung besar.
     kode: |
       modal = 1_000_000
-      modal = modal * 1.20   # +20%
-      modal = modal * 0.80   # -20%
-      print(modal)           # 960000.0
+      modal = modal * 1.20     # naik 20%
+      modal = modal * 0.80     # turun 20%
+      print(f"Modal akhir = Rp{modal:.0f}")   # 960000
     hasil:
       - ret: -4.0
         dd: 0.0
@@ -208,9 +209,10 @@ skenario:
       Selalu pakai persen untuk membandingkan. Persen bahasa yang adil antar saham.
       Keputusanmu: MPPA.
     kode: |
-      bbri = 150 / 3000 * 100
-      mppa = 100 / 1000 * 100
-      print(f"BBRI {bbri:.0f}% | MPPA {mppa:.0f}%")
+      kenaikan_bbri = 150 / 3000 * 100
+      kenaikan_mppa = 100 / 1000 * 100
+      print(f"Kenaikan BBRI = {kenaikan_bbri:.1f}%")
+      print(f"Kenaikan MPPA = {kenaikan_mppa:.1f}%")
       # MPPA 10% — lebih besar dari BBRI 5%
     hasil:
       - ret: 5.0
@@ -260,10 +262,10 @@ skenario:
       Rugi besar butuh kenaikan lebih besar lagi.
       Itu sebabnya potong rugi lebih awal itu penting.
     kode: |
-      harga = 8000
-      target = 10000
-      butuh = (target - harga) / harga * 100
-      print(f"Perlu naik {butuh:.1f}%")   # 25.0%
+      harga_sekarang = 8000
+      harga_target = 10000
+      butuh_naik = (harga_target - harga_sekarang) / harga_sekarang * 100
+      print(f"Butuh naik = {butuh_naik:.1f}%")   # 25.0%
     hasil:
       - ret: -4.0
         dd: 0.0
