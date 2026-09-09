@@ -49,9 +49,11 @@ pelajaran:
 
       Bot yang baik = bot yang gagal dengan aman. Gagal → posisi terkunci aman → manusia diberi tahu. Bukan posisi menggantung tanpa pengawasan.
     kode: |
+      def place_order(side, qty, clientOrderId):
+          print("order terkirim:", side, qty, clientOrderId)   # simulasi exchange
+
       def kirim(order_id, side, qty):
-          # order_id sama → exchange tolak duplikat (idempotent)
-          api.place_order(side, qty, clientOrderId=order_id)
+          place_order(side, qty, clientOrderId=order_id)   # ID sama → tolak duplikat
       try:
           kirim("ord-001", "buy", 0.01)
       except TimeoutError:
@@ -117,9 +119,13 @@ skenario:
     penjelasan: |
       Masalahnya bukan timeout-nya. Masalahnya: bot tidak bisa membedakan 'terkirim' vs 'gagal'. Client order ID (mis. `ord_20260901_001`) membuat request idempotent. Kalau order dengan ID itu sudah diterima exchange, kiriman ulang ditolak. Bot bisa retry dengan aman. Naikkan timeout = bot menggantung lebih lama (lebih buruk). Jangan retry = order sah bisa hilang (missed trade). Retry ID baru = duplikat posisi (masalah asli). Ini bug klasik bot trading — selalu idempotent.
     kode: |
+      from datetime import datetime
+
+      def place_order(side, qty, clientOrderId):
+          print("terkirim:", side, qty, clientOrderId)   # simulasi exchange
+
       def kirim_order(side, qty, client_id):
-          # client_id sama → exchange tolak duplikat
-          return api.place_order(side, qty, clientOrderId=client_id)
+          place_order(side, qty, clientOrderId=client_id)   # ID sama → ditolak duplikat
       oid = f"ord_{datetime.now():%Y%m%d%H%M%S}"
       try:
           kirim_order("buy", 0.01, oid)
