@@ -26,7 +26,7 @@ pelajaran:
     kode: |
       returns = [0.3, -0.2, 0.5, 0.1, -0.4, 0.6, 0.2]
       mean = sum(returns) / len(returns)
-      var = sum((r - mean) ** 2 for r in returns) / len(returns)
+      var = sum((ret_harian - mean) ** 2 for ret_harian in returns) / len(returns)
       std = var ** 0.5
       print(f"mean {mean:.2f}% | std {std:.2f}%")
     penjelasan: "Mean = harapan, std = risiko. Dua-duanya wajib dilaporkan bareng, tidak bisa sendiri-sendiri."
@@ -50,9 +50,10 @@ pelajaran:
 
       Jangan overreact pada z=2 — itu masih wajar (5%). Pasar tiap hari punya puluhan z=2.
     kode: |
-      mean, std = 0.05, 1.2
+      mean = 0.05
+      std = 1.2
       z = (3.6 - mean) / std
-      print(f"z = {z:.1f}")        # 2.96 — langka, tapi bukan mustahil
+      print(f"z = {z:.1f}")        # 3.0 — langka, tapi bukan mustahil
     penjelasan: "Z-score memberi konteks: 2σ = wajar, 3σ = langka, 4σ+ = ada kabar. Jangan overreact sebelum 3σ."
 skenario:
   - id: "s16-1"
@@ -75,9 +76,9 @@ skenario:
     penjelasan: |
       Sharpe ALII = 0.10/1.5 = **0.067**. BRPT = 0.10/4.2 = **0.024**. Return sama, tapi ALII 2.8x lebih efisien. Lebih penting: dengan std 1.5%, ALII bisa di-leverage 2x → return 0.20%/hari dengan std 3%. Masih lebih kecil dari BRPT. Volatilitas bukan peluang. Volatilitas = RISIKO yang harus dibayar. BRPT cuma "lebih seru" — sampai drawdown-nya datang.
     kode: |
-      sharpe_a = 0.10 / 1.5
-      sharpe_b = 0.10 / 4.2
-      print(f"ALII {sharpe_a:.3f} vs BRPT {sharpe_b:.3f}")
+      sharpe_alii = 0.10 / 1.5
+      sharpe_brpt = 0.10 / 4.2
+      print(f"Sharpe ALII: {sharpe_alii:.3f} vs Sharpe BRPT: {sharpe_brpt:.3f}")
       # ALII + leverage 2x: return 0.20, std 3.0 → masih menang
     hasil:
       - ret: 12.4
@@ -116,10 +117,11 @@ skenario:
     penjelasan: |
       Di distribusi normal, z=3 muncul dengan probabilitas ~0.3% ≈ **1 dari 333 hari**. Sampel 200 hari kamu bahkan BELUM cukup untuk melihat z=3. Jadi kemunculan hari ini wajar secara statistik — bukan bukti strategi berubah. Overreact = sizing naik di titik risiko tertinggi. Mean reversion bisa memukul besok. Evaluasi strategi pakai sampel panjang + out-of-sample, bukan satu hari ekstrem. (Kecuali z=4+ atau berulang — itu baru perlu diselidiki.)
     kode: |
-      mean, std = 0.05, 1.2
+      mean = 0.05
+      std = 1.2
       today = 3.6
       z = (today - mean) / std
-      print(f"z = {z:.1f}")          # 2.96
+      print(f"z = {z:.1f}")          # 3.0
       # P(z>3) ≈ 0.13% → ~1 dari 769 hari (satu sisi)
       # Kesimpulan: wajar, jangan ubah strategi
     hasil:
@@ -159,11 +161,12 @@ skenario:
     penjelasan: |
       Interval kepercayaan 95% ≈ mean ± 2×SE = 60% ± 17.8% = **42% - 78%**. 50% (tidak punya edge) MASIH ada di dalam interval. Artinya kamu **belum bisa membuktikan** strategi ini menang lebih sering dari kalah. Butuh sampel lebih besar. Dengan 30 trade, butuh win rate ≥ 68% untuk keluar dari interval (SE 8.9% → 68% − 2×8.9% = 50.2%). Ini alasan kenapa backtest 30 trade tidak bisa dijual sebagai bukti. Statistik butuh ratusan trade.
     kode: |
-      n, wr = 30, 0.6
-      se = (wr * (1 - wr) / n) ** 0.5
-      lo = (wr - 2 * se) * 100
-      hi = (wr + 2 * se) * 100
-      print(f"CI 95%: {lo:.0f}% - {hi:.0f}%")   # 42% - 78%
+      jumlah_trade = 30
+      win_rate = 0.6
+      se = (win_rate * (1 - win_rate) / jumlah_trade) ** 0.5
+      batas_bawah = (win_rate - 2 * se) * 100
+      batas_atas = (win_rate + 2 * se) * 100
+      print(f"CI 95%: {batas_bawah:.0f}% - {batas_atas:.0f}%")   # 42% - 78%
       print("50% dalam CI → belum ada bukti edge")
     hasil:
       - ret: -8.0
@@ -202,7 +205,8 @@ skenario:
     penjelasan: |
       z = (−9.9 − 0.1) ÷ 2 = −5. Kejadian di luar 3 sigma cuma sekitar 0.3%. z = −5 hampir mustahil dari gerak normal harian. Pasar punya ekor gemuk, tapi tetap: jatuh sebesar itu hampir selalu ada pemicunya. Kabar buruk, kepanikan, atau likuidasi beruntun. Beli "diskon" tanpa tahu pemicunya = menangkap pisau jatuh. Bisa turun 10% lagi. Short juga berbahaya: setelah jatuh ekstrem, bounce 5% dalam sejam itu biasa. Stop short bisa tersapu. Langkah benar: cari tahu kabarnya dulu. Tunggu harga stabil 1-2 hari. Baru nilai entry dengan stop yang jelas.
     kode: |
-      mean, std = 0.1, 2.0
+      mean = 0.1
+      std = 2.0
       z = (-9.9 - mean) / std
       print(f"z = {z:.1f}")    # -5.0
       print("z di bawah -4 → ada kabar besar, bukan noise")

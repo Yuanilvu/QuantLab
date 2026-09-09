@@ -66,8 +66,8 @@ pelajaran:
       Pola ini ada di SEMUA bot sungguhan: baca baris → parse (pecah & ubah ke angka) → simpan → analisis. Setelah ini, kamu bisa membaca file CSV (tabel berbasis teks) dari broker mana pun.
     kode: |
       baris = "TLKM 4000"
-      p = baris.split()
-      print(p[0], int(p[1]))   # TLKM 4000
+      bagian = baris.split()
+      print(bagian[0], int(bagian[1]))   # TLKM 4000
     penjelasan: "split() memecah baris, int() mengubah teks jadi angka. Parse = baca → ubah → simpan."
 skenario:
   - id: "s22-1"

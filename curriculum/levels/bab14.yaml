@@ -27,9 +27,9 @@ pelajaran:
       Aturan jempol: strategi dengan < 30 trade = anekdot, bukan bukti. < 100 trade = masih ngarang. Butuh ratusan trade + out-of-sample (uji di data yang belum pernah dipakai) untuk mulai percaya.
     kode: |
       trades = [120, -45, 80, -30, 200]     # hasil per trade (Rp)
-      wins = [t for t in trades if t > 0]
-      pf = sum(wins) / abs(sum(t for t in trades if t < 0))
-      print(f"Profit factor: {pf:.2f} | n={len(trades)}")
+      wins = [trade for trade in trades if trade > 0]
+      profit_factor = sum(wins) / abs(sum(trade for trade in trades if trade < 0))
+      print(f"Profit factor: {profit_factor:.2f} | jumlah trade: {len(trades)}")
     penjelasan: "Profit factor > 1 = untung. Tapi n=5 trade terlalu kecil untuk disimpulkan apa-apa."
   - id: "14-2"
     judul: "Overfitting: Menghafal vs Belajar"
@@ -66,9 +66,9 @@ skenario:
     penjelasan: |
       20 trade = sampel terlalu kecil. Standar error win rate = √(0.8×0.2/20) ≈ 9%. Win rate asli bisa 71% atau 89%. Plus: 20 trade itu dari 1 kombinasi parameter, dipilih dari ratusan. Kemungkinan besar kebetulan. Langkah benar: **modal kecil (paper/1-2% risk) dulu**. Kumpulkan 50-100 trade lagi sebelum menaikkan ukuran. All-in di 20 trade = judi. "Pasti overfit" juga asumsi berlebihan. Leverage = mempercepat kehancuran kalau sampelnya bias.
     kode: |
-      n = 20
-      wr = 0.8
-      se = (wr * (1 - wr) / n) ** 0.5
+      jumlah_trade = 20
+      win_rate = 0.8
+      se = (win_rate * (1 - win_rate) / jumlah_trade) ** 0.5
       print(f"SE win rate: {se*100:.1f}%")   # 8.9%
       # interval 95%: 62% - 98% → terlalu lebar untuk all-in
     hasil:
@@ -111,9 +111,10 @@ skenario:
     penjelasan: |
       Calmar A = 40/35 = **1.14**. Calmar B = 25/8 = **3.13**. B memberi 3x return per unit drawdown. Lebih penting: B bisa dipasang leverage 2x → return 50% dengan DD 16%. Masih jauh lebih kecil dari DD A. Drawdown bukan hiasan. Dia menentukan risiko kehancuran dan biaya psikologis. Strategi DD 35% butuh recovery 54% setelah puncak DD. Sebagian besar trader menyerah di tengah jalan.
     kode: |
-      calmar_a = 40 / 35     # 1.14
-      calmar_b = 25 / 8      # 3.13
-      print(f"A: {calmar_a:.2f} | B: {calmar_b:.2f}")
+      calmar_strategi_a = 40 / 35     # 1.14
+      calmar_strategi_b = 25 / 8      # 3.12
+      print(f"Strategi A: Calmar {calmar_strategi_a:.2f}")
+      print(f"Strategi B: Calmar {calmar_strategi_b:.2f}")
     hasil:
       - ret: 40.0
         dd: 35.0
@@ -237,10 +238,10 @@ skenario:
       Strategi A menunjukkan pola overfit klasik. In-sample 48%, out-of-sample -6%. Edge hilang di data yang belum pernah dilihat. Dengan 34 trade, PF 2,2 bisa muncul dari keberuntungan. Strategi B konsisten: 17% di data riset, 14% di data baru. 520 trade = sampel cukup untuk mulai percaya. Danai B. A dengan modal kecil tetap salah: kamu memberi uang ke strategi yang buktinya menolak. Bagi 50:50 = setengah modal di strategi tanpa bukti. Ujian paling jujur: out-of-sample. Hasil bagus di data lama saja tidak cukup. Kalau edge hilang di data baru, edge itu tidak pernah ada.
     kode: |
       # A: in-sample bagus, out-of-sample jeblok = overfit
-      a = {"n": 34, "pf": 2.2, "is": 48, "oos": -6}
-      b = {"n": 520, "pf": 1.35, "is": 17, "oos": 14}
-      print("A: 48% vs -6% - tidak konsisten")
-      print("B: 17% vs +14% - konsisten, sampel besar")
+      strategi_a = {"trade": 34, "profit_factor": 2.2, "in_sample": 48, "out_sample": -6}
+      strategi_b = {"trade": 520, "profit_factor": 1.35, "in_sample": 17, "out_sample": 14}
+      print("Strategi A: 48% vs -6% - tidak konsisten")
+      print("Strategi B: 17% vs +14% - konsisten, sampel besar")
     hasil:
       - ret: -6.0
         dd: 8.0

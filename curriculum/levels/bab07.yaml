@@ -31,8 +31,9 @@ pelajaran:
       List = cara alami menyimpan harga harian. Gabung loop (Bab 6): `for h in harga:` memproses semuanya.
     kode: |
       harga = [4000, 4100, 3900, 4200, 4050]
-      print(sum(harga) / len(harga))   # 4050.0
-      print(max(harga), min(harga))    # 4200 3900
+      print(f"Rata-rata harga = {sum(harga) / len(harga)}")
+      print(f"Harga tertinggi = {max(harga)}")
+      print(f"Harga terendah = {min(harga)}")
     penjelasan: "List = data. len/sum/min/max = rangkuman instan. Index mulai dari 0."
   - id: "7-2"
     judul: "Fungsi: Rumus yang Bisa Dipakai Ulang"
@@ -59,7 +60,7 @@ pelajaran:
       def hitung_ev(win_rate, reward, loss):
           return win_rate * reward - (1 - win_rate) * loss
 
-      print(hitung_ev(0.6, 5, 5))   # 1.0 — EV positif!
+      print(f"EV = {hitung_ev(0.6, 5, 5)}")   # 1.0 — EV positif!
     penjelasan: "def = resep, return = hasil. Fungsi membuat aturan dipakai konsisten di mana-mana."
 skenario:
   - id: "s7-1"
@@ -84,7 +85,7 @@ skenario:
       Index Python mulai dari **0**. `harga[0]` = angka pertama = **4000**. `harga[1]` = 4100. `harga[2]` = 3900. Ini aturan yang paling sering bikin bingung pemula. Juga sumber bug bot paling umum: mengambil data hari yang salah karena lupa index 0. Hafalkan: **di Python, hitungan dimulai dari nol.**
     kode: |
       harga = [4000, 4100, 3900]
-      print(harga[0])   # 4000 — angka pertama
+      print(f"harga[0] = {harga[0]}")   # 4000 — angka pertama
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -128,10 +129,10 @@ skenario:
     penjelasan: |
       `kali2(21)` memanggil fungsi dengan `x` = 21. Fungsi menghitung `21 * 2`, lalu `return` hasilnya = **42**. `print` mencetaknya. Parameter `x` cuma "tempat kosong". Diisi saat fungsi dipanggil. Fungsi = resep. Resepnya tetap, bahannya yang diganti. Ini dasar membangun aturan trading yang bisa dipakai ulang.
     kode: |
-      def kali2(x):
-          return x * 2
+      def kali2(angka):
+          return angka * 2
 
-      print(kali2(21))   # 42
+      print(f"kali2(21) = {kali2(21)}")   # 42
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -176,7 +177,7 @@ skenario:
               return "BELI"
           return "TAHAN"
 
-      print(sinyal(4100, 4000))   # BELI
+      print(f"Sinyal = {sinyal(4100, 4000)}")   # BELI
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -227,8 +228,8 @@ skenario:
       Sinyal butuh harga terbaru. Pakai `[-1]`. Aman untuk list sepanjang apa pun.
     kode: |
       harga = [4000, 4100, 3900, 4200, 4300]
-      print(harga[-1])   # 4300 — selalu data terbaru
-      print(harga[0])    # 4000 — data terlama
+      print(f"harga[-1] = {harga[-1]}")   # 4300 — selalu data terbaru
+      print(f"harga[0] = {harga[0]}")     # 4000 — data terlama
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -280,8 +281,8 @@ skenario:
       Beli dekat terendah dan jual dekat tertinggi butuh dua angka ini.
     kode: |
       harga = [4000, 4100, 3900, 4200, 4050]
-      print(max(harga))   # 4200
-      print(min(harga))   # 3900
+      print(f"Harga tertinggi = {max(harga)}")   # 4200
+      print(f"Harga terendah = {min(harga)}")    # 3900
     hasil:
       - ret: 0.0
         dd: 0.0

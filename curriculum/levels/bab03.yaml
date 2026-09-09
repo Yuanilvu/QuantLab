@@ -25,8 +25,8 @@ pelajaran:
       # Peluang menang 60% = 0.6
       win_rate = 0.6
       # 5 loss beruntun? Peluangnya kecil TAPI mungkin:
-      p_5_loss = (1 - win_rate) ** 5
-      print(f"P(5 loss beruntun) = {p_5_loss*100:.1f}%")   # 1.0%
+      peluang_5_loss = (1 - win_rate) ** 5
+      print(f"Peluang 5 loss beruntun = {peluang_5_loss * 100:.1f}%")
     penjelasan: "Peluang 60% bukan jaminan — tapi dalam ratusan trade, pola 60% akan terlihat. Sabar adalah bagian dari statistik."
   - id: "3-2"
     judul: "Nilai Harapan: Rata-rata Semua Kemungkinan"
@@ -42,9 +42,11 @@ pelajaran:
 
       **Golden rule trading: hanya ambil trade dengan EV positif.** Hitung dulu: peluang menang, reward kalau menang, loss kalau kalah. EV negatif? Lewati. Sekalipun "rasanya" pasti untung.
     kode: |
-      p_win, reward, loss = 0.6, 5, 5   # 60% menang +5, 40% kalah -5
-      ev = p_win * reward - (1 - p_win) * loss
-      print(f"EV: {ev:+.2f}R per trade")   # +1.00R
+      peluang_menang = 0.6    # 60% menang
+      reward = 5              # hadiah +5R kalau menang
+      kerugian = 5            # kerugian -5R kalau kalah
+      nilai_harapan = peluang_menang * reward - (1 - peluang_menang) * kerugian
+      print(f"Nilai harapan (EV) = {nilai_harapan:+.2f}R per trade")
     penjelasan: "EV positif = layak diulang. EV negatif = judi, berapa pun 'perasaannya'. Hitung dulu, baru eksekusi."
 skenario:
   - id: "s3-1"
@@ -66,8 +68,8 @@ skenario:
 
       Ini analogi trade bagus: win rate 50%, reward 2x risk (RR 2:1), EV tetap positif. "Judi itu jelek" salah besar kalau EV positif. Trader pro cari EV+. Penjudi cari sensasi.
     kode: |
-      ev = 0.5 * 100000 - 0.5 * 50000
-      print(f"EV = {ev:+,} per lemparan")   # +25,000
+      nilai_harapan = 0.5 * 100000 - 0.5 * 50000
+      print(f"Nilai harapan (EV) = {nilai_harapan:+,} per lemparan")   # +25,000.0
     hasil:
       - ret: 12.5
         dd: 3.0
@@ -107,8 +109,8 @@ skenario:
 
       Jebakan klasik: orang fokus ke hadiah besar, lupa peluangnya. Di trading: jangan masuk trade cuma karena "kalau menang, besar banget". Hitung EV-nya dulu.
     kode: |
-      ev = (1/1000) * 1_000_000 - 10_000
-      print(f"EV per tiket: {ev:+,}")   # -9,000
+      nilai_harapan = (1/1000) * 1_000_000 - 10_000
+      print(f"Nilai harapan (EV) per tiket = {nilai_harapan:+,}")   # -9,000.0
     hasil:
       - ret: -9.0
         dd: 0.0
@@ -148,8 +150,8 @@ skenario:
 
       Berhenti = menyerah pada kebetulan jangka pendek. Ukuran 2x = menggandakan risiko saat emosi. Itu revenge trading (balas dendam pasar, Bab 15). Ganti strategi = terlalu bereaksi pada noise. Disiplin pada EV = sabar sampai statistik bekerja.
     kode: |
-      p_2_loss = 0.4 ** 2
-      print(f"P(2 loss beruntun) = {p_2_loss*100:.0f}%")   # 16%
+      peluang_2_loss = 0.4 ** 2
+      print(f"Peluang 2 loss beruntun = {peluang_2_loss * 100:.0f}%")   # 16%
       # wajar — tetap eksekusi sinyal ke-3 dengan ukuran normal
     hasil:
       - ret: 4.5
@@ -199,9 +201,10 @@ skenario:
       Dalam 10 trade: ekspektasi Y = +24%. X cuma +8%.
       Bot Y kalah lebih sering. Siapkan mentalmu — lihat pelajaran 3-1.
     kode: |
-      ev_x = 0.8 * 2 - 0.2 * 4
-      ev_y = 0.4 * 12 - 0.6 * 4
-      print(f"X {ev_x:+.1f}% | Y {ev_y:+.1f}%")
+      ev_bot_x = 0.8 * 2 - 0.2 * 4
+      ev_bot_y = 0.4 * 12 - 0.6 * 4
+      print(f"EV Bot X = {ev_bot_x:+.1f}% per trade")   # +0.8%
+      print(f"EV Bot Y = {ev_bot_y:+.1f}% per trade")   # +2.4%
       # Y 3x lebih besar → pasang Bot Y
     hasil:
       - ret: 8.0
@@ -253,8 +256,9 @@ skenario:
     kode: |
       ev_kotor = 0.6 * 2 - 0.4 * 1.5
       biaya = 0.75
-      print(f"EV kotor {ev_kotor:+.2f}% | bersih {ev_kotor - biaya:+.2f}%")
-      # EV kotor +0.60% | bersih -0.15%
+      ev_bersih = ev_kotor - biaya
+      print(f"EV kotor = {ev_kotor:+.2f}% per trade")     # +0.60%
+      print(f"EV bersih = {ev_bersih:+.2f}% per trade")   # -0.15%
     hasil:
       - ret: -3.0
         dd: 3.0

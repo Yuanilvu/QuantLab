@@ -73,7 +73,7 @@ skenario:
       risk = 10          # $10 max loss
       stop = 0.05        # 5%
       size = risk / stop
-      print(f"${size:.0f} notional")   # $200
+      print(f"Ukuran posisi: ${size:.0f} notional")   # $200
     hasil:
       - ret: -2.5
         dd: 2.5
@@ -111,9 +111,9 @@ skenario:
     penjelasan: |
       Gain yang dibutuhkan = dd ÷ (1 − dd) = 0.20 ÷ 0.80 = **25%**. Dari $800, gain 20% cuma bawa ke $960 — masih minus. Inilah asimetri loss-gain: rugi 20%, tapi harus gain 25% untuk balik. Makin dalam DD, makin curam gunung yang harus didaki.
     kode: |
-      dd = (1000 - 800) / 1000   # 0.20
-      gain = dd / (1 - dd)
-      print(f"{gain*100:.0f}%")   # 25%
+      drawdown = (1000 - 800) / 1000   # 0.20
+      gain_needed = drawdown / (1 - drawdown)
+      print(f"Butuh gain {gain_needed*100:.0f}% untuk balik modal")   # 25%
     hasil:
       - ret: -5.0
         dd: 5.0
@@ -154,9 +154,9 @@ skenario:
     penjelasan: |
       EV = rata-rata hasil per trade kalau diulang berkali-kali. Hasil dihitung pakai satuan R (R = 1x risiko normal per trade). EV A = 0.6×1 − 0.4×1 = **+0.2R**. EV B = 0.3×3 − 0.7×1 = **+0.2R**. EV identik! Jadi keputusannya bukan "mana lebih profit", tapi "mana yang nyaman kamu jalani". B punya streak loss lebih panjang (30% win rate — 5 loss beruntun itu biasa). A loss lebih sering tapi dangkal. Keduanya valid. Pilih yang drawdown psikologisnya bisa kamu tahan, lalu jalankan konsisten. "Cari backtest (uji strategi di data lama) dulu" benar secara prinsip — tapi di sini EV sudah terhitung.
     kode: |
-      ev_a = 0.60 * 1.0 - 0.40 * 1.0   # +0.2R
-      ev_b = 0.30 * 3.0 - 0.70 * 1.0   # +0.2R
-      print(f"A: {ev_a:+.1f}R | B: {ev_b:+.1f}R")
+      ekspektasi_a = 0.60 * 1.0 - 0.40 * 1.0   # +0.2R
+      ekspektasi_b = 0.30 * 3.0 - 0.70 * 1.0   # +0.2R
+      print(f"Strategi A: EV {ekspektasi_a:+.1f}R | Strategi B: EV {ekspektasi_b:+.1f}R")
     hasil:
       - ret: 8.4
         dd: 6.2
@@ -195,10 +195,10 @@ skenario:
       Aturan 2% per trade berlaku untuk posisi yang tidak saling bergantung. BTC, ETH, SOL jatuh bersamaan. Koreksi kripto 5%? Tiga stop kena dalam jam yang sama. Rugi 3 × $20 = $60 = 6% equity dalam sehari. Dua kali batas total 3%. Solusinya: hitung posisi searah sebagai satu posisi besar. Total risiko = $30. Bagi ke tiga posisi: $10 per posisi. Masing-masing 1% equity. Atau ambil satu posisi terbaik saja. Stop tetap di tempatnya. Korelasi mengubah tiga posisi "aman" jadi satu posisi raksasa.
     kode: |
       equity = 1000
-      total = 20 * 3                # 3 posisi terkorelasi x 2%
-      batas = equity * 0.03         # aturan total 3%
-      print(f"Risiko gabungan: ${total} | Batas: ${batas:.0f}")   # $60 > $30
-      print(f"Ukuran aman per posisi: ${30 / 3:.0f}")             # $10
+      risiko_gabungan = 20 * 3          # 3 posisi terkorelasi x $20 risiko
+      batas = equity * 0.03             # aturan total risiko 3%
+      print(f"Risiko gabungan: ${risiko_gabungan} | Batas: ${batas:.0f}")   # $60 > $30
+      print(f"Ukuran aman per posisi: ${batas / 3:.0f}")                    # $10
     hasil:
       - ret: -6.0
         dd: 6.0

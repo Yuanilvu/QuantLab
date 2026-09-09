@@ -25,8 +25,9 @@ pelajaran:
 
       Bonus: ATR juga pembaca regime. ATR menyusut di range (energi terkumpul). Membesar saat harga menembus level penting (breakout) atau panic.
     kode: |
-      equity, risk_pct = 1000, 0.02
-      atr_pct = 0.025          # ATR 2.5% dari harga
+      equity = 1000
+      risk_pct = 0.02        # 2% per trade
+      atr_pct = 0.025        # ATR 2.5% dari harga
       stop_pct = 2 * atr_pct   # 2x ATR
       size = equity * risk_pct / stop_pct
       print(f"Stop {stop_pct*100:.0f}% | Ukuran ${size:.0f}")
@@ -46,7 +47,8 @@ pelajaran:
 
       Cara deteksi regime: bandingkan ATR sekarang dengan ATR 50-100 hari (ATR ratio). Atau ukur lebar band Bollinger (pita harga di sekitar rata-rata) — pita sempit = low vol. ATR naik 2x? Otomatis turunkan ukuran 2x.
     kode: |
-      atr_sekarang, atr_normal = 0.04, 0.01
+      atr_sekarang = 0.04
+      atr_normal = 0.01
       ukuran = 250 / (atr_sekarang / atr_normal)   # turun 4x
       print(f"Ukuran baru: ${ukuran:.0f}")          # $62
     penjelasan: "ATR naik 4x → ukuran turun 4x. Risiko per trade selalu tetap di semua regime."
@@ -68,9 +70,10 @@ skenario:
     penjelasan: |
       Stop 2×ATR = 6%. Ukuran = risiko ÷ stop% = $20 ÷ 0.06 = **$333**. Stop kena? Rugi = 6% × $333 = $20 = 2% equity — persis aturan. Stop 1%? Kena noise harian. CUAN bisa gerak 3% sehari tanpa alasan. Stop 3% (1×ATR) masih terlalu ketat. Stop 15% tanpa mengecilkan size? Risiko per trade jadi $50 = 5% equity. ATR kasih jawaban: biarkan pasar bernafas 2 hari, ukur risikonya.
     kode: |
-      equity, risk = 1000, 20       # $20 = 2%
+      equity = 1000
+      risk = 20               # $20 = 2% equity
       atr = 0.03
-      stop = 2 * atr                # 6%
+      stop = 2 * atr          # 6%
       size = risk / stop
       print(f"Stop {stop*100:.0f}% | size ${size:.0f} | risk ${size*stop:.0f}")
     hasil:
@@ -111,7 +114,8 @@ skenario:
       Ukuran $2.000 × stop 8% = **$160 = 16% equity**. Jauh di atas aturan 2%! Stop naik 4x, ukuran tidak turun → risiko ikut naik 4x. Yang benar: risiko tetap $20. Ukuran = 20 ÷ 0.08 = **$250**. ATR naik 4x? Ukuran harus turun 4x. Bukan berhenti trading — regime liar juga kasih peluang. Tapi sesuaikan ukuran.
     kode: |
       risk = 20
-      atr_old, atr_new = 0.01, 0.04
+      atr_old = 0.01
+      atr_new = 0.04
       stop_new = 2 * atr_new
       size_new = risk / stop_new
       print(f"Size baru: ${size_new:.0f} (dari $2000)")   # $250
@@ -238,8 +242,8 @@ skenario:
       atr = 1200
       stop = 2 * atr        # 2.400
       target = 1.5 * atr    # 1.800, maks historis
-      ev = 0.55 * target - 0.45 * stop
-      print(f"RR {target / stop:.2f} | EV {ev:+.0f} poin")
+      ekspektasi = 0.55 * target - 0.45 * stop
+      print(f"RR {target / stop:.2f} | EV {ekspektasi:+.0f} poin")
     hasil:
       - ret: -4.2
         dd: 6.0

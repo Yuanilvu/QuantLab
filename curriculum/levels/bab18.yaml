@@ -74,8 +74,9 @@ skenario:
     penjelasan: |
       Semua sinyal konsisten: 52-week high + MA slope naik + volume naik + ADX 32 = **trend kuat**. Melawan trend (short) = melawan bukti. "Tunggu koreksi" = opportunity cost — trend kuat jarang koreksi dalam. "Harga tinggi = mahal" = bias psikologis. Di momentum, harga tinggi bisa jauh lebih tinggi. Jawaban profesional: beli breakout, stop di bawah level breakout terakhir (risiko terukur). Trail saat trend berlanjut. Momentum tidak peduli "sudah naik berapa". Dia peduli "masih naik atau tidak".
     kode: |
-      adx, vol = 32, 2.0
-      if adx > 25 and vol > 1.5:
+      adx = 32
+      volume = 2.0
+      if adx > 25 and volume > 1.5:
           print("MOMENTUM: buy breakout, stop di bawah breakout")
     hasil:
       - ret: -5.8
@@ -115,7 +116,9 @@ skenario:
       ADX 14 = tidak ada trend = **regime range**. Ini rumah mean reversion. Harga di dekat support yang sudah teruji 4 bulan → beli di support, stop di bawahnya (risiko ~3%), target resistance 1.650. Short breakdown? Melawan support yang belum pernah gagal. Tunggu breakout? Sah, tapi lama — range bisa bertahan berbulan-bulan. 4 bulan data sudah cukup untuk main range. Beli besar tanpa stop? Melanggar aturan risiko kalau support jebol.
     kode: |
       # Range play
-      entry = 1430; stop = 1390; target = 1650
+      entry = 1430
+      stop = 1390
+      target = 1650
       risk = (entry - stop) / entry
       reward = (target - entry) / entry
       print(f"RR {reward/risk:.1f}:1 | risk {risk*100:.1f}%")

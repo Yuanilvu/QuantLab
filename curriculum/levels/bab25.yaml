@@ -61,8 +61,8 @@ pelajaran:
     kode: |
       import numpy as np
       harga = np.array([4000, 4100, 3900, 4200])
-      r = harga[1:] / harga[:-1] - 1
-      print(np.round(r * 100, 2))   # [ 2.5  -4.88  7.69]
+      ret_harian = harga[1:] / harga[:-1] - 1
+      print(np.round(ret_harian * 100, 2))   # [ 2.5  -4.88  7.69]
     penjelasan: "Potong array berpasangan (`harga[1:]` vs `harga[:-1]`): return harian semua hari dalam satu baris. Statistik: mean/std/max/min/sum."
 skenario:
   - id: "s25-1"

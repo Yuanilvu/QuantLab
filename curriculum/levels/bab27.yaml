@@ -116,7 +116,7 @@ skenario:
       Kenaikan 3.950→4.050 = **+2,5%**, bukan +35% — tapi sumbu yang dimulai di 3.940 membuat garis tampak menanjak curam. Ini trik truncated axis klasik — sumbu Y dipotong supaya kenaikan kecil tampak besar (Bab 27-2). Trader yang sehat: cek sumbu Y, minta angka mentah, minta periode penuh (berapa drawdown di periode itu?). "Garis naik pasti bagus" = cara termudah tertipu.
     kode: |
       # Angka jujurnya:
-      print(f"{(4050 - 3950) / 3950 * 100:.1f}%")   # 2.5%, bukan 35%
+      print(f"Kenaikan asli = {(4050 - 3950) / 3950 * 100:.1f}%")   # 2.5%, bukan 35%
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -199,10 +199,10 @@ skenario:
     kode: |
       import matplotlib.pyplot as plt
       hari = [1, 2, 3, 4]
-      a = [0, 10, 20, 30]   # +30%
-      b = [0, 1, 2, 3]      # +3% — datar? Itu fakta
-      plt.plot(hari, a, label="A")
-      plt.plot(hari, b, label="B")
+      kenaikan_a = [0, 10, 20, 30]   # +30%
+      kenaikan_b = [0, 1, 2, 3]      # +3% — datar? Itu fakta
+      plt.plot(hari, kenaikan_a, label="A")
+      plt.plot(hari, kenaikan_b, label="B")
       plt.legend()
       plt.savefig("/tmp/banding.png")
     hasil:

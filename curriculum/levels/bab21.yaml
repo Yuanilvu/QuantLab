@@ -112,9 +112,11 @@ skenario:
     penjelasan: |
       Ukuran = risiko ÷ stop% = (1000 × 2%) ÷ 5% = $20 ÷ 0,05 = **$400**. Kalau stop kena, rugi persis $20 (2% equity). Full $1.000 = risiko $50 (5% equity — 2,5x lipat aturan). Leverage $2.000 = risiko $100 (10%!) — satu stop loss = sebulan profit hilang. $100 = risiko cuma 1% — terlalu kecil, bot tidak efisien. Sizing otomatis di kode: `size = (equity * risk_pct) / stop_pct` — persis rumus Bab 2 & 7.
     kode: |
-      equity, risk_pct, stop_pct = 1000, 0.02, 0.05
-      size = equity * risk_pct / stop_pct
-      print(f"${size:.0f}")   # $400
+      equity = 1000
+      risk_pct = 0.02
+      stop_pct = 0.05
+      ukuran_posisi = equity * risk_pct / stop_pct
+      print(f"Ukuran posisi = ${ukuran_posisi:.0f}")   # $400
     hasil:
       - ret: -10.0
         dd: 10.0

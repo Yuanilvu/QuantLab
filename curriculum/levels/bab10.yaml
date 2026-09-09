@@ -106,9 +106,9 @@ skenario:
     penjelasan: |
       A: 10jt × (1 − 0,25) = **Rp7,5jt**. B: BBRI 5jt → 3,75jt; UNVR 3jt → 2,91jt; deposito 2jt → 2jt. Total **Rp8,66jt**. Selisih 1,16jt (~15%) — cuma dari menyebar. Diversifikasi tidak bikin kamu kaya lebih cepat di pasar naik. Tapi dia MENYELAMATKANMU di pasar jatuh. Masih punya modal = masih bisa beli saat pasar naik lagi.
     kode: |
-      a = 10_000_000 * 0.75
-      b = 5_000_000 * 0.75 + 3_000_000 * 0.97 + 2_000_000
-      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
+      bbri_saja = 10_000_000 * 0.75
+      diversifikasi = 5_000_000 * 0.75 + 3_000_000 * 0.97 + 2_000_000
+      print(f"BBRI saja: Rp{bbri_saja/1e6:.1f}jt | Diversifikasi: Rp{diversifikasi/1e6:.1f}jt")
     hasil:
       - ret: -25.0
         dd: 25.0
@@ -229,9 +229,9 @@ skenario:
       Hitung hasil nyata 2 tahun. Fund A: Rp10 juta × 2 = Rp20 juta saat naik. Lalu × 0,5 = Rp10 juta saat turun. Return 0%. Fund B: Rp10 juta × 1,1 × 1,1 = Rp12,1 juta. Return +21%. Rata-rata 25% itu rata-rata aritmetik: (100 - 50) ÷ 2. Angka itu menipu. Loss 50% menghapus profit 100% sebelumnya. Itu asimetri loss-gain. Makin ekstrem naik-turunnya, makin jauh hasil nyata dari rata-rata aritmetik. Jual setelah naik 100%? Kamu tidak tahu kapan turun mulai. Itu menebak, hasilnya tetap 0%. Bagi 50:50: A jadi Rp5 juta, B jadi Rp6,05 juta. Total Rp11,05 juta, return +10,5%. Lebih aman, tapi tetap kalah dari Fund B murni. Return stabil mengalahkan return tinggi yang jungkat-jungkit.
     kode: |
       dana = 10_000_000
-      a = dana * 2.0 * 0.5     # Fund A: +100% lalu -50%
-      b = dana * 1.1 * 1.1     # Fund B: +10% dua tahun
-      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
+      fund_a = dana * 2.0 * 0.5     # Fund A: +100% lalu -50%
+      fund_b = dana * 1.1 * 1.1     # Fund B: +10% dua tahun
+      print(f"Fund A: Rp{fund_a/1e6:.1f}jt | Fund B: Rp{fund_b/1e6:.1f}jt")
     hasil:
       - ret: 0.0
         dd: 50.0

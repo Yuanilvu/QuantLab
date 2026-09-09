@@ -24,8 +24,8 @@ pelajaran:
       Di trading: satu hari return -40% (crash) bikin rata-rata return harian tampak buruk. Padahal 99% hari normal. Percaya rata-rata? Tanya dulu: "ada outlier nggak?".
     kode: |
       harga = [4000, 4100, 3900, 4200, 4050]
-      rata2 = sum(harga) / len(harga)
-      print(f"Rata-rata: {rata2:.0f}")   # 4050
+      rata_rata = sum(harga) / len(harga)
+      print(f"Rata-rata harga TLKM = {rata_rata:.0f}")
     penjelasan: "Rata-rata = jumlah ÷ banyak. Kalau ada angka ekstrem, cek median sebagai pembanding."
   - id: "2-2"
     judul: "Sebaran: Seberapa Jauh Angka-angka Itu?"
@@ -41,12 +41,13 @@ pelajaran:
 
       Kenapa penting? Dua strategi return sama. Yang sebarannya kecil LEBIH BAIK. Hasilnya bisa diprediksi. Ukuran bisa dinaikkan dengan aman. Yang sebarannya besar: kadang +10%, kadang -10%. Sulit ditahan. Berbahaya kalau pakai leverage (pinjaman untuk posisi lebih besar).
     kode: |
-      a = [1000, 1000, 1000, 1000]
-      b = [1500, 500, 1400, 600]
-      def sebaran(xs):
-          m = sum(xs) / len(xs)
-          return sum(abs(x - m) for x in xs) / len(xs)
-      print(f"A: {sebaran(a):.0f} | B: {sebaran(b):.0f}")   # 0 vs 450
+      saham_a = [1000, 1000, 1000, 1000]
+      saham_b = [1500, 500, 1400, 600]
+      def sebaran(data):
+          rata_rata = sum(data) / len(data)
+          return sum(abs(x - rata_rata) for x in data) / len(data)
+      print(f"Sebaran Saham A = {sebaran(saham_a):.0f}")
+      print(f"Sebaran Saham B = {sebaran(saham_b):.0f}")
     penjelasan: "Rata-rata menjawab 'berapa hasilnya?', sebaran menjawab 'seberapa yakin?'. Dua-duanya wajib."
 skenario:
   - id: "s2-1"
@@ -68,8 +69,9 @@ skenario:
 
       Ini harga "tipikal" BRPT 4 hari terakhir. Nanti jadi dasar moving average (rata-rata harga beberapa hari).
     kode: |
-      harga = [1000, 1100, 900, 1000]
-      print(sum(harga) / len(harga))   # 1000.0
+      harga_brpt = [1000, 1100, 900, 1000]
+      rata_rata = sum(harga_brpt) / len(harga_brpt)
+      print(f"Rata-rata harga BRPT = {rata_rata}")   # 1000.0
     hasil:
       - ret: 5.0
         dd: 0.0
@@ -114,9 +116,12 @@ skenario:
 
       "Lebih seru" = lebih berisiko, bukan lebih pintar. Ini versi sederhana Sharpe ratio (return ÷ sebaran), ukuran yang dipakai seluruh industri.
     kode: |
-      a = [2, 2, 2, 2, 2, 2]
-      b = [8, -4, 7, -3, 6, -2]
-      print(f"A: {sum(a)/len(a):.0f}% | B: {sum(b)/len(b):.0f}%")
+      return_a = [2, 2, 2, 2, 2, 2]
+      return_b = [8, -4, 7, -3, 6, -2]
+      rata_return_a = sum(return_a) / len(return_a)
+      rata_return_b = sum(return_b) / len(return_b)
+      print(f"Rata-rata return Strategi A = {rata_return_a:.0f}%")
+      print(f"Rata-rata return Strategi B = {rata_return_b:.0f}%")
       # sama-sama 2% — tapi siapa yang bisa kamu tiduri?  → A
     hasil:
       - ret: 12.0
@@ -157,11 +162,12 @@ skenario:
 
       Dua pelajaran: (1) selalu cek outlier sebelum percaya rata-rata. (2) Satu crash -50% menghapus 50 hari profit +1%. Karena itu, melindungi diri dari kejadian langka (stop loss, posisi kecil) lebih penting daripada mengejar return harian.
     kode: |
-      data = [1]*9 + [-50]
-      mean = sum(data) / len(data)
-      med = sorted(data)[len(data)//2]
-      print(f"mean {mean:.1f}% | median {med}%")
-      # mean menyesatkan, median jujur
+      return_harian = [1] * 9 + [-50]
+      rata_rata = sum(return_harian) / len(return_harian)
+      median = sorted(return_harian)[len(return_harian) // 2]
+      print(f"Rata-rata return = {rata_rata:.1f}%")
+      print(f"Median return = {median}%")
+      # rata-rata menyesatkan, median jujur
     hasil:
       - ret: -30.0
         dd: 30.0
@@ -214,10 +220,11 @@ skenario:
       Dana besar pengaruhnya lebih besar.
       Ini cara menghitung return portofolio. Bot dan reksa dana memakainya tiap hari.
     kode: |
-      bbri = 600_000 * 0.05
-      mppa = 400_000 * 0.10
-      untung = bbri + mppa
-      print(f"{untung / 1_000_000 * 100:.1f}%")   # 7.0%
+      untung_bbri = 600_000 * 0.05
+      untung_mppa = 400_000 * 0.10
+      total_untung = untung_bbri + untung_mppa
+      persen_untung = total_untung / 1_000_000 * 100
+      print(f"Keuntungan portofolio = {persen_untung:.1f}%")   # 7.0%
     hasil:
       - ret: 6.0
         dd: 0.0
@@ -269,8 +276,9 @@ skenario:
     kode: |
       total_lama = 16000
       harga_baru = 4400
-      total = total_lama + harga_baru
-      print(total / 5)   # 4080.0
+      total_baru = total_lama + harga_baru
+      rata_rata = total_baru / 5
+      print(f"Rata-rata 5 hari TLKM = {rata_rata}")   # 4080.0
     hasil:
       - ret: 2.0
         dd: 0.0

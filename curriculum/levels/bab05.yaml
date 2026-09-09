@@ -26,8 +26,8 @@ pelajaran:
     kode: |
       harga = 4050
       target = 4000
-      print(harga >= target)   # True — target tercapai!
-      print(harga == 4000)     # False — 4050 bukan 4000
+      print(f"Target tercapai? {harga >= target}")   # True — target tercapai!
+      print(f"Harga tepat 4000? {harga == 4000}")    # False — 4050 bukan 4000
     penjelasan: "Perbandingan menghasilkan True/False. Bot = kumpulan perbandingan + keputusan."
   - id: "5-2"
     judul: "Jika-Maka: Keputusan Komputer"

@@ -28,11 +28,14 @@ pelajaran:
       Aturan praktis: kalau hasil live 3 bulan jauh lebih buruk dari backtest, jangan menunggu "balik". Kembali ke ukuran kecil, lalu audit. Strategi yang benar bertahan di ukuran kecil. Yang salah kelihatan lebih cepat — tanpa menghancurkanmu.
     kode: |
       # Protokol naik level
-      level = 0  # 0=paper, 1=quarter, 2=full
-      deviasi = 0.18   # hasil live vs backtest
-      if level == 0:   level = 1
-      elif deviasi < 0.20: level = 2
-      else:            level = 1  # audit dulu
+      level = 0            # 0=paper, 1=quarter, 2=full
+      deviasi = 0.18       # hasil live vs backtest
+      if level == 0:
+          level = 1
+      elif deviasi < 0.20:
+          level = 2
+      else:
+          level = 1        # audit dulu
       print(f"Level: {level}")
     penjelasan: "Naik level bertahap dengan ambang deviasi yang jelas — bukan berdasarkan perasaan."
   - id: "20-2"

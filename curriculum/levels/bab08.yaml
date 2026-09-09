@@ -161,10 +161,11 @@ skenario:
 
       Ajaibnya: bunga B LEBIH KECIL (10% vs 12%), tapi menang karena bunga berbunga. Makin lama waktunya, makin telak kemenangan majemuk. Contoh 10 tahun: A 22jt vs B 25,9jt. Pelajaran: jangan cuma lihat angka persen. Tanya juga: "majemuk atau sederhana?" dan "berapa lama?".
     kode: |
-      a = 10_000_000 * (1 + 0.12 * 5)
-      b = 10_000_000 * (1 + 0.10) ** 5
-      print(f"A: Rp{a/1e6:.1f}jt | B: Rp{b/1e6:.1f}jt")
-      print(f"Selisih: Rp{(b-a):,.0f}")
+      hasil_a = 10_000_000 * (1 + 0.12 * 5)
+      hasil_b = 10_000_000 * (1 + 0.10) ** 5
+      print(f"Hasil tawaran A = Rp{hasil_a / 1e6:.1f}jt")
+      print(f"Hasil tawaran B = Rp{hasil_b / 1e6:.1f}jt")
+      print(f"Selisih = Rp{hasil_b - hasil_a:,.0f}")
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -216,9 +217,10 @@ skenario:
       Kartu kredit memakai majemuk untuk merugikanmu. Rumusnya sama. Arahnya beda.
     kode: |
       utang = 5_000_000
-      total = utang * (1 + 0.02) ** 12
-      print(f"Rp{total:,.0f}")   # Rp6,341,209
-      print(f"{(total/utang - 1)*100:.1f}% setahun")   # 26.8%
+      total_utang = utang * (1 + 0.02) ** 12
+      print(f"Total utang = Rp{total_utang:,.0f}")   # Rp6,341,209
+      bunga_setahun = (total_utang / utang - 1) * 100
+      print(f"Bunga setahun = {bunga_setahun:.1f}%")   # 26.8%
     hasil:
       - ret: 2.0
         dd: 0.0
@@ -266,10 +268,11 @@ skenario:
       6 bulan = setengah bunga tahunan.
       Hitung bunganya dulu, baru jumlahkan ke pokok (pinjaman awal).
     kode: |
-      pinjam = 2_000_000
-      bunga_1thn = pinjam * 0.12
-      bunga_6bln = bunga_1thn / 2
-      print(f"Total: Rp{pinjam + bunga_6bln:,.0f}")   # Rp2,120,000
+      pokok = 2_000_000
+      bunga_1_tahun = pokok * 0.12
+      bunga_6_bulan = bunga_1_tahun / 2
+      total_bayar = pokok + bunga_6_bulan
+      print(f"Total bayar = Rp{total_bayar:,.0f}")   # Rp2,120,000
     hasil:
       - ret: 0.0
         dd: 0.0

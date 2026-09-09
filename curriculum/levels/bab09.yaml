@@ -39,9 +39,10 @@ pelajaran:
 
       Jam bursa IDX: Senin-Jumat 09:00-15:30 WIB. Istirahat 12:00-13:30. Di luar jam itu, pesanan masuk tapi tidak langsung dieksekusi.
     kode: |
-      bid, ask = 3995, 4005
+      bid = 3995
+      ask = 4005
       spread = ask - bid
-      print(f"Spread {spread} ({spread/ask*100:.2f}%)")   # 10 (0.25%)
+      print(f"Spread = {spread} poin ({spread / ask * 100:.2f}%)")
     penjelasan: "Bid = harga pembeli, ask = harga penjual. Spread = biaya masuk yang langsung terasa."
 skenario:
   - id: "s9-1"
@@ -61,7 +62,10 @@ skenario:
     penjelasan: |
       1 lot = 100 lembar. 100 × 4.000 = **Rp400.000**. Opsi lain: 4.000.000 = 1.000 lembar (10 lot). 40.000 = 10 lembar. 4.000 = 1 lembar. Di IDX, semua transaksi saham pakai kelipatan lot. Paham ini sebelum order. Biar tidak kaget jumlah dananya.
     kode: |
-      print(100 * 4000)   # 400000
+      harga_per_lembar = 4000
+      jumlah_lembar = 100
+      total_harga = harga_per_lembar * jumlah_lembar
+      print(f"Total 1 lot TLKM = Rp{total_harga}")   # 400000
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -101,8 +105,9 @@ skenario:
 
       Opsi lain: 3.995 itu kalau kamu JUAL. 4.000 cuma angka tengah, tidak tersedia di pasar. "Cari yang lebih untung" tidak ada pilihannya: market order selalu kena spread. Trader cerdas menghitung spread sebelum masuk. Target profit cuma 0,2%? Spread 0,25% sudah membuat trade mustahil untung.
     kode: |
-      bid, ask = 3995, 4005
-      print(f"Beli di {ask}, jual di {bid}")   # Beli di 4005
+      bid = 3995
+      ask = 4005
+      print(f"Beli di {ask}, jual di {bid}")   # Beli di 4005, jual di 3995
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -142,9 +147,9 @@ skenario:
 
       Tapi "abaikan IHSG" juga salah. IHSG memberi konteks pasar: sentimen dan likuiditas (mudahnya jual-beli). Saat pasar crash berat, hampir semua saham ikut turun. Baca keduanya: IHSG = cuaca. Saham individual = kondisi rumahmu.
     kode: |
-      ihsg = -1.2
-      tlkm = +0.8
-      print("Kontek: pasar turun, tapi TLKM naik + volume naik")
+      perubahan_ihsg = -1.2
+      perubahan_tlkm = 0.8
+      print(f"Konteks: IHSG {perubahan_ihsg:+.1f}%, TLKM {perubahan_tlkm:+.1f}%, volume TLKM naik")
       print("→ Cek alasan spesifik TLKM, jangan panik")
     hasil:
       - ret: -4.5
@@ -246,9 +251,10 @@ skenario:
       Target untung kecil + spread lebar = sering rugi.
       Pilih saham likuid dengan spread tipis.
     kode: |
-      beli = 5005 * 100
-      jual = 5000 * 100
-      print(f"Hasil: Rp{jual - beli:,}")   # Hasil: Rp-500
+      total_beli = 5005 * 100
+      total_jual = 5000 * 100
+      selisih = total_jual - total_beli
+      print(f"Hasil transaksi = Rp{selisih:,}")   # Rp-500
     hasil:
       - ret: 0.0
         dd: 0.0

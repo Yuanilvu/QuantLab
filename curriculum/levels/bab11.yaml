@@ -24,7 +24,7 @@ pelajaran:
       rate_per_8h = 0.0001      # 0.01% tiap 8 jam
       daily = rate_per_8h * 3    # 3x funding per hari
       annual = daily * 365       # annualisasi
-      print(f"{annual*100:.1f}% per tahun")
+      print(f"Funding tahunan: {annual*100:.1f}%")
     penjelasan: "Funding dibayar 3x sehari (setiap 8 jam). Annualisasi = rate × 3 × 365. 0.01% per 8 jam ≈ 10.95% per tahun."
   - id: "11-2"
     judul: "Arah Aliran Uang"
@@ -63,9 +63,9 @@ skenario:
     penjelasan: |
       Funding dibayar 3x sehari. 0.02% × 3 = 0.06% per hari. 0.06% × 365 = **21.9% per tahun**. Funding kecil tiap 8 jam = besar kalau diakumulasi setahun. Semua itu murni dari funding, tanpa leverage. (0.73% = 0.02×365 tanpa ×3; 7.3% = salah faktor; 2.19% = salah desimal.)
     kode: |
-      rate = 0.0002          # 0.02% per 8 jam
-      annual = rate * 3 * 365
-      print(f"{annual*100:.2f}% per tahun")   # 21.90%
+      rate_per_8h = 0.0002      # 0.02% per 8 jam
+      annual = rate_per_8h * 3 * 365
+      print(f"Return carry tahunan: {annual*100:.2f}%")   # 21.90%
     hasil:
       - ret: 0.7
         dd: 0.2
@@ -145,11 +145,11 @@ skenario:
       Funding negatif ekstrem + OI naik = **crowded short** — semua orang sudah di satu sisi. Siapa lagi yang akan menjual? Short yang ke-likuidasi beruntun bisa memicu **squeeze** (harga naik cepat). Tapi jangan all-in. Funding ekstrem bisa bertahan — pasar bisa tetap irasional. **Long kecil + stop ketat + tetap terima funding** = trade dengan asimetri bagus. Flat = aman, tapi kehilangan peluang. Short = ikut kerumunan di titik rawan. All-in = risk of ruin (modal bisa habis total).
     kode: |
       # Crowded short: siapa yang tersisa untuk menjual?
-      oi = 1.22          # open interest +22%
-      funding = -0.0009  # sangat negatif
+      open_interest = 1.22       # open interest +22%
+      funding = -0.0009          # sangat negatif
       # posisi: long kecil, stop ketat
-      size = 0.02        # 2% equity
-      stop = 0.015       # stop 1.5%
+      size = 0.02                # 2% equity
+      stop = 0.015               # stop 1.5%
       risk = size * stop
       print(f"Risk terukur: {risk*100:.2f}% equity")
     hasil:

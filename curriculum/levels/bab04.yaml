@@ -27,10 +27,10 @@ pelajaran:
 
       Di dunia quant, angka = bahan bakar: harga, persen, profit, loss. Python menghitungnya cepat dan tidak pernah salah hitung.
     kode: |
-      print(2 + 3)        # 5
-      print(6 * 7)        # 42
-      print(10 / 4)       # 2.5
-      print((2 + 3) * 4)  # 20
+      print(f"2 + 3 = {2 + 3}")
+      print(f"6 * 7 = {6 * 7}")
+      print(f"10 / 4 = {10 / 4}")
+      print(f"(2 + 3) * 4 = {(2 + 3) * 4}")
     penjelasan: "print menampilkan hasil. Operator: + − * / // %. Kurung mengontrol urutan."
   - id: "4-2"
     judul: "Variabel: Kotak Penyimpan Angka"
@@ -80,7 +80,8 @@ skenario:
       `harga = 1000` mengisi kotak dengan 1000. `harga * 3` = 1000 × 3 = **3000**. Ini pola dasar semua bot: simpan angka di variabel, hitung, cetak. Sudah bisa membaca kode begini? Berarti kamu mulai bicara bahasa komputer.
     kode: |
       harga = 1000
-      print(harga * 3)   # 3000
+      hasil = harga * 3
+      print(f"harga x 3 = {hasil}")   # 3000
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -121,7 +122,8 @@ skenario:
       Opsi lain salah: `+10` = tambah 10 rupiah, bukan persen. `* 10` = 40.000, 10x lipat. `* 0.10` = 400, cuma besarannya. Pola yang dipakai terus: `harga * (1 + persen/100)`. Kenaikan 5% → `harga * 1.05`.
     kode: |
       harga = 4000
-      print(harga * 1.10)   # 4400.0 — harga setelah naik 10%
+      harga_baru = harga * 1.10
+      print(f"Harga setelah naik 10% = {harga_baru}")   # 4400.0 — harga setelah naik 10%
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -167,10 +169,11 @@ skenario:
     penjelasan: |
       `untung` = 5500 − 5000 = 500. `persen` = 500 ÷ 5000 × 100 = **10.0**. Ini rumus untung persen dari Bab 1, sekarang dalam kode. Variabel menampung angka, lalu dihitung berurutan. Bisa membaca kode begini? Kamu bisa memeriksa logika bot orang lain tanpa menjalankannya.
     kode: |
-      beli, jual = 5000, 5500
-      untung = jual - beli
-      persen = untung / beli * 100
-      print(persen)   # 10.0
+      harga_beli = 5000
+      harga_jual = 5500
+      untung = harga_jual - harga_beli
+      persen_untung = untung / harga_beli * 100
+      print(f"Persen untung = {persen_untung}")   # 10.0
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -222,9 +225,11 @@ skenario:
       Jumlah trade selalu dibulatkan ke bawah.
     kode: |
       dana = 1_000_000
-      butuh = 300_000
-      print(dana // butuh)   # 3 trade
-      print(dana % butuh)    # 100000 sisa
+      butuh_per_trade = 300_000
+      jumlah_trade = dana // butuh_per_trade
+      sisa_dana = dana % butuh_per_trade
+      print(f"Trade maksimal = {jumlah_trade}")   # 3 trade
+      print(f"Sisa dana = Rp{sisa_dana}")         # 100000 sisa
     hasil:
       - ret: 0.0
         dd: 0.0
@@ -277,7 +282,8 @@ skenario:
     kode: |
       salah = 1000 + 1100 + 900 / 3
       benar = (1000 + 1100 + 900) / 3
-      print(salah, benar)   # 2400.0 1000.0
+      print(f"Tanpa kurung = {salah}")    # 2400.0
+      print(f"Dengan kurung = {benar}")   # 1000.0
     hasil:
       - ret: 0.0
         dd: 0.0
