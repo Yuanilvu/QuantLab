@@ -52,14 +52,23 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // Syntax highlighting kode Python (ringan, tanpa dependency)
+  // SINGLE-PASS regex: semua token diganti dalam SATU scan, sehingga markup
+  // <span class="tok-..."> yang disisipkan TIDAK pernah di-scan ulang oleh
+  // pass berikutnya. (Bug lama: pass keyword berjalan SETELAH span disisipkan
+  // dan mencocokkan kata `class`/`str`/`int` di ATRIBUT markup sendiri →
+  // markup korup → class="tok-..." tampil sebagai teks mentah di layar.)
   document.querySelectorAll('pre.block-code code').forEach(el => {
     const code = el.textContent;
     const esc = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-    const html = esc
-      .replace(/\b(0x[0-9a-fA-F]+|\d+\.?\d*)\b/g, '<span class="tok-num">$1</span>')
-      .replace(/(&quot;|")(?:[^"\\]|\\.)*\1|(')(?:[^'\\]|\\.)*\2/g, '<span class="tok-str">$&</span>')
-      .replace(/(#.*)$/gm, '<span class="tok-com">$1</span>')
-      .replace(/\b(def|return|if|elif|else|for|while|import|from|print|class|try|except|and|or|not|in|is|None|True|False|lambda|with|as|pass|break|continue|range|len|sum|min|max|abs|round|int|float|str|list|dict|set|math|random|datetime)\b/g, '<span class="tok-kw">$1</span>');
+    const re = /(0x[0-9a-fA-F]+|\d+\.?\d*)|("(?:[^"\\\n]|\\.)*")|('(?:[^'\\\n]|\\.)*')|(#[^\n]*)|(\b(?:def|return|if|elif|else|for|while|import|from|print|class|try|except|and|or|not|in|is|None|True|False|lambda|with|as|pass|break|continue|range|len|sum|min|max|abs|round|int|float|str|list|dict|set|math|random|datetime)\b)/g;
+    const html = esc.replace(re, (m, num, dq, sq, com, kw) => {
+      if (num !== undefined) return '<span class="tok-num">' + num + '</span>';
+      if (dq !== undefined) return '<span class="tok-str">' + dq + '</span>';
+      if (sq !== undefined) return '<span class="tok-str">' + sq + '</span>';
+      if (com !== undefined) return '<span class="tok-com">' + com + '</span>';
+      if (kw !== undefined) return '<span class="tok-kw">' + kw + '</span>';
+      return m;
+    });
     el.innerHTML = html;
   });
 });
