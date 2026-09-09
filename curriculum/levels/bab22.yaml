@@ -176,7 +176,7 @@ skenario:
     kode: |
       baris = "CUAN 1500 25000"
       harga = int(baris.split()[1])
-      print(harga, type(harga))   # 1500 <class 'int'>
+      print(harga)   # 1500 — sudah angka beneran, siap dihitung
     hasil:
       - ret: 0.0
         dd: 0.0
