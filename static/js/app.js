@@ -57,7 +57,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // pass berikutnya. (Bug lama: pass keyword berjalan SETELAH span disisipkan
   // dan mencocokkan kata `class`/`str`/`int` di ATRIBUT markup sendiri →
   // markup korup → class="tok-..." tampil sebagai teks mentah di layar.)
-  document.querySelectorAll('pre.block-code code').forEach(el => {
+  document.querySelectorAll('pre.block-code:not(.out) code').forEach(el => {
     const code = el.textContent;
     const esc = code.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     const re = /(0x[0-9a-fA-F]+|\d+\.?\d*)|("(?:[^"\\\n]|\\.)*")|('(?:[^'\\\n]|\\.)*')|(#[^\n]*)|(\b(?:def|return|if|elif|else|for|while|import|from|print|class|try|except|and|or|not|in|is|None|True|False|lambda|with|as|pass|break|continue|range|len|sum|min|max|abs|round|int|float|str|list|dict|set|math|random|datetime)\b)/g;

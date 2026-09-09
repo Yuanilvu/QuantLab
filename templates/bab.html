@@ -31,6 +31,12 @@
       {% if l.kode %}
       <pre class="block-code"><code>{{ l.kode }}</code></pre>
       {% endif %}
+      {% if l.out %}
+      <div class="codeout">
+        <div class="codeout-label">▶ Output</div>
+        <pre class="block-code out"><code>{{ l.out }}</code></pre>
+      </div>
+      {% endif %}
       {% if l.penjelasan %}<p class="note">💡 {{ l.penjelasan }}</p>{% endif %}
       <button class="btn paham {{ 'done' if l.id in lessons_done }}" data-lid="{{ l.id }}">
         {{ '✓ Selesai (+5 XP)' if l.id in lessons_done else 'Saya Paham — +5 XP' }}

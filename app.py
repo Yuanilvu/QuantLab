@@ -22,6 +22,38 @@ import judge
 import market
 import mentor
 
+# ── Output contoh kode pelajaran (dihitung sekali per proses, sandbox) ─────
+_KODE_OUT_CACHE = {}
+
+
+def lesson_kode_output(kode: str) -> str | None:
+    """Output blok `kode:` pelajaran via judge sandbox (bubblewrap).
+
+    None kalau blok tidak bisa dijalankan bersih (input(), demo error,
+    timeout) atau stdout kosong — panel Output tidak ditampilkan. Hasil
+    di-cache per proses (kunci = isi kode); miss = None juga di-cache agar
+    blok bermasalah tidak dicoba-coba tiap render halaman.
+    """
+    if not kode:
+        return None
+    if kode in _KODE_OUT_CACHE:
+        return _KODE_OUT_CACHE[kode]
+    if re.search(r"\binput\s*\(", kode):  # blok interaktif → skip
+        _KODE_OUT_CACHE[kode] = None
+        return None
+    try:
+        r = judge.run_code(kode, stdin="")
+    except Exception:
+        _KODE_OUT_CACHE[kode] = None
+        return None
+    out = None
+    if r.get("ok"):
+        out = (r.get("stdout") or "").rstrip("\n")
+        if not out:
+            out = None
+    _KODE_OUT_CACHE[kode] = out
+    return out
+
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
     "SECRET_KEY", secrets.token_hex(32)
@@ -470,7 +502,11 @@ def bab_page(n):
     scens = []
     for s in bab.get("skenario") or []:
         scens.append({"data": s, "done": s["id"] in solved})
-    lessons = bab.get("pelajaran") or []
+    lessons = []
+    for l in (bab.get("pelajaran") or []):
+        l = dict(l)
+        l["out"] = lesson_kode_output(l.get("kode"))
+        lessons.append(l)
     lessons_done = db.get_lesson_done(user["id"])
     soals = bab.get("soal") or []
     soal_solved_set = db.get_soal_solved(user["id"])
@@ -743,7 +779,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v7';
+    sw = """const CACHE = 'quantlab-v8';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
