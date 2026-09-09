@@ -147,8 +147,8 @@ skenario:
   - id: "s4-3"
     judul: "Baca Kode: Untung Berapa?"
     emoji: "🧾"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Kode bot:
@@ -304,6 +304,286 @@ skenario:
     petunjuk:
       - "Python mengerjakan bagi atau tambah lebih dulu?"
       - "900 ÷ 3 dulu, baru dijumlah ke kiri."
+
+  - id: "s4-6"
+    judul: "Baca Kode: Sisa Bagi"
+    emoji: "➗"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kode bot kecil:
+      ```python
+      dana = 17
+      print(dana % 5)
+      ```
+      Berapa yang tercetak di layar?
+    pilihan:
+      - "2"
+      - "3"
+      - "12"
+      - "17"
+    jawaban: 0
+    penjelasan: |
+      17 ÷ 5 = 3 sisa 2. Operator `%` memberi SISA bagi → mencetak **2**.
+      Opsi 3 = hasil bagi bulatnya (pakai `//`). Opsi 12 = 17 − 5, operasi yang salah.
+      Opsi 17 = isi variabel tanpa dihitung.
+      `%` dan `//` sepasang: `//` hasil bulat, `%` sisanya.
+      Bot memakai pola ini untuk hitung sisa dana setelah beli sekian lot.
+    kode: |
+      dana = 17
+      sisa = dana % 5
+      print(f"Sisa = {sisa}")   # 2
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "2 benar: 17 ÷ 5 = 3 sisa 2. `%` = sisa bagi."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "3 itu hasil bagi bulat (17 // 5). `%` memberi sisanya."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "12 itu 17 − 5. `%` bukan pengurangan."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "17 cuma isi variabel. Baris kedua menghitungnya dulu."
+    petunjuk:
+      - "`%` artinya sisa bagi."
+      - "17 dibagi 5: berapa kali utuh, berapa sisanya?"
+
+  - id: "s4-7"
+    judul: "Baca Kode: Bersih Dikali Dua"
+    emoji: "🧮"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kode laporan bot:
+      ```python
+      untung = 1000
+      rugi = 400
+      bersih = untung - rugi
+      print(bersih * 2)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "1200"
+      - "600"
+      - "200"
+      - "2400"
+    jawaban: 0
+    penjelasan: |
+      Baca baris demi baris: untung = 1000, rugi = 400.
+      bersih = 1000 − 400 = 600. Lalu 600 × 2 = **1200**.
+      Variabel `bersih` sudah menyimpan 600 sebelum dikali dua.
+      Opsi 600 = lupa dikali 2. Opsi 200 = menghitung 1000 − (400 × 2) — salah,
+      karena `bersih * 2` mengalikan HASIL pengurangan yang sudah disimpan.
+      Opsi 2400 = mengalikan dua kali.
+      Kotak berubah isinya baris demi baris. Baca urutannya.
+    kode: |
+      untung = 1000
+      rugi = 400
+      bersih = untung - rugi
+      print(f"Bersih x 2 = {bersih * 2}")   # 1200
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "1200 benar: (1000 − 400) × 2. Variabel bersih = 600 dulu."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "600 itu nilai bersih, belum dikali 2 di baris terakhir."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "200 itu kalau 400 dikali 2 dulu. `bersih * 2` mengalikan hasil pengurangan."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "2400 = mengalikan dua kali. Hitungannya cuma satu kali × 2."
+    petunjuk:
+      - "Isi variabel `bersih` dulu: 1000 − 400 = ?"
+      - "Lalu kalikan hasilnya dengan 2."
+
+  - id: "s4-8"
+    judul: "Baca Kode: Dua Kali Turun"
+    emoji: "🏷️"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kode bot pantau saham:
+      ```python
+      harga = 100000
+      harga = harga * 0.90
+      harga = harga * 0.80
+      print(harga)
+      ```
+      Harga awal 100.000. Berapa yang tercetak?
+    pilihan:
+      - "72.000"
+      - "70.000"
+      - "90.000"
+      - "80.000"
+    jawaban: 0
+    penjelasan: |
+      Baris 2: harga menjadi 100.000 × 0,90 = 90.000 (turun 10%).
+      Baris 3: harga LAMA (90.000) dikali 0,80 = **72.000** (turun 20% dari 90.000).
+      Variabel ditimpa: isi kotak diganti tiap baris.
+      Total turun 28%, bukan 30% — penurunan kedua dihitung dari 90.000.
+      Opsi 70.000 = menjumlahkan diskon (10 + 20 = 30%) lalu dipakai dari 100.000. Salah.
+      Opsi 90.000 dan 80.000 = baru satu langkah.
+    kode: |
+      harga = 100000
+      harga = harga * 0.90
+      harga = harga * 0.80
+      print(f"Harga akhir = {harga:,.0f}")   # 72,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "72.000 benar: 90.000 × 0,80. Penurunan kedua dari harga yang sudah turun."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "70.000 itu kalau diskon 30% dijumlah dari 100.000. Persen berturut tidak dijumlah."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "90.000 itu setelah langkah pertama saja. Baris 3 masih jalan."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "80.000 itu kalau 100.000 langsung dikali 0,80 — baris 2 dilewati."
+    petunjuk:
+      - "Jalankan baris demi baris, perbarui isi variabel."
+      - "Baris 3 mengalikan 90.000 (bukan 100.000) dengan 0,80."
+
+  - id: "s4-9"
+    judul: "Baca Kode: Sizing Setelah Fee"
+    emoji: "💰"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kode bot menentukan ukuran posisi:
+      ```python
+      dana = 600000
+      dana = dana - dana * 0.005
+      harga = 1500
+      lembar = dana // harga
+      print(lembar)
+      ```
+      Dana 600.000, fee 0,5% dipotong dulu, harga saham 1.500.
+      Berapa lembar maksimal yang tercetak?
+    pilihan:
+      - "400"
+      - "399"
+      - "398"
+      - "396"
+    jawaban: 2
+    penjelasan: |
+      Fee 0,5% = 600.000 × 0,005 = 3.000. Dana bersih = 597.000.
+      Lembar = 597.000 // 1.500 = **398** (pembagian bulat ke bawah; 597.000 ÷ 1.500 = 398 persis).
+      Opsi 400 = lupa fee. Opsi 399 = memakai fee 0,25% (sisa 598.500).
+      Opsi 396 = fee dihitung 1% (sisa 594.000) — atau fee terpotong dua kali.
+      Urutan penting: dana dipotong fee DULU, baru dibagi harga.
+      Bot yang salah urutan bisa membeli melebihi dana bersih — order ditolak atau kena margin.
+    kode: |
+      dana = 600000
+      dana = dana - dana * 0.005
+      harga = 1500
+      lembar = dana // harga
+      print(f"Lembar maksimal = {lembar}")   # 398
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "400 itu tanpa fee. Dana bersihmu cuma 597.000, tidak cukup 400 lembar."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "399 butuh dana 598.500 — itu kalau fee-nya 0,25%, bukan 0,5%."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "398 benar: (600.000 − 3.000) // 1.500. Fee dipotong dulu."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "396 itu kalau fee 1% (594.000). Fee di sini 0,5% sekali potong."
+    petunjuk:
+      - "Hitung dana setelah fee 0,5%: 600.000 × 0,005 = 3.000."
+      - "Bagi dana bersih dengan 1.500 pakai //."
+
+  - id: "s4-10"
+    judul: "Baca Kode: Untung Bersih"
+    emoji: "🪙"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kode bot laporan harian:
+      ```python
+      harga_beli = 5000
+      lembar = 200
+      harga_jual = 5200
+      hasil_jual = harga_jual * lembar
+      fee_jual = hasil_jual * 0.002
+      untung_bersih = (harga_jual - harga_beli) * lembar - fee_jual
+      print(untung_bersih)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "Rp40.000"
+      - "Rp38.000"
+      - "Rp37.920"
+      - "Rp2.080"
+    jawaban: 2
+    penjelasan: |
+      Langkah demi langkah:
+      hasil_jual = 5.200 × 200 = 1.040.000.
+      fee_jual = 0,2% × 1.040.000 = 2.080.
+      Untung kotor = (5.200 − 5.000) × 200 = 200 × 200 = 40.000.
+      Untung bersih = 40.000 − 2.080 = **37.920**.
+      Opsi 40.000 = lupa fee jual. Opsi 38.000 = fee dihitung dari modal
+      (0,2% × 1.000.000 = 2.000) — salah, fee dipotong dari hasil jual 1.040.000.
+      Opsi 2.080 = cuma fee-nya.
+      Fee 0,2% kecil, tapi dihitung dari nilai jual yang besar.
+    kode: |
+      harga_beli = 5000
+      lembar = 200
+      harga_jual = 5200
+      hasil_jual = harga_jual * lembar
+      fee_jual = hasil_jual * 0.002
+      untung_bersih = (harga_jual - harga_beli) * lembar - fee_jual
+      print(f"Untung bersih = Rp{untung_bersih:,.0f}")   # 37,920
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "40.000 itu untung kotor. Baris terakhir mengurangkan fee 2.080."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "38.000 itu kalau fee dihitung dari modal 1 juta. Fee dihitung dari hasil jual 1,04 juta."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "37.920 benar: 40.000 − fee jual 2.080."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "2.080 cuma fee-nya. Hasil akhir = 40.000 − 2.080."
+    petunjuk:
+      - "Hitung hasil jual total dulu: 5.200 × 200."
+      - "Fee = 0,2% dari hasil jual (1.040.000), bukan dari modal."
+      - "Untung kotor dikurangi fee jual."
 soal:
   - id: "p4-1"
     judul: "Cetak Dua Kali Lipat"

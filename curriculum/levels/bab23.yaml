@@ -270,6 +270,228 @@ skenario:
     petunjuk:
       - "Tidak ada error. Apa yang bisa membedakan benar dan salah?"
       - "Cek potongan [1:]: mulai dari elemen ke berapa?"
+  - id: "s23-6"
+    judul: "Teks Dikali Angka"
+    emoji: "💥"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      baris = "TLKM 4000"
+      bagian = baris.split()
+      print(bagian[1] * 0.5)
+      ```
+      Bot error: `TypeError: can't multiply sequence by non-int of type 'float'`. Kenapa, dan apa perbaikannya?
+    pilihan:
+      - "Python tidak bisa mengalikan — ganti * dengan +"
+      - "bagian[1] masih TEKS '4000' — ubah dulu: int(bagian[1]) * 0.5"
+      - "Angka 0.5 terlalu kecil — pakai 2"
+      - "split() yang salah — ganti split(',')"
+    jawaban: 1
+    penjelasan: |
+      `split()` menghasilkan SEMUA teks: bagian[1] = '4000' (string, bukan angka). Teks dikali float → TypeError: '4000' x 0,5 tidak terdefinisi. Perbaikan: `int(bagian[1]) * 0.5` = 2000.0. Ganti * dengan + = '40004000'? tetap bukan hitungan. Dikalikan 2? '4000' * 2 justru JALAN (teks digandakan jadi '40004000') — lebih menipu daripada error. Ganti split(',') = data makin tidak kebaca (tidak ada koma). Aturan: data hasil parse itu teks sampai kamu buktikan sebaliknya. Pasang int()/float() sebelum aritmetika.
+    kode: |
+      baris = "TLKM 4000"
+      bagian = baris.split()
+      print(int(bagian[1]) * 0.5)   # 2000.0 — int() dulu!
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tambah = menggabung teks, bukan menghitung."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: parse menghasilkan teks; int() sebelum dikali."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "'4000' * 2 tidak error — teks digandakan. Lebih bahaya dari error."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Pemisah bukan masalahnya — tipe datanya yang salah."
+    petunjuk:
+      - "split() menghasilkan teks atau angka?"
+      - "TypeError 'sequence by non-int' = ada string di operasi kali."
+      - "int() dulu, baru aritmetika."
+  - id: "s23-7"
+    judul: "Rata-rata Tanpa Data"
+    emoji: "🚫"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Bot menghitung return rata-rata harian: `rata_rata = total_return / jumlah_hari`. Hari ini error: `ZeroDivisionError: division by zero`. Ternyata `jumlah_hari = 0` — feed data telat, belum ada data masuk. Perbaikan terbaik?
+    pilihan:
+      - "Bagi dengan 1 kalau nol: `jumlah_hari or 1` — biar tidak pernah error"
+      - "Cek dulu: kalau jumlah_hari == 0, jangan bagi — log 'belum ada data' + alert, lewati hitungan"
+      - "Ganti total_return jadi 0 — 0/0 tidak akan error"
+      - "Selalu tambah 1: `jumlah_hari + 1`"
+    jawaban: 1
+    penjelasan: |
+      ZeroDivisionError = membagi dengan nol. Di sini penyebabnya masuk akal: feed telat, belum ada data. Perbaikan benar: GUARD — kalau `jumlah_hari == 0`, lewati hitungan, catat "data kosong", kasih alert. 0/0 juga ZeroDivisionError — mengganti pembilang tidak menolong. `jumlah_hari or 1` = diam-diam mengarang rata-rata 0,0 padahal tidak ada data — laporan palsu, lebih bahaya dari error. Selalu +1 = rata-rata salah permanen. Error di sini bukan musuh: dia menangkap kondisi "belum ada data" yang harusnya DITANGANI, bukan ditutup-tutupi. Bot yang jujur: data kosong → dikatakan kosong.
+    kode: |
+      total_return = 0.0
+      jumlah_hari = 0
+      if jumlah_hari == 0:
+          print("ALERT: belum ada data — lewati hitungan")
+      else:
+          print(f"Rata-rata: {total_return / jumlah_hari:.2f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0,0% palsu masuk laporan — seolah strategi datar, padahal tidak ada data."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: guard + alert. Feed diperbaiki, hitungan jalan begitu data masuk."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "0/0 tetap ZeroDivisionError."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Rata-rata jadi salah permanen (dibagi jumlah_hari + 1)."
+    petunjuk:
+      - "Error muncul karena pembagi = 0. Kenapa bisa 0?"
+      - "Cek pembagi SEBELUM membagi."
+      - "Data kosong harus dilaporkan, bukan diakali."
+  - id: "s23-8"
+    judul: "Satu Baris Rusak, Semua Mati"
+    emoji: "🚧"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Bot membaca 1.000 baris data. Baris ke-7 rusak: `TLKM ???`. Kode memakai satu blok try/except yang mengelilingi SEMUA baris. Bot mati di baris ke-7 — 993 baris valid tidak pernah diproses. Di mana try/except seharusnya diletakkan?
+    pilihan:
+      - "Tetap keliling semua baris — baris rusak memang harus menghentikan bot"
+      - "Try/except DI DALAM loop, per baris: baris jelek dilewati + dihitung, sisanya jalan"
+      - "Bersihkan dulu semua data secara manual sebelum diproses"
+      - "Hapus baris ke-7 dari file sumbernya"
+    jawaban: 1
+    penjelasan: |
+      Letak try/except menentukan perilaku. Di LUAR loop → error pertama menghentikan SEMUA: 1 baris rusak = 1.000 baris hangus. Di DALAM loop → tiap baris dicoba sendiri; baris jelek kena except, dicatat, loop lanjut ke baris berikutnya. 993 baris valid tetap diproses. Ini beda besar di produksi: feed harian selalu punya baris aneh. "Baris rusak harus menghentikan bot" = desain yang salah untuk data massal — kecuali memang mau stop total (bab 24-5: aturan 5%). Bersih manual = tidak scalable tiap hari. Menghapus dari file = memalsukan data; baris itu pernah ada, log yang benar mencatatnya dilewati.
+    kode: |
+      data = ["TLKM 4000", "???", "BBRI 4500"]
+      total = 0
+      rusak = 0
+      for baris in data:
+          try:
+              total += int(baris.split()[1])
+          except (ValueError, IndexError):
+              rusak += 1
+      print(f"Total {total} | baris dilewati: {rusak}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Try di luar loop: baris ke-7 mematikan 993 baris valid. Produktivitas nol."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: except per baris → 993 baris diproses, 7 dicatat dilewati."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bersih manual tiap hari = boros dan manusia rawan salah."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Mengubah file = memalsukan bukti. Log yang benar: dilewati."
+    petunjuk:
+      - "Error di baris ke-7: apa yang terjadi pada baris 8 sampai 1000?"
+      - "Try/except di dalam loop = satu baris jelek tidak menyeret yang lain."
+      - "Hitung baris yang dilewati — laporkan."
+  - id: "s23-9"
+    judul: "Harga dengan Desimal"
+    emoji: "🪙"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Data broker BTC: `BTC 77221.5`. Bot: `harga = int(bagian[1])` → error `ValueError: invalid literal for int() with base 10: '77221.5'`. Kamu mau nilai posisi 0,5 BTC. Apa perbaikan dan hasilnya?
+    pilihan:
+      - "Ganti int → float: harga 77221.5 x 0.5 = 38610.75"
+      - "Biarkan int — ValueError cuma sekali; potong jadi 77221 x 0.5 = 38610.5"
+      - "Hapus titik dulu: int('772215') = 772215 x 0.5 = 386107.5"
+      - "Bungkus try/except dan skip baris ini"
+    jawaban: 0
+    penjelasan: |
+      Pesan error tepat: int() tidak bisa memproses '77221.5' karena ada titik desimal. Harga kripto dan banyak instrumen lain memakai desimal → `float('77221.5')` = 77221.5. Nilai 0,5 BTC = 77221.5 x 0.5 = 38.610,75. int() MEMOTONG desimal: 77221 x 0.5 = 38.610,5 — selisih 0,25 per transaksi kecil, tapi untuk 10 BTC selisihnya $2,5 dan terus menumpuk (error senyap). Menghapus titik = mengalikan harga 10x: 772.215 — salah besar. Skip baris = data valid dibuang diam-diam: harga desimal itu NORMAL, bukan error. Aturan: baca format data dulu — int untuk harga rupiah, float untuk harga berdesimal.
+    kode: |
+      baris = "BTC 77221.5"
+      harga = float(baris.split()[1])
+      nilai = harga * 0.5
+      print(f"Nilai 0.5 BTC: {nilai:.2f}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "float() benar: 38.610,75. Harga desimal ditangani, bukan dipotong."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "int() memotong desimal diam-diam: 38.610,5. Error senyap yang menumpuk."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Menghapus titik = harga x10: 772.215. Salah 10x lipat."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Baris dilewati padahal datanya valid — bot jadi buta terhadap harga BTC."
+    petunjuk:
+      - "Baca pesan error: '77221.5' tidak bisa jadi int. Kenapa?"
+      - "Tipe mana yang menerima desimal: int atau float?"
+      - "Hitung 77221.5 x 0.5 — bandingkan tiap opsi."
+  - id: "s23-10"
+    judul: "Except yang Terlalu Lebar"
+    emoji: "🙊"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Bot produksi: semua request exchange dibungkus `try: ... except Exception: log("gagal")` — biar tidak pernah crash. Tiga minggu kemudian kamu sadar: tidak ada SATU pun order terkirim. Log penuh "gagal" — termasuk error yang seharusnya ketahuan: bug parsing harga membuat semua order ditolak exchange. Kenapa ini bahaya, dan bagaimana memperbaikinya?
+    pilihan:
+      - "Tidak bahaya — bot tidak crash, uptime 100%"
+      - "except Exception menyembunyikan SEMUA error: bug tak terlihat 3 minggu. Fix: tangkap error SPESIFIK (ValueError, KeyError), sisanya biarkan crash + alert"
+      - "Perbaiki: ganti log('gagal') jadi log('gagal + detail error')"
+      - "Kurangi frekuensi request supaya jarang kena error"
+    jawaban: 1
+    penjelasan: |
+      except Exception = jaring yang menangkap SEMUA — termasuk bug yang harusnya membunyikan alarm. Di sini: bug parsing membuat tiap order ditolak; bot mengira itu kegagalan normal, mencatat, lanjut — 3 minggu tanpa satu order pun, tanpa manusia tahu. Crash justru SAHABAT di kasus ini: bot berhenti, alert berbunyi, kamu perbaiki hari itu juga (bab 20-3: gagal dengan aman dan berisik). Perbaikan: except untuk error yang BISA diprediksi (ValueError data jelek, KeyError kolom hilang) → tangani; error di luar itu → biarkan crash, atau except Exception + alert + kill switch. Uptime 100% untuk bot yang tidak melakukan apa-apa = downtime tersembunyi. Log lebih detail tidak menolong kalau tidak ada yang membaca dan bertindak.
+    kode: |
+      try:
+          harga = float("77221.5")   # data valid — float untuk desimal
+      except ValueError:
+          print("ALERT: format harga berubah — pause & cek")
+      print(f"Harga terbaca: {harga}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Uptime 100% tapi 0 order = bot hiasan. Error yang disembunyikan tidak pernah diperbaiki."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Error spesifik ditangani, sisanya crash + alert: bug parsing ketahuan HARI ITU, bukan 3 minggu."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Log lebih detail tetap tidak dibaca siapa pun — error tidak pernah NAIK ke manusia."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Frekuensi request bukan penyebab — bug parsing tetap jalan diam-diam."
+    petunjuk:
+      - "Apa bedanya bot crash vs bot diam-diam salah selama 3 minggu?"
+      - "except Exception menangkap apa saja? Termasuk bug?"
+      - "Error yang tidak terduga sebaiknya: disembunyikan atau dibunyikan?"
 soal:
   - id: "p23-1"
     judul: "Angka atau Bukan?"

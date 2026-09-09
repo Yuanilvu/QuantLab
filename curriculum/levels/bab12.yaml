@@ -137,9 +137,9 @@ skenario:
   - id: "s12-3"
     judul: "EV dan Risiko Kehancuran"
     emoji: "🎲"
-    sulit: "sulit"
-    xp: 50
-    menit: 8
+    sulit: "sedang"
+    xp: 35
+    menit: 6
     cerita: |
       Dua strategi kandidat:
       - **A**: win rate 60%, risk:reward 1:1, 10 trade/bulan
@@ -260,3 +260,262 @@ skenario:
     petunjuk:
       - "Dua persen dari $1.500 berapa?"
       - "Risiko dihitung dari equity sekarang atau yang dulu?"
+
+
+  - id: "s12-6"
+    judul: "Leverage Melipatkan Luka"
+    emoji: "🏋️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Temanmu trading pakai leverage 5x: "tenang, hari ini cuma turun 4%, kecil".
+      Equity dia $1.000, notional $5.000. Berapa loss equity dia hari ini?
+    pilihan:
+      - "4% ($40) — harga turun 4%"
+      - "20% ($200) — 4% × leverage 5x"
+      - "0,8% ($8) — 4% dibagi 5x"
+      - "Tidak tahu — tergantung margin"
+    jawaban: 1
+    penjelasan: |
+      Leverage 5x = notional 5x equity. Pergerakan harga 4% = 4% × $5.000 = $200.
+      Dari equity $1.000: 20%. Satu hari "cuma 4%" menghapus 20% akun. Kalau turun
+      20%? Semua modal habis (margin call = posisi ditutup paksa). Ini kenapa aturan
+      risk 2% per trade dihitung dari equity, dan kenapa leverage mengubah loss
+      kecil jadi luka besar. "Cuma 4%" itu bahasa harga — bahasa equity-nya 20%.
+      "0,8%" = arah hitung terbalik. "Tergantung margin" = tidak paham risiko
+      posisi sendiri.
+    kode: |
+      equity = 1000
+      leverage = 5
+      turun = 0.04
+      loss = equity * leverage * turun
+      print(f"Loss: ${loss:.0f} = {loss/equity*100:.0f}% equity")
+    hasil:
+      - ret: -20.0
+        dd: 20.0
+        win: 20
+        note: "Kamu meniru gaya teman: seminggu kemudian total −8% harga = −40% equity. Kamu berhenti."
+      - ret: 2.0
+        dd: 0.5
+        win: 70
+        note: "Kamu paham bahasanya: lev 5x = 20% equity untuk gerak 4%. Kamu trading 1x dengan aturan 2%."
+      - ret: -20.0
+        dd: 20.0
+        win: 15
+        note: "0,8% salah arah hitung. Nyatanya loss 4% × 5 = 20% equity."
+      - ret: -20.0
+        dd: 20.0
+        win: 10
+        note: "Tidak paham risiko posisi sendiri. Loss tetap 20% equity."
+    petunjuk:
+      - "Loss dolar = harga × notional. Notional = equity × leverage."
+      - "4% dari $5.000 = $200 = berapa persen dari $1.000?"
+  - id: "s12-7"
+    judul: "Sisa Budget Bulanan"
+    emoji: "📆"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Equity $1.000. Aturanmu: risk 2% per trade ($20) DAN berhenti trading kalau
+      total loss bulan ini sudah −5%. Bulan ini: 3 loss beruntun, total −4,5%.
+      Sinyal bagus muncul sekarang. Boleh trading?
+    pilihan:
+      - "Boleh 1 trade risk 2% — batas −5% belum lewat"
+      - "Tidak — sisa budget 0,5%, kurang dari 1 trade sesuai aturan 2%"
+      - "Boleh 1 trade risk 0,5% — memakai sisa persis"
+      - "Naikkan risk 4% — sudah 3 loss, pasti akan menang"
+    jawaban: 1
+    penjelasan: |
+      Budget bulanan = 5% × $1.000 = $50. Sudah terpakai $45 (4,5%). Sisa $5 =
+      0,5% equity — lebih kecil dari risk minimum 2% ($20). Artinya tidak ada satu
+      pun trade yang bisa masuk tanpa melanggar batas. Trade 2% → total −6,5%,
+      lewat batas. Trade 0,5% → melanggar aturan ukuran, dan biasanya tanda emosi.
+      Keputusan profesional: berhenti. Tiga loss beruntun juga sinyal: kondisi pasar
+      sedang tidak cocok dengan strategimu. Besok market masih ada. Aturan yang
+      dilanggar = aturan yang mati.
+    kode: |
+      equity = 1000
+      batas = equity * 0.05
+      loss_berjalan = equity * 0.045
+      sisa = batas - loss_berjalan
+      print(f"Sisa budget: ${sisa:.0f} ({sisa/equity*100:.1f}% equity)")
+      print("Risk 1 trade: $20 — sisa tidak cukup")
+    hasil:
+      - ret: -6.5
+        dd: 6.5
+        win: 22
+        note: "Trade ke-4 kena stop: total −6,5%, lewat batas. Aturan yang dilanggar jadi mati."
+      - ret: 1.8
+        dd: 4.5
+        win: 68
+        note: "Kamu berhenti. Besok setup bagus, 2 trade profit: bulan tetap +1,8%."
+      - ret: -5.0
+        dd: 5.0
+        win: 20
+        note: "Trade 0,5% tetap loss: batas tepat habis, dan kamu trading dalam emosi."
+      - ret: -8.5
+        dd: 8.5
+        win: 8
+        note: "Risk 4% kena stop: total −8,5%. Mencari balas dendam = mempercepat luka."
+    petunjuk:
+      - "Berapa sisa budget dalam dolar dan persen?"
+      - "Bandingkan dengan risk minimum satu trade (2%)."
+  - id: "s12-8"
+    judul: "Jarak ke Margin Call"
+    emoji: "📞"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Equity $1.000, leverage 5x: notional $5.000. Bursa menutup paksa (margin
+      call) kalau equity menyentuh maintenance margin 2,5% dari notional = $125.
+      Harga harus turun berapa persen dari entry sampai margin call? (abaikan fee
+      dan funding)
+    pilihan:
+      - "2,5% — margin 2,5%"
+      - "17,5% — equity harus turun $875 = 17,5% dari notional"
+      - "87,5% — loss equity setelah margin call"
+      - "20% — $1.000 dibagi $5.000"
+    jawaban: 1
+    penjelasan: |
+      Margin call terjadi saat equity = maintenance ($125). Equity harus turun
+      $1.000 − $125 = $875. Pergerakan 1% harga = 1% × $5.000 = $50 equity.
+      Penurunan harga = $875 ÷ $50 = 17,5%. Artinya: harga turun 17,5% → posisi
+      ditutup paksa, uangmu tinggal $125 (rugi 87,5% equity). Leverage 5x mengubah
+      koreksi 17,5% jadi kehilangan 87,5% akun. "2,5%" = maintenance dalam %
+      notional, bukan trigger harga. "87,5%" = akibat margin call, bukan pemicunya.
+      "20%" = rasio margin awal ($1.000/$5.000), bukan jarak ke margin call.
+    kode: |
+      equity = 1000
+      notional = 5000
+      maintenance = 125
+      loss_maks = equity - maintenance
+      persen_harga = loss_maks / notional
+      print(f"Loss maks: ${loss_maks:.0f} = {persen_harga*100:.1f}% harga")
+    hasil:
+      - ret: -87.5
+        dd: 87.5
+        win: 8
+        note: "Kamu tidak tahu trigger-nya: koreksi 17,5% → margin call, equity tersisa $125."
+      - ret: 0.6
+        dd: 1.2
+        win: 66
+        note: "Kamu tahu batasnya, leverage diturunkan ke 2x. Koreksi 18% datang 2 bulan kemudian — kamu selamat."
+      - ret: -87.5
+        dd: 87.5
+        win: 10
+        note: "87,5% itu loss equity setelah margin call, bukan trigger harga. Sama-sama hancur."
+      - ret: -87.5
+        dd: 87.5
+        win: 12
+        note: "20% = rasio margin awal. Trigger asli 17,5%, dan kamu tidak siap."
+    petunjuk:
+      - "Equity boleh turun sampai $125: berarti $875."
+      - "1% pergerakan harga = $50 equity (1% × notional $5.000). $875 ÷ $50 = ?"
+  - id: "s12-9"
+    judul: "Sepuluh Loss Beruntun"
+    emoji: "🩸"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Strategimu: 10 loss beruntun itu normal, muncul sekali dalam 2-3 tahun. Kamu
+      memilih risk per trade: 2%, 5%, atau 10% equity. Hitung equity tersisa setelah
+      10 loss beruntun (compounding) dan gain yang dibutuhkan untuk balik modal.
+      Mana yang kamu pilih?
+    pilihan:
+      - "2%: equity sisa 81,7%, butuh gain +22% — layak bertahan"
+      - "5%: equity sisa 59,9%, butuh gain +67%"
+      - "10%: equity sisa 34,9%, butuh gain +187%"
+      - "5% — 10 loss cuma −50% additive, dan itu wajar"
+    jawaban: 0
+    penjelasan: |
+      Compounding, bukan additive. Risk 2%: 0,98^10 = 0,817 → DD 18,3%. Gain balik
+      modal = 18,3 ÷ 81,7 = 22%. Risk 5%: 0,95^10 = 0,599 → DD 40,1%, butuh +67%.
+      Risk 10%: 0,9^10 = 0,349 → DD 65,1%, butuh +187%. Streak 10 loss pasti
+      datang. Dengan 2%, kamu bertahan dan pulih. Dengan 5%, drawdown 40% bikin
+      kebanyakan trader menyerah di tengah — strategi bagus terbunuh di titik
+      terendahnya. Dengan 10%, butuh +187%: hampir mustahil, akun praktis mati.
+      "−50% additive" = salah hitung; kenyataannya −40,1% dan recovery-nya +67%.
+      Risk per trade menentukan kamu bisa menahan nasib buruk atau tidak.
+    kode: |
+      for risiko in [0.02, 0.05, 0.10]:
+          sisa = (1 - risiko) ** 10
+          dd = (1 - sisa) * 100
+          butuh = (1 / sisa - 1) * 100
+          print(f"Risk {risiko*100:.0f}%: sisa {sisa*100:.1f}%, butuh +{butuh:.0f}%")
+    hasil:
+      - ret: 8.0
+        dd: 18.3
+        win: 60
+        note: "Streak 10 loss datang di bulan 4: DD 18,3%, kamu bertahan. Setahun +8% — aturan menang."
+      - ret: -12.0
+        dd: 40.1
+        win: 25
+        note: "DD 40% bikin kamu nyerah di tengah streak. Strategi pulih, kamu sudah kapok."
+      - ret: -40.0
+        dd: 65.1
+        win: 8
+        note: "DD 65%: butuh +187% untuk balik. Kamu berhenti total di −40%."
+      - ret: -22.0
+        dd: 40.1
+        win: 15
+        note: "Kamu pikir −50% additive, kenyataannya −40,1% dan butuh +67%. Menyerah di tengah."
+    petunjuk:
+      - "Compounding: kalikan (1 − risk) sepuluh kali, bukan dikali 10."
+      - "Gain balik modal = dd ÷ (1 − dd)."
+      - "Streak 10 loss normal: pilih risk yang recovery-nya masih masuk akal."
+  - id: "s12-10"
+    judul: "Strategi Win Rate 30%"
+    emoji: "🃏"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Strategimu: win rate 30%, risk:reward 3:1 (EV +0,2R). Risk per trade 2%
+      equity. Peluang 8 loss beruntun = 0,7^8. Dalam 300 trade (sekitar setahun),
+      berapa kali streak itu muncul, dan apa akibatnya ke equity?
+    pilihan:
+      - "Nyaris mustahil — 0,7^8 kecil sekali, tidak perlu disiapkan"
+      - "Probabilitas 5,8% per streak, sekitar 5x per 300 trade. DD 8 loss = 14,9%, butuh +17,5%. Wajar — jangan kapok"
+      - "Kalau sudah 5 loss beruntun, stop total — strategi rusak"
+      - "Naikkan risk ke 5% biar cepat pulih setelah streak"
+    jawaban: 1
+    penjelasan: |
+      0,7^8 = 0,058 = 5,8%. Dalam 300 trade, streak 8 loss muncul kira-kira 300 ×
+      0,3 × 0,058 ≈ 5 kali. Bukan mustahil — rutin. Akibatnya dengan risk 2%:
+      equity 0,98^8 = 0,851 → DD 14,9%. Butuh gain 14,9 ÷ 85,1 = 17,5% untuk balik.
+      Ini harga tiket strategi EV +0,2R. Yang salah: berhenti total setelah 5 loss
+      (strategi baik dibunuh di titik terendah), menaikkan risk setelah streak
+      (memperbesar luka saat paling rapuh), atau tidak siap mental sama sekali.
+      Ukuran tetap + eksekusi tetap = jawabannya. Win rate 30% = loss beruntun
+      panjang itu desain, bukan kerusakan.
+    kode: |
+      p_streak = 0.7 ** 8
+      frekuensi = 300 * 0.3 * p_streak
+      sisa = 0.98 ** 8
+      print(f"Prob 8 loss: {p_streak*100:.1f}% | ~{frekuensi:.0f}x per 300 trade")
+      print(f"DD: {(1-sisa)*100:.1f}% | butuh +{(1/sisa-1)*100:.1f}%")
+    hasil:
+      - ret: -14.9
+        dd: 14.9
+        win: 25
+        note: "Streak datang juga. Kamu kaget dan berhenti di titik terendah, melewatkan pemulihan."
+      - ret: 9.0
+        dd: 14.9
+        win: 62
+        note: "Lima streak terjadi, kamu tetap eksekusi sesuai aturan. Setahun: EV positif terwujud."
+      - ret: -6.0
+        dd: 9.6
+        win: 20
+        note: "Stop total di loss ke-5: mengunci −9,6% dan membuang 10 bulan EV positif."
+      - ret: -28.0
+        dd: 28.0
+        win: 10
+        note: "Risk 5% setelah streak: 3 loss lagi = DD tambahan. Total −28%, hampir menyerah."
+    petunjuk:
+      - "0,7^8 = ? (hitung 7^8 dulu, baru desimal)"
+      - "DD 8 loss dengan risk 2%: 0,98^8 = ?"
+      - "Kalau EV positif, apa yang harus dilakukan saat streak datang?"

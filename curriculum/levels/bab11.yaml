@@ -255,3 +255,268 @@ skenario:
     petunjuk:
       - "Berapa biaya funding 3 minggu (5 hari ekstrem + 16 hari normal)?"
       - "Kalau short, kamu terima 2,28%. Tapi harga naik 9%. Net berapa?"
+
+
+  - id: "s11-6"
+    judul: "Arah Pembayaran"
+    emoji: "💰"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu long ETH di Bybit. Funding rate ETH sedang negatif: −0,03% per 8 jam.
+      Artinya short membayar long. Berapa yang kamu terima per hari kalau rate
+      bertahan?
+    pilihan:
+      - "Bayar 0,09% per hari — funding negatif = long yang bayar"
+      - "Terima 0,03% per hari"
+      - "Terima 0,09% per hari"
+      - "Tidak ada transfer — funding cuma untuk posisi besar"
+    jawaban: 2
+    penjelasan: |
+      Funding negatif = short bayar long. Kamu long, jadi kamu menerima. Rate −0,03%
+      artinya short membayar 0,03% dari notional tiap 8 jam kepada long. Dibayar 3x
+      sehari: 0,03% × 3 = 0,09% per hari. Sebulan (30 hari) sekitar 2,7% — lumayan,
+      tanpa leverage. Jebakannya: tanda negatif bikin banyak trader salah arah.
+      Yang menentukan bukan tanda rate, tapi posisimu: menerima = posisi lawan dari
+      yang membayar. Funding negatif = mayoritas trader short, mereka yang bayar.
+      "0,03%" = lupa ×3. "Bayar" = arah terbalik. "Tidak ada transfer" = salah,
+      funding berlaku untuk semua posisi.
+    kode: |
+      rate = 0.0003
+      pembayaran_harian = rate * 3
+      print(f"Terima {pembayaran_harian*100:.2f}% per hari")
+    hasil:
+      - ret: -0.5
+        dd: 0.8
+        win: 20
+        note: "Arah terbalik: kamu pindah short, malah membayar 0,09% per hari sementara ETH naik pelan."
+      - ret: 0.9
+        dd: 0.3
+        win: 40
+        note: "Kamu benar menerima, tapi hitunganmu setengah: 0,03% itu per 8 jam, bukan per hari."
+      - ret: 2.7
+        dd: 0.6
+        win: 74
+        note: "Benar: 0,09% per hari sekitar 2,7% per bulan murni dari funding."
+      - ret: -0.8
+        dd: 1.2
+        win: 22
+        note: "Kamu abaikan funding yang bisa diterima, malah ikut short crowd dan kena squeeze kecil."
+    petunjuk:
+      - "Funding dibayar berapa kali sehari?"
+      - "Siapa yang membayar saat funding negatif?"
+  - id: "s11-7"
+    judul: "Carry di Kerumunan Long"
+    emoji: "🔍"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      SOL: funding +0,06% per 8 jam (3x normal), sudah naik 20% dalam 2 minggu.
+      Open interest naik 30%, tapi volume rally mengecil. BTC: funding +0,02%,
+      harga sideways 2 minggu, open interest normal. Kamu trader carry: pegang
+      posisi 1 minggu, funding positif artinya short yang menerima. Keputusanmu?
+    pilihan:
+      - "Short BTC — carry stabil, tanpa drama harga"
+      - "Short SOL — funding 1,26% per minggu plus koreksi dari posisi jenuh"
+      - "Long SOL — funding positif = pasar yakin, ikut naik"
+      - "Flat — funding ekstrem berarti jangan pegang posisi apa pun"
+    jawaban: 1
+    penjelasan: |
+      SOL: funding ekstrem + harga sudah naik 20% + open interest naik 30% + volume
+      mengecil = ciri kerumunan long yang jenuh. Siapa lagi yang akan beli? Koreksi
+      tinggal menunggu pemicu. Short SOL: terima funding 0,06% × 3 × 7 = 1,26%,
+      plus profit koreksi. BTC: 0,02% × 3 × 7 = 0,42% — aman tapi kecil. Long SOL =
+      ikut kerumunan di titik rawan, dan kamu bayar funding. Flat = aman, tapi
+      melewatkan asimetri yang jelas. Ini kebalikan dari s11-3: di sana kerumunan
+      short yang jenuh, di sini kerumunan long. Kerumunan yang ramai = sisi yang
+      berbahaya untuk diikuti.
+    kode: |
+      carry_sol = 0.0006 * 3 * 7
+      koreksi = 0.05
+      net_short_sol = carry_sol + koreksi
+      net_long_sol = -koreksi - carry_sol
+      print(f"Short SOL: {net_short_sol*100:+.2f}% | Long SOL: {net_long_sol*100:+.2f}%")
+    hasil:
+      - ret: 0.4
+        dd: 0.3
+        win: 55
+        note: "BTC sideways seminggu: +0,42% bersih. Aman, tapi SOL memberi peluang 4x lipat."
+      - ret: 6.3
+        dd: 1.5
+        win: 72
+        note: "Koreksi 5% datang di hari ke-4: carry 1,26% + profit koreksi = +6,3%."
+      - ret: -6.3
+        dd: 6.3
+        win: 12
+        note: "Long di kerumunan jenuh: koreksi −5% plus bayar funding 1,26%. Total −6,3%."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Flat = aman, tapi asimetri short SOL yang jelas terlewat."
+    petunjuk:
+      - "Funding ekstrem + OI naik + volume mengecil = ciri apa?"
+      - "Hitung carry seminggu: 0,06% × 3 × 7 = ?"
+  - id: "s11-8"
+    judul: "Leverage Menggandakan Funding"
+    emoji: "⚙️"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu long BTC pakai leverage 2x: equity $1.000, notional $2.000. Funding
+      positif 0,01% per 8 jam — long bayar short. Harga diperkirakan datar 30 hari.
+      Berapa loss funding ke equity-mu sebulan?
+    pilihan:
+      - "0,9% equity — 0,01% × 3 × 30"
+      - "0,3% equity — 0,01% × 30"
+      - "1,8% equity — funding dihitung dari notional $2.000, bukan equity"
+      - "0% — harga datar berarti tidak ada biaya"
+    jawaban: 2
+    penjelasan: |
+      Funding dihitung dari NOTIONAL, bukan equity. Notional $2.000 (leverage 2x).
+      0,01% × 3 × 30 hari = 0,9% dari notional = $18. Equity cuma $1.000: $18 =
+      1,8% equity. Leverage menggandakan beban funding. Trader lev 10x: biayanya
+      10x lipat — 9% equity per bulan untuk rate 0,01% yang kelihatan receh. Aturan:
+      hitung carry cost dalam % equity sebelum entry. Kalau ekspektasi naik harga
+      kurang dari 1,8% per bulan, posisi ini rugi bersih walau arahnya benar.
+      "0,9%" = menghitung di equity, lupa notional 2x. "0,3%" = lupa 3x per hari.
+      "0%" = mengira harga datar membebaskan biaya.
+    kode: |
+      equity = 1000
+      notional = 2000
+      funding_30_hari = 0.0001 * 3 * 30
+      biaya = notional * funding_30_hari
+      print(f"Biaya: ${biaya:.1f} = {biaya/equity*100:.1f}% equity")
+    hasil:
+      - ret: -1.8
+        dd: 1.8
+        win: 25
+        note: "Kamu hitung 0,9% di equity, padahal notional 2x: loss nyata 1,8% equity."
+      - ret: -1.8
+        dd: 1.8
+        win: 20
+        note: "0,3% = lupa 3x per hari. Biaya nyata 6x lipat hitunganmu."
+      - ret: 0.4
+        dd: 0.8
+        win: 70
+        note: "Kamu hitung benar: −1,8% per bulan lebih besar dari ekspektasi naik 1,2%. Posisi dibatalkan."
+      - ret: -1.8
+        dd: 1.8
+        win: 15
+        note: "Harga datar tetap kena funding. −1,8% equity bulan itu."
+    petunjuk:
+      - "Funding dihitung dari notional atau equity?"
+      - "0,01% × 3 × 30 = berapa persen notional? Lalu kalikan leverage 2x."
+  - id: "s11-9"
+    judul: "Carry Delta-Neutral"
+    emoji: "🪢"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Modal $10.000. Setup delta-neutral: beli spot BTC $10.000 + short perp BTC
+      $10.000. Funding +0,05% per 8 jam kamu terima dari leg short. Biaya sekali
+      jalan: spread 0,1% + fee 0,04%. Skenario konservatif: funding bertahan 0,05%
+      selama 20 hari, lalu turun ke 0,01% selama 10 hari. Berapa return bersih 30
+      hari?
+    pilihan:
+      - "+3,16% ($316) — 20 hari di 0,05% + 10 hari di 0,01%, dikurangi biaya 0,14%"
+      - "+4,5% ($450) — 0,05% × 3 × 30, biaya cuma receh"
+      - "+0,3% ($30) — funding cuma untuk posisi short murni"
+      - "0% — spread dan fee makan semua carry"
+    jawaban: 0
+    penjelasan: |
+      Fase 1: 0,05% × 3 × 20 = 3,0%. Fase 2: 0,01% × 3 × 10 = 0,3%. Total funding
+      3,3%. Biaya sekali jalan: spread 0,1% + fee 0,04% = 0,14%. Bersih = 3,3 −
+      0,14 = 3,16% → $316. Delta-neutral: untung-rugi harga saling hapus (spot vs
+      perp), jadi carry ini murni. Tapi bukan tanpa risiko: funding bisa berubah
+      negatif (kamu malah bayar), dan leg short butuh margin — kalau dipasang
+      leverage, harga naik cepat bisa melikuidasi leg short padahal leg spot
+      untung. Setup aman = spot penuh + margin leg short longgar. "+4,5%" = lupa
+      biaya dan menganggap funding tetap selamanya. "+0,3%" = salah paham
+      delta-neutral. "0%" = melewatkan carry yang terukur.
+    kode: |
+      modal = 10_000
+      fase1 = 0.0005 * 3 * 20
+      fase2 = 0.0001 * 3 * 10
+      biaya = 0.001 + 0.0004
+      bersih = modal * (fase1 + fase2 - biaya)
+      print(f"Return bersih: ${bersih:.0f} ({bersih/modal*100:.2f}%)")
+    hasil:
+      - ret: 3.2
+        dd: 0.4
+        win: 73
+        note: "Funding sesuai skenario: +3,16% bersih. Margin leg short dijaga longgar."
+      - ret: -1.2
+        dd: 6.0
+        win: 25
+        note: "Kamu yakin 4,5%, pasang leverage di leg short. Harga naik 8%, leg short kena margin call."
+      - ret: 0.3
+        dd: 0.2
+        win: 30
+        note: "Short perp tanpa spot = kena risiko harga. Beruntung harga datar: cuma +0,3%."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Kamu skip: 3,16% bersih sebulan tanpa arah = peluang carry terlewat."
+    petunjuk:
+      - "Hitung funding 20 hari di 0,05% lalu 10 hari di 0,01%."
+      - "Jangan lupa potong biaya 0,14%."
+      - "Apa yang terjadi ke leg short kalau harga naik cepat?"
+  - id: "s11-10"
+    judul: "Stop, Leverage, dan Funding"
+    emoji: "🛟"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Akun $1.000. Kamu long BTC leverage 3x: notional $3.000, stop loss 8% di
+      bawah entry. Funding positif 0,04% per 8 jam — long bayar. Harga turun pelan,
+      stop kena di hari ke-5. Selama 5 hari kamu bayar funding tiap 8 jam. Berapa
+      total loss ke equity saat stop kena? (abaikan fee)
+    pilihan:
+      - "8% equity — stop 8% ya 8%"
+      - "24% equity — lupa funding"
+      - "25,8% equity — loss harga 24% + funding 1,8%"
+      - "7,4% equity — funding mengurangi loss"
+    jawaban: 2
+    penjelasan: |
+      Stop 8% berlaku ke harga, tapi loss ke equity = 8% × leverage 3x = 24%.
+      Funding: 0,04% × 3 × 5 hari = 0,6% dari notional = 0,6% × $3.000 = $18 =
+      1,8% equity. Total = $240 + $18 = $258 = 25,8% equity. Satu trade menghapus
+      seperempat akun — 13x lipat aturan 2%. Pelajaran: hitung loss dalam % equity,
+      bukan % harga; funding dan biaya masuk hitungan skenario terburuk; lev 3x +
+      stop 8% + funding = risiko 25,8%, di luar batas wajar. Turunkan leverage atau
+      jauhkan stop. "8%" = lupa leverage. "24%" = lupa funding. "7,4%" = arah
+      hitung terbalik.
+    kode: |
+      equity = 1000
+      notional = 3000
+      loss_harga = notional * 0.08
+      loss_funding = notional * 0.0004 * 3 * 5
+      total = loss_harga + loss_funding
+      print(f"Loss harga: ${loss_harga:.0f} | Funding 5 hari: ${loss_funding:.0f}")
+      print(f"Total: ${total:.0f} = {total/equity*100:.1f}% equity")
+    hasil:
+      - ret: -25.8
+        dd: 25.8
+        win: 12
+        note: "Kamu pikir risiko cuma 8%. Kenyataannya −25,8% equity. Kaget dan panik."
+      - ret: -25.8
+        dd: 25.8
+        win: 15
+        note: "24% saja sudah 12x aturan. Funding $18 ekstra membuat loss nyata 25,8%."
+      - ret: 3.1
+        dd: 2.0
+        win: 70
+        note: "Kamu hitung dulu: 25,8% jauh di atas aturan. Posisi dikecilkan, loss terkendali."
+      - ret: -25.8
+        dd: 25.8
+        win: 10
+        note: "Funding tidak mengurangi loss harga — malah menambah. Total −25,8%."
+    petunjuk:
+      - "Loss harga dalam equity = 8% × 3 (leverage) = ?"
+      - "Funding 5 hari: 0,04% × 3 × 5 = ?% dari notional. Dalam dolar?"
+      - "Jumlahkan dua-duanya, bandingkan dengan equity $1.000."

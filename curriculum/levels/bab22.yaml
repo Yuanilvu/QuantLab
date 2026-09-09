@@ -160,8 +160,8 @@ skenario:
   - id: "s22-3"
     judul: "Parse Baris Data"
     emoji: "✂️"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Satu baris data dari broker: `"CUAN 1500 25000"` (nama, harga, volume). Kamu mau ambil HARGA-nya sebagai angka. Kode yang benar?
@@ -290,6 +290,245 @@ skenario:
     petunjuk:
       - "Operasi paling sering: hitung semua, atau cari satu?"
       - "Dict: akses lewat label, langsung. List: harus scan."
+  - id: "s22-6"
+    judul: "Baca Kode: Ambil Volume"
+    emoji: "📋"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      baris = "TLKM 4000 120000"
+      bagian = baris.split()
+      print(bagian[2])
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "120000"
+      - "4000"
+      - "TLKM"
+      - "['TLKM', '4000', '120000']"
+    jawaban: 0
+    penjelasan: |
+      `split()` memecah baris jadi tiga bagian: ['TLKM', '4000', '120000']. Indeks 2 = elemen KETIGA = volume 120000. Hati-hati: masih bertipe TEKS ('120000'), belum angka — kalau mau dihitung, bungkus `int()`. 4000 = indeks 1 (harga). TLKM = indeks 0 (nama). List utuh muncul kalau `print(bagian)` tanpa indeks. Ingat urutannya: nama 0, harga 1, volume 2.
+    kode: |
+      baris = "TLKM 4000 120000"
+      bagian = baris.split()
+      print(bagian[2])   # 120000 — masih teks, int() kalau mau dihitung
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: indeks 2 = volume."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4000 = indeks 1 (harga), bukan volume."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "TLKM = indeks 0 (nama)."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Itu hasil print(bagian) tanpa indeks — semua elemen."
+    petunjuk:
+      - "split() memberi list: indeks 0, 1, 2."
+      - "Volume ada di urutan ketiga = indeks berapa?"
+  - id: "s22-7"
+    judul: "Nilai Transaksi"
+    emoji: "💰"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      ```python
+      baris = "BBRI 4500 25000"
+      bagian = baris.split()
+      nilai = int(bagian[1]) * int(bagian[2])
+      print(nilai)
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "100000"
+      - "112500000"
+      - "450025000"
+      - "Error — bagian[1] masih teks"
+    jawaban: 1
+    penjelasan: |
+      Harga 4.500 x volume 25.000 lembar = 112.500.000. Kedua kolom di-parse dulu dengan `int()` — kalau tidak, teks dikali teks = error atau perilaku aneh. 100.000 = 4.500 x 25 — salah baca volume (25.000, bukan 25). 450025000 = menggabungkan teks, bukan mengalikan angka. "Error" tidak terjadi di kode ini: `int()` sudah dipasang di dua-duanya. Nilai transaksi = harga x volume — hitungan paling sering di pasar. Cek angka nolnya: 4.500 x 25.000 = 112.500.000.
+    kode: |
+      baris = "BBRI 4500 25000"
+      bagian = baris.split()
+      nilai = int(bagian[1]) * int(bagian[2])
+      print(nilai)   # 112500000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "100.000 = 4.500 x 25 — volume salah baca (25.000, bukan 25)."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 4.500 x 25.000 = 112.500.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Itu teks digabung, bukan angka dikali."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "int() sudah dipasang — kode ini jalan normal."
+    petunjuk:
+      - "Dua kolom angka: ubah dulu dengan int()."
+      - "4.500 x 25.000 = ? (hitung nolnya!)"
+  - id: "s22-8"
+    judul: "Data Pakai Koma"
+    emoji: "📄"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Broker lain kirim data pakai KOMA: `baris = "TLKM,4000,25000"`. Kamu mau ambil harga sebagai angka. Kode mana yang benar?
+    pilihan:
+      - "`int(baris.split()[1])`"
+      - "`int(baris.split(',')[1])`"
+      - "`int(baris[1])`"
+      - "`baris.split(',')`"
+    jawaban: 1
+    penjelasan: |
+      `split()` TANPA argumen memecah berdasarkan SPASI. Baris ini tidak punya spasi → hasilnya satu elemen utuh 'TLKM,4000,25000' → `split()[1]` kena IndexError. Kirim pemisahnya: `split(',')` → ['TLKM', '4000', '25000'], lalu `[1]` = '4000', `int()` = 4000. `baris[1]` = karakter kedua ('L') — string di-index per huruf. `split(',')` saja = list teks, belum ambil kolom dan belum jadi angka. Pola lengkap: pilih pemisah sesuai FORMAT data (spasi, koma, tab), lalu indeks, lalu `int()`. Selalu cek satu baris asli dari brokermu.
+    kode: |
+      baris = "TLKM,4000,25000"
+      bagian = baris.split(",")
+      print(int(bagian[1]))   # 4000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "split() tanpa argumen memakai spasi — baris koma jadi SATU elemen, indeks 1 error."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: split(',') memecah di koma → harga 4000."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "baris[1] = huruf kedua ('L'). String di-index per karakter."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Itu baru list teks — belum ambil kolom dan belum jadi angka."
+    petunjuk:
+      - "split() default memakai spasi. Data ini dipisah apa?"
+      - "split(',') → ['TLKM', '4000', '25000']."
+      - "Baru ambil indeks 1 + int()."
+  - id: "s22-9"
+    judul: "Akumulasi per Nama"
+    emoji: "🗃️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      ```python
+      nilai = {}
+      for baris in ["TLKM 4000 25000", "BBRI 4500 80000", "TLKM 4100 30000"]:
+          p = baris.split()
+          if p[0] not in nilai:
+              nilai[p[0]] = 0
+          nilai[p[0]] = nilai[p[0]] + int(p[1]) * int(p[2])
+      print(nilai["TLKM"])
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "223000000"
+      - "100000000"
+      - "8100"
+      - "Error — kunci TLKM dipakai dua kali"
+    jawaban: 0
+    penjelasan: |
+      Loop membaca 3 baris. TLKM muncul dua kali → dict meng-AKUMULASI: 4000 x 25.000 = 100.000.000, lalu ditambah 4100 x 30.000 = +123.000.000 → 223.000.000. BBRI dihitung sendiri (4500 x 80.000 = 360.000.000), tidak mengganggu TLKM. 100.000.000 = cuma baris TLKM pertama (lupa baris ketiga). 8.100 = menjumlahkan HARGA (4000 + 4100) tanpa volume — salah kolom. Kunci dipakai dua kali TIDAK error: pola `if p[0] not in nilai` sengaja dibuat supaya kunci yang sudah ada ditambah, bukan ditimpa. Ini pola agregasi: data mentah berulang → satu angka per nama. Bot memakainya untuk total nilai dan volume per saham.
+    kode: |
+      nilai = {}
+      for baris in ["TLKM 4000 25000", "BBRI 4500 80000", "TLKM 4100 30000"]:
+          p = baris.split()
+          if p[0] not in nilai:
+              nilai[p[0]] = 0
+          nilai[p[0]] = nilai[p[0]] + int(p[1]) * int(p[2])
+      print(nilai["TLKM"])   # 223000000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 100.000.000 + 123.000.000 = 223.000.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Baris TLKM ketiga (4100 x 30000) tidak dihitung."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "8.100 = jumlah harga tanpa volume (4000 + 4100)."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Tidak error — pola if + not in justru untuk akumulasi."
+    petunjuk:
+      - "TLKM muncul berapa kali? Nilainya dijumlah."
+      - "Hitung dulu: 4000 x 25000 dan 4100 x 30000."
+      - "print(nilai['TLKM']) = total akumulasi TLKM."
+  - id: "s22-10"
+    judul: "Filter dan Hitung Unik"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      ```python
+      lolos = {}
+      for baris in ["TLKM 4000", "BBRI 4500", "TLKM 4150", "CUAN 1500", "BBRI 4600"]:
+          p = baris.split()
+          if int(p[1]) > 4000:
+              lolos[p[0]] = int(p[1])
+      print(len(lolos))
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "3 — tiga baris lolos"
+      - "2 — BBRI dan TLKM"
+      - "4 — TLKM dua kali dihitung"
+      - "Error — BBRI dipakai dua kali sebagai kunci"
+    jawaban: 1
+    penjelasan: |
+      Baris yang lolos (harga > 4000): BBRI 4500, TLKM 4150, BBRI 4600 → 3 baris. Tapi `lolos` adalah DICT: disimpan per KUNCI. BBRI ditimpa (4500 → 4600), TLKM 4150. Jadi isinya {'BBRI': 4600, 'TLKM': 4150} → `len(lolos)` = 2. Inilah keunggulan dict: kunci unik otomatis — baris dobel tidak menggandakan entri, yang terakhir menang (biasanya data terbaru). "3 baris" = menghitung baris, padahal yang ditanya berapa SAHAM berbeda. "4" = menghitung TLKM dua kali — dict tidak bekerja begitu. Kunci dobel tidak error — justru ditimpa. Pola ini = deduplikasi gratis: feed 10.000 baris dengan nama berulang → satu entri per nama.
+    kode: |
+      lolos = {}
+      for baris in ["TLKM 4000", "BBRI 4500", "TLKM 4150", "CUAN 1500", "BBRI 4600"]:
+          p = baris.split()
+          if int(p[1]) > 4000:
+              lolos[p[0]] = int(p[1])
+      print(len(lolos))   # 2 — BBRI & TLKM
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3 baris lolos — tapi len() menghitung KUNCI unik, bukan baris."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 2 saham berbeda yang lolos — BBRI dan TLKM."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Dict tidak menggandakan kunci — TLKM tetap satu entri."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Kunci dobel = ditimpa, bukan error."
+    petunjuk:
+      - "Baris mana yang harganya > 4000? Ada 3 baris."
+      - "Tapi lolos adalah DICT: satu kunci per nama."
+      - "BBRI ditimpa 4600 — len() menghitung kunci."
 soal:
   - id: "p22-1"
     judul: "Kamus Saham"

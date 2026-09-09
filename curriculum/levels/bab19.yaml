@@ -275,3 +275,224 @@ skenario:
     petunjuk:
       - "Hitung vol tiap alokasi (korelasi 0). Mana yang ≤ 12%?"
       - "Porsi kebalik vol: 1/10 berbanding 1/30 = 75:25."
+  - id: "s19-6"
+    judul: "Hedge yang Sedang Mati"
+    emoji: "🌪️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Portofoliomu 60% saham global (vol 25%) + 40% emas (vol 15%). Lima tahun terakhir korelasi saham-emas -0,2: tiap saham jatuh, emas naik. Bulan ini krisis perbankan. Saham global sudah -15%. Masalahnya emas ikut turun -9%, padahal dulu selalu naik saat panik. Korelasi terukur pekan ini: +0,6. Apa artinya untuk portofoliomu?
+    pilihan:
+      - "Jual emas, all-in saham — saham sudah murah, emas sedang lemah"
+      - "Abaikan — korelasi 5 tahun lebih valid daripada noise mingguan"
+      - "Hedge sedang mati: jangan andalkan emas; kurangi risiko total sampai rezim normal lagi"
+      - "+0,6 masih jauh dari 1 — diversifikasi tetap jalan, diam saja"
+    jawaban: 2
+    penjelasan: |
+      Dulu korelasi -0,2: saat saham -15%, emas justru naik sekitar +3%. Kini korelasi +0,6: emas ikut turun -9% (0,6 x 15%). Portofolio 60/40: 0,6 x (-15) + 0,4 x (-9) = -12,6% — hampir separah all-in saham. Inilah rezim krisis: korelasi naik mendekati 1, semua aset berisiko jatuh bareng. Hedge-nya sedang mati. Jual emas dan all-in saham = menambah risiko di saat terburuk. Mengabaikan data pekan ini = memakai statistik rezim lama. "+0,6 masih jauh dari 1" menenangkan diri dengan angka yang menyesatkan: emas -9% sudah bukti hedge tidak bekerja. Keputusan sehat: kurangi eksposur total (misal saham 60% ke 25%, sisanya cash), tunggu korelasi normal lagi.
+    kode: |
+      saham = 0.60
+      emas = 0.40
+      rugi_saham = -15
+      rugi_emas = 0.6 * rugi_saham
+      rugi_porto = saham * rugi_saham + emas * rugi_emas
+      print(f"Rugi portofolio 60/40 saat krisis: {rugi_porto:.1f}%")
+    hasil:
+      - ret: -18.0
+        dd: 24.0
+        win: 15
+        note: "All-in saham pas kepanikan: saham masih jatuh ke -25%. Realisasi -18%."
+      - ret: -12.6
+        dd: 16.0
+        win: 20
+        note: "Tetap 60/40: kena penuh -12,6%. Statistik lama tidak menolong di rezim baru."
+      - ret: -7.4
+        dd: 9.0
+        win: 35
+        note: "Pangkas saham ke 25% + cash: rugi -7,4%, modal utuh untuk entry saat rezim pulih."
+      - ret: -18.9
+        dd: 24.0
+        win: 10
+        note: "Yakin diversifikasi aman lalu pasang leverage 1,5x: -12,6% x 1,5 = -18,9%."
+    petunjuk:
+      - "Korelasi mana yang relevan: rata-rata 5 tahun atau yang terukur sekarang?"
+      - "Kalau dua aset turun bareng, apa gunanya posisi lindung nilai?"
+      - "Hitung rugi portofolio untuk tiap keputusan."
+  - id: "s19-7"
+    judul: "Vol Gabungan, Bukan Jumlah"
+    emoji: "📊"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Strategi A dan B sama-sama vol 20% per tahun, korelasi +0,8 (satu sektor). Kamu gabung 50/50 dan butuh angka vol portofolio untuk aturan sizing. Rumus: σp = √(w²σA² + (1-w)²σB² + 2·w·(1-w)·ρ·σA·σB). Angka berapa yang kamu pakai?
+    pilihan:
+      - "14,1% — risiko terbagi rata: 20% dibagi akar dua"
+      - "19,0% — korelasi tinggi tapi tidak sempurna"
+      - "40,0% — dua aset berarti dua kali risiko"
+      - "20,0% — korelasi +0,8 nyaris 1: anggap satu aset saja"
+    jawaban: 1
+    penjelasan: |
+      Masukkan angkanya: w = 0,5, σ = 0,20, ρ = 0,8. σp² = 0,25 x 0,04 + 0,25 x 0,04 + 2 x 0,25 x 0,8 x 0,04 = 0,01 + 0,01 + 0,016 = 0,036. σp = √0,036 = 18,97% ≈ 19,0%. Pembanding: kalau ρ = 0, vol 14,1% (√0,02); kalau ρ = 1, vol 20,0%. Korelasi +0,8 cuma memberi sedikit penurunan. 40% = menjumlahkan risiko — variance tidak dijumlah begitu saja. 14,1% = menganggap korelasi nol; dipakai untuk sizing, posisimu bisa ~35% lebih besar dari seharusnya. 20% = mengabaikan manfaat kecil yang ada. Untuk sizing, 19% adalah angka yang benar: pas dengan risiko nyata gabungan.
+    kode: |
+      bobot = 0.5
+      vol_a = 0.20
+      vol_b = 0.20
+      korelasi = 0.8
+      vol_porto = (bobot**2 * vol_a**2 + bobot**2 * vol_b**2 + 2 * bobot * bobot * korelasi * vol_a * vol_b) ** 0.5
+      print(f"Vol portofolio 50/50 (korelasi 0,8): {vol_porto*100:.1f}%")
+    hasil:
+      - ret: 5.0
+        dd: 16.0
+        win: 40
+        note: "Asumsi 14,1% → leverage kegedean. Koreksi -10% bikin DD 16%."
+      - ret: 12.0
+        dd: 8.0
+        win: 70
+        note: "Vol 19% dipakai benar: sizing pas, drawdown sesuai rencana."
+      - ret: 8.5
+        dd: 6.0
+        win: 55
+        note: "Asumsi 40% → posisi terlalu kecil. Aman, tapi return cuma 8,5%."
+      - ret: 9.0
+        dd: 7.0
+        win: 60
+        note: "Anggap 20%: hampir benar, sizing sedikit kegedean. 19% lebih tepat."
+    petunjuk:
+      - "Hitung σp² dulu: dua suku variance + satu suku kovariansi."
+      - "Cek pembanding: ρ = 0 → 14,1%; ρ = 1 → 20%."
+  - id: "s19-8"
+    judul: "Rebalance dengan Ambang"
+    emoji: "🔁"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Target portofoliomu 60% saham + 40% obligasi. Aturanmu: rebalance hanya kalau porsi saham melenceng lebih dari 5 poin persen dari target (band ±5). Awal tahun: $6.000 saham, $4.000 obligasi. Kini saham +15%, obligasi +8%. Aksi?
+    pilihan:
+      - "Rebalance sekarang — makin sering dicek makin aman"
+      - "Tunggu — porsi saham baru 61,5%, masih di dalam band 5 poin"
+      - "Jual 10% saham sekarang, biar aman-aman saja"
+      - "Hapus aturan band — rebalance sekali setahun sudah cukup"
+    jawaban: 1
+    penjelasan: |
+      Saham: 6.000 x 1,15 = 6.900. Obligasi: 4.000 x 1,08 = 4.320. Total 11.220. Porsi saham = 6.900 / 11.220 = 61,5% — melenceng 1,5 poin dari target 60%, masih di bawah ambang 5 poin → tidak ada aksi. Rebalance sekarang = jual sekitar $168 saham (target 60% x 11.220 = 6.732) dengan biaya transaksi, padahal manfaatnya nyaris nol. Rebalance rutin tanpa ambang = membayar biaya untuk risiko yang belum menyimpang. Band menahan: baru kalau porsi saham lewat 65% (atau di bawah 55%) kamu bergerak. Menghapus band = rebalancing kalender buta. Aturan dengan ambang menyeimbangkan disiplin dan biaya.
+    kode: |
+      saham = 6000 * 1.15
+      obligasi = 4000 * 1.08
+      porsi_saham = saham / (saham + obligasi) * 100
+      if porsi_saham - 60 > 5:
+          aksi = "Rebalance sekarang"
+      else:
+          aksi = "Tunggu, masih dalam band 5 poin"
+      print(f"Porsi saham: {porsi_saham:.1f}% → {aksi}")
+    hasil:
+      - ret: 10.4
+        dd: 6.8
+        win: 55
+        note: "Rebalance tiap bulan: 12x biaya kecil menggerus return → 10,4%."
+      - ret: 11.6
+        dd: 6.2
+        win: 72
+        note: "Tunggu benar: band menjaga biaya. Saat porsi menyentuh 65% baru rebalance → 11,6%."
+      - ret: 10.0
+        dd: 7.0
+        win: 50
+        note: "Jual 10% tanpa alasan band: kena biaya dobel saat rebalance sungguhan tiba."
+      - ret: 10.8
+        dd: 9.5
+        win: 45
+        note: "Kalender setahun: porsi sempat 68% sebelum dicek — risiko melenceng lebih lama."
+    petunjuk:
+      - "Porsi saham sekarang = 6.900 / 11.220 x 100 = ?"
+      - "Bandingkan dengan ambang: target 60% ± 5 poin."
+      - "Kalau belum lewat ambang, apa gunanya transaksi?"
+  - id: "s19-9"
+    judul: "Korelasi Rendah Palsu"
+    emoji: "🧨"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Modal $10.000. Bot A: long BTC momentum, vol 40%, return 25%. Bot B: market-neutral carry (spot + short futures BTC, ambil funding), vol 25%, return 15%. Korelasi terukur 6 bulan: -0,8. Alokasi 50/50 + leverage 2x → vol portofolio 12,5% x 2 = 25% (targetmu). Pekan ini trade basis crowded: A dan B rugi bareng, korelasi harian +0,6. Keputusan?
+    pilihan:
+      - "Pertahankan leverage 2x — korelasi seminggu itu noise, target vol tetap 25%"
+      - "Turunkan leverage ke 1x dan pangkas posisi 15% — vol efektif kembali ke sekitar 25%"
+      - "Rebalance 70/30 ke A — A return lebih tinggi, B sedang rusak"
+      - "Naikkan leverage ke 2,5x — korelasi historis -0,8 masih memberi ruang"
+    jawaban: 1
+    penjelasan: |
+      Hitung vol baru (korelasi +0,6, tanpa leverage): 0,25 x 40² + 0,25 x 25² + 2 x 0,25 x 0,6 x 40 x 25 = 400 + 156,25 + 300 = 856,25. √856,25 = 29,3%. Dengan leverage 2x: 58,5% — bukan 25%! Kenapa korelasi -0,8 palsu? B itu SHORT BTC via futures, A long BTC — satu faktor yang sama: arah BTC. Saat basis crowded, leg spot dan futures sama-sama tertekan, korelasi melompat positif. Leverage yang dibangun di atas korelasi negatif jadi bumerang. Target 25% butuh leverage 25/29,3 = 0,85x: 1x lalu pangkas 15% posisi (0,85 x 29,3 = 24,9%). Opsi lain: 2x = 58,5% — koreksi BTC -20% bisa -40% ekuitas; 70/30 ke A = menambah taruhan BTC; 2,5x = 73% vol.
+    kode: |
+      vol_a = 0.40
+      vol_b = 0.25
+      bobot = 0.5
+      korelasi_baru = 0.6
+      vol_tanpa_lev = (bobot**2 * vol_a**2 + bobot**2 * vol_b**2 + 2 * bobot * bobot * korelasi_baru * vol_a * vol_b) ** 0.5
+      print(f"Vol tanpa leverage: {vol_tanpa_lev*100:.1f}%")
+      print(f"Vol dengan leverage 2x: {vol_tanpa_lev*2*100:.1f}%")
+    hasil:
+      - ret: -38.0
+        dd: 42.0
+        win: 8
+        note: "Vol 58,5% beneran terjadi: BTC -20% → porto -42% sebelum sempat turunkan. Nyaris margin call."
+      - ret: -9.5
+        dd: 18.0
+        win: 30
+        note: "De-lever + pangkas 15%: koreksi -20% cuma -17,9% ke porto, tanpa margin call. Pulih ke -9,5%."
+      - ret: -44.0
+        dd: 48.0
+        win: 5
+        note: "70/30 ke A + tetap 2x: makin pekat ke BTC. BTC -20% → -44%."
+      - ret: -52.0
+        dd: 56.0
+        win: 4
+        note: "Leverage 2,5x di korelasi yang sudah berubah: -21% x 2,5 = -52,5%."
+    petunjuk:
+      - "Apa isi sebenarnya posisi B? (spot + short futures BTC)"
+      - "Hitung ulang vol dengan korelasi +0,6, lalu kalikan leverage 2x."
+      - "Target 25%: leverage berapa yang dibutuhkan sekarang?"
+  - id: "s19-10"
+    judul: "Berapa Strategi Cukup?"
+    emoji: "🧩"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kamu punya 2 strategi saham lintas sektor: vol masing-masing 25%, korelasi antarstrategi 0,5 (semua pasangan). Vol portofolio sekarang 25 x √((1+0,5)/2) = 21,7% — di atas target 19%. Rencana: tambah strategi sejenis (vol 25%, korelasi 0,5 ke semua). Rumus equal weight N aset: σp = σ x √((1+(N-1)ρ)/N). Tambah berapa supaya vol ≤ 19%?
+    pilihan:
+      - "Tambah 1 (total 3) — 20,4%, tinggal sedikit lagi"
+      - "Tambah 2 (total 4) — 19,8%, sudah cukup"
+      - "Tambah 5 (total 7) — 18,9%, aman di bawah target"
+      - "Tambah 20 (total 22) — 18,1%, makin banyak makin baik"
+    jawaban: 2
+    penjelasan: |
+      Coba N satu per satu. N = 3: √((1 + 2 x 0,5)/3) = √0,667 = 0,816 → 20,4% (lewat). N = 4: √(2,5/4) = 0,791 → 19,8% (lewat). N = 5: √0,6 = 0,775 → 19,4% (lewat). N = 6: √0,583 = 0,764 → 19,1% (lewat, nyaris). N = 7: √(4/7) = 0,756 → 18,9% ≤ 19% — jawabannya: total 7, tambah 5. Bandingkan: N = 22 → 18,1%, cuma 0,8 poin lebih rendah untuk 15 strategi ekstra. Batasnya: N → ∞ → σ√ρ = 25 x 0,707 = 17,7%. Sesudah 7 strategi, tiap tambahan memberi < 0,2 poin penurunan — padahal tiap strategi ada biaya nyata (modal minimum, pantau, slippage) dan korelasi naik ke ~1 saat krisis. Ambil jumlah minimum yang lolos target.
+    kode: |
+      vol = 0.25
+      korelasi = 0.5
+      for jumlah in [3, 4, 5, 6, 7, 22]:
+          vol_porto = vol * ((1 + (jumlah - 1) * korelasi) / jumlah) ** 0.5
+          print(f"Total {jumlah} strategi: vol {vol_porto*100:.1f}%")
+    hasil:
+      - ret: 10.8
+        dd: 11.5
+        win: 52
+        note: "Total 3: vol 20,4%. Koreksi pasar -15% → porto -12%, lewat toleransi."
+      - ret: 11.0
+        dd: 11.0
+        win: 55
+        note: "Total 4: vol 19,8% — nyaris, tapi Januari membuktikan masih di atas target."
+      - ret: 12.4
+        dd: 9.0
+        win: 68
+        note: "Total 7: vol 18,9% ≤ 19%. Drawdown sesuai rencana, return tetap jalan."
+      - ret: 11.9
+        dd: 8.6
+        win: 66
+        note: "Total 22: vol 18,1%, tapi biaya dan overlap 15 strategi ekstra menggerus return."
+    petunjuk:
+      - "Coba N = 3, 4, 5, 6, 7: hitung vol masing-masing."
+      - "Cari N terkecil yang vol-nya ≤ 19%."
+      - "Berapa batasnya kalau N → ∞? (σ√ρ)"

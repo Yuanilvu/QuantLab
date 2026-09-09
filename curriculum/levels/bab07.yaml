@@ -303,6 +303,288 @@ skenario:
     petunjuk:
       - "max = terbesar, min = terkecil."
       - "Cari angka terbesar dan terkecil dari kelima harga."
+
+  - id: "s7-6"
+    judul: "Baca Kode: Berapa Banyak Data"
+    emoji: "📏"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kode bot laporan:
+      ```python
+      harga = [1000, 2000, 3000]
+      print(len(harga))
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "3"
+      - "6000"
+      - "1000"
+      - "0"
+    jawaban: 0
+    penjelasan: |
+      `len(harga)` = banyaknya angka di dalam list = **3**.
+      Opsi 6000 = sum(harga) — jumlah nilainya, bukan banyaknya.
+      Opsi 1000 = harga[0] — elemen pertama, bukan jumlah elemen.
+      Opsi 0 = mengira 'index mulai dari 0' berlaku untuk len — salah.
+      len menghitung elemen nyata: tiga angka, jawabannya 3.
+      Bot memakai len untuk tahu berapa hari data terkumpul sebelum menghitung rata-rata.
+    kode: |
+      harga = [1000, 2000, 3000]
+      print(f"Jumlah data = {len(harga)}")   # 3
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "3 benar: len menghitung banyaknya elemen list."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "6000 itu jumlah nilainya (sum). len bukan sum."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "1000 = harga[0], elemen pertama. Pertanyaannya berapa banyak elemen."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Index mulai dari 0 tidak membuat len jadi 0. Elemennya ada 3."
+    petunjuk:
+      - "len = banyaknya elemen."
+      - "Hitung ada berapa angka di dalam kurung siku."
+
+  - id: "s7-7"
+    judul: "Baca Kode: Rata-rata dengan //"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kode bot:
+      ```python
+      harga = [4000, 4100, 3900, 4200]
+      print(sum(harga) // len(harga))
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "4050"
+      - "4050.0"
+      - "4100"
+      - "4000"
+    jawaban: 0
+    penjelasan: |
+      sum(harga) = 4.000 + 4.100 + 3.900 + 4.200 = 16.200. len(harga) = 4.
+      16.200 // 4 = **4.050**. `//` membagi lalu membulatkan ke bawah,
+      hasilnya bilangan bulat (int) → tercetak 4050, bukan 4050.0.
+      Opsi 4050.0 = kalau memakai `/` (pembagian biasa) — simbol beda, hasil beda tipe.
+      Opsi 4100 = elemen kedua (harga[1]). Opsi 4000 = elemen pertama.
+      Rata-rata harga = statistik Bab 2 dalam satu baris Python: sum + len.
+    kode: |
+      harga = [4000, 4100, 3900, 4200]
+      rata_rata = sum(harga) // len(harga)
+      print(f"Rata-rata = {rata_rata}")   # 4050
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "4050 benar: 16.200 // 4 = 4050, bilangan bulat."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "4050.0 itu hasil `/` (pembagian biasa). Kode memakai `//`."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "4100 itu elemen kedua list. sum dan len menghitung semua elemen."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4000 itu elemen pertama. Rata-ratanya 4050."
+    petunjuk:
+      - "sum = jumlah semua, len = banyaknya."
+      - "`//` membulatkan ke bawah dan hasilnya bilangan bulat."
+
+  - id: "s7-8"
+    judul: "Baca Kode: Fungsi Dipakai Dua Kali"
+    emoji: "🧰"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kode bot:
+      ```python
+      def hitung_untung(beli, jual):
+          return jual - beli
+
+      untung1 = hitung_untung(5000, 5500)
+      untung2 = hitung_untung(4500, 4700)
+      print(untung1 + untung2)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "700"
+      - "500"
+      - "1000"
+      - "200"
+    jawaban: 0
+    penjelasan: |
+      Fungsi dipanggil dua kali dengan bahan berbeda.
+      untung1 = 5.500 − 5.000 = 500. untung2 = 4.700 − 4.500 = 200.
+      print(500 + 200) = **700**.
+      Opsi 500 = cuma untung1. Opsi 200 = cuma untung2.
+      Opsi 1000 = 5.500 − 4.500 — mencampur harga jual transaksi 1 dengan harga beli transaksi 2.
+      Pasangannya salah.
+      Fungsi = resep sekali tulis, dipakai ulang. Selama parameternya benar, hasilnya konsisten.
+    kode: |
+      def hitung_untung(beli, jual):
+          return jual - beli
+
+      untung1 = hitung_untung(5000, 5500)
+      untung2 = hitung_untung(4500, 4700)
+      print(f"Total untung = {untung1 + untung2}")   # 700
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "700 benar: 500 + 200. Fungsi dijalankan dua kali."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "500 cuma untung transaksi pertama. untung2 = 200 belum dijumlah."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "1000 itu 5.500 − 4.500 — mencampur transaksi yang berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "200 cuma untung transaksi kedua. untung1 = 500 ikut dijumlah."
+    petunjuk:
+      - "Hitung untung1 dan untung2 terpisah."
+      - "Jangan mencampur pasangan beli-jual yang berbeda."
+
+  - id: "s7-9"
+    judul: "Baca Kode: Fungsi yang Menyaring"
+    emoji: "🕵️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kode bot:
+      ```python
+      def total_profit(data):
+          total = 0
+          for nilai in data:
+              if nilai > 0:
+                  total += nilai
+          return total
+
+      print(total_profit([5, -3, 8, -2, 4]))
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "17"
+      - "12"
+      - "3"
+      - "8"
+    jawaban: 0
+    penjelasan: |
+      Di dalam fungsi, total diisi hanya saat nilai > 0.
+      Data: 5 → masuk (total 5). −3 → dilewati. 8 → masuk (13).
+      −2 → dilewati. 4 → masuk (**17**). return 17 → tercetak 17.
+      Opsi 12 = menjumlahkan SEMUA angka (5 − 3 + 8 − 2 + 4).
+      Nama fungsi 'total_profit' menyesatkan — isi kode yang menentukan, bukan namanya.
+      Opsi 3 = jumlah angka positif, bukan jumlah nilainya.
+      Opsi 8 = angka positif terbesar.
+      Fungsi + loop + if = alat menyaring data yang bisa dipakai ulang.
+    kode: |
+      def total_profit(data):
+          total = 0
+          for nilai in data:
+              if nilai > 0:
+                  total += nilai
+          return total
+
+      print(f"Total profit = {total_profit([5, -3, 8, -2, 4])}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "17 benar: 5 + 8 + 4. Angka minus dilewati if."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "12 = jumlah semua angka. Hari minus tetap dipotong di kode ini."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "3 = jumlah hari positif, bukan total nilainya."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "8 cuma angka positif terbesar. Ketiga angka positif dijumlahkan."
+    petunjuk:
+      - "Jalankan fungsi dengan data satu per satu."
+      - "Angka minus dilewati if — tidak masuk total."
+      - "Hati-hati: nama fungsi tidak mengubah isi kode."
+
+  - id: "s7-10"
+    judul: "Baca Kode: List Bertambah"
+    emoji: "🧲"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kode bot menambah data harga:
+      ```python
+      harga = [4000, 4200, 4100]
+      harga.append(4300)
+      harga.append(4500)
+      print(len(harga))
+      print(harga[-1] - harga[0])
+      ```
+      Baris 1 dan baris 2 mencetak apa?
+    pilihan:
+      - "5 lalu 500"
+      - "3 lalu 100"
+      - "5 lalu 4500"
+      - "5 lalu 400"
+    jawaban: 0
+    penjelasan: |
+      append menambah elemen di belakang: list jadi [4000, 4200, 4100, 4300, 4500].
+      len = **5**. harga[-1] = 4500 (terakhir). harga[0] = 4000 (pertama).
+      4500 − 4000 = **500**. Baris 1 cetak 5, baris 2 cetak 500.
+      Opsi '3 lalu 100' = lupa append (list lama: 4100 − 4000 = 100).
+      Opsi '5 lalu 4500' = lupa mengurangi harga[0].
+      Opsi '5 lalu 400' = memakai harga[2] (4100) — index 2 bukan elemen pertama.
+      [-1] selalu data terbaru, [0] data terlama.
+    kode: |
+      harga = [4000, 4200, 4100]
+      harga.append(4300)
+      harga.append(4500)
+      print(f"Jumlah = {len(harga)}")                     # 5
+      print(f"Terbaru - terlama = {harga[-1] - harga[0]}")   # 500
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "'5 lalu 500' benar: 5 elemen, 4500 − 4000 = 500."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3 itu sebelum append. Dua angka baru masuk ke list."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4500 itu harga terbaru saja. Baris kedua mengurangkan harga[0] = 4000."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "400 itu 4500 − 4100 (elemen ketiga). Elemen pertama = 4000."
+    petunjuk:
+      - "Tulis list setelah dua append."
+      - "-1 = elemen terakhir, 0 = elemen pertama."
 soal:
   - id: "p7-1"
     judul: "Jumlah Tiga Angka"

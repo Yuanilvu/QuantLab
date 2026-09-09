@@ -146,8 +146,8 @@ skenario:
   - id: "s2-3"
     judul: "Rata-rata yang Bohong"
     emoji: "🕳️"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Bot kamu 10 hari. Sembilan hari pertama: return +1% per hari. Hari ke-10: **-50%** (crash). Rata-rata = (9×1 - 50) ÷ 10 = **-4,1%**. Tapi lihat datanya baik-baik. Kesimpulan yang BENAR?
@@ -299,3 +299,252 @@ skenario:
     petunjuk:
       - "Total harga 4 hari dulu berapa? Lalu tambah harga hari ke-5."
       - "Bagi total baru dengan 5 hari."
+
+  - id: "s2-6"
+    judul: "Rata-rata Return Harian"
+    emoji: "🗓️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Botmu mencatat return 4 hari: +2%, −1%, +3%, 0%.
+      Target evaluasimu: rata-rata +1% per hari.
+      Berapa rata-rata return harian bot itu?
+    pilihan:
+      - "+1%"
+      - "+2,5%"
+      - "+1,5%"
+      - "+4%"
+    jawaban: 0
+    penjelasan: |
+      Jumlah = 2 + (−1) + 3 + 0 = 4. Bagi 4 hari = **+1% per hari**. Target tercapai.
+      Opsi 2,5% = merata-ratakan hari positif saja ((2 + 3) ÷ 2). Hari minus jangan dibuang.
+      Opsi 1,5% = menjumlahkan nilai mutlak (2 + 1 + 3 + 0 = 6) — minus tetap minus.
+      Opsi 4% = jumlah total, lupa dibagi jumlah hari.
+      Return negatif itu data asli. Membuangnya bikin rata-rata terlihat lebih bagus dari kenyataan.
+    kode: |
+      return_harian = [2, -1, 3, 0]
+      rata_rata = sum(return_harian) / len(return_harian)
+      print(f"Rata-rata return = {rata_rata:+.1f}%")   # +1.0%
+    hasil:
+      - ret: 1.0
+        dd: 0.0
+        win: 80
+        note: "Benar: +1%/hari. Bot lanjut sesuai rencana, target evaluasi tercapai."
+      - ret: -2.0
+        dd: 0.0
+        win: 25
+        note: "Kamu pikir 2,5%/hari, posisi dibesarkan 2x. Hari minus −1% berikutnya jadi −2%."
+      - ret: 0.5
+        dd: 0.0
+        win: 35
+        note: "Kamu pikir 1,5% dan menaikkan target. Bot kena 2 hari minus, kamu matikan prematur."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Kamu pikir 4% per hari, target mustahil. Bot dimatikan, dana menganggur."
+    petunjuk:
+      - "Jumlahkan semua return, termasuk yang minus."
+      - "Bagi dengan jumlah hari (4)."
+
+  - id: "s2-7"
+    judul: "Jangan Rata-ratakan Rata-rata"
+    emoji: "📐"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Harga TLKM: 10 hari pertama rata-rata 4.000. Lima hari terakhir rata-rata 4.600.
+      Kamu ingin tahu rata-rata 15 hari sebagai patokan beli. Berapa?
+    pilihan:
+      - "4.200"
+      - "4.300"
+      - "4.000"
+      - "4.600"
+    jawaban: 0
+    penjelasan: |
+      Tidak boleh langsung (4.000 + 4.600) ÷ 2 = 4.300. Itu menganggap dua kelompok sama besar,
+      padahal 10 hari vs 5 hari.
+      Hitung total dulu: 10 hari = 10 × 4.000 = 40.000. Lima hari = 5 × 4.600 = 23.000.
+      Total 63.000 ÷ 15 hari = **4.200**.
+      Kelompok 10 hari berbobot lebih besar.
+      Opsi 4.300 = rata-rata dua rata-rata (salah). Opsi 4.000 dan 4.600 = cuma satu kelompok.
+    kode: |
+      total_10_hari = 10 * 4000
+      total_5_hari = 5 * 4600
+      rata_15_hari = (total_10_hari + total_5_hari) / 15
+      print(f"Rata-rata 15 hari = {rata_15_hari:.0f}")   # 4200
+    hasil:
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "Patokan 4.200 tepat. Kamu beli saat harga menyentuh bawah — cuan saat rebound."
+      - ret: 3.0
+        dd: 0.0
+        win: 35
+        note: "Patokan 4.300 terlalu tinggi. Entry kelewat, kamu beli panik di 4.350."
+      - ret: 1.0
+        dd: 0.0
+        win: 30
+        note: "Patokan 4.000: harga tak pernah serendah itu. Kamu menunggu terus, dana menganggur."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Patokan 4.600 = harga puncak. Beli di puncak, harga koreksi ke 4.500."
+    petunjuk:
+      - "Hitung total harga tiap kelompok dulu."
+      - "Kelompok 10 hari bobotnya dua kali kelompok 5 hari."
+      - "Total 63.000 dibagi 15."
+
+  - id: "s2-8"
+    judul: "Rata-rata Harga Beli"
+    emoji: "🛒"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu pegang 100 lembar BRPT harga 1.000. Harga turun ke 800, kamu beli 300 lembar lagi di 800.
+      Berapa rata-rata harga beli 400 lembarmu?
+    pilihan:
+      - "Rp900"
+      - "Rp850"
+      - "Rp800"
+      - "Rp1.000"
+    jawaban: 1
+    penjelasan: |
+      Total biaya = (100 × 1.000) + (300 × 800) = 100.000 + 240.000 = 340.000.
+      Total lembar = 400. Rata-rata = 340.000 ÷ 400 = **Rp850**.
+      Opsi 900 = rata-rata dua harga (1.000 + 800) ÷ 2 — lupa jumlah lembarnya beda.
+      Opsi 800 = menganggap semua kebeli di harga baru. Opsi 1.000 = mengabaikan pembelian kedua.
+      Dengan rata-rata 850, BRPT cukup naik ke 935 (+10%) untuk untung 10% — tidak perlu balik ke 1.000.
+    kode: |
+      total_biaya = 100 * 1000 + 300 * 800
+      total_lembar = 100 + 300
+      harga_rata2 = total_biaya / total_lembar
+      print(f"Rata-rata harga beli = Rp{harga_rata2:.0f}")   # 850
+    hasil:
+      - ret: 6.0
+        dd: 0.0
+        win: 35
+        note: "Kamu kira rata-rata 900, target untung 990. Harga puncak 960 — jual kepagian di 940."
+      - ret: 10.0
+        dd: 0.0
+        win: 80
+        note: "Benar: rata-rata 850. Target 935 tercapai — untung 10% dari posisi."
+      - ret: 4.0
+        dd: 0.0
+        win: 30
+        note: "Kamu kira rata-rata 800, pasang target 880. Jual di 880, untung tipis padahal potensi 10%."
+      - ret: 2.0
+        dd: 0.0
+        win: 25
+        note: "Kamu kira rata-rata 1.000, panik saat harga 900. Cut di 900, padahal posisi masih untung."
+    petunjuk:
+      - "Hitung total rupiah yang keluar: (100×1.000) + (300×800)."
+      - "Bagi dengan total lembar (400)."
+
+  - id: "s2-9"
+    judul: "Cuan Sama, Getaran Beda"
+    emoji: "🏁"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Dua bot, return bulanan 4 bulan terakhir:
+      Bot X: +2%, +4%, +4%, +2%.
+      Bot Y: +8%, −2%, +8%, +2%.
+      Modalmu cukup untuk satu bot. Bot mana yang lebih baik? Hitung rata-rata dan sebarannya.
+    pilihan:
+      - "Bot Y — rata-rata 4% lebih tinggi dari X"
+      - "Bot X — return per unit risiko 3,0, jauh di atas Y yang cuma 1,0"
+      - "Bot Y — getaran besar artinya peluang besar"
+      - "Sama saja — X 3% dan Y 4%, beda tipis"
+    jawaban: 1
+    penjelasan: |
+      Bot X: rata-rata (2+4+4+2) ÷ 4 = 3%. Jarak tiap angka ke 3: 1, 1, 1, 1 → sebaran 1.
+      Bot Y: rata-rata (8−2+8+2) ÷ 4 = 4%. Jarak ke 4: 4, 6, 4, 2 → sebaran 4.
+      Return per unit risiko (versi sederhana Sharpe): X = 3 ÷ 1 = 3,0. Y = 4 ÷ 4 = 1,0.
+      X menghasilkan 3% per unit risiko; Y cuma 1%. Rata-rata Y memang lebih tinggi,
+      tapi risikonya 4x lipat — drawdown Y sempat 10% (dari +8% ke −2%).
+      Trader profesional pilih X: hasilnya bisa diprediksi dan aman dinaikkan ukurannya.
+    kode: |
+      return_x = [2, 4, 4, 2]
+      return_y = [8, -2, 8, 2]
+      def sebaran(data):
+          rata = sum(data) / len(data)
+          return sum(abs(x - rata) for x in data) / len(data)
+      rasio_x = (sum(return_x) / 4) / sebaran(return_x)
+      rasio_y = (sum(return_y) / 4) / sebaran(return_y)
+      print(f"X: {rasio_x:.1f} vs Y: {rasio_y:.1f}")   # 3.0 vs 1.0
+    hasil:
+      - ret: 10.0
+        dd: 14.0
+        win: 40
+        note: "Bot Y: sempat +8% tapi drawdown 14%. Kamu cut di titik bawah, realisasi makin kecil."
+      - ret: 19.0
+        dd: 2.0
+        win: 75
+        note: "Benar: X stabil +3%/bulan dengan DD 2%. Aman dinaikkan 2x, hasil membesar."
+      - ret: 4.0
+        dd: 22.0
+        win: 25
+        note: "Bot Y + leverage: getaran besar dikali utang — drawdown 22%, margin call."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak pasang bot apa pun. Dana menganggur, melewatkan return positif."
+    petunjuk:
+      - "Hitung rata-rata tiap bot."
+      - "Hitung sebaran: rata-rata jarak tiap angka ke rata-ratanya."
+      - "Bagi rata-rata dengan sebaran. Angka besar = lebih baik."
+
+  - id: "s2-10"
+    judul: "Portofolio Tiga Saham"
+    emoji: "🧩"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Portofoliomu Rp1.000.000: BBRI 400.000, TLKM 350.000, CUAN 250.000.
+      Hari ini: BBRI −2%, TLKM +8%, CUAN −12%.
+      Berapa persen return portofoliomu hari ini?
+    pilihan:
+      - "−2,0% — rata-rata (−2 + 8 − 12) ÷ 3"
+      - "−1,0% — 0,40×(−2) + 0,35×8 + 0,25×(−12)"
+      - "+2,8% — untung TLKM saja"
+      - "−6,0% — jumlah semua return"
+    jawaban: 1
+    penjelasan: |
+      Hitung kontribusi per saham: BBRI 0,40 × (−2) = −0,8%. TLKM 0,35 × 8 = +2,8%.
+      CUAN 0,25 × (−12) = −3,0%. Total = −0,8 + 2,8 − 3,0 = **−1,0%**.
+      Cek dalam rupiah: BBRI −8.000, TLKM +28.000, CUAN −30.000 → total −10.000 dari 1 juta = −1,0%.
+      Opsi −2,0% merata-ratakan tiga return tanpa bobot dana.
+      Opsi +2,8% cuma melihat saham yang naik. Opsi −6,0% menjumlahkan return mentah.
+      Dana besar pengaruhnya besar. Itulah return portofolio sebenarnya.
+    kode: |
+      untung_bbri = 0.40 * -2
+      untung_tlkm = 0.35 * 8
+      untung_cuan = 0.25 * -12
+      return_total = untung_bbri + untung_tlkm + untung_cuan
+      print(f"Return portofolio = {return_total:.1f}%")   # -1.0%
+    hasil:
+      - ret: -1.5
+        dd: 1.5
+        win: 25
+        note: "Panik jual semua saat −1%. TLKM lanjut +5% minggu depan tanpa kamu, plus biaya transaksi."
+      - ret: 2.5
+        dd: 1.0
+        win: 75
+        note: "Benar: −1,0% hari ini. TLKM & BBRI masih sehat — tahan, evaluasi CUAN. Minggu depan +2,5%."
+      - ret: 1.0
+        dd: 2.0
+        win: 35
+        note: "Fokus TLKM, tambah porsi besar: TLKM koreksi −3% minggu depan. Konsentrasi menghantam."
+      - ret: -3.5
+        dd: 3.5
+        win: 20
+        note: "Tambah CUAN di 'diskon': ada masalah fundamental, CUAN lanjut −5%. Menangkap pisau jatuh."
+    petunjuk:
+      - "Kalikan return tiap saham dengan bobot dananya."
+      - "Jumlahkan ketiga kontribusi."
+      - "Cek juga dalam rupiah: −8.000 + 28.000 − 30.000."

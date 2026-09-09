@@ -264,3 +264,258 @@ skenario:
     petunjuk:
       - "Bandingkan target maksimum dengan jarak stop."
       - "Win rate 55% butuh RR minimal berapa agar EV positif?"
+
+
+  - id: "s17-6"
+    judul: "Stop Terlalu Dekat"
+    emoji: "🎐"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ETH 3.000, ATR(14) = 90 (3% per hari). Artinya harga biasanya bergerak ±90
+      poin sehari. Kamu entry long dan pasang stop 60 poin (2%) di bawah entry.
+      Apa yang akan terjadi?
+    pilihan:
+      - "Stop 60 poin bagus — ketat berarti aman"
+      - "Stop kena noise: 1 hari normal = 90 poin. 60 poin = 0,7×ATR, terlalu dekat. Standar 2×ATR = 180 poin"
+      - "Stop 60 poin terlalu jauh — pasang 30 poin"
+      - "Tidak perlu stop — ATR kecil"
+    jawaban: 1
+    penjelasan: |
+      ATR 90 = harga bisa bergerak 90 poin sehari tanpa "alasan". Stop 60 poin =
+      0,7×ATR: noise normal sehari saja sudah melewatinya. Akibatnya stop palsu:
+      kamu keluar di −2%, lalu harga lanjut sesuai analisamu. Standar 2×ATR = 180
+      poin: butuh 2 hari pergerakan normal melawanmu — baru itu "salah arah". Stop
+      lebih ketat dari 1×ATR hampir selalu kena getar. Tanpa stop = melanggar
+      aturan risiko. Ukur stop dari napas pasar (ATR), bukan dari harapanmu.
+    kode: |
+      atr = 90
+      stop = 2 * atr
+      print(f"Stop standar: {stop} poin (2x ATR)")
+      print(f"Stop 60 poin = {60/atr:.1f}x ATR — kena noise harian")
+    hasil:
+      - ret: -3.0
+        dd: 3.0
+        win: 20
+        note: "Stop 60 kena di hari ke-2 (noise 2,5%), harga lanjut +6% tanpa kamu."
+      - ret: 6.5
+        dd: 2.0
+        win: 71
+        note: "Stop 180: 3 trade, 2 profit, 1 kena stop sungguhan. Net +6,5%."
+      - ret: -4.5
+        dd: 4.5
+        win: 18
+        note: "Stop 30 (1%): kena di hari pertama. Stop palsu beruntun, −4,5% bulan itu."
+      - ret: -8.0
+        dd: 8.0
+        win: 12
+        note: "Tanpa stop: berita jelek, ETH −10%. Rugi jauh lebih besar dari rencana."
+    petunjuk:
+      - "Satu hari normal = berapa poin?"
+      - "Stop 60 poin itu berapa × ATR?"
+  - id: "s17-7"
+    judul: "Dua Saham, Satu Risiko"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Equity $1.000, aturan risk 2% ($20) per trade. Saham A ATR 2%, saham B ATR
+      5%. Stop 2×ATR masing-masing. Berapa ukuran posisi untuk tiap saham, dan apa
+      artinya?
+    pilihan:
+      - "A $500, B $200 — risiko keduanya sama $20. ATR menyeimbangkan: saham liar dapat posisi kecil"
+      - "A $500, B $500 — ukuran sama biar adil"
+      - "A $200, B $500 — B lebih volatile = lebih banyak peluang, beri lebih besar"
+      - "A $1.000, B $1.000 — dua-duanya aman, stop sudah 2×ATR"
+    jawaban: 0
+    penjelasan: |
+      Stop A = 2 × 2% = 4%. Stop B = 2 × 5% = 10%. Ukuran = risk ÷ stop: A = $20 ÷
+      0,04 = $500. B = $20 ÷ 0,10 = $200. Kalau stop kena, dua-duanya rugi $20 —
+      persis aturan. Ini keajaiban ATR: saham yang 2,5x lebih liar otomatis dapat
+      posisi 2,5x lebih kecil. Ukuran sama untuk semua saham = saham liar diam-diam
+      melanggar aturan (5% stop × $500 = $25, bukan $20). "B lebih besar karena
+      volatile" = membalik logika risiko. ATR menyamakan risiko antar saham: risiko
+      per trade selalu $20 di dunia mana pun.
+    kode: |
+      risk = 20
+      size_a = risk / (2 * 0.02)
+      size_b = risk / (2 * 0.05)
+      print(f"Saham A (ATR 2%): ${size_a:.0f} | Saham B (ATR 5%): ${size_b:.0f}")
+    hasil:
+      - ret: 7.0
+        dd: 2.0
+        win: 70
+        note: "Dua-duanya jalan: A +8%, B kena stop −$20. Net +7% — risiko terjaga di dua dunia."
+      - ret: -2.5
+        dd: 6.0
+        win: 25
+        note: "B $500: stop kena = $50 = 5% equity. Dua kali aturan. Bulan jelek = −10%."
+      - ret: -5.0
+        dd: 10.0
+        win: 15
+        note: "Posisi terbesar di saham paling liar: B kena stop 2x beruntun = −10% equity."
+      - ret: -10.0
+        dd: 12.0
+        win: 10
+        note: "Full equity di dua saham: koreksi datang bersamaan = −10%."
+    petunjuk:
+      - "Stop = 2×ATR: 4% dan 10%."
+      - "Ukuran = $20 ÷ stop."
+      - "Risiko per trade kedua saham harus sama, yaitu berapa?"
+  - id: "s17-8"
+    judul: "Sebelum Rilis Besar"
+    emoji: "📰"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      ATR CUAN cuma 1% — pasar tenang 2 minggu menunggu keputusan bank sentral AS
+      malam ini. Histori 12 rilis: 5 kali harga gap lebih dari 2% saat pembukaan.
+      Stop standarmu 2×ATR = 2%. Kamu dapat sinyal entry sore ini. Keputusan
+      terbaik?
+    pilihan:
+      - "Entry sekarang — ATR rendah berarti pasar aman"
+      - "Tunda entry sampai besok — probabilitas gap menembus stop 42%, stop 2% bisa dieksekusi jauh lebih buruk"
+      - "Entry dengan stop 1% — biar loss kecil kalau gap"
+      - "Entry 2x lipat — kalau gap bagus, untung besar"
+    jawaban: 1
+    penjelasan: |
+      ATR rendah sebelum rilis besar = pasar menahan napas, bukan tenang. Begitu
+      rilis, volatilitas meledak. Histori: 5 dari 12 rilis (42%) menggerakkan harga
+      lebih dari 2% — stop 2% bisa dieksekusi di −4% atau −5% karena gap. Sinyal
+      sore ini berdasarkan data lama; besok pagi ada data baru (harga pasca-rilis)
+      — sinyalnya lebih baik. Tunda = membayar sedikit slippage, menghindari
+      lotere. Stop 1% lebih parah: kena noise biasa. Entry 2x lipat sebelum event =
+      menggandakan risiko lotere. Aturan: jangan entry baru tepat sebelum event
+      besar.
+    kode: |
+      gap_besar = 5
+      total = 12
+      prob = gap_besar / total
+      print(f"Probabilitas gap > stop: {prob*100:.0f}%")
+      print("ATR 1% = tenang SEBELUM event, bukan kondisi normal")
+    hasil:
+      - ret: -4.5
+        dd: 4.5
+        win: 20
+        note: "Rilis hawkish: gap −4,2%. Stop 2% dieksekusi di −4,2%. Risk 2% equity jadi 4,2%."
+      - ret: 3.0
+        dd: 1.0
+        win: 65
+        note: "Besok ATR baru 3%. Entry dengan stop 6% (2×ATR baru) dan size kecil: +3% bulan itu."
+      - ret: -2.0
+        dd: 2.0
+        win: 22
+        note: "Stop 1% kena noise pre-rilis duluan. Kamu keluar, event bagus — ketinggalan."
+      - ret: -8.0
+        dd: 8.0
+        win: 12
+        note: "2x lipat sebelum event: gap −4,2% dikali 2 = −8,4%. Lotere kalah."
+    petunjuk:
+      - "5 dari 12 rilis gap > 2% — berapa persen?"
+      - "ATR rendah sebelum event = tenang atau menahan napas?"
+  - id: "s17-9"
+    judul: "Posisi di Pita Bollinger"
+    emoji: "📶"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      CUAN: MA20 = 4.000, band Bollinger (MA20 ± 2 std): atas 4.160, bawah 3.840.
+      Empat bulan terakhir harga memantul 3.850-4.150, ADX 15. Harga sekarang
+      4.140. %B = (harga − band bawah) ÷ (band atas − band bawah) = 0,94. RSI 65.
+      Kamu mau main range. Rencana terbaik?
+    pilihan:
+      - "Long — mendekati band atas = breakout"
+      - "Short 4.140, stop 4.180 (di atas band), target 4.000 (middle): risk 40, reward 140, RR 3,5"
+      - "Short tanpa stop — band atas = resistance pasti"
+      - "Skip — %B 0,94 sudah 6x terjadi, yang ke-7 pasti tembus"
+    jawaban: 1
+    penjelasan: |
+      ADX 15 = tidak ada trend = regime range. Di range: jual di daerah band atas,
+      beli di band bawah. %B 0,94 = harga sudah menempuh 94% jarak dari bawah ke
+      atas — dekat ekstrem atas. Entry short 4.140, stop di atas band (4.180):
+      kalau breakout beneran, keluar −40 poin (0,97%). Target middle band 4.000:
+      reward 140 poin. RR = 140 ÷ 40 = 3,5. Enam kali menyentuh atas dan bertahan =
+      bukti range kuat, bukan alasan "pasti tembus" (gambler's fallacy). Long di
+      band atas = membeli di resistance range. Tanpa stop = melanggar aturan. %B
+      tinggi di range = zona jual, bukan beli.
+    kode: |
+      entry = 4140
+      stop = 4180
+      target = 4000
+      risk = stop - entry
+      reward = entry - target
+      print(f"Risk {risk} poin | Reward {reward} poin | RR {reward/risk:.1f}")
+    hasil:
+      - ret: -3.0
+        dd: 4.0
+        win: 20
+        note: "Long di 4.140: harga balik ke 3.980. Stop di bawah MA20 kena. Range tetap range."
+      - ret: 3.4
+        dd: 1.0
+        win: 70
+        note: "Harga balik: target 4.000 kena dalam 5 hari. +140 poin (3,4%) dengan risk 40."
+      - ret: -1.9
+        dd: 2.5
+        win: 25
+        note: "Harga sempat 4.220: tanpa stop kamu panik dan tutup −1,9%. Itu judi, bukan sistem."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Gambler's fallacy: 6x bertahan = range makin kuat. Peluang RR 3,5 dilewatkan."
+    petunjuk:
+      - "%B 0,94 di regime range: harga ada di zona apa?"
+      - "Hitung RR: (4.180 − 4.140) vs (4.140 − 4.000)."
+  - id: "s17-10"
+    judul: "Stop Palsu dalam Angka"
+    emoji: "🎣"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Backtest 3 tahun TLKM, dua versi stop. Stop fixed 5%: 90 trade, 68% kena stop
+      lalu harga balik (stop palsu), win 40%, win rata-rata +3,2%, loss −5%. Stop
+      2×ATR: 74 trade, stop palsu 45%, win 55%, win rata-rata +3,5%, loss −4,8%.
+      Berapa EV per trade masing-masing, dan apa kesimpulannya?
+    pilihan:
+      - "Fixed −1,72% vs ATR −0,23% — dua-duanya negatif, stop tidak penting"
+      - "Fixed −1,72% vs ATR −0,23% — ATR 7x lebih baik tapi masih negatif: tambah filter arah, stop fixed = bunuh diri pelan"
+      - "Fixed +0,6% — lebih banyak trade lebih untung"
+      - "ATR +3,5% — pakai ATR, selesai"
+    jawaban: 1
+    penjelasan: |
+      EV = win% × win rata-rata − loss% × loss rata-rata. Fixed: 0,4×3,2 − 0,6×5 =
+      1,28 − 3,0 = −1,72% per trade. ATR: 0,55×3,5 − 0,45×4,8 = 1,93 − 2,16 =
+      −0,23%. Stop fixed kalah telak: 68% stop palsu — keluar tepat sebelum harga
+      balik. ATR 7x lebih baik, TAPI masih negatif: strategi dasarnya belum punya
+      edge. Pelajaran: stop 2×ATR menyelamatkanmu dari stop palsu, tapi stop tidak
+      menciptakan edge. EV masih negatif? Tambah filter arah (trend) atau akui
+      strategi ini gagal. "+3,5%" = lupa loss. "+0,6%" = salah hitung.
+    kode: |
+      ev_fixed = 0.4 * 3.2 - 0.6 * 5.0
+      ev_atr = 0.55 * 3.5 - 0.45 * 4.8
+      print(f"EV fixed 5%: {ev_fixed:+.2f}% | EV 2xATR: {ev_atr:+.2f}%")
+    hasil:
+      - ret: -12.0
+        dd: 10.0
+        win: 20
+        note: "Kamu abaikan: −1,72% per trade selama 2 tahun = akun menyusut parah."
+      - ret: 5.0
+        dd: 4.0
+        win: 66
+        note: "Ganti 2×ATR + filter ADX: stop palsu turun ke 30%, EV jadi +0,4%. Setahun +5%."
+      - ret: -15.0
+        dd: 12.0
+        win: 15
+        note: "Fixed dipertahankan: 90 trade × −1,72% — makin sering, makin cepat rugi."
+      - ret: -2.5
+        dd: 5.0
+        win: 30
+        note: "2×ATR saja tanpa filter: −0,23% per trade = masih bocor. Setahun −2,5%."
+    petunjuk:
+      - "EV = win% × win rata-rata − loss% × loss rata-rata, untuk dua versi stop."
+      - "Stop palsu 68% vs 45%: apa akibatnya ke EV?"
+      - "EV masih negatif setelah ganti stop — apa artinya?"

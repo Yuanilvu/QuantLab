@@ -153,8 +153,8 @@ skenario:
   - id: "s26-3"
     judul: "Pandas vs Manual"
     emoji: "⚔️"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Data 10.000 baris (tanggal, harga, volume). Tugas: (1) rata-rata harga, (2) total volume, (3) hari dengan harga > 5.000. Tanpa pandas butuh ~30 baris loop. Dengan pandas?
@@ -276,6 +276,226 @@ skenario:
     petunjuk:
       - "Data urut: lama di atas, baru di bawah. Harga kemarin ada di ujung mana?"
       - "tail = ekor = akhir = terbaru."
+  - id: "s26-6"
+    judul: "Baca Kode: Volume Terbesar"
+    emoji: "⏫"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "CUAN"], "vol": [120000, 80000, 25000]})
+      print(df["vol"].max())
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "120000"
+      - "80000"
+      - "225000"
+      - "3"
+    jawaban: 0
+    penjelasan: |
+      `df["vol"]` = kolom volume: 120.000, 80.000, 25.000. `.max()` mengambil nilai TERBESAR = 120.000 (milik TLKM). 80.000 = nilai tengah (BBRI). 225.000 = jumlah (sum) semua volume — bukan maksimum. 3 = jumlah baris. Pola kolom: ambil kolom → operasi (.max(), .min(), .mean(), .sum()). Volume terbesar sering dipakai untuk cek likuiditas: saham dengan volume kecil = eksekusi lebih berisiko.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "CUAN"], "vol": [120000, 80000, 25000]})
+      print(df["vol"].max())   # 120000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 120.000 — volume TLKM terbesar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "80.000 = volume BBRI, bukan maksimum."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "225.000 = jumlah semua volume (.sum())."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "3 = banyak baris (len), bukan volume."
+    petunjuk:
+      - "df['vol'] mengambil kolom volume."
+      - ".max() = nilai terbesar, .sum() = jumlah."
+  - id: "s26-7"
+    judul: "Dua Syarat Sekaligus"
+    emoji: "🧩"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      DataFrame saham punya kolom `harga` dan `vol`. Kamu mau filter: harga > 4000 DAN vol > 50000. Kode mana yang benar?
+    pilihan:
+      - "`df[df.harga > 4000 and df.vol > 50000]`"
+      - "`df[(df['harga'] > 4000) & (df['vol'] > 50000)]`"
+      - "`df[df.harga > 4000 or df.vol > 50000]`"
+      - "`df[df['harga'] > 4000]`"
+    jawaban: 1
+    penjelasan: |
+      Dua kondisi = dua deretan True/False yang harus digabung. Di pandas, DAN = `&` (bukan kata `and`), dan tiap kondisi WAJIB dikurung: (kondisi1) & (kondisi2). Kurung diperlukan karena `&` dievaluasi lebih dulu daripada `>`. `and` = kata Python untuk nilai tunggal — dipakai di sini muncul error ambigu. `or` = ATAU (salah satu cukup) — artinya beda. Satu kondisi saja = filter tidak lengkap. Uji dengan data: TLKM 4000/120000 gagal syarat harga (4000 tidak > 4000), BBRI 4500/80000 lolos, CUAN 1500/25000 gagal → hasil cuma BBRI.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "CUAN"],
+                         "harga": [4000, 4500, 1500], "vol": [120000, 80000, 25000]})
+      lolos = df[(df["harga"] > 4000) & (df["vol"] > 50000)]
+      print(lolos["nama"].tolist())   # ['BBRI']
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "and untuk pandas = error ambigu. Yang benar: & dengan kurung."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: dua kondisi dikurung, digabung &: cuma BBRI yang lolos."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "or = cukup salah satu — TLKM (volume besar) ikut lolos padahal harga tidak > 4000."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Satu syarat saja: filter tidak lengkap, saham yang salah ikut masuk."
+    petunjuk:
+      - "DAN di pandas pakai &, dan tiap kondisi dalam kurung."
+      - "Cek per baris: TLKM harga 4000 tidak > 4000 → gugur."
+      - "Hasil: hanya BBRI."
+  - id: "s26-8"
+    judul: "Maksimum per Kolom"
+    emoji: "📑"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "UNVR"], "harga": [4000, 4500, 3000]})
+      print(df.max())
+      ```
+      Bot mau harga tertinggi. Apa yang tercetak, dan apa masalahnya?
+    pilihan:
+      - "4500 — benar, harga tertinggi"
+      - "UNVR dan 4500 — df.max() memberi maksimum TIAP kolom: kolom teks ikut dihitung. Bot harus df['harga'].max() = 4500"
+      - "Error — kolom nama tidak bisa dibandingkan"
+      - "12000 — jumlah semua harga"
+    jawaban: 1
+    penjelasan: |
+      df.max() TANPA pilih kolom menghitung per KOLOM. Kolom 'nama' (teks) ikut kena max → 'UNVR' (secara alfabet U > T). Kolom harga → 4500. Jadi cetakannya dua baris: nama UNVR, harga 4500 — bukan satu angka. Bot yang menyangka dapat "harga tertinggi" bingung membaca hasil ini. Tidak error: pandas menganggap teks bisa dibandingkan (leksikografis). Yang benar: `df['harga'].max()` = 4500 — pilih kolom dulu, baru agregasi. 12.000 = jumlah (sum). Aturan: selalu sebut kolomnya, kecuali memang mau ringkasan semua kolom sekaligus.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "UNVR"], "harga": [4000, 4500, 3000]})
+      print(df["harga"].max())   # 4500 — pilih kolom dulu!
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "df.max() mencetak DUA baris (nama + harga) — bukan cuma 4500."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: max per kolom, kolom teks ikut ('UNVR'). Pakai df['harga'].max()."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error — pandas membandingkan teks secara alfabet."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "12.000 = sum, bukan max."
+    petunjuk:
+      - "df.max() tanpa kolom = maksimum untuk TIAP kolom."
+      - "Kolom 'nama' ikut dihitung: mana yang 'terbesar' secara alfabet?"
+      - "Pilih kolom dulu: df['harga'].max()."
+  - id: "s26-9"
+    judul: "Porsi Nilai TLKM"
+    emoji: "🥧"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Portofolio: TLKM harga 4000 (200 lembar), BBRI harga 4500 (100 lembar), CUAN harga 1500 (100 lembar). Analyzer harus melapor: berapa PERSEN nilai portofolio ada di TLKM? (nilai = harga x lembar)
+    pilihan:
+      - "50% — TLKM 200 lembar dari total 400 lembar"
+      - "57,1% — nilai TLKM 800.000 dari total nilai 1.400.000"
+      - "40% — harga TLKM 4000 dari total harga 10.000"
+      - "33,3% — 1 dari 3 saham"
+    jawaban: 1
+    penjelasan: |
+      Nilai tiap posisi: TLKM 4000 x 200 = 800.000; BBRI 4500 x 100 = 450.000; CUAN 1500 x 100 = 150.000. Total = 1.400.000. Porsi TLKM = 800.000 / 1.400.000 = 57,1%. Porsi LEMBAR (200/400 = 50%) salah: lembar tidak mencerminkan uang karena harga tiap saham beda. Porsi HARGA (4000/10.000 = 40%) juga salah: harga per lembar bukan nilai posisi. 33,3% = bagi rata tiga saham. Analyzer yang benar: buat kolom nilai (harga x lembar) dulu, lalu porsi tiap posisi dari total. Porsi nilai = dasar membaca konsentrasi risiko: satu posisi 57% berarti portofolio sangat bergantung pada TLKM.
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"nama": ["TLKM", "BBRI", "CUAN"],
+                         "harga": [4000, 4500, 1500], "lembar": [200, 100, 100]})
+      df["nilai"] = df["harga"] * df["lembar"]
+      porsi_tlkm = df["nilai"][0] / df["nilai"].sum() * 100
+      print(f"Porsi TLKM: {porsi_tlkm:.1f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Porsi lembar ≠ porsi nilai — harga tiap saham berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 800.000 / 1.400.000 = 57,1%."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4000/10.000 = porsi harga per lembar — jumlah lembarnya tidak masuk hitungan."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bagi rata mengabaikan ukuran posisi masing-masing."
+    petunjuk:
+      - "Nilai posisi = harga x lembar. Hitung tiga-tiganya."
+      - "Porsi = nilai TLKM ÷ total nilai semua posisi."
+      - "800.000 ÷ 1.400.000 x 100 = ?"
+  - id: "s26-10"
+    judul: "Berapa Hari di Atas Rata-rata?"
+    emoji: "🧮"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Close TLKM 5 hari: [4000, 3500, 4200, 3800, 4100]. Bot mau tahu: berapa PERSEN hari yang close-nya DI ATAS rata-rata 5 hari itu? Kode mana yang benar?
+    pilihan:
+      - "`(df['close'] > df['close'].mean()).mean() * 100`"
+      - "`df['close'].mean() * 100`"
+      - "`(df['close'] < df['close'].mean()).mean() * 100`"
+      - "`(df['close'] > 3000).mean() * 100`"
+    jawaban: 0
+    penjelasan: |
+      Rata-rata = (4000 + 3500 + 4200 + 3800 + 4100) / 5 = 19.600 / 5 = 3.920. Hari di atasnya: 4000, 4200, 4100 → 3 dari 5 hari = 60%. Kode: `df['close'] > mean` → [True False True False True]; `.mean()` dari deretan boolean = 3/5 = 0,6 (True dihitung 1); x100 = 60. Trik boolean mean: menghitung persentase tanpa len(). Opsi lain: mean x100 = 392.000? itu bukan persentase hari. Tanda `<` = hari di BAWAH rata-rata = 40%. `> 3000` = semua 5 hari lolos = 100% — salah batas (rata-ratanya 3920, bukan 3000). Pola ini dipakai untuk win rate dan "hari di atas normal".
+    kode: |
+      import pandas as pd
+      df = pd.DataFrame({"close": [4000, 3500, 4200, 3800, 4100]})
+      di_atas = (df["close"] > df["close"].mean()).mean() * 100
+      print(f"Hari di atas rata-rata: {di_atas:.0f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 3 dari 5 hari = 60%."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Itu rata-rata harga (3920), bukan persentase hari."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tanda < = hari di bawah rata-rata: 2 dari 5 = 40%."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Batas 3000: semua lolos = 100%. Rata-ratanya 3920, bukan 3000."
+    petunjuk:
+      - "Rata-rata 5 hari = 19.600 / 5 = 3.920."
+      - "Hari mana yang > 3.920? Ada 3."
+      - "Boolean .mean() = jumlah True ÷ total."
 soal:
   - id: "p26-1"
     judul: "DataFrame Pertamamu"

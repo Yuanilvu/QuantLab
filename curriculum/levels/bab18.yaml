@@ -268,3 +268,258 @@ skenario:
     petunjuk:
       - "ADX 31 dan ADX 12 bilang apa tentang tiap saham?"
       - "Strategi apa yang hidup di regime trending dan di regime range?"
+
+
+  - id: "s18-6"
+    judul: "Pilih Bot"
+    emoji: "🤖"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Dua bot siap jalan di IHSG. Bot Momentum: beli breakout 20-hari high. Bot
+      Reversion: beli saat RSI < 30 di zona support. Dua bulan terakhir IHSG naik
+      dengan puncak lebih tinggi, ADX 28 dan naik. Bot mana yang kamu aktifkan?
+    pilihan:
+      - "Bot Reversion — RSI < 30 lebih sering memberi sinyal"
+      - "Bot Momentum — ADX 28 naik = trending; momentum hidup di trend, reversion mati di trend"
+      - "Dua-duanya — biar sinyalnya lengkap"
+      - "Tidak ada — pasar tidak bisa diprediksi"
+    jawaban: 1
+    penjelasan: |
+      ADX 28 dan naik = regime trending. Momentum (breakout, puncak lebih tinggi)
+      hidup di sini. Mean reversion (beli RSI < 30) justru berbahaya: di uptrend,
+      "turun ke RSI 30" jarang; kalau sampai terjadi, itu awal kehancuran trend,
+      bukan diskon. Menjalankan dua bot = bot reversion beli di setiap koreksi
+      kecil dan kena stop. Pertanyaan pertama bukan "bot mana yang bagus", tapi
+      "pasar sedang apa". Jawab regime dulu, baru pilih senjata.
+    kode: |
+      adx = 28
+      if adx > 25:
+          print("Regime trending — aktifkan Bot Momentum")
+          print("Bot Reversion: pause, pisau jatuh di trend")
+    hasil:
+      - ret: -4.0
+        dd: 6.0
+        win: 20
+        note: "Bot reversion beli 3 koreksi, 3x kena stop. Momentum +9% lewat tanpa kamu."
+      - ret: 9.0
+        dd: 2.5
+        win: 73
+        note: "Bot momentum: 4 breakout, 3 profit. +9% dalam 2 bulan."
+      - ret: -1.0
+        dd: 5.0
+        win: 30
+        note: "Dua bot bertarung: reversion −4% menutup profit momentum +3%. Net −1%."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Aman, tapi regime trending yang jelas terlewat. Momentum kuat cuma 2-3x setahun."
+    petunjuk:
+      - "ADX 28 bilang pasar sedang apa?"
+      - "Strategi apa yang hidup di trending? Yang mati di trending?"
+  - id: "s18-7"
+    judul: "Dua Bot, Satu Saham"
+    emoji: "🥊"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      TLKM breakout 52-week high dengan volume 2x. Bot Momentum: BUY. Bot
+      Reversion (RSI 76 lebih dari 70): SELL — "overbought". ADX 32, MA20 di atas
+      MA50, slope naik. Bot mana yang benar?
+    pilihan:
+      - "Bot Reversion — RSI 76 jelas overbought"
+      - "Bot Momentum — di uptrend kuat (ADX 32, MA slope naik), RSI 76 = kekuatan, bukan kejenuhan"
+      - "Dua-duanya — jual sekarang, beli lagi nanti"
+      - "Tidak ada — sinyal berlawanan = pasar bingung"
+    jawaban: 1
+    penjelasan: |
+      RSI > 70 = "overbought" menurut buku, tapi di uptrend kuat RSI bisa tinggal di
+      60-80 berbulan-bulan. TLKM: ADX 32, MA20 di atas MA50 slope naik, breakout
+      dengan volume = trend sehat. RSI 76 di sini = permintaan kuat, bukan
+      kejenuhan. Bot reversion tanpa filter trend akan menjual di awal setiap leg
+      naik. Bot momentum benar: ikut trend. Jual sekarang dan beli lagi nanti =
+      mencoba timing, kena biaya 2x, dan berisiko tidak kebelian lagi. Sinyal
+      berlawanan bukan "pasar bingung" — itu dua filosofi; regime yang memutuskan.
+    kode: |
+      adx = 32
+      rsi = 76
+      if adx > 25:
+          print("Trend kuat — RSI 76 = kekuatan, sinyal jual reversion OFF")
+    hasil:
+      - ret: -6.0
+        dd: 6.0
+        win: 18
+        note: "Bot reversion jual di 4.200, harga lanjut 4.650. Kamu kehilangan 10% leg."
+      - ret: 10.0
+        dd: 2.0
+        win: 74
+        note: "Momentum: +10% sebelum koreksi pertama. RSI tinggi di trend = teman."
+      - ret: 3.0
+        dd: 3.5
+        win: 30
+        note: "Jual dan beli lagi: kena biaya 2x dan salah timing. Cuma +3% dari leg 10%."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak trading = tidak rugi, tapi analisis 'bingung' salah: regime sudah jelas trending."
+    petunjuk:
+      - "RSI 76 di uptrend kuat artinya apa?"
+      - "Regime ADX 32: filosofi mana yang berlaku?"
+  - id: "s18-8"
+    judul: "MA Datar, Struktur Turun"
+    emoji: "🛷"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      ALII 8 bulan: puncak turun 2.100 → 1.900, dasar turun 1.950 → 1.750 (lower
+      highs dan lower lows pelan). MA200 datar di 1.900. RSI 32. Kamu mau "beli di
+      support 1.750-1.800" karena MA datar = range. Benarkah?
+    pilihan:
+      - "Benar — MA200 datar = sideways, beli di support"
+      - "Salah — lower highs/lows = downtrend gradual. MA200 datar cuma karena rata-rata 200 hari. Jangan tangkap pisau pelan"
+      - "Benar — RSI 32 = oversold, pasti balik"
+      - "Short — semua saham yang MA-nya datar akan turun"
+    jawaban: 1
+    penjelasan: |
+      MA200 datar karena dia rata-rata 200 hari — termasuk harga-harga lama yang
+      lebih tinggi. Dalam 8 bulan terakhir strukturnya jelas: puncak dan dasar
+      makin rendah = downtrend gradual. Ini bukan range (harga bolak-balik di zona
+      sama), tapi trend turun pelan. "Support" 1.750 sedang diuji ulang — bukan
+      tempat beli. MA alat bantu; struktur harga (higher high/low) lebih jujur. RSI
+      32 di downtrend bisa rendah berbulan-bulan. Yang benar: tunggu struktur
+      berubah — puncak lebih tinggi atau MA200 mulai naik. Short juga belum tentu:
+      trend pelan = reward kecil, risiko bounce.
+    kode: |
+      ma200 = 1900
+      puncak_awal = 2100
+      puncak_sekarang = 1900
+      if puncak_sekarang < puncak_awal:
+          print("Lower highs dan lows = downtrend, walau MA200 datar")
+    hasil:
+      - ret: -8.0
+        dd: 8.0
+        win: 18
+        note: "Support 1.750 jebol pelan: 1.650 tiga bulan kemudian. −8% sebelum kamu cut."
+      - ret: 5.0
+        dd: 1.5
+        win: 66
+        note: "Kamu menunggu. Bulan 9: higher low + MA200 mulai naik. Entry 1.780, +5%."
+      - ret: -8.0
+        dd: 8.0
+        win: 15
+        note: "RSI 32 di downtrend bisa tinggal rendah berbulan-bulan. −8%."
+      - ret: -3.0
+        dd: 4.0
+        win: 20
+        note: "Short di downtrend pelan: reward kecil, bounce 5% bulan ini menyapu stop."
+    petunjuk:
+      - "Lower highs + lower lows = struktur apa?"
+      - "Kenapa MA200 bisa datar padahal harga turun 8 bulan?"
+  - id: "s18-9"
+    judul: "Lima Trade Pisau"
+    emoji: "🩹"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Bot mean reversion, 100 trade setahun: 70 win +1,5%; 25 loss −3%; 5 loss
+      −12% — lima loss terakhir terjadi saat ADX > 25 (harga trending, bot melawan
+      trend). Hitung EV total, lalu EV kalau bot dipasangi filter "hanya trade saat
+      ADX < 20".
+    pilihan:
+      - "Tanpa filter −0,3%/trade (rugi); dengan filter +0,3%/trade — 5 trade pisau mengubah strategi untung jadi rugi"
+      - "Tanpa filter +0,3%; dengan filter +1,5% — filter selalu menaikkan EV"
+      - "Sama saja — EV dihitung per trade, filter tidak mengubah apa-apa"
+      - "Tanpa filter −0,3% — buang bot, mean reversion tidak bekerja"
+    jawaban: 0
+    penjelasan: |
+      Tanpa filter: 70×1,5 = +105. 25×(−3) = −75. 5×(−12) = −60. Total = −30 →
+      −0,3% per trade: RUGI. Padahal win rate 70%! Lima trade pisau (−60)
+      menghapus 57% dari total profit normal (+105). Dengan filter ADX < 20, lima
+      trade itu tidak pernah diambil: +105 − 75 = +30 → +0,3% per trade: UNTUNG.
+      Satu-satunya yang berubah = 5 trade. Ini ciri mean reversion: win rate tinggi
+      menutupi ekor kiri (loss besar saat melawan trend). Filter regime bukan
+      hiasan — dia penentu hidup-mati strategi ini. "Buang bot" = membuang strategi
+      yang sehat setelah difilter.
+    kode: |
+      total = 70 * 1.5 - 25 * 3 - 5 * 12
+      bersih = 70 * 1.5 - 25 * 3
+      print(f"Tanpa filter: {total:+.1f}% ({total/100:+.2f}%/trade)")
+      print(f"Filter ADX < 20: {bersih:+.1f}% ({bersih/100:+.2f}%/trade)")
+    hasil:
+      - ret: 18.0
+        dd: 8.0
+        win: 70
+        note: "Bot difilter: trade pisau hilang. Setahun +18% bersih setelah biaya."
+      - ret: -18.0
+        dd: 18.0
+        win: 15
+        note: "Bot tanpa filter: pisau −12% datang 2x setahun. Net −18%."
+      - ret: -18.0
+        dd: 18.0
+        win: 18
+        note: "Filter mengubah segalanya: −30 vs +30. Kamu salah hitung, bot tetap liar."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot dimatikan total: padahal +0,3%/trade valid setelah filter. Edge dibuang."
+    petunjuk:
+      - "Hitung total: 70×1,5 − 25×3 − 5×12 = ?"
+      - "Hitung lagi tanpa 5 trade pisau."
+      - "Kapan 5 trade pisau terjadi? Filter apa yang membuangnya?"
+  - id: "s18-10"
+    judul: "Rezim Menentukan Total"
+    emoji: "🧹"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Backtest 5 tahun bot momentum, 1.000 trade. Dipecah per regime: 400 trade
+      saat ADX > 25 (trend), rata-rata +0,4% per trade. 450 trade saat ADX < 20
+      (range), rata-rata −0,3%. 150 trade transisi, −0,25%. Berapa total bot tanpa
+      filter, dan kalau dipasang filter ADX > 25?
+    pilihan:
+      - "Total +160% — bot hebat, filter tidak perlu"
+      - "Total −12,5%; dengan filter +160% — bot bagus di trend, tapi 600 trade di regime salah membuatnya rugi total"
+      - "Total −12,5% — bot rusak, matikan"
+      - "Total +25% — hitung selisih win dan loss saja"
+    jawaban: 1
+    penjelasan: |
+      Bot momentum di regime yang benar: 400 × 0,4 = +160%. Di range: 450 × (−0,3)
+      = −135%. Transisi: 150 × (−0,25) = −37,5%. Total = 160 − 135 − 37,5 =
+      −12,5%: RUGI — padahal di trend dia +0,4% per trade yang sehat. Enam puluh
+      persen trade-nya terjadi di regime yang salah, dan di sana dia kalah
+      konsisten. Filter ADX > 25: buang 600 trade → +160% bersih 5 tahun.
+      Kesimpulan: strategi tidak bisa dinilai global — harus per regime. Bot ini
+      bukan rusak; dia salah tempat 60% waktunya. Matikan total = membuang +160%.
+      Win rate campuran = menutupi dua dunia.
+    kode: |
+      trend = 400 * 0.4
+      rugi_range = 450 * 0.3
+      rugi_transisi = 150 * 0.25
+      total = trend - rugi_range - rugi_transisi
+      print(f"Tanpa filter: {total:+.1f}% | Filter ADX>25: {trend:+.0f}%")
+    hasil:
+      - ret: -12.5
+        dd: 20.0
+        win: 20
+        note: "Tanpa filter live 2 tahun: −12%. Bot 'hebat' cuma benar di 40% waktunya."
+      - ret: 32.0
+        dd: 8.0
+        win: 74
+        note: "Filter regime: trade hanya saat ADX > 25. Total +160% dalam 5 tahun."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot dimatikan total: edge +160% di regime trend ikut mati. Butuh filter, bukan eksekusi."
+      - ret: -12.5
+        dd: 20.0
+        win: 15
+        note: "25% itu mencampur dua dunia. Bot tetap jalan di range: −12,5%."
+    petunjuk:
+      - "Hitung kontribusi tiap regime: jumlah trade × rata-rata per trade."
+      - "Jumlahkan: 160 − 135 − 37,5 = ?"
+      - "Apa yang terjadi kalau 600 trade regime salah dibuang?"

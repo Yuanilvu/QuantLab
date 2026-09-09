@@ -275,3 +275,260 @@ skenario:
     petunjuk:
       - "Beli di harga berapa? Jual dapat harga berapa?"
       - "Bandingkan: naik 5 poin vs spread 10 poin."
+
+  - id: "s9-6"
+    judul: "Dua Lot"
+    emoji: "💵"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu mau beli 2 lot TLKM di harga 4.000. Satu lot = 100 lembar.
+      Berapa rupiah total yang harus disiapkan, belum termasuk fee?
+    pilihan:
+      - "Rp800.000"
+      - "Rp400.000"
+      - "Rp8.000.000"
+      - "Rp80.000"
+    jawaban: 0
+    penjelasan: |
+      2 lot = 2 × 100 = 200 lembar. 200 × 4.000 = **Rp800.000**.
+      Opsi 400.000 = 1 lot saja. Opsi 8.000.000 = 2.000 lembar (20 lot) — salah kalikan 100.
+      Opsi 80.000 = 20 lembar.
+      Selalu tulis satuannya: lot → lembar → rupiah.
+      Di IDX semua transaksi memakai kelipatan lot. Satu lot TLKM di 4.000 = 400.000.
+    kode: |
+      jumlah_lot = 2
+      lembar_per_lot = 100
+      harga = 4000
+      total = jumlah_lot * lembar_per_lot * harga
+      print(f"Total 2 lot = Rp{total:,}")   # 800,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "800.000 benar: 200 lembar × 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "400.000 itu 1 lot. Kamu mau 2 lot."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "8 juta = 2.000 lembar. 2 lot cuma 200 lembar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "80.000 = 20 lembar. Satu lot = 100 lembar."
+    petunjuk:
+      - "2 lot = berapa lembar?"
+      - "Kalikan jumlah lembar dengan harga per lembar."
+
+  - id: "s9-7"
+    judul: "Spread dalam Persen"
+    emoji: "🔍"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      TLKM di 10.000: bid 9.990, ask 10.010. BBRI di 4.000: bid 3.990, ask 4.010.
+      Kamu sering masuk-keluar posisi (scalping). Eksekusi saham mana yang lebih murah?
+      Artinya: spread relatif mana yang lebih kecil?
+    pilihan:
+      - "Sama saja — spread keduanya 20 poin"
+      - "TLKM — 20 ÷ 10.000 = 0,2%, sedangkan BBRI 20 ÷ 4.000 = 0,5%"
+      - "BBRI — harga murah berarti spread-nya kecil"
+      - "Tidak bisa dibandingkan — harga dasarnya beda"
+    jawaban: 1
+    penjelasan: |
+      Spread poin sama (20), tapi harga dasar beda.
+      Spread relatif TLKM = 20 ÷ 10.000 = 0,2%. BBRI = 20 ÷ 4.000 = 0,5%.
+      Masuk TLKM 'hanya' membayar 0,2%, BBRI 0,5% — 2,5x lebih mahal.
+      Untuk scalper yang targetnya 1%, beda 0,3% itu penentu untung-rugi.
+      Opsi 'sama 20 poin' = membandingkan poin mentah — menyesatkan seperti membandingkan
+      kenaikan harga tanpa persen (Bab 1).
+      Justru di harga murah, spread 20 poin terasa lebih berat. Selalu ubah ke persen.
+    kode: |
+      spread_tlkm = 20 / 10_000 * 100
+      spread_bbri = 20 / 4_000 * 100
+      print(f"Spread TLKM = {spread_tlkm:.2f}%")   # 0.20%
+      print(f"Spread BBRI = {spread_bbri:.2f}%")   # 0.50%
+    hasil:
+      - ret: 1.0
+        dd: 0.0
+        win: 35
+        note: "Kamu anggap sama, main BBRI sering keluar-masuk. Spread 0,5% tiap eksekusi menggerus profit."
+      - ret: 5.0
+        dd: 0.0
+        win: 78
+        note: "Benar: TLKM 0,2% per eksekusi. Biaya tersembunyi paling kecil."
+      - ret: 2.0
+        dd: 0.0
+        win: 30
+        note: "BBRI di harga 4.000: 20 poin = 0,5%, dua setengah kali lebih mahal dari TLKM."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Bisa dibandingkan — ubah dulu ke persen dari harga. Itu bahasa yang adil."
+    petunjuk:
+      - "Ubah spread ke persen: 20 ÷ harga."
+      - "Harga lebih rendah dengan spread poin sama = persen lebih besar."
+
+  - id: "s9-8"
+    judul: "Dana untuk Beli Plus Fee"
+    emoji: "💳"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu mau beli 2 lot BRPT di harga 1.000. Fee beli 0,15% dari nilai transaksi.
+      Berapa dana minimal yang harus tersedia di rekening?
+    pilihan:
+      - "Rp200.300"
+      - "Rp200.000"
+      - "Rp203.000"
+      - "Rp300"
+    jawaban: 0
+    penjelasan: |
+      Nilai transaksi = 2 lot × 100 lembar × 1.000 = 200.000.
+      Fee = 0,15% × 200.000 = 300. Dana perlu = 200.000 + 300 = **Rp200.300**.
+      Opsi 200.000 = lupa fee — order ditolak kalau saldo kurang 300.
+      Opsi 203.000 = fee dianggap 1,5% (0,15% = 0,0015, bukan 0,015).
+      Opsi 300 = fee saja.
+      Broker memotong fee dari saldo saat order terisi.
+      Dana yang disiapkan = nilai transaksi + fee.
+    kode: |
+      jumlah_lot = 2
+      harga = 1000
+      nilai_transaksi = jumlah_lot * 100 * harga
+      fee = nilai_transaksi * 0.0015
+      dana_perlu = nilai_transaksi + fee
+      print(f"Dana perlu = Rp{dana_perlu:,.0f}")   # 200,300
+    hasil:
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 200.300. Saldo pas, order langsung terisi."
+      - ret: 3.0
+        dd: 0.0
+        win: 30
+        note: "Saldo 200.000 kurang 300 untuk fee. Order ditolak, harga lalu naik."
+      - ret: 4.0
+        dd: 0.0
+        win: 35
+        note: "203.000 itu kalau fee 1,5%. Fee sebenarnya 0,15% — dana 2.700 menganggur."
+      - ret: 1.0
+        dd: 0.0
+        win: 20
+        note: "300 cuma fee-nya. Nilai transaksi 200.000 belum dihitung."
+    petunjuk:
+      - "Nilai transaksi = 2 × 100 × 1.000."
+      - "Fee = 0,15% dari nilai transaksi."
+      - "Jumlahkan nilai transaksi dan fee."
+
+  - id: "s9-9"
+    judul: "Limit Order Kena Gap"
+    emoji: "⛔"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Jumat sore kamu pasang beli 2 lot TLKM, limit 4.000.
+      Senin ada kabar bagus: TLKM buka di 4.150 (gap naik) dan seharian tidak pernah turun
+      di bawah 4.080. Apa yang terjadi dengan ordermu?
+    pilihan:
+      - "Terisi di 4.000 — limit order jalan begitu bursa buka"
+      - "Tidak terisi — limit beli 4.000 di bawah harga pasar sepanjang hari; order harian batal di akhir sesi"
+      - "Terisi otomatis di 4.150 — pakai harga pasar saat buka"
+      - "Batal, dan kamu anggap TLKM sudah mahal — pindah ke saham lain"
+    jawaban: 1
+    penjelasan: |
+      Limit beli 4.000 hanya terisi kalau ada penjual di harga ≤ 4.000.
+      Harga terendah hari itu 4.080 — tidak pernah menyentuh 4.000.
+      Order tidak terisi, dan di IDX order harian umumnya batal di akhir sesi.
+      Kamu tidak punya posisi.
+      Opsi 'terisi di 4.000' = mitos: limit tidak mengejar harga.
+      Opsi 'terisi 4.150' = itu perilaku market order, bukan limit.
+      Gap = harga melompat saat buka. Order yang tampak 'tinggal menunggu' bisa meleset total.
+      Keputusan setelahnya: pasang ulang limit wajar, atau tunggu. Jangan panik beli market
+      di harga yang sudah meloncat 3,75%.
+    kode: |
+      limit_beli = 4000
+      harga_buka = 4150
+      harga_terendah = 4080
+      terisi = harga_terendah <= limit_beli
+      print(f"Order terisi? {terisi}")   # False
+    hasil:
+      - ret: 1.2
+        dd: 0.0
+        win: 30
+        note: "Kamu mengira posisi ada di 4.000. Baru sadar saat harga 4.250 — beli telat, untung tipis."
+      - ret: 4.9
+        dd: 0.0
+        win: 78
+        note: "Benar: order batal. Pasang ulang limit 4.100, terisi saat koreksi — jual di 4.300."
+      - ret: 3.6
+        dd: 0.0
+        win: 35
+        note: "Panik beli market 4.150: tetap untung ke 4.300, tapi bayar 50 poin lebih mahal."
+      - ret: 2.0
+        dd: 0.0
+        win: 25
+        note: "Pindah ke saham lain yang cuma +2% — TLKM yang kamu analisis malah naik 7,5%."
+    petunjuk:
+      - "Limit beli 4.000 butuh harga ≤ 4.000. Hari itu ada harga segitu?"
+      - "Order harian yang tidak terisi akan batal di akhir sesi."
+
+  - id: "s9-10"
+    judul: "Bid Harus Naik Berapa?"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Saham sepi: bid 3.990, ask 4.000. Kamu beli 1 lot di ask (4.000).
+      Fee beli 0,15%, fee jual 0,25% dari nilai transaksi.
+      Berapa poin minimal bid harus naik dari 3.990 supaya setelah semua fee kamu impas?
+    pilihan:
+      - "10 poin"
+      - "16 poin"
+      - "26 poin"
+      - "36 poin"
+    jawaban: 2
+    penjelasan: |
+      Modal keluar: 4.000 × 100 = 400.000 + fee beli 0,15% (600) = 400.600.
+      Jual di bid baru b: masuk b × 100, dipotong fee jual 0,25% → b × 100 × 0,9975 = b × 99,75.
+      Impas: b × 99,75 = 400.600 → b = 4.016,04. Bid harus naik dari 3.990 ke 4.016 = **26 poin**.
+      Rinciannya: 10 poin spread (beli di ask 4.000, jual di bid awal 3.990)
+      + 16 poin fee (0,4% × 4.000).
+      Opsi 10 = lupa fee. Opsi 16 = lupa spread: begitu kamu beli, jual cepatmu cuma 3.990.
+      Opsi 36 = spread dihitung dua kali — spread cuma sekali: beli di ask, jual di bid.
+    kode: |
+      harga_ask = 4000
+      harga_bid = 3990
+      biaya_keluar = harga_ask * 100 * 1.0015
+      harga_jual_min = biaya_keluar / (100 * 0.9975)
+      naik_minimal = harga_jual_min - harga_bid
+      print(f"Bid minimal = {harga_jual_min:.0f}")         # 4016
+      print(f"Bid harus naik sekitar {naik_minimal:.0f} poin")   # 26
+    hasil:
+      - ret: -0.4
+        dd: 0.0
+        win: 20
+        note: "Target 10 poin (bid 4.000): fee makan semuanya — rugi 0,4%."
+      - ret: -0.25
+        dd: 0.0
+        win: 30
+        note: "Target 16 poin (bid 4.006): lupa spread awal 10 poin — masih rugi 0,25%."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: tunggu bid 4.016. Tercapai saat puncak 4.018 — impas, modal utuh."
+      - ret: -0.15
+        dd: 0.0
+        win: 25
+        note: "Target 36 poin tak tercapai (puncak 4.018). Jual saat bid balik ke 4.010 — rugi 0,15%."
+    petunjuk:
+      - "Modal keluar = ask × 100 × 1,0015."
+      - "Uang masuk = bid × 100 × 0,9975."
+      - "Bid minimal = modal keluar ÷ 99,75. Bandingkan dengan 3.990."

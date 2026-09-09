@@ -279,3 +279,252 @@ skenario:
     petunjuk:
       - "Hitung EV kotor dulu. Lalu kurangi biaya 0,75%."
       - "EV bersih negatif atau positif?"
+
+  - id: "s3-6"
+    judul: "EV Satu Trade"
+    emoji: "🃏"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Bot scalper: 70% trade menang +3%, 30% kalah −3% (reward sama dengan risk).
+      Berapa nilai harapan (EV) bot ini per trade dalam persen?
+    pilihan:
+      - "+1,2%"
+      - "+2,1%"
+      - "+3,0%"
+      - "0%"
+    jawaban: 0
+    penjelasan: |
+      EV = (peluang menang × reward) − (peluang kalah × kerugian)
+      = 0,70 × 3 − 0,30 × 3 = 2,1 − 0,9 = **+1,2% per trade**.
+      Opsi 2,1% = cuma menghitung 0,70 × 3, lupa sisi kalah.
+      Opsi 3,0% = menganggap selalu menang. Opsi 0% = menganggap peluang 50:50.
+      EV +1,2% artinya: dalam banyak trade, rata-rata untung 1,2% per trade.
+      Satu-dua trade bisa kalah. EV baru terlihat setelah puluhan trade.
+    kode: |
+      peluang_menang = 0.7
+      reward = 3
+      kerugian = 3
+      ev = peluang_menang * reward - (1 - peluang_menang) * kerugian
+      print(f"EV = {ev:+.1f}% per trade")   # +1.2
+    hasil:
+      - ret: 1.2
+        dd: 0.0
+        win: 80
+        note: "Benar: EV +1,2%/trade. Dalam 20 trade ekspektasi +24%, minus drawdown wajar."
+      - ret: 0.5
+        dd: 0.0
+        win: 35
+        note: "Kamu pikir EV 2,1%, target evaluasi terlalu tinggi. Bot kena 3 loss beruntun, kamu matikan."
+      - ret: -0.5
+        dd: 0.0
+        win: 25
+        note: "Kamu pikir selalu menang 3%. Loss pertama datang, kamu panik dan matikan bot."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Kamu pikir EV 0, bot tidak dipasang. Padahal +1,2% per trade adalah edge yang layak."
+    petunjuk:
+      - "EV = (0,7 × 3) − (0,3 × 3)."
+      - "Hitung dua sisi dulu: menang dan kalah."
+
+  - id: "s3-7"
+    judul: "Sepuluh Trade, Pasti Menang?"
+    emoji: "🎰"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Strategimu win rate 50% (seperti koin). Kamu akan main 10 trade.
+      Berapa peluang paling tidak ada 1 trade yang menang?
+    pilihan:
+      - "50%"
+      - "99,9%"
+      - "100%"
+      - "10%"
+    jawaban: 1
+    penjelasan: |
+      Hitung kebalikannya dulu: peluang SEMUA 10 trade kalah = 0,5 × 0,5 × ... sepuluh kali
+      = 0,5¹⁰ = 0,00098 = 0,098% (sekitar 0,1%).
+      Peluang paling tidak 1 menang = 100% − 0,098% = **99,9%**.
+      Opsi 50% = peluang per trade, bukan untuk 10 trade.
+      Opsi 100% = salah: masih ada 0,1% kemungkinan 10 loss semua.
+      Opsi 10% = mengalikan tanpa dasar.
+      Kalau kejadian yang ditanya 'paling tidak satu', lebih gampang hitung 'nol sama sekali' dulu.
+    kode: |
+      peluang_semua_kalah = 0.5 ** 10
+      peluang_min_1_menang = (1 - peluang_semua_kalah) * 100
+      print(f"Peluang >=1 menang = {peluang_min_1_menang:.1f}%")   # 99.9
+    hasil:
+      - ret: -3.0
+        dd: 3.0
+        win: 30
+        note: "Kamu pikir tiap trade cuma 50%, ragu terus. Berhenti setelah 3 loss — padahal itu wajar."
+      - ret: 6.0
+        dd: 4.0
+        win: 75
+        note: "Benar: 99,9% paling tidak 1 menang. Main 10 trade disiplin, total +6%."
+      - ret: -2.0
+        dd: 2.0
+        win: 25
+        note: "'Pasti menang' → semua dana di trade pertama. Kalah, modal langsung jebol."
+      - ret: 1.0
+        dd: 5.0
+        win: 35
+        note: "Kamu pikir cuma 10%, main asal-asalan dengan ukuran tidak konsisten. Hasil tipis."
+    petunjuk:
+      - "Lebih mudah hitung peluang KEBALIKANNYA: semua 10 kalah."
+      - "0,5 pangkat 10 = ?"
+      - "Kurangi dari 100%."
+
+  - id: "s3-8"
+    judul: "Ambil Profit Cepat atau Tahan?"
+    emoji: "🧮"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Sinyal bagus muncul. Dua gaya eksekusi:
+      Gaya A: target +2%, win rate 65%, stop loss −2%.
+      Gaya B: target +5%, win rate 35%, stop loss −2%.
+      Kamu pilih gaya mana?
+    pilihan:
+      - "Gaya B — sekali menang +5% sudah menutup dua kali kalah −2%"
+      - "Gaya A — EV +0,6% per trade, lebih tinggi dari B yang +0,45%"
+      - "Gaya B — win rate 35% dengan reward 5% itu pola trader pro"
+      - "Sama saja — dua-duanya EV positif"
+    jawaban: 1
+    penjelasan: |
+      EV A = 0,65 × 2 − 0,35 × 2 = 1,3 − 0,7 = **+0,6% per trade**.
+      EV B = 0,35 × 5 − 0,65 × 2 = 1,75 − 1,3 = **+0,45% per trade**.
+      A unggul 0,15% per trade. Dalam 100 trade bedanya 15%.
+      Argumen 'sekali menang nutup 2 loss' lupa bahwa B cuma menang 35%.
+      Dalam 100 trade: B = 35 × (+5%) − 65 × (−2%) = +45%. A = 65 × (+2%) − 35 × (−2%) = +60%.
+      Reward besar itu menggoda. Frekuensi menang ikut menentukan. Hitung EV, bukan imajinasi.
+    kode: |
+      ev_a = 0.65 * 2 - 0.35 * 2
+      ev_b = 0.35 * 5 - 0.65 * 2
+      print(f"EV A = {ev_a:+.2f}% | EV B = {ev_b:+.2f}%")   # +0.60 | +0.45
+    hasil:
+      - ret: 4.5
+        dd: 8.0
+        win: 40
+        note: "Gaya B: 10 trade realisasi +4,5% dengan drawdown 8%. Deg-degan tiap loss beruntun."
+      - ret: 6.0
+        dd: 3.0
+        win: 65
+        note: "Benar: EV A lebih tinggi. 10 trade = +6% dengan DD 3%."
+      - ret: 4.5
+        dd: 8.0
+        win: 35
+        note: "Tetap B: hasil 4,5% lebih kecil dari 6%. 'Pola pro' tanpa hitung EV tetap kalah."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak eksekusi: dana menganggur. EV positif yang dilewatkan juga biaya."
+    petunjuk:
+      - "EV = (peluang menang × reward) − (peluang kalah × loss)."
+      - "Hitung EV dua gaya dulu, baru bandingkan."
+
+  - id: "s3-9"
+    judul: "Empat Loss Beruntun"
+    emoji: "🧯"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Botmu: win rate 60%, menang +5%, kalah −5%. Hari ini kena 4 loss beruntun.
+      Peluang 4 loss beruntun berapa persen? Kalau terjadi, modal 10 juta jadi berapa?
+      Kamu harus memutuskan: lanjut, berhenti, atau ubah strategi?
+    pilihan:
+      - "Peluang 2,56%; sisa Rp8.145.000 — wajar secara statistik, lanjut ukuran normal"
+      - "Peluang 2,56%; sisa Rp8.000.000 — strategi rusak, berhenti"
+      - "Peluang 6,4%; sisa Rp8.145.000 — besarkan posisi biar cepat balik"
+      - "Peluang 16%; sisa Rp8.000.000 — ganti strategi"
+    jawaban: 0
+    penjelasan: |
+      Peluang 4 loss beruntun = 0,4⁴ = 0,0256 = **2,56%**. Kecil tapi mungkin.
+      Rugi 4 loss berturut: 10.000.000 × 0,95⁴ = 10.000.000 × 0,8145 = **8.145.000** (−18,5%),
+      BUKAN 8.000.000: loss bertumpuk, 0,95 × 0,95 × 0,95 × 0,95, bukan 4 × 5% dari modal awal.
+      Opsi 6,4% = peluang 3 loss (0,4³). Opsi 16% = peluang 2 loss (0,4²).
+      EV bot tetap +1% per trade. Empat loss bukan bukti rusak — itu variance.
+      Keputusan benar: lanjut ukuran normal. Jangan balas dendam.
+    kode: |
+      peluang_4_loss = 0.4 ** 4
+      sisa_modal = 10_000_000 * (0.95 ** 4)
+      print(f"Peluang 4 loss = {peluang_4_loss * 100:.2f}%")   # 2.56%
+      print(f"Sisa modal = Rp{sisa_modal:,.0f}")   # 8,145,062
+    hasil:
+      - ret: 6.0
+        dd: 18.5
+        win: 72
+        note: "Benar: 4 loss itu 2,56%, wajar. Lanjut normal — deret menang datang, total +6%."
+      - ret: -4.0
+        dd: 4.0
+        win: 20
+        note: "Berhenti total: minggu depannya bot profit 8%. Bot sehat dibuang karena noise."
+      - ret: -18.0
+        dd: 25.0
+        win: 15
+        note: "Ukuran 2x: 2 loss lagi. Revenge trading mengubah −18,5% jadi lebih dalam."
+      - ret: -12.0
+        dd: 12.0
+        win: 18
+        note: "Ganti strategi setelah 4 loss: strategi baru belum teruji, kalah lagi −12%."
+    petunjuk:
+      - "Peluang loss berturut = 0,4 pangkat jumlah loss."
+      - "Rugi bertumpuk = kalikan 0,95 sebanyak 4 kali, bukan 4 × 5%."
+      - "Apakah 4 loss mengubah EV strategi? Tidak."
+
+  - id: "s3-10"
+    judul: "EV per Trade vs EV per Bulan"
+    emoji: "🚀"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Tiga bot siap dipasang. EV sudah bersih biaya:
+      Bot A: EV +0,3% per trade, rata-rata 40 trade per bulan.
+      Bot B: EV +0,9% per trade, 12 trade per bulan.
+      Bot C: EV +0,5% per trade, 25 trade per bulan.
+      Bot mana yang memberi ekspektasi profit bulanan terbesar?
+    pilihan:
+      - "Bot A — 12% per bulan"
+      - "Bot B — EV per trade tertinggi"
+      - "Bot C — 12,5% per bulan, lebih besar dari A dan B"
+      - "Tidak bisa dibandingkan — EV per trade-nya beda-beda"
+    jawaban: 2
+    penjelasan: |
+      EV bulanan = EV per trade × jumlah trade.
+      Bot A: 0,3 × 40 = 12%. Bot B: 0,9 × 12 = 10,8%. Bot C: 0,5 × 25 = **12,5%**.
+      Pemenang: Bot C — tipis di atas A, jelas di atas B.
+      Jebakan: Bot B punya EV per trade tertinggi (0,9%), tapi cuma 12 kali sebulan.
+      EV per trade tinggi tanpa frekuensi = profit kecil.
+      Bot A frekuensi tinggi dengan edge tipis — rawan tergerus kalau fee naik sedikit saja.
+      Evaluasi bot = EV per trade × frekuensi − biaya. Bukan salah satunya.
+    kode: |
+      ev_bulanan_a = 0.3 * 40
+      ev_bulanan_b = 0.9 * 12
+      ev_bulanan_c = 0.5 * 25
+      print(f"A = {ev_bulanan_a:+.1f}% | B = {ev_bulanan_b:+.1f}% | C = {ev_bulanan_c:+.1f}%")
+    hasil:
+      - ret: 12.0
+        dd: 5.0
+        win: 55
+        note: "Bot A: 12%. Bagus, tapi kamu tinggalkan 0,5% — edge tipis A sensitif terhadap fee."
+      - ret: 10.8
+        dd: 8.0
+        win: 40
+        note: "Bot B: EV per trade tertinggi tapi jarang trade → 10,8%, paling kecil."
+      - ret: 12.5
+        dd: 4.0
+        win: 62
+        note: "Benar: C = 12,5%. Kombinasi edge wajar dan frekuensi memadai."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak pasang: ketiganya EV positif. Dana menganggur = EV nol."
+    petunjuk:
+      - "EV bulanan = EV per trade × jumlah trade."
+      - "Hitung ketiganya, jangan cuma melihat EV per trade."

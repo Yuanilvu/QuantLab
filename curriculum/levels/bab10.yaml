@@ -132,8 +132,8 @@ skenario:
   - id: "s10-3"
     judul: "Tahun Lalu 30%"
     emoji: "🎰"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Sahammu naik 30% tahun ini — jauh di atas rata-rata historis 10%/tahun. Temanmu bilang "tahun depan pasti naik lagi, tambah semua uangmu". Pikiran yang paling sehat?
@@ -252,3 +252,263 @@ skenario:
     petunjuk:
       - "Fund A: 10jt × 2 lalu × 0,5 = berapa?"
       - "Rata-rata (100 - 50) ÷ 2 = 25%. Hasil nyata segitu juga?"
+
+
+  - id: "s10-6"
+    judul: "Premi Risiko"
+    emoji: "🏦"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu lihat dua obligasi: obligasi negara (SUN) yield 7% per tahun dan obligasi
+      perusahaan tambang yield 13% per tahun. Temanmu bilang: "13% hampir dua kali
+      lipat, pasti lebih bagus. Ambil semua!" Penjelasan paling tepat untuk yield
+      yang lebih tinggi itu?
+    pilihan:
+      - "Penerbit perusahaan bisa gagal bayar — yield ekstra adalah bayaran atas risiko itu"
+      - "Pemerintah pelit, perusahaan lebih dermawan ke investor"
+      - "Obligasi perusahaan bebas pajak, makanya yield-nya lebih tinggi"
+      - "Yield tinggi = sinyal perusahaan sedang untung besar"
+    jawaban: 0
+    penjelasan: |
+      Yield 13% vs 7%: selisih 6% per tahun = premi risiko. Penerbit perusahaan bisa
+      gagal bayar. Kalau bangkrut, kamu bisa kehilangan sebagian besar pokok.
+      Obligasi negara risikonya jauh lebih kecil. "Lebih dermawan" bukan cara pasar
+      bekerja. Pajak malah memangkas yield, bukan menaikkannya. Yield tinggi = pasar
+      menilai risiko tinggi. Kalau tanpa risiko ekstra, semua orang beli obligasi itu
+      dan yield-nya langsung turun. Tanya dulu: risiko apa di balik 6% ekstra itu?
+    kode: |
+      yield_sun = 0.07
+      yield_korporasi = 0.13
+      premi_risiko = yield_korporasi - yield_sun
+      print(f"Premi risiko: {premi_risiko*100:.0f}% per tahun")
+      print("Yield ekstra = bayaran atas risiko gagal bayar")
+    hasil:
+      - ret: 6.5
+        dd: 2.0
+        win: 72
+        note: "Kamu paham premi risikonya. Masuk porsi wajar: yield 13% terbayar, portofolio tetap aman."
+      - ret: -14.0
+        dd: 18.0
+        win: 12
+        note: "All-in obligasi tambang: harga batu bara jatuh, emiten gagal bayar. Kamu kehilangan 30% pokok."
+      - ret: 3.0
+        dd: 1.5
+        win: 40
+        note: "Kamu tetap beli karena alasan salah. Beruntung sektor sedang baik, cuma +3%."
+      - ret: -6.0
+        dd: 9.0
+        win: 22
+        note: "Siklus tambang berbalik, harga obligasi turun 8%. Kamu jual panik."
+    petunjuk:
+      - "Selisih 13% − 7% = 6%. Kompensasi atas apa?"
+      - "Kalau penerbit bangkrut, siapa yang menanggung?"
+  - id: "s10-7"
+    judul: "Bunga vs Inflasi"
+    emoji: "🌡️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dana pensiunmu Rp100 juta, semua di deposito 5% per tahun. Inflasi rata-rata
+      6% per tahun. Kamu tidak menambah atau menarik uang. Setelah 20 tahun, berapa
+      kira-kira daya beli uangmu?
+    pilihan:
+      - "Rp265 juta — deposito mengalahkan inflasi"
+      - "Rp83 juta — nominal naik, tapi daya beli turun sekitar 17%"
+      - "Rp100 juta — bunga 5% hampir menutup inflasi 6%"
+      - "Rp60 juta — inflasi menggerus hampir separuh"
+    jawaban: 1
+    penjelasan: |
+      Saldo nominal: Rp100 juta × 1,05^20 = Rp265 juta. Tapi harga naik 1,06^20 =
+      3,2 kali. Daya beli = 265 ÷ 3,2 ≈ Rp83 juta. Rugi daya beli sekitar 17% walau
+      saldo naik 165%. Jebakannya: 5% vs 6% cuma beda 1 poin — tapi 20 tahun
+      compounding mengubahnya jadi −17%. Ini kenapa uang jangka panjang di deposito
+      diam-diam tergerus. "Rp265 juta" = lupa inflasi. "Rp100 juta" = menganggap
+      bunga menutup inflasi, padahal gap 1% tetap berlipat. "Rp60 juta" =
+      melebih-lebihkan kerusakan.
+    kode: |
+      dana = 100_000_000
+      nominal = dana * 1.05 ** 20
+      daya_beli = nominal / (1.06 ** 20)
+      print(f"Nominal: Rp{nominal/1e6:.0f} juta")
+      print(f"Daya beli: Rp{daya_beli/1e6:.0f} juta")
+    hasil:
+      - ret: -17.0
+        dd: 0.0
+        win: 30
+        note: "Saldo memang Rp265 juta, tapi daya belinya cuma Rp83 juta. Kamu salah hitung kebutuhan pensiun."
+      - ret: 0.0
+        dd: 0.0
+        win: 74
+        note: "Kamu paham nominal vs riil. Sebagian dana dipindah ke aset produktif, sisanya tetap aman."
+      - ret: -17.0
+        dd: 0.0
+        win: 28
+        note: "Bunga 5% tidak menutup inflasi 6%. Dua puluh tahun kemudian daya beli turun 17%."
+      - ret: -15.0
+        dd: 4.0
+        win: 25
+        note: "Kamu panik, pindah ke produk anti-inflasi abal-abal. Kena biaya, hasil malah negatif."
+    petunjuk:
+      - "Hitung saldo nominal dulu (1,05^20), lalu bagi dengan kenaikan harga (1,06^20)."
+      - "Naik nominal tidak sama dengan naik daya beli."
+  - id: "s10-8"
+    judul: "Dua Bank, Satu Keranjang"
+    emoji: "🏛️"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Modal Rp20 juta. Rencanamu: Rp10 juta saham BBRI + Rp10 juta saham BBNI.
+      Teman bilang: "dua bank beda perusahaan, sudah diversifikasi". Lalu krisis
+      perbankan: saham bank turun rata-rata 25%, saham telekomunikasi cuma turun
+      5%. Berapa nilai portofolio dua-bank itu dibanding portofolio BBRI + TLKM?
+    pilihan:
+      - "Sama-sama Rp15 juta — semua kena krisis"
+      - "Dua bank: Rp15 juta. Bank + TLKM: Rp17 juta. Dua bank = satu keranjang"
+      - "Dua bank: Rp17 juta — dua perusahaan = risiko terbagi"
+      - "Tetap Rp20 juta — krisis perbankan tidak mungkin terjadi"
+    jawaban: 1
+    penjelasan: |
+      Dua bank = satu keranjang. BBRI dan BBNI digerakkan faktor yang sama: suku
+      bunga, kredit macet, kesehatan sektor perbankan. Korelasinya tinggi. Krisis
+      perbankan? Dua-duanya kena 25%: 10 juta × 0,75 + 10 juta × 0,75 = Rp15 juta.
+      Rugi 25%. Ganti BBNI dengan TLKM (sektor beda): 7,5 juta + 9,5 juta = Rp17
+      juta. Rugi cuma 15%. Selisih Rp2 juta murni dari beneran beda keranjang.
+      Diversifikasi dihitung dari korelasi, bukan jumlah nama saham. Dua saham bank
+      = satu titik kegagalan yang sama.
+    kode: |
+      dua_bank = 10_000_000 * 0.75 + 10_000_000 * 0.75
+      beda_sektor = 10_000_000 * 0.75 + 10_000_000 * 0.95
+      print(f"Dua bank: Rp{dua_bank/1e6:.0f} juta")
+      print(f"Bank + telekomunikasi: Rp{beda_sektor/1e6:.0f} juta")
+    hasil:
+      - ret: -25.0
+        dd: 25.0
+        win: 15
+        note: "Besarnya beda: TLKM cuma −5%. Kamu mengabaikan keranjang yang masih sehat."
+      - ret: -15.0
+        dd: 15.0
+        win: 68
+        note: "Kamu paham korelasi. Rugi 15%, dan dua sektor memberi dua peluang pemulihan."
+      - ret: -25.0
+        dd: 25.0
+        win: 20
+        note: "Dua perusahaan bank tetap satu industri. Faktanya dua-duanya −25%: portofolio Rp15 juta."
+      - ret: -25.0
+        dd: 25.0
+        win: 8
+        note: "Krisis tetap datang. −25% tanpa rencana."
+    petunjuk:
+      - "BBRI dan BBNI jatuh karena faktor yang sama atau beda?"
+      - "Hitung dua skenario: 10+10 di sektor sama vs 10+10 di sektor beda."
+  - id: "s10-9"
+    judul: "Alokasi dan Dua Skenario"
+    emoji: "💼"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Rp100 juta, horizon 2 tahun. Analisamu: 60% kemungkinan pasar naik (saham
+      +15%, obligasi +6%) dan 40% pasar turun (saham −25%, obligasi +7%). Pilihan
+      alokasi: A = 100% saham, B = 70% saham + 30% obligasi, C = 50% saham + 50%
+      obligasi. Mana yang memberi nilai akhir harapan (expected value) terbesar?
+    pilihan:
+      - "A — Rp99 juta. Skenario naik memberi 115, turun 75"
+      - "B — Rp101,2 juta. Bobot obligasi menahan saat pasar turun"
+      - "C — Rp102,7 juta. Obligasi positif di dua skenario, EV saham negatif"
+      - "Sama saja — semua alokasi untung di skenario naik"
+    jawaban: 2
+    penjelasan: |
+      Skenario naik (prob 60%): A = 100×1,15 = 115. B = 70×1,15 + 30×1,06 = 80,5 +
+      31,8 = 112,3. C = 50×1,15 + 50×1,06 = 57,5 + 53 = 110,5. Skenario turun
+      (40%): A = 75. B = 70×0,75 + 30×1,07 = 52,5 + 32,1 = 84,6. C = 50×0,75 +
+      50×1,07 = 37,5 + 53,5 = 91. EV = probabilitas × hasil: A = 0,6×115 + 0,4×75
+      = 99. B = 0,6×112,3 + 0,4×84,6 = 101,2. C = 0,6×110,5 + 0,4×91 = 102,7.
+      Kenapa C menang? EV saham = 0,6×15 + 0,4×(−25) = −1%. EV obligasi = 0,6×6 +
+      0,4×7 = +6,4%. Makin berat obligasi, makin tinggi EV dan drawdown terburuknya
+      paling dangkal.
+    kode: |
+      prob_naik = 0.6
+      ev_a = prob_naik * 115 + 0.4 * 75
+      ev_b = prob_naik * 112.3 + 0.4 * 84.6
+      ev_c = prob_naik * 110.5 + 0.4 * 91.0
+      print(f"A (100% saham): Rp{ev_a:.1f} juta")
+      print(f"B (70/30): Rp{ev_b:.1f} juta")
+      print(f"C (50/50): Rp{ev_c:.1f} juta")
+    hasil:
+      - ret: -1.0
+        dd: 25.0
+        win: 25
+        note: "A: EV 99 juta. Kalau skenario turun terjadi, portofolio −25% nyata dan kamu panik di titik terendah."
+      - ret: 1.2
+        dd: 15.4
+        win: 45
+        note: "B: EV 101,2 juta. Lebih baik dari A, tapi kalah dari C karena bobot saham masih 70%."
+      - ret: 2.7
+        dd: 9.0
+        win: 72
+        note: "C: EV 102,7 juta dan drawdown paling dangkal. Kombinasi EV dan risiko terbaik."
+      - ret: -1.0
+        dd: 25.0
+        win: 18
+        note: "Kamu mengabaikan probabilitas, lalu asal pilih A yang EV-nya terendah. Menebak bukan strategi."
+    petunjuk:
+      - "Hitung nilai akhir tiap alokasi di dua skenario, lalu kalikan probabilitasnya."
+      - "EV saham saja: 0,6×15 + 0,4×(−25) = berapa?"
+      - "Cek juga drawdown terburuk tiap opsi."
+  - id: "s10-10"
+    judul: "Leverage Tersembunyi"
+    emoji: "🕵️"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Produk "bot trading" menjanjikan +3% per bulan, klaim "murni arbitrase, tanpa
+      leverage". Kamu baca dokumennya: bot memakai leverage 5x. Aset dasarnya
+      rata-rata cuma naik 0,5% per bulan. Bulan ini aset dasar turun 8%. Berapa
+      kira-kira kinerja bot bulan ini, dan apa simpulanmu soal klaim itu?
+    pilihan:
+      - "Bot tetap +3% — arbitrase tidak peduli arah pasar"
+      - "Sekitar −40% — leverage 5x ada di struktur, klaim tanpa leverage bohong"
+      - "−8% — kinerja bot mengikuti aset dasar"
+      - "0% — bot punya cut loss otomatis"
+    jawaban: 1
+    penjelasan: |
+      Leverage 5x melipatgandakan gerakan aset: −8% × 5 = −40%. Bulan bagus? Aset
+      +0,5% × 5 = +2,5% — masih di bawah janji +3%. Janji 3% bahkan melebihi
+      kapasitas struktur yang terlihat. Artinya ada leverage tambahan, biaya
+      tersembunyi, atau angka yang dihaluskan. Kalau aset turun 20%? −100%: modal
+      habis, dan biaya funding leverage bisa membuat saldo negatif. Klaim "tanpa
+      leverage" terbantah dokumen. Return besar yang stabil: tanya dulu dari mana.
+      "−8%" = lupa leverage. "+3%" = percaya klaim tanpa cek. "0%" = percaya cut
+      loss otomatis yang tidak ada di dokumen.
+    kode: |
+      aset_bulan_ini = -0.08
+      leverage = 5
+      kinerja_bot = aset_bulan_ini * leverage
+      kapasitas = 0.005 * leverage
+      print(f"Kinerja bot bulan ini: {kinerja_bot*100:.0f}%")
+      print(f"Kapasitas normal: {kapasitas*100:.1f}% per bulan")
+    hasil:
+      - ret: -40.0
+        dd: 40.0
+        win: 10
+        note: "Bulan itu bot −40%. Arbitrase tetap kena pasar karena ada leverage 5x."
+      - ret: 0.0
+        dd: 0.0
+        win: 76
+        note: "Kamu batal investasi. Enam bulan kemudian aset −25%: produk 5x = −125%, banyak korban kehilangan lebih dari modal."
+      - ret: -30.0
+        dd: 30.0
+        win: 15
+        note: "Kamu kira rugi cuma −8%, ternyata −40%. Stop loss yang dijanjikan tidak ada di dokumen."
+      - ret: -40.0
+        dd: 40.0
+        win: 12
+        note: "Cut loss otomatis tidak ada. Likuidasi terjadi di −40% dan biaya funding menambah luka."
+    petunjuk:
+      - "Kalau ada leverage 5x, return aset dasar dikali berapa?"
+      - "Bandingkan janji 3% per bulan dengan kapasitas: 0,5% × 5 = ?"

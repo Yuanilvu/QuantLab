@@ -134,9 +134,9 @@ skenario:
   - id: "s15-3"
     judul: "Sinyal Bagus, Eksekusi Nol"
     emoji: "📭"
-    sulit: "sulit"
-    xp: 50
-    menit: 7
+    sulit: "sedang"
+    xp: 35
+    menit: 6
     cerita: |
       Sebulan terakhir, 7 sinyal valid (sesuai sistem) kamu lewatkan: 3 karena "tunggu harga lebih murah", 2 karena ragu, 2 karena sibuk. 6 dari 7 sinyal itu ternyata profit (rata-rata +6%). Sinyal ke-8 muncul sekarang. Sistemmu jelas: entry. Apa masalah terbesarmu? Apa yang harus diperbaiki?
     pilihan:
@@ -257,3 +257,256 @@ skenario:
     petunjuk:
       - "Hitung ekspektasi: peluang menang × hasil menang, dikurangi peluang kalah × hasil kalah."
       - "Sistem positif tapi hasilmu negatif. Siapa yang salah?"
+
+
+  - id: "s15-6"
+    judul: "Maker vs Taker"
+    emoji: "🏭"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Di bursa kripto: fee maker (order limit yang menunggu di antrian) 0,02%, fee
+      taker (market order) 0,055% per sisi. Kamu trader 100 roundtrip per bulan.
+      Berapa beda total biaya kalau semua pakai limit dibanding semua market?
+    pilihan:
+      - "0,07% — bedanya kecil, tidak penting"
+      - "7% dari notional per bulan — 0,035% × 2 sisi × 100 trade"
+      - "3,5% — 0,035% × 100"
+      - "Tidak ada beda — fee sama untuk semua jenis order"
+    jawaban: 1
+    penjelasan: |
+      Beda fee per sisi = 0,055 − 0,02 = 0,035%. Satu roundtrip = dua sisi (masuk +
+      keluar): 0,07%. Seratus roundtrip = 100 × 0,07% = 7% dari notional. Kalau
+      notional rata-rata $10.000: $700 per bulan — untuk aktivitas yang sama, cuma
+      beda jenis order. Trader frekuensi tinggi wajib maker. Limit butuh kesabaran
+      (tidak selalu terisi) dan risiko harga bergerak, tapi selisihnya besar.
+      "0,07%" = menghitung per trade, lupa mengalikan frekuensi. "3,5%" = lupa dua
+      sisi. "Tidak ada beda" = salah: taker 2,75x lebih mahal dari maker.
+    kode: |
+      beda_per_sisi = 0.00055 - 0.0002
+      trade_per_bulan = 100
+      beda_bulanan = beda_per_sisi * 2 * trade_per_bulan
+      print(f"Beda biaya: {beda_bulanan*100:.1f}% notional per bulan")
+    hasil:
+      - ret: -7.0
+        dd: 7.0
+        win: 20
+        note: "Kamu tetap market: 7% notional menguap per bulan. Setahun akun jeblok."
+      - ret: 5.5
+        dd: 1.5
+        win: 72
+        note: "Pindah ke limit: hemat 7% per bulan. Sebagian order tidak terisi — terkompensasi harga lebih baik."
+      - ret: -3.5
+        dd: 3.5
+        win: 30
+        note: "3,5% = lupa dua sisi. Biaya nyata 2x lipat hitunganmu."
+      - ret: -7.0
+        dd: 7.0
+        win: 15
+        note: "Fee beda: taker 2,75x maker. Kamu bayar mahal tanpa sadar."
+    petunjuk:
+      - "Beda fee per sisi berapa?"
+      - "Satu roundtrip = berapa sisi? Kalikan dengan 100 trade."
+  - id: "s15-7"
+    judul: "Trade di Luar Aturan"
+    emoji: "🗒️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Jurnal 40 trade: 10 di luar aturan (entry emosi), 8 di antaranya loss. Dari
+      30 trade sesuai aturan, 18 win. Berapa win rate masing-masing kelompok, dan
+      apa artinya buat tradingmu?
+    pilihan:
+      - "Sama saja — win rate total 50%, biasa"
+      - "Sesuai aturan 60%, di luar aturan 20% — patuh aturan 3x lebih baik; loss terbesar dari trade liar"
+      - "Sesuai aturan 60%, liar 20% — tapi cuma 10 trade, tidak masalah"
+      - "Sulit dibedakan — trading itu campuran"
+    jawaban: 1
+    penjelasan: |
+      Sesuai aturan: 18 ÷ 30 = 60%. Di luar aturan: 2 ÷ 10 = 20%. Tiga kali lebih
+      baik. Kalau ukuran trade liar juga lebih besar (khas revenge trading), kontribusi
+      loss-nya makin parah. Ini fungsi jurnal: memisahkan strategi dari perilaku.
+      Buang 10 trade liar, win rate naik dari 50% (20/40) ke 60% dan drawdown
+      mengecil. "Tidak masalah" salah: 8 loss dari 10 trade emosi = sumber utama
+      loss bulan itu. Perbaikan: aturan entry ditulis objektif, dan trade yang tidak
+      memenuhi syarat otomatis di-skip. Perilaku diukur, bukan dirasakan.
+    kode: |
+      win_aturan = 18 / 30
+      win_liar = 2 / 10
+      print(f"Win rate sesuai aturan: {win_aturan*100:.0f}%")
+      print(f"Win rate di luar aturan: {win_liar*100:.0f}%")
+    hasil:
+      - ret: -4.0
+        dd: 6.0
+        win: 25
+        note: "Total 50% menutupi dua dunia: 60% disiplin vs 20% emosional. Loss besar terus berulang."
+      - ret: 9.0
+        dd: 2.0
+        win: 73
+        note: "Trade liar dihentikan: 30 trade patuh = +9% bersih. Pola loss hilang."
+      - ret: 4.0
+        dd: 4.0
+        win: 40
+        note: "10 trade kecil? 8 loss-nya = 40% total loss bulan itu. Justru masalah utama."
+      - ret: -2.0
+        dd: 5.0
+        win: 30
+        note: "Tanpa pemisahan, tidak ada yang bisa diperbaiki. Kebiasaan lama lanjut: −2%."
+    petunjuk:
+      - "18 ÷ 30 = ? dan 2 ÷ 10 = ?"
+      - "Berapa kontribusi loss trade liar terhadap total loss?"
+  - id: "s15-8"
+    judul: "Stop Saat Gap"
+    emoji: "🚧"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Posisi long saham tipis, stop loss 5% dari entry. Berita buruk semalam: harga
+      buka gap turun 7% — langsung di bawah stop. Stop loss-mu order market. Di
+      harga berapa kamu keluar, dan kenapa?
+    pilihan:
+      - "5% — stop loss menjamin harga eksekusi"
+      - "Sekitar 7% — gap melompati level stop: market order dieksekusi di harga buka"
+      - "0% — stop loss batal kalau terjadi gap"
+      - "10% — stop loss malah memperbesar loss"
+    jawaban: 1
+    penjelasan: |
+      Stop loss = order yang berubah jadi market order saat harga menyentuh level.
+      Kalau harga buka sudah 7% di bawah entry, level 5% tidak pernah "tersentuh" —
+      order langsung market di harga buka. Loss = 7%, bukan 5%. Slippage 2% tak
+      terhindarkan di gap. Pelajaran: stop loss bukan jaminan harga di saham tipis
+      dan momen berita. Alternatif stop limit 5% lebih parah: tidak terisi (harga
+      tak pernah kembali ke 5%), loss bisa 12%+. Proteksi nyata = ukuran posisi:
+      kalau gap 7% masih dalam batas risk equity, kamu selamat. Stop ketat di aset
+      yang sering gap = ilusi keamanan.
+    kode: |
+      stop = 0.05
+      gap = 0.07
+      print(f"Loss direncanakan: {stop*100:.0f}% | Loss nyata: {gap*100:.0f}%")
+    hasil:
+      - ret: -7.0
+        dd: 7.0
+        win: 20
+        note: "Kamu kira keluar di −5%, nyatanya −7%. Risk 2% equity jadi 3,5% — melanggar diam-diam."
+      - ret: 2.0
+        dd: 2.0
+        win: 64
+        note: "Kamu paham gap risk: ukuran dikecilkan sampai gap 7% = 2% equity. Tetap hidup bulan itu."
+      - ret: -12.0
+        dd: 12.0
+        win: 10
+        note: "Stop limit 5% tidak terisi: harga jatuh ke −12% baru ada likuiditas. Loss 2x lipat."
+      - ret: -7.0
+        dd: 7.0
+        win: 15
+        note: "Stop tidak memperbesar loss — gap yang melakukannya. Salah diagnosis = salah perbaikan."
+    petunjuk:
+      - "Kalau harga buka sudah di bawah stop, order dieksekusi di harga berapa?"
+      - "Cara melindungi diri dari gap = apa?"
+  - id: "s15-9"
+    judul: "Trade Kecil yang Merugikan"
+    emoji: "✂️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Swing trading IDX: 24 trade setahun. Profit kotor: 12 trade +2,5%, 7 trade
+      +0,9%, 5 trade +0,3%. Biaya per trade (fee beli 0,15% + fee jual 0,25% +
+      slippage 0,15%) = 0,55%. Berapa return bersih semua trade dibanding kalau 5
+      trade terkecil dibuang?
+    pilihan:
+      - "Semua: +24,6%. Buang 5 kecil: +25,8% — trade di bawah biaya adalah loss tersembunyi"
+      - "Semua: +37,8% — biaya tidak perlu dihitung"
+      - "Semua: +13,2% — biaya makan semuanya"
+      - "Buang 5 kecil: +36,3% — makin sedikit trade makin untung"
+    jawaban: 0
+    penjelasan: |
+      Gross semua = 12×2,5 + 7×0,9 + 5×0,3 = 30 + 6,3 + 1,5 = 37,8%. Biaya = 24 ×
+      0,55 = 13,2%. Bersih = 24,6%. Trade +0,3% ada DI BAWAH biaya 0,55%: rugi
+      bersih −0,25% tiap kali. Lima trade itu: gross 1,5%, biaya 2,75% → loss
+      loss bersih 1,25%. Dibuang: gross 36,3 − biaya 19 × 0,55 = 10,45 → bersih
+      +25,8%. Lebih tinggi DAN risiko lebih rendah (5 eksposur hilang). Aturan:
+      target profit minimal 2-3x biaya roundtrip. "+37,8%" = lupa biaya. "+13,2%" =
+      salah baca: itu total biaya, bukan hasil. "+36,3%" = gross tanpa biaya.
+    kode: |
+      biaya = 0.55
+      gross_semua = 12 * 2.5 + 7 * 0.9 + 5 * 0.3
+      net_semua = gross_semua - 24 * biaya
+      gross_tanpa_kecil = 12 * 2.5 + 7 * 0.9
+      net_tanpa_kecil = gross_tanpa_kecil - 19 * biaya
+      print(f"Semua: {net_semua:+.1f}% | Tanpa 5 kecil: {net_tanpa_kecil:+.1f}%")
+    hasil:
+      - ret: 25.8
+        dd: 8.0
+        win: 73
+        note: "Filter dipasang: 19 trade, +25,8%, DD mengecil. Trade kecil yang tampak aman ternyata bocor."
+      - ret: 13.0
+        dd: 14.0
+        win: 25
+        note: "Tanpa hitung biaya kamu pikir +37,8%. Nyata +24,6%, dan trade kecil tetap rugi bersih."
+      - ret: 10.0
+        dd: 12.0
+        win: 20
+        note: "13,2% itu biaya total, bukan hasil. Salah hitung bikin kamu berhenti total."
+      - ret: 21.0
+        dd: 9.0
+        win: 35
+        note: "Buang trade kecil benar, tapi 36,3% itu gross — bersihnya 25,8%. Kamu overestimate."
+    petunjuk:
+      - "Hitung gross dan biaya total untuk semua trade."
+      - "Trade +0,3% vs biaya 0,55%: untung atau rugi bersih?"
+      - "Bandingkan net semua trade vs net tanpa 5 trade kecil."
+  - id: "s15-10"
+    judul: "Setelah Lima Menang"
+    emoji: "🥂"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kamu menang 5 hari beruntun, +1% equity per hari (total +5,1%). Euforia:
+      "sistemku sedang on fire". Besok kamu pasang ukuran 3x lipat. Hari itu loss
+      −1% (normal). Berapa profit yang tersisa, dan apa masalah sebenarnya?
+    pilihan:
+      - "+2,1% — masih untung, tidak masalah"
+      - "+2,1%: sehari ukuran 3x menghapus 60% profit seminggu. Win streak tidak mengubah edge — ukuran tetap"
+      - "+4,1% — ukuran tidak memengaruhi hasil"
+      - "−1% — ukuran 3x tidak mengubah loss"
+    jawaban: 1
+    penjelasan: |
+      Lima win beruntun = +5,1% (compounding). Hari ke-6 ukuran 3x: loss 1% × 3 =
+      −3%. Sisa +2,1%. Satu hari menghapus hampir 60% profit seminggu. Kalau ukuran
+      tetap: +5,1 − 1 = +4,1%. Win streak TIDAK mengubah probabilitas trade
+      berikutnya — edge strategi konstan. Yang berubah cuma persepsimu (hot hand
+      fallacy = merasa sedang "panas"). Ukuran membesar setelah menang = cara
+      tercepat mengembalikan profit ke bursa. Aturan: ukuran ditentukan SEBELUM
+      trade oleh risiko dan ATR, bukan oleh mood atau streak. Naikkan ukuran hanya
+      kalau equity naik (2% dari equity baru), bukan karena percaya diri.
+    kode: |
+      profit_minggu = (1.01 ** 5 - 1) * 100
+      loss_besar = 3 * 1.0
+      sisa = profit_minggu - loss_besar
+      print(f"Profit tersisa: {sisa:+.1f}% (vs {profit_minggu - 1.0:+.1f}% kalau ukuran tetap)")
+    hasil:
+      - ret: 0.5
+        dd: 6.0
+        win: 25
+        note: "Masih untung, jadi kamu ulangi. Streak loss datang dengan ukuran 3x: profit habis, DD 6%."
+      - ret: 6.8
+        dd: 2.0
+        win: 72
+        note: "Ukuran tetap: 2 minggu berikutnya +4,1% lagi. Konsistensi = compounding yang aman."
+      - ret: -3.0
+        dd: 7.0
+        win: 20
+        note: "Ukuran 3x itu nyata: −3% sehari. Kamu baru sadar setelah 3 hari loss."
+      - ret: -3.0
+        dd: 6.0
+        win: 12
+        note: "Loss 1% × 3 = −3%. Ukuran tidak mengubah loss = kesalahan paling mahal."
+    petunjuk:
+      - "Lima win +5,1% lalu loss 3% = berapa sisa?"
+      - "Win streak mengubah probabilitas trade berikutnya?"
+      - "Ukuran posisi ditentukan oleh apa?"

@@ -262,3 +262,214 @@ skenario:
     petunjuk:
       - "Aturan exit berbunyi. Apa isi aturan yang kamu tulis sendiri?"
       - "Mengubah aturan di tengah posisi = keputusan emosi."
+  - id: "s21-6"
+    judul: "Annualisasi Funding"
+    emoji: "🕒"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Funding rate BTC: 0,02% per 8 jam (dibayar 3x sehari). Threshold entry botmu: annualized funding > 15%. Annualisasi = x3x365. Berapa annualized-nya, dan apakah lolos threshold?
+    pilihan:
+      - "7,3% — di bawah threshold, bot tetap flat"
+      - "21,9% — lolos threshold, kandidat entry"
+      - "2,19% — di bawah threshold"
+      - "0,73% — jauh di bawah"
+    jawaban: 1
+    penjelasan: |
+      Funding dibayar 3x sehari (setiap 8 jam). Setahun: 3 x 365 = 1.095 kali bayar. Annualized = 0,02% x 1.095 = 21,9%. Itu di atas 15% → lolos threshold, masuk kandidat entry (tetap dengan filter arah harga dan stop, bab 21-1). Opsi 7,3% = lupa dikali 3 (menganggap funding dibayar sekali sehari). 2,19% dan 0,73% = salah posisi desimal atau salah periode. Kesalahan annualisasi mengubah keputusan: 7,3% membuatmu melewatkan sinyal valid; angka kegedean membuatmu entry di funding sampah. Selalu hitung: rate x 3 x 365 — ini item pertama ceklis go-live (bab 21-2).
+    kode: |
+      rate_per_8jam = 0.0002
+      annualized = rate_per_8jam * 3 * 365
+      print(f"Annualized funding: {annualized*100:.1f}%")
+      print(f"Lolos threshold 15%: {'YA' if annualized > 0.15 else 'TIDAK'}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Anggap 7,3%: bot flat 6 minggu, funding 18-22% dilewati semua. +0%."
+      - ret: 4.8
+        dd: 1.2
+        win: 75
+        note: "21,9% benar: 4 entry valid bulan itu, +4,8% dengan stop disiplin."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "2,19%: flat terus, sinyal bagus terlewat."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "0,73%: salah hitung total — tidak pernah entry."
+    petunjuk:
+      - "Berapa kali funding dibayar dalam sehari?"
+      - "Kalikan rate x 3 x 365, lalu bandingkan dengan 15%."
+  - id: "s21-7"
+    judul: "Backtest Lupa Biaya"
+    emoji: "🧾"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Backtest bot carry: +0,28% per trade GROSS (belum potong biaya). Biaya nyata: fee 0,04% per sisi (masuk + keluar) dan slippage 0,04% per trade. Berapa net per trade, dan apakah bot layak?
+    pilihan:
+      - "+0,28% — biaya kecil, abaikan saja"
+      - "+0,16% — 0,28 dikurangi (0,08 fee + 0,04 slippage). Masih positif: layak, tapi tipis — pantau ketat"
+      - "-0,12% — biaya dihitung dobel: rugi"
+      - "+0,24% — potong fee 0,04% saja"
+    jawaban: 1
+    penjelasan: |
+      Biaya round-trip: fee 0,04% x 2 sisi = 0,08%, plus slippage 0,04% → total 0,12% per trade. Net = 0,28 - 0,12 = +0,16% per trade. Masih positif → bot layak diuji (paper dulu), TAPI edge cuma 0,16%: sekali slippage ekstra langsung habis. Kalau backtest lupa biaya, kamu overestimate 75% (0,28 vs 0,16). "+0,28% abaikan biaya" = backtest bohong — item ceklis bab 21-2: fee + slippage wajib masuk. "+0,24%" cuma potong fee satu sisi. "-0,12%" = biaya dihitung dobel. Bot dengan net tipis begini wajib: ukuran kecil, eksekusi limit, audit slippage tiap minggu.
+    kode: |
+      gross = 0.28
+      biaya_roundtrip = 0.04 * 2 + 0.04
+      net = gross - biaya_roundtrip
+      print(f"Net per trade: {net:.2f}%")
+    hasil:
+      - ret: -4.0
+        dd: 6.0
+        win: 20
+        note: "Anggap 0,28%: sizing kegedean 75%. Slippage nyata menghabiskan edge, 3 bulan -4%."
+      - ret: 6.8
+        dd: 3.0
+        win: 68
+        note: "Net 0,16% dipakai: ukuran pas, paper 3 minggu, lalu live kecil. +6,8% setahun."
+      - ret: -2.5
+        dd: 4.0
+        win: 25
+        note: "Biaya dihitung dobel: bot dianggap rugi lalu dibuang. Padahal net positif."
+      - ret: 1.5
+        dd: 8.0
+        win: 30
+        note: "Potong fee satu sisi saja: sizing tetap kegedean. DD 8% — lebih liar dari rencana."
+    petunjuk:
+      - "Fee dua sisi: masuk + keluar = 0,08%."
+      - "Net = gross - (fee 2 sisi + slippage)."
+      - "Edge 0,16% itu tipis — apa implikasinya untuk ukuran posisi?"
+  - id: "s21-8"
+    judul: "Aturan Drawdown Maksimum"
+    emoji: "🛑"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Aturan botmu: kalau equity turun 15% dari puncak (peak), bot STOP TOTAL — mati sampai kamu audit manual. Equity: puncak $1.050, sekarang $890. Apakah aturan berbunyi? Apa aksimu?
+    pilihan:
+      - "Lewati — 15,2% cuma lewat 0,2 poin, nanggung berhenti"
+      - "Stop total — DD = (1.050 - 890) / 1.050 = 15,2% > 15%: aturan berbunyi, audit dulu"
+      - "Kurangi ukuran setengah — kompromi yang bijak"
+      - "Tambah posisi — harga sedang murah setelah turun"
+    jawaban: 1
+    penjelasan: |
+      Drawdown = (1.050 - 890) / 1.050 = 160 / 1.050 = 15,2% — LEWAT ambang 15%. Aturan berbunyi: stop total. Kenapa harus kaku? 15% bukan angka ajaib — itu batas yang kamu tetapkan saat tenang, sebelum drawdown mengaburkan penilaian. "Lewati 0,2 poin" = awal dari menggeser batas: minggu depan 16%, bulan depan 20%. Kurangi setengah = mengubah aturan di tengah jalan (bab 21-5). Tambah posisi = averaging down tanpa data baru — judi. Stop total bukan hukuman: bot mati, modal $890 utuh, kamu audit: kenapa DD tembus? Siklus funding? Strategi rusak? Data baru → keputusan baru yang tenang.
+    kode: |
+      puncak = 1050
+      sekarang = 890
+      drawdown = (puncak - sekarang) / puncak * 100
+      if drawdown > 15:
+          print(f"DD {drawdown:.1f}% > 15% — STOP TOTAL, audit dulu")
+      else:
+          print(f"DD {drawdown:.1f}% — masih aman")
+    hasil:
+      - ret: -6.0
+        dd: 22.0
+        win: 10
+        note: "Batas digeser diam-diam: DD lanjut ke 22% sebelum berhenti paksa. Modal terkikis."
+      - ret: -1.2
+        dd: 15.2
+        win: 40
+        note: "Stop di -15,2%: modal $890 utuh. Audit: sizing 3% (bukan 2%) sejak update — diperbaiki."
+      - ret: -3.5
+        dd: 18.0
+        win: 25
+        note: "Setengah ukuran tanpa audit: penyebabnya (sizing salah) tetap jalan, DD lanjut ke 18%."
+      - ret: -8.0
+        dd: 25.0
+        win: 8
+        note: "Averaging down di drawdown tanpa data baru: tren lanjut turun. -8%, nyaris margin call."
+    petunjuk:
+      - "Hitung DD: (1.050 - 890) / 1.050 x 100 = ?"
+      - "Batas dibuat saat tenang — jangan digeser saat panik."
+      - "Stop total = modal utuh + data untuk audit."
+  - id: "s21-9"
+    judul: "Juara Backtest vs Parameter Stabil"
+    emoji: "🔮"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Bot carry: 3 parameter (threshold funding, stop ATR, filter tren). Kamu uji 200 kombinasi di 3 tahun data. Kombinasi juara: +32% per tahun (in-sample). Walk-forward (bab 21-2): semua 200 kombinasi diuji di 2 tahun data berikutnya — juara in-sample cuma +6%, padahal rata-rata semua kombinasi +11% dan konfigurasi standarmu (threshold 15%, stop 2xATR) +12%. Keputusan?
+    pilihan:
+      - "Go-live dengan kombinasi juara — 32% itu bukti terbaik"
+      - "Pakai konfigurasi standar yang stabil (+12% out-sample) — juara in-sample = overfit"
+      - "Gabungkan 200 kombinasi jadi satu bot raksasa"
+      - "Ulangi pencarian 200 kombinasi di data yang sama sampai dapat juara baru"
+    jawaban: 1
+    penjelasan: |
+      Data bicara: juara in-sample +32% cuma menghasilkan +6% di data baru — DI BAWAH rata-rata semua kombinasi (+11%). Itu tanda overfit: parameternya menghafal masa lalu, bukan menangkap aturan yang bertahan. Konfigurasi standar yang sederhana justru +12% out-sample — stabil karena tidak menempel pada noise. Ceklis bab 21-2: "bukan cuma parameter terbaik dari 200 percobaan". Go-live dengan juara = menguji hipotesis yang sudah terbukti rapuh. Bot raksasa 200 kombinasi = overfit yang di-ensemble — tetap overfit. Mengulang pencarian di data yang sama = memilih pemenang dari undian yang sama. Parameter yang bertahan di data baru lebih berharga daripada yang maksimal di data lama.
+    kode: |
+      hasil_oos = {"kombinasi_juara": 6, "rata_rata_200_kombinasi": 11, "konfigurasi_standar": 12}
+      for nama, oos in hasil_oos.items():
+          print(f"Out-sample {nama}: {oos}%")
+    hasil:
+      - ret: -10.0
+        dd: 12.0
+        win: 15
+        note: "Juara in-sample go-live: klaim 32% ternyata optimistis. Dua kuartal: -10%."
+      - ret: 11.0
+        dd: 4.0
+        win: 72
+        note: "Standar yang stabil: +12% out-sample terbukti. Setahun live: +11% — sesuai ekspektasi."
+      - ret: 2.0
+        dd: 9.0
+        win: 25
+        note: "Ensembel 200 kombinasi: rata-rata dari banyak overfit. Kinerja 2%."
+      - ret: -5.0
+        dd: 10.0
+        win: 20
+        note: "Mengulang pencarian di data sama: juara baru tetap overfit. Butuh data baru, bukan iterasi."
+    petunjuk:
+      - "Bandingkan out-sample: juara 6% vs standar 12% vs rata-rata 11%."
+      - "Yang menghafal masa lalu tidak bertahan di data baru."
+      - "Ceklis bab 21-2: walk-forward, bukan cuma parameter terbaik."
+  - id: "s21-10"
+    judul: "Win Rate Tinggi, Dompet Tipis"
+    emoji: "🎲"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Dua kandidat bot carry, sama-sama 100 trade backtest. Bot X: win rate 60%, rata-rata menang +0,5%, rata-rata kalah -0,6%. Bot Y: win rate 45%, rata-rata menang +1,1%, rata-rata kalah -0,5%. Kamu pilih yang mana?
+    pilihan:
+      - "Bot X — 60% win rate jauh lebih meyakinkan"
+      - "Bot Y — EV X = 0,06%, EV Y = 0,22% per trade. EV yang menentukan, bukan win rate"
+      - "Bot X — win rate tinggi pasti drawdown lebih kecil"
+      - "Tidak bisa dibandingkan — beda gaya trading"
+    jawaban: 1
+    penjelasan: |
+      Hitung ekspektasi: EV = (peluang menang x rata-rata menang) - (peluang kalah x rata-rata kalah). Bot X: 0,6 x 0,5 - 0,4 x 0,6 = 0,30 - 0,24 = +0,06% per trade. Bot Y: 0,45 x 1,1 - 0,55 x 0,5 = 0,495 - 0,275 = +0,22% per trade. Y menang 3,7x lipat per trade — walau win rate-nya cuma 45%. Win rate tinggi dengan reward/risk 0,83 (0,5/0,6) tidak bisa menutup kekalahan. 100 trade: X sekitar +6%, Y sekitar +22% (sebelum biaya). "Win rate tinggi = DD kecil" tidak otomatis: X kalah 0,6% pada 40% trade — rentetan rugi bisa panjang. Untuk carry, Y (menang besar jarang, kalah kecil sering) cocok dengan funding yang kadang spike. Ukur EV, lalu biaya, lalu DD — bukan sekadar persentase menang.
+    kode: |
+      ev_x = 0.60 * 0.5 - 0.40 * 0.6
+      ev_y = 0.45 * 1.1 - 0.55 * 0.5
+      print(f"EV Bot X: {ev_x:.2f}% per trade")
+      print(f"EV Bot Y: {ev_y:.2f}% per trade")
+    hasil:
+      - ret: 6.0
+        dd: 8.0
+        win: 60
+        note: "Bot X: EV 0,06%. 100 trade = +6% sebelum biaya 0,12% — nyaris impas."
+      - ret: 22.0
+        dd: 9.0
+        win: 45
+        note: "Bot Y: EV 0,22% x 100 trade = +22% sebelum biaya. Kalah sering tapi kecil — kurva tetap naik."
+      - ret: 6.0
+        dd: 8.5
+        win: 58
+        note: "Bot X tetap X: win rate 60% tidak mengubah EV 0,06%."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Tidak memilih = keputusan ditunda. Uang tidak bekerja."
+    petunjuk:
+      - "EV = (win rate x rata-rata menang) - (loss rate x rata-rata kalah)."
+      - "Hitung EV kedua bot dulu, baru bandingkan."
+      - "Win rate tinggi + reward/risk kecil = bisa kalah total."

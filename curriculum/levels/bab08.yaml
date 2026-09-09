@@ -293,3 +293,258 @@ skenario:
     petunjuk:
       - "Bunga setahun berapa? Lalu bagi dua untuk 6 bulan."
       - "Total = pokok + bunga."
+
+  - id: "s8-6"
+    judul: "Bunga Deposito Tiga Tahun"
+    emoji: "🌱"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kamu depositokan Rp2.000.000 dengan bunga sederhana 8% per tahun, dibayar tiap tahun.
+      Berapa TOTAL bunga yang kamu terima setelah 3 tahun?
+    pilihan:
+      - "Rp480.000"
+      - "Rp160.000"
+      - "Rp2.480.000"
+      - "Rp519.000"
+    jawaban: 0
+    penjelasan: |
+      Bunga 1 tahun = 2.000.000 × 8% = 160.000.
+      Bunga sederhana: jumlahnya sama tiap tahun.
+      3 tahun = 160.000 × 3 = **Rp480.000**.
+      Opsi 160.000 = bunga 1 tahun saja. Opsi 2.480.000 = modal + bunga — pertanyaannya bunga SAJA.
+      Opsi 519.000 = kalau dihitung majemuk (2.000.000 × 1,08³ − 2.000.000 = 519.424).
+      Di soal ini bunganya sederhana: dibayar tiap tahun dan tidak dibungakan lagi.
+    kode: |
+      modal = 2_000_000
+      bunga_tahunan = modal * 0.08
+      bunga_3_tahun = bunga_tahunan * 3
+      print(f"Total bunga 3 tahun = Rp{bunga_3_tahun:,.0f}")   # 480,000
+    hasil:
+      - ret: 6.0
+        dd: 0.0
+        win: 80
+        note: "Benar: bunga 480.000 dalam 3 tahun. Rencana kasmu akurat."
+      - ret: 2.0
+        dd: 0.0
+        win: 30
+        note: "160.000 cuma bunga tahun pertama. Dua tahun berikutnya masih berbunga."
+      - ret: 4.0
+        dd: 0.0
+        win: 35
+        note: "2.480.000 itu saldo akhir. Pertanyaannya bunga saja = 480.000."
+      - ret: 5.0
+        dd: 0.0
+        win: 25
+        note: "519.000 itu versi majemuk. Deposito ini bunganya sederhana."
+    petunjuk:
+      - "Bunga 1 tahun = modal × 8%."
+      - "Bunga sederhana: kalikan bunga tahunan dengan 3."
+
+  - id: "s8-7"
+    judul: "Berlipat Dua dalam Sembilan Tahun"
+    emoji: "⏳"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kamu mencari investasi yang membuat uangmu berlipat dua dalam 9 tahun.
+      Pakai Aturan 72. Kira-kira berapa return per tahun yang dibutuhkan?
+    pilihan:
+      - "8%"
+      - "9%"
+      - "11,1%"
+      - "72%"
+    jawaban: 0
+    penjelasan: |
+      Aturan 72: 72 ÷ return = tahun untuk berlipat dua.
+      Dibalik: return = 72 ÷ tahun = 72 ÷ 9 = **8% per tahun**.
+      Opsi 9% = menyamakan return dengan tahun.
+      Opsi 11,1% = membagi 100 dengan 9 — angka 100 dipakai untuk persen biasa, bukan aturan 72.
+      Opsi 72% = memakai 72 mentah tanpa dibagi.
+      Cek cepat: 1,08⁹ ≈ 2,0 — benar, 8% setahun berlipat dua dalam 9 tahun.
+      Aturan 72 = kalkulator mental: 6% → 12 tahun, 12% → 6 tahun.
+    kode: |
+      tahun = 9
+      return_per_tahun = 72 / tahun
+      print(f"Butuh return sekitar {return_per_tahun:.0f}% per tahun")   # 8%
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 72 ÷ 9 = 8% per tahun. Target realistis."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "9 itu tahunnya, bukan return-nya. Bagilah 72 dengan 9."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "11,1% = 100 ÷ 9. Aturan 72 memakai angka 72, bukan 100."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "72% mentah tanpa dibagi. 72 ÷ tahun = 8%."
+    petunjuk:
+      - "Aturan 72: 72 ÷ return = tahun dobel."
+      - "Balikkan: return = 72 ÷ tahun."
+
+  - id: "s8-8"
+    judul: "Sederhana vs Majemuk, Tahun Ketiga"
+    emoji: "📈"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Modal Rp1.000.000. Tabungan A: bunga sederhana 5% per tahun.
+      Tabungan B: bunga majemuk 5% per tahun.
+      Setelah 3 tahun, berapa SELISIH total bunga A dan B?
+    pilihan:
+      - "Rp0"
+      - "Rp7.625"
+      - "Rp157.625"
+      - "Rp150.000"
+    jawaban: 1
+    penjelasan: |
+      A (sederhana): bunga = 1.000.000 × 5% × 3 = 150.000.
+      B (majemuk): 1.000.000 × 1,05³ − 1.000.000 = 1.157.625 − 1.000.000 = 157.625.
+      Selisih = 157.625 − 150.000 = **Rp7.625**.
+      Beda kecil di tahun ke-3. Bunga berbunga baru terasa pelan:
+      tahun 1 bunga B = 50.000 (sama dengan A), tahun 2 = 52.500, tahun 3 = 55.125.
+      Opsi 0 = mengira dua-duanya sama. Opsi 157.625 = bunga B saja. Opsi 150.000 = bunga A saja.
+      Dalam 10 tahun selisihnya membengkak: A 500.000 vs B 628.895.
+    kode: |
+      modal = 1_000_000
+      bunga_a = modal * 0.05 * 3
+      bunga_b = modal * (1.05 ** 3) - modal
+      selisih = bunga_b - bunga_a
+      print(f"Selisih bunga = Rp{selisih:,.0f}")   # 7,625
+    hasil:
+      - ret: 1.0
+        dd: 0.0
+        win: 25
+        note: "Tidak nol — bunga B tahun ke-2 dan ke-3 dihitung dari saldo lebih besar."
+      - ret: 5.0
+        dd: 0.0
+        win: 80
+        note: "Benar: selisih 7.625. Majemuk mulai unggul di tahun ke-3."
+      - ret: 4.0
+        dd: 0.0
+        win: 35
+        note: "157.625 itu total bunga majemuk. Selisihnya = 157.625 − 150.000."
+      - ret: 3.0
+        dd: 0.0
+        win: 30
+        note: "150.000 itu total bunga sederhana. Bandingkan dengan bunga majemuk."
+    petunjuk:
+      - "Bunga A = modal × 5% × 3."
+      - "Bunga B = modal × 1,05 pangkat 3, dikurangi modal."
+      - "Kurangi bunga A dari bunga B."
+
+  - id: "s8-9"
+    judul: "Deposito Kena Pajak"
+    emoji: "🧾"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Deposito Rp5.000.000, bunga 6% per tahun, dibayar tiap tahun.
+      Bunga kena pajak 20%, dipotong dari tiap pembayaran tahunan.
+      Setelah 2 tahun, saldomu berapa?
+    pilihan:
+      - "Rp5.600.000"
+      - "Rp5.480.000"
+      - "Rp5.540.000"
+      - "Rp5.360.000"
+    jawaban: 1
+    penjelasan: |
+      Bunga kotor per tahun = 5.000.000 × 6% = 300.000.
+      Pajak = 20% × 300.000 = 60.000 per tahun.
+      Bunga bersih per tahun = 240.000. Dua tahun = 480.000.
+      Saldo = 5.000.000 + 480.000 = **Rp5.480.000**.
+      Opsi 5.600.000 = lupa pajak (bunga 600.000 penuh).
+      Opsi 5.540.000 = pajak dipotong sekali saja (60.000), padahal dipotong tiap tahun.
+      Opsi 5.360.000 = pajak 20% dihitung dari total 600.000 (120.000) lalu dipotong dua kali.
+      Pajak 20% berlaku per pembayaran tahunan.
+      Bunga '6%' di iklan itu kotor. Yang masuk kantong lebih kecil.
+    kode: |
+      modal = 5_000_000
+      bunga_kotor = modal * 0.06 * 2
+      pajak = bunga_kotor * 0.20
+      saldo = modal + bunga_kotor - pajak
+      print(f"Saldo setelah 2 tahun = Rp{saldo:,.0f}")   # 5,480,000
+    hasil:
+      - ret: 8.0
+        dd: 0.0
+        win: 30
+        note: "5.600.000 lupa pajak 120.000. Target pengeluaranmu meleset."
+      - ret: 9.6
+        dd: 0.0
+        win: 80
+        note: "Benar: saldo 5.480.000 (bunga bersih 480.000). Perencanaan pajak tepat."
+      - ret: 9.2
+        dd: 0.0
+        win: 35
+        note: "5.540.000 = pajak sekali saja. Padahal pajak dipotong tiap tahun, dua kali."
+      - ret: 7.2
+        dd: 0.0
+        win: 25
+        note: "5.360.000 = pajak 20% dari akumulasi dipotong dua kali. Pajak 20% per pembayaran tahunan."
+    petunjuk:
+      - "Bunga kotor per tahun = 5.000.000 × 6% = 300.000."
+      - "Pajak 20% dipotong dari tiap pembayaran tahunan (2 kali)."
+      - "Saldo = modal + (bunga kotor − pajak)."
+
+  - id: "s8-10"
+    judul: "Pinjamkan atau Depositokan?"
+    emoji: "⚖️"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Teman pinjam Rp5.000.000 dengan janji bunga sederhana 8% per tahun, 3 tahun,
+      pokok dan bunga dibayar di akhir. Alternatifnya: deposito 5,5% per tahun majemuk, 3 tahun.
+      Mana yang lebih menguntungkan dan berapa selisihnya?
+    pilihan:
+      - "Teman — lebih besar sekitar Rp328.800"
+      - "Deposito — lebih besar sekitar Rp328.800"
+      - "Deposito — bunga majemuk pasti menang"
+      - "Sama saja — bedanya tipis"
+    jawaban: 0
+    penjelasan: |
+      Teman: bunga = 5.000.000 × 8% × 3 = 1.200.000 → kembali 6.200.000.
+      Deposito: 5.000.000 × 1,055³ = 5.000.000 × 1,17424 = 5.871.207 → bunga 871.207.
+      Selisih = 6.200.000 − 5.871.207 = 328.793 ≈ **Rp328.800**.
+      Teman menang walau bunganya sederhana: 8% vs 5,5%, bedanya cukup besar untuk 3 tahun.
+      Opsi 'deposito pasti menang' salah: majemuk butuh waktu, bukan ajaib.
+      Catatan: ini hitungan matematis. Risiko teman tidak bayar (gagal bayar) belum dihitung.
+      Deposito dijamin LPS, teman tidak.
+    kode: |
+      modal = 5_000_000
+      hasil_teman = modal * (1 + 0.08 * 3)
+      hasil_deposito = modal * (1 + 0.055) ** 3
+      selisih = hasil_teman - hasil_deposito
+      print(f"Teman = Rp{hasil_teman:,.0f} | Deposito = Rp{hasil_deposito:,.0f}")
+      print(f"Selisih = Rp{selisih:,.0f}")   # 328,793
+    hasil:
+      - ret: 24.0
+        dd: 0.0
+        win: 80
+        note: "Benar: pinjamkan, kembali 6,2 juta (+24% dalam 3 tahun)."
+      - ret: 17.4
+        dd: 0.0
+        win: 35
+        note: "Deposito cuma 5,87 juta (+17,4%). Kamu tinggalkan 328 ribu."
+      - ret: 17.4
+        dd: 0.0
+        win: 40
+        note: "'Majemuk pasti menang'? Di 3 tahun, 8% sederhana mengalahkan 5,5% majemuk."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Kamu tidak yakin, dana menganggur di rekening — inflasi memakannya pelan-pelan."
+    petunjuk:
+      - "Hasil teman = modal × (1 + 0,08 × 3)."
+      - "Hasil deposito = modal × 1,055 pangkat 3."
+      - "Bandingkan keduanya, lalu cari selisihnya."

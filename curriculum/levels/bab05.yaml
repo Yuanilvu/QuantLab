@@ -336,6 +336,321 @@ skenario:
     petunjuk:
       - "Cek: apakah 4.000 memenuhi `harga < 4000`?"
       - "Kalau mau 4.000 ikut, operator apa yang dipakai?"
+
+  - id: "s5-6"
+    judul: "Baca Kode: Mahal atau Murah"
+    emoji: "💭"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kode bot pantau harga:
+      ```python
+      harga = 5000
+      if harga > 4000:
+          print("MAHAL")
+      else:
+          print("MURAH")
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "MAHAL"
+      - "MURAH"
+      - "Error"
+      - "MAHAL lalu MURAH"
+    jawaban: 0
+    penjelasan: |
+      Cek kondisi: 5.000 > 4.000? **True** → blok if jalan → cetak **MAHAL**.
+      Blok else dilewati. Hanya satu cabang yang jalan.
+      Opsi MURAH = kebalikan logika. Error tidak mungkin: if/else selalu valid.
+      Dua-duanya tidak mungkin: if dan else saling eksklusif.
+      Bot membandingkan harga pasar dengan ambangmu tiap detik — persis logika ini.
+    kode: |
+      harga = 5000
+      if harga > 4000:
+          print("MAHAL")
+      else:
+          print("MURAH")
+      # MAHAL
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "MAHAL benar: 5.000 > 4.000, blok if yang jalan."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "MURAH itu kalau kondisinya False. Di sini 5.000 lewat batas 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error — if/else selalu punya satu jawaban."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak mungkin dua-duanya: if dan else saling eksklusif."
+    petunjuk:
+      - "Apakah 5.000 lebih besar dari 4.000?"
+      - "True → blok if. False → blok else."
+
+  - id: "s5-7"
+    judul: "Baca Kode: Harga Diperbarui"
+    emoji: "🔀"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kode bot:
+      ```python
+      harga = 3900
+      target = 4000
+      if harga < target:
+          harga = 3950
+      if harga >= target:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "JUAL"
+      - "TAHAN"
+      - "Error — dua if tanpa elif"
+      - "Tidak mencetak apa pun"
+    jawaban: 1
+    penjelasan: |
+      Ada DUA if terpisah — bukan if-elif.
+      If pertama: 3.900 < 4.000? True → harga diubah jadi 3.950.
+      If kedua berdiri sendiri: 3.950 >= 4.000? False → else → cetak **TAHAN**.
+      Perubahan di if pertama tidak otomatis menembus if kedua.
+      Kondisi kedua tetap dihitung dengan harga sekarang (3.950) — masih di bawah target 4.000.
+      Opsi JUAL = mengira harga sudah naik cukup. Dua if berurutan itu sah, tidak error.
+      Karena ada else, pasti ada cetakan.
+    kode: |
+      harga = 3900
+      target = 4000
+      if harga < target:
+          harga = 3950
+      if harga >= target:
+          print("JUAL")
+      else:
+          print("TAHAN")
+      # TAHAN
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "JUAL butuh harga >= 4.000. 3.950 belum sampai — if kedua tetap dicek dari awal."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "TAHAN benar: harga baru 3.950 masih di bawah target 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error. Dua if berurutan itu sah, beda dengan if-elif."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Ada else di if kedua — selalu ada satu cetakan."
+    petunjuk:
+      - "Jalankan if pertama: harga berubah jadi berapa?"
+      - "If kedua menghitung dengan harga BARU (3.950) — masih di bawah 4.000?"
+
+  - id: "s5-8"
+    judul: "Baca Kode: Di Antara Dua Batas"
+    emoji: "🛡️"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kode bot:
+      ```python
+      target_jual = 4500
+      batas_rugi = 4000
+      harga = 4300
+      if harga >= target_jual:
+          print("JUAL")
+      elif harga <= batas_rugi:
+          print("CUT")
+      else:
+          print("TAHAN")
+      ```
+      Harga 4.300, target jual 4.500, batas rugi 4.000. Apa yang tercetak?
+    pilihan:
+      - "JUAL"
+      - "CUT"
+      - "TAHAN"
+      - "Error — dua kondisi"
+    jawaban: 2
+    penjelasan: |
+      Python cek berurutan dari atas.
+      Kondisi 1: 4.300 >= 4.500? False → lanjut.
+      elif: 4.300 <= 4.000? False → lanjut.
+      else → cetak **TAHAN**.
+      Harga 4.300 ada DI ANTARA batas rugi 4.000 dan target jual 4.500 — belum kena satu pun.
+      Bot menahan posisi.
+      Urutan kondisi menentukan: kalau `>= target` ditulis lebih dulu dan benar, CUT tak dicek.
+      Elif = 'atau jika'. Hanya satu cabang yang bisa jalan.
+    kode: |
+      target_jual = 4500
+      batas_rugi = 4000
+      harga = 4300
+      if harga >= target_jual:
+          print("JUAL")
+      elif harga <= batas_rugi:
+          print("CUT")
+      else:
+          print("TAHAN")
+      # TAHAN
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "JUAL butuh harga >= 4.500. 4.300 masih di bawah."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "CUT butuh harga <= 4.000. 4.300 masih di atas batas rugi."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "TAHAN benar: 4.300 belum menyentuh target 4.500 maupun batas rugi 4.000."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Tidak error. if-elif-else dengan dua kondisi itu pola standar."
+    petunjuk:
+      - "Cek kondisi pertama: 4.300 >= 4.500?"
+      - "Lalu elif: 4.300 <= 4.000?"
+      - "Dua-duanya salah → else yang jalan."
+
+  - id: "s5-9"
+    judul: "Baca Kode: Cabang yang Tak Pernah Jalan"
+    emoji: "⚠️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kode bot pemberi label:
+      ```python
+      harga = 4200
+      if harga > 4000:
+          print("MAHAL")
+      elif harga > 4500:
+          print("SANGAT MAHAL")
+      else:
+          print("MURAH")
+      ```
+      Apa yang tercetak? Adakah masalah pada kode ini?
+    pilihan:
+      - "MAHAL — dan kode ini benar, tidak ada masalah"
+      - "MAHAL — tapi cabang SANGAT MAHAL tidak akan pernah jalan karena kondisi pertama sudah mencakup semua harga di atas 4.000"
+      - "SANGAT MAHAL — harga 4.200 lewat batas 4.000"
+      - "MURAH — 4.200 tidak memenuhi syarat mana pun"
+    jawaban: 1
+    penjelasan: |
+      Cek: 4.200 > 4.000? True → cetak **MAHAL**, berhenti.
+      Tapi ini bug desain. Kondisi pertama (> 4.000) mencakup SEMUA harga yang juga > 4.500.
+      Akibatnya elif `> 4500` tidak akan pernah True — cabang SANGAT MAHAL mati selamanya.
+      Bot akan melabeli harga 5.000 sebagai MAHAL, padahal harusnya SANGAT MAHAL.
+      Perbaikan: urutkan dari kondisi paling sempit. Cek `> 4500` dulu, baru `> 4000`.
+      Urutan kondisi = urutan prioritas aturan. Salah urut = aturan yang diam-diam tidak berlaku.
+    kode: |
+      harga = 4200
+      if harga > 4000:
+          print("MAHAL")         # True → MAHAL
+      elif harga > 4500:
+          print("SANGAT MAHAL")  # tak akan pernah jalan
+      else:
+          print("MURAH")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "'Tidak ada masalah'? Coba harga 5.000: dicetak MAHAL, padahal harusnya SANGAT MAHAL."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: MAHAL tercetak, tapi ada bug — SANGAT MAHAL mati karena kondisi pertama terlalu luas."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "SANGAT MAHAL butuh harga > 4.500. 4.200 tertangkap kondisi pertama lebih dulu."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4.200 memenuhi kondisi pertama (> 4.000). MURAH tidak pernah tercapai di sini."
+    petunjuk:
+      - "Cek: apakah 4.200 > 4.000?"
+      - "Harga berapa saja yang bisa masuk kondisi kedua? Bandingkan dengan kondisi pertama."
+      - "Kondisi luas di depan akan memakan kondisi sempit di belakang."
+
+  - id: "s5-10"
+    judul: "Baca Kode: Target Tepat di Harga"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kode bot:
+      ```python
+      target = 4300
+      batas_rugi = 4000
+      harga = 4300
+      if harga > target:
+          print("TP")
+      elif harga <= batas_rugi:
+          print("CUT")
+      else:
+          print("HOLD")
+      ```
+      Harga tepat 4.300 — sama dengan target jualmu. Apa yang tercetak, dan apa masalahnya?
+    pilihan:
+      - "TP — harga sudah di target, wajar langsung ambil untung"
+      - "HOLD — 4.300 tidak > 4.300. Aturan pakai `>` seharusnya `>=` supaya target yang tepat ikut tercapai"
+      - "CUT — 4.300 mendekati batas rugi"
+      - "Error — harga sama dengan target membuat program macet"
+    jawaban: 1
+    penjelasan: |
+      Cek: 4.300 > 4.300? **False** — angka sama tidak lebih besar.
+      elif: 4.300 <= 4.000? False. Else → cetak **HOLD**.
+      Padahal aturanmu: 'jual kalau harga mencapai target 4.300'.
+      Harga TEPAT di target malah ditahan! Bugnya: `>` harusnya `>=`.
+      Satu tanda beda = bot melewatkan exit yang direncanakan. Harga bisa balik turun dan profit menguap.
+      Opsi TP = nalar manusia ('sudah di target'), tapi bot patuh pada simbol.
+      Saat batasnya angka pasti, selalu tanya: angka itu sendiri ikut atau tidak?
+    kode: |
+      target = 4300
+      batas_rugi = 4000
+      harga = 4300
+      if harga >= target:    # >= supaya 4.300 ikut
+          print("TP")
+      elif harga <= batas_rugi:
+          print("CUT")
+      else:
+          print("HOLD")
+      # TP
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Bot mencetak HOLD, bukan TP. 4.300 > 4.300 itu False."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: bot mencetak HOLD padahal harga sudah di target — bug `>` vs `>=` ketahuan."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "CUT butuh harga <= 4.000. 4.300 jauh di atas batas rugi."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Tidak error — perbandingan angka sama itu valid, hasilnya False."
+    petunjuk:
+      - "4.300 > 4.300 itu True atau False?"
+      - "Kalau mau harga sama dengan target ikut terdeteksi, operator apa yang dipakai?"
 soal:
   - id: "p5-1"
     judul: "Positif atau Negatif"

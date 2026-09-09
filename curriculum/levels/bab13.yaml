@@ -269,3 +269,265 @@ skenario:
     petunjuk:
       - "Volume 0,7x artinya di bawah atau di atas normal?"
       - "Apa bukti penembusan yang sehat?"
+
+
+  - id: "s13-6"
+    judul: "Death Cross di Uptrend"
+    emoji: "🪦"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      BRPT: uptrend 5 bulan, puncak selalu lebih tinggi. Pekan ini koreksi 7%: MA20
+      memotong MA50 ke bawah — death cross. Tapi MA50 masih slope naik, harga masih
+      di atas MA50, volume koreksi mengecil, ADX 27. Botmu memberi sinyal jual.
+      Keputusanmu?
+    pilihan:
+      - "Jual semua — death cross = trend selesai"
+      - "Tahan — koreksi di uptrend: MA50 naik, ADX 27, volume turun. Death cross sering palsu di akhir koreksi"
+      - "Short — death cross pasti turun lagi"
+      - "Beli besar — diskon 7%"
+    jawaban: 1
+    penjelasan: |
+      Death cross = MA20 di bawah MA50. Tapi indikator bukan perintah — konteks
+      yang menentukan. Di sini MA50 masih naik (trend 5 bulan utuh), ADX 27 (trend
+      masih ada), volume koreksi mengecil (tidak ada distribusi besar). Pola begini
+      = koreksi normal di uptrend. Death cross muncul SETELAH koreksi terjadi — dia
+      telat, bukan prediktif. Jual di sini = menjual di dasar koreksi. Short =
+      melawan trend yang utuh. Beli besar tanpa konfirmasi = melanggar aturan entry.
+      Tahan dan pantau: kalau MA50 ikut datar dan harga tembus MA50, baru evaluasi.
+    kode: |
+      slope_ma50 = "naik"
+      adx = 27
+      volume = 0.7
+      if slope_ma50 == "naik" and adx > 25 and volume < 1.0:
+          print("Koreksi sehat di uptrend — tahan, jangan panik jual")
+    hasil:
+      - ret: -4.0
+        dd: 0.0
+        win: 25
+        note: "Kamu jual di dasar koreksi. Harga lanjut +12% ke puncak baru tanpa kamu."
+      - ret: 8.5
+        dd: 2.0
+        win: 73
+        note: "Koreksi selesai, uptrend lanjut +8,5%. Death cross tadi cuma noise di akhir koreksi."
+      - ret: -5.0
+        dd: 6.0
+        win: 20
+        note: "Short melawan uptrend: harga balik naik, stop kena."
+      - ret: -3.0
+        dd: 4.5
+        win: 25
+        note: "Beli besar tanpa konfirmasi: koreksi masih dalam 3 hari, kamu cut di floating loss."
+    petunjuk:
+      - "Apa kata MA50 yang masih naik plus ADX 27?"
+      - "Death cross muncul setelah harga turun — dia telat atau prediktif?"
+  - id: "s13-7"
+    judul: "Jarak ke MA50"
+    emoji: "📏"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Sistem swing-mu: beli saat harga di atas MA50 yang naik, stop 2×ATR. Dua
+      kandidat. Saham A: harga 5.600, MA50 5.000 (+12%), sudah naik 25% sebulan.
+      Saham B: harga 5.050, MA50 5.000 (+1%), baru pullback. ATR keduanya 3%. Entry
+      mana yang lebih baik?
+    pilihan:
+      - "A — yang kuat makin kuat, ikuti momentum"
+      - "B — entry dekat MA50: risiko pullback ke MA50 cuma 1%, stop 2×ATR masuk akal"
+      - "A — MA50 di 5.000 = support jauh, upside besar"
+      - "Sama saja — dua-duanya di atas MA50 yang naik"
+    jawaban: 1
+    penjelasan: |
+      Harga A 12% di atas MA50: kalau pullback normal ke MA50 terjadi, kamu floating
+      loss −10,7% — stop 2×ATR (6%) kena lebih dulu. Artinya di A, stop hampir pasti
+      kena sebelum trend lanjut. B: harga 1% dari MA50 yang naik — risiko pullback
+      kecil, stop 6% di bawah MA50 masuk akal, risk-reward jauh lebih baik. Entry di
+      saham yang extended = bayar premium. Momentum kuat itu nyata, tapi entry tetap
+      harus di dekat support terdekat. Tunggu A pullback dulu, atau trade B sekarang.
+      Jarak ke support menentukan berapa besar risiko yang kamu tanggung.
+    kode: |
+      jarak_a = (5600 - 5000) / 5600
+      jarak_b = (5050 - 5000) / 5050
+      print(f"Jarak ke MA50: A {jarak_a*100:.1f}% | B {jarak_b*100:.1f}%")
+      print("Entry dekat MA50 = stop kecil, risiko terukur")
+    hasil:
+      - ret: -6.0
+        dd: 6.0
+        win: 20
+        note: "A pullback 6%, stop kena, lalu lanjut +10%. Kamu keluar di titik terburuk."
+      - ret: 7.2
+        dd: 1.8
+        win: 71
+        note: "B pullback tipis lalu naik +7,2%. Stop aman, tidur nyenyak."
+      - ret: -6.0
+        dd: 6.0
+        win: 18
+        note: "Support jauh bukan upside besar — itu risiko besar. Stop kena di pullback pertama."
+      - ret: -3.0
+        dd: 6.0
+        win: 30
+        note: "Kamu asal pilih A: beda jarak ke support = beda risiko. −6% dulu, baru naik."
+    petunjuk:
+      - "Kalau harga balik ke MA50, A turun berapa persen? B?"
+      - "Stop 2×ATR dipasang di mana relatif MA50?"
+  - id: "s13-8"
+    judul: "Resistance di Depan Sinyal"
+    emoji: "🧱"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      CUAN hari ini golden cross MA20/MA50 plus volume 1,8x. Tapi harga 4.750 tepat
+      di bawah resistance 4.800 — level yang sudah menolak 3x dalam 6 bulan. RSI
+      68. Kamu mau entry. Rencana terbaik?
+    pilihan:
+      - "Market buy sekarang — sinyal kuat, jangan ragu"
+      - "Entry kecil, atau tunggu tembus 4.800 dengan volume — resistance teruji 3x adalah risiko nyata"
+      - "Short di resistance — pasti ditolak lagi"
+      - "Entry besar — golden cross + resistance = breakout tinggal menunggu"
+    jawaban: 1
+    penjelasan: |
+      Dua kekuatan berlawanan: momentum bullish (golden cross + volume 1,8x) versus
+      supply di 4.800 (3x ditolak = banyak orang antre jual di sana). Harga cuma
+      1,1% dari resistance. Market buy sekarang = bayar hampir di harga penolakan —
+      kalau ditolak lagi, kamu langsung floating loss dan stop kena. Rencana paling
+      bersih: pasang order di 4.810 (breakout) dengan stop di bawah 4.650, atau
+      entry kecil sekarang. Resistance yang jebol dengan volume jadi support. Short
+      di resistance teruji = menebak. Entry besar di area penolakan =
+      melipatgandakan risiko di titik rawan.
+    kode: |
+      harga = 4750
+      resistance = 4800
+      jarak = (resistance - harga) / harga
+      print(f"Jarak ke resistance: {jarak*100:.1f}%")
+      print("Sinyal bullish + resistance = tunggu konfirmasi tembus")
+    hasil:
+      - ret: -4.2
+        dd: 5.0
+        win: 25
+        note: "Ditolak lagi di 4.800. Harga balik ke 4.560. Stop kena."
+      - ret: 6.8
+        dd: 1.5
+        win: 70
+        note: "Tembus 4.810 dengan volume di hari ke-3. Entry breakout, stop aman, +6,8%."
+      - ret: -3.5
+        dd: 4.0
+        win: 20
+        note: "Kali ini tembus: short kena stop di 4.850."
+      - ret: -8.4
+        dd: 8.4
+        win: 10
+        note: "Posisi 2x di area penolakan: ditolak lagi, −4,2% dikali 2 = −8,4%."
+    petunjuk:
+      - "Tiga kali ditolak di 4.800 artinya ada apa di level itu?"
+      - "Di mana entry yang risikonya terukur: sebelum atau sesudah tembus?"
+  - id: "s13-9"
+    judul: "Filter Mana yang Dipakai"
+    emoji: "🧾"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Backtest 5 tahun strategi MA crossover dengan dua filter. Filter A (ADX >
+      25): 24 trade, win 55%, win rata-rata +4%, loss rata-rata −3%. Filter B
+      (volume > 1,5x): 60 trade, win 42%, win rata-rata +5%, loss rata-rata −2%.
+      Biaya dan slippage 0,5% per trade. Filter mana yang kamu pakai?
+    pilihan:
+      - "A — win rate 55% lebih tinggi, pasti lebih andal"
+      - "B — EV bersih +0,44%/trade dikali 60 = +26%, sampel 2,5x lebih besar"
+      - "Sama saja — dua-duanya EV positif"
+      - "Tidak ada — biaya 0,5% membuat semua strategi MA rugi"
+    jawaban: 1
+    penjelasan: |
+      EV bersih per trade: A = 0,55×4 − 0,45×3 − 0,5 = +0,35%/trade. B = 0,42×5 −
+      0,58×2 − 0,5 = +0,44%/trade. Total 5 tahun: A = 0,35 × 24 = +8,4%. B = 0,44
+      × 60 = +26,4%. Dua alasan B menang: EV per trade lebih tinggi DAN sampel 60
+      vs 24 — 24 trade bisa kebetulan. Win rate 55% menipu: A menang lebih sering
+      tapi hadiah kecil (+4%) dengan loss besar (−3%); B menang jarang tapi hadiah
+      +5% dengan loss −2%. Yang menentukan = EV bersih setelah biaya, bukan win
+      rate. Filter B juga memberi trade 2,5x lebih banyak = statistik lebih kuat.
+    kode: |
+      biaya = 0.5
+      ev_a = 0.55 * 4 - 0.45 * 3 - biaya
+      ev_b = 0.42 * 5 - 0.58 * 2 - biaya
+      print(f"Filter A: {ev_a:+.2f}%/trade x 24 = {ev_a*24:+.1f}%")
+      print(f"Filter B: {ev_b:+.2f}%/trade x 60 = {ev_b*60:+.1f}%")
+    hasil:
+      - ret: 8.4
+        dd: 6.0
+        win: 35
+        note: "A live 2 tahun: +8,4%. Positif, tapi setengah dari B dan lebih sensitif."
+      - ret: 26.4
+        dd: 9.0
+        win: 72
+        note: "B live 2 tahun: +26%. Sampel besar memberi keyakinan saat drawdown datang."
+      - ret: 12.0
+        dd: 12.0
+        win: 40
+        note: "EV-nya beda jauh. Kamu asal pilih A: 5 tahun kehilangan 18% peluang."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "EV tetap positif setelah biaya. Berhenti total = membuang edge terukur."
+    petunjuk:
+      - "EV per trade = win% × win rata-rata − loss% × loss rata-rata − biaya."
+      - "Kalikan EV bersih dengan jumlah trade."
+      - "24 trade vs 60 trade: mana yang lebih bisa dipercaya?"
+  - id: "s13-10"
+    judul: "Divergence di Puncak"
+    emoji: "🪄"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Posisi long CUAN sejak 1.650, sekarang 1.850 (+12%). RSI mingguan turun dari
+      72 ke 61 sementara harga bikin puncak lebih tinggi (1.850 > 1.790) —
+      divergence bearish: momentum naik melemah. MA20 naik di 1.760. Historis CUAN:
+      3 dari 4 divergence mingguan diikuti koreksi ke MA20. Keputusanmu?
+    pilihan:
+      - "Jual semua — kunci profit +12%, probabilitas koreksi 75%"
+      - "Jual separuh — sisanya dipasangi stop di MA20"
+      - "Tambah posisi — puncak lebih tinggi = trend sehat"
+      - "Tahan semua tanpa stop — divergence sering palsu"
+    jawaban: 0
+    penjelasan: |
+      Divergence = harga bikin puncak baru, indikator tidak: momentum melemah.
+      Historis CUAN: 75% diikuti koreksi ke MA20 (1.760) atau lebih dalam. Profit
+      +12% sudah di tangan. EV jual semua = +12,1% pasti. Tahan dengan stop MA20:
+      kalau koreksi, keluar +6,7% — lebih kecil, plus menahan risiko 3 minggu tanpa
+      imbalan. Jual separuh = kompromi, EV-nya di antara keduanya. Tambah posisi =
+      melawan probabilitas 75%. Tanpa stop = membiarkan profit +12% berubah jadi
+      rugi kalau koreksi dalam. Divergence bukan sinyal entry — dia alat take
+      profit. Ketika probabilitas koreksi tinggi dan profit sudah besar, kunci.
+      Entry ulang bisa dilakukan lebih rendah.
+    kode: |
+      entry = 1650
+      harga = 1850
+      ma20 = 1760
+      profit = (harga - entry) / entry
+      exit_ma20 = (ma20 - entry) / entry
+      print(f"Profit sekarang: +{profit*100:.1f}% | Exit di MA20: +{exit_ma20*100:.1f}%")
+      print("Probabilitas koreksi 75% — kunci profit")
+    hasil:
+      - ret: 12.1
+        dd: 0.0
+        win: 72
+        note: "Profit terkunci +12,1%. Dua minggu kemudian harga 1.702 (−8%). Kamu entry ulang lebih rendah."
+      - ret: 9.4
+        dd: 4.0
+        win: 55
+        note: "Separuh kena koreksi dan keluar di 1.760 (+6,7%). Total +9,4% — aman, tapi setengah modal menganggur."
+      - ret: 3.6
+        dd: 8.0
+        win: 25
+        note: "Tambah di 1.850: koreksi −8%, posisi tambahan −16%. Total cuma +3,6%."
+      - ret: 6.7
+        dd: 5.0
+        win: 30
+        note: "Stop MA20 kena: +6,7%. Selamat, tapi menahan risiko 3 minggu tanpa imbalan ekstra."
+    petunjuk:
+      - "Probabilitas koreksi 75%: sisi mana yang lebih besar?"
+      - "Profit +12% sudah di tangan — apa gunanya divergence?"
+      - "Hitung exit kalau stop di MA20 kena: (1.760 − 1.650) ÷ 1.650."

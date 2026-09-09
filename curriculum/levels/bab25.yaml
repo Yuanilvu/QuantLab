@@ -153,8 +153,8 @@ skenario:
   - id: "s25-3"
     judul: "Return Harian Satu Baris"
     emoji: "📉"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Harga 4 hari: [4000, 4100, 3900, 4200]. Kode: `r = harga[1:] / harga[:-1] - 1`. Berapa return hari ke-2 (dari 4100 ke 3900)?
@@ -273,6 +273,224 @@ skenario:
     petunjuk:
       - "Hari 1: 10.000 × 1,01 = ? Hari 2: hasil itu dikali 0,98."
       - "Compounding: kali beruntun, bukan tambah."
+  - id: "s25-6"
+    judul: "Baca Kode: Filter Angka"
+    emoji: "🔦"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      import numpy as np
+      h = np.array([4000, 4100, 3900, 4200])
+      print(h[h > 4000])
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "[4000 4100 4200]"
+      - "[4100 4200]"
+      - "[3900]"
+      - "Error — array tidak bisa dibandingkan"
+    jawaban: 1
+    penjelasan: |
+      `h > 4000` membandingkan SEMUA elemen sekaligus: hasilnya [False True False True]. `h[...]` dengan deretan True/False mengambil elemen yang True → [4100 4200]. 4000 TIDAK ikut: syaratnya > (lebih besar dari), bukan >=. 3900 = satu-satunya yang di bawah, tidak diambil. Tidak error — memfilter dengan boolean justru fitur inti NumPy. Pola ini dipakai terus: harga di atas batas, hari return positif, volume di atas rata-rata. Operasi vektor: satu baris, tanpa loop.
+    kode: |
+      import numpy as np
+      h = np.array([4000, 4100, 3900, 4200])
+      print(h[h > 4000])   # [4100 4200]
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "4000 tidak lolos: syaratnya > 4000, bukan >= 4000."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: elemen yang memenuhi syarat diambil."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "3900 = yang di bawah — justru TIDAK diambil."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Filter boolean = fitur inti NumPy, bukan error."
+    petunjuk:
+      - "h > 4000 menghasilkan deretan True/False apa?"
+      - "Elemen mana yang True? (4100 dan 4200)"
+  - id: "s25-7"
+    judul: "Rata-rata Hari Hijau"
+    emoji: "🟢"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Return harian strategimu (dalam persen): `r = np.array([1.2, -0.5, 0.8, -1.1, 0.3])`. Kamu mau angka "rata-rata return di hari HIJAU saja" untuk laporan. Kode mana yang benar?
+    pilihan:
+      - "`r.mean()`"
+      - "`r[r > 0].mean()`"
+      - "`r[r < 0].mean()`"
+      - "`(r > 0).sum()`"
+    jawaban: 1
+    penjelasan: |
+      Hari hijau = return positif. `r > 0` → [True False True False True]. `r[r > 0]` → [1.2 0.8 0.3] (nilai hari hijau saja). `.mean()` = (1,2 + 0,8 + 0,3) / 3 = 0,7667 ≈ +0,77% per hari hijau. `r.mean()` = rata-rata SEMUA hari = 0,14% — mencampur hijau dan merah. `r[r < 0].mean()` = rata-rata hari merah = (-0,5 + -1,1) / 2 = -0,8%. `(r > 0).sum()` = JUMLAH hari hijau (3), bukan rata-ratanya. Pola: filter dulu dengan kondisi, statistik di atas hasil filter. Rata-rata hijau vs merah menunjukkan kualitas hari untung vs hari rugi — dipakai menilai strategi.
+    kode: |
+      import numpy as np
+      r = np.array([1.2, -0.5, 0.8, -1.1, 0.3])
+      print(f"Rata-rata hari hijau: {r[r > 0].mean():.2f}%")
+      print(f"Rata-rata hari merah: {r[r < 0].mean():.2f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0,14% = campur hijau dan merah. Laporan jadi menyesatkan."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: (1,2 + 0,8 + 0,3) / 3 = 0,77%."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Itu rata-rata hari MERAH (-0,8%) — kebalikannya."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "3 = jumlah hari hijau, bukan rata-rata nilainya."
+    petunjuk:
+      - "Filter dulu: r[r > 0] mengambil nilai hari positif."
+      - "Lalu .mean() dari hasil filter."
+      - "Bandingkan: (1,2 + 0,8 + 0,3) / 3."
+  - id: "s25-8"
+    judul: "Standar Deviasi Harian"
+    emoji: "🌊"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      ```python
+      import numpy as np
+      r = np.array([0.01, -0.02, 0.015, 0.01])
+      print(np.round(r.std() * 100, 2))
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "1.39"
+      - "1.6"
+      - "0.14"
+      - "0.01"
+    jawaban: 0
+    penjelasan: |
+      std() = sebaran (volatilitas). Langkahnya: rata-rata = (0,01 - 0,02 + 0,015 + 0,01) / 4 = 0,00375. Simpangan tiap hari: 0,00625; -0,02375; 0,01125; 0,00625. Rata-rata kuadrat simpangan = 0,0001922 → akar = 0,01386 → x100 = 1,39% per hari. np.std default = populasi (dibagi n = 4). 1,6 = std SAMPEL (dibagi n-1 = 3) — metode berbeda; pilih satu dan konsisten (populasi umum dipakai di pasar). 0,14 = rata-rata return, bukan sebaran. 0,01 = lupa dikali 100. Volatilitas harian ini bahan untuk vol tahunan (x √252), sizing, dan batas risiko.
+    kode: |
+      import numpy as np
+      r = np.array([0.01, -0.02, 0.015, 0.01])
+      print(np.round(r.std() * 100, 2))   # 1.39 — vol harian (%)
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: vol harian 1,39% (populasi, dibagi 4)."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "1,6 = std sampel (dibagi 3). Metode beda, angka beda — konsistenlah."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "0,14% = rata-rata return, bukan sebaran."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "0,01 = lupa dikali 100 (std mentah 0,0139)."
+    petunjuk:
+      - "std() mengukur sebaran, bukan rata-rata."
+      - "Populasi: dibagi n. Sampel: dibagi n - 1."
+      - "Jangan lupa x100 untuk persen."
+  - id: "s25-9"
+    judul: "Bandingkan yang Sebanding"
+    emoji: "🆚"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Dua saham mau dibandingkan performa 4 harinya: TLKM [4000, 4100, 4200, 4050] vs CUAN [1000, 950, 900, 980]. Harganya beda skala (4000-an vs 900-an). Cara paling jujur membandingkan?
+    pilihan:
+      - "TLKM lebih unggul — harganya sampai 4200, jauh di atas CUAN 900"
+      - "Normalisasi: TLKM 4050/4000 = +1,25%; CUAN 980/1000 = -2% → TLKM relatif lebih kuat"
+      - "CUAN lebih menarik — harga 900 lebih murah, upside lebih besar"
+      - "Bandingkan selisih poin: TLKM +50 (4050-4000) vs CUAN -20 (980-1000) → TLKM"
+    jawaban: 1
+    penjelasan: |
+      Harga absolut tidak bisa dibandingkan lintas saham: skala tiap saham berbeda (riwayat split, right issue, umur listing). Cara jujur: ubah ke RETURN. TLKM: 4050/4000 - 1 = +1,25%. CUAN: 980/1000 - 1 = -2%. Di NumPy: `harga / harga[0] - 1` atau indeks `harga / harga[0] * 100`. TLKM naik 1,25% dalam 4 hari; CUAN turun 2%. "Harga lebih tinggi = lebih unggul" salah: 4.000 bisa saham yang 10 tahun tidak bergerak. "900 lebih murah = upside besar" = fallacy harga murah (murah relatif ke apa?). Selisih poin juga menyesatkan: 50 poin dari 4.000 = 1,25%, tapi 20 poin dari 1.000 = 2% — dua skala berbeda.
+    kode: |
+      import numpy as np
+      tlkm = np.array([4000, 4100, 4200, 4050])
+      cuan = np.array([1000, 950, 900, 980])
+      print(f"TLKM 4 hari: {(tlkm[-1] / tlkm[0] - 1) * 100:+.2f}%")
+      print(f"CUAN 4 hari: {(cuan[-1] / cuan[0] - 1) * 100:+.2f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Harga absolut tidak sebanding — skala tiap saham berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: return relatif +1,25% vs -2%. TLKM pemenang periode ini."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Murah bukan sinyal — CUAN malah turun 2% di periode ini."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "Poin tidak sebanding: 50 dari 4000 = 1,25%; 20 dari 1000 = 2%."
+    petunjuk:
+      - "Bagi harga terakhir dengan harga pertama: 4050/4000 dan 980/1000."
+      - "Kurangi 1, kalikan 100 → persen."
+      - "Skala harga berbeda: yang sebanding cuma persen."
+  - id: "s25-10"
+    judul: "Vol Tahunan dari Return Harian"
+    emoji: "📅"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Return harian strategimu (dalam persen): [0.5, -0.8, 1.2, -0.3, 0.9]. Vol hariannya = std ≈ 0,75%. Laporan butuh vol TAHUNAN (252 hari trading setahun). Berapa?
+    pilihan:
+      - "188% — 0,75 x 252"
+      - "11.8% — 0,75 x akar 252"
+      - "0.75% — ya vol hariannya itu"
+      - "9.0% — 0,75 x 12 (bulan)"
+    jawaban: 1
+    penjelasan: |
+      Vol harian 0,75% itu per HARI — tidak bisa langsung dikali 252: return harian tidak menumpuk linear seperti itu. Aturan pasar: vol tahunan = vol harian x √252. √252 = 15,87 → 0,75 x 15,87 = 11,8%. Hitung presisi dari data: std [0.5, -0.8, 1.2, -0.3, 0.9] = 0,7456% → x15,87 = 11,84 ≈ 11,8% per tahun. 188% = 0,75 x 252 — kesalahan klasik menganggap vol dijumlah linear. 0,75% = lupa annualisasi. 9% = menganggap setahun 12 hari. Vol tahunan dipakai untuk sizing dan batas risiko — salah hitung = posisi kegedean atau kekecilan.
+    kode: |
+      import numpy as np
+      ret = np.array([0.5, -0.8, 1.2, -0.3, 0.9])
+      vol_tahunan = ret.std() * np.sqrt(252)
+      print(f"Vol tahunan: {vol_tahunan:.1f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "0,75 x 252 = 188% — vol tidak dijumlah linear. Sizing jadi tidak masuk akal."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: 0,75 x √252 = 11,8% — standar pasar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "0,75% cuma harian — laporan tahunan butuh skala berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "x12 = menganggap setahun cuma 12 hari trading."
+    petunjuk:
+      - "√252 sekitar 15,87."
+      - "Vol tahunan = vol harian x √252."
+      - "0,75 x 15,87 = ?"
 soal:
   - id: "p25-1"
     judul: "Rata-rata & Tertinggi"

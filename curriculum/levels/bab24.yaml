@@ -299,6 +299,241 @@ skenario:
     petunjuk:
       - "0,7% baris rusak: apakah 993 baris lainnya masih bisa dipercaya?"
       - "Yang dilarang: berhenti total, menebak, atau lewat diam-diam."
+  - id: "s24-6"
+    judul: "Return yang Terlalu Cepat"
+    emoji: "💨"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      def total_harga(baris):
+          total = 0
+          for b in baris:
+              total += int(b.split()[1])
+              return total
+      print(total_harga(["TLKM 4000", "BBRI 4500"]))
+      ```
+      Kamu mau output 8500, tapi yang tercetak 4000. Kenapa?
+    pilihan:
+      - "Data BBRI tidak terbaca — barisnya rusak"
+      - "return ada DI DALAM loop — fungsi berhenti di iterasi pertama, total 4000 langsung dikembalikan"
+      - "print-nya salah — harusnya print(total)"
+      - "int() gagal di baris kedua"
+    jawaban: 1
+    penjelasan: |
+      return = "fungsi selesai, serahkan hasilnya". Kalau return ada di dalam for, fungsi berhenti pada iterasi PERTAMA: total = 4000 langsung dikembalikan; BBRI tidak pernah dijumlah. Output 4000 — bukan error, jadi makin licik: bot menerima 4000 sebagai "total" tanpa curiga. Perbaikan: return total di LUAR loop (sejajar for, setelah loop selesai). Indentasi menentukan: return yang menjorok ke dalam for = bug klasik. Pola benar: inisialisasi → loop akumulasi → return setelah loop. Kalau hasil fungsi selalu "angka pertama", curigai return di dalam loop.
+    kode: |
+      def total_harga(baris):
+          total = 0
+          for b in baris:
+              total += int(b.split()[1])
+          return total   # di luar loop!
+      print(total_harga(["TLKM 4000", "BBRI 4500"]))   # 8500
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Data baik-baik saja — masalahnya struktur fungsi."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: return di dalam loop menghentikan fungsi di iterasi pertama."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "print(total_harga(...)) sudah benar — isi fungsinya yang salah."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "int() sukses dua-duanya — 4000 lalu 4500."
+    petunjuk:
+      - "return melakukan apa terhadap fungsi? (menghentikan)"
+      - "Perhatikan indentasi return: sejajar for atau di dalam for?"
+      - "Jalankan mental: iterasi 1 → return → iterasi 2 pernah jalan?"
+  - id: "s24-7"
+    judul: "Fungsi yang Keras Kepala"
+    emoji: "🧱"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      ```python
+      def total_porto():
+          data = ["TLKM 4000", "BBRI 4500"]
+          total = 0
+          for b in data:
+              total += int(b.split()[1])
+          return total
+      ```
+      Fungsi ini benar untuk portofolio TLKM + BBRI. Tapi kamu punya 3 portofolio berbeda — hasilnya selalu 8500. Perbaikan apa?
+    pilihan:
+      - "Salin fungsi 3x, ubah data masing-masing"
+      - "Jadikan data parameter: `def total_porto(data):` — fungsi menerima data dari luar"
+      - "Tambah variabel global `data` di luar fungsi"
+      - "Panggil fungsi 3x — pasti hasilnya beda"
+    jawaban: 1
+    penjelasan: |
+      Data terkurung DI DALAM fungsi = fungsi hanya bisa menghitung satu portofolio itu. Isi fungsi seharusnya cuma LOGIKA; data datang dari PEMANGGIL (bab 24-1: fungsi = aturan yang bisa dipakai ulang). Fix: `def total_porto(data):`, lalu panggil total_porto(data_a), total_porto(data_b), dan seterusnya. Menyalin 3x = 3 tempat bug: aturan berubah → edit 3 tempat. Variabel global = tersembunyi, bisa berubah diam-diam dari bagian lain — sulit dilacak. Memanggil 3x tanpa mengubah fungsi = 8500 tiga kali. Uji fungsi: masukkan data berbeda → hasil berbeda. Kalau hasil selalu sama, curigai data yang hardcode di dalam.
+    kode: |
+      def total_porto(data):
+          total = 0
+          for b in data:
+              total += int(b.split()[1])
+          return total
+      print(f"Portofolio 1: {total_porto(['TLKM 4000', 'BBRI 4500'])}")
+      print(f"Portofolio 2: {total_porto(['CUAN 1500', 'MPPA 500'])}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "3 salinan = 3 tempat bug. Satu aturan berubah → harus edit 3x."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: data sebagai parameter — satu fungsi untuk semua portofolio."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Global tersembunyi dan bisa berubah diam-diam. Parameter lebih jelas."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Panggil 3x dengan fungsi yang sama = 8500 terus."
+    petunjuk:
+      - "Apa yang membedakan portofolio satu dan lainnya? Datanya."
+      - "Data yang berbeda harus jadi apa di fungsi? (parameter)"
+      - "Fungsi = logika sekali, data dari pemanggil."
+  - id: "s24-8"
+    judul: "Aturan per Saham, Bukan Rata-rata"
+    emoji: "🧮"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Aturan bot: JUAL saham yang return mingguannya di bawah -2%. Analyzer memberi rata-rata portofolio: +0,9% (5 saham). Bot: tidak ada yang dijual. Padahal BBRI -2,5%, sisanya positif. Di mana salahnya?
+    pilihan:
+      - "Aturannya salah — -2% terlalu ketat"
+      - "Analyzer memberi RATA-RATA, padahal aturan butuh nilai PER SAHAM. Bot harus cek tiap baris, bukan satu angka"
+      - "BBRI -2,5% dibulatkan jadi -2% — masih di ambang"
+      - "Rata-rata +0,9% benar — BBRI kecil pengaruhnya, abaikan"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata menutupi anggota: +0,9% bisa terdiri dari BBRI -2,5% dan empat lainnya positif. Aturan jual bekerja PER SAHAM: butuh daftar return tiap saham, lalu filter return < -2. Analyzer yang benar mengembalikan daftar + ringkasan (bab 24-2) — bot yang salah hanya membaca ringkasannya. -2,5% < -2% → BBRI MASUK daftar jual, apa pun rata-ratanya. Angka rata-rata untuk keputusan per posisi = salah alat. Ini juga alasan output analyzer harus lengkap: total, daftar, termahal — bukan satu angka. Kalau BBRI dibiarkan, penurunannya bisa berlanjut; aturan ada supaya kerugian kecil tidak jadi besar.
+    kode: |
+      return_saham = {"TLKM": 1.5, "BBRI": -2.5, "CUAN": 3.0, "MPPA": 0.8, "UNVR": 1.2}
+      for nama, ret in return_saham.items():
+          if ret < -2:
+              print(f"JUAL {nama}: return {ret}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Ambang bukan masalah — BBRI -2,5% jelas di bawah -2%."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: filter per saham → BBRI dijual, sisanya dipegang."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "-2,5% lebih buruk dari -2% — tidak ada pembulatan dalam aturan."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Rata-rata tidak membatalkan aturan per posisi. BBRI dibiarkan turun ke -7%."
+    petunjuk:
+      - "Aturan berbunyi untuk SIAPA: portofolio atau tiap saham?"
+      - "Analyzer harus memberi apa? (daftar, bukan cuma rata-rata)"
+      - "Cek: -2,5 < -2 → jual."
+  - id: "s24-9"
+    judul: "Return Bertingkat, Bukan Dirata-rata"
+    emoji: "📈"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Laporan analyzer bulanan: minggu 1: -2%, minggu 2: +3%, minggu 3: +1%. Analyzer mencetak "rata-rata +0,67%". Saldo aktual: $10.000 → $10.195 (+1,95%). Analyzer salah di mana?
+    pilihan:
+      - "Tidak salah — 0,67% benar, saldo cuma beda pembulatan"
+      - "Return mingguan tidak bisa dirata-rata begitu: modal berubah tiap minggu, harus dikali beruntun: 0,98 x 1,03 x 1,01 = 1,0195 → +1,95%"
+      - "Jumlahkan saja: -2 + 3 + 1 = +2% — itu yang benar"
+      - "Analyzer benar — saldo aktual yang aneh"
+    jawaban: 1
+    penjelasan: |
+      Minggu 1: 10.000 x 0,98 = 9.800. Minggu 2: 9.800 x 1,03 = 10.094. Minggu 3: 10.094 x 1,01 = 10.194,94 ≈ 10.195 → +1,95%. Kenapa bukan +0,67%? Karena return minggu 2 dihitung dari modal 9.800 (bukan 10.000), return minggu 3 dari 10.094. Rata-rata aritmetika (-2 + 3 + 1)/3 menganggap modal tiap minggu sama — salah untuk modal berjalan. Menjumlahkan (-2+3+1 = +2%) juga salah: return tidak dijumlah begitu saja. Analyzer yang benar memakai compounding: kalikan (1+r) beruntun, atau hitung modal akhir / modal awal - 1. Beda 0,67% vs 1,95% kecil di 3 minggu — dalam 12 bulan, rata-rata naif meleset jauh. Laporan harus cocok dengan saldo.
+    kode: |
+      modal = 10000
+      for ret in [-0.02, 0.03, 0.01]:
+          modal = modal * (1 + ret)
+      print(f"Saldo akhir: ${modal:.0f} (+{(modal / 10000 - 1) * 100:.2f}%)")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "0,67% ≠ 1,95% — bukan pembulatan. Dua metode hitung berbeda."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: compounding. Laporan +1,95% cocok dengan saldo 10.195."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Return tidak dijumlah: -2% lalu +3% bukan +1% total (0,98 x 1,03 = 1,0094)."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Saldo aktual dari broker = kebenaran. Analyzer yang harus diperbaiki."
+    petunjuk:
+      - "Simulasikan minggu per minggu: 10.000 x 0,98 = ? lalu x 1,03?"
+      - "Rata-rata aritmetika menganggap modal TETAP — padahal modal berubah."
+      - "Compounding: kalikan (1 + r) beruntun."
+  - id: "s24-10"
+    judul: "Data Analyzer yang Basi"
+    emoji: "🧠"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Harga TLKM 5 hari: 4300, 4250, 4200, 4150, 4100 (rata-rata 4200). Bot aturan: BELI kalau harga sekarang < rata-rata x 0,98. Analyzer menghitung rata-rata SETIAP PAGI sebelum candle hari ini terbentuk. Jam 10.00 harga turun ke 4100. Analyzer masih memakai rata-rata kemarin. Apa keputusanmu?
+    pilihan:
+      - "Beli — 4100 < 4200 x 0,98 = 4116, aturan terpenuhi"
+      - "Jangan beli dulu: candle 4100 belum masuk data analyzer. Rata-rata baru (termasuk 4100) = 4183, ambang 4099,7 — 4100 tidak lolos. Update data dulu, baru putuskan"
+      - "Beli setengah — kompromi yang aman"
+      - "Beli 2x lipat — harga murah, sekalian"
+    jawaban: 1
+    penjelasan: |
+      Hitung dua versi. Data analyzer (5 hari lama): rata-rata 4200, ambang 0,98 x 4200 = 4116 → 4100 < 4116 → sinyal BELI. Tapi harga 4100 itu BELUM masuk data analyzer! Begitu candle hari ini masuk: rata-rata 6 hari = (4300 + 4250 + 4200 + 4150 + 4100 + 4100) / 6 = 25.100 / 6 = 4183,3; ambang = 0,98 x 4183,3 = 4099,7 → 4100 > 4099,7 → TIDAK beli. Sinyal beli tadi lahir dari data basi — keputusan berubah total dengan data lengkap. Bot harus: (1) pastikan candle terkini masuk data, (2) hitung ulang, (3) baru eksekusi. Beli setengah = tetap membeli sinyal basi. Beli 2x = menggandakan kesalahan. Urutan pipeline (bab 24-2): data terkini → analyzer → aturan → eksekusi.
+    kode: |
+      harga = [4300, 4250, 4200, 4150, 4100, 4100]
+      rata_baru = sum(harga) / len(harga)
+      ambang = rata_baru * 0.98
+      print(f"Rata-rata 6 hari: {rata_baru:.1f} → ambang {ambang:.1f}")
+      if 4100 < ambang:
+          print("BELI")
+      else:
+          print("TAHAN — data lengkap tidak memberi sinyal")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Sinyal dari data basi: dengan data lengkap 4100 tidak lolos ambang. Beli di awal penurunan."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Update data dulu: ambang 4099,7 → TAHAN. Harga lanjut turun ke 4050 — keputusan benar."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Setengah tetap sinyal basi — rugi separuh dari opsi beli penuh."
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "Sinyal basi x 2: TLKM turun ke 4050, stop kena dobel."
+    petunjuk:
+      - "Data analyzer sudah memuat harga 4100 atau belum?"
+      - "Hitung rata-rata 6 hari dan ambang baru: 25.100 / 6 x 0,98."
+      - "Bandingkan: 4100 < 4099,7?"
 soal:
   - id: "p24-1"
     judul: "Rata-rata Tahan Banting"

@@ -262,3 +262,263 @@ skenario:
     petunjuk:
       - "Bandingkan in-sample dan out-of-sample tiap strategi."
       - "Mana yang lebih bisa dipercaya: 34 trade atau 520 trade?"
+
+
+  - id: "s14-6"
+    judul: "Profit Factor"
+    emoji: "🪙"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Backtest strategi barumu: 12 trade. Total win $1.200, total loss $800.
+      Profit factor = 1,5. Kamu mau langsung pasang modal besar. Evaluasi yang
+      benar?
+    pilihan:
+      - "PF 1,5 lebih dari 1 = untung. All-in!"
+      - "PF 1,5 = untung, tapi 12 trade terlalu sedikit — bisa kebetulan"
+      - "PF harus di atas 2 — 1,5 berarti rugi"
+      - "PF 1,5 = win rate 50%"
+    jawaban: 1
+    penjelasan: |
+      PF = total win ÷ total loss = 1.200 ÷ 800 = 1,5. Di atas 1 = untung: setiap
+      $1 risiko menghasilkan $1,5. Tapi 12 trade = anekdot. Satu trade besar bisa
+      mengubah segalanya: kalau $700 win berasal dari satu trade, tanpa dia PF = 0,7
+      (rugi). Standar error-nya besar. Kesimpulan aman: PF 1,5 itu menjanjikan,
+      belum terbukti. Jalan: modal kecil dulu, kumpulkan 50-100 trade. PF di bawah 1
+      = rugi, bukan "harus 2". PF juga bukan win rate — dua metrik berbeda yang
+      sering tertukar.
+    kode: |
+      total_win = 1200
+      total_loss = 800
+      profit_factor = total_win / total_loss
+      print(f"Profit factor: {profit_factor:.2f}")
+      print("Jumlah trade: 12 — sampel terlalu kecil")
+    hasil:
+      - ret: -8.0
+        dd: 10.0
+        win: 15
+        note: "All-in: 12 trade itu kebetulan. Live 4 bulan: −8%."
+      - ret: 5.0
+        dd: 2.5
+        win: 70
+        note: "Paper trade 60 kali: PF asli 1,2. Masih positif — modal dinaikkan bertahap, +5%."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "PF 1,5 jelas untung. Kamu melewatkan strategi valid karena patokan keliru."
+      - ret: -8.0
+        dd: 10.0
+        win: 18
+        note: "PF dan win rate tidak sama. Salah paham dasar, keputusan ikut salah."
+    petunjuk:
+      - "PF = total win ÷ total loss."
+      - "Dua belas trade cukup untuk disimpulkan?"
+  - id: "s14-7"
+    judul: "Annualisasi Sharpe"
+    emoji: "🗓️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Strategi bulananmu: return rata-rata +1,2% per bulan, std 2,4%. Sharpe
+      bulanan = 0,5. Berapa Sharpe tahunannya? Catatan: Sharpe di-annualisasi
+      dengan √12, bukan ×12.
+    pilihan:
+      - "6,0 — 0,5 × 12"
+      - "1,73 — 0,5 × √12"
+      - "0,5 — tidak perlu annualisasi"
+      - "0,14 — 0,5 ÷ √12"
+    jawaban: 1
+    penjelasan: |
+      Sharpe bulanan 0,5 artinya return 0,5 std per bulan. Setahun ada 12 bulan:
+      return dikali 12, tapi std cuma naik √12 — volatilitas tumbuh dengan akar
+      waktu. Sharpe tahunan = 0,5 × √12 = 0,5 × 3,46 = 1,73. Angka 1,73 termasuk
+      sehat untuk strategi bulanan (acuan: di atas 1 bagus). "6,0" = mengalikan 12
+      tanpa √ — salah: itu menganggap risiko naik 12x lipat, padahal cuma 3,46x.
+      "0,5" = lupa konversi, tidak bisa dibandingkan dengan Sharpe tahunan strategi
+      lain. "0,14" = arah pembagian terbalik.
+    kode: |
+      sharpe_bulanan = 0.5
+      sharpe_tahunan = sharpe_bulanan * 12 ** 0.5
+      print(f"Sharpe tahunan: {sharpe_tahunan:.2f}")
+    hasil:
+      - ret: 3.0
+        dd: 9.0
+        win: 30
+        note: "Kamu pikir Sharpe 6,0 (luar biasa), pasang leverage 4x. DD 18% bikin menyerah: realisasi +3%."
+      - ret: 9.0
+        dd: 4.0
+        win: 72
+        note: "Sharpe 1,73 = solid. Leverage 1,5x, DD terkontrol, +9%."
+      - ret: 6.0
+        dd: 4.0
+        win: 45
+        note: "Tanpa annualisasi kamu salah bandingkan dengan strategi lain yang angka tahunannya."
+      - ret: -2.0
+        dd: 6.0
+        win: 20
+        note: "0,14 = pembagian terbalik. Kamu anggap strategi jelek dan berhenti — padahal 1,73."
+    petunjuk:
+      - "Volatilitas tumbuh dengan akar waktu, return tumbuh linear."
+      - "0,5 × √12 = ?"
+  - id: "s14-8"
+    judul: "Walk-Forward"
+    emoji: "🚶"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Data 2016-2021. Kamu optimasi parameter MA di 2016-2019 (in-sample): +22%
+      per tahun. Uji di 2020-2021 (out-of-sample): +8%. Sistem walk-forward
+      (optimasi ulang tiap tahun, diuji di tahun berikutnya): rata-rata +11% per
+      tahun, konsisten. Parameter mana yang kamu bawa ke live?
+    pilihan:
+      - "Parameter 2016-2019 — return +22% jauh lebih tinggi"
+      - "Walk-forward — OOS cuma 36% dari IS = overfit; +11% konsisten lebih bisa dipercaya"
+      - "Tolak semua — OOS harus sama dengan IS"
+      - "Gabungkan: trade parameter IS dan OOS bersamaan"
+    jawaban: 1
+    penjelasan: |
+      Parameter terbaik di data lama sering overfit: +22% in-sample, tapi cuma +8%
+      di data yang belum pernah dilihat — 64% edge-nya hilang. Walk-forward tidak
+      mencari "satu parameter ajaib": tiap tahun optimasi di data LALU, lalu diuji
+      di tahun BERIKUTNYA yang belum dipakai. Hasilnya +11% konsisten — lebih rendah
+      dari janji 22%, tapi nyata. Aturan: backtest terbaik = yang paling jujur,
+      bukan yang paling tinggi. "OOS harus sama dengan IS" tidak realistis —
+      degradasi wajar, yang berbahaya degradasi ekstrem. Mencampur IS dan OOS =
+      optimasi ulang di data uji = overfit lagi.
+    kode: |
+      in_sample = 22
+      out_sample = 8
+      rasio = out_sample / in_sample
+      print(f"OOS = {rasio*100:.0f}% dari IS — degradasi besar")
+      print("Walk-forward: +11%/tahun konsisten — pilih ini")
+    hasil:
+      - ret: -4.0
+        dd: 9.0
+        win: 22
+        note: "Live pakai parameter 2016-2019: 2022 cuma +2%. Janji 22% tidak pernah nyata."
+      - ret: 11.0
+        dd: 5.0
+        win: 74
+        note: "Walk-forward live 2022-2023: +10,5% dan +11%. Dekat dengan uji — bukti edge nyata."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "Standar mustahil itu menolak strategi sehat. WF +11% dengan degradasi wajar justru bagus."
+      - ret: -2.0
+        dd: 7.0
+        win: 25
+        note: "Mencampur IS + OOS = optimasi di data uji. Overfit lagi: −2%."
+    petunjuk:
+      - "22% menjadi 8%: berapa persen edge yang hilang?"
+      - "Apa beda walk-forward dengan memilih parameter sekali saja?"
+  - id: "s14-9"
+    judul: "Hantu yang Signifikan"
+    emoji: "👻"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kamu menguji 1.000 kombinasi parameter di data 5 tahun. Asumsi: 10% kombinasi
+      benar-benar punya edge, 90% sisanya tidak. Tes statistik: 5% false positive
+      (α) dan daya deteksi 60% untuk yang punya edge. Berapa bagian dari hasil
+      "signifikan" yang sebenarnya palsu?
+    pilihan:
+      - "5% — sesuai α, kecil"
+      - "Sekitar 43% — 45 palsu dari 105 yang signifikan, hampir separuhnya hantu"
+      - "60% — sesuai daya deteksi"
+      - "90% — mayoritas kombinasi tidak punya edge"
+    jawaban: 1
+    penjelasan: |
+      Dari 1.000 kombinasi: 100 punya edge nyata. Daya deteksi 60% → 60 terdeteksi
+      signifikan. Sisanya 900 tanpa edge: α 5% → 900 × 5% = 45 muncul "signifikan"
+      karena kebetulan. Total yang lolos = 60 + 45 = 105. Yang palsu = 45 ÷ 105 =
+      43%. Ini p-hacking dalam angka: makin banyak yang kamu coba, makin banyak
+      hantu yang lolos. α 5% berlaku per percobaan, bukan per proyek. Implikasi:
+      temuan "signifikan" dari seleksi 1.000 percobaan wajib diuji ulang di data
+      baru — hampir separuhnya mati di sana. "5%" = salah baca α. "60%" = salah
+      baca daya deteksi. "90%" = salah baca proporsi dasar.
+    kode: |
+      kombinasi = 1000
+      beredge = 0.10 * kombinasi
+      terdeteksi = beredge * 0.60
+      palsu = 0.90 * kombinasi * 0.05
+      signifikan = terdeteksi + palsu
+      print(f"Signifikan: {signifikan:.0f} | Palsu: {palsu:.0f} ({palsu/signifikan*100:.0f}%)")
+    hasil:
+      - ret: -9.0
+        dd: 10.0
+        win: 15
+        note: "Kamu percaya semua temuan signifikan. Separuhnya palsu: live 6 bulan −9%."
+      - ret: 7.0
+        dd: 3.0
+        win: 70
+        note: "Kamu replicasi di OOS: 40 kandidat mati di sana. 12 sisanya jalan: +7% bersih."
+      - ret: -6.0
+        dd: 8.0
+        win: 18
+        note: "Daya deteksi berlaku untuk yang punya edge, bukan bagian yang palsu. Tetap over-invest di hantu."
+      - ret: -4.0
+        dd: 6.0
+        win: 22
+        note: "90% itu proporsi dasar, bukan proporsi palsu di antara yang signifikan."
+    petunjuk:
+      - "Berapa kombinasi yang benar punya edge dan terdeteksi?"
+      - "Berapa false positive dari 900 yang tidak punya edge?"
+      - "Palsu ÷ total signifikan = ?"
+  - id: "s14-10"
+    judul: "Tiga Kandidat"
+    emoji: "🏆"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Tiga strategi lolos penyaringan awal (data 2019-2023). A: return 25% per
+      tahun, max DD 30%, PF 1,6 — profit terkonsentrasi di bull 2020-2021. B:
+      return 15% per tahun, max DD 8%, PF 1,4 — konsisten tiap tahun. C: return 30%
+      per tahun, max DD 45%, PF 2,0 — tapi cuma 22 trade, semuanya di 2022. Mana
+      yang kamu danai?
+    pilihan:
+      - "C — return dan PF tertinggi"
+      - "B — Calmar 1,9 vs A 0,8 vs C 0,7; konsisten tiap tahun; sampel tidak menumpuk di satu periode"
+      - "A — return 25% seimbang"
+      - "Bagi rata ke tiga-tiganya"
+    jawaban: 1
+    penjelasan: |
+      Calmar (return ÷ max DD): A = 25 ÷ 30 = 0,83. B = 15 ÷ 8 = 1,88. C = 30 ÷ 45
+      = 0,67. B memberi hampir 2x return per unit drawdown. Tapi lebih dari itu: A
+      profitnya cuma dari bull market — kalau 2024 sideways, A bisa jeblok. C: 22
+      trade dalam SATU periode = sampel kecil dan event-driven; PF 2,0 bisa
+      kebetulan satu crash. B: profit tiap tahun = edge lintas kondisi. Risk-adjusted
+      + konsistensi + sampel tersebar = B. Bagi rata = memberi modal ke C yang belum
+      terbukti dan A yang bergantung regime. Return tertinggi tanpa konteks =
+      jebakan.
+    kode: |
+      calmar_a = 25 / 30
+      calmar_b = 15 / 8
+      calmar_c = 30 / 45
+      print(f"Calmar: A {calmar_a:.2f} | B {calmar_b:.2f} | C {calmar_c:.2f}")
+      print("B: risk-adjusted terbaik + profit tersebar tiap tahun")
+    hasil:
+      - ret: -15.0
+        dd: 35.0
+        win: 12
+        note: "C live 2024: 14 trade, −15%. Edge-nya ada di 2022 doang."
+      - ret: 15.0
+        dd: 6.0
+        win: 75
+        note: "B live 2024: +14%. Konsisten seperti uji. Kamu tidur nyenyak."
+      - ret: 4.0
+        dd: 12.0
+        win: 30
+        note: "A jalan 6 bulan lalu jeblok di market datar. Total +4% — B sendirian lebih baik."
+      - ret: 1.0
+        dd: 18.0
+        win: 25
+        note: "Rata-rata: untung B (1/3 modal) ditutup loss A dan C. Total cuma +1%."
+    petunjuk:
+      - "Bagi return dengan max DD untuk tiap strategi."
+      - "Periksa: profit datang dari satu periode atau tersebar?"
+      - "22 trade dalam satu crash = sampel seperti apa?"

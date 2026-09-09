@@ -282,3 +282,225 @@ skenario:
     petunjuk:
       - "Sinyal itu dihitung dari harga jam berapa?"
       - "Harga sudah beda. Apakah aturan entry masih berlaku?"
+  - id: "s20-6"
+    judul: "Error Malam, Posisi Aman"
+    emoji: "🚨"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      03.00 pagi, botmu error: order entry gagal "insufficient margin". Log: retry otomatis 5 kali, semua gagal, lalu bot berhenti. Posisi lama: FLAT (tidak ada posisi terbuka). Kamu lihat alert-nya jam 07.00. Apa langkah pertamamu?
+    pilihan:
+      - "Panik — matikan bot permanen dan cabut API key"
+      - "Cek dulu: posisi flat, tidak ada bahaya. Baca log, cari penyebab, perbaiki, pasang alert yang lebih baik"
+      - "Abaikan — tidak ada posisi terbuka, berarti tidak ada masalah"
+      - "Entry manual sekarang — bot gagal, kamu yang gantikan"
+    jawaban: 1
+    penjelasan: |
+      Urutkan bahaya: posisi terbuka tanpa pengawasan = bahaya nomor satu. Di sini posisi FLAT → tidak ada darurat. Error "insufficient margin" saat entry justru bekerja sebagaimana mestinya: bot menolak masuk tanpa modal cukup, lalu berhenti (fail-safe). Yang kurang: alert-nya baru kamu lihat jam 07.00 — 4 jam telat. Aksi benar: baca log (kenapa margin kurang? equity turun? sizing terlalu besar?), perbaiki, dan pastikan alert error sampai ke HP. Mematikan bot permanen = overreaction, masalah margin tidak selesai. Mengabaikan = error berikutnya bisa terjadi saat posisi TERBUKA. Entry manual = menghidupkan emosi jam 3 pagi. Bot yang gagal dengan aman dan berisik: posisi aman, manusia diberi tahu.
+    kode: |
+      posisi_terbuka = 0
+      if posisi_terbuka > 0:
+          print("DARURAT: amankan posisi dulu")
+      else:
+          print("Aman: posisi flat — fokus ke penyebab error")
+    hasil:
+      - ret: -2.0
+        dd: 1.0
+        win: 20
+        note: "Bot mati total: 3 minggu tanpa trading, sinyal bagus terlewat. Penyebab margin tidak pernah dicari."
+      - ret: 3.1
+        dd: 0.8
+        win: 75
+        note: "Log dibaca: sizing 5% terlalu besar untuk equity. Diperbaiki + alert ke HP. Bot jalan normal."
+      - ret: -1.5
+        dd: 2.5
+        win: 25
+        note: "Dibiarkan: minggu depannya error serupa terjadi saat posisi TERBUKA — baru panik."
+      - ret: -2.8
+        dd: 3.0
+        win: 15
+        note: "Entry manual tanpa sinyal: salah arah, stop kena -2,8%."
+    petunjuk:
+      - "Bahaya nomor satu: posisi terbuka. Ada? (flat)"
+      - "Kalau aman, kerja berikutnya: cari PENYEBAB error."
+      - "Error yang tidak sampai ke manusia = tidak pernah diperbaiki."
+  - id: "s20-7"
+    judul: "State Bot vs Kenyataan"
+    emoji: "🔗"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Reconciliation pagi ini: state bot = FLAT, tapi exchange menunjukkan posisi +0,15 BTC dari order 21.00 kemarin — log-nya "timeout, dianggap gagal". Harga BTC naik 2% sejak order itu. Apa keputusanmu?
+    pilihan:
+      - "Anggap flat — log bilang order gagal, state bot sumber kebenaran"
+      - "Sync dari exchange: posisi +0,15 BTC itu NYATA. Kelola dengan aturan bot, lalu cari kenapa log bohong"
+      - "Jual 0,15 BTC sekarang — ambil untung 2% sebelum semuanya kacau"
+      - "Hapus log kemarin, mulai hari baru yang bersih"
+    jawaban: 1
+    penjelasan: |
+      Exchange = sumber kebenaran posisi. Bot boleh salah catat; exchange tidak. Order "timeout" ternyata terisi — idempotency yang gagal diam-diam: tanpa client order ID, bot tidak bisa membedakan 'gagal' dan 'terkirim'. Posisi +0,15 BTC itu nyata dan TANPA pengawasan sejak 21.00 → mulai kelola sekarang: masukkan ke state, jalankan aturan exit bot (target/stop/funding). Jual manual asal-asalan = keputusan tanpa aturan (untung 2% bisa jadi target, bisa juga bukan). Anggap flat = posisi nyata terlantar, suatu hari muncul sebagai 'hantu'. Hapus log = membuang bukti. Setelah posisi aman, audit: kenapa reconciliation tidak berbunyi tiap 5 menit?
+    kode: |
+      posisi_exchange = 0.15
+      posisi_state = 0.0
+      if posisi_exchange != posisi_state:
+          print(f"SYNC: posisi nyata {posisi_exchange} BTC — kelola dengan aturan bot")
+      else:
+          print("State cocok")
+    hasil:
+      - ret: -1.8
+        dd: 2.0
+        win: 20
+        note: "Posisi 0,15 BTC dianggap tidak ada: BTC turun 3% malam itu, kerugian baru ketahuan besok."
+      - ret: 2.4
+        dd: 0.5
+        win: 75
+        note: "Sync + aturan exit jalan: posisi keluar di +1,8% sesuai target. Reconciliation diperbaiki."
+      - ret: 1.2
+        dd: 1.0
+        win: 40
+        note: "Jual manual untung 2% — beruntung. Tapi tanpa aturan: lain kali 'ambil untung' di tengah tren = rugi besar."
+      - ret: -0.5
+        dd: 0.8
+        win: 30
+        note: "Log dihapus: bukti hilang, penyebab tidak ketemu. Pola ini akan terulang."
+    petunjuk:
+      - "Kalau bot dan exchange beda pendapat soal posisi, siapa yang benar?"
+      - "Posisi nyata tanpa pengawasan = bahaya. Kelola dulu, audit kemudian."
+      - "Kenapa order 'timeout' tidak ketahuan reconciliation?"
+  - id: "s20-8"
+    judul: "Retry Tanpa Batas"
+    emoji: "🔂"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Semalam exchange maintenance 2 jam. Botmu punya loop retry: kalau order gagal, kirim ulang tiap 5 detik — TANPA batas. Pagi ini: 1.400 percobaan gagal di log, API key kena rate limit 1 jam. Tidak ada posisi terbuka. Perbaikan apa?
+    pilihan:
+      - "Biarkan — selama exchange mati, retry terus sampai sukses itu wajar"
+      - "Retry maksimal 3x dengan jeda naik (5s, 30s, 120s), lalu alarm + pause sampai manusia memutuskan"
+      - "Jalankan 3 thread retry paralel — 3x lebih cepat sukses"
+      - "Restart bot tiap jam — biar tidak pernah kehabisan rate limit"
+    jawaban: 1
+    penjelasan: |
+      Retry tanpa batas mengubah masalah kecil jadi besar: 1.400 request sampah → rate limit 1 jam, bot buta saat market buka. Prinsip bab 20-2: retry 3x dengan backoff (jeda makin panjang), lalu BERHENTI dan panggil manusia. 5s → 30s → 120s memberi exchange waktu pulih tanpa membanjiri. Alarm = kamu tahu ada yang salah; pause = bot tidak menggantung. "Retry terus sampai sukses" = bot bisa menghabiskan berjam-jam melawan masalah yang tidak bisa dia selesaikan. Thread paralel = rate limit habis lebih cepat. Restart tiap jam = retry tanpa batas yang menyamar, plus state bisa korup tiap restart. Bot yang baik: coba sebentar, lalu bertanya pada manusia.
+    kode: |
+      exchange_hidup = False
+      for percobaan in range(1, 4):
+          if exchange_hidup:
+              print(f"Order sukses di retry ke-{percobaan}")
+              break
+          print(f"Retry ke-{percobaan} gagal — jeda {5 * percobaan} detik")
+      else:
+          print("ALARM: pause bot, panggil manusia")
+    hasil:
+      - ret: -3.0
+        dd: 1.5
+        win: 15
+        note: "1.400 retry → rate limit 1 jam. Sinyal pagi terlewat, biaya API membengkak."
+      - ret: 2.2
+        dd: 0.5
+        win: 72
+        note: "3x retry + alarm: maintenance selesai 10 menit kemudian, kamu resume manual. Tidak ada yang terlewat."
+      - ret: -4.5
+        dd: 2.0
+        win: 10
+        note: "3 thread paralel: rate limit habis 3x lebih cepat. Bot buta 2 jam."
+      - ret: -2.0
+        dd: 1.0
+        win: 20
+        note: "Restart tiap jam: retry tetap jalan tiap 5 detik, rate limit tetap kena, state malah sering reset."
+    petunjuk:
+      - "Kalau exchange mati 2 jam, berapa lama bot harus mencoba?"
+      - "Backoff: jeda makin panjang, lalu berhenti + alarm."
+      - "Rate limit itu sumber daya — jangan dibakar untuk masalah di luar kendali bot."
+  - id: "s20-9"
+    judul: "Slippage Lebih Gemuk dari Asumsi"
+    emoji: "💸"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Backtest botmu: +0,35% net per trade (sudah potong fee 0,05% + slippage 0,08% per trade). Paper trade 4 minggu, 40 trade: slippage NYATA rata-rata 0,18% per trade (order besar menggeser harga). Fee tetap 0,05%. Apa keputusanmu?
+    pilihan:
+      - "Naikkan ke full size — 0,25% per trade masih positif, kenapa tidak"
+      - "Tetap ukuran kecil + audit penyebab slippage: ukuran order, tipe order (market vs limit), jam eksekusi"
+      - "Stop total — strategi terbukti tidak layak"
+      - "Pindah exchange ber-fee 0,02% — masalah selesai"
+    jawaban: 1
+    penjelasan: |
+      Ekspektasi paper: 0,35 - (0,18 - 0,08) = +0,25% per trade. Masih positif, TAPI turun 29% dari backtest (0,10 / 0,35) — lewat ambang deviasi 20% (bab 20-1): JANGAN naikkan ukuran. Selisih 0,10% itu lebih besar dari fee-nya — biang masalah adalah slippage, bukan fee. Pindah exchange cuma menghemat 0,03% fee; 0,10% slippage tetap bocor. Stop total = overreaksi: 0,25% masih positif, bot layak di ukuran kecil. Audit dulu: order market besar di buku tipis? Pecah order kecil-kecil. Eksekusi pas funding spike? Geser jam eksekusi. Slippage adalah masalah eksekusi — bisa diperbaiki tanpa membuang strategi. Ukur lagi 2 minggu setelah perbaikan, baru putuskan naik ukuran.
+    kode: |
+      asumsi_slippage = 0.08
+      slippage_nyata = 0.18
+      net_backtest = 0.35
+      net_paper = net_backtest - (slippage_nyata - asumsi_slippage)
+      print(f"Net per trade versi paper: {net_paper:.2f}%")
+      print(f"Deviasi dari backtest: {(net_backtest - net_paper) / net_backtest * 100:.0f}%")
+    hasil:
+      - ret: 4.0
+        dd: 14.0
+        win: 35
+        note: "Full size dengan slippage 0,18%: edge 0,25% terlalu tipis. Satu bulan jelek: DD 14%."
+      - ret: 9.5
+        dd: 4.0
+        win: 70
+        note: "Audit: order dipecah dan pakai limit. Slippage turun ke 0,11%. Naik ukuran bertahap → 9,5%."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Bot dihentikan: padahal 0,25% masih layak. Strategi yang bisa diselamatkan dibuang."
+      - ret: 5.5
+        dd: 9.0
+        win: 40
+        note: "Pindah exchange: fee hemat 0,03%, slippage 0,18% tetap. Masalah utama tidak tersentuh."
+    petunjuk:
+      - "Hitung net paper: 0,35 - (0,18 - 0,08) = ?"
+      - "Penurunan 29% itu di atas ambang deviasi 20% — artinya apa untuk ukuran?"
+      - "Slippage besar = masalah EKSEKUSI, bukan fee."
+  - id: "s20-10"
+    judul: "Tiga Bulan Lebih Buruk: Kecilkan atau Berhenti?"
+    emoji: "🩹"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Backtest 3 tahun: +8% per kuartal rata-rata. Live 3 bulan di ukuran 1/2: realisasi +1,5% — ekspektasi ukuran 1/2 seharusnya +4%. Tidak ada bug, slippage normal, sinyal sesuai aturan. Keputusan apa?
+    pilihan:
+      - "Stop total — live membuktikan strategi gagal"
+      - "Turunkan ke 1/4 dan audit 4-8 minggu — jangan tunggu 'balik' di ukuran besar"
+      - "Naikkan ke full size — biar cepat kejar ketertinggalan"
+      - "Biarkan di 1/2 — 3 bulan belum cukup, tunggu 3 bulan lagi"
+    jawaban: 1
+    penjelasan: |
+      Deviasi: (4 - 1,5) / 4 = 62,5% — jauh di atas ambang 20%. Aturan bab 20-1: hasil live 3 bulan jauh lebih buruk dari ekspektasi → JANGAN menunggu balik; kecilkan dan audit. Tiga bulan di ukuran kecil = sampel cukup untuk curiga tanpa risiko besar. Stop total = keputusan emosional: deviasi besar bisa berasal dari kondisi pasar (funding rendah, tren sepi), bukan strategi mati — audit yang membedakan. Naikkan ukuran = membesarkan taruhan saat bukti justru memburuk (mental catch-up). Biarkan 3 bulan lagi = menunggu balik; kalau strategi memang rusak, kamu bayar 3 bulan untuk penegasan yang bisa ditebak. Kecilkan ke 1/4: risiko kecil, data tetap mengalir, keputusan berikutnya berbasis angka baru.
+    kode: |
+      ekspektasi_setengah = 4.0
+      realisasi = 1.5
+      deviasi = (ekspektasi_setengah - realisasi) / ekspektasi_setengah
+      if deviasi > 0.20:
+          print(f"Deviasi {deviasi*100:.0f}% > 20% — kecilkan & audit")
+      else:
+          print("Lanjut ukuran sekarang")
+    hasil:
+      - ret: -3.0
+        dd: 4.0
+        win: 20
+        note: "Bot dimatikan. Kuartal berikutnya funding normal lagi — strategi sebenarnya hidup. Rugi waktu."
+      - ret: 5.5
+        dd: 2.5
+        win: 65
+        note: "1/4 ukuran + audit: ternyata cuma funding rendah (siklus). Kembali ke 1/2 saat pulih → +5,5%."
+      - ret: -7.0
+        dd: 9.0
+        win: 15
+        note: "Full size pas kondisi jelek: kuartal itu -7%. Membesarkan taruhan saat bukti memburuk."
+      - ret: 0.5
+        dd: 6.0
+        win: 30
+        note: "3 bulan menunggu di 1/2: hasil tetap meleset, waktu audit terbuang. +0,5%."
+    petunjuk:
+      - "Ekspektasi ukuran 1/2 = 8% x 0,5 = 4%. Realisasi 1,5%. Deviasi berapa?"
+      - "Ambang bab 20-1: 20%. Di atasnya: kecilkan & audit."
+      - "'Menunggu balik' vs 'kecilkan & cari tahu' — mana yang membayar data?"

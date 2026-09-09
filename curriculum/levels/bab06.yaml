@@ -149,8 +149,8 @@ skenario:
   - id: "s6-3"
     judul: "Kenapa Loop Itu Penting"
     emoji: "💡"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Kamu punya data harga TLKM 250 hari (satu angka per hari). Mau hitung rata-rata 250 hari itu. Tanpa loop, kamu harus menulis `harga1 + harga2 + ... + harga250` — 250 variabel! Apa cara yang benar?
@@ -309,6 +309,293 @@ skenario:
     petunjuk:
       - "Angka mana saja yang lebih besar dari 0?"
       - "Hitung berapa angka yang lolos `if p > 0`."
+
+  - id: "s6-6"
+    judul: "Baca Kode: Total Bertambah"
+    emoji: "🧮"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Kode bot:
+      ```python
+      total = 10
+      for i in range(3):
+          total += 10
+      print(total)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "40"
+      - "30"
+      - "13"
+      - "10"
+    jawaban: 0
+    penjelasan: |
+      total mulai dari 10. Loop 3 putaran, tiap putaran total += 10 (total = total + 10):
+      10 → 20 → 30 → **40**. Tercetak 40.
+      Opsi 30 = lupa nilai awal 10.
+      Opsi 13 = menambahkan 3 (jumlah putaran) ke 10 — salah: yang ditambah 10 tiap putaran.
+      Opsi 10 = menganggap loop tidak mengubah apa pun.
+      Pola akumulasi: mulai dari nilai awal, timbun di dalam loop, cetak setelah loop selesai.
+    kode: |
+      total = 10
+      for i in range(3):
+          total += 10
+      print(f"Total = {total}")   # 40
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "40 benar: 10 + (3 × 10). Nilai awal ikut dihitung."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "30 itu 3 × 10 saja. total mulai dari 10, bukan 0."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "13 itu kalau yang ditambah 1 per putaran. Di sini += 10."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Loop 3 putaran mengubah total: 10 → 40."
+    petunjuk:
+      - "Tulis ulang isi total tiap putaran: 10 → ? → ? → ?"
+      - "Berapa kali angka 10 ditambahkan?"
+
+  - id: "s6-7"
+    judul: "Baca Kode: Jumlah i"
+    emoji: "🔢"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kode bot:
+      ```python
+      total = 0
+      for i in range(2, 6):
+          total += i
+      print(total)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "14"
+      - "20"
+      - "15"
+      - "4"
+    jawaban: 0
+    penjelasan: |
+      range(2, 6) berisi 2, 3, 4, 5. Angka 6 TIDAK masuk — range berhenti sebelum angka kedua.
+      Total = 2 + 3 + 4 + 5 = **14**.
+      Opsi 20 = memasukkan 6 (2+3+4+5+6) — salah batas.
+      Opsi 15 = menjumlahkan 1 sampai 5 — salah titik mulai.
+      Opsi 4 = jumlah putaran, bukan jumlah i.
+      `i` bukan sekadar penghitung: nilainya (2, 3, 4, 5) ikut dijumlahkan.
+      range(a, b) itu a sampai b−1.
+    kode: |
+      total = 0
+      for i in range(2, 6):
+          total += i
+      print(f"Total = {total}")   # 14
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "14 benar: 2 + 3 + 4 + 5. Angka 6 tidak masuk range(2, 6)."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "20 itu kalau 6 ikut dijumlahkan. range(2, 6) berhenti sebelum 6."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "15 = 1+2+3+4+5. Mulainya 2, bukan 1."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "4 itu jumlah putaran. Yang dicetak adalah jumlah nilai i."
+    petunjuk:
+      - "range(2, 6) berisi angka apa saja?"
+      - "Jumlahkan semuanya."
+
+  - id: "s6-8"
+    judul: "Baca Kode: Jumlah Hari Genap"
+    emoji: "🧩"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Bot menjumlahkan profit hari genap (i genap):
+      ```python
+      total = 0
+      for i in range(1, 7):
+          if i % 2 == 0:
+              total += i
+      print(total)
+      ```
+      Berapa yang tercetak?
+    pilihan:
+      - "12"
+      - "21"
+      - "9"
+      - "6"
+    jawaban: 0
+    penjelasan: |
+      range(1, 7) = 1, 2, 3, 4, 5, 6.
+      Syarat `i % 2 == 0` (sisa bagi 2 = 0) artinya genap. Yang lolos: 2, 4, 6.
+      Total = 2 + 4 + 6 = **12**.
+      Opsi 21 = menjumlahkan SEMUA angka 1 sampai 6 — lupa filter.
+      Opsi 9 = menjumlahkan yang ganjil (1 + 3 + 5) — arah filter tertukar.
+      Opsi 6 = cuma angka genap terbesar.
+      Loop + if di dalam = filter: proses semua data, ambil yang memenuhi syarat.
+      Ini pola menghitung hari menang atau transaksi valid.
+    kode: |
+      total = 0
+      for i in range(1, 7):
+          if i % 2 == 0:
+              total += i
+      print(f"Total genap = {total}")   # 12
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "12 benar: 2 + 4 + 6. Hanya i genap yang masuk total."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "21 = jumlah semua 1..6. Filter `i % 2 == 0` membuang yang ganjil."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "9 = 1+3+5, jumlah yang ganjil. Filter-nya minta genap."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "6 cuma angka genap terbesar. Ketiganya (2, 4, 6) masuk total."
+    petunjuk:
+      - "Angka 1 sampai 6 mana saja yang genap?"
+      - "Jumlahkan hanya angka itu."
+
+  - id: "s6-9"
+    judul: "Baca Kode: Modal Bertumbuh"
+    emoji: "📈"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Kode bot simulasi:
+      ```python
+      modal = 1_000_000
+      for i in range(3):
+          modal = modal * 1.1
+      print(modal)
+      ```
+      Modal bertumbuh 10% per putaran, 3 putaran. Berapa yang tercetak?
+    pilihan:
+      - "Rp1.300.000"
+      - "Rp1.331.000"
+      - "Rp1.210.000"
+      - "Rp1.100.000"
+    jawaban: 1
+    penjelasan: |
+      Tiap putaran modal dikali 1,1 dari nilai SEKARANG:
+      Putaran 1: 1.000.000 × 1,1 = 1.100.000.
+      Putaran 2: 1.100.000 × 1,1 = 1.210.000.
+      Putaran 3: 1.210.000 × 1,1 = **1.331.000**.
+      Opsi 1.300.000 = menambah 3 × 10% dari modal awal (100.000 × 3) — lupa bunga berbunga:
+      putaran 2 dan 3 menghitung dari modal yang sudah lebih besar.
+      Opsi 1.210.000 = baru 2 putaran. Opsi 1.100.000 = 1 putaran.
+      Variabel yang ditimpa dalam loop = mesin compounding.
+    kode: |
+      modal = 1_000_000
+      for i in range(3):
+          modal = modal * 1.1
+      print(f"Modal akhir = Rp{modal:,.0f}")   # 1,331,000
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "1.300.000 itu 3 × 10% dari modal awal. Tiap putaran menghitung dari modal terbaru."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "1.331.000 benar: 1.000.000 × 1,1 × 1,1 × 1,1. Bunga berbunga."
+      - ret: 0.0
+        dd: 0.0
+        win: 35
+        note: "1.210.000 = setelah 2 putaran saja. Loop-nya 3 putaran."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "1.100.000 = baru putaran pertama. Masih ada 2 putaran lagi."
+    petunjuk:
+      - "Tulis modal setelah putaran 1, 2, dan 3."
+      - "Putaran 2 mengalikan 1.100.000 (bukan 1.000.000) dengan 1,1."
+
+  - id: "s6-10"
+    judul: "Baca Kode: Total dan Hari Menang"
+    emoji: "📋"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kode laporan bot:
+      ```python
+      profit = [5, -3, 8, -2, 4]
+      total = 0
+      menang = 0
+      for p in profit:
+          total += p
+          if p > 0:
+              menang += 1
+      print(total)
+      print(menang)
+      ```
+      Profit harian: +5, −3, +8, −2, +4. Baris 1 dan baris 2 mencetak apa?
+    pilihan:
+      - "12 lalu 3"
+      - "17 lalu 3"
+      - "12 lalu 5"
+      - "17 lalu 5"
+    jawaban: 0
+    penjelasan: |
+      Dua akumulator jalan bersamaan dalam satu loop.
+      total: 5 − 3 + 8 − 2 + 4 = **12**.
+      menang: bertambah hanya saat p > 0. Yang positif: +5 (1), +8 (2), +4 (3) → **3**.
+      Baris 1 cetak 12, baris 2 cetak 3.
+      Opsi '17 lalu 3' = menjumlahkan hanya angka positif (5+8+4) — hari minus tetap mengurangi total.
+      Opsi '12 lalu 5' = menghitung semua hari sebagai menang — hari −3 dan −2 bukan menang.
+      Dua akumulator dalam satu loop = pola laporan: total profit + win rate sekaligus.
+    kode: |
+      profit = [5, -3, 8, -2, 4]
+      total = 0
+      hari_menang = 0
+      for p in profit:
+          total += p
+          if p > 0:
+              hari_menang += 1
+      print(f"Total = {total} | Hari menang = {hari_menang}")   # 12 | 3
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "'12 lalu 3' benar: total 5−3+8−2+4, menang 3 hari."
+      - ret: 0.0
+        dd: 0.0
+        win: 30
+        note: "17 = 5+8+4 saja. Hari minus tetap mengurangi total, tidak dibuang."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Hari −3 dan −2 bukan menang. `if p > 0` menyaringnya."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "17 salah untuk total, 5 salah untuk menang — dua-duanya salah hitung."
+    petunjuk:
+      - "Jalankan loop, catat total tiap putaran: 5, 2, 10, 8, 12."
+      - "menang bertambah hanya kalau p > 0."
 soal:
   - id: "p6-1"
     judul: "Cetak 1 Sampai N"

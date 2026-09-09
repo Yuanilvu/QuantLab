@@ -140,8 +140,8 @@ skenario:
   - id: "s27-3"
     judul: "Integritas Visualisasi"
     emoji: "🧭"
-    sulit: "sulit"
-    xp: 50
+    sulit: "sedang"
+    xp: 35
     menit: 5
     cerita: |
       Tim pemasaran minta chart "biar return strategimu keliatan gede". Saran mereka: potong sumbu Y, tampilkan cuma 3 bulan terbaik, dan pakai skala ganda biar kurva lebih curam. Responsmu?
@@ -266,6 +266,229 @@ skenario:
     petunjuk:
       - "+40% itu dihitung dari angka berapa: 500 atau 1.000?"
       - "Balik modal: dari 700 naik ke 1.000 = berapa persen?"
+  - id: "s27-6"
+    judul: "Chart yang Tidak Pernah Ada"
+    emoji: "💾"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Bot harianmu membuat chart equity, tapi folder output selalu kosong — tidak ada file PNG. Kodenya:
+      ```python
+      import matplotlib.pyplot as plt
+      plt.plot([1, 2, 3], [100, 110, 105])
+      plt.title("Equity")
+      ```
+      Apa yang kurang?
+    pilihan:
+      - "plt.legend() — chart butuh legenda"
+      - "plt.savefig('equity.png') — menggambar saja tidak menulis file ke disk"
+      - "Ganti plt.plot dengan plt.bar — line plot tidak bisa dipakai"
+      - "Tambah data lebih banyak — 3 titik terlalu sedikit"
+    jawaban: 1
+    penjelasan: |
+      plt.plot menggambar di kanvas MEMORI. Tanpa `plt.savefig('equity.png')`, tidak ada file yang ditulis ke disk — chart hilang saat program selesai. Di server bot (tanpa layar), savefig adalah SATU-SATUNYA cara menyimpan chart. Urutan yang benar: plot → label/title → savefig. legend = untuk chart banyak garis; dengan satu garis tidak wajib. Bar chart = jenis chart berbeda, bukan pengganti savefig. Jumlah titik tidak menentukan file tersimpan. Pola bot harian: gambar equity → savefig dengan nama ber-tanggal → lampirkan ke laporan. Folder kosong? Cek savefig-nya ada atau tidak.
+    kode: |
+      import matplotlib.pyplot as plt
+      plt.plot([1, 2, 3], [100, 110, 105])
+      plt.title("Equity")
+      plt.savefig("/tmp/equity.png")
+      print("Chart tersimpan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Legend untuk membedakan banyak garis — bukan penyebab file hilang."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: savefig menulis file. Tanpa itu chart hanya ada di memori."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Jenis chart tidak terkait — masalahnya tidak ada penyimpanan."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Jumlah titik tidak menentukan file tersimpan atau tidak."
+    petunjuk:
+      - "plot menggambar di mana? (memori)"
+      - "Perintah apa yang menulis hasil gambar ke disk? (savefig)"
+      - "Urutan: plot → savefig."
+  - id: "s27-7"
+    judul: "Rata-rata Tanpa Sebaran"
+    emoji: "🎢"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Iklan bot: "return rata-rata +1,2% per hari, kurva mulus naik!" Itu satu-satunya chart yang ditampilkan. Kamu minta data: return hariannya std 3,1% dan pernah -9% dalam sehari. Evaluasimu?
+    pilihan:
+      - "Bagus — rata-rata +1,2% dengan kurva mulus = strategi stabil"
+      - "Menyesatkan: rata-rata tanpa SEBARAN. Realitanya hari bisa -9%. Minta histogram return dan kurva equity dengan drawdown"
+      - "-9% sekali tidak masalah — rata-rata tetap positif"
+      - "Std 3,1% itu kecil — aman"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata +1,2% hanya setengah cerita. Tanpa sebaran, hari -9% dan +11% bisa "rata-rata" +1%. Std 3,1% per hari itu BESAR: dalam sebulan (21 hari trading), swing wajar sekitar 3,1 x √21 = ±14%. Satu hari -9% menghapus 7-8 hari profit +1,2%. "Kurva mulus" bisa hasil smoothing atau sumbu yang dipotong — bukan bukti stabilitas. Yang jujur (bab 27-2): rata-rata SELALU disertai sebaran — histogram return (bentuknya: normal atau ekor?) dan equity penuh dengan drawdown-nya. "-9% sekali tidak masalah" = menormalisasi risiko ekor. "Std 3,1% kecil" = salah skala: itu per HARI, bukan per tahun.
+    kode: |
+      import numpy as np
+      import matplotlib.pyplot as plt
+      ret = np.array([1.2, -0.5, 3.1, -2.0, 1.5, -9.0, 2.2, 0.8])
+      plt.hist(ret, bins=5)
+      plt.title("Sebaran return harian — minta chart ini, bukan cuma rata-rata")
+      plt.savefig("/tmp/sebaran.png")
+      print("Histogram tersimpan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Kurva mulus bisa hasil smoothing — tanpa sebaran tidak ada bukti stabilitas."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: minta histogram + equity penuh. Risiko baru terlihat dari sebaran."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Satu hari -9% menghapus 7-8 hari profit — justru harus diperiksa."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "3,1% per hari = sekitar ±14% swing sebulan — bukan kecil."
+    petunjuk:
+      - "Rata-rata +1,2% bisa berasal dari hari -9% dan +11%."
+      - "Yang menampilkan risiko: sebaran (histogram) dan drawdown."
+      - "Bab 27-2: rata-rata tanpa sebaran = trik."
+  - id: "s27-8"
+    judul: "Histogram dengan Bin yang Tepat"
+    emoji: "📦"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Return harian 250 hari. Mau melihat BENTUK sebarannya (risiko). Kamu coba `plt.hist(ret, bins=250)` — hasilnya 250 batang, hampir semua tingginya 1, tidak terbaca. Perbaikan apa?
+    pilihan:
+      - "Bin terlalu banyak — pakai bins 10-20: tiap batang merangkum 12-25 hari, bentuknya kelihatan"
+      - "Tambah data jadi 2.000 hari — biar bins=250 masuk akal"
+      - "Ganti plt.hist dengan plt.plot — garis lebih jelas"
+      - "Bins=250 sudah benar — memang harus satu batang per nilai"
+    jawaban: 0
+    penjelasan: |
+      Bin = keranjang pengelompokan. 250 hari dengan 250 bin → tiap bin cuma berisi sekitar 1 observasi: histogram jadi deretan batang tinggi 1 — itu noise, bukan bentuk. Aturan praktis: untuk ratusan data, bins 10-30; tiap bin idealnya berisi belasan observasi. 250 hari ÷ 15 bin ≈ 17 hari per batang → bentuk distribusi mulai terlihat (normal? ekor kiri? dua puncak?). Menambah data sampai 2.000 tetap tidak membuat bins=250 tepat (8 per bin, masih kasar) dan data tambahan tidak selalu ada. plot = deret waktu, bukan distribusi. Tujuan histogram = bentuk sebaran untuk menilai risiko (bab 27-1). Bin salah bukan bohong — tapi gagal bercerita.
+    kode: |
+      import numpy as np
+      import matplotlib.pyplot as plt
+      ret = np.array([0.5, -0.8, 1.2, -0.3, 0.9, -1.5, 2.0, 0.3])
+      plt.hist(ret, bins=4)
+      plt.title("Return harian — bins wajar")
+      plt.savefig("/tmp/hist_wajar.png")
+      print("Histogram tersimpan")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: bins 10-20 untuk 250 hari — bentuk distribusi kelihatan."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "2.000 hari ÷ 250 bin = 8 per bin — masih kasar, dan data tidak selalu bisa ditambah."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "Line plot untuk deret waktu; distribusi = histogram."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Satu batang per nilai = noise, bukan bentuk distribusi."
+    petunjuk:
+      - "Bin = keranjang. 250 hari ÷ 250 bin = berapa isi tiap keranjang?"
+      - "Bentuk muncul kalau tiap bin berisi belasan data."
+      - "Coba bins=15."
+  - id: "s27-9"
+    judul: "Ekor Kiri di Histogram"
+    emoji: "🦂"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Histogram return harian botmu: rata-rata +0,15%, std 0,8%. Sekitar 99% hari di antara -1% dan +2%. TAPI ada ekor kiri: 3 hari per tahun di -6%, -8%, -10%. Partner usul leverage 3x: "std kecil, aman". Keputusanmu?
+    pilihan:
+      - "Setuju — 0,8% x 3 = 2,4% vol harian, masih kecil"
+      - "Tolak sampai ekor kiri dijelaskan: leverage 3x mengubah hari -10% jadi -30% ekuitas — satu hari bisa menghapus berbulan-bulan profit"
+      - "Setuju dengan 2x — kompromi"
+      - "Naikkan 4x — sekali jalan, biar cepat kaya"
+    jawaban: 1
+    penjelasan: |
+      Std 0,8% menggambarkan TUBUH distribusi (99% hari normal) — tidak menggambarkan ekor. Hari -10% itu mustahil di distribusi normal (jauh di atas 12 std) → artinya return TIDAK normal: ekor kiri jauh lebih gemuk dari model. Leverage 3x: hari -10% menjadi -30% ekuitas. Modal $10.000 → -$3.000 dalam sehari; profit rata-rata +0,15% per hari cuma +$15 — butuh 200 hari profit untuk menutup satu hari itu. 2x pun: -20% sehari, menghapus 133 hari profit. Leverage yang aman dihitung dari SKENARIO TERBURUK (ekor), bukan dari std: kalau terburuk -10%, batas aman 1x dengan stop ketat. Frekuensi ekor kecil (3 hari/tahun) tapi dampaknya besar. Histogram dibaca utuh: tubuh untuk rata-rata, ekor untuk risiko.
+    kode: |
+      modal = 10000
+      for leverage in [1, 2, 3]:
+          rugi = modal * 0.10 * leverage
+          print(f"Leverage {leverage}x: hari -10% → rugi ${rugi:,.0f}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Std tidak menangkap ekor. Hari -10% x 3 = -30% ekuitas — dekat margin call."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: leverage dihitung dari skenario terburuk, bukan dari std."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "2x tetap -20% sehari — lebih ringan, tapi masih menghapus berbulan-bulan profit."
+      - ret: 0.0
+        dd: 0.0
+        win: 10
+        note: "4x: -40% sehari. Satu hari ekor = setengah modal hilang."
+    petunjuk:
+      - "Apa yang dihitung std 0,8%? (tubuh distribusi, bukan ekor)"
+      - "Kalikan hari terburuk dengan leverage: -10% x 3 = ?"
+      - "Berapa hari profit +0,15% untuk menutup -30%?"
+  - id: "s27-10"
+    judul: "Bruto vs Net: Return Bulanan"
+    emoji: "🪜"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Bot: return bruto +5% per bulan, 12 bulan berturut-turut. Biaya: 1% ekuitas per bulan. Modal $1.000. Laporan bot menulis: "+79,6% setahun!" (dari 1,05 pangkat 12). Kamu mau angka yang jujur. Berapa?
+    pilihan:
+      - "+79,6% — biaya 1% kecil, abaikan saja"
+      - "+60,1% — net 4% per bulan: 1,04 pangkat 12 = 1,601 → +60,1%"
+      - "+48% — 4% x 12 bulan"
+      - "+60% — 5% x 12 bulan (bruto, tanpa compounding)"
+    jawaban: 1
+    penjelasan: |
+      Laporan bot menghitung 1,05¹² = 1,7959 → +79,6% — itu BRUTO, tanpa biaya. Padahal biaya 1% diambil dari ekuitas berjalan tiap bulan: return NET = 5% - 1% = 4% per bulan. 1,04¹² = 1,6010 → +60,1%. Modal $1.000 → $1.601. Beda 79,6 vs 60,1 = 19,5 poin — hampir sepertiga keuntungan klaim hilang karena biaya. +48% = 4 x 12 linear — lupa compounding bulanan (return ditumpuk ke modal yang tumbuh). +60% = 5 x 12 bruto linear — dua kesalahan sekaligus. Pelajaran: (1) potong biaya dari return SEBELUM compound; (2) compounding memakai angka net. Laporan jujur: net bulanan → 1,04¹². Kalau bot menulis 79,6%, tanyakan: biayanya di mana?
+    kode: |
+      modal = 1000
+      for bulan in range(12):
+          modal = modal * 1.04
+      print(f"Modal akhir (net 4%/bulan): ${modal:.0f}")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "79,6% bruto: biaya 1% x 12 bulan = 12% ekuitas mengalir keluar — tidak kecil."
+      - ret: 0.0
+        dd: 0.0
+        win: 80
+        note: "Benar: net 4%/bulan → 1,04¹² = +60,1%. Modal jadi $1.601."
+      - ret: 0.0
+        dd: 0.0
+        win: 25
+        note: "48% = 4 x 12 linear — lupa compounding bulanan."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "60% = bruto linear — dua kesalahan: biaya dan compounding."
+    petunjuk:
+      - "Net per bulan = 5% - 1% = 4%."
+      - "Hitung 1,04 pangkat 12 — bukan 4 x 12."
+      - "Bandingkan: 1,05¹² vs 1,04¹²."
 soal:
   - id: "p27-1"
     judul: "Persiapan Chart: Rentang"

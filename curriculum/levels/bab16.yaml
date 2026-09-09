@@ -271,3 +271,260 @@ skenario:
     petunjuk:
       - "Berapa return tanpa satu trade terbesar?"
       - "Bisakah kamu mengandalkan kejadian yang tidak bisa direncanakan?"
+
+
+  - id: "s16-6"
+    judul: "Di Luar Dua Sigma"
+    emoji: "🎚️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Return harian strategimu: mean +0,1%, std 1%. Aturan praktis distribusi
+      normal: dalam ±1 std sekitar 68% hari, dalam ±2 std sekitar 95%. Hari ini
+      return +2,4%. Seberapa sering hari se-ekstrem ini muncul?
+    pilihan:
+      - "Di luar ±2 std sekitar 5% — 1 dari 20 hari. Wajar, jangan overreact"
+      - "0,3% — sangat langka, pasti ada kabar besar"
+      - "32% — sering terjadi"
+      - "50% — setengah hari"
+    jawaban: 0
+    penjelasan: |
+      z = (2,4 − 0,1) ÷ 1 = 2,3. Distribusi normal: ±2 std mencakup 95% kejadian.
+      Di luar = 5% (sekitar 2,5% tiap sisi). Artinya hari seperti ini muncul
+      kira-kira 1 dari 20 hari — dalam setahun trading (252 hari) sekitar 12 kali.
+      Bukan anomali, bukan kabar. Reaksi yang benar: tidak melakukan apa-apa.
+      "0,3%" = patokan ±3 std, bukan ±2. "32%" = patokan ±1 std. Overreact ke hari
+      2σ = mengganti strategi karena noise.
+    kode: |
+      mean = 0.1
+      std = 1.0
+      z = (2.4 - mean) / std
+      print(f"z = {z:.1f} — di luar 2 std")
+      print("Kejadian di luar 2 std: sekitar 5% hari — rutin, bukan anomali")
+    hasil:
+      - ret: 6.0
+        dd: 2.0
+        win: 73
+        note: "Kamu biarkan sistem jalan: bulan itu +6%. Hari 2σ cuma noise."
+      - ret: -2.0
+        dd: 4.0
+        win: 20
+        note: "Kamu cari kabar yang tidak ada, matikan bot di hari bagus. Ketinggalan 1,5% minggu itu."
+      - ret: -3.0
+        dd: 5.0
+        win: 22
+        note: "Kamu takut di hari normal dan sering memotong posisi bagus lebih awal."
+      - ret: -1.5
+        dd: 3.0
+        win: 25
+        note: "50% = tidak paham distribusi. Hari 2σ diperlakukan sama dengan hari biasa."
+    petunjuk:
+      - "z = (2,4 − 0,1) ÷ 1 = ?"
+      - "Berapa persen kejadian di luar ±2 std?"
+  - id: "s16-7"
+    judul: "Volatilitas Naik, z Berubah"
+    emoji: "🧊"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Botmu: mean return harian +0,1%. Enam bulan lalu std 0,5%, sekarang std 2%
+      (volatilitas naik 4x). Hari ini bot mencetak +1,4%. Dashboardmu masih memakai
+      std lama: z = (1,4 − 0,1) ÷ 0,5 = 2,6 — "langka, perbesar posisi!". Apa yang
+      sebenarnya terjadi?
+    pilihan:
+      - "Memang langka — z 2,6, manfaatkan momentum"
+      - "z dengan std baru = 0,65 — hari normal. Dashboard std basi bikin salah baca, jangan ubah posisi"
+      - "Bot rusak — mean harus ikut naik"
+      - "Kurangi posisi — z 2,6 artinya overbought"
+    jawaban: 1
+    penjelasan: |
+      z dihitung dengan std PERIODE ITU. Volatilitas naik 4x (0,5% → 2%), pergerakan
+      1,4% sekarang cuma 0,65 std — kejadian normal, muncul hampir tiap minggu.
+      Dashboard yang memakai std lama menyesatkan: z 2,6 itu artefak. Pergerakan
+      sama, konteks beda. Kalau kamu perbesar posisi karena z palsu, kamu menambah
+      risiko tepat saat volatilitas sudah 4x lipat. Hitung ulang std dengan window
+      terbaru secara berkala. Volatilitas tinggi = std besar = z kecil untuk
+      pergerakan yang sama. Mean tidak ikut naik — bot tidak rusak, std-mu yang
+      basi.
+    kode: |
+      mean = 0.1
+      z_lama = (1.4 - mean) / 0.5
+      z_baru = (1.4 - mean) / 2.0
+      print(f"z std lama: {z_lama:.1f} | z std baru: {z_baru:.2f}")
+      print("Pakai std terkini — 0,65 = hari biasa")
+    hasil:
+      - ret: -3.5
+        dd: 6.0
+        win: 20
+        note: "Posisi 2x di pasar yang std-nya 4x lipat: koreksi 1,5% = −6% equity. Dashboard basi."
+      - ret: 5.0
+        dd: 2.5
+        win: 70
+        note: "Dashboard diperbaiki, posisi tetap: +5% sebulan. z yang benar bikin tenang."
+      - ret: -2.0
+        dd: 4.0
+        win: 25
+        note: "Mean harian tetap 0,1%. Bot tidak rusak — std-mu yang basi."
+      - ret: -1.0
+        dd: 3.0
+        win: 30
+        note: "z bukan RSI. Salah alat baca, keputusan ikut salah."
+    petunjuk:
+      - "Hitung ulang z dengan std 2%."
+      - "Kalau std naik 4x, pergerakan yang sama jadi lebih biasa atau lebih langka?"
+  - id: "s16-8"
+    judul: "Berapa Hari untuk Membuktikan"
+    emoji: "🔭"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Estimasi edge harianmu 0,1% (mean return). Volatilitas harian (std) 1%.
+      Standar error mean = std ÷ √n. Supaya edge terbukti (standar error = setengah
+      edge = 0,05%), butuh berapa hari sampel?
+    pilihan:
+      - "40 hari — 1 ÷ 0,05 × 2"
+      - "400 hari — (1 ÷ 0,05)² = 400, sekitar 1,5 tahun trading"
+      - "100 hari — 1 ÷ 0,01"
+      - "20 hari — 0,1% ÷ 0,05%"
+    jawaban: 1
+    penjelasan: |
+      Standar error mean = std ÷ √n = 1 ÷ √n. Target: SE = 0,05% — setengah edge —
+      supaya mean 0,1 jelas beda dari nol: 0,1 ± 2×0,05 tepat tidak menyentuh nol.
+      1 ÷ √n = 0,05 → √n = 20 → n = 400 hari, sekitar 1,5 tahun trading. Artinya:
+      dengan volatilitas 10x lipat edge, 100 hari data TIDAK cukup membuktikan
+      apa-apa — padahal itu 4-5 bulan. Ini kenapa strategi baru wajib ukuran kecil
+      dulu: bukti statistik butuh waktu. "40 hari" = salah aljabar. "100 hari" =
+      SE 0,1, sama besar dengan edge: kesimpulan goyah. "20 hari" = anekdot.
+    kode: |
+      std = 1.0
+      target_se = 0.05
+      n = (std / target_se) ** 2
+      print(f"Butuh sampel: {n:.0f} hari")
+    hasil:
+      - ret: -4.0
+        dd: 8.0
+        win: 18
+        note: "40 hari: SE 0,16 — noise 3x edge. Kamu 'terbukti' padahal belum, sizing besar, kena pukulan."
+      - ret: 6.0
+        dd: 3.0
+        win: 70
+        note: "400 hari kemudian edge 0,1% terkonfirmasi. Sizing naik bertahap: +6%."
+      - ret: 2.0
+        dd: 5.0
+        win: 30
+        note: "100 hari: SE sama besar dengan edge. Kesimpulan goyah, kamu sering ragu."
+      - ret: -2.0
+        dd: 6.0
+        win: 22
+        note: "20 hari = anekdot. Keputusan berdasarkan 20 hari = judi."
+    petunjuk:
+      - "SE = std ÷ √n. Masukkan SE = 0,05 dan std = 1."
+      - "√n = 20 → n = ?"
+  - id: "s16-9"
+    judul: "Volatilitas Bulanan"
+    emoji: "⏫"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Return harian strategimu std 1,5%. Satu bulan trading = 21 hari. Syaratmu:
+      dengan patokan ±2 std (sekitar 95%), loss bulanan tidak boleh lebih dari
+      10%. Berapa std bulananmu sekarang, dan apakah ukuran posisi perlu diubah?
+    pilihan:
+      - "Std bulanan 31,5% (×21) — jauh di atas batas, berhenti trading"
+      - "Std bulanan 6,9%; 2 std = 13,7% lebih dari 10%. Turunkan ukuran ke sekitar 73%"
+      - "Std bulanan 6,9%; 2 std = 13,7% — masih aman, tidak perlu ubah"
+      - "Std bulanan 0,33% (÷21) — sangat aman"
+    jawaban: 1
+    penjelasan: |
+      Volatilitas tumbuh dengan akar waktu: std bulanan = 1,5 × √21 = 6,87%.
+      Dengan patokan ±2 std, batas loss bulanan = 2 × 6,87 = 13,7% — di atas batas
+      10%. Supaya 2 std = 10%, std bulanan harus ≤ 5%: faktor ukuran = 5 ÷ 6,87 =
+      0,73. Turunkan ukuran sekitar 27%. Ini vol targeting: risiko diatur dari
+      angka, bukan perasaan. "31,5%" (×21) = salah: volatilitas tidak linear
+      terhadap waktu. "÷21" = arah terbalik. Setelah ukuran turun, expected return
+      ikut turun sekitar 27% — harga wajar untuk batas risiko.
+    kode: |
+      std_harian = 1.5
+      std_bulanan = std_harian * 21 ** 0.5
+      batas_2std = 2 * std_bulanan
+      faktor = 5.0 / std_bulanan
+      print(f"Std bulanan: {std_bulanan:.2f}% | 2 std: {batas_2std:.1f}%")
+      print(f"Faktor ukuran: {faktor*100:.0f}%")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Berhenti total karena salah hitung (31,5% itu keliru): 2 tahun return bagus hilang."
+      - ret: 7.0
+        dd: 9.5
+        win: 72
+        note: "Size 73%: bulan terburuk −9,2%, masih di bawah 10%. Setahun +7% dengan tidur nyenyak."
+      - ret: -13.7
+        dd: 13.7
+        win: 25
+        note: "Kamu biarkan: bulan crash −13,7%. Melanggar batas sendiri = aturan mati."
+      - ret: 3.0
+        dd: 5.0
+        win: 30
+        note: "0,33% salah arah hitung. Kamu terlalu takut: ukuran 0,2x, return melambat."
+    petunjuk:
+      - "Std bulanan = std harian × √21."
+      - "Bandingkan 2 × std bulanan dengan batas 10%."
+      - "Faktor ukuran = 5 ÷ std bulanan."
+  - id: "s16-10"
+    judul: "Ekor Gemuk"
+    emoji: "🐘"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Backtest 500 hari: mean +0,08%, std 1,1%. Model normal: loss 1 hari terburuk
+      sekitar −3,5% (3 std). Kenyataan: 1 hari −8,2% (z = −7,5) dan 3 hari di bawah
+      −4% (z di bawah −3,7). Loss 99% aktual = −5,1%; model normal = −2,6% (2,33
+      std). Buat menentukan ukuran posisi, angka mana yang kamu pakai?
+    pilihan:
+      - "Normal (−2,6%) — 500 hari cukup, ekor gemuk cuma kebetulan"
+      - "Aktual (−5,1%) — ekor gemuk nyata: loss ekstrem 2x lebih sering dari normal. Ukuran harus sekitar 50% dari aman-normal"
+      - "Buang hari ekstrem dari data — biar statistiknya bersih"
+      - "Pakai mean saja — 0,08% positif, risiko tidak relevan"
+    jawaban: 1
+    penjelasan: |
+      Pasar punya ekor gemuk: kejadian ekstrem jauh lebih sering dari prediksi
+      kurva normal. Buktinya di data sendiri: −4% yang "mustahil" (probabilitas
+      0,01%) muncul 3 kali dalam 500 hari; −8,2% muncul sekali (normal: sekali
+      dalam triliunan hari). Loss 99% aktual −5,1% vs normal −2,6%: hampir 2x.
+      Kalau sizing pakai angka normal, kamu 2x over-risk — hari −5% yang "mustahil"
+      itu datang tiap beberapa tahun. Buang hari ekstrem = menghapus risiko yang
+      akan datang lagi. Ukuran aman = 2,56 ÷ 5,1 ≈ 50% dari ukuran aman-normal.
+      Mean tanpa risiko = mengabaikan 99% cerita.
+    kode: |
+      var_normal = 2.33 * 1.1
+      var_aktual = 5.1
+      faktor = var_normal / var_aktual
+      print(f"Loss 99%: normal {var_normal:.2f}% vs aktual {var_aktual:.1f}%")
+      print(f"Faktor ukuran: {faktor*100:.0f}%")
+    hasil:
+      - ret: -18.0
+        dd: 18.0
+        win: 15
+        note: "Size normal: hari −8,2% datang 2 tahun kemudian = −16,4% equity (lev 2x). Kamu kapok."
+      - ret: 5.0
+        dd: 4.0
+        win: 68
+        note: "Size 50%: hari −8,2% = −4,1% equity. Masih hidup, setahun +5% — umur panjang."
+      - ret: -9.0
+        dd: 10.0
+        win: 18
+        note: "Data dibersihkan, size besar: hari ekstrem tetap datang di live. −9%."
+      - ret: -12.0
+        dd: 14.0
+        win: 12
+        note: "Mean tanpa risiko: kamu 3x leverage, DD 14% pertama bikin menyerah."
+    petunjuk:
+      - "Bandingkan loss 99% model normal vs aktual."
+      - "Ekor gemuk = ekstrem lebih sering dari normal. Siapa yang harus menyesuaikan?"
+      - "Faktor ukuran = 2,56 ÷ 5,1."
