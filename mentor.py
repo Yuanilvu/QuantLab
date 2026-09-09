@@ -1,49 +1,30 @@
-"""mentor.py — Mentor AI QuantLab: DeepSeek API + fallback hermes -z.
+"""mentor.py — Mentor AI QuantLab: Hermes Agent (hermes -z) satu-satunya backend.
 
-Pola sama seperti Coach Tracbit (validated): key dibaca dari env, lalu dari
-file env Hermes (hidden dotfile, satu user). Tidak ada secret di file ini.
+Keputusan user (9 Sep 2026): mentor = HERMES 100%. DeepSeek API tidak dipakai
+lagi. Kalau Hermes gagal/timeout → balas pesan error ramah, bukan jawaban dari
+model lain. History percakapan ikut dikirim (riwayat dari DB, 10 pesan terakhir)
+supaya Hermes inget konteks obrolan.
 """
-import json
-import os
 import re
 import subprocess
-import urllib.error
-import urllib.request
-from pathlib import Path
 
-API_BASE = "https://api.deepseek.com/v1"
-API_MODEL = os.environ.get("QL_AI_MODEL", "deepseek-v4-flash")
-HERMES_ENV = Path(os.environ.get("HERMES_HOME", str(Path.home() / ".hermes"))) / ".env"
+SYSTEM_CORE = """Kamu adalah **Hermes — Mentor QuantLab**: asisten pribadi Yuan (yang juga mengelola vault Obsidian, cron, dan server rumahnya) yang sedang berperan sebagai mentor belajar trading kuantitatif di aplikasi QuantLab.
 
-SYSTEM_CORE = """Kamu adalah **Mentor QuantLab** — pembimbing belajar trading kuantitatif yang sabar, untuk trader berpengalaman yang TIDAK ngoding (belajar Python lewat kasus pasar; main Bybit funding carry; akrab dengan TLKM/BBRI/BRPT/CUAN/TPIA/ALII/MPPA/IHSG).
-
-Aturan menjawab:
-1. Bahasa Indonesia santai, kalimat pendek (maks ~20 kata), tidak menggurui, tidak kekanak-kanakan.
-2. Jawaban maksimal ~160 kata. Kalau perlu panjang, tawarkan lanjutan ("mau aku jabarin lebih dalam?").
-3. Selalu utamakan ANGKA & hitungan konkret, bukan teori. Hindari mental math — tulis hitungannya.
-4. Kalau relevan, tunjukkan logika Python singkat (3-6 baris) sebagai terjemahan keputusan — user belajar baca kode lewat contoh nyata.
-5. User suka analogi sehari-hari dan contoh dari dunianya (funding Bybit, saham IDX).
-6. Kalau user menanyakan skenario yang sedang dipelajari: BIMBING dulu dengan pertanyaan/angka pancingan (1 langkah). Kalau user tetap minta jawaban/konfirmasi, berikan jawaban + hitungan + alasan singkat — tujuan akhirnya user paham.
-7. Jangan menyebut bahwa kamu AI/model; kamu mentor pribadinya.
+Kesepakatan belajar dengan Yuan (WAJIB dipatuhi):
+1. Anggap Yuan TIDAK paham rumus matematika sama sekali — mulai dari bahasa manusia sehari-hari + contoh uang/koin/angka konkret, BARU ke istilah dan kode. Jangan pakai notasi (Σ, ∂, formula) tanpa menjelaskan dari nol.
+2. Bahasa Indonesia santai, kalimat pendek (maks ~20 kata), tidak menggurui, tidak kekanak-kanakan.
+3. Jawaban maksimal ~160 kata. Kalau perlu panjang, tawarkan lanjutan ("mau aku jabarin lebih dalam?").
+4. Utamakan ANGKA & hitungan konkret — tulis hitungannya, jangan minta mental math.
+5. Kalau relevan, tunjukkan logika Python singkat (3-6 baris) sebagai terjemahan — Yuan belajar baca kode lewat contoh nyata.
+6. Istilah teknis (volatilitas, EV, likuidasi, drawdown, dsb) wajib di-gloss dengan analogi sehari-hari saat pertama muncul.
+7. Skenario yang sedang dipelajari: BIMBING dulu dengan pertanyaan/angka pancingan (1 langkah). Kalau user tetap minta jawaban/konfirmasi, berikan jawaban + hitungan + alasan singkat — tujuan akhirnya user paham.
 8. Format: markdown ringan (bold, list, kode pendek). Jangan pakai heading besar.
 
-Bila ada blok "KONTEKS BAB" atau "KONTEKS SKENARIO" di bawah, jawablah dalam kerangka itu. Blok "RIWAYAT PERCAKAPAN" hanya konteks — jangan ulangi. Balas langsung ke pertanyaan user terakhir."""
-
-
-def _get_key() -> str:
-    key = os.environ.get("DEEPSEEK_API_KEY", "")
-    if key:
-        return key
-    try:
-        for line in HERMES_ENV.read_text(encoding="utf-8").splitlines():
-            if line.startswith("DEEPSEEK_API_KEY="):
-                return line.split("=", 1)[1].strip().strip('"').strip("'")
-    except OSError:
-        pass
-    return ""
+Bila ada blok "KONTEKS BAB" atau "KONTEKS SKENARIO" di bawah, jawablah dalam kerangka itu (jangan bocorkan jawaban skenario yang BELUM dikerjakan user). Blok "RIWAYAT PERCAKAPAN" hanya konteks — jangan diulangi. Balas langsung ke pertanyaan user terakhir."""
 
 
 def _clean(content: str) -> str:
+    """Buang preamble berpikir kalau ikut terlanjur, rapikan spasi."""
     if not content:
         return ""
     content = re.sub(r"Here's a thinking process:.*", "", content, flags=re.S)
@@ -51,40 +32,29 @@ def _clean(content: str) -> str:
     return content.strip()
 
 
-def _call_api(system: str, history: list[dict], user_msg: str, timeout: int = 40) -> str | None:
-    messages = [{"role": "system", "content": system}]
-    messages += history[-8:]
-    messages.append({"role": "user", "content": user_msg})
-    body = json.dumps({
-        "model": API_MODEL,
-        "messages": messages,
-        "max_tokens": 500,
-        "temperature": 0.7,
-    }).encode("utf-8")
-    req = urllib.request.Request(
-        API_BASE + "/chat/completions",
-        data=body,
-        headers={
-            "Content-Type": "application/json",
-            "Authorization": "Bearer " + _get_key(),
-        },
-    )
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        data = json.loads(r.read().decode("utf-8"))
-    reply = _clean(data["choices"][0]["message"].get("content") or "")
-    return reply or None
-
-
-def _call_hermes(system: str, user_msg: str) -> str | None:
-    prompt = f"{system}\n\nPertanyaan user: {user_msg}".replace("\n", " ")[:1500]
+def _call_hermes(system: str, history: list[dict], user_msg: str, timeout: int = 100) -> str | None:
+    parts = [system]
+    if history:
+        parts.append("\n\nRIWAYAT PERCAKAPAN (konteks saja — jangan ulangi):")
+        for h in history[-10:]:
+            who = "User" if h.get("role") == "user" else "Mentor"
+            text = (h.get("content") or "").strip().replace("\n", " ")
+            parts.append(f"{who}: {text[:500]}")
+    parts.append(f"\n\nPertanyaan terakhir user:\n{user_msg}")
+    prompt = "\n".join(parts)
+    if len(prompt) > 14000:
+        prompt = prompt[:14000]
     try:
         proc = subprocess.run(
             ["hermes", "-z", prompt],
-            capture_output=True, text=True, timeout=45,
+            capture_output=True, text=True, timeout=timeout,
         )
-        out = (proc.stdout or "").strip()
-        return out or None
-    except Exception:
+        return _clean(proc.stdout or "") or None
+    except subprocess.TimeoutExpired:
+        _log("hermes timeout")
+        return None
+    except Exception as e:  # noqa: BLE001 — apa pun penyebabnya, jangan crash route
+        _log(f"hermes gagal: {type(e).__name__}")
         return None
 
 
@@ -92,21 +62,16 @@ def _log(msg: str) -> None:
     print(f"[mentor] {msg}", flush=True)
 
 
-def call_mentor(system: str, history: list[dict], user_msg: str) -> str | None:
-    """DeepSeek dulu (≤40 dtk); kalau gagal, fallback hermes -z (≤45 dtk)."""
+def call_mentor(system: str, history: list[dict], user_msg: str) -> str:
+    """Hermes adalah satu-satunya backend (keputusan user). Gagal → pesan error."""
     import time
     t0 = time.time()
-    if _get_key():
-        try:
-            reply = _call_api(system, history, user_msg)
-            _log(f"deepseek ok in {time.time()-t0:.1f}s")
-            if reply:
-                return reply
-        except Exception as e:
-            _log(f"deepseek gagal ({type(e).__name__}), fallback hermes")
-    reply = _call_hermes(system, user_msg)
-    _log(f"hermes fallback in {time.time()-t0:.1f}s: {'ok' if reply else 'gagal'}")
-    return reply
+    reply = _call_hermes(system, history, user_msg)
+    if reply:
+        _log(f"hermes ok in {time.time()-t0:.1f}s")
+        return reply
+    _log(f"hermes gagal total dalam {time.time()-t0:.1f}s")
+    return "⚠️ Mentor-nya lagi bermasalah (gagal merespons). Coba ulangi pesan lo sebentar lagi, ya."
 
 
 def build_context(bab: dict | None, scenario: dict | None, scenario_solved: bool) -> str:
