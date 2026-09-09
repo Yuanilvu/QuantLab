@@ -54,7 +54,9 @@
   const chat = document.getElementById('chat');
   const inp = document.getElementById('inp');
   const btn = document.getElementById('sendbtn');
-  const base = window.QL_BASE || '';
+  // QL_BASE di-set base.html di BAWAH script ini — baca LAZY (saat dipakai),
+  // bukan saat halaman baru parse, supaya path /quant funnel benar.
+  function apiPath(p) { return (window.QL_BASE || '') + p; }
   let busy = false;
 
   function esc(s) {
@@ -112,7 +114,7 @@
       bab: document.getElementById('ctx_bab').value,
       sid: document.getElementById('ctx_sid').value
     });
-    fetch(base + '/mentor/send', {
+    fetch(apiPath('/mentor/send'), {
       method: 'POST',
       headers: { 'X-CSRF-Token': document.getElementById('csrf').value },
       body: body
@@ -157,7 +159,7 @@
   });
   document.getElementById('clearbtn').addEventListener('click', function () {
     if (!confirm('Hapus semua riwayat chat mentor?')) return;
-    fetch(base + '/mentor/clear', {
+    fetch(apiPath('/mentor/clear'), {
       method: 'POST',
       headers: { 'X-CSRF-Token': document.getElementById('csrf').value },
       body: new URLSearchParams({ _csrf: document.getElementById('csrf').value })
