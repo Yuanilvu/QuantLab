@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-{% block title %}{{ drill.judul }} — Chart Drill — QuantLab{% endblock %}
+{% block title %}{{ drill.judul }} — Lab Teknikal — QuantLab{% endblock %}
 {% block content %}
 <nav class="crumb" aria-label="Breadcrumb">
   <a href="{{ url_for('index') }}">Dashboard</a>
   <span aria-hidden="true"> › </span>
-  <a href="{{ url_for('chart_list') }}">Chart Drill</a>
+  <a href="{{ url_for('chart_list') }}">Lab Teknikal</a>
   <span aria-hidden="true"> › </span>
   <span>{{ drill.judul }}</span>
 </nav>
@@ -12,6 +12,7 @@
 <section class="scenario">
   <div class="scenhead">
     <span class="badge {{ drill.tingkat }}">{{ drill.tingkat }}</span>
+    {% if praktik %}<span class="badge coding">🎯 praktik</span>{% endif %}
     <h1>{{ drill.emoji }} {{ drill.judul }}</h1>
     <span class="meta">{{ drill.simbol }} · {{ drill.hari }} hari terakhir · {{ xp_drill }} XP · ±{{ drill.menit }} menit</span>
   </div>
@@ -23,18 +24,28 @@
   </div>
 
   <div class="casebox">
-    <h3>❓ Pertanyaan</h3>
+    <h3>❓ {% if praktik %}{{ drill.tugas }}{% else %}Pertanyaan{% endif %}</h3>
     <div class="case">{{ drill.pertanyaan }}</div>
   </div>
 
   {% if jawab %}
     <div class="verdict {{ 'good' if jawab.correct else 'bad' }}">
-      <h1>{% if jawab.correct %}✓ Benar! Kunci jawaban Chart Drill kelar.{% else %}✗ Belum tepat — tapi sekarang kamu tahu caranya.{% endif %}</h1>
+      {% if praktik %}
+      <h1>{% if jawab.correct %}✓ Benar! Level-nya tepat.{% else %}✗ Meleset — tapi sekarang kamu tahu levelnya.{% endif %}</h1>
+      <p class="meta">
+        Pilihanmu: <b>{{ "{:,.0f}".format(jawab.choice) }}</b>
+        {% if jawab.correct and jawab.xp %}· +{{ jawab.xp }} XP{% endif %}
+        {% if not jawab.correct %}<br>Kunci: <b>{{ "{:,.0f}".format(drill.kunci) }}</b>{% endif %}
+      </p>
+      <p class="meta">Garis <span class="warna-user">biru</span> = jawabanmu · garis <span class="warna-kunci">kuning</span> = level kunci.</p>
+      {% else %}
+      <h1>{% if jawab.correct %}✓ Benar! Kunci jawaban Lab Teknikal kelar.{% else %}✗ Belum tepat — tapi sekarang kamu tahu caranya.{% endif %}</h1>
       <p class="meta">
         Jawabanmu: <b>{{ drill.pilihan[jawab.choice] }}</b>
         {% if jawab.correct and jawab.xp %}· +{{ jawab.xp }} XP{% endif %}
         {% if not jawab.correct %}<br>Jawaban benar: <b>{{ drill.pilihan[drill.jawaban] }}</b>{% endif %}
       </p>
+      {% endif %}
     </div>
 
     <div class="casebox">
@@ -49,6 +60,81 @@
       <a class="btn ghost" href="{{ url_for('chart_list') }}">Kembali ke daftar</a>
     </div>
   {% else %}
+    {% if praktik %}
+    <div class="casebox">
+      <h3>🖱️ Klik di grafik</h3>
+      <p class="note">Arahkan lalu klik pada grafik di atas untuk memilih harga. Garis penanda akan muncul di titik klikmu — klik lagi kalau mau memindahkan.</p>
+      <form method="post" id="praktikform">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <input type="hidden" name="jawab_harga" id="jawab_harga" value="">
+        <div class="pilihbar">
+          <span class="readout">Pilihanmu: <b id="pilih-readout">— belum dipilih —</b></span>
+          <button class="btn primary" type="submit" id="pilih-submit" disabled>Kunci Jawaban →</button>
+          <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
+        </div>
+      </form>
+    </div>
+
+    <div class="hints hidden" id="hints" aria-live="polite">
+      {% for h in drill.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+    </div>
+
+    <script>
+    (function () {
+      var svg = document.querySelector('.chartbox svg[data-interaktif="1"]');
+      if (!svg) return;
+      svg.classList.add('svg-pilih');
+      var vb = svg.viewBox.baseVal;
+      var hi = parseFloat(svg.getAttribute('data-harga-max'));
+      var lo = parseFloat(svg.getAttribute('data-harga-min'));
+      var yAtas = parseFloat(svg.getAttribute('data-y-atas'));
+      var yBawah = parseFloat(svg.getAttribute('data-y-bawah'));
+      var xKiri = parseFloat(svg.getAttribute('data-x-kiri') || '46');
+      var xKanan = parseFloat(svg.getAttribute('data-x-kanan') || (vb.width - 14));
+      var inp = document.getElementById('jawab_harga');
+      var out = document.getElementById('pilih-readout');
+      var btn = document.getElementById('pilih-submit');
+      var NS = 'http://www.w3.org/2000/svg';
+      var garis = null, teks = null;
+      function fmt(p) {
+        if (p >= 1000) return Math.round(p).toLocaleString('id-ID');
+        return p.toLocaleString('id-ID', { maximumFractionDigits: 2 });
+      }
+      function gambar(yv, harga) {
+        if (!garis) {
+          garis = document.createElementNS(NS, 'line');
+          garis.setAttribute('stroke', '#22d3ee');
+          garis.setAttribute('stroke-width', '1.8');
+          garis.setAttribute('stroke-dasharray', '6 4');
+          svg.appendChild(garis);
+          teks = document.createElementNS(NS, 'text');
+          teks.setAttribute('fill', '#22d3ee');
+          teks.setAttribute('font-size', '14');
+          teks.setAttribute('font-weight', '700');
+          svg.appendChild(teks);
+        }
+        garis.setAttribute('x1', xKiri);
+        garis.setAttribute('x2', xKanan);
+        garis.setAttribute('y1', yv.toFixed(1));
+        garis.setAttribute('y2', yv.toFixed(1));
+        teks.setAttribute('x', (xKiri + 6).toFixed(1));
+        teks.setAttribute('y', (yv - 6).toFixed(1));
+        teks.textContent = fmt(harga);
+      }
+      svg.addEventListener('click', function (e) {
+        var rect = svg.getBoundingClientRect();
+        var skala = vb.height / rect.height;
+        var yv = (e.clientY - rect.top) * skala;
+        yv = Math.min(Math.max(yv, yAtas), yBawah);
+        var harga = hi - (yv - yAtas) / (yBawah - yAtas) * (hi - lo);
+        inp.value = harga.toFixed(2);
+        out.textContent = fmt(harga);
+        btn.disabled = false;
+        gambar(yv, harga);
+      });
+    })();
+    </script>
+    {% else %}
     <form method="post">
       <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
       <h3>🤔 Jawabanmu?</h3>
@@ -70,6 +156,7 @@
     <div class="hints hidden" id="hints" aria-live="polite">
       {% for h in drill.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
     </div>
+    {% endif %}
   {% endif %}
 </section>
 {% endblock %}

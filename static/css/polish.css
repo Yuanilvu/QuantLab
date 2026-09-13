@@ -338,3 +338,15 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
 .chartnote { color: var(--dim); font-size: .8rem; margin: 8px 4px 2px; }
 .badge.ok { color: var(--green); border-color: #1e5c38; background: rgba(45, 212, 126, .07); }
 .badge.no { color: var(--red); border-color: #6b2133; background: rgba(242, 109, 109, .08); }
+
+/* Lab Teknikal — modul & praktik klik */
+.modulhead { margin: 30px 0 4px; font-size: 1.06rem; display: flex;
+  align-items: baseline; gap: 10px; flex-wrap: wrap; }
+.modulhead .meta { font-size: .84rem; font-weight: 400; color: var(--dim); }
+.modulblock .note { margin: 0 0 10px; }
+.svg-pilih { cursor: crosshair; }
+.pilihbar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 12px; }
+.pilihbar .readout { color: var(--dim); font-size: .92rem; }
+#pilih-readout { color: #22d3ee; font-variant-numeric: tabular-nums; }
+.warna-user { color: #22d3ee; font-weight: 700; }
+.warna-kunci { color: #f59e0b; font-weight: 700; }

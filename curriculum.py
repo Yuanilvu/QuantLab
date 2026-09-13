@@ -122,6 +122,17 @@ def xp_for_scenario(s):
 CHARTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "curriculum", "charts.yaml")
 CHART_XP = {"mudah": 20, "sedang": 35, "sulit": 50}
 
+CHART_MODULES = [
+    ("dasar", "🕯️ Baca Candle & Tren",
+     "Anatomi candle, pola penting (engulfing, doji, hammer), dan struktur tren."),
+    ("level", "📐 Level & Struktur",
+     "Support, resistance, dan breakout — level tempat harga berbalik atau menembus."),
+    ("indikator", "📊 Indikator & Risiko",
+     "RSI, moving average, dan drawdown — alat ukur momentum dan risiko."),
+    ("praktik", "🎯 Praktik Langsung",
+     "Klik grafiknya: tandai level, pasang stop loss, tentukan entry dan take profit."),
+]
+
 _charts = None
 
 
@@ -149,6 +160,18 @@ def get_chart(cid):
 
 def xp_for_chart(d):
     return int(CHART_XP.get((d or {}).get("tingkat"), 20))
+
+
+def charts_by_modul(drills=None):
+    """Kelompokkan drill per modul (urutan tetap; dalam modul: tingkat lalu id)."""
+    isi = drills if drills is not None else get_charts()
+    urut_tingkat = {"mudah": 0, "sedang": 1, "sulit": 2}
+    out = []
+    for code, nama, desc in CHART_MODULES:
+        anggota = [d for d in isi if d.get("modul") == code]
+        anggota.sort(key=lambda d: (urut_tingkat.get(d.get("tingkat"), 9), d["id"]))
+        out.append({"code": code, "nama": nama, "desc": desc, "drills": anggota})
+    return out
 
 
 def stats():

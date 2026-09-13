@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
-"""Verifier Chart Drill QuantLab — struktur + FAKTA dihitung ulang dari data beku.
+"""Verifier Lab Teknikal (Chart Drill) QuantLab — struktur + FAKTA dari data beku.
 
 Jalankan dari repo:
     cd ~/quantlab && .venv/bin/python scripts/verify_charts.py
 
-Cek:
-- struktur: id unik, 4 pilihan (string), jawaban 0-3, tingkat valid, field lengkap;
-- data: setiap drill punya data/chart/<id>.csv, jumlah baris == `hari` YAML;
-- fakta: angka di blok `fakta` dihitung ulang dari CSV (SMA/RSI/drawdown/posisi)
-  dan harus COCOK — ini pengaman agar kunci jawaban tidak pernah basi;
-- render: chartgen.svg_price_chart() tidak error utk tiap drill.
+Cek per drill:
+- struktur: field wajib, pilihan==4 & jawaban valid (kecuali `jenis: praktik`),
+  modul dikenal, tingkat valid, jumlah baris CSV == `hari` (dan punya OHLC
+  kalau `jenis: candle` / praktik);
+- FAKTA: tiap entri blok `fakta` dihitung ULANG dari CSV beku via chartfacts —
+  kunci jawaban tidak boleh basi. Format entri: `nama: nilai` atau
+  `nama: {nilai: X, ...param}`;
+- praktik: `kunci` harus == fakta `kunci_fakta` dikali `kunci_faktor` (±1%);
+- render: chartgen.render_drill() tidak error (line/candle/praktik).
 Exit code 1 kalau ada FAIL.
 """
 import os
@@ -19,41 +22,18 @@ REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, REPO)
 import yaml  # noqa: E402
 import chartgen  # noqa: E402
+import chartfacts as cf  # noqa: E402
 
 CHARTS_YAML = os.path.join(REPO, "curriculum", "charts.yaml")
+MODUL = {"dasar", "level", "indikator", "praktik"}
 
 
-def hitung_fakta(dates, closes):
-    """Hitung semua besaran yang boleh dipin di blok `fakta`."""
-    m20 = chartgen.sma(closes, 20)
-    m50 = chartgen.sma(closes, 50)
-    r = chartgen.rsi(closes, 14)
-    puncak = 0.0
-    dd = 0.0
-    for c in closes:
-        puncak = max(puncak, c)
-        dd = max(dd, (puncak - c) / puncak * 100)
-    cross_up = cross_dn = 0
-    for i in range(max(1, len(closes) - 30), len(closes)):
-        if None in (m20[i], m20[i - 1], m50[i], m50[i - 1]):
-            continue
-        if m20[i - 1] <= m50[i - 1] and m20[i] > m50[i]:
-            cross_up += 1
-        if m20[i - 1] >= m50[i - 1] and m20[i] < m50[i]:
-            cross_dn += 1
-    return {
-        "terakhir": round(closes[-1], 2),
-        "ma20": round(m20[-1], 2) if m20[-1] is not None else None,
-        "ma50": round(m50[-1], 2) if m50[-1] is not None else None,
-        "rsi": round(r[-1], 2) if r[-1] is not None else None,
-        "low20": round(min(closes[-20:]), 2),
-        "high30": round(max(closes[-30:]), 2),
-        "dd": round(dd, 2),
-        "imax": closes.index(max(closes)),
-        "n": len(closes),
-        "cross_up_30": cross_up,
-        "cross_dn_30": cross_dn,
-    }
+def cocok(a, b):
+    if isinstance(a, bool) or isinstance(b, bool):
+        return a is b
+    if isinstance(a, (int, float)) and isinstance(b, (int, float)):
+        return abs(float(a) - float(b)) < 0.005
+    return a == b
 
 
 def main():
@@ -69,51 +49,83 @@ def main():
             errs.append("id duplikat")
         ids.add(cid)
         for k in ("judul", "emoji", "tingkat", "menit", "simbol", "hari",
-                  "pertanyaan", "pilihan", "jawaban", "penjelasan", "petunjuk"):
+                  "pertanyaan", "penjelasan", "petunjuk"):
             if k not in d:
                 errs.append(f"field {k} hilang")
         if d.get("tingkat") not in ("mudah", "sedang", "sulit"):
             errs.append(f"tingkat invalid: {d.get('tingkat')}")
-        pilihan = d.get("pilihan") or []
-        if len(pilihan) != 4:
-            errs.append(f"pilihan != 4 ({len(pilihan)})")
-        if any(not isinstance(p, str) for p in pilihan):
-            errs.append("ada pilihan bukan string")
-        if not (0 <= d.get("jawaban", -1) <= 3):
-            errs.append("jawaban invalid")
+        if d.get("modul") not in MODUL:
+            errs.append(f"modul invalid: {d.get('modul')}")
+        jenis = d.get("jenis", "line")
+        if jenis == "praktik":
+            if not isinstance(d.get("kunci"), (int, float)):
+                errs.append("praktik tanpa kunci angka")
+            if not isinstance(d.get("toleransi_pct"), (int, float)):
+                errs.append("praktik tanpa toleransi_pct")
+            if "kunci_fakta" not in d:
+                errs.append("praktik tanpa kunci_fakta")
+        else:
+            pilihan = d.get("pilihan") or []
+            if len(pilihan) != 4:
+                errs.append(f"pilihan != 4 ({len(pilihan)})")
+            if any(not isinstance(p, str) for p in pilihan):
+                errs.append("ada pilihan bukan string")
+            if not (0 <= d.get("jawaban", -1) <= 3):
+                errs.append("jawaban invalid")
         if not len(d.get("petunjuk") or []):
             errs.append("petunjuk kosong")
 
         try:
-            dates, closes = chartgen.load_frozen(cid)
+            rows = chartgen.load_frozen_rows(cid)
         except (OSError, ValueError) as e:
             errs.append(f"data beku tidak terbaca: {e}")
-            dates, closes = [], []
-        if closes:
-            if len(closes) != d.get("hari"):
-                errs.append(f"jumlah baris CSV {len(closes)} != hari {d.get('hari')}")
-            fk = hitung_fakta(dates, closes)
-            for k, v in (d.get("fakta") or {}).items():
-                if k not in fk:
-                    errs.append(f"fakta.{k} tidak dikenal")
-                    continue
-                if isinstance(v, float) or isinstance(fk[k], float):
-                    cocok = abs(float(v) - float(fk[k])) < 0.005
+            rows = []
+        if rows:
+            if len(rows) != d.get("hari"):
+                errs.append(f"jumlah baris CSV {len(rows)} != hari {d.get('hari')}")
+            if jenis in ("candle", "praktik") and not chartgen.punya_ohlc(rows):
+                errs.append("data candle/praktik tidak punya kolom OHLC")
+            for kunci, entri in (d.get("fakta") or {}).items():
+                if isinstance(entri, dict):
+                    param = {k: v for k, v in entri.items() if k != "nilai"}
+                    nilai_yaml = entri.get("nilai")
                 else:
-                    cocok = v == fk[k]
-                if not cocok:
-                    errs.append(f"FAKTA BEDA {k}: yaml={v} hitung={fk[k]}")
+                    param, nilai_yaml = None, entri
+                try:
+                    nilai_hitung = cf.hitung_fakta(rows, kunci, param)
+                except KeyError:
+                    errs.append(f"fakta `{kunci}` tidak dikenal")
+                    continue
+                except Exception as e:  # noqa: BLE001
+                    errs.append(f"fakta `{kunci}` error: {e}")
+                    continue
+                if not cocok(nilai_yaml, nilai_hitung):
+                    errs.append(f"FAKTA BEDA {kunci}: yaml={nilai_yaml} hitung={nilai_hitung}")
+            if jenis == "praktik":
+                kf = d.get("kunci_fakta")
+                if isinstance(kf, dict):
+                    nama = kf.get("nama")
+                    param = {k: v for k, v in kf.items() if k != "nama"}
+                else:
+                    nama, param = kf, None
+                try:
+                    nilai = cf.hitung_fakta(rows, nama, param)
+                    faktor = float(d.get("kunci_faktor", 1.0))
+                    harap = float(nilai) * faktor
+                    if abs(float(d["kunci"]) - harap) > max(0.5, abs(harap) * 0.01):
+                        errs.append(f"KUNCI BEDA: yaml={d['kunci']} hitung={harap:.2f} "
+                                    f"({nama}×{faktor})")
+                except Exception as e:  # noqa: BLE001
+                    errs.append(f"kunci_fakta error: {e}")
             try:
-                chartgen.svg_price_chart(
-                    dates, closes, ma=tuple(d.get("ma") or ()),
-                    rsi_panel=bool(d.get("rsi_panel")), garis=d.get("garis") or [])
+                chartgen.render_drill(d, interaktif=jenis == "praktik")
             except Exception as e:  # noqa: BLE001
                 errs.append(f"render SVG error: {e}")
         status = "FAIL" if errs else "ok  "
         if errs:
             fails += 1
-        print(f"{status} {cid} {d.get('simbol')} {d.get('hari')}h "
-              f"{d.get('tingkat')} jawaban={d.get('jawaban')}"
+        print(f"{status} {cid} [{d.get('modul', '?')}] {d.get('simbol')} {d.get('hari')}h "
+              f"{d.get('jenis', 'line')} {d.get('tingkat')}"
               + (f" -> {errs}" if errs else ""))
     print(f"\nTotal drill: {len(drills)} | FAIL: {fails}")
     return 1 if fails else 0

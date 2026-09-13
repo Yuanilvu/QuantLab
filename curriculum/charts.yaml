@@ -1,241 +1,897 @@
-# Chart Drill — latihan baca grafik harga NYATA (data beku di data/chart/).
+# Lab Teknikal — latihan baca grafik harga NYATA (data beku di data/chart/).
 #
 # ATURAN PENTING:
 # - Data chart = file beku data/chart/<id>.csv — JANGAN diubah/refresh; kunci
 #   jawaban terikat ke angka-angka di file itu (dijaga scripts/verify_charts.py).
-# - `fakta` = angka yang dihitung ulang verifier dari CSV; harus persis.
-# - tingkat: mudah→20 XP · sedang→35 XP · sulit→50 XP (tabel v6).
+# - `fakta` = angka yang dihitung ulang verifier via chartfacts.py; harus persis.
+#   Format: `nama: nilai` atau `nama: {nilai: X, ...param}`.
+# - modul: dasar | level | indikator | praktik.
+# - jenis: line | candle | praktik. Drill `praktik` tidak pakai pilihan/jawaban,
+#   tapi `kunci` + `kunci_fakta` (+`kunci_faktor`) + `toleransi_pct`.
+# - tingkat: mudah→20 XP · sedang→35 XP · sulit→50 XP.
 # - pilihan 4 opsi, hanya SATU yang benar (hindari opsi yang ikut benar).
 
 drills:
-  - id: "c1"
-    judul: "BBRI: Baca Arah Tren"
-    emoji: "📈"
-    tingkat: mudah
-    menit: 4
-    simbol: "BBRI"
-    hari: 60
-    ma: [20, 50]
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Lihat grafik BBRI 3 bulan terakhir (garis biru = harga, ungu = MA20, pink = MA50). Menurutmu, tren-nya sedang apa?"
-    pilihan:
-      - "Tren naik — harga dan rata-ratanya makin tinggi"
-      - "Tren turun — harga makin rendah terus"
-      - "Sideways — bolak-balik di tempat"
-      - "Tidak bisa dibaca dari grafik ini"
-    jawaban: 0
-    penjelasan: |
-      BBRI naik cukup kuat. Harga terakhir 3.250 — itu harga TERTINGGI di chart (puncak baru).
-      MA20 (3.114) ada DI ATAS MA50 (2.967), dan MA20 masih menanjak (5 hari lalu 3.056).
-      Pola "MA cepat di atas MA lambat + dua-duanya menanjak" = ciri tren naik (Bab 13 & 18).
-    petunjuk:
-      - "Bandingkan posisi garis MA20 (ungu) vs MA50 (pink) — mana yang di atas?"
-      - "Harga terakhir: ada di dekat puncak atau di dasar grafik?"
-    fakta:
-      terakhir: 3250.00
-      ma20: 3114.00
-      ma50: 2967.00
-
-  - id: "c2"
-    judul: "TLKM: Harga vs MA20"
-    emoji: "📉"
-    tingkat: mudah
-    menit: 4
-    simbol: "TLKM"
-    hari: 60
-    ma: [20, 50]
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Harga terakhir TLKM 2.600 ada di mana dibanding garis MA20 (ungu)?"
-    pilihan:
-      - "Di atas MA20"
-      - "Tepat di MA20"
-      - "Di bawah MA20"
-      - "Di bawah MA50 (pink)"
-    jawaban: 2
-    penjelasan: |
-      Harga terakhir 2.600, sedangkan MA20 = 2.634 → harga ada DI BAWAH MA20
-      (selisih tipis: 34 poin, sekitar 1,3%). Tapi harga masih DI ATAS MA50 (2.580) —
-      jadi tren jangka panjang belum rusak, hanya melemah jangka pendek.
-      Pilihan terakhir salah karena 2.600 masih di atas MA50.
-    petunjuk:
-      - "Cocokkan angka 2.600 dengan legenda MA20 di kiri atas."
-      - "Cek juga posisinya ke MA50 supaya tidak tertukar."
-    fakta:
-      terakhir: 2600.00
-      ma20: 2634.00
-      ma50: 2580.40
-
-  - id: "c3"
-    judul: "IHSG: RSI Sekarang Berapa?"
-    emoji: "🌡️"
-    tingkat: sedang
-    menit: 5
-    simbol: "IHSG"
-    hari: 90
-    ma: [20]
-    rsi_panel: true
-    garis: []
-    pertanyaan: "Lihat panel RSI-14 di bawah grafik (garis kuning; garis putus merah = 70, hijau = 30). RSI terakhir IHSG ada di rentang mana?"
-    pilihan:
-      - "Di bawah 30 — jenuh jual (oversold)"
-      - "30 sampai 50 — lemah tapi belum jenuh"
-      - "50 sampai 70 — kuat tapi belum jenuh"
-      - "Di atas 70 — jenuh beli (overbought)"
-    jawaban: 2
-    penjelasan: |
-      RSI terakhir = 56,47 → masuk rentang 50–70. Artinya tekanan beli cukup kuat,
-      TAPI belum sampai jenuh beli (di atas 70). Garis putus merah = batas overbought (70),
-      garis hijau = batas oversold (30). Catatan penting Bab 13: RSI tinggi bukan berarti
-      "wajib jual" — dia cuma mengukur kekuatan momentum.
-    petunjuk:
-      - "Baca ujung kanan garis kuning di panel bawah."
-      - "Bandingkan dengan garis putus merah (70) dan hijau (30)."
-    fakta:
-      rsi: 56.47
-
-  - id: "c4"
-    judul: "BRPT: Cari Support Terdekat"
-    emoji: "🧱"
-    tingkat: sedang
-    menit: 5
-    simbol: "BRPT"
-    hari: 60
-    ma: []
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Support terdekat = harga terendah yang pernah dicapai dalam 20 hari terakhir. Berapa levelnya di grafik BRPT?"
-    pilihan:
-      - "1.650"
-      - "1.700"
-      - "1.750"
-      - "1.800"
-    jawaban: 2
-    penjelasan: |
-      Harga terendah 20 hari terakhir = 1.750 (terjadi 26 Agu 2026) → itulah support terdekat.
-      Harga terakhir 1.785 masih tipis di atasnya. Kalau harga turun menembus 1.750,
-      support "jebol" dan patokan berikutnya turun ke titik terendah 3 bulan: 1.285
-      (lihat dasar grafik paling kiri). Support = LEVEL (bisa ditarik garis lurus), bukan satu titik.
-    petunjuk:
-      - "Cari titik terendah di bagian kanan grafik (20 hari terakhir)."
-      - "Level support bisa digambar sebagai garis lurus dari titik terendah itu."
-    fakta:
-      low20: 1750.00
-
-  - id: "c5"
-    judul: "CUAN: Sudah Breakout?"
-    emoji: "🚀"
-    tingkat: sedang
-    menit: 5
-    simbol: "CUAN"
-    hari: 60
-    ma: [20]
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Apakah harga terakhir CUAN sudah menembus harga tertinggi 30 hari terakhir?"
-    pilihan:
-      - "Ya — baru saja breakout"
-      - "Belum — masih di bawah high 30 hari"
-      - "Tepat menyentuh high 30 hari"
-      - "Grafik ini tidak punya titik tertinggi"
-    jawaban: 1
-    penjelasan: |
-      High 30 hari = 870 (12 Agu 2026). Harga terakhir 815 → BELUM breakout,
-      masih sekitar 55 poin (6%) di bawah puncaknya. Cerita chart: naik dari dasar 530
-      ke 870, lalu turun-turun kecil, sekarang mantul lagi. Breakout baru sah kalau
-      870 ditembus dengan tenaga (Bab 13: breakout tanpa tenaga sering gagal).
-    petunjuk:
-      - "Temukan titik puncak tertinggi grafik."
-      - "Bandingkan dengan posisi ujung kanan garis harga."
-    fakta:
-      high30: 870.00
-      terakhir: 815.00
-
-  - id: "c6"
-    judul: "TLKM: Golden Cross atau Bukan?"
-    emoji: "✂️"
-    tingkat: sulit
-    menit: 7
-    simbol: "TLKM"
-    hari: 90
-    ma: [20, 50]
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Dalam 30 hari terakhir (paruh kanan grafik), apakah MA20 (ungu) sempat memotong MA50 (pink) ke ATAS?"
-    pilihan:
-      - "Tidak ada persilangan sama sekali"
-      - "Ya — golden cross (MA20 potong ke atas MA50)"
-      - "Ya — death cross (MA20 potong ke bawah MA50)"
-      - "Kedua garis menempel tapi tidak pernah menyilang"
-    jawaban: 1
-    penjelasan: |
-      Ada 1 golden cross: 10 Agustus 2026, MA20 menembus MA50 ke atas (MA20 2.647 vs MA50 2.637),
-      dan sejak itu MA20 masih di atas MA50. Tapi perhatikan lanjutannya: setelah cross,
-      harga justru melemah balik ke 2.600-an. Ini contoh bagus bahwa golden cross = SINYAL,
-      bukan jaminan — di pasar sideways sinyal mudah palsu (Bab 13).
-    petunjuk:
-      - "Telusuri kedua garis MA dari kiri ke kanan dengan mata."
-      - "Cari momen garis ungu melewati garis pink ke arah atas."
-      - "Cross-nya ada di paruh kanan grafik (Agustus)."
-    fakta:
-      cross_up_30: 1
-      cross_dn_30: 0
-      ma20: 2634.00
-      ma50: 2580.40
-
-  - id: "c7"
-    judul: "BTC: Seberapa Dalam Drawdown?"
-    emoji: "🕳️"
-    tingkat: sulit
-    menit: 7
-    simbol: "BTC"
-    hari: 60
-    ma: []
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Drawdown = turun dari puncak tertinggi sejauh ini. Berapa drawdown MAKSIMUM BTC dalam 60 hari di grafik ini?"
-    pilihan:
-      - "Di bawah 5%"
-      - "5% sampai 15%"
-      - "15% sampai 30%"
-      - "Di atas 30%"
-    jawaban: 1
-    penjelasan: |
-      Puncak tertinggi = 80.258 (dolar). Setelah puncak itu, harga turun paling dalam
-      ke sekitar 75.738 → drawdown = (80.258 − 75.738) / 80.258 = 5,63% → masuk rentang 5–15%.
-      Kunci mengerjakannya: cari titik tertinggi DULU, baru cari titik terendah SETELAH titik itu
-      (bukan sebelum). Drawdown mengukur risiko dari puncak — beda dengan "turun dari awal chart" (Bab 12).
-    petunjuk:
-      - "Cari titik tertinggi grafik dulu."
-      - "Lalu cari titik TERENDAH setelah titik tertinggi itu (yang sebelumnya tidak dihitung)."
-    fakta:
-      dd: 5.63
-
-  - id: "c8"
-    judul: "IHSG: Kapan Puncaknya?"
-    emoji: "⛰️"
-    tingkat: mudah
-    menit: 4
-    simbol: "IHSG"
-    hari: 60
-    ma: []
-    rsi_panel: false
-    garis: []
-    pertanyaan: "Harga tertinggi IHSG dalam 60 hari di grafik ini terjadi kapan?"
-    pilihan:
-      - "Di 10 hari pertama (paling kiri)"
-      - "Sekitar hari ke-30 (tengah grafik)"
-      - "Di 10 hari terakhir (paling kanan)"
-      - "Puncaknya di luar jangkauan grafik"
-    jawaban: 2
-    penjelasan: |
-      Puncak 6.525,69 terjadi 21 Agustus 2026 — hari ke-55 dari 60 → masuk 10 hari terakhir
-      (paling kanan grafik). IHSG bangkit dari dasar 5.342 (awal Juni) dan naik bertahap
-      sampai sekarang — kebalikan dari TLKM/BBRI yang justru turun sepanjang tahun (lihat drill lain).
-    petunjuk:
-      - "Cari titik tertinggi grafik, lalu perhatikan posisinya: kiri, tengah, atau kanan?"
-      - "Bandingkan dengan label tanggal di bawah grafik."
-    fakta:
-      imax: 55
+- id: c1
+  judul: 'BBRI: Baca Arah Tren'
+  emoji: 📈
+  tingkat: mudah
+  menit: 4
+  simbol: BBRI
+  hari: 60
+  ma:
+  - 20
+  - 50
+  rsi_panel: false
+  garis: []
+  pertanyaan: Lihat grafik BBRI 3 bulan terakhir (garis biru = harga, ungu = MA20, pink = MA50). Menurutmu, tren-nya
+    sedang apa?
+  pilihan:
+  - Tren naik — harga dan rata-ratanya makin tinggi
+  - Tren turun — harga makin rendah terus
+  - Sideways — bolak-balik di tempat
+  - Tidak bisa dibaca dari grafik ini
+  jawaban: 0
+  penjelasan: |
+    BBRI naik cukup kuat. Harga terakhir 3.250 — itu harga TERTINGGI di chart (puncak baru).
+    MA20 (3.114) ada DI ATAS MA50 (2.967), dan MA20 masih menanjak (5 hari lalu 3.056).
+    Pola "MA cepat di atas MA lambat + dua-duanya menanjak" = ciri tren naik (Bab 13 & 18).
+  petunjuk:
+  - Bandingkan posisi garis MA20 (ungu) vs MA50 (pink) — mana yang di atas?
+  - 'Harga terakhir: ada di dekat puncak atau di dasar grafik?'
+  fakta:
+    terakhir: 3250.0
+    ma20: 3114.0
+    ma50: 2967.0
+  modul: dasar
+  jenis: line
+- id: c2
+  judul: 'TLKM: Harga vs MA20'
+  emoji: 📉
+  tingkat: mudah
+  menit: 4
+  simbol: TLKM
+  hari: 60
+  ma:
+  - 20
+  - 50
+  rsi_panel: false
+  garis: []
+  pertanyaan: Harga terakhir TLKM 2.600 ada di mana dibanding garis MA20 (ungu)?
+  pilihan:
+  - Di atas MA20
+  - Tepat di MA20
+  - Di bawah MA20
+  - Di bawah MA50 (pink)
+  jawaban: 2
+  penjelasan: |
+    Harga terakhir 2.600, sedangkan MA20 = 2.634 → harga ada DI BAWAH MA20
+    (selisih tipis: 34 poin, sekitar 1,3%). Tapi harga masih DI ATAS MA50 (2.580) —
+    jadi tren jangka panjang belum rusak, hanya melemah jangka pendek.
+    Pilihan terakhir salah karena 2.600 masih di atas MA50.
+  petunjuk:
+  - Cocokkan angka 2.600 dengan legenda MA20 di kiri atas.
+  - Cek juga posisinya ke MA50 supaya tidak tertukar.
+  fakta:
+    terakhir: 2600.0
+    ma20: 2634.0
+    ma50: 2580.4
+  modul: dasar
+  jenis: line
+- id: c8
+  judul: 'IHSG: Kapan Puncaknya?'
+  emoji: ⛰️
+  tingkat: mudah
+  menit: 4
+  simbol: IHSG
+  hari: 60
+  ma: []
+  rsi_panel: false
+  garis: []
+  pertanyaan: Harga tertinggi IHSG dalam 60 hari di grafik ini terjadi kapan?
+  pilihan:
+  - Di 10 hari pertama (paling kiri)
+  - Sekitar hari ke-30 (tengah grafik)
+  - Di 10 hari terakhir (paling kanan)
+  - Puncaknya di luar jangkauan grafik
+  jawaban: 2
+  penjelasan: |
+    Puncak 6.525,69 terjadi 21 Agustus 2026 — hari ke-55 dari 60 → masuk 10 hari terakhir
+    (paling kanan grafik). IHSG bangkit dari dasar 5.342 (awal Juni) dan naik bertahap
+    sampai sekarang — kebalikan dari TLKM/BBRI yang justru turun sepanjang tahun (lihat drill lain).
+  petunjuk:
+  - 'Cari titik tertinggi grafik, lalu perhatikan posisinya: kiri, tengah, atau kanan?'
+  - Bandingkan dengan label tanggal di bawah grafik.
+  fakta:
+    imax: 55
+    n: 60
+  modul: dasar
+  jenis: line
+- id: d1
+  judul: 'TLKM: Baca Satu Candle'
+  emoji: 🕯️
+  modul: dasar
+  tingkat: mudah
+  menit: 4
+  simbol: TLKM
+  hari: 60
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: 'Candle paling kanan (11 Sep): buka 2.620, tutup 2.600. Warna apa candle ini, dan apa artinya?'
+  pilihan:
+  - Merah — tutup lebih rendah dari buka; penjual menang hari itu, tapi besok belum tentu turun
+  - Hijau — buka lebih rendah dari tutup
+  - Merah — jadi besok PASTI turun
+  - Doji — tidak ada yang menang
+  jawaban: 0
+  penjelasan: |-
+    Buka 2.620, tutup 2.600, jadi candle MERAH (tutup < buka). Artinya: di hari itu penjual pegang kendali.
+    Tapi satu candle bukan ramalan. Di sini MA20 (2.611) dan MA50 (2.609) hampir menempel — pasar sedang sideways di sekitar 2.600. Candle merah di pasar sideways = informasi tipis, bukan sinyal jual.
+    Waspadai pilihan yang memakai kata 'PASTI' — pasar tidak pernah memberi jaminan.
+  petunjuk:
+  - Merah = tutup di bawah buka.
+  - 'Cek MA20 vs MA50: pasar sedang sideways atau tren?'
+  fakta:
+    candle_arah:
+      nilai: merah
+      idx: -1
+    ma20: 2611.0
+    ma50: 2608.8
+- id: d3
+  judul: 'IHSG: Rentetan Candle Merah'
+  emoji: 🟥
+  modul: dasar
+  tingkat: mudah
+  menit: 4
+  simbol: IHSG
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Berapa HARI BERTURUT-TURUT candle merah terpanjang dalam 60 hari ini?
+  pilihan:
+  - 2 hari
+  - 4 hari
+  - 6 hari
+  - 10 hari
+  jawaban: 2
+  penjelasan: |-
+    Rentetan terpanjang = 6 hari (22–29 Juli 2026).
+    Rentetan merah = tekanan jual beruntun. Tapi bukan otomatis tren berbalik: setelah rentetan itu IHSG justru memantul dan lanjut naik.
+    Yang perlu dilatih: setelah rentetan panjang, cari candle BALIK (hammer atau bullish engulfing). Kalau tidak muncul, tekanan jual belum tentu selesai.
+  petunjuk:
+  - Merah = tutup lebih rendah dari buka.
+  - Hitung yang TERPANJANG beruntun, bukan jumlah total candle merah.
+  fakta:
+    merah_beruntun: 6
+- id: d2
+  judul: 'BBRI: Pola di Titik A'
+  emoji: 🪤
+  modul: dasar
+  tingkat: sedang
+  menit: 5
+  simbol: BBRI
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers:
+  - idx: 54
+    label: A
+  pertanyaan: Candle bertanda A MENELAN seluruh badan candle hijau sebelumnya (buka lebih tinggi, ditutup jauh lebih
+    rendah). Pola ini namanya apa?
+  pilihan:
+  - Doji — pasar ragu-ragu
+  - Bullish engulfing — pembeli menelan penjual
+  - Bearish engulfing — penjual menelan pembeli
+  - Hammer — sinyal kuat balik naik
+  jawaban: 2
+  penjelasan: |-
+    4 Sep: buka 3.430 (di atas tutup kemarin 3.410), lalu dijual sampai tutup 3.390. Badan merah itu MENELAN badan hijau sebelumnya (3.400 → 3.410) → bearish engulfing: penjual mengambil alih kendali.
+    Muncul tidak jauh dari puncak 3.440, dan besoknya harga lanjut turun ke 3.370.
+    Engulfing paling kuat maknanya ketika muncul setelah kenaikan panjang atau tepat di level resistance — makin 'besar' konteksnya, makin layak diperhatikan.
+  petunjuk:
+  - Warna A merah — siapa yang menelan siapa?
+  - '''Engulfing'' = badan candle A lebih besar dan membungkus badan candle sebelumnya.'
+  fakta:
+    pola:
+      nilai: bearish_engulfing
+      idx: 54
+- id: d4
+  judul: 'BTC: Struktur Naik atau Tidak?'
+  emoji: 🪜
+  modul: dasar
+  tingkat: sedang
+  menit: 5
+  simbol: BTC
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Bagi 30 hari terakhir jadi 3 blok @10 hari. Apakah strukturnya naik (high makin tinggi DAN low makin
+    tinggi)?
+  pilihan:
+  - Ya — higher high dan higher low
+  - Tidak — high-nya justru naik lalu turun lagi
+  - Ya, tapi cuma low-nya yang naik
+  - Tidak bisa dibaca dari grafik ini
+  jawaban: 1
+  penjelasan: |-
+    Blok 1: high 79.970 / low 62.649 → blok 2: high 82.262 / low 76.248 → blok 3: high 81.433 / low 76.163.
+    High naik lalu TURUN (79.970 → 82.262 → 81.433), low naik lalu stagnan. Struktur naik sejati seperti tangga: high naik DAN low naik, dua-duanya.
+    Jadi jawabannya: belum struktur naik — BTC sedang konsolidasi di bawah puncak 82.000-an.
+  petunjuk:
+  - Bandingkan high tiap blok dulu, lalu low tiap blok.
+  - Naik = dua-duanya menanjak seperti anak tangga.
+  fakta:
+    struktur_naik: false
+    high_n:
+      nilai: 82262.21
+      n: 30
+- id: d5
+  judul: 'CUAN: Doji Setelah Lonjakan'
+  emoji: ⚖️
+  modul: dasar
+  tingkat: sedang
+  menit: 5
+  simbol: CUAN
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers:
+  - idx: 53
+    label: A
+  pertanyaan: 'Candle bertanda A (3 Sep): buka 910, tutup 910 — badan hampir nol, ekor panjang atas-bawah. Pola
+    ini apa?'
+  pilihan:
+  - Doji — pasar ragu / tenaga berhenti sejenak
+  - Bullish engulfing — sinyal lanjut naik
+  - Hammer — sinyal kuat balik naik
+  - Marubozu — badan penuh tanpa ekor
+  jawaban: 0
+  penjelasan: |-
+    Buka = tutup → tidak ada yang menang hari itu: itulah DOJI.
+    Muncul setelah lonjakan tajam (1 Sep: 820 → 905, naik sekitar 10%) — wajar setelah lompatan besar pasar jeda dan mencerna.
+    Doji bukan sinyal jual. Dia tanda momentum melambat. Konfirmasi datang dari candle berikutnya: 4 Sep harga naik ke 940 — tenaga belum habis.
+  petunjuk:
+  - Bandingkan harga buka dan tutup.
+  - Doji = keraguan; tunggu candle konfirmasi setelahnya.
+  fakta:
+    pola:
+      nilai: doji
+      idx: 53
+- id: s3
+  judul: 'IHSG: Resistance Terdekat'
+  emoji: 🚧
+  modul: level
+  tingkat: mudah
+  menit: 4
+  simbol: IHSG
+  hari: 90
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Resistance terdekat = harga TERTINGGI (high) 30 hari terakhir. Berapa levelnya?
+  pilihan:
+  - '6.400'
+  - '6.541'
+  - '6.712'
+  - '6.900'
+  jawaban: 2
+  penjelasan: |-
+    High tertinggi 30 hari = 6.712,5. Harga terakhir 6.541, masih sekitar 2,5% di bawahnya.
+    Selama 6.712 belum tembus, area itu jadi 'langit-langit': penjual menunggu di sana.
+    Kalau tembus dengan tenaga → potensi lanjut naik. Kalau ditolak → harga balik menguji support 6.267.
+  petunjuk:
+  - Cari puncak tertinggi 30 bar terakhir.
+  - Resistance dibaca dari HIGH, bukan close.
+  fakta:
+    high_n:
+      nilai: 6712.5
+      n: 30
+- id: s4
+  judul: 'ALII: Area Beli yang Logis'
+  emoji: 🛒
+  modul: level
+  tingkat: mudah
+  menit: 4
+  simbol: ALII
+  hari: 60
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: ALII 60 hari ini main di rentang 760–855. Harga sekarang 795 (tengah-tengah, menempel MA20). Kalau
+    kamu mau beli, level paling logis di mana?
+  pilihan:
+  - 760–770, dekat support bawah
+  - 795 — beli sekarang karena harganya di tengah
+  - 850–855, dekat resistance atas
+  - 900 — kalau sudah naik, tinggal ikut
+  jawaban: 0
+  penjelasan: |-
+    Beli dekat support = risiko kecil (jarak ke stop loss pendek) dan ruang untung besar (sampai resistance).
+    Beli di 795 (tengah) tidak punya keunggulan: kalau harga turun, jarak ke SL panjang. Beli dekat resistance 855 = kebalikannya — reward kecil, risiko besar.
+    Aturan sederhana: cari beli di dekat lantai, jual di dekat langit-langit.
+  petunjuk:
+  - Mana yang membuat jarak ke stop loss paling pendek?
+  - Support 760, resistance 855 — pilih sisi yang murah.
+  fakta:
+    low_n:
+      nilai: 760.0
+      n: 20
+    high_n:
+      nilai: 855.0
+      n: 30
+    ma20: 792.25
+- id: c4
+  judul: 'BRPT: Cari Support Terdekat'
+  emoji: 🧱
+  tingkat: sedang
+  menit: 5
+  simbol: BRPT
+  hari: 60
+  ma: []
+  rsi_panel: false
+  garis: []
+  pertanyaan: Support terdekat = harga terendah yang pernah dicapai dalam 20 hari terakhir. Berapa levelnya di grafik
+    BRPT?
+  pilihan:
+  - '1.650'
+  - '1.700'
+  - '1.750'
+  - '1.800'
+  jawaban: 2
+  penjelasan: |
+    Harga terendah 20 hari terakhir = 1.750 (terjadi 26 Agu 2026) → itulah support terdekat.
+    Harga terakhir 1.785 masih tipis di atasnya. Kalau harga turun menembus 1.750,
+    support "jebol" dan patokan berikutnya turun ke titik terendah 3 bulan: 1.285
+    (lihat dasar grafik paling kiri). Support = LEVEL (bisa ditarik garis lurus), bukan satu titik.
+  petunjuk:
+  - Cari titik terendah di bagian kanan grafik (20 hari terakhir).
+  - Level support bisa digambar sebagai garis lurus dari titik terendah itu.
+  fakta:
+    low20: 1750.0
+  modul: level
+  jenis: line
+- id: c5
+  judul: 'CUAN: Sudah Breakout?'
+  emoji: 🚀
+  tingkat: sedang
+  menit: 5
+  simbol: CUAN
+  hari: 60
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  pertanyaan: Apakah harga terakhir CUAN sudah menembus harga tertinggi 30 hari terakhir?
+  pilihan:
+  - Ya — baru saja breakout
+  - Belum — masih di bawah high 30 hari
+  - Tepat menyentuh high 30 hari
+  - Grafik ini tidak punya titik tertinggi
+  jawaban: 1
+  penjelasan: |
+    High 30 hari = 870 (12 Agu 2026). Harga terakhir 815 → BELUM breakout,
+    masih sekitar 55 poin (6%) di bawah puncaknya. Cerita chart: naik dari dasar 530
+    ke 870, lalu turun-turun kecil, sekarang mantul lagi. Breakout baru sah kalau
+    870 ditembus dengan tenaga (Bab 13: breakout tanpa tenaga sering gagal).
+  petunjuk:
+  - Temukan titik puncak tertinggi grafik.
+  - Bandingkan dengan posisi ujung kanan garis harga.
+  fakta:
+    high30: 870.0
+    terakhir: 815.0
+  modul: level
+  jenis: line
+- id: s1
+  judul: 'BRPT: Support Terdekat'
+  emoji: 🪨
+  modul: level
+  tingkat: sedang
+  menit: 5
+  simbol: BRPT
+  hari: 60
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Support terdekat = harga TERENDAH (low) 20 hari terakhir. Berapa levelnya?
+  pilihan:
+  - '1.620'
+  - '1.685'
+  - '1.750'
+  - '1.820'
+  jawaban: 1
+  penjelasan: |-
+    Low terendah 20 hari = 1.685. Harga terakhir 1.700 — cuma 15 poin di atasnya, jadi support ini sedang diuji.
+    Kalau jebol, patokan berikutnya low 60 hari: 1.270 (kiri bawah grafik).
+    Catatan: RSI 31,4 sudah dekat area oversold — tekanan jual kuat, tapi sudah mendekati kelelahan.
+  petunjuk:
+  - Cari titik terendah 20 bar terakhir (ujung ekor bawah candle).
+  - Support dibaca dari LOW, bukan close.
+  fakta:
+    low_n:
+      nilai: 1685.0
+      n: 20
+    terakhir: 1700.0
+- id: s2
+  judul: 'TLKM: Magnet 2.600'
+  emoji: 🧲
+  modul: level
+  tingkat: sulit
+  menit: 6
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Level bulat 2.600 sering jadi 'magnet'. Dari 90 hari, berapa hari yang rentangnya (low–high) menyentuh
+    area 2.600 ±1%?
+  pilihan:
+  - 8 hari
+  - 20 hari
+  - 39 hari
+  - 70 hari
+  jawaban: 2
+  penjelasan: |-
+    39 dari 90 hari (43%) — hampir separuh waktu harga main di area 2.600 ±1% (2.574–2.626).
+    Makin sering harga bolak-balik di satu level, makin banyak pertempuran pembeli vs penjual di situ → level terasa 'berat'. Itulah kenapa angka bulat seperti 2.600 jadi magnet: semua orang memperhatikannya.
+    Cara hitung cepat: low ≤ 2.626 DAN high ≥ 2.574 di hari yang sama.
+  petunjuk:
+  - ±1% dari 2.600 = 26 poin, jadi areanya 2.574–2.626.
+  - Sehari dihitung kalau rentangnya menyentuh area itu.
+  fakta:
+    sentuh:
+      nilai: 39
+      level: 2600
+      tol_pct: 1.0
+- id: c3
+  judul: 'IHSG: RSI Sekarang Berapa?'
+  emoji: 🌡️
+  tingkat: sedang
+  menit: 5
+  simbol: IHSG
+  hari: 90
+  ma:
+  - 20
+  rsi_panel: true
+  garis: []
+  pertanyaan: Lihat panel RSI-14 di bawah grafik (garis kuning; garis putus merah = 70, hijau = 30). RSI terakhir
+    IHSG ada di rentang mana?
+  pilihan:
+  - Di bawah 30 — jenuh jual (oversold)
+  - 30 sampai 50 — lemah tapi belum jenuh
+  - 50 sampai 70 — kuat tapi belum jenuh
+  - Di atas 70 — jenuh beli (overbought)
+  jawaban: 2
+  penjelasan: |
+    RSI terakhir = 56,47 → masuk rentang 50–70. Artinya tekanan beli cukup kuat,
+    TAPI belum sampai jenuh beli (di atas 70). Garis putus merah = batas overbought (70),
+    garis hijau = batas oversold (30). Catatan penting Bab 13: RSI tinggi bukan berarti
+    "wajib jual" — dia cuma mengukur kekuatan momentum.
+  petunjuk:
+  - Baca ujung kanan garis kuning di panel bawah.
+  - Bandingkan dengan garis putus merah (70) dan hijau (30).
+  fakta:
+    rsi: 56.47
+  modul: indikator
+  jenis: line
+- id: i1
+  judul: 'IHSG: Berapa Hari Oversold?'
+  emoji: ❄️
+  modul: indikator
+  tingkat: sedang
+  menit: 5
+  simbol: IHSG
+  hari: 90
+  jenis: candle
+  volume: false
+  ma: []
+  rsi_panel: true
+  garis: []
+  markers: []
+  pertanyaan: Berapa hari RSI-14 IHSG berada DI BAWAH 30 (oversold) selama 90 hari ini?
+  pilihan:
+  - Tidak pernah
+  - 1–5 hari
+  - 6–15 hari
+  - Lebih dari 30 hari
+  jawaban: 2
+  penjelasan: |-
+    11 hari, terkonsentrasi di 21 Mei–9 Juni 2026 — saat IHSG tertekan di dasar 5.607.
+    Setelah itu RSI pulih dan harga naik sampai 6.500-an.
+    Oversold = kelelahan jual, BUKAN lampu hijau otomatis. Tapi kalau harga sedang di area support dan RSI baru keluar dari bawah 30, itu salah satu kombinasi sinyal balik yang paling sering dipakai trader.
+  petunjuk:
+  - Lihat panel RSI di bawah grafik, hitung area di bawah garis hijau 30.
+  - Oversold ≠ wajib beli; cek juga level harganya.
+  fakta:
+    rsi_bawah30: 11
+- id: i2
+  judul: 'CUAN: Terlalu Panas?'
+  emoji: 🥵
+  modul: indikator
+  tingkat: sedang
+  menit: 5
+  simbol: CUAN
+  hari: 60
+  jenis: candle
+  volume: false
+  ma: []
+  rsi_panel: true
+  garis: []
+  markers: []
+  pertanyaan: Berapa hari RSI-14 CUAN berada DI ATAS 70 (overbought) selama 60 hari ini?
+  pilihan:
+  - Tidak pernah
+  - 1–5 hari
+  - 6–20 hari
+  - Semua hari
+  jawaban: 2
+  penjelasan: |-
+    15 dari 60 hari — wajar untuk saham yang naik 12,5% dalam 20 hari.
+    Pelajaran penting: di tren kuat, RSI bisa 'overbought' berhari-hari dan harga TETAP naik. Jangan otomatis jual hanya karena RSI di atas 70.
+    Pakai sebagai alarm: makin tinggi RSI, makin hati-hati — cek candle, level, dan volume sebelum ambil keputusan.
+  petunjuk:
+  - Hitung area kuning di ATAS garis merah 70.
+  - RSI tinggi = kuat, belum tentu langsung berbalik.
+  fakta:
+    rsi_atas70: 15
+- id: i3
+  judul: 'BBRI: Betah di Atas MA20?'
+  emoji: 📏
+  modul: indikator
+  tingkat: sedang
+  menit: 5
+  simbol: BBRI
+  hari: 90
+  jenis: candle
+  volume: false
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Dari 90 hari, berapa hari harga BBRI TUTUP di atas MA20?
+  pilihan:
+  - 10–20 hari
+  - 21–35 hari
+  - 36–55 hari
+  - 58–90 hari
+  jawaban: 2
+  penjelasan: |-
+    47 hari dari 90 (52%). Harga yang betah di atas MA20 = ciri tren naik: pembeli menguasai.
+    Bandingkan dengan TLKM: cuma 24 dari 90 hari — jauh lebih lemah.
+    Angka ini alat cepat untuk menilai 'siapa yang sedang kuat': hitung berapa lama harga bertahan di atas MA20.
+  petunjuk:
+  - Lihat garis ungu MA20 — hitung kapan harga (biru/hijau) di atasnya.
+  - Separuh hari atau lebih di atas MA20 = bias naik.
+  fakta:
+    hari_di_atas_ma20: 47
+- id: c6
+  judul: 'TLKM: Golden Cross atau Bukan?'
+  emoji: ✂️
+  tingkat: sulit
+  menit: 7
+  simbol: TLKM
+  hari: 90
+  ma:
+  - 20
+  - 50
+  rsi_panel: false
+  garis: []
+  pertanyaan: Dalam 30 hari terakhir (paruh kanan grafik), apakah MA20 (ungu) sempat memotong MA50 (pink) ke ATAS?
+  pilihan:
+  - Tidak ada persilangan sama sekali
+  - Ya — golden cross (MA20 potong ke atas MA50)
+  - Ya — death cross (MA20 potong ke bawah MA50)
+  - Kedua garis menempel tapi tidak pernah menyilang
+  jawaban: 1
+  penjelasan: |
+    Ada 1 golden cross: 10 Agustus 2026, MA20 menembus MA50 ke atas (MA20 2.647 vs MA50 2.637),
+    dan sejak itu MA20 masih di atas MA50. Tapi perhatikan lanjutannya: setelah cross,
+    harga justru melemah balik ke 2.600-an. Ini contoh bagus bahwa golden cross = SINYAL,
+    bukan jaminan — di pasar sideways sinyal mudah palsu (Bab 13).
+  petunjuk:
+  - Telusuri kedua garis MA dari kiri ke kanan dengan mata.
+  - Cari momen garis ungu melewati garis pink ke arah atas.
+  - Cross-nya ada di paruh kanan grafik (Agustus).
+  fakta:
+    cross_up_30: 1
+    cross_dn_30: 0
+    ma20: 2634.0
+    ma50: 2580.4
+  modul: indikator
+  jenis: line
+- id: c7
+  judul: 'BTC: Seberapa Dalam Drawdown?'
+  emoji: 🕳️
+  tingkat: sulit
+  menit: 7
+  simbol: BTC
+  hari: 60
+  ma: []
+  rsi_panel: false
+  garis: []
+  pertanyaan: Drawdown = turun dari puncak tertinggi sejauh ini. Berapa drawdown MAKSIMUM BTC dalam 60 hari di grafik
+    ini?
+  pilihan:
+  - Di bawah 5%
+  - 5% sampai 15%
+  - 15% sampai 30%
+  - Di atas 30%
+  jawaban: 1
+  penjelasan: |
+    Puncak tertinggi = 80.258 (dolar). Setelah puncak itu, harga turun paling dalam
+    ke sekitar 75.738 → drawdown = (80.258 − 75.738) / 80.258 = 5,63% → masuk rentang 5–15%.
+    Kunci mengerjakannya: cari titik tertinggi DULU, baru cari titik terendah SETELAH titik itu
+    (bukan sebelum). Drawdown mengukur risiko dari puncak — beda dengan "turun dari awal chart" (Bab 12).
+  petunjuk:
+  - Cari titik tertinggi grafik dulu.
+  - Lalu cari titik TERENDAH setelah titik tertinggi itu (yang sebelumnya tidak dihitung).
+  fakta:
+    dd: 5.63
+  modul: indikator
+  jenis: line
+- id: i4
+  judul: 'TLKM: MA20 Menunduk, MA50 Menanjak'
+  emoji: 🧭
+  modul: indikator
+  tingkat: sulit
+  menit: 6
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  - 50
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: '10 hari terakhir: MA20 turun (2.635 → 2.611) tapi MA50 masih naik (2.581 → 2.609). Bacaan paling
+    tepat?'
+  pilihan:
+  - Jangka pendek melemah, tren menengah masih naik
+  - Dua-duanya sudah downtrend
+  - Dua-duanya uptrend kuat
+  - MA tidak bisa menunjukkan arah
+  jawaban: 0
+  penjelasan: |-
+    MA20 (garis cepat) menunduk = tenaga jangka pendek melemah. MA50 (garis lambat) masih menanjak = tren menengah belum rusak.
+    Fase seperti ini disebut sideways melemah. Yang menentukan arah berikutnya: apakah MA20 memotong MA50 ke BAWAH (death cross → tren menengah ikut rusak) atau berbalik naik (tren lanjut).
+    Perhatikan juga: jarak MA20 dan MA50 cuma sekitar 2 poin — keduanya hampir menempel, tanda pasar sedang memilih arah.
+  petunjuk:
+  - MA20 = garis cepat (ungu), MA50 = garis lambat (pink).
+  - 'Pertanyaan kuncinya: siapa yang akan menyalip siapa?'
+  fakta:
+    ma20_slope: turun
+    ma50_slope: naik
+    ma20: 2611.0
+    ma50: 2608.8
+- id: p1
+  judul: 'BRPT: Tandai Support'
+  emoji: 👆
+  modul: praktik
+  tingkat: sedang
+  menit: 5
+  simbol: BRPT
+  hari: 60
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Support
+  pertanyaan: 'Klik langsung di grafik pada level yang menurutmu jadi SUPPORT terdekat — batas bawah tempat harga
+    biasanya bertahan. Diuji: level terendah 20 hari terakhir. Toleransi ±1,5% — analisa teknikal itu ZONA, bukan
+    garis presisi.'
+  kunci: 1685.0
+  kunci_fakta: low20
+  kunci_faktor: 1.0
+  toleransi_pct: 1.5
+  penjelasan: |-
+    Support = 1.685, level terendah 20 hari. Harga terakhir 1.700 baru saja menguji area ini dari atas.
+    Kalau 1.685 jebol, patokan berikutnya 1.270 (low 60 hari).
+    Zona 1.660–1.710 tetap dihitung benar — trader memakai area, bukan satu angka.
+  petunjuk:
+  - Ikuti ekor bawah candle dari kiri ke kanan; cari yang paling rendah.
+  - Level dengan pantulan terbanyak = kandidat support.
+  fakta:
+    low20: 1685.0
+- id: p2
+  judul: 'CUAN: Tandai Resistance'
+  emoji: ✋
+  modul: praktik
+  tingkat: sedang
+  menit: 5
+  simbol: CUAN
+  hari: 60
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Resistance
+  pertanyaan: 'Klik di grafik pada level RESISTANCE terdekat — batas atas tempat penjual menunggu. Diuji: harga
+    tertinggi (high) 30 hari terakhir. Toleransi ±1,5%.'
+  kunci: 1040.0
+  kunci_fakta: high30
+  kunci_faktor: 1.0
+  toleransi_pct: 1.5
+  penjelasan: |-
+    Resistance = 1.040 (high 30 hari). Harga terakhir 945, masih sekitar 10% di bawah — belum ada ujian di level itu.
+    Kalau nanti harga sampai 1.040: perhatikan apakah tembus dengan volume besar (breakout sungguhan) atau ditolak lalu balik turun.
+    Resistance = tempat harga pernah gagal naik.
+  petunjuk:
+  - Cari puncak tertinggi chart (ujung ekor atas candle).
+  - Resistance terdekat = high 30 hari terakhir.
+  fakta:
+    high30: 1040.0
+- id: p5
+  judul: 'BTC: Tentukan Take Profit'
+  emoji: 🏁
+  modul: praktik
+  tingkat: sedang
+  menit: 6
+  simbol: BTC
+  hari: 60
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Take Profit
+  pertanyaan: Kamu long BTC di 77.000. Resistance 30 hari = 82.262. Klik di mana kamu pasang take profit. Toleransi
+    ±2%.
+  kunci: 82262.21
+  kunci_fakta:
+    nama: high_n
+    n: 30
+  kunci_faktor: 1.0
+  toleransi_pct: 2.0
+  penjelasan: |-
+    TP realistis = dekat resistance 82.262 (zona 80.600–83.900 tetap benar).
+    Banyak trader ambil sedikit DI BAWAH level bulat — di resistance biasanya menumpuk order jual, jadi harga sering berbalik sebelum menyentuhnya.
+    Hitung rasio: risiko (entry 77.000 → SL ~75.400) sekitar 2,1%; imbalan (sampai 82.262) sekitar +6,8% → RR ±3x. Layak diambil.
+  petunjuk:
+  - TP = di mana kamu keluar dengan untung.
+  - 'Ingat: di depan resistance, order jual menumpuk.'
+  fakta:
+    high_n:
+      nilai: 82262.21
+      n: 30
+- id: p6
+  judul: 'TLKM: Support Utama 3 Bulan'
+  emoji: 🔻
+  modul: praktik
+  tingkat: sedang
+  menit: 5
+  simbol: TLKM
+  hari: 90
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Support Utama
+  pertanyaan: 'TLKM 90 hari. Cari SUPPORT TERKUAT: level terendah yang pernah dipakai harga untuk memantul kuat.
+    Klik levelnya. Toleransi ±1,5%.'
+  kunci: 2350.0
+  kunci_fakta:
+    nama: low_n
+    n: 60
+  kunci_faktor: 1.0
+  toleransi_pct: 1.5
+  penjelasan: |-
+    Support utama = 2.350 — dasar 90 hari ini. Buktinya: 8 Juni harga menyentuh 2.350, lalu memantul naik sampai 3.030 dalam dua minggu.
+    Support paling kuat = yang paling dalam DAN terbukti membalikkan arah. Sedangkan 2.550 cuma support jangka pendek (level 20 hari).
+    Kalau 2.350 jebol, tidak ada lagi penopang di chart ini — level itu penting secara psikologis.
+  petunjuk:
+  - Support 'utama' = yang paling dalam dan pernah memantul kuat.
+  - 'Lihat sisi kiri-tengah grafik: cari dasar yang menghasilkan rally.'
+  fakta:
+    low_n:
+      nilai: 2350.0
       n: 60
+- id: p3
+  judul: 'TLKM: Pasang Stop Loss'
+  emoji: 🛡️
+  modul: praktik
+  tingkat: sulit
+  menit: 6
+  simbol: TLKM
+  hari: 90
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Pasang Stop Loss
+  pertanyaan: 'Kamu long TLKM di 2.600. Support terdekat 2.550. Klik DI MANA kamu pasang stop loss. Ingat: SL bukan
+    tepat di support — taruh sedikit DI BAWAHNYA supaya tidak kena sapu gerakan kecil. Toleransi ±1,5%.'
+  kunci: 2524.5
+  kunci_fakta:
+    nama: low_n
+    n: 20
+  kunci_faktor: 0.99
+  toleransi_pct: 1.5
+  penjelasan: |-
+    SL yang baik ≈ 2.525 (0,99 × support 2.550). Zona 2.490–2.560 tetap dihitung benar.
+    Kenapa tidak tepat di 2.550? Karena level bulat dan support justru tempat 'sapu stop' paling sering terjadi: harga menyentuh, kena SL, lalu balik naik.
+    Jarak SL dari entry 2.600 = sekitar 2,2% — risiko terkendali. Kalau support jebol dan SL kena, kamu rugi kecil; kalau benar, biarkan jalan.
+  petunjuk:
+  - SL = titik kamu mengaku salah. Beri sedikit ruang di bawah support.
+  - Terlalu dekat = gampang kena; terlalu jauh = rugi membengkak.
+  fakta:
+    low_n:
+      nilai: 2550.0
+      n: 20
+- id: p4
+  judul: 'BRPT: Level Entry Breakout'
+  emoji: 🚪
+  modul: praktik
+  tingkat: sulit
+  menit: 6
+  simbol: BRPT
+  hari: 60
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Entry
+  pertanyaan: Resistance BRPT di 1.965. Kalau kamu mau ikut breakout, klik level ENTRY kamu — harga yang harus ditembus
+    dulu sebelum kamu beli. Toleransi ±1,5%.
+  kunci: 1974.82
+  kunci_fakta: high30
+  kunci_faktor: 1.005
+  toleransi_pct: 1.5
+  penjelasan: |-
+    Entry breakout ≈ 1.975 — sekitar 0,5% di atas resistance 1.965.
+    Kenapa tidak beli sekarang (1.700)? Karena belum breakout — beli sekarang berarti menebak. Kenapa tidak menunggu 2.100? Karena sudah telat: SL jadi jauh, risiko membengkak.
+    Zona wajar: 1.945–2.005. Tetap pasang SL di bawah (misal < 1.900) dan waspadai breakout palsu: kalau tembus lalu balik cepat ke bawah 1.965, itu jebakan.
+  petunjuk:
+  - Breakout = beli SETELAH level ditembus, bukan sebelum.
+  - 0,5–1% di atas resistance = zona entry yang umum.
+  fakta:
+    high_n:
+      nilai: 1965.0
+      n: 30

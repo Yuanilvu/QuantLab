@@ -1,15 +1,15 @@
 {% extends "base.html" %}
-{% block title %}Chart Drill — Latihan Baca Grafik — QuantLab{% endblock %}
+{% block title %}Lab Teknikal — Latihan Analisa Grafik — QuantLab{% endblock %}
 {% block content %}
 <nav class="crumb" aria-label="Breadcrumb">
   <a href="{{ url_for('index') }}">Dashboard</a>
   <span aria-hidden="true"> › </span>
-  <span>Chart Drill</span>
+  <span>Lab Teknikal</span>
 </nav>
 
 <section class="pagehead">
-  <h1>📊 Chart Drill</h1>
-  <p class="sub">Latihan <b>baca grafik harga nyata</b> — BBRI, TLKM, IHSG, BRPT, CUAN, BTC (data beku, jadi kunci jawaban selalu konsisten). Kamu lihat grafiknya, jawab satu pertanyaan, langsung dapat penjelasan + XP. Ini sisi "analisa teknikal" yang selama ini cuma ada di materi skenario.</p>
+  <h1>📈 Lab Teknikal</h1>
+  <p class="sub">Latihan <b>analisa teknikal pakai grafik harga NYATA</b> (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC — data beku, jadi kunci jawaban selalu konsisten). Empat modul berurutan: baca candle &amp; tren → level &amp; struktur → indikator → <b>praktik klik langsung di grafik</b> (tandai support, pasang stop loss, tentukan entry). Semua dinilai otomatis + XP.</p>
 </section>
 
 <section class="statrow" aria-label="Progresmu">
@@ -18,13 +18,16 @@
   <div class="stat"><b>{{ '%.0f' | format(benar / total * 100) if total else 0 }}%</b><span>Akurasi</span></div>
 </section>
 
-<div class="chartlist" style="margin-top:20px">
-  {% for d in drills %}
+{% for g in groups %}
+<section class="modulblock" aria-label="Modul {{ g.nama }}">
+  <h2 class="modulhead">{{ g.nama }} <span class="meta">{{ g.selesai }}/{{ g.total }} selesai{% if g.benar %} · {{ g.benar }} benar{% endif %}</span></h2>
+  <p class="note">{{ g.desc }}</p>
+  {% for d in g.drills %}
   <a class="scenrow {{ 'done' if d.selesai }}" href="{{ url_for('chart_page', cid=d.id) }}">
     <span class="scenemoji" aria-hidden="true">{{ d.emoji }}</span>
     <span class="scenmain">
       <b>{{ d.judul }}</b>
-      <span class="meta">{{ d.simbol }} · {{ d.hari }} hari · {{ d.xp }} XP · ±{{ d.menit }} menit</span>
+      <span class="meta">{{ d.simbol }} · {{ d.hari }} hari · {{ d.xp }} XP · ±{{ d.menit }} menit{% if d.jenis == 'praktik' %} · 🎯 klik grafik{% endif %}</span>
     </span>
     <span class="badge {{ d.tingkat }}">{{ d.tingkat }}</span>
     {% if d.benar %}
@@ -36,5 +39,6 @@
     {% endif %}
   </a>
   {% endfor %}
-</div>
+</section>
+{% endfor %}
 {% endblock %}
