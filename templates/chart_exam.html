@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}Ujian Teknikal · Soal {{ n }}/{{ total }} — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('chart_list') }}">Lab Teknikal</a>
+  <span aria-hidden="true"> › </span>
+  <span>Ujian — soal {{ n }}/{{ total }}</span>
+</nav>
+
+<section class="scenario">
+  <div class="scenhead">
+    <span class="badge coding">🎓 Ujian Teknikal</span>
+    <h1>{{ drill.emoji }} Soal {{ n }} dari {{ total }}</h1>
+    <span class="meta">⏳ sisa <b id="waktu">--:--</b> · tanpa petunjuk</span>
+  </div>
+
+  <div class="examprog" aria-hidden="true"><div style="width: {{ ((n - 1) / total * 100) | round }}%"></div></div>
+
+  <div class="chartbox">
+    {% if svg %}{{ svg | safe }}{% else %}<p class="alert">⚠️ Data grafik tidak ditemukan.</p>{% endif %}
+  </div>
+
+  <div class="casebox">
+    <h3>❓ Pertanyaan</h3>
+    <div class="case">{{ drill.pertanyaan }}</div>
+  </div>
+
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <div class="opts" role="radiogroup" aria-label="Pilihan jawaban">
+      {% for p in drill.pilihan %}
+      <label class="opt">
+        <input type="radio" name="choice" value="{{ loop.index0 }}" required
+               {% if jawaban_lama is not none and jawaban_lama == loop.index0 %}checked{% endif %}>
+        <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
+      </label>
+      {% endfor %}
+    </div>
+    <div class="scenactions">
+      <button class="btn primary" type="submit">
+        {% if n == total %}Selesai &amp; Lihat Hasil →{% else %}Lanjut Soal {{ n + 1 }} →{% endif %}
+      </button>
+      <a class="btn ghost" href="{{ url_for('chart_list') }}">Keluar sebentar</a>
+    </div>
+  </form>
+
+  <script>
+  (function () {
+    var mulai = new Date("{{ mulai }}");
+    var batas = mulai.getTime() + {{ menit }} * 60000;
+    var el = document.getElementById('waktu');
+    function tick() {
+      var sisa = Math.max(0, batas - Date.now());
+      var m = Math.floor(sisa / 60000);
+      var d = Math.floor((sisa % 60000) / 1000);
+      el.textContent = (m < 10 ? '0' : '') + m + ':' + (d < 10 ? '0' : '') + d;
+      if (sisa <= 0) {
+        location.href = "{{ url_for('chart_ujian_hasil') }}";
+      }
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+  </script>
+</section>
+{% endblock %}

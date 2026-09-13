@@ -85,12 +85,25 @@ def main():
                 errs.append(f"jumlah baris CSV {len(rows)} != hari {d.get('hari')}")
             if jenis in ("candle", "praktik") and not chartgen.punya_ohlc(rows):
                 errs.append("data candle/praktik tidak punya kolom OHLC")
-            for kunci, entri in (d.get("fakta") or {}).items():
-                if isinstance(entri, dict):
-                    param = {k: v for k, v in entri.items() if k != "nilai"}
-                    nilai_yaml = entri.get("nilai")
-                else:
-                    param, nilai_yaml = None, entri
+            # fakta: boleh dict {nama: nilai|{nilai,...param}} ATAU list
+            # [{nama, nilai, ...param}] (utk fakta berulang, mis. 2 index).
+            fakta = d.get("fakta") or {}
+            if isinstance(fakta, list):
+                entri_iter = []
+                for e in fakta:
+                    nama = e.get("nama")
+                    param = {k: v for k, v in e.items() if k not in ("nama", "nilai")}
+                    entri_iter.append((nama, param or None, e.get("nilai")))
+            else:
+                entri_iter = []
+                for kunci, entri in fakta.items():
+                    if isinstance(entri, dict):
+                        param = {k: v for k, v in entri.items() if k != "nilai"}
+                        nilai_yaml = entri.get("nilai")
+                    else:
+                        param, nilai_yaml = None, entri
+                    entri_iter.append((kunci, param, nilai_yaml))
+            for kunci, param, nilai_yaml in entri_iter:
                 try:
                     nilai_hitung = cf.hitung_fakta(rows, kunci, param)
                 except KeyError:

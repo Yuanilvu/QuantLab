@@ -339,6 +339,18 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
 .badge.ok { color: var(--green); border-color: #1e5c38; background: rgba(45, 212, 126, .07); }
 .badge.no { color: var(--red); border-color: #6b2133; background: rgba(242, 109, 109, .08); }
 
+/* Ujian Teknikal */
+.aturanlist { margin: 6px 0 2px; padding-left: 20px; }
+.aturanlist li { margin: 4px 0; font-size: .93rem; line-height: 1.55; }
+.examprog { height: 6px; background: var(--bg2, #0d1420); border: 1px solid var(--line);
+  border-radius: 999px; margin: 4px 0 12px; overflow: hidden; }
+.examprog div { height: 100%; background: linear-gradient(90deg, #22d3ee, #a78bfa); border-radius: 999px; }
+.examrow { border: 1px solid var(--line); border-radius: 10px; padding: 10px 14px; margin-bottom: 8px; }
+.examrow.ok { border-color: #1e5c38; }
+.examrow.no { border-color: #6b2133; }
+.examrow .exhead { display: flex; justify-content: space-between; gap: 10px; align-items: center; flex-wrap: wrap; }
+.examrow .meta { display: block; margin-top: 6px; font-size: .88rem; line-height: 1.55; }
+
 /* Lab Teknikal — modul & praktik klik */
 .modulhead { margin: 30px 0 4px; font-size: 1.06rem; display: flex;
   align-items: baseline; gap: 10px; flex-wrap: wrap; }

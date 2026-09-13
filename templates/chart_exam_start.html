@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}Ujian Teknikal — Lab Teknikal — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('chart_list') }}">Lab Teknikal</a>
+  <span aria-hidden="true"> › </span>
+  <span>Ujian Teknikal</span>
+</nav>
+
+<section class="pagehead">
+  <h1>🎓 Ujian Teknikal</h1>
+  <p class="sub">Ujian akhir Lab Teknikal: <b>{{ n }} soal acak</b> dari {{ pool_n }} drill pilihan-ganda (semua modul, termasuk level Mahir). Waktu <b>{{ menit }} menit</b>. Lulus <b>≥70%</b> → <b>+{{ xp }} XP</b> + status lulus di halaman Lab.</p>
+</section>
+
+{% if hasil %}
+<div class="okbox" style="margin-bottom:14px">
+  ✓ Kamu sudah <b>LULUS</b> Ujian Teknikal — skor <b>{{ hasil.score }}/{{ hasil.total }}</b>.
+  Ujian ulang boleh untuk latihan (XP tambahan tidak diberikan).
+</div>
+{% endif %}
+
+<section class="casebox">
+  <h3>📋 Peraturan</h3>
+  <ul class="aturanlist">
+    <li><b>{{ n }} soal acak</b> — tiap ujian soalnya beda (diambil dari kumpulan drill).</li>
+    <li>Waktu <b>{{ menit }} menit</b> — otomatis ditutup ketika habis; yang belum dijawab dihitung salah.</li>
+    <li>Tanpa petunjuk — ini ujian 😄</li>
+    <li>Boleh keluar & kembali selama waktu berjalan (jawaban tersimpan).</li>
+    <li>Disarankan: modul <b>Dasar — Level — Indikator</b> sudah dijalani sebelum ujian.</li>
+  </ul>
+</section>
+
+<form method="post" action="{{ url_for('chart_ujian_mulai') }}" style="margin-top:16px">
+  <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+  <div class="scenactions">
+    <button class="btn primary" type="submit">{{ 'Ulangi Ujian →' if hasil else 'Mulai Ujian →' }}</button>
+    <a class="btn ghost" href="{{ url_for('chart_list') }}">Kembali ke Lab</a>
+  </div>
+</form>
+{% endblock %}

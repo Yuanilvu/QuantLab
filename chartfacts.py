@@ -240,6 +240,95 @@ def f_jarak_ma20_pct(rows, p=None):
     return round((rows[-1]["close"] - m[-1]) / m[-1] * 100, 2)
 
 
+# ── fakta level "mahir" ─────────────────────────────────────────────────────
+
+def f_close_idx(rows, p=None):
+    return round(rows[_idx(rows, p["idx"])]["close"], 2)
+
+
+def f_high_idx(rows, p=None):
+    return round(_high(rows[_idx(rows, p["idx"])]), 2)
+
+
+def f_low_idx(rows, p=None):
+    return round(_low(rows[_idx(rows, p["idx"])]), 2)
+
+
+def f_rsi_idx(rows, p=None):
+    r = chartgen.rsi([r["close"] for r in rows], 14)
+    v = r[_idx(rows, p["idx"])]
+    return round(v, 2) if v is not None else None
+
+
+def f_volume_ratio(rows, p=None):
+    idx = _idx(rows, p["idx"])
+    n = p.get("n", 20)
+    sebelum = rows[max(0, idx - n):idx]
+    avg = sum(r.get("volume", 0) for r in sebelum) / max(1, len(sebelum))
+    if not avg:
+        return None
+    return round(rows[idx].get("volume", 0) / avg, 2)
+
+
+def _gap(rows, naik):
+    if len(rows) < 2:
+        return None
+    nilai = [(r["open"] - p["close"]) / p["close"] * 100
+             for p, r in zip(rows, rows[1:]) if p["close"]]
+    if naik:
+        return round(max(nilai), 2)
+    return round(min(nilai), 2)
+
+
+def f_gap_naik_pct(rows, p=None):
+    return _gap(rows, naik=True)
+
+
+def f_gap_turun_pct(rows, p=None):
+    return _gap(rows, naik=False)
+
+
+def _body(rows, naik):
+    if not rows or not chartgen.punya_ohlc(rows):
+        return None
+    nilai = [(r["close"] - r["open"]) / r["open"] * 100 for r in rows if r["open"]]
+    if naik:
+        return round(max(nilai), 2)
+    return round(min(nilai), 2)
+
+
+def f_body_naik_maks(rows, p=None):
+    return _body(rows, naik=True)
+
+
+def f_body_turun_maks(rows, p=None):
+    return _body(rows, naik=False)
+
+
+def f_jebakan_breakout(rows, p=None):
+    """Jumlah 'breakout palsu': high menembus high n bar sebelumnya,
+    tapi close balik DI BAWAH level itu."""
+    n = (p or {}).get("n", 20)
+    jml = 0
+    for i in range(n, len(rows)):
+        lvl = max(_high(r) for r in rows[i - n:i])
+        if _high(rows[i]) > lvl and rows[i]["close"] < lvl:
+            jml += 1
+    return jml
+
+
+def f_high_setelah(rows, p=None):
+    idx = _idx(rows, p["idx"])
+    sisa = rows[idx + 1:]
+    return round(max(_high(r) for r in sisa), 2) if sisa else None
+
+
+def f_jarak_ke_high_pct(rows, p=None):
+    n = (p or {}).get("n", 60)
+    hi = f_high_n(rows, {"n": n})
+    return round((hi - rows[-1]["close"]) / rows[-1]["close"] * 100, 2)
+
+
 # ── registry ────────────────────────────────────────────────────────────────
 
 FAKTA = {
@@ -270,6 +359,18 @@ FAKTA = {
     "ma50_slope": f_ma50_slope,
     "perubahan_pct": f_perubahan_pct,
     "jarak_ma20_pct": f_jarak_ma20_pct,
+    "close_idx": f_close_idx,
+    "high_idx": f_high_idx,
+    "low_idx": f_low_idx,
+    "rsi_idx": f_rsi_idx,
+    "volume_ratio": f_volume_ratio,
+    "gap_naik_pct": f_gap_naik_pct,
+    "gap_turun_pct": f_gap_turun_pct,
+    "body_naik_maks": f_body_naik_maks,
+    "body_turun_maks": f_body_turun_maks,
+    "jebakan_breakout": f_jebakan_breakout,
+    "high_setelah": f_high_setelah,
+    "jarak_ke_high_pct": f_jarak_ke_high_pct,
 }
 
 

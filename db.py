@@ -54,6 +54,12 @@ CREATE TABLE IF NOT EXISTS chart_solved (
     created_at TEXT DEFAULT (datetime('now')),
     PRIMARY KEY (user_id, chart_id)
 );
+CREATE TABLE IF NOT EXISTS chart_exam (
+    user_id INTEGER PRIMARY KEY,
+    score INTEGER NOT NULL,
+    total INTEGER NOT NULL,
+    passed_at TEXT DEFAULT (datetime('now'))
+);
 CREATE TABLE IF NOT EXISTS journal_entries (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
@@ -405,6 +411,27 @@ def get_chart_solves(user_id):
             "SELECT * FROM chart_solved WHERE user_id = ?", (user_id,)
         ).fetchall()
     return {r["chart_id"]: r for r in rows}
+
+
+# ---------- Ujian Teknikal (Lab Teknikal) ----------
+
+def chart_exam_save(user_id, score, total):
+    """Simpan hasil ujian PERTAMA yang lulus (first-pass saja)."""
+    with get_conn() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO chart_exam (user_id, score, total) VALUES (?, ?, ?)",
+            (user_id, score, total),
+        )
+        return conn.execute(
+            "SELECT * FROM chart_exam WHERE user_id = ?", (user_id,)
+        ).fetchone()
+
+
+def get_chart_exam(user_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM chart_exam WHERE user_id = ?", (user_id,)
+        ).fetchone()
 
 
 # ---------- Jurnal Trading ----------

@@ -10,6 +10,7 @@
 <section class="pagehead">
   <h1>📈 Lab Teknikal</h1>
   <p class="sub">Latihan <b>analisa teknikal pakai grafik harga NYATA</b> (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC — data beku, jadi kunci jawaban selalu konsisten). Empat modul berurutan: baca candle &amp; tren → level &amp; struktur → indikator → <b>praktik klik langsung di grafik</b> (tandai support, pasang stop loss, tentukan entry). Semua dinilai otomatis + XP.</p>
+  <p class="note">🎖️ Level kamu: <b>{{ rank }}</b> <span class="meta">· {{ rank_desc }} · {{ selesai }}/{{ total }} drill{% if hasil_exam %} · ujian teknikal: {{ hasil_exam.score }}/{{ hasil_exam.total }} ✓{% endif %}</span></p>
 </section>
 
 <section class="statrow" aria-label="Progresmu">
@@ -41,4 +42,10 @@
   {% endfor %}
 </section>
 {% endfor %}
+
+<section class="modulblock" aria-label="Ujian Teknikal">
+  <h2 class="modulhead">🎓 Ujian Teknikal <span class="meta">{{ 'lulus ' ~ hasil_exam.score ~ '/' ~ hasil_exam.total ~ ' ✓' if hasil_exam else 'belum lulus' }}</span></h2>
+  <p class="note">Ujian akhir: <b>{{ exam_n }} soal acak</b> campuran dari semua modul · {{ exam_menit }} menit · lulus ≥70% → <b>+{{ exam_xp }} XP</b>. Disarankan setelah modul Dasar–Level–Indikator dijalani.</p>
+  <a class="btn primary" href="{{ url_for('chart_ujian_start') }}">{{ 'Lihat / Ulangi Ujian →' if hasil_exam else 'Mulai Ujian →' }}</a>
+</section>
 {% endblock %}

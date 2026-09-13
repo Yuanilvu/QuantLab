@@ -276,6 +276,88 @@ drills:
     pola:
       nilai: doji
       idx: 53
+- id: m10
+  judul: 'TLKM: Hammer yang Gagal'
+  emoji: 🔨
+  modul: dasar
+  tingkat: sulit
+  menit: 6
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: true
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers:
+  - idx: 78
+    label: A
+  pertanyaan: 'Candle bertanda A (27 Agu) berbentuk HAMMER — ekor bawah panjang, badan kecil di atas: sinyal potensial
+    harga balik naik. Tapi besoknya harga malah turun. Pelajaran paling tepat?'
+  pilihan:
+  - Pola candle itu sinyal LEMAH tanpa konfirmasi — tunggu candle berikutnya mendukung dulu
+  - Hammer tidak pernah berguna; buang semua teori candle
+  - Harus langsung beli setiap kali melihat hammer
+  - Berarti besok-besok harga pasti turun terus
+  jawaban: 0
+  penjelasan: |-
+    Hammer A (close 2.610) memang pola pembalikan yang sering dipakai — tapi sinyalnya WAJIB dikonfirmasi candle berikutnya.
+    Di sini candle berikutnya justru menelan balik (close 2.570): hammer gagal, harga lanjut melemah ke 2.550 sebelum stabil.
+    Cara pakai yang benar: tandai hammer → JANGAN entry dulu → entry hanya kalau candle konfirmasi menembus high hammer (2.610) dengan volume. Gagal? Batalkan. Biaya menunggu konfirmasi jauh lebih murah daripada entry prematur.
+  petunjuk:
+  - Hammer = sinyal POTENSIAL, bukan perintah beli.
+  - 'Lihat candle tepat SETELAH A: mendukung atau menelan?'
+  fakta:
+  - nama: pola
+    nilai: hammer
+    idx: 78
+  - nama: close_idx
+    nilai: 2610.0
+    idx: 78
+  - nama: candle_arah
+    nilai: merah
+    idx: 79
+  - nama: close_idx
+    nilai: 2570.0
+    idx: 79
+- id: m8
+  judul: 'BRPT: Candle Terburuk'
+  emoji: 🧨
+  modul: dasar
+  tingkat: sulit
+  menit: 6
+  simbol: BRPT
+  hari: 90
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Cari candle terburuk dalam 90 hari — hari di mana harga jatuh paling dalam DARI BUKA KE TUTUP. Berapa
+    persen turunnya?
+  pilihan:
+  - −6,5%
+  - −9,2%
+  - −12,8%
+  - −18,4%
+  jawaban: 2
+  penjelasan: |-
+    Hari terburuk: 21 Mei — buka 1.755, tutup 1.530: −12,8% dalam sehari.
+    Yang bikin makin pahit: harga BUKA lebih tinggi dari close kemarin (1.720 → buka 1.755, gap naik +2%). Yang beli di pembukaan karena tergiur 'gap naik' selesai hari itu −12,8% — pola ini disebut bull trap.
+    Pelajaran: gap naik tanpa konfirmasi bukan sinyal beli. Beri waktu minimal setengah jam sampai satu hari agar arah jelas.
+  petunjuk:
+  - Cari candle merah dengan badan paling panjang.
+  - 'Hitung: (tutup − buka) ÷ buka × 100.'
+  fakta:
+    body_turun_maks: -12.82
+    close_idx:
+      nilai: 1530.0
+      idx: 11
+    high_idx:
+      nilai: 1770.0
+      idx: 11
 - id: s3
   judul: 'IHSG: Resistance Terdekat'
   emoji: 🚧
@@ -442,6 +524,121 @@ drills:
       nilai: 1685.0
       n: 20
     terakhir: 1700.0
+- id: m1
+  judul: 'CUAN: Jebakan Breakout'
+  emoji: 🎣
+  modul: level
+  tingkat: sulit
+  menit: 7
+  simbol: CUAN
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers:
+  - idx: 54
+    label: A
+  pertanyaan: 'Candle bertanda A (4 Sep): harga sempat menyentuh 980 — DI ATAS level 955 (high 20 hari sebelumnya)
+    — tapi ditutup balik ke 940, di BAWAH level. Pola ini apa dan kenapa berbahaya?'
+  pilihan:
+  - Breakout PALSU (false breakout) — yang beli saat 'tembus' level langsung terjebak
+  - Breakout sah — sinyal beli kuat
+  - Gap up — beda dengan breakout
+  - Tidak ada artinya; besok pasti naik
+  jawaban: 0
+  penjelasan: |-
+    4 Sep: high 980 menembus level 955 — tapi close balik ke 940, DI BAWAH level. Breakout gagal bertahan.
+    Yang beli saat 'tembus' (~970–980) langsung rugi; tiga hari berikutnya harga tertahan di 935–940 (di bawah level), jadi stop loss di bawah 955 pun kena.
+    Bandingkan: breakout SAH = tembus level DAN close bertahan di atasnya, idealnya dengan volume besar. Di chart ini jebakan breakout muncul 3× dalam 60 hari — di fase sideways & saham yang ramai, jebakan justru hal biasa.
+  petunjuk:
+  - Bandingkan HIGH hari itu vs CLOSE-nya.
+  - Breakout dihitung sah kalau close bertahan di atas level — bukan cuma 'sempat lewat'.
+  fakta:
+    jebakan_breakout:
+      nilai: 3
+      n: 20
+    close_idx:
+      nilai: 940.0
+      idx: 54
+    high_idx:
+      nilai: 980.0
+      idx: 54
+- id: m2
+  judul: 'TLKM: Seberapa Jauh ke Resistance?'
+  emoji: 📐
+  modul: level
+  tingkat: sulit
+  menit: 7
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: Harga TLKM sekarang 2.600. High tertinggi 60 hari = 2.790 (calon resistance). Berapa PERSEN harga
+    harus naik dari sekarang untuk menyentuh resistance itu?
+  pilihan:
+  - 4,2%
+  - 7,3%
+  - 10,5%
+  - 15,2%
+  jawaban: 1
+  penjelasan: |-
+    (2.790 − 2.600) ÷ 2.600 × 100 = 7,31%.
+    Hitungan seperti ini dilakukan SEBELUM entry: kalau ruang naik ke resistance cuma 7,3% sementara jarak ke stop loss 5%, rasio untung-risikonya tipis — lebih baik tunggu harga dekat support.
+    Catatan levels: setelah 2.790 tembus, 'atap' berikutnya ada di zona 2.800–3.030 (bekas area pantulan Juni 2026).
+  petunjuk:
+  - 'Rumus: (resistance − harga) ÷ harga × 100.'
+  - 2.790 − 2.600 = 190 poin dulu.
+  fakta:
+    terakhir: 2600.0
+    high_n:
+      nilai: 2790.0
+      n: 60
+    jarak_ke_high_pct:
+      nilai: 7.31
+      n: 60
+- id: m5
+  judul: 'TLKM: Zona Gap 2.900–3.090'
+  emoji: 🪟
+  modul: level
+  tingkat: sulit
+  menit: 7
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: '29 Mei: TLKM buka di 2.900 — GAP TURUN 6,15% dari tutup sebelumnya (3.090). Selama 90 hari berikutnya,
+    sejauh mana harga memantul kembali?'
+  pilihan:
+  - Sampai 2.900 — cuma menutup separuh gap
+  - Sampai 3.030 — masih di dalam zona gap (2.900–3.090)
+  - Sampai 3.090 — gap terisi penuh
+  - Sampai 3.190 — melebihi zona gap
+  jawaban: 1
+  penjelasan: |-
+    Pantulan tertinggi setelah gap = 3.030 (17 Juni) — masih di TENGAH zona gap 2.900–3.090. Gap belum terisi penuh.
+    Zona gap sering jadi 'atap': di area itu harga tidak sempat transaksi, sehingga penjual menumpuk di harga lama dan pembeli ketinggalan enggan mengejar.
+    Pelajaran: setelah gap besar, tandai ZONANYA (bukan satu garis). Ingat juga: gap bisa lahir dari aksi korporasi seperti ex-dividen — bukan hanya berita buruk.
+  petunjuk:
+  - Zona gap = antara open (2.900) dan close sebelumnya (3.090).
+  - Cari puncak pantulan tertinggi SETELAH 29 Mei di chart.
+  fakta:
+    gap_turun_pct: -6.15
+    close_idx:
+      nilai: 3030.0
+      idx: 17
+    high_setelah:
+      nilai: 3030.0
+      idx: 17
 - id: s2
   judul: 'TLKM: Magnet 2.600'
   emoji: 🧲
@@ -700,6 +897,133 @@ drills:
     ma50_slope: naik
     ma20: 2611.0
     ma50: 2608.8
+- id: m3
+  judul: 'BTC: Divergensi — Momentum Bocor'
+  emoji: 🪞
+  modul: indikator
+  tingkat: sulit
+  menit: 7
+  simbol: BTC
+  hari: 60
+  jenis: candle
+  volume: false
+  ma: []
+  rsi_panel: true
+  garis: []
+  markers:
+  - idx: 42
+    label: A
+  - idx: 49
+    label: B
+  pertanyaan: 'Candle A (27 Agu): close 80.258, RSI di 91. Candle B (3 Sep): close LEBIH TINGGI (81.272) — tapi
+    RSI-nya cuma 60. Apa nama pola ini?'
+  pilihan:
+  - Divergensi bearish — harga bikin high baru, tapi tenaga (RSI) justru bocor
+  - Divergensi bullish — sinyal lanjut naik
+  - Golden cross
+  - Konfirmasi breakout — sinyal beli
+  jawaban: 0
+  penjelasan: |-
+    Harga: 80.258 → 81.272 (high baru). RSI: 91 → 60 (turun jauh). Ini DIVERGENSI BEARISH: harga naik, tapi tenaga beli makin tipis — seperti mesin yang suaranya melemah walau masih jalan.
+    Di BTC ini hasilnya nyata: setelah 3 Sep, harga turun sampai 77.066 (sekitar −5%).
+    Divergensi bukan sinyal jual otomatis — tapi alasan kuat untuk berhenti entry baru dan mengencangkan stop.
+  petunjuk:
+  - Bandingkan arah HARGA vs arah RSI di dua titik.
+  - High baru + RSI lebih rendah = tanda apa?
+  fakta:
+  - nama: close_idx
+    nilai: 80257.54
+    idx: 42
+  - nama: rsi_idx
+    nilai: 91.16
+    idx: 42
+  - nama: close_idx
+    nilai: 81271.74
+    idx: 49
+  - nama: rsi_idx
+    nilai: 59.96
+    idx: 49
+  - nama: terakhir
+    nilai: 77066.46
+- id: m4
+  judul: 'CUAN: Volume Raksasa yang Menipu'
+  emoji: 🔊
+  modul: indikator
+  tingkat: sulit
+  menit: 7
+  simbol: CUAN
+  hari: 60
+  jenis: candle
+  volume: true
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers:
+  - idx: 39
+    label: A
+  pertanyaan: 'Hari A (12 Agu): volume 5,3× rata-rata 20 hari — luar biasa besar. Tapi harga mentok di 870 dan besoknya
+    gagal bertahan di 885 (close balik ke 840). Bacaan paling tepat?'
+  pilihan:
+  - Volume besar di area resistance yang GAGAL = jejak distribusi — waspadai
+  - Volume besar = pasti breakout sukses, beli sekarang
+  - Volume tidak relevan untuk analisa teknikal
+  - Artinya harga dijamin naik minggu depan
+  jawaban: 0
+  penjelasan: |-
+    12 Agu: volume 5,3× rata-rata — ada transaksi raksasa di area 870 (dekat resistance 885). Besoknya harga GAGAL (high 885 → close 840), dan dua minggu kemudian turun ke 815 (sekitar −6% dari 870).
+    Volume besar TIDAK otomatis bullish. Di area resistance, volume raksasa + gagal bertahan = jejak 'distribusi' — yang besar melepas barang ke yang telat membeli.
+    Breakout baru disebut terkonfirmasi kalau volume besar DAN close bertahan di atas level.
+  petunjuk:
+  - 'Volume besar di puncak: kira-kira siapa yang jual ke siapa?'
+  - Lihat apa yang terjadi BESOKNYA sebelum menyimpulkan.
+  fakta:
+  - nama: volume_ratio
+    nilai: 5.34
+    idx: 39
+    n: 20
+  - nama: close_idx
+    nilai: 870.0
+    idx: 39
+  - nama: high_idx
+    nilai: 885.0
+    idx: 40
+  - nama: close_idx
+    nilai: 840.0
+    idx: 40
+- id: m9
+  judul: 'Sizing: Berapa Lot Boleh?'
+  emoji: 🎚️
+  modul: indikator
+  tingkat: sulit
+  menit: 7
+  simbol: TLKM
+  hari: 90
+  jenis: candle
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  pertanyaan: 'Aturan risiko: maksimal 1% modal per trade. Modal Rp10 juta → risiko maks Rp100.000. Rencana: entry
+    TLKM di 2.600, SL di 2.525 (jarak 75 poin per lembar). Berapa LOT (1 lot = 100 lembar) yang boleh dibeli?'
+  pilihan:
+  - 7 lot
+  - 13 lot
+  - 25 lot
+  - 40 lot
+  jawaban: 1
+  penjelasan: |-
+    Risiko per lembar = 75 poin. Lembar maksimal = Rp100.000 ÷ 75 = 1.333 lembar = 13,3 lot → bulatkan TURUN ke 13 lot (konservatif).
+    Kalau nekat 40 lot: saat SL kena, rugi Rp300.000 = 3% modal — tiga kali lipat aturan.
+    Inilah bedanya trader beraturan dan yang asal beli: ukuran posisi dihitung dari RISIKO, bukan dari 'uang yang ada'. Bonus insight: makin dekat SL, makin besar lot yang boleh — dengan risiko rupiah yang sama.
+  petunjuk:
+  - 'Rumus: risiko rupiah ÷ jarak SL per lembar = jumlah lembar.'
+  - 1 lot = 100 lembar; bulatkan KE BAWAH supaya risiko tidak melebihi aturan.
+  fakta:
+    terakhir: 2600.0
+    low_n:
+      nilai: 2550.0
+      n: 20
 - id: p1
   judul: 'BRPT: Tandai Support'
   emoji: 👆
@@ -829,6 +1153,72 @@ drills:
     low_n:
       nilai: 2350.0
       n: 60
+- id: m6
+  judul: 'BBRI: Beli di Pullback MA20'
+  emoji: 🎯
+  modul: praktik
+  tingkat: sulit
+  menit: 6
+  simbol: BBRI
+  hari: 90
+  jenis: praktik
+  volume: false
+  ma:
+  - 20
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Beli di Pullback
+  pertanyaan: 'BBRI sedang tren naik. Kamu mau beli MURAH dengan strategi pullback: tunggu harga turun menyentuh
+    MA20. Klik level MA20 di grafik. Toleransi ±1%.'
+  kunci: 3254.5
+  kunci_fakta: ma20
+  kunci_faktor: 1.0
+  toleransi_pct: 1.0
+  penjelasan: |-
+    MA20 = 3.254,5 (dibulatkan 3.255). Di tren naik, MA20 sering jadi 'lantai dinamis': harga menyentuh, memantul, lanjut naik.
+    Entry di pullback MA20 lebih murah dan stop loss lebih dekat (mis. di bawah 3.200) dibanding mengejar harga di 3.270.
+    Syaratnya: MA20 hanya jadi lantai SELAMA tren naik (MA20 di atas MA50 dan MA50 menanjak). Kalau tren rusak, MA20 berubah jadi jebakan.
+  petunjuk:
+  - MA20 = garis ungu (rata-rata 20 hari terakhir).
+  - Harga sekarang 3.270 — MA20 sedikit di bawahnya.
+  fakta:
+    ma20: 3254.5
+    terakhir: 3270.0
+- id: m7
+  judul: 'BTC: Batas Batal Short'
+  emoji: 🛑
+  modul: praktik
+  tingkat: sulit
+  menit: 6
+  simbol: BTC
+  hari: 60
+  jenis: praktik
+  volume: false
+  ma: []
+  rsi_panel: false
+  garis: []
+  markers: []
+  tugas: Tandai Level Batal
+  pertanyaan: 'Kamu SHORT BTC di 82.000 (harga ditepis resistance 82.262). Tentukan level INVALIDASI: kalau harga
+    tutup di atas level ini, tesis short-mu batal dan kamu cut. Klik levelnya. Toleransi ±1%.'
+  kunci: 82673.52
+  kunci_fakta:
+    nama: high_n
+    n: 30
+  kunci_faktor: 1.005
+  toleransi_pct: 1.0
+  penjelasan: |-
+    Invalidasi ≈ 82.674 — sekitar 0,5% di atas resistance 82.262.
+    Aturan penting: stop loss untuk SHORT dipasang di atas level yang MEMBATALKAN tesis (bukan sekadar di atas entry). Kalau harga tembus 82.262 dengan tenaga, justru breakout yang jadi tesis barunya — keluar cepat dengan rugi kecil (sekitar −0,8% dari entry 82.000).
+    Yang salah: 'tahan saja sampai balik' — itu bukan rencana, itu harapan.
+  petunjuk:
+  - Short ditepis resistance — di atas level mana tesisnya mati?
+  - Beri buffer kecil di atas resistance (0,3–0,7%).
+  fakta:
+    high_n:
+      nilai: 82262.21
+      n: 30
 - id: p3
   judul: 'TLKM: Pasang Stop Loss'
   emoji: 🛡️

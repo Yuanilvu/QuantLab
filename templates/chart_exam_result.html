@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Hasil Ujian Teknikal — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('chart_list') }}">Lab Teknikal</a>
+  <span aria-hidden="true"> › </span>
+  <span>Hasil Ujian</span>
+</nav>
+
+<section class="scenario">
+  <div class="verdict {{ 'good' if lulus else 'bad' }}">
+    <h1>{% if lulus %}🎓 LULUS!{% else %}✗ Belum lulus{% endif %} — skor {{ benar }}/{{ total }}</h1>
+    <p class="meta">
+      {% if lulus %}
+      Selamat! +{{ xp }} XP{% if hasil %} · catatan lulus: {{ hasil.score }}/{{ hasil.total }}{% endif %}.
+      {% else %}
+      Butuh ≥70% ({{ ((total * 0.7) | round(0, 'ceil')) | int }}/{{ total }}). Pelajari ulang soal yang salah di bawah, lalu coba lagi — soal tiap ujian beda.
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="casebox">
+    <h3>📋 Review Jawaban</h3>
+    {% for r in review %}
+    <div class="examrow {{ 'ok' if r.benar else 'no' }}">
+      <div class="exhead">
+        <span>{{ r.emoji }} <b>{{ r.judul }}</b></span>
+        <span class="badge {{ 'ok' if r.benar else 'no' }}">{{ '✓ benar' if r.benar else '✗ salah' }}</span>
+      </div>
+      {% if not r.benar %}
+      <div class="meta">Jawabanmu: {{ r.pilihanmu or '(tidak dijawab)' }}<br>Kunci: {{ r.kunci }}</div>
+      {% endif %}
+      <a class="meta" href="{{ url_for('chart_page', cid=r.id) }}">Buka drill →</a>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="scenactions">
+    <a class="btn primary" href="{{ url_for('chart_ujian_start') }}">Ujian Lagi →</a>
+    <a class="btn ghost" href="{{ url_for('chart_list') }}">Kembali ke Lab</a>
+  </div>
+</section>
+{% endblock %}

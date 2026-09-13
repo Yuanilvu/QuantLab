@@ -624,6 +624,39 @@ def scenario_result(sid):
 
 # ---------- Chart Drill (latihan baca grafik) ----------
 
+CHART_EXAM_N = 10
+CHART_EXAM_MENIT = 15
+CHART_EXAM_XP = 100
+
+
+def _chart_rank(selesai, total, lulus):
+    """Label jenjang Lab Teknikal."""
+    if lulus and selesai >= total:
+        return "🏆 Teknisi Tersertifikasi", "khatam semua drill + lulus ujian"
+    if lulus:
+        return "🎓 Lulus Ujian Teknikal", "terus khatamkan drill-nya"
+    if selesai >= 30:
+        return "🥇 Mahir", "sedikit lagi khatam"
+    if selesai >= 20:
+        return "🥈 Senior", "terus jalan"
+    if selesai >= 10:
+        return "🥉 Menengah", "baru mulai panas"
+    if selesai >= 4:
+        return "🌱 Pemula+", "awal yang bagus"
+    return "🐣 Pemula", "mulai dari modul pertama"
+
+
+def _chart_exam_habis():
+    mulai = session.get("cx_start")
+    if not mulai:
+        return False
+    try:
+        lewat = (datetime.now() - datetime.fromisoformat(mulai)).total_seconds()
+    except ValueError:
+        return False
+    return lewat > CHART_EXAM_MENIT * 60
+
+
 @app.route("/chart")
 @login_required
 def chart_list():
@@ -642,8 +675,110 @@ def chart_list():
     total = len(semua)
     selesai = sum(1 for d in semua if d["selesai"])
     benar = sum(1 for d in semua if d["benar"])
+    hasil_exam = db.get_chart_exam(user["id"])
+    rank, rank_desc = _chart_rank(selesai, total, bool(hasil_exam))
     return render_template("charts.html", groups=groups, total=total,
-                           selesai=selesai, benar=benar)
+                           selesai=selesai, benar=benar, rank=rank,
+                           rank_desc=rank_desc, hasil_exam=hasil_exam,
+                           exam_n=CHART_EXAM_N, exam_menit=CHART_EXAM_MENIT,
+                           exam_xp=CHART_EXAM_XP)
+
+
+@app.route("/chart/ujian")
+@login_required
+def chart_ujian_start():
+    user = _user()
+    hasil = db.get_chart_exam(user["id"])
+    pool_n = sum(1 for d in curriculum.get_charts() if d.get("jenis") != "praktik")
+    return render_template("chart_exam_start.html", hasil=hasil,
+                           n=CHART_EXAM_N, menit=CHART_EXAM_MENIT,
+                           xp=CHART_EXAM_XP, pool_n=pool_n)
+
+
+@app.route("/chart/ujian/mulai", methods=["POST"])
+@login_required
+def chart_ujian_mulai():
+    pool = [d for d in curriculum.get_charts() if d.get("jenis") != "praktik"]
+    ids = [d["id"] for d in random.sample(pool, min(CHART_EXAM_N, len(pool)))]
+    session["cx_ids"] = ids
+    session["cx_ans"] = {}
+    session["cx_start"] = datetime.now().isoformat(timespec="seconds")
+    return redirect(url_for("chart_ujian_soal", n=1))
+
+
+@app.route("/chart/ujian/hasil")
+@login_required
+def chart_ujian_hasil():
+    user = _user()
+    ids = session.get("cx_ids") or []
+    if not ids:
+        return redirect(url_for("chart_ujian_start"))
+    ans = session.get("cx_ans") or {}
+    review = []
+    benar = 0
+    for qid in ids:
+        d = curriculum.get_chart(qid)
+        if not d:
+            continue
+        c = ans.get(qid, -1)
+        ok = c == int(d["jawaban"])
+        benar += 1 if ok else 0
+        review.append({
+            "id": qid, "judul": d["judul"], "emoji": d.get("emoji", ""),
+            "benar": ok,
+            "pilihanmu": d["pilihan"][c] if 0 <= c < len(d["pilihan"]) else None,
+            "kunci": d["pilihan"][int(d["jawaban"])],
+        })
+    total = len(ids)
+    lulus = benar >= max(1, round(total * 0.7))
+    xp_got = 0
+    sebelumnya = db.get_chart_exam(user["id"])
+    hasil = sebelumnya
+    if lulus:
+        hasil = db.chart_exam_save(user["id"], benar, total)
+        if not sebelumnya:
+            db.update_xp(user["id"], CHART_EXAM_XP)
+            xp_got = CHART_EXAM_XP
+    for k in ("cx_ids", "cx_ans", "cx_start"):
+        session.pop(k, None)
+    return render_template("chart_exam_result.html", review=review, benar=benar,
+                           total=total, lulus=lulus, xp=xp_got, hasil=hasil,
+                           menit=CHART_EXAM_MENIT)
+
+
+@app.route("/chart/ujian/<int:n>", methods=["GET", "POST"])
+@login_required
+def chart_ujian_soal(n):
+    ids = session.get("cx_ids") or []
+    if not ids:
+        return redirect(url_for("chart_ujian_start"))
+    total = len(ids)
+    if n < 1 or n > total:
+        return redirect(url_for("chart_ujian_soal", n=total))
+    habis = _chart_exam_habis()
+    if request.method == "POST" and not habis:
+        ans = session.get("cx_ans") or {}
+        try:
+            c = int(request.form.get("choice", -1))
+        except ValueError:
+            c = -1
+        if 0 <= c <= 3:
+            ans[ids[n - 1]] = c
+            session["cx_ans"] = ans
+        if n >= total:
+            return redirect(url_for("chart_ujian_hasil"))
+        return redirect(url_for("chart_ujian_soal", n=n + 1))
+    if habis:
+        return redirect(url_for("chart_ujian_hasil"))
+    drill = curriculum.get_chart(ids[n - 1])
+    jawaban_lama = (session.get("cx_ans") or {}).get(ids[n - 1])
+    try:
+        svg = chartgen.render_drill(drill)
+    except (OSError, ValueError):
+        svg = None
+    return render_template("chart_exam.html", drill=drill, svg=svg, n=n,
+                           total=total, mulai=session.get("cx_start"),
+                           menit=CHART_EXAM_MENIT, jawaban_lama=jawaban_lama)
 
 
 @app.route("/chart/<cid>", methods=["GET", "POST"])
@@ -882,7 +1017,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v11';
+    sw = """const CACHE = 'quantlab-v12';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
