@@ -19,6 +19,10 @@ MEM_LIMIT = 768        # MB (OpenBLAS butuh virtual memori besar)
 FILE_LIMIT = 1         # MB
 OUTPUT_LIMIT = 2 * 1024 * 1024   # 2MB per stream
 
+# Snapshot harga read-only utk soal coding "data nyata" (baca CSV di sandbox).
+# Hanya folder ini yang di-bind — file repo lain (DB, .env, dll) TETAP tak terlihat.
+SOAL_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "soal")
+
 LIB_RE = re.compile(r"^\s*(import|from)\s+(numpy|pandas|matplotlib)\b", re.M)
 
 
@@ -36,7 +40,7 @@ def _limits(mem_mb=MEM_LIMIT):
 def _sandbox_command(code):
     """bubblewrap: sistem read-only + venv ro-bind, /home & /tmp tmpfs, net off."""
     venv_root = os.path.dirname(os.path.dirname(sys.executable))
-    return [
+    cmd = [
         "/usr/bin/bwrap",
         "--unshare-all", "--die-with-parent",
         "--ro-bind", "/usr", "/usr",
@@ -48,6 +52,11 @@ def _sandbox_command(code):
         "--proc", "/proc",
         "--dev", "/dev",
         "--ro-bind", venv_root, "/venv",
+    ]
+    if os.path.isdir(SOAL_DATA):
+        # data/soal (snapshot harga utk soal "data nyata") → /soaldata read-only
+        cmd += ["--ro-bind", SOAL_DATA, "/soaldata"]
+    cmd += [
         "--tmpfs", "/tmp",
         "--tmpfs", "/home",
         "--tmpfs", "/root",
@@ -59,6 +68,7 @@ def _sandbox_command(code):
         "--setenv", "PATH", "/usr/bin:/bin",
         "/venv/bin/python", "-E", "-s", "-B", "-c", code,
     ]
+    return cmd
 
 
 def _read_limited(pipe, limit):

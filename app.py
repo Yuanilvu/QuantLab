@@ -18,6 +18,7 @@ from werkzeug.security import check_password_hash
 
 import curriculum
 import db
+import chartgen
 import judge
 import market
 import mentor
@@ -621,6 +622,87 @@ def scenario_result(sid):
                            challenge_id=daily_challenge_id())
 
 
+# ---------- Chart Drill (latihan baca grafik) ----------
+
+@app.route("/chart")
+@login_required
+def chart_list():
+    user = _user()
+    solves = db.get_chart_solves(user["id"])
+    urut = {"mudah": 0, "sedang": 1, "sulit": 2}
+    drills = []
+    for d in curriculum.get_charts():
+        s = solves.get(d["id"])
+        drills.append({**d, "xp": curriculum.xp_for_chart(d),
+                       "selesai": s is not None, "benar": bool(s and s["correct"])})
+    drills.sort(key=lambda x: urut.get(x.get("tingkat"), 9))
+    total = len(drills)
+    selesai = sum(1 for d in drills if d["selesai"])
+    benar = sum(1 for d in drills if d["benar"])
+    return render_template("charts.html", drills=drills, total=total,
+                           selesai=selesai, benar=benar)
+
+
+@app.route("/chart/<cid>", methods=["GET", "POST"])
+@login_required
+def chart_page(cid):
+    drill = curriculum.get_chart(cid)
+    if not drill:
+        abort(404)
+    user = _user()
+    solves = db.get_chart_solves(user["id"])
+    hasil = None
+    if request.method == "POST" and cid not in solves:
+        try:
+            choice = int(request.form.get("choice", -1))
+        except ValueError:
+            choice = -1
+        if 0 <= choice < len(drill["pilihan"]):
+            benar = choice == int(drill["jawaban"])
+            xp = curriculum.xp_for_chart(drill)
+            inserted, _streak = db.chart_add_solve(user["id"], cid, choice, benar,
+                                                   xp if benar else 0)
+            if inserted:
+                hasil = {"benar": benar, "xp": xp if benar else 0, "pilihanmu": choice}
+                solves = db.get_chart_solves(user["id"])
+    jawab = solves.get(cid)
+    try:
+        dates, closes = chartgen.load_frozen(cid)
+        svg = chartgen.svg_price_chart(dates, closes, ma=tuple(drill.get("ma") or ()),
+                                       rsi_panel=bool(drill.get("rsi_panel")),
+                                       garis=drill.get("garis") or [])
+    except (OSError, ValueError):
+        svg = None
+    # drill berikutnya yang belum selesai (navigasi lanjut)
+    semua = curriculum.get_charts()
+    urutan = [d["id"] for d in semua]
+    next_d = None
+    for d in semua[urutan.index(cid) + 1:] + semua[:urutan.index(cid)]:
+        if d["id"] not in solves:
+            next_d = d
+            break
+    return render_template("chart.html", drill=drill, svg=svg, jawab=jawab,
+                           hasil=hasil, next_d=next_d,
+                           xp_drill=curriculum.xp_for_chart(drill))
+
+
+@app.route("/chart/<cid>/svg")
+@login_required
+def chart_svg(cid):
+    """SVG utuh (tab baru) — biar bisa dizoom besar di HP."""
+    drill = curriculum.get_chart(cid)
+    if not drill:
+        abort(404)
+    try:
+        dates, closes = chartgen.load_frozen(cid)
+        svg = chartgen.svg_price_chart(dates, closes, ma=tuple(drill.get("ma") or ()),
+                                       rsi_panel=bool(drill.get("rsi_panel")),
+                                       garis=drill.get("garis") or [])
+    except (OSError, ValueError):
+        abort(404)
+    return app.response_class(svg, mimetype="image/svg+xml")
+
+
 # ---------- Leaderboard & Badges ----------
 
 @app.route("/leaderboard")
@@ -770,6 +852,7 @@ def manifest_route():
         ],
         "shortcuts": [
             {"name": "Dashboard", "short_name": "Beranda", "url": base + "/"},
+            {"name": "Chart Drill", "short_name": "Chart", "url": base + "/chart"},
             {"name": "Mentor AI", "short_name": "Mentor", "url": base + "/mentor"},
             {"name": "Backtest Lab", "short_name": "Lab", "url": base + "/lab"},
         ],
@@ -779,7 +862,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v9';
+    sw = """const CACHE = 'quantlab-v10';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));

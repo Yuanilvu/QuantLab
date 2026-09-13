@@ -519,3 +519,43 @@ skenario:
       - "EV = win% × win rata-rata − loss% × loss rata-rata, untuk dua versi stop."
       - "Stop palsu 68% vs 45%: apa akibatnya ke EV?"
       - "EV masih negatif setelah ganti stop — apa artinya?"
+soal:
+  - id: "p17-1"
+    judul: "ATR Rata-rata"
+    emoji: "📏"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      ATR mengukur seberapa lebar gerakan harga (volatilitas).
+      Baca N (baris 1), lalu N baris berisi dua angka dipisah spasi: high lalu low.
+      ATR sederhana = rata-rata (high − low) dari semua baris. Cetak 2 desimal.
+    input_spec: |
+      Baris 1: N (jumlah hari).
+      N baris berikutnya: high dan low, dipisah spasi.
+    output_spec: |
+      Satu baris: ATR, 2 desimal.
+    contoh:
+      - input: "3\n10 8\n12 9\n11 10"
+        output: "2.00"
+      - input: "1\n50 40"
+        output: "10.00"
+    tes:
+      - input: "3\n10 8\n12 9\n11 10"
+        output: "2.00"
+      - input: "4\n100 90\n105 95\n110 100\n120 108"
+        output: "10.50"
+      - input: "1\n50 40"
+        output: "10.00"
+      - input: "5\n20 20\n30 25\n25 22\n28 24\n26 26"
+        output: "2.40"
+    solusi: |
+      n = int(input())
+      total_rentang = 0.0
+      for _ in range(n):
+          high, low = input().split()
+          total_rentang += float(high) - float(low)
+      print(f"{total_rentang / n:.2f}")
+    petunjuk:
+      - "Hitung rentang tiap baris: high − low."
+      - "Jumlahkan semua rentang, lalu bagi N."

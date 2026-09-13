@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Chart Drill — Latihan Baca Grafik — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <span>Chart Drill</span>
+</nav>
+
+<section class="pagehead">
+  <h1>📊 Chart Drill</h1>
+  <p class="sub">Latihan <b>baca grafik harga nyata</b> — BBRI, TLKM, IHSG, BRPT, CUAN, BTC (data beku, jadi kunci jawaban selalu konsisten). Kamu lihat grafiknya, jawab satu pertanyaan, langsung dapat penjelasan + XP. Ini sisi "analisa teknikal" yang selama ini cuma ada di materi skenario.</p>
+</section>
+
+<section class="statrow" aria-label="Progresmu">
+  <div class="stat"><b>{{ selesai }}/{{ total }}</b><span>Selesai</span></div>
+  <div class="stat"><b>{{ benar }}</b><span>Jawaban benar</span></div>
+  <div class="stat"><b>{{ '%.0f' | format(benar / total * 100) if total else 0 }}%</b><span>Akurasi</span></div>
+</section>
+
+<div class="chartlist" style="margin-top:20px">
+  {% for d in drills %}
+  <a class="scenrow {{ 'done' if d.selesai }}" href="{{ url_for('chart_page', cid=d.id) }}">
+    <span class="scenemoji" aria-hidden="true">{{ d.emoji }}</span>
+    <span class="scenmain">
+      <b>{{ d.judul }}</b>
+      <span class="meta">{{ d.simbol }} · {{ d.hari }} hari · {{ d.xp }} XP · ±{{ d.menit }} menit</span>
+    </span>
+    <span class="badge {{ d.tingkat }}">{{ d.tingkat }}</span>
+    {% if d.benar %}
+    <span class="badge ok">✓ benar</span>
+    {% elif d.selesai %}
+    <span class="badge no">✗ ulas lagi</span>
+    {% else %}
+    <span class="arrow" aria-hidden="true">→</span>
+    {% endif %}
+  </a>
+  {% endfor %}
+</div>
+{% endblock %}

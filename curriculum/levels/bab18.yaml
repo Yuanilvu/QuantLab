@@ -523,3 +523,53 @@ skenario:
       - "Hitung kontribusi tiap regime: jumlah trade × rata-rata per trade."
       - "Jumlahkan: 160 − 135 − 37,5 = ?"
       - "Apa yang terjadi kalau 600 trade regime salah dibuang?"
+soal:
+  - id: "p18-1"
+    judul: "Sinyal MA Crossover"
+    emoji: "🔀"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      MA cepat = rata-rata 3 harga terakhir. MA lambat = rata-rata 5 harga terakhir.
+      Baca N (minimal 5), lalu N baris harga.
+      Cetak MA cepat (2 desimal), MA lambat (2 desimal), lalu sinyal:
+      GOLDEN kalau MA cepat lebih besar, DEATH kalau lebih kecil, SAMA kalau seri.
+    input_spec: |
+      Baris 1: N (jumlah harga, minimal 5).
+      N baris berikutnya: satu harga per baris.
+    output_spec: |
+      Baris 1: MA cepat (2 desimal).
+      Baris 2: MA lambat (2 desimal).
+      Baris 3: GOLDEN, DEATH, atau SAMA.
+    contoh:
+      - input: "7\n1\n2\n3\n4\n5\n6\n7"
+        output: "6.00\n5.00\nGOLDEN"
+      - input: "9\n10\n11\n12\n13\n14\n13\n12\n11\n10"
+        output: "11.00\n12.00\nDEATH"
+    tes:
+      - input: "9\n10\n11\n12\n13\n14\n13\n12\n11\n10"
+        output: "11.00\n12.00\nDEATH"
+      - input: "5\n10\n10\n10\n10\n10"
+        output: "10.00\n10.00\nSAMA"
+      - input: "7\n1\n2\n3\n4\n5\n6\n7"
+        output: "6.00\n5.00\nGOLDEN"
+      - input: "7\n5\n4\n4\n3\n6\n7\n8"
+        output: "7.00\n5.60\nGOLDEN"
+    solusi: |
+      n = int(input())
+      harga = [float(input()) for _ in range(n)]
+      ma_cepat = sum(harga[-3:]) / 3
+      ma_lambat = sum(harga[-5:]) / 5
+      if ma_cepat > ma_lambat:
+          sinyal = "GOLDEN"
+      elif ma_cepat < ma_lambat:
+          sinyal = "DEATH"
+      else:
+          sinyal = "SAMA"
+      print(f"{ma_cepat:.2f}")
+      print(f"{ma_lambat:.2f}")
+      print(sinyal)
+    petunjuk:
+      - "3 harga terakhir: harga[-3:]. 5 harga terakhir: harga[-5:]."
+      - "Rata-rata = jumlah dibagi banyaknya harga."

@@ -1,0 +1,241 @@
+# Chart Drill — latihan baca grafik harga NYATA (data beku di data/chart/).
+#
+# ATURAN PENTING:
+# - Data chart = file beku data/chart/<id>.csv — JANGAN diubah/refresh; kunci
+#   jawaban terikat ke angka-angka di file itu (dijaga scripts/verify_charts.py).
+# - `fakta` = angka yang dihitung ulang verifier dari CSV; harus persis.
+# - tingkat: mudah→20 XP · sedang→35 XP · sulit→50 XP (tabel v6).
+# - pilihan 4 opsi, hanya SATU yang benar (hindari opsi yang ikut benar).
+
+drills:
+  - id: "c1"
+    judul: "BBRI: Baca Arah Tren"
+    emoji: "📈"
+    tingkat: mudah
+    menit: 4
+    simbol: "BBRI"
+    hari: 60
+    ma: [20, 50]
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Lihat grafik BBRI 3 bulan terakhir (garis biru = harga, ungu = MA20, pink = MA50). Menurutmu, tren-nya sedang apa?"
+    pilihan:
+      - "Tren naik — harga dan rata-ratanya makin tinggi"
+      - "Tren turun — harga makin rendah terus"
+      - "Sideways — bolak-balik di tempat"
+      - "Tidak bisa dibaca dari grafik ini"
+    jawaban: 0
+    penjelasan: |
+      BBRI naik cukup kuat. Harga terakhir 3.250 — itu harga TERTINGGI di chart (puncak baru).
+      MA20 (3.114) ada DI ATAS MA50 (2.967), dan MA20 masih menanjak (5 hari lalu 3.056).
+      Pola "MA cepat di atas MA lambat + dua-duanya menanjak" = ciri tren naik (Bab 13 & 18).
+    petunjuk:
+      - "Bandingkan posisi garis MA20 (ungu) vs MA50 (pink) — mana yang di atas?"
+      - "Harga terakhir: ada di dekat puncak atau di dasar grafik?"
+    fakta:
+      terakhir: 3250.00
+      ma20: 3114.00
+      ma50: 2967.00
+
+  - id: "c2"
+    judul: "TLKM: Harga vs MA20"
+    emoji: "📉"
+    tingkat: mudah
+    menit: 4
+    simbol: "TLKM"
+    hari: 60
+    ma: [20, 50]
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Harga terakhir TLKM 2.600 ada di mana dibanding garis MA20 (ungu)?"
+    pilihan:
+      - "Di atas MA20"
+      - "Tepat di MA20"
+      - "Di bawah MA20"
+      - "Di bawah MA50 (pink)"
+    jawaban: 2
+    penjelasan: |
+      Harga terakhir 2.600, sedangkan MA20 = 2.634 → harga ada DI BAWAH MA20
+      (selisih tipis: 34 poin, sekitar 1,3%). Tapi harga masih DI ATAS MA50 (2.580) —
+      jadi tren jangka panjang belum rusak, hanya melemah jangka pendek.
+      Pilihan terakhir salah karena 2.600 masih di atas MA50.
+    petunjuk:
+      - "Cocokkan angka 2.600 dengan legenda MA20 di kiri atas."
+      - "Cek juga posisinya ke MA50 supaya tidak tertukar."
+    fakta:
+      terakhir: 2600.00
+      ma20: 2634.00
+      ma50: 2580.40
+
+  - id: "c3"
+    judul: "IHSG: RSI Sekarang Berapa?"
+    emoji: "🌡️"
+    tingkat: sedang
+    menit: 5
+    simbol: "IHSG"
+    hari: 90
+    ma: [20]
+    rsi_panel: true
+    garis: []
+    pertanyaan: "Lihat panel RSI-14 di bawah grafik (garis kuning; garis putus merah = 70, hijau = 30). RSI terakhir IHSG ada di rentang mana?"
+    pilihan:
+      - "Di bawah 30 — jenuh jual (oversold)"
+      - "30 sampai 50 — lemah tapi belum jenuh"
+      - "50 sampai 70 — kuat tapi belum jenuh"
+      - "Di atas 70 — jenuh beli (overbought)"
+    jawaban: 2
+    penjelasan: |
+      RSI terakhir = 56,47 → masuk rentang 50–70. Artinya tekanan beli cukup kuat,
+      TAPI belum sampai jenuh beli (di atas 70). Garis putus merah = batas overbought (70),
+      garis hijau = batas oversold (30). Catatan penting Bab 13: RSI tinggi bukan berarti
+      "wajib jual" — dia cuma mengukur kekuatan momentum.
+    petunjuk:
+      - "Baca ujung kanan garis kuning di panel bawah."
+      - "Bandingkan dengan garis putus merah (70) dan hijau (30)."
+    fakta:
+      rsi: 56.47
+
+  - id: "c4"
+    judul: "BRPT: Cari Support Terdekat"
+    emoji: "🧱"
+    tingkat: sedang
+    menit: 5
+    simbol: "BRPT"
+    hari: 60
+    ma: []
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Support terdekat = harga terendah yang pernah dicapai dalam 20 hari terakhir. Berapa levelnya di grafik BRPT?"
+    pilihan:
+      - "1.650"
+      - "1.700"
+      - "1.750"
+      - "1.800"
+    jawaban: 2
+    penjelasan: |
+      Harga terendah 20 hari terakhir = 1.750 (terjadi 26 Agu 2026) → itulah support terdekat.
+      Harga terakhir 1.785 masih tipis di atasnya. Kalau harga turun menembus 1.750,
+      support "jebol" dan patokan berikutnya turun ke titik terendah 3 bulan: 1.285
+      (lihat dasar grafik paling kiri). Support = LEVEL (bisa ditarik garis lurus), bukan satu titik.
+    petunjuk:
+      - "Cari titik terendah di bagian kanan grafik (20 hari terakhir)."
+      - "Level support bisa digambar sebagai garis lurus dari titik terendah itu."
+    fakta:
+      low20: 1750.00
+
+  - id: "c5"
+    judul: "CUAN: Sudah Breakout?"
+    emoji: "🚀"
+    tingkat: sedang
+    menit: 5
+    simbol: "CUAN"
+    hari: 60
+    ma: [20]
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Apakah harga terakhir CUAN sudah menembus harga tertinggi 30 hari terakhir?"
+    pilihan:
+      - "Ya — baru saja breakout"
+      - "Belum — masih di bawah high 30 hari"
+      - "Tepat menyentuh high 30 hari"
+      - "Grafik ini tidak punya titik tertinggi"
+    jawaban: 1
+    penjelasan: |
+      High 30 hari = 870 (12 Agu 2026). Harga terakhir 815 → BELUM breakout,
+      masih sekitar 55 poin (6%) di bawah puncaknya. Cerita chart: naik dari dasar 530
+      ke 870, lalu turun-turun kecil, sekarang mantul lagi. Breakout baru sah kalau
+      870 ditembus dengan tenaga (Bab 13: breakout tanpa tenaga sering gagal).
+    petunjuk:
+      - "Temukan titik puncak tertinggi grafik."
+      - "Bandingkan dengan posisi ujung kanan garis harga."
+    fakta:
+      high30: 870.00
+      terakhir: 815.00
+
+  - id: "c6"
+    judul: "TLKM: Golden Cross atau Bukan?"
+    emoji: "✂️"
+    tingkat: sulit
+    menit: 7
+    simbol: "TLKM"
+    hari: 90
+    ma: [20, 50]
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Dalam 30 hari terakhir (paruh kanan grafik), apakah MA20 (ungu) sempat memotong MA50 (pink) ke ATAS?"
+    pilihan:
+      - "Tidak ada persilangan sama sekali"
+      - "Ya — golden cross (MA20 potong ke atas MA50)"
+      - "Ya — death cross (MA20 potong ke bawah MA50)"
+      - "Kedua garis menempel tapi tidak pernah menyilang"
+    jawaban: 1
+    penjelasan: |
+      Ada 1 golden cross: 10 Agustus 2026, MA20 menembus MA50 ke atas (MA20 2.647 vs MA50 2.637),
+      dan sejak itu MA20 masih di atas MA50. Tapi perhatikan lanjutannya: setelah cross,
+      harga justru melemah balik ke 2.600-an. Ini contoh bagus bahwa golden cross = SINYAL,
+      bukan jaminan — di pasar sideways sinyal mudah palsu (Bab 13).
+    petunjuk:
+      - "Telusuri kedua garis MA dari kiri ke kanan dengan mata."
+      - "Cari momen garis ungu melewati garis pink ke arah atas."
+      - "Cross-nya ada di paruh kanan grafik (Agustus)."
+    fakta:
+      cross_up_30: 1
+      cross_dn_30: 0
+      ma20: 2634.00
+      ma50: 2580.40
+
+  - id: "c7"
+    judul: "BTC: Seberapa Dalam Drawdown?"
+    emoji: "🕳️"
+    tingkat: sulit
+    menit: 7
+    simbol: "BTC"
+    hari: 60
+    ma: []
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Drawdown = turun dari puncak tertinggi sejauh ini. Berapa drawdown MAKSIMUM BTC dalam 60 hari di grafik ini?"
+    pilihan:
+      - "Di bawah 5%"
+      - "5% sampai 15%"
+      - "15% sampai 30%"
+      - "Di atas 30%"
+    jawaban: 1
+    penjelasan: |
+      Puncak tertinggi = 80.258 (dolar). Setelah puncak itu, harga turun paling dalam
+      ke sekitar 75.738 → drawdown = (80.258 − 75.738) / 80.258 = 5,63% → masuk rentang 5–15%.
+      Kunci mengerjakannya: cari titik tertinggi DULU, baru cari titik terendah SETELAH titik itu
+      (bukan sebelum). Drawdown mengukur risiko dari puncak — beda dengan "turun dari awal chart" (Bab 12).
+    petunjuk:
+      - "Cari titik tertinggi grafik dulu."
+      - "Lalu cari titik TERENDAH setelah titik tertinggi itu (yang sebelumnya tidak dihitung)."
+    fakta:
+      dd: 5.63
+
+  - id: "c8"
+    judul: "IHSG: Kapan Puncaknya?"
+    emoji: "⛰️"
+    tingkat: mudah
+    menit: 4
+    simbol: "IHSG"
+    hari: 60
+    ma: []
+    rsi_panel: false
+    garis: []
+    pertanyaan: "Harga tertinggi IHSG dalam 60 hari di grafik ini terjadi kapan?"
+    pilihan:
+      - "Di 10 hari pertama (paling kiri)"
+      - "Sekitar hari ke-30 (tengah grafik)"
+      - "Di 10 hari terakhir (paling kanan)"
+      - "Puncaknya di luar jangkauan grafik"
+    jawaban: 2
+    penjelasan: |
+      Puncak 6.525,69 terjadi 21 Agustus 2026 — hari ke-55 dari 60 → masuk 10 hari terakhir
+      (paling kanan grafik). IHSG bangkit dari dasar 5.342 (awal Juni) dan naik bertahap
+      sampai sekarang — kebalikan dari TLKM/BBRI yang justru turun sepanjang tahun (lihat drill lain).
+    petunjuk:
+      - "Cari titik tertinggi grafik, lalu perhatikan posisinya: kiri, tengah, atau kanan?"
+      - "Bandingkan dengan label tanggal di bawah grafik."
+    fakta:
+      imax: 55
+      n: 60

@@ -45,6 +45,15 @@ CREATE TABLE IF NOT EXISTS soal_solved (
     created_at TEXT DEFAULT (datetime('now')),
     PRIMARY KEY (user_id, soal_id)
 );
+CREATE TABLE IF NOT EXISTS chart_solved (
+    user_id INTEGER NOT NULL,
+    chart_id TEXT NOT NULL,
+    choice INTEGER NOT NULL,
+    correct INTEGER NOT NULL,
+    xp INTEGER NOT NULL DEFAULT 0,
+    created_at TEXT DEFAULT (datetime('now')),
+    PRIMARY KEY (user_id, chart_id)
+);
 CREATE TABLE IF NOT EXISTS journal_entries (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER NOT NULL,
@@ -348,6 +357,54 @@ def get_soal_solved(user_id):
             "SELECT soal_id FROM soal_solved WHERE user_id = ?", (user_id,)
         ).fetchall()
     return {r["soal_id"] for r in rows}
+
+
+# ---------- Chart Drill (latihan baca grafik) ----------
+
+def chart_add_solve(user_id, chart_id, choice, correct, xp):
+    """Simpan jawaban Chart Drill (first-solve via PK). XP hanya kalau benar,
+    streak tetap dihitung utk aktivitas — sama seperti skenario."""
+    today = today_wib()
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT OR IGNORE INTO chart_solved (user_id, chart_id, choice, correct, xp) VALUES (?, ?, ?, ?, ?)",
+            (user_id, chart_id, choice, 1 if correct else 0, xp),
+        )
+        inserted = cur.rowcount > 0
+        if inserted:
+            row = conn.execute(
+                "SELECT streak, last_active FROM users WHERE id = ?", (user_id,)
+            ).fetchone()
+            last = row["last_active"]
+            if last == today:
+                streak = row["streak"]
+            elif last == (datetime.now(WIB).date() - timedelta(days=1)).isoformat():
+                streak = row["streak"] + 1
+            else:
+                streak = 1
+            if correct:
+                conn.execute(
+                    "UPDATE users SET xp = xp + ?, streak = ?, last_active = ? WHERE id = ?",
+                    (xp, streak, today, user_id),
+                )
+            else:
+                conn.execute(
+                    "UPDATE users SET streak = ?, last_active = ? WHERE id = ?",
+                    (streak, today, user_id),
+                )
+        else:
+            streak = conn.execute(
+                "SELECT streak FROM users WHERE id = ?", (user_id,)
+            ).fetchone()["streak"]
+    return inserted, streak
+
+
+def get_chart_solves(user_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT * FROM chart_solved WHERE user_id = ?", (user_id,)
+        ).fetchall()
+    return {r["chart_id"]: r for r in rows}
 
 
 # ---------- Jurnal Trading ----------

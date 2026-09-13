@@ -496,3 +496,48 @@ skenario:
       - "Coba N = 3, 4, 5, 6, 7: hitung vol masing-masing."
       - "Cari N terkecil yang vol-nya ≤ 19%."
       - "Berapa batasnya kalau N → ∞? (σ√ρ)"
+soal:
+  - id: "p19-1"
+    judul: "Return Portofolio Berbobot"
+    emoji: "🥧"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Portofolio 2 aset. Tiap aset punya nilai (Rp) dan return (persen).
+      Baca 4 baris: nilai A, return A, nilai B, return B.
+      Return portofolio = rata-rata berbobot nilai:
+      (nilai A × return A + nilai B × return B) ÷ (nilai A + nilai B).
+      Cetak 2 desimal.
+    input_spec: |
+      Baris 1: nilai aset A (Rp).
+      Baris 2: return aset A (persen).
+      Baris 3: nilai aset B (Rp).
+      Baris 4: return aset B (persen).
+    output_spec: |
+      Satu baris: return portofolio (persen, 2 desimal).
+    contoh:
+      - input: "1000000\n10\n1000000\n0"
+        output: "5.00"
+      - input: "3000000\n12\n1000000\n4"
+        output: "10.00"
+    tes:
+      - input: "1000000\n10\n1000000\n0"
+        output: "5.00"
+      - input: "3000000\n12\n1000000\n4"
+        output: "10.00"
+      - input: "500000\n-5\n1500000\n15"
+        output: "10.00"
+      - input: "2000000\n20\n500000\n-10"
+        output: "14.00"
+    solusi: |
+      nilai_a = float(input())
+      return_a = float(input())
+      nilai_b = float(input())
+      return_b = float(input())
+      total = nilai_a + nilai_b
+      return_porto = (nilai_a * return_a + nilai_b * return_b) / total
+      print(f"{return_porto:.2f}")
+    petunjuk:
+      - "Aset yang nilainya lebih besar mempengaruhi hasil lebih banyak."
+      - "Bobot tiap aset = nilai aset ÷ total nilai."

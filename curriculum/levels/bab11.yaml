@@ -108,8 +108,8 @@ skenario:
       net = funding_received - price_loss
       print(f"Net: {net*100:+.2f}%")     # -1.23% → cut
     hasil:
-      - ret: -1.23
-        dd: 3.4
+      - ret: -3.6
+        dd: 3.6
         win: 30
         note: "Ditahan: harga lanjut naik 2.4% lagi sebelum funding akhirnya turun. Total loss ~3.6%."
       - ret: -1.23
@@ -120,10 +120,10 @@ skenario:
         dd: 5.2
         win: 22
         note: "Averaging down di posisi melawan trend = loss membengkak. Funding tidak menyelamatkanmu."
-      - ret: -0.6
+      - ret: -2.6
         dd: 2.8
         win: 41
-        note: "FOMO balik long di puncak: harga pullback 1.1% setelah kamu entry. Kamu kena dua arah."
+        note: "FOMO balik long di puncak: harga pullback 1.1% setelah entry. Kena dua arah — total -2.6%."
     petunjuk:
       - "Hitung total funding 3 hari vs loss harga."
       - "Carry tidak menutup loss trend yang melawan."
@@ -520,3 +520,46 @@ skenario:
       - "Loss harga dalam equity = 8% × 3 (leverage) = ?"
       - "Funding 5 hari: 0,04% × 3 × 5 = ?% dari notional. Dalam dolar?"
       - "Jumlahkan dua-duanya, bandingkan dengan equity $1.000."
+soal:
+  - id: "p11-1"
+    judul: "Cuan Funding Harian"
+    emoji: "🪙"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Posisi carry kamu menerima funding tiap 8 jam sekali.
+      Baca modal (dolar) di baris 1 dan funding rate per 8 jam dalam persen di baris 2.
+      Cetak cuan per hari (3 kali funding) dan cuan per 30 hari — dua angka, 2 desimal.
+    input_spec: |
+      Baris 1: modal dalam dolar (mis. 1000).
+      Baris 2: funding rate per 8 jam dalam persen (mis. 0.01 artinya 0,01%).
+    output_spec: |
+      Baris 1: cuan per hari.
+      Baris 2: cuan per 30 hari.
+      Keduanya 2 desimal.
+    contoh:
+      - input: "1000\n0.01"
+        output: "0.30\n9.00"
+      - input: "5000\n0.02"
+        output: "3.00\n90.00"
+    tes:
+      - input: "1000\n0.01"
+        output: "0.30\n9.00"
+      - input: "500\n0.02"
+        output: "0.30\n9.00"
+      - input: "10000\n0.005"
+        output: "1.50\n45.00"
+      - input: "2000\n0.1"
+        output: "6.00\n180.00"
+    solusi: |
+      modal = float(input())
+      rate = float(input())
+      cuan_8jam = modal * rate / 100
+      cuan_hari = cuan_8jam * 3
+      cuan_bulan = cuan_hari * 30
+      print(f"{cuan_hari:.2f}")
+      print(f"{cuan_bulan:.2f}")
+    petunjuk:
+      - "Funding dibayar 3 kali sehari (tiap 8 jam)."
+      - "Rate dalam persen — bagi 100 dulu: 0,01% = 0,0001."

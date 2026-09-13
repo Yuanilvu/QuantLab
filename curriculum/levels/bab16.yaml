@@ -528,3 +528,44 @@ skenario:
       - "Bandingkan loss 99% model normal vs aktual."
       - "Ekor gemuk = ekstrem lebih sering dari normal. Siapa yang harus menyesuaikan?"
       - "Faktor ukuran = 2,56 ÷ 5,1."
+soal:
+  - id: "p16-1"
+    judul: "Expectancy per Trade"
+    emoji: "🧮"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Expectancy = untung rata-rata tiap kali kamu trading.
+      Baca 3 angka: win rate (%), rata-rata profit, rata-rata loss (angka positif).
+      Rumus: expectancy = (win rate / 100 × profit) − ((100 − win rate) / 100 × loss).
+      Cetak expectancy, 2 desimal.
+    input_spec: |
+      Baris 1: win rate dalam persen.
+      Baris 2: rata-rata profit per trade menang.
+      Baris 3: rata-rata loss per trade kalah (angka positif).
+    output_spec: |
+      Satu baris: expectancy, 2 desimal.
+    contoh:
+      - input: "60\n100\n80"
+        output: "28.00"
+      - input: "50\n50\n50"
+        output: "0.00"
+    tes:
+      - input: "60\n100\n80"
+        output: "28.00"
+      - input: "50\n50\n50"
+        output: "0.00"
+      - input: "40\n200\n100"
+        output: "20.00"
+      - input: "30\n100\n150"
+        output: "-75.00"
+    solusi: |
+      win_rate = float(input())
+      profit = float(input())
+      loss = float(input())
+      expectancy = (win_rate / 100) * profit - (1 - win_rate / 100) * loss
+      print(f"{expectancy:.2f}")
+    petunjuk:
+      - "Win rate 60% artinya peluang menang 0,60."
+      - "Peluang kalah = 1 − 0,60 = 0,40."

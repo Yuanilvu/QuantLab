@@ -473,3 +473,53 @@ skenario:
       - "EV = (win rate x rata-rata menang) - (loss rate x rata-rata kalah)."
       - "Hitung EV kedua bot dulu, baru bandingkan."
       - "Win rate tinggi + reward/risk kecil = bisa kalah total."
+soal:
+  - id: "p21-1"
+    judul: "MA20 & Sinyal dari Data Nyata"
+    emoji: "🛰️"
+    tingkat: sulit
+    xp: 55
+    menit: 10
+    cerita: |
+      Masih dari data nyata di /soaldata (file CSV kolom date,close).
+      Baca path file dari input. Hitung MA20 = rata-rata 20 harga terakhir.
+      Cetak MA20 (2 desimal), lalu status harga terakhir:
+      DI ATAS kalau harga terakhir lebih besar dari MA20, selain itu DI BAWAH.
+    input_spec: |
+      Satu baris: path file CSV, mis. /soaldata/harga_tlkm.csv
+      Kolom file: date,close
+    output_spec: |
+      Baris 1: MA20 (2 desimal).
+      Baris 2: DI ATAS atau DI BAWAH.
+    contoh:
+      - input: "/soaldata/harga_tlkm.csv"
+        output: "2634.00\nDI BAWAH"
+      - input: "/soaldata/harga_ihsg.csv"
+        output: "6380.88\nDI ATAS"
+    tes:
+      - input: "/soaldata/harga_tlkm.csv"
+        output: "2634.00\nDI BAWAH"
+      - input: "/soaldata/harga_ihsg.csv"
+        output: "6380.88\nDI ATAS"
+      - input: "/soaldata/harga_bbri.csv"
+        output: "3114.00\nDI ATAS"
+      - input: "/soaldata/harga_btc.csv"
+        output: "73160.42\nDI ATAS"
+    solusi: |
+      import csv
+
+      path = input()
+      with open(path) as f:
+          baris = list(csv.DictReader(f))
+
+      harga = [float(b["close"]) for b in baris]
+      ma20 = sum(harga[-20:]) / 20
+      if harga[-1] > ma20:
+          status = "DI ATAS"
+      else:
+          status = "DI BAWAH"
+      print(f"{ma20:.2f}")
+      print(status)
+    petunjuk:
+      - "20 harga terakhir: harga[-20:]. Harga terakhir: harga[-1]."
+      - "Kalau sama persis dengan MA20, tulis DI BAWAH."

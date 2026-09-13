@@ -27,6 +27,7 @@
     <a class="{{ 'active' if p == '/' }}" href="{{ url_for('index') }}">Dashboard</a>
     <a class="{{ 'active' if p.startswith('/mentor') }}" href="{{ url_for('mentor_page') }}">🤖 Mentor</a>
     <a class="{{ 'active' if p.startswith('/peta') }}" href="{{ url_for('peta') }}">Peta Belajar</a>
+    <a class="{{ 'active' if p.startswith('/chart') }}" href="{{ url_for('chart_list') }}">📊 Chart Drill</a>
     <a class="{{ 'active' if p.startswith('/playground') }}" href="{{ url_for('playground') }}">Playground</a>
     <a class="{{ 'active' if p.startswith('/lab') }}" href="{{ url_for('lab') }}">Lab</a>
     <a class="{{ 'active' if p.startswith('/jurnal') }}" href="{{ url_for('jurnal') }}">Jurnal</a>

@@ -75,22 +75,22 @@ skenario:
       size = risk / stop
       print(f"Ukuran posisi: ${size:.0f} notional")   # $200
     hasil:
-      - ret: -2.5
-        dd: 2.5
+      - ret: -5.0
+        dd: 5.0
         win: 30
         note: "All-in $500: stop kena → rugi $25 = 5% equity dalam satu trade. Dua kali begini = -10%."
       - ret: -2.0
         dd: 2.0
         win: 62
         note: "$200 notional: stop kena → rugi persis $10 (2% equity). Disiplin terjaga."
-      - ret: -2.0
-        dd: 2.0
+      - ret: -2.5
+        dd: 2.5
         win: 55
         note: "$250 → risiko $12.5, sedikit di atas batas. Lama-lama bocor."
-      - ret: -1.0
-        dd: 1.0
-        win: 50
-        note: "$100 terlalu kecil: risiko cuma 1%. Aman tapi tidak efisien — opportunity cost."
+      - ret: -3.0
+        dd: 3.0
+        win: 45
+        note: "Terlalu kecil: profit saat benar cuma $5 → frustrasi, perbesar posisi di luar aturan → kena stop. Total -3%."
     petunjuk:
       - "Ukuran = risiko ÷ jarak stop (dalam desimal)."
       - "Target: stop kena = rugi persis $10."
@@ -519,3 +519,49 @@ skenario:
       - "0,7^8 = ? (hitung 7^8 dulu, baru desimal)"
       - "DD 8 loss dengan risk 2%: 0,98^8 = ?"
       - "Kalau EV positif, apa yang harus dilakukan saat streak datang?"
+soal:
+  - id: "p12-1"
+    judul: "Drawdown Maksimum"
+    emoji: "🪂"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Kamu punya deret harga harian. Drawdown = seberapa jauh harga turun
+      dari PUNCAK tertinggi sejauh ini. Contoh: dari 120 turun ke 90 = drawdown 25%.
+      Baca N (baris 1), lalu N baris harga. Cetak drawdown MAKSIMUM selama deret, 2 desimal.
+    input_spec: |
+      Baris 1: N (jumlah harga).
+      N baris berikutnya: satu harga per baris.
+    output_spec: |
+      Satu baris: drawdown maksimum dalam persen, 2 desimal.
+    contoh:
+      - input: "5\n100\n120\n90\n110\n80"
+        output: "33.33"
+      - input: "4\n50\n55\n60\n65"
+        output: "0.00"
+    tes:
+      - input: "5\n100\n120\n90\n110\n80"
+        output: "33.33"
+      - input: "4\n50\n55\n60\n65"
+        output: "0.00"
+      - input: "6\n200\n180\n190\n150\n170\n160"
+        output: "25.00"
+      - input: "3\n100\n100\n90"
+        output: "10.00"
+    solusi: |
+      n = int(input())
+      puncak = 0.0
+      dd_maks = 0.0
+      for _ in range(n):
+          harga = float(input())
+          if harga > puncak:
+              puncak = harga
+          else:
+              dd = (puncak - harga) / puncak * 100
+              if dd > dd_maks:
+                  dd_maks = dd
+      print(f"{dd_maks:.2f}")
+    petunjuk:
+      - "Lacak puncak tertinggi sejauh ini saat membaca harga satu per satu."
+      - "Drawdown di titik itu = (puncak − harga) / puncak × 100. Simpan yang paling besar."

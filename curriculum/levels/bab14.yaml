@@ -522,3 +522,46 @@ skenario:
       - "Bagi return dengan max DD untuk tiap strategi."
       - "Periksa: profit datang dari satu periode atau tersebar?"
       - "22 trade dalam satu crash = sampel seperti apa?"
+soal:
+  - id: "p14-1"
+    judul: "Win Rate & Total Return"
+    emoji: "🏅"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Backtest selesai. Baca N (baris 1), lalu N baris hasil trade dalam persen (boleh negatif).
+      Trade dengan hasil 0 dianggap BUKAN menang.
+      Cetak win rate dalam persen (1 desimal) dan total return semua trade digabung (2 desimal).
+    input_spec: |
+      Baris 1: N (jumlah trade).
+      N baris berikutnya: hasil tiap trade dalam persen.
+    output_spec: |
+      Baris 1: win rate (%, 1 desimal).
+      Baris 2: total return (%, 2 desimal).
+    contoh:
+      - input: "5\n2\n-1\n3\n-2\n1"
+        output: "60.0\n3.00"
+      - input: "3\n1\n1\n1"
+        output: "100.0\n3.00"
+    tes:
+      - input: "5\n2\n-1\n3\n-2\n1"
+        output: "60.0\n3.00"
+      - input: "4\n-1\n-2\n-3\n-4"
+        output: "0.0\n-10.00"
+      - input: "3\n1\n1\n1"
+        output: "100.0\n3.00"
+      - input: "7\n0\n2\n-1\n4\n-3\n1\n-2"
+        output: "42.9\n1.00"
+    solusi: |
+      n = int(input())
+      hasil = [float(input()) for _ in range(n)]
+      menang = sum(1 for x in hasil if x > 0)
+      win_rate = menang / n * 100
+      total = sum(hasil)
+      print(f"{win_rate:.1f}")
+      print(f"{total:.2f}")
+    petunjuk:
+      - "Menang artinya hasil lebih besar dari 0. Trade 0 tidak dihitung menang."
+      - "Win rate = jumlah menang ÷ N × 100."
+      - "Total return = jumlahkan semua hasil trade."

@@ -504,3 +504,55 @@ skenario:
       - "Ekspektasi ukuran 1/2 = 8% x 0,5 = 4%. Realisasi 1,5%. Deviasi berapa?"
       - "Ambang bab 20-1: 20%. Di atasnya: kecilkan & audit."
       - "'Menunggu balik' vs 'kecilkan & cari tahu' — mana yang membayar data?"
+soal:
+  - id: "p20-1"
+    judul: "Baca Data Harga dari File"
+    emoji: "📂"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Data harga harian ASLI ada di folder /soaldata — file CSV dengan kolom date,close.
+      File yang tersedia: /soaldata/harga_tlkm.csv, harga_ihsg.csv, harga_bbri.csv, harga_btc.csv.
+      Baca path file dari input. Lalu cetak 4 baris:
+      harga awal (2 desimal), harga akhir (2 desimal),
+      return total dari awal ke akhir dalam persen (2 desimal), dan harga tertinggi (2 desimal).
+    input_spec: |
+      Satu baris: path file CSV, mis. /soaldata/harga_tlkm.csv
+      Kolom file: date,close
+    output_spec: |
+      Baris 1: harga awal. Baris 2: harga akhir.
+      Baris 3: return total (%). Baris 4: harga tertinggi.
+    contoh:
+      - input: "/soaldata/harga_tlkm.csv"
+        output: "3110.00\n2600.00\n-16.40\n3940.00"
+      - input: "/soaldata/harga_ihsg.csv"
+        output: "7736.07\n6525.48\n-15.65\n9134.70"
+    tes:
+      - input: "/soaldata/harga_tlkm.csv"
+        output: "3110.00\n2600.00\n-16.40\n3940.00"
+      - input: "/soaldata/harga_ihsg.csv"
+        output: "7736.07\n6525.48\n-15.65\n9134.70"
+      - input: "/soaldata/harga_bbri.csv"
+        output: "3980.00\n3250.00\n-18.34\n4250.00"
+      - input: "/soaldata/harga_btc.csv"
+        output: "109250.59\n77221.26\n-29.32\n124752.53"
+    solusi: |
+      import csv
+
+      path = input()
+      with open(path) as f:
+          baris = list(csv.DictReader(f))
+
+      harga = [float(b["close"]) for b in baris]
+      harga_awal = harga[0]
+      harga_akhir = harga[-1]
+      return_total = (harga_akhir - harga_awal) / harga_awal * 100
+      print(f"{harga_awal:.2f}")
+      print(f"{harga_akhir:.2f}")
+      print(f"{return_total:.2f}")
+      print(f"{max(harga):.2f}")
+    petunjuk:
+      - "Pakai csv.DictReader dari modul csv — nama kolomnya date dan close."
+      - "Harga = float dari kolom close tiap baris."
+      - "Return total = (harga akhir − harga awal) ÷ harga awal × 100."

@@ -117,6 +117,40 @@ def xp_for_scenario(s):
     return int(s.get("xp", 20))
 
 
+# ---------- Chart Drill (latihan baca grafik) ----------
+
+CHARTS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "curriculum", "charts.yaml")
+CHART_XP = {"mudah": 20, "sedang": 35, "sulit": 50}
+
+_charts = None
+
+
+def _load_charts():
+    global _charts
+    if _charts is not None:
+        return
+    with open(CHARTS_FILE, encoding="utf-8") as f:
+        data = yaml.safe_load(f) or {}
+    _charts = data.get("drills") or []
+
+
+def get_charts():
+    _load_charts()
+    return _charts or []
+
+
+def get_chart(cid):
+    _load_charts()
+    for d in (_charts or []):
+        if d.get("id") == cid:
+            return d
+    return None
+
+
+def xp_for_chart(d):
+    return int(CHART_XP.get((d or {}).get("tingkat"), 20))
+
+
 def stats():
     _load_all()
     return {

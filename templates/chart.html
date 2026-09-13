@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}{{ drill.judul }} — Chart Drill — QuantLab{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('chart_list') }}">Chart Drill</a>
+  <span aria-hidden="true"> › </span>
+  <span>{{ drill.judul }}</span>
+</nav>
+
+<section class="scenario">
+  <div class="scenhead">
+    <span class="badge {{ drill.tingkat }}">{{ drill.tingkat }}</span>
+    <h1>{{ drill.emoji }} {{ drill.judul }}</h1>
+    <span class="meta">{{ drill.simbol }} · {{ drill.hari }} hari terakhir · {{ xp_drill }} XP · ±{{ drill.menit }} menit</span>
+  </div>
+
+  <div class="chartbox">
+    {% if svg %}{{ svg | safe }}{% else %}<p class="alert">⚠️ Data grafik tidak ditemukan — laporkan ke admin.</p>{% endif %}
+    <p class="chartnote">Data harga beku (snapshot) — angka di penjelasan dihitung dari grafik yang kamu lihat ini.
+      <a href="{{ url_for('chart_svg', cid=drill.id) }}" target="_blank" rel="noopener">🖼️ Buka ukuran penuh</a></p>
+  </div>
+
+  <div class="casebox">
+    <h3>❓ Pertanyaan</h3>
+    <div class="case">{{ drill.pertanyaan }}</div>
+  </div>
+
+  {% if jawab %}
+    <div class="verdict {{ 'good' if jawab.correct else 'bad' }}">
+      <h1>{% if jawab.correct %}✓ Benar! Kunci jawaban Chart Drill kelar.{% else %}✗ Belum tepat — tapi sekarang kamu tahu caranya.{% endif %}</h1>
+      <p class="meta">
+        Jawabanmu: <b>{{ drill.pilihan[jawab.choice] }}</b>
+        {% if jawab.correct and jawab.xp %}· +{{ jawab.xp }} XP{% endif %}
+        {% if not jawab.correct %}<br>Jawaban benar: <b>{{ drill.pilihan[drill.jawaban] }}</b>{% endif %}
+      </p>
+    </div>
+
+    <div class="casebox">
+      <h3>📖 Penjelasan</h3>
+      <div class="case">{{ drill.penjelasan | replace('\n', '<br>') | safe }}</div>
+    </div>
+
+    <div class="scenactions">
+      {% if next_d %}
+      <a class="btn primary" href="{{ url_for('chart_page', cid=next_d.id) }}">Lanjut drill: {{ next_d.judul }} →</a>
+      {% endif %}
+      <a class="btn ghost" href="{{ url_for('chart_list') }}">Kembali ke daftar</a>
+    </div>
+  {% else %}
+    <form method="post">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <h3>🤔 Jawabanmu?</h3>
+      <p class="note">Satu percobaan per drill — setelah dijawab, kamu langsung lihat penjelasannya.</p>
+      <div class="opts" role="radiogroup" aria-label="Pilihan jawaban">
+        {% for p in drill.pilihan %}
+        <label class="opt">
+          <input type="radio" name="choice" value="{{ loop.index0 }}" required>
+          <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
+        </label>
+        {% endfor %}
+      </div>
+      <div class="scenactions">
+        <button class="btn primary" type="submit">Kunci Jawaban →</button>
+        <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
+      </div>
+    </form>
+
+    <div class="hints hidden" id="hints" aria-live="polite">
+      {% for h in drill.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+    </div>
+  {% endif %}
+</section>
+{% endblock %}

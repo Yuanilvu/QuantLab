@@ -124,22 +124,22 @@ skenario:
       print(signal(72, "up"))    # HOLD
       print(signal(28, "down"))  # SKIP
     hasil:
-      - ret: -4.2
-        dd: 6.5
-        win: 33
-        note: "Bot polos: BRPT kejual di 72 lalu naik 9% (missed), MPPA kebeli di 28 lalu turun 12%. Net -4.2%."
-      - ret: -4.2
-        dd: 6.5
-        win: 33
-        note: "Dua-duanya salah — persis diagnosis di atas. Ini contoh nyata kenapa indikator butuh konteks."
-      - ret: -7.9
-        dd: 7.9
-        win: 26
-        note: "BRPT juga bermasalah: jual di 72 = potong kuda yang sedang lari kencang. Kamu meremehkan kesalahan pertama."
-      - ret: 5.1
-        dd: 3.2
-        win: 58
-        note: "MPPA justru yang lebih parah (pisau jatuh -12%). BRPT cuma missed opportunity. Diagnosis terbalik."
+      - ret: -6.0
+        dd: 6.0
+        win: 25
+        note: "Bot polos: BRPT kejual di 72 lalu naik 9% (missed), MPPA kebeli di 28 lalu turun 12%. Net -6%."
+      - ret: 9.0
+        dd: 2.0
+        win: 70
+        note: "Diagnosis tepat: bot dihentikan — BRPT tidak kejual (ikut naik 9%), MPPA tidak dibeli. Portofolio untung."
+      - ret: 0.0
+        dd: 0.0
+        win: 40
+        note: "Sisi MPPA dibenahi, BRPT tidak: bot tetap jual di 72, lalu BRPT naik 9% tanpa kamu. Untung melayang."
+      - ret: -6.0
+        dd: 6.0
+        win: 20
+        note: "MPPA dianggap aman padahal pisau jatuh: bot beli di 28, turun 12%. BRPT cuma missed opportunity — diagnosis terbalik."
     petunjuk:
       - "RSI 72 di uptrend itu apa artinya? RSI 28 di downtrend?"
       - "Indikator harus dibaca dengan arah trend."
@@ -531,3 +531,52 @@ skenario:
       - "Probabilitas koreksi 75%: sisi mana yang lebih besar?"
       - "Profit +12% sudah di tangan — apa gunanya divergence?"
       - "Hitung exit kalau stop di MA20 kena: (1.760 − 1.650) ÷ 1.650."
+soal:
+  - id: "p13-1"
+    judul: "RSI-14 Sederhana"
+    emoji: "🌡️"
+    tingkat: sedang
+    xp: 40
+    menit: 8
+    cerita: |
+      Hitung RSI-14 dari deret harga — RSI mengukur kekuatan momentum (0 sampai 100).
+      Rumus: RSI = 100 − 100 / (1 + RS), dengan RS = rata-rata naik ÷ rata-rata turun.
+      Rata-rata = total naik (atau total turun) dibagi 14 — TETAP 14, bukan jumlah hari naik.
+      Kalau tidak ada penurunan sama sekali, cetak 100.00.
+      Baca N (minimal 15), lalu N baris harga.
+    input_spec: |
+      Baris 1: N (jumlah harga, minimal 15).
+      N baris berikutnya: satu harga per baris.
+    output_spec: |
+      Satu baris: nilai RSI, 2 desimal.
+    contoh:
+      - input: "15\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15"
+        output: "100.00"
+      - input: "15\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10"
+        output: "50.00"
+    tes:
+      - input: "15\n1\n2\n3\n4\n5\n6\n7\n8\n9\n10\n11\n12\n13\n14\n15"
+        output: "100.00"
+      - input: "15\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10\n11\n10"
+        output: "50.00"
+      - input: "15\n100\n99\n98\n97\n96\n95\n94\n93\n92\n91\n90\n89\n88\n87\n86"
+        output: "0.00"
+      - input: "15\n20\n21\n20\n22\n21\n23\n22\n24\n25\n24\n26\n25\n27\n28\n27"
+        output: "68.42"
+    solusi: |
+      n = int(input())
+      harga = [float(input()) for _ in range(n)]
+      selisih = [harga[i] - harga[i - 1] for i in range(1, len(harga))]
+      terakhir = selisih[-14:]
+      total_naik = sum(x for x in terakhir if x > 0)
+      total_turun = -sum(x for x in terakhir if x < 0)
+      if total_turun == 0:
+          rsi = 100.0
+      else:
+          rs = (total_naik / 14) / (total_turun / 14)
+          rsi = 100 - 100 / (1 + rs)
+      print(f"{rsi:.2f}")
+    petunjuk:
+      - "Hitung selisih antar harga yang berdekatan dulu, ambil 14 yang terakhir."
+      - "total_naik = jumlah semua selisih positif. total_turun = jumlah selisih negatif (jadikan positif)."
+      - "RS = (total_naik / 14) dibagi (total_turun / 14)."
