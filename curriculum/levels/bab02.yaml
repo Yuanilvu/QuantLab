@@ -124,14 +124,14 @@ skenario:
       print(f"Rata-rata return Strategi B = {rata_return_b:.0f}%")
       # sama-sama 2% — tapi siapa yang bisa kamu tiduri?  → A
     hasil:
-      - ret: 12.0
-        dd: 0.0
-        win: 75
-        note: "A + leverage 2x: +4%/bulan stabil, DD nyaris nol. Tidur nyenyak tiap malam."
       - ret: 9.0
         dd: 7.5
         win: 45
-        note: "B: total +9% (1,08×0,96×1,07×0,97×1,06×0,98 = 1,09) dengan DD 7,5%. Kamu deg-degan tiap bulan."
+        note: "B: total +9% dengan DD 7,5%. Kamu deg-degan tiap bulan — hasilnya tetap kalah dari A yang stabil."
+      - ret: 12.0
+        dd: 0.0
+        win: 75
+        note: "A: +2%/bulan stabil, 6 bulan total ≈ +12%, DD nyaris nol. Tidur nyenyak tiap malam."
       - ret: 0.0
         dd: 0.0
         win: 35

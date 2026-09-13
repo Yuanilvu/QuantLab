@@ -133,11 +133,11 @@ skenario:
         dd: 0.0
         win: 78
         note: "harga * 1.10 = 4400. Benar: 1.10 = 100% + 10%."
-      - ret: 900.0
+      - ret: 0.0
         dd: 0.0
         win: 20
         note: "harga * 10 = 40.000. Itu 10x lipat, bukan naik 10 persen!"
-      - ret: -90.0
+      - ret: 0.0
         dd: 0.0
         win: 30
         note: "4000 * 0.10 = 400 — itu cuma BESARAN kenaikannya, bukan harga barunya."

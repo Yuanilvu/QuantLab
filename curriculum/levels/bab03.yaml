@@ -116,10 +116,10 @@ skenario:
         dd: 0.0
         win: 20
         note: "Kamu beli 10 tiket: tidak menang, rugi 100rb. '10x peluang' tetap 99% kalah."
-      - ret: -9.0
+      - ret: 0.0
         dd: 0.0
         win: 78
-        note: "Benar: EV −9rb/tiket. Tidak ikut = hemat 90rb — itu keputusan EV positif."
+        note: "Benar: EV tiap tiket −9rb. Tidak ikut = modal utuh, return 0% — hemat 90rb dibanding ikut 10 tiket."
       - ret: -90.0
         dd: 0.0
         win: 10
@@ -154,18 +154,18 @@ skenario:
       print(f"Peluang 2 loss beruntun = {peluang_2_loss * 100:.0f}%")   # 16%
       # wajar — tetap eksekusi sinyal ke-3 dengan ukuran normal
     hasil:
-      - ret: 4.5
-        dd: 0.0
-        win: 75
-        note: "Sinyal ke-3 menang +5%. Kamu patuh EV, total hari itu −5% → balik pelan-pelan. Benar."
-      - ret: -15.0
-        dd: 15.0
-        win: 20
-        note: "Ukuran 2x di sinyal ke-3 yang TERNyata loss: total −20%. Revenge trading menghancurkan."
       - ret: -10.0
         dd: 10.0
         win: 25
-        note: "Berhenti: sinyal ke-3 ternyata MENANG +5%. Kamu kehilangan 5% + kepercayaan pada strategi yang benar."
+        note: "Berhenti setelah 2 loss: padahal sinyal ke-3 ternyata MENANG +5%. Hari ditutup −10%, kamu kehilangan peluang balik modal."
+      - ret: -20.0
+        dd: 20.0
+        win: 20
+        note: "Ukuran 2x di sinyal ke-3 yang ternyata loss: −10% lalu −10% lagi = −20%. Revenge trading menghancurkan."
+      - ret: -5.0
+        dd: 10.0
+        win: 75
+        note: "Sinyal ke-3 menang +5%: total hari −5% (sempat −10%). Kamu patuh EV — benar, sabar sampai statistik bekerja."
       - ret: -18.0
         dd: 18.0
         win: 15

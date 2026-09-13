@@ -79,10 +79,10 @@ skenario:
         dd: 12.0
         win: 35
         note: "Benar. Ini kenapa 'strategi profit 0.25%' bisa jadi bencana di venue berbiaya tinggi."
-      - ret: -6.0
-        dd: 6.0
+      - ret: -12.0
+        dd: 12.0
         win: 30
-        note: "Tidak impas: 0.25% < 0.4%, selisihnya negatif konsisten. Setiap trade = -0.15%."
+        note: "Tidak impas: 0.25% < 0.4%, selisihnya negatif konsisten. Setiap trade = -0.15% → total -12%."
       - ret: -12.0
         dd: 12.0
         win: 22
@@ -155,14 +155,14 @@ skenario:
       print(f"Leakage bulan ini: {missed_profit*100:.0f}% potensi")
       # fix: order limit otomatis di zona entry
     hasil:
-      - ret: 12.4
-        dd: 5.0
-        win: 78
-        note: "Fix eksekusi: 8 sinyal berikutnya dieksekusi semua, 6 profit. Bulan itu +12.4% — leakage ditutup."
       - ret: 0.0
         dd: 0.0
         win: 65
         note: "Kamu cari 'harga lebih baik': sinyal ke-8 jalan tanpa kamu, +5.8%. Analisis benar tapi tidak mengubah perilaku — leakage lanjut."
+      - ret: 12.4
+        dd: 5.0
+        win: 78
+        note: "Fix eksekusi: 8 sinyal berikutnya dieksekusi semua, 6 profit. Bulan itu +12.4% — leakage ditutup."
       - ret: -2.1
         dd: 2.1
         win: 40

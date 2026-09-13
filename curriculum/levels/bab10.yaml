@@ -154,15 +154,15 @@ skenario:
       - ret: -18.0
         dd: 22.0
         win: 15
-        note: "Tambah semua: tahun berikutnya -15%. Kamu kehilangan sebagian profit + modal di puncak."
+        note: "Tambah semua di puncak: pasar koreksi, portofolio -18%. Profit tahun lalu tergerus, modal baru ikut terjebak."
       - ret: 8.0
         dd: 4.0
         win: 72
         note: "Patuh rencana: tahun berikutnya -4% (koreksi ringan), tapi portofolio seimbang tetap +8% karena rebalancing."
-      - ret: 12.0
+      - ret: 0.0
         dd: 0.0
         win: 30
-        note: "Jual semua: pasar naik lagi 12% sebelum koreksi. Timing market = menebak."
+        note: "Jual semua: pasar masih naik 12% sebelum koreksi — kamu di cash, ketinggalan rally. Timing market = menebak."
       - ret: -35.0
         dd: 35.0
         win: 5

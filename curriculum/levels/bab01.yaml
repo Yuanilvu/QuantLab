@@ -83,15 +83,15 @@ skenario:
       - ret: 2.0
         dd: 0.0
         win: 40
-        note: "2% itu kalau naiknya 80, bukan 200. Salah hitung persen = salah ukur kinerja."
-      - ret: 20.0
+        note: "2% itu kalau naiknya 80, bukan 200. Kamu mengira kenaikan cuma segitu, jual kepagian di 4.080 — padahal harga naik ke 4.200."
+      - ret: 0.0
         dd: 0.0
         win: 25
-        note: "20% itu kalau naiknya 800. Kamu membagi dengan 2100-an? Hati-hati: selalu bagi dengan harga LAMA (4.000)."
+        note: "20% itu kalau naiknya 800, bukan 200. Kamu yakin TLKM naik besar, pasang target jual 4.800 — harga cuma sempat 4.200 lalu balik. Jual telat di 4.000: 0%."
       - ret: 0.5
         dd: 0.0
         win: 30
-        note: "0,5% terlalu kecil — itu kalau naiknya cuma 20. Periksa lagi desimalnya."
+        note: "0,5% itu kalau naiknya cuma 20 — desimal bergeser. Kamu jual kepagian di 4.020, padahal harga naik ke 4.200."
     petunjuk:
       - "Berapa rupiah kenaikannya?"
       - "Bagi kenaikan dengan harga awal, kali 100."
@@ -126,10 +126,10 @@ skenario:
         dd: 0.0
         win: 78
         note: "750 benar. Naik 50% lalu turun 50% = -25% bersih. Itulah bahaya drawdown (turun dari harga puncak)."
-      - ret: 25.0
+      - ret: -25.0
         dd: 0.0
         win: 20
-        note: "1.250 itu kalau turun 50% dihitung dari 1.000 — salah. Turun selalu dihitung dari harga SEKARANG."
+        note: "1.250 itu kalau turun dihitung dari 1.000 — salah. Kamu yakin harga berhenti di 1.250, tidak jual di puncak 1.500; harga jatuh ke 750, jual telat: -25%."
       - ret: -50.0
         dd: 0.0
         win: 25
@@ -169,10 +169,10 @@ skenario:
         dd: 0.0
         win: 75
         note: "960.000 benar. Naik 20% lalu turun 20% = -4%. Rumus cepat: rugi = X²/100 persen."
-      - ret: 4.0
+      - ret: -4.0
         dd: 0.0
         win: 25
-        note: "1.040.000 itu kalau naik dan turun dihitung dari angka berbeda — urutan hitungnya salah."
+        note: "1.040.000 itu kalau naik dan turun dihitung dari angka berbeda — urutan salah. Saldo nyatamu 960.000: merasa 'masih untung' padahal sudah rugi 4%."
       - ret: -20.0
         dd: 0.0
         win: 20
