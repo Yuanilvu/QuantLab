@@ -630,6 +630,16 @@ soal:
     petunjuk:
       - "range(1, n+1) membuat angka 1 sampai n."
       - "Print i di dalam loop, satu per baris."
+    tugas:
+      - "Baca N dengan int(input())."
+      - "Buat loop: for i in range(1, n + 1)."
+      - "Cetak i di dalam loop, satu angka per baris."
+    starter: |
+      n = int(input())
+
+      # TODO: loop i dari 1 sampai n
+      for i in range(1, n + 1):
+          pass  # TODO: cetak i
   - id: "p6-2"
     judul: "Jumlah 1 Sampai N"
     emoji: "➕"
@@ -665,6 +675,21 @@ soal:
     petunjuk:
       - "Mulai dengan total = 0."
       - "Di dalam loop: total += i."
+    tugas:
+      - "Baca N dengan int(input())."
+      - "Siapkan total = 0 sebelum loop."
+      - "Di dalam loop for i in range(1, n + 1), tambahkan total += i."
+      - "Cetak total setelah loop selesai."
+    starter: |
+      n = int(input())
+
+      # TODO: siapkan total mulai dari 0
+      total = 0
+
+      for i in range(1, n + 1):
+          pass  # TODO: tambahkan i ke total
+
+      # TODO: cetak total
   - id: "p6-3"
     judul: "Rata-rata Harga"
     emoji: "📊"
@@ -701,6 +726,24 @@ soal:
     petunjuk:
       - "Baca n dulu, lalu loop n kali membaca harga."
       - "Rata-rata = total // n (pembulatan ke bawah)."
+    tugas:
+      - "Baca N (jumlah hari) dengan int(input())."
+      - "Siapkan total = 0, lalu loop N kali: tiap iterasi baca harga dan tambahkan ke total."
+      - "Cetak total di baris 1."
+      - "Cetak rata-rata total // n di baris 2."
+    starter: |
+      n = int(input())
+
+      # TODO: siapkan total mulai dari 0
+      total = 0
+
+      # TODO: loop n kali, tiap iterasi baca harga (int(input())) dan tambahkan ke total
+      for i in range(n):
+          pass
+
+      print(total)
+
+      # TODO: cetak rata-rata total // n
   - id: "p6-4"
     judul: "Harga Tertinggi & Terendah"
     emoji: "📊"
@@ -742,3 +785,22 @@ soal:
     petunjuk:
       - "Mulai dengan tertinggi = -1 dan terendah = angka sangat besar."
       - "Di tiap loop, bandingkan dan perbarui keduanya."
+    tugas:
+      - "Baca N, lalu siapkan tertinggi = -1 dan terendah = angka sangat besar (10 ** 9)."
+      - "Loop N kali: baca harga tiap iterasi."
+      - "Perbarui tertinggi kalau harga lebih besar, perbarui terendah kalau harga lebih kecil."
+      - "Cetak tertinggi di baris 1 dan terendah di baris 2."
+    starter: |
+      n = int(input())
+
+      # TODO: mulai dari tertinggi = -1 dan terendah = 10 ** 9
+      tertinggi = -1
+      terendah = 10 ** 9
+
+      for i in range(n):
+          harga = int(input())
+          # TODO: kalau harga > tertinggi, perbarui tertinggi
+          # TODO: kalau harga < terendah, perbarui terendah
+          pass
+
+      # TODO: cetak tertinggi, lalu cetak terendah

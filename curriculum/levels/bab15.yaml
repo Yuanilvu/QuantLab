@@ -510,3 +510,123 @@ skenario:
       - "Lima win +5,1% lalu loss 3% = berapa sisa?"
       - "Win streak mengubah probabilitas trade berikutnya?"
       - "Ukuran posisi ditentukan oleh apa?"
+soal:
+  - id: "p15-1"
+    judul: "Fee Bolak-Balik"
+    emoji: "💸"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Setiap trade kena fee dua kali: sekali saat masuk, sekali saat keluar.
+      Baca notional tiap trade dalam dolar, fee taker per sisi dalam persen, dan
+      jumlah trade. Cetak fee satu trade bolak-balik dan total fee semua trade.
+    input_spec: |
+      Baris 1: notional tiap trade dalam dolar (mis. 2000).
+      Baris 2: fee taker per sisi dalam persen (mis. 0.055).
+      Baris 3: jumlah trade, bilangan bulat.
+    output_spec: |
+      Baris 1: fee satu trade bolak-balik (masuk ditambah keluar).
+      Baris 2: total fee semua trade.
+      Keduanya 2 desimal.
+    contoh:
+      - input: "2000\n0.055\n10"
+        output: "2.20\n22.00"
+      - input: "500\n0.1\n3"
+        output: "1.00\n3.00"
+    tes:
+      - input: "2000\n0.055\n10"
+        output: "2.20\n22.00"
+      - input: "500\n0.1\n3"
+        output: "1.00\n3.00"
+      - input: "10000\n0.02\n50"
+        output: "4.00\n200.00"
+      - input: "1500\n0.075\n8"
+        output: "2.25\n18.00"
+    solusi: |
+      notional = float(input())
+      fee_persen = float(input())
+      jumlah_trade = int(input())
+      fee_trade = notional * fee_persen / 100 * 2
+      print(f"{fee_trade:.2f}")
+      print(f"{fee_trade * jumlah_trade:.2f}")
+    petunjuk:
+      - "Satu trade berarti dua sisi: masuk dan keluar."
+      - "Fee per sisi = notional x fee% / 100. Kalikan 2, lalu kalikan jumlah trade."
+    tugas:
+      - "Baca notional, fee per sisi, dan jumlah trade."
+      - "Hitung fee satu sisi = notional kali fee dibagi 100."
+      - "Kalikan 2 karena ada sisi masuk dan sisi keluar."
+      - "Cetak fee satu trade lalu total fee semua trade."
+    starter: |
+      notional = float(input())
+      fee_persen = float(input())
+      jumlah_trade = int(input())
+      # TODO: fee_trade = notional * fee_persen / 100 * 2
+      print(f"{fee_trade:.2f}")
+      print(f"{fee_trade * jumlah_trade:.2f}")
+  - id: "p15-2"
+    judul: "Profit Bersih Setelah Biaya"
+    emoji: "🧮"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Sinyal benar dan harga naik, tapi fee dan slippage tetap dipotong.
+      Baca notional posisi (dolar), return kotor dalam persen, fee taker per sisi
+      dalam persen, dan slippage per sisi dalam persen.
+      Cetak profit kotor, total biaya dua sisi dalam persen, dan profit bersih.
+    input_spec: |
+      Baris 1: notional posisi dalam dolar.
+      Baris 2: return kotor dalam persen.
+      Baris 3: fee taker per sisi dalam persen.
+      Baris 4: slippage per sisi dalam persen.
+    output_spec: |
+      Baris 1: profit kotor dalam dolar.
+      Baris 2: total biaya dua sisi dalam persen.
+      Baris 3: profit bersih dalam dolar.
+      Semua 2 desimal.
+    contoh:
+      - input: "1000\n2\n0.055\n0.05"
+        output: "20.00\n0.21\n17.90"
+      - input: "500\n1\n0.1\n0.1"
+        output: "5.00\n0.40\n3.00"
+    tes:
+      - input: "1000\n2\n0.055\n0.05"
+        output: "20.00\n0.21\n17.90"
+      - input: "500\n1\n0.1\n0.1"
+        output: "5.00\n0.40\n3.00"
+      - input: "2500\n3\n0.02\n0.03"
+        output: "75.00\n0.10\n72.50"
+      - input: "800\n-1\n0.055\n0.05"
+        output: "-8.00\n0.21\n-9.68"
+    solusi: |
+      notional = float(input())
+      return_kotor = float(input())
+      fee = float(input())
+      slippage = float(input())
+      profit_kotor = notional * return_kotor / 100
+      biaya_persen = (fee + slippage) * 2
+      profit_bersih = profit_kotor - notional * biaya_persen / 100
+      print(f"{profit_kotor:.2f}")
+      print(f"{biaya_persen:.2f}")
+      print(f"{profit_bersih:.2f}")
+    petunjuk:
+      - "Biaya masuk dan keluar: (fee + slippage) dikali 2."
+      - "Profit bersih = profit kotor dikurangi notional x biaya% / 100."
+    tugas:
+      - "Baca notional, return kotor, fee per sisi, dan slippage per sisi."
+      - "Hitung profit kotor = notional kali return dibagi 100."
+      - "Hitung total biaya dua sisi dalam persen."
+      - "Cetak profit kotor, biaya persen, lalu profit bersih."
+    starter: |
+      notional = float(input())
+      return_kotor = float(input())
+      fee = float(input())
+      slippage = float(input())
+      # TODO: profit_kotor = notional * return_kotor / 100
+      # TODO: biaya_persen = (fee + slippage) * 2
+      # TODO: profit_bersih = profit_kotor - notional * biaya_persen / 100
+      print(f"{profit_kotor:.2f}")
+      print(f"{biaya_persen:.2f}")
+      print(f"{profit_bersih:.2f}")

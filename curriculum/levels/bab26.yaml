@@ -532,6 +532,17 @@ soal:
     petunjuk:
       - "pd.DataFrame({'nama': [..], 'harga': [..]})."
       - "Akses kolom df['harga'], elemen [0]."
+    tugas:
+      - "Baca dua baris: nama saham dan harga (angka bulat)."
+      - "Buat DataFrame pandas dengan kolom nama dan harga."
+      - "Ambil nilai harga dari baris pertama."
+      - "Cetak harga itu."
+    starter: |
+      import pandas as pd
+      nama = input()
+      harga = int(input())
+      # TODO: buat DataFrame dengan kolom "nama" dan "harga" (tiap kolom diisi list satu elemen)
+      # TODO: cetak harga dari baris pertama
   - id: "p26-2"
     judul: "Statistik Portofolio"
     emoji: "📊"
@@ -572,6 +583,21 @@ soal:
     petunjuk:
       - "Kumpulkan list dulu, lalu DataFrame."
       - "max() dan mean() pada kolom harga."
+    tugas:
+      - "Baca N, lalu N baris berisi nama dan harga."
+      - "Kumpulkan nama ke satu list dan harga (int) ke list lain."
+      - "Buat DataFrame pandas dari kedua list itu."
+      - "Cetak harga tertinggi (int) lalu rata-rata harga (int), satu per baris."
+    starter: |
+      import pandas as pd
+      n = int(input())
+      nama = []
+      harga = []
+      for i in range(n):
+          p = input().split()
+          # TODO: tambahkan p[0] ke list nama dan int(p[1]) ke list harga
+      # TODO: buat DataFrame dari kedua list itu
+      # TODO: cetak harga tertinggi dan rata-rata harga (keduanya int), satu per baris
   - id: "p26-3"
     judul: "Filter di Atas Rata-rata"
     emoji: "🎯"
@@ -614,3 +640,19 @@ soal:
     petunjuk:
       - "Filter: df[df['harga'] > rata]."
       - "Loop hasil filter dengan iterrows() atau zip kolom."
+    tugas:
+      - "Baca N, lalu N baris berisi nama dan harga."
+      - "Buat DataFrame pandas dengan kolom nama dan harga."
+      - "Saring baris yang harganya di atas rata-rata kolom harga."
+      - "Cetak nama hasil saringan, satu nama per baris (urut kemunculan)."
+    starter: |
+      import pandas as pd
+      n = int(input())
+      nama = []
+      harga = []
+      for i in range(n):
+          p = input().split()
+          # TODO: isi list nama dan harga dari tiap baris
+      # TODO: buat DataFrame dari kedua list itu
+      # TODO: saring baris yang harganya di atas rata-rata kolom harga
+      # TODO: cetak kolom nama hasil saringan, satu nama per baris

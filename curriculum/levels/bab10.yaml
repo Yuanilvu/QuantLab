@@ -512,3 +512,123 @@ skenario:
     petunjuk:
       - "Kalau ada leverage 5x, return aset dasar dikali berapa?"
       - "Bandingkan janji 3% per bulan dengan kapasitas: 0,5% × 5 = ?"
+soal:
+  - id: "p10-1"
+    judul: "Dua Keranjang, Bukan Satu"
+    emoji: "🧺"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Jangan taruh semua modal di satu aset. Baca modal total, alokasi ke aset A
+      dalam persen (sisanya ke aset B), lalu return setahun aset A dan aset B
+      dalam persen (boleh negatif). Cetak nilai akhir kedua keranjang dan totalnya.
+    input_spec: |
+      Baris 1: modal total.
+      Baris 2: alokasi ke aset A dalam persen (0 sampai 100).
+      Baris 3: return setahun aset A dalam persen.
+      Baris 4: return setahun aset B dalam persen.
+    output_spec: |
+      Baris 1: nilai akhir aset A.
+      Baris 2: nilai akhir aset B.
+      Baris 3: total kekayaan akhir.
+      Semua 2 desimal.
+    contoh:
+      - input: "10000000\n60\n10\n-5"
+        output: "6600000.00\n3800000.00\n10400000.00"
+      - input: "1000000\n50\n20\n-20"
+        output: "600000.00\n400000.00\n1000000.00"
+    tes:
+      - input: "10000000\n60\n10\n-5"
+        output: "6600000.00\n3800000.00\n10400000.00"
+      - input: "1000000\n50\n20\n-20"
+        output: "600000.00\n400000.00\n1000000.00"
+      - input: "5000000\n100\n15\n0"
+        output: "5750000.00\n0.00\n5750000.00"
+      - input: "2000000\n30\n-10\n25"
+        output: "540000.00\n1750000.00\n2290000.00"
+    solusi: |
+      modal = float(input())
+      alokasi_a = float(input())
+      return_a = float(input())
+      return_b = float(input())
+      nilai_a = modal * alokasi_a / 100 * (1 + return_a / 100)
+      nilai_b = modal * (100 - alokasi_a) / 100 * (1 + return_b / 100)
+      print(f"{nilai_a:.2f}")
+      print(f"{nilai_b:.2f}")
+      print(f"{nilai_a + nilai_b:.2f}")
+    petunjuk:
+      - "Porsi aset A = alokasi persen, porsi aset B = 100 dikurangi alokasi A."
+      - "Nilai akhir = porsi modal x (1 + return / 100)."
+    tugas:
+      - "Baca modal, persentase alokasi aset A, dan return kedua aset."
+      - "Hitung nilai akhir aset A dari porsi alokasinya."
+      - "Hitung nilai akhir aset B memakai sisa alokasi (100 dikurangi alokasi A)."
+      - "Cetak kedua nilai lalu totalnya, semua 2 desimal."
+    starter: |
+      modal = float(input())
+      alokasi_a = float(input())
+      return_a = float(input())
+      return_b = float(input())
+      # TODO: nilai_a = modal * alokasi_a / 100 * (1 + return_a / 100)
+      # TODO: nilai_b = modal * (100 - alokasi_a) / 100 * (1 + return_b / 100)
+      print(f"{nilai_a:.2f}")
+      print(f"{nilai_b:.2f}")
+      print(f"{nilai_a + nilai_b:.2f}")
+  - id: "p10-2"
+    judul: "Leverage Melipat Rugi"
+    emoji: "🎭"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Produk yang katanya tanpa leverage ternyata punya leverage tersembunyi.
+      Return yang kamu rasakan = return aset dikali leverage.
+      Baca modal, leverage, dan kinerja aset bulan ini dalam persen (bisa
+      negatif). Cetak kinerja portofolio dan nilai modal akhir.
+    input_spec: |
+      Baris 1: modal dalam rupiah.
+      Baris 2: leverage (mis. 5).
+      Baris 3: kinerja aset bulan ini dalam persen (mis. -8).
+    output_spec: |
+      Baris 1: kinerja portofolio dalam persen (kinerja aset x leverage).
+      Baris 2: nilai modal akhir.
+      Keduanya 2 desimal.
+    contoh:
+      - input: "10000000\n5\n-8"
+        output: "-40.00\n6000000.00"
+      - input: "2000000\n3\n2"
+        output: "6.00\n2120000.00"
+    tes:
+      - input: "10000000\n5\n-8"
+        output: "-40.00\n6000000.00"
+      - input: "2000000\n3\n2"
+        output: "6.00\n2120000.00"
+      - input: "5000000\n1\n-20"
+        output: "-20.00\n4000000.00"
+      - input: "1000000\n10\n1.5"
+        output: "15.00\n1150000.00"
+    solusi: |
+      modal = float(input())
+      leverage = float(input())
+      kinerja_aset = float(input())
+      kinerja = kinerja_aset * leverage
+      modal_akhir = modal * (1 + kinerja / 100)
+      print(f"{kinerja:.2f}")
+      print(f"{modal_akhir:.2f}")
+    petunjuk:
+      - "Leverage melipat gerakan aset: -8% dengan leverage 5x berarti -40%."
+      - "Modal akhir = modal x (1 + kinerja / 100)."
+    tugas:
+      - "Baca modal, leverage, dan kinerja aset bulan ini."
+      - "Hitung kinerja portofolio = kinerja aset dikali leverage."
+      - "Hitung modal akhir dari kinerja portofolio itu."
+      - "Cetak kinerja portofolio lalu modal akhir, keduanya 2 desimal."
+    starter: |
+      modal = float(input())
+      leverage = float(input())
+      kinerja_aset = float(input())
+      # TODO: kinerja = kinerja_aset * leverage
+      # TODO: modal_akhir = modal * (1 + kinerja / 100)
+      print(f"{kinerja:.2f}")
+      print(f"{modal_akhir:.2f}")

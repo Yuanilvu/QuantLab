@@ -559,3 +559,15 @@ soal:
     petunjuk:
       - "Hitung rentang tiap baris: high − low."
       - "Jumlahkan semua rentang, lalu bagi N."
+    tugas:
+      - "Baca N lalu N baris berisi high dan low yang dipisah spasi."
+      - "Hitung rentang tiap baris: high dikurangi low."
+      - "Jumlahkan semua rentang ke dalam total_rentang."
+      - "Cetak total_rentang dibagi N dengan 2 desimal."
+    starter: |
+      n = int(input())
+      total_rentang = 0.0
+      for _ in range(n):
+          high, low = input().split()
+          # TODO: tambahkan float(high) - float(low) ke total_rentang
+      print(f"{total_rentang / n:.2f}")

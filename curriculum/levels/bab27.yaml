@@ -524,6 +524,16 @@ soal:
     petunjuk:
       - "np.array + .min()/.max()."
       - "Format f-string: f\"min={...} max={...}\"."
+    tugas:
+      - "Baca N, lalu N baris harga."
+      - "Simpan semua harga ke satu np.array."
+      - "Cari nilai terendah dan tertinggi."
+      - "Cetak satu baris dengan format min=X max=Y."
+    starter: |
+      import numpy as np
+      n = int(input())
+      # TODO: baca n baris harga jadi np.array
+      # TODO: cetak satu baris f"min={...} max={...}" dari harga.min() dan harga.max()
   - id: "p27-2"
     judul: "Data Histogram Return"
     emoji: "📊"
@@ -559,6 +569,17 @@ soal:
     petunjuk:
       - "Return: harga[1:] / harga[:-1] - 1."
       - "Hitung: (r > 0).sum() dan (r < 0).sum()."
+    tugas:
+      - "Baca N (minimal 2), lalu N baris harga."
+      - "Simpan semua harga ke np.array, lalu hitung return harian."
+      - "Hitung berapa return positif dan berapa negatif (yang nol diabaikan)."
+      - "Cetak satu baris dengan format positif=X negatif=Y."
+    starter: |
+      import numpy as np
+      n = int(input())
+      # TODO: baca n baris harga jadi np.array
+      # TODO: hitung return harian dengan harga[1:] / harga[:-1] - 1
+      # TODO: cetak f"positif={...} negatif={...}" dari (r > 0).sum() dan (r < 0).sum()
   - id: "p27-3"
     judul: "Data Bar Chart Portofolio"
     emoji: "📊"
@@ -597,3 +618,16 @@ soal:
     petunjuk:
       - "Simpan pasangan (nama, return) di list."
       - "Urutkan menurun: sort(key=lambda x: x[1], reverse=True)."
+    tugas:
+      - "Baca N, lalu N baris berisi nama dan return."
+      - "Simpan tiap pasangan jadi (nama, return) di dalam list."
+      - "Urutkan list dari return tertinggi ke terendah."
+      - "Cetak tiap baris dengan format nama:return."
+    starter: |
+      n = int(input())
+      data = []
+      for i in range(n):
+          p = input().split()
+          # TODO: simpan (p[0], int(p[1])) ke dalam list data
+      # TODO: urutkan data dari return tertinggi ke terendah
+      # TODO: cetak tiap baris dengan format nama:return

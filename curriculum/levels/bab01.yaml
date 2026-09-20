@@ -541,3 +541,118 @@ skenario:
       - "Modal sisa setelah dua kali rugi berapa?"
       - "Balik modal = naik 1.900.000 dari 8.100.000."
       - "Bagi 1.900.000 dengan modal SISA, bukan modal awal."
+soal:
+  - id: "p1-1"
+    judul: "Untung Persen Saham"
+    emoji: "📈"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Kamu beli saham TLKM di harga 4.000 per lembar, lalu jual di 4.300.
+      Biar bisa dibandingkan dengan saham lain, untungnya harus diukur dalam persen.
+      Baca harga beli dan harga jual, lalu cetak persen untungnya.
+    input_spec: |
+      Baris 1: harga beli per lembar (angka).
+      Baris 2: harga jual per lembar (angka).
+    output_spec: |
+      Satu baris: persen untung, 2 angka di belakang koma.
+      Kalau harga jual lebih kecil dari harga beli, hasilnya negatif (rugi).
+    contoh:
+      - input: "4000\n4300"
+        output: "7.50"
+      - input: "1000\n1100"
+        output: "10.00"
+    tes:
+      - input: "4000\n4300"
+        output: "7.50"
+      - input: "1000\n1100"
+        output: "10.00"
+      - input: "5000\n4500"
+        output: "-10.00"
+      - input: "2000\n2000"
+        output: "0.00"
+    solusi: |
+      harga_beli = float(input())
+      harga_jual = float(input())
+      untung = harga_jual - harga_beli
+      persen = untung / harga_beli * 100
+      print(f"{persen:.2f}")
+    petunjuk:
+      - "Untung = harga jual - harga beli."
+      - "Bagi untung dengan harga BELI (bukan harga jual), lalu kali 100."
+      - "Cetak dengan 2 desimal: print(f\"{persen:.2f}\")."
+    tugas:
+      - "Baca harga beli di baris pertama dengan float(input())."
+      - "Baca harga jual di baris kedua."
+      - "Hitung untung = harga jual - harga beli, lalu bagi dengan harga beli dan kali 100."
+      - "Cetak persennya dengan format 2 angka desimal."
+    starter: |
+      harga_beli = float(input())
+      harga_jual = float(input())
+
+      # TODO: hitung untung (selisih harga jual dan harga beli)
+      untung = 0
+
+      # TODO: ubah untung jadi persen dari harga beli
+      persen = 0
+
+      # TODO: cetak persen dengan 2 angka desimal
+      print(persen)
+  - id: "p1-2"
+    judul: "Butuh Naik Berapa Persen?"
+    emoji: "🔄"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Saham BBRI kamu beli di 10.000, sekarang harganya 8.000 — turun 20%.
+      Kamu mau tahan sampai balik modal, tapi untung 20% saja belum cukup.
+      Berapa persen kenaikan dari harga SEKARANG yang dibutuhkan supaya balik modal?
+    input_spec: |
+      Baris 1: harga beli per lembar (angka).
+      Baris 2: harga sekarang per lembar (angka).
+    output_spec: |
+      Satu baris: persen kenaikan yang dibutuhkan untuk balik modal, 2 angka di belakang koma.
+      Dihitung dari harga SEKARANG, bukan harga beli.
+    contoh:
+      - input: "10000\n8000"
+        output: "25.00"
+      - input: "5000\n4000"
+        output: "25.00"
+    tes:
+      - input: "10000\n8000"
+        output: "25.00"
+      - input: "5000\n4000"
+        output: "25.00"
+      - input: "2000\n1500"
+        output: "33.33"
+      - input: "1000\n900"
+        output: "11.11"
+    solusi: |
+      harga_beli = float(input())
+      harga_sekarang = float(input())
+      selisih = harga_beli - harga_sekarang
+      butuh_naik = selisih / harga_sekarang * 100
+      print(f"{butuh_naik:.2f}")
+    petunjuk:
+      - "Balik modal = harga naik sebesar selisih harga beli dan harga sekarang."
+      - "Persen dihitung dari harga SEKARANG (basis yang lebih kecil), jadi angkanya lebih besar dari 20%."
+      - "Cetak dengan 2 desimal."
+    tugas:
+      - "Baca harga beli dan harga sekarang (dua baris)."
+      - "Hitung selisih = harga beli - harga sekarang."
+      - "Bagi selisih dengan harga SEKARANG, lalu kali 100."
+      - "Cetak hasilnya dengan 2 angka desimal."
+    starter: |
+      harga_beli = float(input())
+      harga_sekarang = float(input())
+
+      # TODO: hitung selisih harga beli dengan harga sekarang
+      selisih = 0
+
+      # TODO: bagi selisih dengan harga sekarang, kali 100
+      butuh_naik = 0
+
+      # TODO: cetak butuh_naik dengan 2 angka desimal
+      print(butuh_naik)

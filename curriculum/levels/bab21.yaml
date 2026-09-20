@@ -523,3 +523,17 @@ soal:
     petunjuk:
       - "20 harga terakhir: harga[-20:]. Harga terakhir: harga[-1]."
       - "Kalau sama persis dengan MA20, tulis DI BAWAH."
+    tugas:
+      - "Baca path file CSV dari input, lalu kumpulkan kolom close jadi list harga (float)."
+      - "Hitung MA20 = rata-rata 20 harga terakhir."
+      - "Tentukan status: DI ATAS kalau harga terakhir lebih besar dari MA20, selain itu DI BAWAH."
+      - "Cetak MA20 (2 desimal) di baris pertama, lalu status di baris kedua."
+    starter: |
+      import csv
+      path = input()
+      with open(path) as f:
+          baris = list(csv.DictReader(f))
+      # TODO: kumpulkan kolom "close" jadi list harga (float)
+      # TODO: hitung MA20 = rata-rata 20 harga terakhir
+      # TODO: tentukan status "DI ATAS" / "DI BAWAH" dari harga terakhir vs MA20
+      # TODO: cetak MA20 (2 desimal) lalu status, masing-masing satu baris

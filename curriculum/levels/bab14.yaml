@@ -565,3 +565,16 @@ soal:
       - "Menang artinya hasil lebih besar dari 0. Trade 0 tidak dihitung menang."
       - "Win rate = jumlah menang ÷ N × 100."
       - "Total return = jumlahkan semua hasil trade."
+    tugas:
+      - "Baca N lalu N hasil trade dalam persen, nilainya boleh negatif."
+      - "Hitung berapa trade yang hasilnya lebih besar dari nol."
+      - "Hitung win rate = jumlah menang dibagi N kali 100, cetak 1 desimal."
+      - "Jumlahkan semua hasil trade lalu cetak total return 2 desimal."
+    starter: |
+      n = int(input())
+      hasil = [float(input()) for _ in range(n)]
+      # TODO: menang = banyak trade dengan hasil lebih besar dari 0
+      # TODO: win_rate = menang / n * 100
+      # TODO: total = jumlah semua hasil trade
+      print(f"{win_rate:.1f}")
+      print(f"{total:.2f}")

@@ -565,3 +565,18 @@ soal:
     petunjuk:
       - "Lacak puncak tertinggi sejauh ini saat membaca harga satu per satu."
       - "Drawdown di titik itu = (puncak − harga) / puncak × 100. Simpan yang paling besar."
+    tugas:
+      - "Baca N di baris pertama, lalu baca N harga satu per satu."
+      - "Lacak harga puncak tertinggi yang sudah lewat."
+      - "Di setiap harga hitung drawdown dari puncak: (puncak - harga) / puncak x 100."
+      - "Simpan drawdown terbesar dan cetak dengan 2 desimal."
+    starter: |
+      n = int(input())
+      puncak = 0.0
+      dd_maks = 0.0
+      for _ in range(n):
+          harga = float(input())
+          # TODO: kalau harga lebih tinggi dari puncak, perbarui nilai puncak
+          # TODO: kalau tidak, hitung drawdown = (puncak - harga) / puncak * 100
+          # TODO: simpan ke dd_maks kalau lebih besar dari dd_maks sekarang
+      print(f"{dd_maks:.2f}")

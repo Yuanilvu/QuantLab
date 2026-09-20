@@ -569,3 +569,16 @@ soal:
     petunjuk:
       - "Win rate 60% artinya peluang menang 0,60."
       - "Peluang kalah = 1 − 0,60 = 0,40."
+    tugas:
+      - "Baca win rate, rata-rata profit, dan rata-rata loss dari tiga baris input."
+      - "Ubah win rate jadi peluang menang dengan membagi 100."
+      - "Peluang kalah = 1 dikurangi peluang menang."
+      - "Hitung expectancy lalu cetak 2 desimal."
+    starter: |
+      win_rate = float(input())
+      profit = float(input())
+      loss = float(input())
+      p_menang = win_rate / 100
+      p_kalah = 1 - p_menang
+      # TODO: expectancy = p_menang * profit - p_kalah * loss
+      print(f"{expectancy:.2f}")

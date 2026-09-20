@@ -548,3 +548,126 @@ skenario:
       - "Hasil teman = modal × (1 + 0,08 × 3)."
       - "Hasil deposito = modal × 1,055 pangkat 3."
       - "Bandingkan keduanya, lalu cari selisihnya."
+soal:
+  - id: "p8-1"
+    judul: "Bunga Deposito Sederhana"
+    emoji: "🏦"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Deposito pakai bunga sederhana: bunga selalu dihitung dari modal awal,
+      bunga yang sudah didapat tidak ikut berbunga. Baca modal (rupiah), bunga
+      per tahun dalam persen, dan lama menabung dalam tahun.
+      Cetak bunga total dan saldo akhir — dua angka, 2 desimal.
+    input_spec: |
+      Baris 1: modal dalam rupiah (mis. 5000000).
+      Baris 2: bunga per tahun dalam persen (mis. 6 artinya 6%).
+      Baris 3: lama menabung dalam tahun (mis. 3).
+    output_spec: |
+      Baris 1: bunga total selama menabung.
+      Baris 2: saldo akhir (modal ditambah bunga).
+      Keduanya 2 desimal.
+    contoh:
+      - input: "5000000\n6\n3"
+        output: "900000.00\n5900000.00"
+      - input: "1000000\n5\n2"
+        output: "100000.00\n1100000.00"
+    tes:
+      - input: "5000000\n6\n3"
+        output: "900000.00\n5900000.00"
+      - input: "1000000\n5\n2"
+        output: "100000.00\n1100000.00"
+      - input: "2500000\n4\n1"
+        output: "100000.00\n2600000.00"
+      - input: "8000000\n7.5\n4"
+        output: "2400000.00\n10400000.00"
+    solusi: |
+      modal = float(input())
+      bunga_persen = float(input())
+      tahun = float(input())
+      bunga = modal * bunga_persen / 100 * tahun
+      saldo = modal + bunga
+      print(f"{bunga:.2f}")
+      print(f"{saldo:.2f}")
+    petunjuk:
+      - "Bunga sederhana = modal x bunga% x tahun, cuma dari modal awal."
+      - "Bagi persen dengan 100 dulu: 6% berarti 0,06."
+    tugas:
+      - "Baca modal, bunga per tahun, dan lama menabung dari tiga baris input."
+      - "Hitung bunga total = modal kali bunga dibagi 100 kali tahun."
+      - "Hitung saldo akhir = modal ditambah bunga total."
+      - "Cetak bunga total lalu saldo akhir, keduanya 2 desimal."
+    starter: |
+      modal = float(input())
+      bunga_persen = float(input())
+      tahun = float(input())
+      # TODO: hitung bunga = modal * bunga_persen / 100 * tahun
+      # TODO: hitung saldo = modal + bunga
+      print(f"{bunga:.2f}")
+      print(f"{saldo:.2f}")
+  - id: "p8-2"
+    judul: "Sederhana vs Majemuk"
+    emoji: "⚖️"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Temanmu menawarkan bunga sederhana 8% per tahun. Bank menawarkan deposito
+      5,5% per tahun tapi bunganya MAJEMUK — bunga ikut menghasilkan bunga.
+      Baca modal, bunga sederhana per tahun, bunga majemuk per tahun, dan lama
+      menabung. Cetak hasil akhir kedua opsi dan selisihnya.
+    input_spec: |
+      Baris 1: modal dalam rupiah.
+      Baris 2: bunga sederhana per tahun dalam persen.
+      Baris 3: bunga majemuk per tahun dalam persen.
+      Baris 4: lama menabung dalam tahun.
+    output_spec: |
+      Baris 1: hasil akhir opsi bunga sederhana.
+      Baris 2: hasil akhir opsi bunga majemuk.
+      Baris 3: selisih (sederhana dikurangi majemuk), bisa negatif.
+      Semua 2 desimal.
+    contoh:
+      - input: "5000000\n8\n5.5\n3"
+        output: "6200000.00\n5871206.87\n328793.13"
+      - input: "1000000\n6\n5\n2"
+        output: "1120000.00\n1102500.00\n17500.00"
+    tes:
+      - input: "5000000\n8\n5.5\n3"
+        output: "6200000.00\n5871206.87\n328793.13"
+      - input: "1000000\n6\n5\n2"
+        output: "1120000.00\n1102500.00\n17500.00"
+      - input: "2000000\n10\n10\n5"
+        output: "3000000.00\n3221020.00\n-221020.00"
+      - input: "1200000\n5\n4.5\n10"
+        output: "1800000.00\n1863563.31\n-63563.31"
+    solusi: |
+      modal = float(input())
+      bunga_sederhana = float(input())
+      bunga_majemuk = float(input())
+      tahun = float(input())
+      hasil_sederhana = modal * (1 + bunga_sederhana / 100 * tahun)
+      hasil_majemuk = modal * (1 + bunga_majemuk / 100) ** tahun
+      selisih = hasil_sederhana - hasil_majemuk
+      print(f"{hasil_sederhana:.2f}")
+      print(f"{hasil_majemuk:.2f}")
+      print(f"{selisih:.2f}")
+    petunjuk:
+      - "Sederhana: modal x (1 + bunga% x tahun)."
+      - "Majemuk: modal x (1 + bunga%) pangkat tahun, pakai operator **."
+    tugas:
+      - "Baca modal, bunga sederhana, bunga majemuk, dan lama menabung."
+      - "Hitung hasil akhir opsi sederhana tanpa pangkat."
+      - "Hitung hasil akhir opsi majemuk dengan operator pangkat."
+      - "Cetak kedua hasil lalu selisihnya, semua 2 desimal."
+    starter: |
+      modal = float(input())
+      bunga_sederhana = float(input())
+      bunga_majemuk = float(input())
+      tahun = float(input())
+      # TODO: hasil_sederhana = modal * (1 + bunga_sederhana / 100 * tahun)
+      # TODO: hasil_majemuk = modal * (1 + bunga_majemuk / 100) ** tahun
+      # TODO: selisih = hasil_sederhana - hasil_majemuk
+      print(f"{hasil_sederhana:.2f}")
+      print(f"{hasil_majemuk:.2f}")
+      print(f"{selisih:.2f}")

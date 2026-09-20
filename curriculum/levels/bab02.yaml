@@ -548,3 +548,127 @@ skenario:
       - "Kalikan return tiap saham dengan bobot dananya."
       - "Jumlahkan ketiga kontribusi."
       - "Cek juga dalam rupiah: −8.000 + 28.000 − 30.000."
+soal:
+  - id: "p2-1"
+    judul: "Rata-rata Empat Harga"
+    emoji: "📊"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Kamu catat empat harga penutupan saham BBRI selama empat hari.
+      Rata-rata dipakai untuk melihat harga 'wajar' di tengah naik-turun harian.
+      Baca keempat harga, lalu cetak rata-ratanya.
+    input_spec: |
+      Empat baris: harga hari 1 sampai hari 4 (angka).
+    output_spec: |
+      Satu baris: rata-rata keempat harga, 2 angka di belakang koma.
+    contoh:
+      - input: "4000\n4100\n3900\n4000"
+        output: "4000.00"
+      - input: "1000\n2000\n3000\n4000"
+        output: "2500.00"
+    tes:
+      - input: "4000\n4100\n3900\n4000"
+        output: "4000.00"
+      - input: "1000\n2000\n3000\n4000"
+        output: "2500.00"
+      - input: "5000\n5000\n5000\n5000"
+        output: "5000.00"
+      - input: "3000\n3200\n3100\n3300"
+        output: "3150.00"
+    solusi: |
+      harga1 = float(input())
+      harga2 = float(input())
+      harga3 = float(input())
+      harga4 = float(input())
+      total = harga1 + harga2 + harga3 + harga4
+      rata = total / 4
+      print(f"{rata:.2f}")
+    petunjuk:
+      - "Rata-rata = jumlah semua harga dibagi banyaknya data."
+      - "Banyak datanya 4."
+      - "Cetak dengan 2 desimal."
+    tugas:
+      - "Baca empat harga (satu angka per baris)."
+      - "Jumlahkan keempatnya."
+      - "Bagi total dengan 4."
+      - "Cetak rata-ratanya dengan 2 angka desimal."
+    starter: |
+      harga1 = float(input())
+      harga2 = float(input())
+      harga3 = float(input())
+      harga4 = float(input())
+
+      # TODO: jumlahkan keempat harga
+      total = 0
+
+      # TODO: bagi total dengan 4
+      rata = 0
+
+      # TODO: cetak rata dengan 2 angka desimal
+      print(rata)
+  - id: "p2-2"
+    judul: "Return Portofolio Dua Saham"
+    emoji: "⚖️"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Modalmu dibagi ke dua saham: sebagian di saham A, sisanya di saham B.
+      Hari ini saham A dan B punya return berbeda, dan porsi dana menentukan hasil akhirnya.
+      Hitung return portofoliomu — rata-rata berbobot, bukan rata-rata biasa.
+    input_spec: |
+      Baris 1: return saham A dalam persen (mis. 8 artinya +8%).
+      Baris 2: bobot dana di saham A dalam persen.
+      Baris 3: return saham B dalam persen.
+      Baris 4: bobot dana di saham B dalam persen.
+    output_spec: |
+      Satu baris: return portofolio dalam persen, 2 angka di belakang koma.
+    contoh:
+      - input: "8\n60\n-2\n40"
+        output: "4.00"
+      - input: "10\n50\n0\n50"
+        output: "5.00"
+    tes:
+      - input: "8\n60\n-2\n40"
+        output: "4.00"
+      - input: "10\n50\n0\n50"
+        output: "5.00"
+      - input: "-5\n30\n10\n70"
+        output: "5.50"
+      - input: "6\n25\n-4\n75"
+        output: "-1.50"
+    solusi: |
+      return_a = float(input())
+      bobot_a = float(input())
+      return_b = float(input())
+      bobot_b = float(input())
+      kontribusi_a = return_a * bobot_a / 100
+      kontribusi_b = return_b * bobot_b / 100
+      portofolio = kontribusi_a + kontribusi_b
+      print(f"{portofolio:.2f}")
+    petunjuk:
+      - "Kalikan tiap return dengan bobot dananya (bagi 100 dulu)."
+      - "Jumlahkan kedua kontribusi itu."
+      - "Return bisa negatif — jangan lupa tanda minusnya ikut dihitung."
+    tugas:
+      - "Baca return dan bobot saham A, lalu return dan bobot saham B (empat baris)."
+      - "Hitung kontribusi A = return A dikali bobot A dibagi 100."
+      - "Hitung kontribusi B = return B dikali bobot B dibagi 100."
+      - "Jumlahkan keduanya dan cetak dengan 2 angka desimal."
+    starter: |
+      return_a = float(input())
+      bobot_a = float(input())
+      return_b = float(input())
+      bobot_b = float(input())
+
+      # TODO: kontribusi A = return A * bobot A / 100
+      kontribusi_a = 0
+
+      # TODO: kontribusi B = return B * bobot B / 100
+      kontribusi_b = 0
+
+      # TODO: jumlahkan keduanya lalu cetak dengan 2 angka desimal
+      portofolio = 0
+      print(portofolio)

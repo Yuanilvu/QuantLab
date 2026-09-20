@@ -575,6 +575,20 @@ soal:
     petunjuk:
       - "Hitung jumlah data valid dengan variabel terpisah."
       - "Rata-rata = total // hitung; kalau hitung 0 → 0."
+    tugas:
+      - "Baca N, lalu N baris teks (sebagian mungkin bukan angka)."
+      - "Untuk tiap baris yang valid, tambahkan ke total dan tambah penghitung data valid."
+      - "Lewati baris yang ValueError."
+      - "Cetak rata-rata total dibagi jumlah data valid (pembagian bulat //); kalau tidak ada yang valid, cetak 0."
+    starter: |
+      n = int(input())
+      total = 0
+      hitung = 0
+      for i in range(n):
+          teks = input()
+          # TODO: coba ubah teks jadi int; kalau berhasil, tambahkan ke total dan hitung += 1
+          # TODO: kalau ValueError, lewati baris ini
+      # TODO: cetak total // hitung; kalau hitung nol, cetak 0
   - id: "p24-2"
     judul: "Analyzer Portofolio"
     emoji: "📊"
@@ -621,3 +635,18 @@ soal:
     petunjuk:
       - "Return bisa negatif — inisialisasi tertinggi dengan angka sangat kecil."
       - "Gunakan `>` supaya yang pertama menang saat seri."
+    tugas:
+      - "Baca N, lalu N baris berisi nama dan return (return bisa negatif)."
+      - "Lewati baris yang formatnya jelek atau return-nya bukan angka."
+      - "Jumlahkan semua return, lalu lacak return tertinggi beserta namanya."
+      - "Cetak total return di baris 1 dan nama dengan return tertinggi di baris 2."
+    starter: |
+      n = int(input())
+      total = 0
+      nama_terbaik = ""
+      return_tertinggi = -10 ** 9
+      for i in range(n):
+          teks = input()
+          # TODO: pecah teks jadi nama dan return (int); bungkus dengan try/except
+          # TODO: tambahkan return ke total; simpan nama kalau return-nya lebih tinggi
+      # TODO: cetak total lalu nama_terbaik, masing-masing satu baris

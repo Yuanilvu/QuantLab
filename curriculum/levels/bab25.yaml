@@ -527,6 +527,16 @@ soal:
     petunjuk:
       - "np.array([...]) dari list input."
       - "harga.mean() dan harga.max(), bungkus int()."
+    tugas:
+      - "Baca N, lalu N baris harga."
+      - "Simpan semua harga ke satu np.array."
+      - "Hitung rata-rata dan nilai tertinggi."
+      - "Cetak rata-rata (int) lalu tertinggi (int), satu per baris."
+    starter: |
+      import numpy as np
+      n = int(input())
+      # TODO: baca n baris harga jadi np.array
+      # TODO: cetak rata-rata (int) dan tertinggi (int), satu per baris
   - id: "p25-2"
     judul: "Volatilitas (Std Dev)"
     emoji: "📊"
@@ -561,6 +571,16 @@ soal:
     petunjuk:
       - "np.std menghitung standar deviasi populasi."
       - "Format: f\"{nilai:.2f}\"."
+    tugas:
+      - "Baca N, lalu N baris harga."
+      - "Simpan semua harga ke satu np.array."
+      - "Hitung standar deviasi (np.std)."
+      - "Cetak hasilnya dengan 2 angka desimal."
+    starter: |
+      import numpy as np
+      n = int(input())
+      # TODO: baca n baris harga jadi np.array
+      # TODO: hitung standar deviasi, lalu cetak dengan 2 angka desimal
   - id: "p25-3"
     judul: "Rata-rata Return Harian"
     emoji: "📉"
@@ -596,3 +616,14 @@ soal:
     petunjuk:
       - "Return harian = harga[1:] / harga[:-1] - 1."
       - "Rata-rata × 100 untuk persen, format %.2f."
+    tugas:
+      - "Baca N (minimal 2), lalu N baris harga."
+      - "Simpan semua harga ke satu np.array."
+      - "Hitung return harian dengan harga[1:] / harga[:-1] - 1."
+      - "Cetak rata-rata return harian dalam persen dengan 2 desimal."
+    starter: |
+      import numpy as np
+      n = int(input())
+      # TODO: baca n baris harga jadi np.array
+      # TODO: hitung return harian dengan harga[1:] / harga[:-1] - 1
+      # TODO: cetak rata-rata return dikali 100, format 2 desimal

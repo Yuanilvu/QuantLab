@@ -689,6 +689,25 @@ soal:
     petunjuk:
       - "Baca angka: `n = int(input())`."
       - "if n > 0, elif n < 0, else untuk 0."
+    tugas:
+      - "Baca satu angka dengan n = int(input())."
+      - "Kalau n lebih besar dari 0, cetak POSITIF."
+      - "Kalau n lebih kecil dari 0, cetak NEGATIF."
+      - "Kalau n persis 0, cetak NOL."
+    starter: |
+      n = int(input())
+
+      # TODO: cetak "POSITIF" kalau n > 0
+      if n > 0:
+          pass
+
+      # TODO: cetak "NEGATIF" kalau n < 0
+      elif n < 0:
+          pass
+
+      # TODO: cetak "NOL" untuk sisanya
+      else:
+          pass
   - id: "p5-2"
     judul: "Jual atau Tahan"
     emoji: "📤"
@@ -725,6 +744,19 @@ soal:
     petunjuk:
       - "Kondisi: `harga >= target`."
       - ">= artinya 'sama dengan atau lebih besar'."
+    tugas:
+      - "Baca harga pasar (baris 1) dan target jual (baris 2)."
+      - "Bandingkan: harga sudah mencapai atau melewati target kalau harga >= target."
+      - "Cetak JUAL kalau target tercapai, TAHAN kalau belum."
+    starter: |
+      harga = int(input())
+      target = int(input())
+
+      # TODO: kalau harga >= target cetak "JUAL", sisanya cetak "TAHAN"
+      if harga >= target:
+          pass
+      else:
+          pass
   - id: "p5-3"
     judul: "Genap atau Ganjil"
     emoji: "⚖️"
@@ -760,6 +792,21 @@ soal:
     petunjuk:
       - "Sisa bagi n dengan 2: `n % 2`."
       - "Sisa 0 = genap, sisa 1 = ganjil."
+    tugas:
+      - "Baca satu angka dengan int(input())."
+      - "Hitung sisa bagi 2 dengan operator %: sisa = n % 2."
+      - "Kalau sisanya 0 cetak GENAP, kalau tidak cetak GANJIL."
+    starter: |
+      n = int(input())
+
+      # TODO: sisa bagi 2 (n % 2)
+      sisa = 0
+
+      # TODO: sisa 0 = GENAP, selain itu GANJIL
+      if sisa == 0:
+          pass
+      else:
+          pass
   - id: "p5-4"
     judul: "Klasifikasi Sinyal"
     emoji: "🚦"
@@ -799,3 +846,20 @@ soal:
     petunjuk:
       - "Cek target dulu (if), lalu cut (elif), sisanya TAHAN."
       - "Gunakan >= dan <= supaya sama dengan ikut masuk."
+    tugas:
+      - "Baca harga (baris 1), target jual (baris 2), dan batas cut loss (baris 3)."
+      - "Kalau harga >= target, cetak JUAL."
+      - "Kalau tidak, cek harga <= batas cut loss: cetak CUT."
+      - "Kalau dua-duanya tidak, cetak TAHAN."
+    starter: |
+      harga = int(input())
+      target = int(input())
+      cut = int(input())
+
+      # TODO: cek target dulu, lalu cut loss, sisanya TAHAN
+      if harga >= target:
+          pass
+      elif harga <= cut:
+          pass
+      else:
+          pass

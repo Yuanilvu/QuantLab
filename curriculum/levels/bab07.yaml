@@ -618,6 +618,16 @@ soal:
     petunjuk:
       - "input().split() memecah baris menjadi daftar teks."
       - "map(int, ...) mengubah semuanya jadi angka."
+    tugas:
+      - "Baca satu baris tiga angka dengan input().split()."
+      - "Ubah ketiganya jadi angka bulat: a, b, c = map(int, ...)."
+      - "Cetak jumlah a + b + c."
+    starter: |
+      # TODO: baca satu baris lalu pecah jadi tiga angka (pakai split dan map(int, ...))
+      baris = input()
+      a, b, c = 0, 0, 0
+
+      # TODO: cetak jumlah ketiga angka
   - id: "p7-2"
     judul: "Harga Tertinggi"
     emoji: "📈"
@@ -653,6 +663,21 @@ soal:
     petunjuk:
       - "Buat list kosong: harga = []."
       - "Tambah tiap harga dengan harga.append(...)."
+    tugas:
+      - "Baca N dengan int(input())."
+      - "Siapkan list kosong harga = [], lalu loop N kali: baca harga dan append ke list."
+      - "Cetak harga tertinggi dengan max(harga)."
+    starter: |
+      n = int(input())
+
+      # TODO: siapkan list kosong untuk harga
+      harga = []
+
+      # TODO: loop n kali, baca tiap harga lalu append ke list
+      for i in range(n):
+          pass
+
+      # TODO: cetak harga tertinggi dengan max()
   - id: "p7-3"
     judul: "Fungsi Rata-rata"
     emoji: "⚙️"
@@ -689,6 +714,21 @@ soal:
     petunjuk:
       - "Fungsi: def rata2(lst): return sum(lst) // len(lst)."
       - "Isi list dengan list comprehension atau loop + append."
+    tugas:
+      - "Buat fungsi rata2(lst) yang mengembalikan sum(lst) // len(lst)."
+      - "Baca N, lalu isi list harga dari N baris input."
+      - "Panggil rata2(harga) dan cetak hasilnya."
+    starter: |
+      # TODO: lengkapi fungsi rata2 — kembalikan sum(lst) // len(lst)
+      def rata2(lst):
+          pass
+
+      n = int(input())
+
+      # TODO: isi list harga dari n baris input
+      harga = []
+
+      print(rata2(harga))
   - id: "p7-4"
     judul: "Fungsi Nilai Harapan"
     emoji: "🎲"
@@ -727,3 +767,17 @@ soal:
     petunjuk:
       - "Rumus EV: (peluang menang × reward) − (peluang kalah × loss)."
       - "Format hasil dengan f-string: `print(f\"{hasil:.2f}\")`."
+    tugas:
+      - "Buat fungsi ev(wr, reward, loss) yang mengembalikan (wr/100 * reward) - ((100 - wr)/100 * loss)."
+      - "Baca win rate, reward, dan loss (tiga baris)."
+      - "Cetak hasil ev(...) dengan 2 angka desimal (:.2f)."
+    starter: |
+      # TODO: lengkapi fungsi ev dengan rumus nilai harapan
+      def ev(wr, reward, loss):
+          pass
+
+      wr = int(input())
+      reward = int(input())
+      loss = int(input())
+
+      # TODO: panggil ev(wr, reward, loss) dan cetak hasilnya 2 angka desimal

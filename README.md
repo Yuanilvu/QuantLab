@@ -1,20 +1,23 @@
 # QuantLab ⚡
 
-Platform belajar **quant trading lewat skenario keputusan** — ala freeCodeCamp/HackerRank,
-dibuat untuk trader yang tidak ngoding: baca kasus pasar → pilih keputusan → lihat
-terjemahan Python-nya → lihat hasil simulasi 4 keputusan. Plus **Chart Drill** (latihan
-baca grafik harga nyata) dan **soal coding** yang dinilai otomatis.
+Platform belajar **quant trading ala kelas interaktif (Kaggle-style)** — dibuat untuk trader
+yang belajar dari nol: **belajar teori → kerjakan latihan coding yang disuruh** (kotak
+"🎯 Tugasmu" + starter `# TODO` di editor) → uji pemahaman lewat **skenario keputusan**
+(pilih keputusan → lihat hasil simulasi). Plus **Chart Drill** (latihan baca grafik
+harga nyata) dan **soal coding** yang dinilai otomatis di sandbox.
 
 ## Isi
 
-- **6 track · 27 bab · 270 skenario keputusan · 43 soal coding · 37 Lab Teknikal + Ujian**
+- **6 track · 27 bab · 270 skenario keputusan · 57 soal coding · 37 Lab Teknikal + Ujian**
   - 🧮 Math 1-3 → 🐍 Python 4-7 → 💰 Finance 8-10 → 📈 Quant 11-21
   - 🚀 Advanced 22-24 → 📦 Libraries 25-27 (NumPy/Pandas/Matplotlib)
+  - Setiap bab: 2 pelajaran teori → **latihan coding** (semua bab punya!) → 10 skenario
 - **Skenario keputusan**: cerita kasus pasar (konteks Bybit funding, saham IDX) →
   4 pilihan → jawaban benar + hitungan + kode Python + hasil simulasi (return/drawdown/win rate).
-- **Soal coding (43)**: ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses
-  file/internet dari kode user). Track Python & Advanced/Libraries + track Quant (bab 11-21,
-  termasuk 2 soal **"data nyata"** yang membaca snapshot harga di `/soaldata`).
+- **Soal coding (57, gaya Kaggle)**: SETIAP bab punya latihan coding — kotak **🎯 Tugasmu**
+  (langkah "disuruh apa") + **starter code** ber-`# TODO` yang terpasang otomatis di editor.
+  Ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses file/internet dari kode
+  user); termasuk 2 soal **"data nyata"** yang membaca snapshot harga di `/soaldata`.
 - **📈 Lab Teknikal (37 drill, 4 modul, + Ujian Teknikal)** — latihan analisa teknikal pakai
   grafik harga NYATA (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC): baca candle & tren → level &
   struktur → indikator & risiko → **praktik klik langsung di grafik** (tandai support, pasang
@@ -35,8 +38,9 @@ Flask + gunicorn (systemd user service `quantlab.service`), SQLite (`data/quantl
 WAL), YAML curriculum di `curriculum/levels/babNN.yaml` + `curriculum/charts.yaml`,
 sandbox bubblewrap (`judge.py`), chart SVG pure-Python (`chartgen.py` + `chartfacts.py`).
 
-Konten kurikulum: `curriculum/levels/babNN.yaml` — 2 pelajaran + 10 skenario + (opsional)
-soal coding per bab. Setelah edit YAML, restart service (kurikulum di-cache per proses).
+Konten kurikulum: `curriculum/levels/babNN.yaml` — 2 pelajaran + soal coding + 10 skenario
+per bab (urutan UI: Tahap 1 Teori → Tahap 2 Coding → Tahap 3 Skenario). Setelah edit YAML,
+restart service (kurikulum di-cache per proses).
 
 Data pendukung (beku, jangan di-refresh):
 `data/chart/*.csv` (grafik Lab Teknikal) · `data/soal/*.csv` (bahan soal "data nyata",

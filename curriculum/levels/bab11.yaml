@@ -563,3 +563,16 @@ soal:
     petunjuk:
       - "Funding dibayar 3 kali sehari (tiap 8 jam)."
       - "Rate dalam persen — bagi 100 dulu: 0,01% = 0,0001."
+    tugas:
+      - "Baca modal dolar di baris pertama dan funding rate per 8 jam di baris kedua."
+      - "Hitung cuan sekali bayar = modal kali rate dibagi 100."
+      - "Kalikan dengan 3 untuk cuan sehari, lalu dengan 30 untuk cuan sebulan."
+      - "Cetak cuan harian lalu cuan 30 hari, keduanya 2 desimal."
+    starter: |
+      modal = float(input())
+      rate = float(input())
+      cuan_8jam = modal * rate / 100
+      # TODO: cuan_hari = cuan_8jam * 3
+      # TODO: cuan_bulan = cuan_hari * 30
+      print(f"{cuan_hari:.2f}")
+      print(f"{cuan_bulan:.2f}")

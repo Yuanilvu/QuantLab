@@ -556,3 +556,16 @@ soal:
       - "Pakai csv.DictReader dari modul csv — nama kolomnya date dan close."
       - "Harga = float dari kolom close tiap baris."
       - "Return total = (harga akhir − harga awal) ÷ harga awal × 100."
+    tugas:
+      - "Baca path file CSV dari input."
+      - "Buka file itu, lalu kumpulkan kolom close jadi list harga (ubah tiap nilai ke float)."
+      - "Ambil harga awal (elemen pertama), harga akhir (elemen terakhir), dan harga tertinggi."
+      - "Cetak 4 baris dengan 2 desimal: harga awal, harga akhir, return total dalam persen, harga tertinggi."
+    starter: |
+      import csv
+      path = input()
+      with open(path) as f:
+          baris = list(csv.DictReader(f))
+      # TODO: kumpulkan kolom "close" tiap baris jadi list harga (float)
+      # TODO: simpan harga awal dan harga akhir, lalu hitung return total (%) dari keduanya
+      # TODO: cetak 4 baris (2 desimal): harga awal, harga akhir, return total, harga tertinggi

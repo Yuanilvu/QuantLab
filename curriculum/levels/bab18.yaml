@@ -573,3 +573,17 @@ soal:
     petunjuk:
       - "3 harga terakhir: harga[-3:]. 5 harga terakhir: harga[-5:]."
       - "Rata-rata = jumlah dibagi banyaknya harga."
+    tugas:
+      - "Baca N lalu semua harga ke dalam sebuah list."
+      - "Hitung MA cepat dari 3 harga terakhir dan MA lambat dari 5 harga terakhir."
+      - "Bandingkan keduanya untuk menentukan sinyal GOLDEN, DEATH, atau SAMA."
+      - "Cetak MA cepat, MA lambat (2 desimal), lalu sinyalnya."
+    starter: |
+      n = int(input())
+      harga = [float(input()) for _ in range(n)]
+      # TODO: ma_cepat = rata-rata 3 harga terakhir
+      # TODO: ma_lambat = rata-rata 5 harga terakhir
+      # TODO: tentukan sinyal: GOLDEN kalau ma_cepat lebih besar, DEATH kalau lebih kecil, SAMA kalau seri
+      print(f"{ma_cepat:.2f}")
+      print(f"{ma_lambat:.2f}")
+      print(sinyal)

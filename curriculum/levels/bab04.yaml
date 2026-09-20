@@ -617,6 +617,17 @@ soal:
     petunjuk:
       - "Baca angka dengan `n = int(input())`."
       - "Cetak `n * 2`."
+    tugas:
+      - "Baca satu angka harga kemarin dengan int(input())."
+      - "Hitung harga hari ini: harga kemarin dikali 2."
+      - "Cetak harga hari ini dengan print()."
+    starter: |
+      harga_kemarin = int(input())
+
+      # TODO: harga hari ini = dua kali harga kemarin
+      harga_hari_ini = 0
+
+      print(harga_hari_ini)
   - id: "p4-2"
     judul: "Harga Setelah Diskon"
     emoji: "🏷️"
@@ -650,6 +661,18 @@ soal:
     petunjuk:
       - "Harga setelah diskon = harga × (100 − diskon) ÷ 100."
       - "Gunakan `//` supaya hasilnya bilangan bulat."
+    tugas:
+      - "Baca harga asli (baris 1) dan persen diskon (baris 2), keduanya int(input())."
+      - "Hitung harga setelah diskon: harga dikali (100 - diskon) lalu // 100."
+      - "Cetak harga setelah diskon dengan print()."
+    starter: |
+      harga = int(input())
+      diskon = int(input())
+
+      # TODO: harga diskon = harga * (100 - diskon) // 100
+      harga_diskon = 0
+
+      print(harga_diskon)
   - id: "p4-3"
     judul: "Harga Naik Persen"
     emoji: "🚀"
@@ -683,6 +706,18 @@ soal:
     petunjuk:
       - "Harga baru = harga × (100 + persen) ÷ 100."
       - "Contoh: 1000 × 105 ÷ 100 = 1050."
+    tugas:
+      - "Baca harga awal (baris 1) dan persen kenaikan (baris 2)."
+      - "Hitung harga baru: harga dikali (100 + persen) lalu // 100."
+      - "Cetak harga barunya."
+    starter: |
+      harga = int(input())
+      persen = int(input())
+
+      # TODO: harga baru = harga * (100 + persen) // 100
+      harga_baru = 0
+
+      print(harga_baru)
   - id: "p4-4"
     judul: "Total Biaya Beli Saham"
     emoji: "🧾"
@@ -717,3 +752,19 @@ soal:
     petunjuk:
       - "1 lot = 100 lembar."
       - "Total = (harga × lot × 100) + fee."
+    tugas:
+      - "Baca harga per lembar, jumlah lot, dan fee (tiga baris)."
+      - "Hitung nilai beli: harga dikali lot dikali 100, karena 1 lot = 100 lembar."
+      - "Tambahkan fee ke nilai beli, lalu cetak totalnya."
+    starter: |
+      harga = int(input())
+      lot = int(input())
+      fee = int(input())
+
+      # TODO: nilai beli = harga * lot * 100 (1 lot = 100 lembar)
+      nilai_beli = 0
+
+      # TODO: total = nilai beli + fee
+      total = 0
+
+      print(total)

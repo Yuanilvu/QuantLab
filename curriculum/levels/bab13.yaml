@@ -580,3 +580,19 @@ soal:
       - "Hitung selisih antar harga yang berdekatan dulu, ambil 14 yang terakhir."
       - "total_naik = jumlah semua selisih positif. total_turun = jumlah selisih negatif (jadikan positif)."
       - "RS = (total_naik / 14) dibagi (total_turun / 14)."
+    tugas:
+      - "Baca N lalu semua harga ke dalam sebuah list."
+      - "Hitung selisih antar harga yang berdekatan, lalu ambil 14 yang terakhir."
+      - "Jumlahkan selisih positif jadi total_naik dan selisih negatif jadi total_turun."
+      - "Hitung RS dan RSI, cetak 2 desimal (total_turun nol berarti 100.00)."
+    starter: |
+      n = int(input())
+      harga = [float(input()) for _ in range(n)]
+      selisih = [harga[i] - harga[i - 1] for i in range(1, n)]
+      terakhir = selisih[-14:]
+      total_naik = 0.0
+      total_turun = 0.0
+      # TODO: jumlahkan selisih positif ke total_naik dan selisih negatif ke total_turun
+      # TODO: rs = (total_naik / 14) / (total_turun / 14)
+      # TODO: rsi = 100 - 100 / (1 + rs), tapi kalau total_turun nol maka rsi = 100.0
+      print(f"{rsi:.2f}")

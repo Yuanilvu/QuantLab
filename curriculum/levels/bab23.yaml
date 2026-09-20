@@ -528,6 +528,15 @@ soal:
     petunjuk:
       - "Bungkus int(input()) dengan try."
       - "except ValueError → cetak BUKAN ANGKA."
+    tugas:
+      - "Baca satu baris input."
+      - "Coba ubah isinya menjadi int di dalam blok try."
+      - "Kalau berhasil, cetak angka itu dikali 2."
+      - "Kalau ValueError, cetak BUKAN ANGKA."
+    starter: |
+      teks = input()
+      # TODO: coba ubah teks jadi int (try)
+      # TODO: kalau berhasil cetak angka dikali 2; kalau ValueError cetak BUKAN ANGKA (except)
   - id: "p23-2"
     judul: "Bagi yang Aman"
     emoji: "➗"
@@ -564,6 +573,16 @@ soal:
     petunjuk:
       - "a / b di dalam try."
       - "except ZeroDivisionError → TAK TERDEFINISI."
+    tugas:
+      - "Baca dua baris angka bulat: pembilang dan penyebut."
+      - "Hitung pembilang dibagi penyebut di dalam blok try."
+      - "Tangkap ZeroDivisionError."
+      - "Cetak hasil baginya; kalau pembaginya nol, cetak TAK TERDEFINISI."
+    starter: |
+      a = int(input())
+      b = int(input())
+      # TODO: coba bagi a dengan b di dalam try, lalu cetak hasilnya
+      # TODO: kalau ZeroDivisionError, cetak TAK TERDEFINISI (except)
   - id: "p23-3"
     judul: "Jumlah yang Valid"
     emoji: "🧹"
@@ -602,3 +621,16 @@ soal:
     petunjuk:
       - "int(input()) di dalam try, tambahkan ke total."
       - "except ValueError: pass → lewati yang jelek."
+    tugas:
+      - "Baca N, lalu N baris teks (masing-masing mungkin bukan angka)."
+      - "Untuk tiap baris, coba ubah jadi int lalu tambahkan ke total."
+      - "Lewati baris yang ValueError."
+      - "Cetak totalnya."
+    starter: |
+      n = int(input())
+      total = 0
+      for i in range(n):
+          teks = input()
+          # TODO: coba ubah teks jadi int, tambahkan ke total (try)
+          # TODO: kalau ValueError, lewati baris ini (except ... pass)
+      # TODO: cetak total

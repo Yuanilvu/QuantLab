@@ -11,6 +11,7 @@
 <section class="pagehead">
   <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
   <p class="sub">{{ bab.deskripsi }}</p>
+  <p class="sub">🧭 Alur bab: 1️⃣ Teori → 2️⃣ Coding (kamu disuruh kerjakan) → 3️⃣ Uji keputusan</p>
   <div class="scenactions">
     <a class="btn small ghost" href="{{ url_for('mentor_page', bab=bab.bab) }}">🤖 Tanya Mentor soal bab ini</a>
   </div>
@@ -19,8 +20,8 @@
 {% if lessons %}
 {% set ldone = lessons | selectattr('id', 'in', lessons_done) | list | length %}
 <section class="lessons">
-  <h3>📚 Materi Singkat <span class="meta">{{ ldone }}/{{ lessons | length }} selesai</span></h3>
-  <p class="note">Baca pelan-pelan, lalu tekan <b>“Saya Paham”</b> di tiap pelajaran — +5 XP, sekali per pelajaran.</p>
+  <h3>📚 Tahap 1 — Teori (Materi) <span class="meta">{{ ldone }}/{{ lessons | length }} selesai</span></h3>
+  <p class="note">Ini bekal teori bab ini — baca pelan-pelan, tekan <b>“Saya Paham”</b> di tiap pelajaran (+5 XP). Habis ini kamu lanjut <b>latihan coding</b>.</p>
   {% for l in lessons %}
   <details class="lesson" data-lid="{{ l.id }}">
     <summary>Pelajaran {{ l.id }} — {{ l.judul }} <span class="meta">· {{ l.menit }} menit</span>
@@ -47,10 +48,31 @@
 </section>
 {% endif %}
 
+{% if soals %}
+{% set qdone = soals | selectattr('id', 'in', soal_solved) | list | length %}
+<section class="scenlist">
+  <h3>⌨️ Tahap 2 — Latihan Coding <span class="meta">{{ qdone }}/{{ soals | length }} lolos</span></h3>
+  <p class="note">Gaya Kaggle: kamu <b>disuruh menyelesaikan tugas kecil</b> — tulis kode Python-nya, komputer menilai otomatis. Buka satu soal, baca <b>🎯 Tugasmu</b>, lalu kerjakan.</p>
+  {% for q in soals %}
+  <a class="scenrow {{ 'done' if q.id in soal_solved }}" href="{{ url_for('soal_page', qid=q.id) }}">
+    <span class="scenemoji">⌨️</span>
+    <span class="scenmain">
+      <b>{{ q.judul }}</b>
+      <span class="meta">
+        {{ q.tingkat }} · {{ q.menit }} menit · {{ q.xp }} XP
+        {% if q.id in soal_solved %} · <span class="good">✓ lolos</span>{% endif %}
+      </span>
+    </span>
+    <span class="arrow">{{ '✓' if q.id in soal_solved else '→' }}</span>
+  </a>
+  {% endfor %}
+</section>
+{% endif %}
+
 {% if scens %}
 {% set sdone = scens | selectattr('done') | list | length %}
 <section class="scenlist">
-  <h3>🎯 Latihan Skenario <span class="meta">{{ sdone }}/{{ scens | length }} selesai</span></h3>
+  <h3>🎯 Tahap 3 — Uji Keputusan (Skenario) <span class="meta">{{ sdone }}/{{ scens | length }} selesai</span></h3>
   <p class="note">Kasus pasar → kamu pilih keputusan → langsung lihat hasil tiap pilihan + pembahasannya. XP = poin belajarmu.</p>
   {% for s in scens %}
   <a class="scenrow {{ 'done' if s.done }}" href="{{ url_for('scenario_page', sid=s.data.id) if not s.done else url_for('scenario_result', sid=s.data.id) }}">
@@ -63,27 +85,6 @@
       </span>
     </span>
     <span class="arrow">{{ '✓' if s.done else '→' }}</span>
-  </a>
-  {% endfor %}
-</section>
-{% endif %}
-
-{% if soals %}
-{% set qdone = soals | selectattr('id', 'in', soal_solved) | list | length %}
-<section class="scenlist">
-  <h3>⌨️ Soal Coding <span class="meta">{{ qdone }}/{{ soals | length }} lolos</span></h3>
-  <p class="note">Kamu menulis kode Python sendiri — komputer menjalankan dan menilainya otomatis lewat tes rahasia.</p>
-  {% for q in soals %}
-  <a class="scenrow {{ 'done' if q.id in soal_solved }}" href="{{ url_for('soal_page', qid=q.id) }}">
-    <span class="scenemoji">⌨️</span>
-    <span class="scenmain">
-      <b>{{ q.judul }}</b>
-      <span class="meta">
-        {{ q.tingkat }} · {{ q.menit }} menit · {{ q.xp }} XP
-        {% if q.id in soal_solved %} · <span class="good">✓ lolos</span>{% endif %}
-      </span>
-    </span>
-    <span class="arrow">{{ '✓' if q.id in soal_solved else '→' }}</span>
   </a>
   {% endfor %}
 </section>

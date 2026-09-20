@@ -528,3 +528,120 @@ skenario:
     petunjuk:
       - "EV bulanan = EV per trade × jumlah trade."
       - "Hitung ketiganya, jangan cuma melihat EV per trade."
+soal:
+  - id: "p3-1"
+    judul: "Peluang Menang dalam Persen"
+    emoji: "🎯"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Dari 40 trade bot kamu bulan ini, 24-nya menang.
+      Peluang menang (win rate) dipakai sebagai bahan bakar hitungan nilai harapan.
+      Baca jumlah menang dan jumlah trade, lalu cetak win rate-nya.
+    input_spec: |
+      Baris 1: jumlah trade yang menang.
+      Baris 2: jumlah seluruh trade.
+    output_spec: |
+      Satu baris: win rate dalam persen, 2 angka di belakang koma.
+    contoh:
+      - input: "24\n40"
+        output: "60.00"
+      - input: "3\n4"
+        output: "75.00"
+    tes:
+      - input: "24\n40"
+        output: "60.00"
+      - input: "3\n4"
+        output: "75.00"
+      - input: "1\n8"
+        output: "12.50"
+      - input: "50\n50"
+        output: "100.00"
+    solusi: |
+      menang = float(input())
+      total = float(input())
+      win_rate = menang / total * 100
+      print(f"{win_rate:.2f}")
+    petunjuk:
+      - "Peluang = bagian dibagi keseluruhan."
+      - "Kalikan dengan 100 untuk jadi persen."
+      - "Cetak dengan 2 desimal."
+    tugas:
+      - "Baca jumlah trade menang dan jumlah seluruh trade (dua baris)."
+      - "Bagi jumlah menang dengan jumlah seluruh trade."
+      - "Kalikan 100 supaya jadi persen."
+      - "Cetak dengan 2 angka desimal."
+    starter: |
+      menang = float(input())
+      total = float(input())
+
+      # TODO: hitung win_rate = menang / total * 100
+      win_rate = 0
+
+      # TODO: cetak win_rate dengan 2 angka desimal
+      print(win_rate)
+  - id: "p3-2"
+    judul: "Nilai Harapan Satu Trade"
+    emoji: "💰"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Sistem tradingmu: 60% trade untung Rp100.000, 40% trade rugi Rp50.000.
+      Untung besar tapi jarang, atau kecil tapi sering — mana yang lebih baik?
+      Hitung nilai harapan (EV) per trade dalam rupiah.
+    input_spec: |
+      Baris 1: win rate dalam persen (mis. 60 artinya 60%).
+      Baris 2: untung saat menang, dalam rupiah.
+      Baris 3: rugi saat kalah, dalam rupiah.
+    output_spec: |
+      Satu baris: nilai harapan per trade dalam rupiah, 2 angka di belakang koma.
+      Bisa negatif kalau sistemnya rugi.
+    contoh:
+      - input: "60\n100000\n50000"
+        output: "40000.00"
+      - input: "50\n100000\n50000"
+        output: "25000.00"
+    tes:
+      - input: "60\n100000\n50000"
+        output: "40000.00"
+      - input: "50\n100000\n50000"
+        output: "25000.00"
+      - input: "30\n200000\n50000"
+        output: "25000.00"
+      - input: "40\n50000\n100000"
+        output: "-40000.00"
+    solusi: |
+      win_rate = float(input())
+      reward = float(input())
+      loss = float(input())
+      peluang_menang = win_rate / 100
+      peluang_kalah = 1 - peluang_menang
+      ev = peluang_menang * reward - peluang_kalah * loss
+      print(f"{ev:.2f}")
+    petunjuk:
+      - "EV = (peluang menang × untung) − (peluang kalah × rugi)."
+      - "Peluang menang = win rate ÷ 100; peluang kalah = 1 − peluang menang."
+      - "Cetak hasilnya dengan 2 desimal."
+    tugas:
+      - "Baca win rate (persen), untung saat menang, dan rugi saat kalah (tiga baris)."
+      - "Ubah win rate jadi peluang: bagi 100. Peluang kalah = 1 - peluang menang."
+      - "Hitung EV = peluang menang x untung - peluang kalah x rugi."
+      - "Cetak EV dengan 2 angka desimal."
+    starter: |
+      win_rate = float(input())
+      reward = float(input())
+      loss = float(input())
+
+      # TODO: ubah win_rate jadi peluang (bagi 100)
+      peluang_menang = 0
+
+      # TODO: peluang kalah = 1 - peluang menang
+      peluang_kalah = 0
+
+      # TODO: hitung EV = peluang menang * reward - peluang kalah * loss
+      ev = 0
+
+      # TODO: cetak EV dengan 2 angka desimal
+      print(ev)

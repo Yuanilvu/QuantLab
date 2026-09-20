@@ -541,3 +541,15 @@ soal:
     petunjuk:
       - "Aset yang nilainya lebih besar mempengaruhi hasil lebih banyak."
       - "Bobot tiap aset = nilai aset ÷ total nilai."
+    tugas:
+      - "Baca 4 baris input: nilai aset A, return aset A, nilai aset B, return aset B (semuanya angka)."
+      - "Hitung total nilai portofolio = nilai A + nilai B."
+      - "Hitung return portofolio berbobot: (nilai A × return A + nilai B × return B) ÷ total nilai."
+      - "Cetak return portofolio dengan 2 angka desimal."
+    starter: |
+      nilai_a = float(input())
+      return_a = float(input())
+      nilai_b = float(input())
+      return_b = float(input())
+      # TODO: hitung total nilai portofolio (nilai_a + nilai_b)
+      # TODO: hitung return portofolio berbobot, lalu cetak dengan 2 angka desimal

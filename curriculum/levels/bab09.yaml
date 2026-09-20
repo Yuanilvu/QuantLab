@@ -532,3 +532,116 @@ skenario:
       - "Modal keluar = ask × 100 × 1,0015."
       - "Uang masuk = bid × 100 × 0,9975."
       - "Bid minimal = modal keluar ÷ 99,75. Bandingkan dengan 3.990."
+soal:
+  - id: "p9-1"
+    judul: "Biaya Beli Satu Lot"
+    emoji: "🧾"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Beli saham IDX lewat online trading: harga di layar adalah harga ask
+      (harga yang kamu bayar), dan fee beli 0,15% dari nilai transaksi.
+      Baca harga ask per lembar dan jumlah lot. Satu lot = 100 lembar.
+      Cetak nilai saham dan total uang yang keluar dari rekening.
+    input_spec: |
+      Baris 1: harga ask per lembar (mis. 4000).
+      Baris 2: jumlah lot yang dibeli (mis. 2).
+    output_spec: |
+      Baris 1: nilai saham (harga ask x jumlah lembar).
+      Baris 2: total bayar termasuk fee beli 0,15%.
+      Keduanya 2 desimal.
+    contoh:
+      - input: "4000\n2"
+        output: "800000.00\n801200.00"
+      - input: "1000\n5"
+        output: "500000.00\n500750.00"
+    tes:
+      - input: "4000\n2"
+        output: "800000.00\n801200.00"
+      - input: "1000\n5"
+        output: "500000.00\n500750.00"
+      - input: "250\n10"
+        output: "250000.00\n250375.00"
+      - input: "1550\n3"
+        output: "465000.00\n465697.50"
+    solusi: |
+      harga_ask = float(input())
+      lot = int(input())
+      lembar = lot * 100
+      nilai_saham = harga_ask * lembar
+      total_bayar = nilai_saham * 1.0015
+      print(f"{nilai_saham:.2f}")
+      print(f"{total_bayar:.2f}")
+    petunjuk:
+      - "1 lot = 100 lembar, jadi lembar = lot x 100."
+      - "Fee beli 0,15% artinya kalikan nilai saham dengan 1,0015."
+    tugas:
+      - "Baca harga ask per lembar dan jumlah lot."
+      - "Ubah lot jadi lembar dengan mengalikan 100."
+      - "Hitung nilai saham = harga ask kali lembar."
+      - "Hitung total bayar = nilai saham kali 1,0015, lalu cetak keduanya."
+    starter: |
+      harga_ask = float(input())
+      lot = int(input())
+      # TODO: lembar = lot * 100
+      # TODO: nilai_saham = harga_ask * lembar
+      # TODO: total_bayar = nilai_saham * 1.0015
+      print(f"{nilai_saham:.2f}")
+      print(f"{total_bayar:.2f}")
+  - id: "p9-2"
+    judul: "Harga Impas Setelah Fee"
+    emoji: "🎯"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Kamu sudah beli saham di harga ask. Supaya balik modal, harga jual harus
+      menutup fee beli 0,15% plus fee jual 0,25%.
+      Baca harga ask saat kamu beli dan harga bid sekarang. Cetak harga jual
+      impas dan berapa poin bid harus naik dari posisi sekarang.
+    input_spec: |
+      Baris 1: harga ask saat beli (mis. 4000).
+      Baris 2: harga bid sekarang (mis. 3990).
+    output_spec: |
+      Baris 1: harga jual impas (uang masuk sama dengan modal keluar).
+      Baris 2: poin kenaikan bid yang dibutuhkan dari harga bid sekarang.
+      Keduanya 2 desimal.
+    contoh:
+      - input: "4000\n3990"
+        output: "4016.04\n26.04"
+      - input: "1000\n985"
+        output: "1004.01\n19.01"
+    tes:
+      - input: "4000\n3990"
+        output: "4016.04\n26.04"
+      - input: "1000\n985"
+        output: "1004.01\n19.01"
+      - input: "250\n250"
+        output: "251.00\n1.00"
+      - input: "1550\n1520"
+        output: "1556.22\n36.22"
+    solusi: |
+      harga_ask = float(input())
+      harga_bid = float(input())
+      modal_keluar = harga_ask * 1.0015
+      harga_impas = modal_keluar / 0.9975
+      poin_naik = harga_impas - harga_bid
+      print(f"{harga_impas:.2f}")
+      print(f"{poin_naik:.2f}")
+    petunjuk:
+      - "Modal keluar = ask x 1,0015. Uang masuk = harga jual x 0,9975."
+      - "Impas saat harga jual x 0,9975 = modal keluar, jadi harga jual = modal keluar / 0,9975."
+    tugas:
+      - "Baca harga ask saat beli dan harga bid sekarang."
+      - "Hitung modal keluar = ask kali 1,0015 (fee beli)."
+      - "Hitung harga impas = modal keluar dibagi 0,9975 (fee jual)."
+      - "Cetak harga impas dan selisihnya dengan bid sekarang."
+    starter: |
+      harga_ask = float(input())
+      harga_bid = float(input())
+      # TODO: modal_keluar = harga_ask * 1.0015
+      # TODO: harga_impas = modal_keluar / 0.9975
+      # TODO: poin_naik = harga_impas - harga_bid
+      print(f"{harga_impas:.2f}")
+      print(f"{poin_naik:.2f}")

@@ -21,6 +21,15 @@
     <div class="case">{{ q.cerita | replace('\n', '<br>') | safe }}</div>
   </div>
 
+  {% if q.tugas %}
+  <div class="casebox">
+    <h3>🎯 Tugasmu <span class="meta">(ini yang kamu kerjakan)</span></h3>
+    <ol class="tasklist">
+      {% for t in q.tugas %}<li>{{ t }}</li>{% endfor %}
+    </ol>
+  </div>
+  {% endif %}
+
   <div class="casebox">
     <h3>📐 Format Soal</h3>
     <div class="io">
@@ -68,8 +77,9 @@
 
   <form method="post" class="codeform casebox">
     <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-    <h3>💻 Kode Python-mu</h3>
-    <textarea name="code" rows="12" spellcheck="false" aria-label="Editor kode Python" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code }}</textarea>
+    <h3>💻 Giliranmu — tulis kode</h3>
+    {% if q.starter and not code %}<p class="note">✏️ Kode awal sudah dipasang — lengkapi bagian bertanda <code># TODO</code>, lalu tekan <b>▶ Jalankan &amp; Uji</b>.</p>{% endif %}
+    <textarea name="code" rows="12" spellcheck="false" aria-label="Editor kode Python" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code if code else (q.starter or '') }}</textarea>
     <div class="scenactions">
       <button class="btn primary" type="submit">▶ Jalankan & Uji</button>
       <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
