@@ -513,10 +513,20 @@ UPLOAD_MAX_FILES = 30
 UPLOAD_EXTS = (".csv", ".tsv", ".txt")
 
 
+def work_dir(username):
+    """Folder kerja user (di-bind ke sandbox sebagai /work)."""
+    safe = "".join(ch for ch in str(username or "") if ch.isalnum() or ch in "._-") or "user"
+    return os.path.join(WORKROOT, safe)
+
+
 def uploads_dir(username):
     """Folder uploads user = subfolder /work user (terlihat di sandbox sebagai /work/uploads)."""
-    safe = "".join(ch for ch in str(username or "") if ch.isalnum() or ch in "._-") or "user"
-    return os.path.join(WORKROOT, safe, UPLOAD_DIRNAME)
+    return os.path.join(work_dir(username), UPLOAD_DIRNAME)
+
+
+def submission_path(username):
+    """Berkas submission Kompetisi Simulasi: /work/submission.csv."""
+    return os.path.join(work_dir(username), "submission.csv")
 
 
 def safe_upload_name(filename):

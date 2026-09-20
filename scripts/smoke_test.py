@@ -52,7 +52,7 @@ def main():
     check("register", r.status_code in (200, 302))
 
     # 3. Sweep rute utama
-    paths = ["/", "/peta", "/data-science", "/jurnal", "/ulas",
+    paths = ["/", "/peta", "/data-science", "/kompetisi", "/jurnal", "/ulas",
              "/leaderboard", "/badges", "/profil", "/cari?q=funding",
              "/notebook", "/notebook/datasets",
              "/bab/1", "/bab/11", "/bab/27", "/bab/28", "/skenario/s11-1",
@@ -102,6 +102,8 @@ def main():
           "Data Science" in html and "kredit_umkm" in html and "Playbook" in html)
     html = c.get("/notebook/datasets").get_data(as_text=True)
     check("dataset + upload hadir", "Upload Datamu" in html and "uploads" in html)
+    html = c.get("/kompetisi").get_data(as_text=True)
+    check("halaman kompetisi", "Lomba Kredit UMKM" in html and "submission.csv" in html)
 
     # 8. Header keamanan
     hdrs = c.get("/login").headers
@@ -115,7 +117,8 @@ def main():
     if row:
         uid = row["id"]
         for t in ("solves", "lesson_done", "soal_solved", "journal_entries",
-                  "exam_pass", "review_schedule", "mentor_messages", "notebooks"):
+                  "exam_pass", "review_schedule", "mentor_messages", "notebooks",
+                  "submissions"):
             conn.execute(f"DELETE FROM {t} WHERE user_id=?", (uid,))
         conn.execute("DELETE FROM users WHERE id=?", (uid,))
         conn.commit()

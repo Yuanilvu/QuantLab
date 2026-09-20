@@ -3,6 +3,7 @@
 Flask app: auth (CSRF + anti brute-force DB-backed), kurikulum YAML,
 XP/streak/badges, leaderboard, notebook ala Kaggle, fitur Data Science.
 """
+import csv
 import json
 import math
 import os
@@ -872,7 +873,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v16';
+    sw = """const CACHE = 'quantlab-v17';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1278,13 +1279,158 @@ def data_science():
             "nb": nb_done,
         })
     level = ds_level(ds["done"] if ds else 0, ds["total"] if ds else 0)
+    _bk = db.submission_best(user["id"], "kredit_umkm")
+    best_komp = dict(_bk) if _bk else None
     tpl_ds = {k: v for k, v in nblib.TEMPLATE_META.items() if v.get("group") == "ds"}
     return render_template(
         "data_science.html", cards=cards, ds=ds, level=level,
         exam=db.exam_passed(user["id"], "ds"),
         tpl_ds=tpl_ds, playbook=nblib.TEMPLATE_META.get("playbook"),
         datasets=nblib.list_datasets(),
-        uploads_n=len(nblib.list_uploads(user["username"])))
+        uploads_n=len(nblib.list_uploads(user["username"])),
+        best_komp=best_komp,
+        nsub_komp=db.submission_count(user["id"], "kredit_umkm"))
+
+
+# ---------- Kompetisi Simulasi (nilai /work/submission.csv vs kunci) ----------
+
+KOMPETISI_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "kompetisi")
+
+KOMPETISI = {
+    "kredit_umkm": {
+        "nama": "Lomba Kredit UMKM",
+        "emoji": "\U0001F3E6",
+        "deskripsi": "Prediksi status 150 pengajuan kredit baru (Lancar / Macet) — dari data mentah sampai submission, ala lomba data science sungguhan.",
+        "n": 150,
+        "kolom": ("id_pengajuan", "status_prediksi"),
+        "labels": ("Lancar", "Macet"),
+        "kunci": os.path.join(KOMPETISI_DIR, "kredit_umkm_uji_kunci.csv"),
+        "baseline_mode": 0.760,   # tebakan mayoritas (semua "Lancar")
+        "contoh_model": 0.847,    # logreg ala Playbook, terukur di data uji
+        "tier_gold": 0.87,
+        "tier_silver": 0.84,
+        "tier_bronze": 0.78,
+    },
+}
+
+
+def _kompetisi_kunci(ev):
+    kunci = {}
+    with open(ev["kunci"], newline="", encoding="utf-8") as f:
+        for row in csv.DictReader(f):
+            kunci[row["id_pengajuan"].strip()] = row["status"].strip()
+    return kunci
+
+
+def _kompetisi_nilai(username, ev):
+    """Baca submission user, validasi, dan nilai vs kunci. return (hasil|None, pesan_error)."""
+    spath = nblib.submission_path(username)
+    if not os.path.isfile(spath):
+        return None, "Belum ada berkas /work/submission.csv — jalankan dulu Notebook Playbook sampai sel terakhir."
+    if os.path.getsize(spath) > 1_000_000:
+        return None, "Berkas submission terlalu besar (maks 1 MB)."
+    try:
+        kunci = _kompetisi_kunci(ev)
+    except OSError:
+        return None, "Kunci penilaian belum tersedia di server — hubungi admin."
+    rows = []
+    with open(spath, newline="", encoding="utf-8", errors="replace") as f:
+        reader = csv.DictReader(f)
+        cols = reader.fieldnames or []
+        for c in ev["kolom"]:
+            if c not in cols:
+                return None, f"Kolom '{c}' tidak ditemukan — header harus memuat: {', '.join(ev['kolom'])}."
+        for x in reader:
+            rows.append(((x.get("id_pengajuan") or "").strip(),
+                         (x.get("status_prediksi") or "").strip()))
+    if len(rows) != ev["n"]:
+        return None, f"Jumlah baris {len(rows)} — harus {ev['n']} (satu prediksi per pengajuan)."
+    ids = [rid for rid, _ in rows]
+    if len(set(ids)) != len(ids):
+        return None, "Ada id_pengajuan yang duplikat — pastikan satu prediksi per pengajuan."
+    if set(ids) != set(kunci):
+        return None, (f"Daftar id_pengajuan tidak cocok dengan data uji "
+                      f"(kurang {len(set(kunci) - set(ids))}, asing {len(set(ids) - set(kunci))}) — "
+                      f"pakai persis kolom id dari kredit_umkm_uji.csv.")
+    norm = {lab.lower(): lab for lab in ev["labels"]}
+    tp = tn = fp = fn = 0
+    asing = []
+    for rid, val in rows:
+        pred = norm.get(val.lower())
+        if pred is None:
+            asing.append(val)
+            continue
+        true = kunci[rid]
+        if true == "Macet":
+            tp += pred == "Macet"
+            fn += pred == "Lancar"
+        else:
+            tn += pred == "Lancar"
+            fp += pred == "Macet"
+    if asing:
+        contoh = ", ".join(sorted(set(asing))[:3])
+        return None, f"Isi status_prediksi harus 'Lancar' atau 'Macet' (ditemukan: {contoh})."
+    n = tp + tn + fp + fn
+    acc = (tp + tn) / n
+    prec = tp / (tp + fp) if (tp + fp) else 0.0
+    rec = tp / (tp + fn) if (tp + fn) else 0.0
+    if acc >= ev["tier_gold"]:
+        medal = "\U0001F947"
+    elif acc >= ev["tier_silver"]:
+        medal = "\U0001F948"
+    elif acc >= ev["tier_bronze"]:
+        medal = "\U0001F949"
+    elif acc >= ev["baseline_mode"]:
+        medal = "\u2705"
+    else:
+        medal = "\u274C"
+    return {"n": n, "tp": tp, "tn": tn, "fp": fp, "fn": fn,
+            "accuracy": round(acc, 4), "precision": round(prec, 4),
+            "recall": round(rec, 4), "medal": medal}, None
+
+
+@app.route("/kompetisi")
+@login_required
+def kompetisi():
+    user = _user()
+    ev = KOMPETISI["kredit_umkm"]
+    hist = db.submission_list(user["id"], "kredit_umkm", 12)
+    for h in hist:
+        h["waktu"] = _nb_wib(h["created_at"])
+    _bk = db.submission_best(user["id"], "kredit_umkm")
+    best = dict(_bk) if _bk else None
+    hasil = hasil_d = None
+    try:
+        sid = int(request.args.get("sid", ""))
+    except ValueError:
+        sid = 0
+    if sid:
+        row = db.submission_get(sid, user["id"])
+        if row:
+            hasil = dict(row)
+            try:
+                hasil_d = json.loads(hasil.get("detail") or "{}")
+            except ValueError:
+                hasil_d = {}
+    return render_template("kompetisi.html", ev=ev, hist=hist, best=best,
+                           nsub=db.submission_count(user["id"], "kredit_umkm"),
+                           hasil=hasil, hasil_d=hasil_d,
+                           ada_file=os.path.isfile(nblib.submission_path(user["username"])),
+                           kunci_ada=os.path.isfile(ev["kunci"]))
+
+
+@app.route("/kompetisi/cek", methods=["POST"])
+@login_required
+def kompetisi_cek():
+    user = _user()
+    ev = KOMPETISI["kredit_umkm"]
+    hasil, err = _kompetisi_nilai(user["username"], ev)
+    if err:
+        return redirect(url_for("kompetisi") + "?err=" + quote(err))
+    sid = db.submission_add(user["id"], "kredit_umkm", hasil["n"], hasil["accuracy"],
+                            hasil["precision"], hasil["recall"], hasil["medal"],
+                            json.dumps({k: hasil[k] for k in ("tp", "tn", "fp", "fn")}))
+    return redirect(url_for("kompetisi") + f"?sid={sid}")
 
 
 # ---------- Notebook (ala Kaggle) ----------

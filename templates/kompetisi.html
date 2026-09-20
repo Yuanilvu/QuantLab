@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% block title %}Kompetisi — QuantLab{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=5">
+{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <span class="kicker">Kompetisi Simulasi</span>
+  <h1>🏁 {{ ev.nama }}</h1>
+  <p class="sub">{{ ev.deskripsi }} Kerjakan di <b>📓 Notebook</b> → simpan <code>/work/submission.csv</code> → kirim ke sini untuk dinilai otomatis.</p>
+</section>
+
+<div class="nbstat">
+  <span class="chip">{{ nsub }} percobaan</span>
+  {% if best %}<span class="chip xp">{{ best.medal }} terbaik: {{ (best.accuracy * 100) | round(1) }}%</span>{% endif %}
+  <span class="chip">{{ '✅ submission.csv terdeteksi' if ada_file else '⬜ belum ada submission.csv di /work' }}</span>
+</div>
+
+{% if request.args.get('err') %}<p class="upmsg err">⚠️ {{ request.args.get('err') }}</p>{% endif %}
+{% if not kunci_ada %}<p class="upmsg err">⚠️ Kunci penilaian belum tersedia di server.</p>{% endif %}
+
+{% if hasil %}
+<section class="dscard" style="margin-bottom:18px">
+  <div class="dshead">
+    <b>Penilaian terakhir {{ hasil.medal }}</b>
+    <span class="chip">akurasi {{ (hasil.accuracy * 100) | round(1) }}%</span>
+  </div>
+  <p class="dsdesc">Presisi "Macet": {{ (hasil.precision_macet * 100) | round(1) }}% · Recall "Macet": {{ (hasil.recall_macet * 100) | round(1) }}% · {{ hasil.n_rows }} baris dinilai</p>
+  <div class="dstablewrap">
+    <table class="dstable">
+      <tr><th></th><th>Kenyataan: Macet</th><th>Kenyataan: Lancar</th></tr>
+      <tr><th>Prediksi: Macet</th><td>{{ hasil_d.tp }}</td><td>{{ hasil_d.fp }}</td></tr>
+      <tr><th>Prediksi: Lancar</th><td>{{ hasil_d.fn }}</td><td>{{ hasil_d.tn }}</td></tr>
+    </table>
+  </div>
+  <p class="dsdesc" style="margin-top:10px">
+    Pembanding → tebakan mayoritas: <b>{{ (ev.baseline_mode * 100) | round(1) }}%</b> · model contoh (bab 31): <b>{{ (ev.contoh_model * 100) | round(1) }}%</b>.
+    {% if hasil.medal == '🥇' %} Juara — luar biasa! 🎉
+    {% elif hasil.medal == '🥈' %} Mantap — setara model contoh!
+    {% elif hasil.medal == '🥉' %} Bagus — jelas di atas tebakan mayoritas.
+    {% elif hasil.medal == '✅' %} Lulus minimum — ayo perbaiki fitur/model untuk naik medali.
+    {% else %} Masih di bawah tebakan mayoritas — ulangi bab 28-31 lalu coba lagi.{% endif %}
+  </p>
+</section>
+{% endif %}
+
+<section class="dscard" style="margin-bottom:18px">
+  <div class="dshead"><b>Cara ikut</b><span class="chip">boleh dicoba berkali-kali</span></div>
+  <p class="dsdesc">
+    1️⃣ Buka <b>Notebook</b> → pakai template <b>🏆 Playbook Kompetisi</b> (atau notebook sendiri — bebas modelnya).<br>
+    2️⃣ Jalankan sel dari atas sampai bawah — sel terakhir menyimpan <code>/work/submission.csv</code>.<br>
+    3️⃣ Kembali ke halaman ini → tekan <b>🔍 Cek &amp; Nilai Submisi</b>.<br>
+    4️⃣ Lihat skor &amp; matriksnya — lalu perbaiki (fitur baru? model lain? tuning?) dan ulangi!
+  </p>
+  <p class="note">Skor dihitung terhadap <b>150 label rahasia</b> yang tersimpan di server (tidak bisa diintip dari notebook) — persis ala lomba.</p>
+  <div class="scenactions">
+    <form method="post" action="{{ url_for('notebook_baru') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="template" value="playbook">
+      <button type="submit" class="btn small" style="width:auto">🏆 Buka Playbook Kompetisi</button>
+    </form>
+    <form method="post" action="{{ url_for('kompetisi_cek') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button type="submit" class="btn primary" style="width:auto">🔍 Cek &amp; Nilai Submisi</button>
+    </form>
+    <a class="btn ghost small" href="{{ url_for('notebook_list') }}">📓 Notebook saya</a>
+  </div>
+</section>
+
+{% if hist %}
+<section class="scenlist">
+  <h3>🕘 Riwayat Percobaan <span class="meta">{{ nsub }} total</span></h3>
+  <div class="dstablewrap">
+    <table class="dstable">
+      <tr><th>Waktu (WIB)</th><th>Akurasi</th><th>Presisi “Macet”</th><th>Recall “Macet”</th><th>Medali</th></tr>
+      {% for h in hist %}
+      <tr><td>{{ h.waktu }}</td><td>{{ (h.accuracy * 100) | round(1) }}%</td><td>{{ (h.precision_macet * 100) | round(1) }}%</td><td>{{ (h.recall_macet * 100) | round(1) }}%</td><td>{{ h.medal }}</td></tr>
+      {% endfor %}
+    </table>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

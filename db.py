@@ -108,6 +108,18 @@ CREATE TABLE IF NOT EXISTS notebooks (
     created_at TEXT DEFAULT (datetime('now')),
     updated_at TEXT DEFAULT (datetime('now'))
 );
+CREATE TABLE IF NOT EXISTS submissions (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    event TEXT NOT NULL,
+    n_rows INTEGER NOT NULL,
+    accuracy REAL NOT NULL,
+    precision_macet REAL,
+    recall_macet REAL,
+    medal TEXT NOT NULL DEFAULT '',
+    detail TEXT DEFAULT '',
+    created_at TEXT DEFAULT (datetime('now'))
+);
 """
 
 
@@ -677,5 +689,50 @@ def notebook_count(user_id):
     with get_conn() as conn:
         row = conn.execute(
             "SELECT COUNT(*) AS n FROM notebooks WHERE user_id = ?", (user_id,)
+        ).fetchone()
+    return row["n"] if row else 0
+
+
+# ---------- Kompetisi Simulasi (skor submission) ----------
+
+def submission_add(user_id, event, n_rows, accuracy, precision, recall, medal, detail=""):
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT INTO submissions (user_id, event, n_rows, accuracy, precision_macet, "
+            "recall_macet, medal, detail) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            (user_id, event, n_rows, accuracy, precision, recall, medal, detail),
+        )
+        return cur.lastrowid
+
+
+def submission_get(sid, user_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM submissions WHERE id = ? AND user_id = ?", (sid, user_id)
+        ).fetchone()
+
+
+def submission_list(user_id, event, limit=12):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT * FROM submissions WHERE user_id = ? AND event = ? "
+            "ORDER BY id DESC LIMIT ?", (user_id, event, limit),
+        ).fetchall()
+    return [dict(r) for r in rows]
+
+
+def submission_best(user_id, event):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM submissions WHERE user_id = ? AND event = ? "
+            "ORDER BY accuracy DESC, id ASC LIMIT 1", (user_id, event),
+        ).fetchone()
+
+
+def submission_count(user_id, event):
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) AS n FROM submissions WHERE user_id = ? AND event = ?",
+            (user_id, event),
         ).fetchone()
     return row["n"] if row else 0

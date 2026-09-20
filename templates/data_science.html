@@ -94,6 +94,15 @@
   {% endfor %}
 </section>
 
+<section class="scenlist" aria-label="Kompetisi simulasi">
+  <h3>🏁 Uji Nyali — Kompetisi Simulasi</h3>
+  <a class="scenrow" href="{{ url_for('kompetisi') }}">
+    <span class="scenemoji" aria-hidden="true">🏁</span>
+    <span class="scenmain"><b>Lomba Kredit UMKM</b><span class="meta">Kerjakan di notebook → kirim submission → dapat akurasi &amp; medali. {% if best_komp %}Terbaikmu: {{ best_komp.medal }} {{ (best_komp.accuracy * 100) | round(1) }}% · {{ nsub_komp }} percobaan{% else %}Belum dicoba — mulai dari Playbook!{% endif %}</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</section>
+
 <section class="scenlist" aria-label="Ujian dan sertifikat">
   <h3>🎓 Ujian &amp; Sertifikat</h3>
   <a class="scenrow" href="{{ url_for('ujian', track='ds') }}">
@@ -109,12 +118,14 @@
 </section>
 
 <div class="casebox">
-  <h3>🚀 Alur cepat</h3>
+  <h3>🧭 Cara Belajar di sini (ikuti urutannya)</h3>
   <p class="meta">
-    1️⃣ Selesaikan bab <b>28 → 33</b> berurutan — teori, soal coding, lalu skenario.<br>
-    2️⃣ Di tiap bab buka <b>notebook latihan</b> dan jalankan semua sel — ubah angkanya, lihat apa yang berubah.<br>
-    3️⃣ Punya data lomba? <b>Upload CSV-mu</b> (📦 halaman Dataset) → baca di notebook dari <code>/work/uploads/</code>.<br>
-    4️⃣ Tutup dengan <b>🏆 Playbook Kompetisi</b>: alur 8 langkah dari data mentah sampai <code>submission.csv</code>.
+    1️⃣ <b>Bab 28 → 33 berurutan</b> — tiap bab: baca teori → kerjakan 2 soal coding → jawab <b>10 skenario</b> keputusan (aktivitasmu: {{ level.done }}/{{ level.total }}).<br>
+    2️⃣ Di tiap bab, <b>buka notebook latihan</b>-nya — jalankan semua sel, ubah-ubah angkanya sampai benar-benar paham.<br>
+    3️⃣ Sudah lancar? <b>Jalankan 🏆 Playbook</b> dari atas ke bawah → menghasilkan <code>submission.csv</code>.<br>
+    4️⃣ <b>🏁 Kirim ke Kompetisi Simulasi</b> → lihat akurasi &amp; medali. Perbaiki, ulangi, kejar 🥇!<br>
+    5️⃣ <b>Ujian Data Science</b> (+50 XP), lalu lengkapi sampai 72/72 → <b>🎓 Sertifikat</b>.<br>
+    6️⃣ Terakhir: <b>data lombamu sendiri</b> — upload CSV di Notebook, lalu ulangi alur yang sama.
   </p>
 </div>
 {% endblock %}

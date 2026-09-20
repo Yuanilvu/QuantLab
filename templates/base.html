@@ -30,6 +30,7 @@
     <a class="{{ 'active' if p.startswith('/chart') }}" href="{{ url_for('chart_list') }}">📈 Teknikal</a>
     <a class="{{ 'active' if p.startswith('/notebook') }}" href="{{ url_for('notebook_list') }}">📓 Notebook</a>
     <a class="{{ 'active' if p.startswith('/data-science') }}" href="{{ url_for('data_science') }}">📊 Data Science</a>
+    <a class="{{ 'active' if p.startswith('/kompetisi') }}" href="{{ url_for('kompetisi') }}">🏁 Kompetisi</a>
     <a class="{{ 'active' if p.startswith('/jurnal') }}" href="{{ url_for('jurnal') }}">Jurnal</a>
     <a class="{{ 'active' if p.startswith('/ulas') }}" href="{{ url_for('ulas') }}">Ulasan{% if user._review_due %}<span class="navbadge">{{ user._review_due }}</span>{% endif %}</a>
     <a class="{{ 'active' if p.startswith('/leaderboard') }}" href="{{ url_for('leaderboard_page') }}">Papan Skor</a>

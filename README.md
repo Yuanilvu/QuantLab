@@ -8,7 +8,8 @@ harga nyata), **soal coding** yang dinilai otomatis di sandbox, **📓 Notebook*
 (workspace ala Kaggle: kernel Python hidup — variabel tersimpan antar sel — plus dataset
 IDX siap pakai di `/datasets`), dan **📊 Data Science** (jalur + halaman fitur persiapan
 kompetisi: cleaning → EDA → feature engineering → ML → evaluasi → deep learning —
-lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigasi).
+lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigasi, serta **🏁 Kompetisi Simulasi** — kirim submission,
+dinilai otomatis, dapat skor & medali).
 
 ## Isi
 
@@ -45,11 +46,16 @@ lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigas
   Grafik SVG server-side (line & candlestick + volume + RSI), data dibekukan di
   `data/chart/*.csv` supaya kunci jawaban tidak pernah basi (dijaga `scripts/verify_charts.py`).
   Halaman `/chart` & `/chart/ujian`, XP 20/35/50 per tingkat.
+- **🏁 Kompetisi Simulasi (`/kompetisi`)** — alur lomba sungguhan: kerjakan di notebook →
+  `submission.csv` dinilai otomatis vs **150 label rahasia**: akurasi, presisi/recall,
+  confusion matrix, medali (🥇≥87% · 🥈≥84% · 🥉≥78% · ✅≥76%) + riwayat percobaan.
+  Pembanding terukur: tebakan mayoritas 76,0% · model contoh 84,7%.
 - **📊 Data Science (`/data-science`)** — halaman fitur: **kartu level** (8 tingkat 🌱→🏆),
   **checklist per bab** (teori/coding/skenario/notebook), 6 bab terurut (28-33),
   notebook latihan starter per bab + **🏆 Playbook Kompetisi** (end-to-end sampai
-  `submission.csv`), kartu **Ujian & Sertifikat**, dan dataset latihan (kredit UMKM
-  **sintetis, sengaja kotor** + **sample submission** ala kompetisi; read-only di `/datasets`).
+  `submission.csv`), kartu **Ujian & Sertifikat**, panduan **Cara Belajar** urut 6 langkah, dan dataset
+ latihan (kredit UMKM **sintetis, sengaja kotor** + **sample submission** ala kompetisi;
+ read-only di `/datasets`).
 - Fitur lain: tantangan harian, radar kemampuan, ujian per track, ulasan cerdas
   (spaced repetition), jurnal + export CSV, leaderboard, badge, sertifikat, PWA.
 
