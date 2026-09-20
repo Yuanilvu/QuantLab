@@ -4,7 +4,9 @@ Platform belajar **quant trading ala kelas interaktif (Kaggle-style)** — dibua
 yang belajar dari nol: **belajar teori → kerjakan latihan coding yang disuruh** (kotak
 "🎯 Tugasmu" + starter `# TODO` di editor) → uji pemahaman lewat **skenario keputusan**
 (pilih keputusan → lihat hasil simulasi). Plus **Chart Drill** (latihan baca grafik
-harga nyata) dan **soal coding** yang dinilai otomatis di sandbox.
+harga nyata), **soal coding** yang dinilai otomatis di sandbox, dan **📓 Notebook**
+(workspace ala Kaggle: kernel Python hidup — variabel tersimpan antar sel — plus dataset
+IDX siap pakai di `/datasets`).
 
 ## Isi
 
@@ -18,6 +20,16 @@ harga nyata) dan **soal coding** yang dinilai otomatis di sandbox.
   (langkah "disuruh apa") + **starter code** ber-`# TODO` yang terpasang otomatis di editor.
   Ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses file/internet dari kode
   user); termasuk 2 soal **"data nyata"** yang membaca snapshot harga di `/soaldata`.
+- **📓 Notebook (ala Kaggle)** — workspace Python ber-sel (kode + markdown): **kernel
+  persisten per user** (variabel tersimpan antar sel), output di bawah sel (teks, nilai
+  `Out[n]`, grafik matplotlib), **▶▶ Jalankan Semua** & **⟳ Restart Kernel**, simpan
+  otomatis, template siap pakai (Kosong / Pandas / Watchlist / Backtest Mini), rail
+  **📦 Dataset** (klik = contoh kode). Sandbox bubblewrap terpisah (`notebook_kerneld.py`
+  + worker `notebook_kernel.py`, service `quantlab-kernel.service`, port 5211, timeout
+  30 dtk/sel); file tulis per user di `/work` (tersimpan antar sesi).
+- **📦 Dataset notebook** (`/notebook/datasets`): snapshot nyata dari `data/ohlc` —
+  `ihsg_harian`, `saham_watchlist` (6 saham, format panjang), `saham_lebar` (format
+  lebar, siap korelasi), `btc_harian`; di-bind **read-only** ke `/datasets`.
 - **📈 Lab Teknikal (37 drill, 4 modul, + Ujian Teknikal)** — latihan analisa teknikal pakai
   grafik harga NYATA (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC): baca candle & tren → level &
   struktur → indikator & risiko → **praktik klik langsung di grafik** (tandai support, pasang
@@ -36,7 +48,9 @@ harga nyata) dan **soal coding** yang dinilai otomatis di sandbox.
 
 Flask + gunicorn (systemd user service `quantlab.service`), SQLite (`data/quantlab.db`,
 WAL), YAML curriculum di `curriculum/levels/babNN.yaml` + `curriculum/charts.yaml`,
-sandbox bubblewrap (`judge.py`), chart SVG pure-Python (`chartgen.py` + `chartfacts.py`).
+sandbox bubblewrap (`judge.py`), chart SVG pure-Python (`chartgen.py` + `chartfacts.py`),
+daemon kernel notebook (`notebook_kerneld.py` + `notebook_kernel.py`, service
+`quantlab-kernel.service`).
 
 Konten kurikulum: `curriculum/levels/babNN.yaml` — 2 pelajaran + soal coding + 10 skenario
 per bab (urutan UI: Tahap 1 Teori → Tahap 2 Coding → Tahap 3 Skenario). Setelah edit YAML,
@@ -68,7 +82,8 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
 
 # produksi (systemd user)
 cp quantlab.service ~/.config/systemd/user/
-systemctl --user daemon-reload && systemctl --user enable --now quantlab
+cp quantlab-kernel.service ~/.config/systemd/user/   # daemon Notebook (untuk /notebook)
+systemctl --user daemon-reload && systemctl --user enable --now quantlab quantlab-kernel
 ```
 
 Sandbox soal coding butuh `bubblewrap` (`bwrap`) di sistem.

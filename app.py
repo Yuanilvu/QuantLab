@@ -3,6 +3,7 @@
 Flask app: auth (CSRF + anti brute-force DB-backed), kurikulum YAML,
 XP/streak/badges, leaderboard, playground (kalkulator + mini backtest MA).
 """
+import json
 import math
 import os
 import random
@@ -22,6 +23,7 @@ import chartgen
 import judge
 import market
 import mentor
+import notebook as nblib
 
 # ── Output contoh kode pelajaran (dihitung sekali per proses, sandbox) ─────
 _KODE_OUT_CACHE = {}
@@ -59,7 +61,8 @@ app = Flask(__name__)
 app.config["SECRET_KEY"] = os.environ.get(
     "SECRET_KEY", secrets.token_hex(32)
 )
-app.config["MAX_CONTENT_LENGTH"] = 64 * 1024
+app.config["MAX_FORM_MEMORY_SIZE"] = 2_000_000  # sel notebook + output bisa besar
+app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024  # notebook: payload sel + output bisa besar
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_NAME"] = "ql_session"
@@ -1008,6 +1011,7 @@ def manifest_route():
         "shortcuts": [
             {"name": "Dashboard", "short_name": "Beranda", "url": base + "/"},
             {"name": "Lab Teknikal", "short_name": "Teknikal", "url": base + "/chart"},
+            {"name": "Notebook", "short_name": "Notebook", "url": base + "/notebook"},
             {"name": "Mentor AI", "short_name": "Mentor", "url": base + "/mentor"},
             {"name": "Backtest Lab", "short_name": "Lab", "url": base + "/lab"},
         ],
@@ -1017,7 +1021,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v12';
+    sw = """const CACHE = 'quantlab-v13';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1573,6 +1577,132 @@ def mentor_send():
 def mentor_clear():
     db.mentor_clear(_user()["id"])
     return {"ok": True}
+
+
+# ---------- Notebook (ala Kaggle) ----------
+
+def _nb_wib(ts):
+    """Timestamp UTC SQLite → 'dd/mm HH:MM' WIB untuk tampilan."""
+    try:
+        d = datetime.strptime(ts, "%Y-%m-%d %H:%M:%S") + timedelta(hours=7)
+        return d.strftime("%d/%m %H:%M")
+    except (TypeError, ValueError):
+        return "-"
+
+
+@app.route("/notebook")
+@login_required
+def notebook_list():
+    user = _user()
+    rows = db.notebook_list(user["id"])
+    for r in rows:
+        r["updated_wib"] = _nb_wib(r["updated_at"])
+    return render_template(
+        "notebooks.html",
+        rows=rows,
+        templates=nblib.TEMPLATE_META,
+        total_cells=sum(r["n_cells"] for r in rows),
+    )
+
+
+@app.route("/notebook/baru", methods=["POST"])
+@login_required
+def notebook_baru():
+    user = _user()
+    tpl = request.form.get("template", "kosong")
+    meta = nblib.TEMPLATE_META.get(tpl, nblib.TEMPLATE_META["kosong"])
+    cells = nblib.template_cells(tpl)
+    judul = (request.form.get("judul") or "").strip()[:80] or meta["judul"]
+    nid = db.notebook_create(user["id"], judul,
+                             nblib.cells_to_json(cells), emoji=meta["emoji"])
+    return redirect(url_for("notebook_editor", nid=nid))
+
+
+@app.route("/notebook/<int:nid>")
+@login_required
+def notebook_editor(nid):
+    user = _user()
+    row = db.notebook_get(nid, user["id"])
+    if not row:
+        abort(404)
+    try:
+        cells = json.loads(row["cells"] or "[]")
+    except ValueError:
+        cells = []
+    return render_template(
+        "notebook.html",
+        nb=row,
+        cells_json=nblib.cells_for_js(cells),
+        datasets=nblib.list_datasets(),
+        exec_timeout=int(nblib.EXEC_TIMEOUT_S),
+        updated_wib=_nb_wib(row["updated_at"]),
+    )
+
+
+@app.route("/notebook/datasets")
+@login_required
+def notebook_datasets():
+    items = nblib.list_datasets()
+    for it in items:
+        it["preview"] = nblib.dataset_preview(it["name"], 5)
+    return render_template("notebook_datasets.html", items=items)
+
+
+@app.route("/api/notebook/<int:nid>/simpan", methods=["POST"])
+@login_required
+def notebook_simpan(nid):
+    user = _user()
+    if not db.notebook_get(nid, user["id"]):
+        return {"ok": False, "error": "notebook tidak ditemukan"}, 404
+    try:
+        judul, cells_json = nblib.parse_payload(request.form.get("payload", ""))
+    except ValueError as exc:
+        return {"ok": False, "error": str(exc)}, 400
+    db.notebook_update(nid, user["id"], judul, cells_json)
+    return {"ok": True, "saved_wib": datetime.now().strftime("%H:%M:%S")}
+
+
+@app.route("/api/notebook/<int:nid>/jalankan", methods=["POST"])
+@login_required
+def notebook_jalankan(nid):
+    user = _user()
+    if not db.notebook_get(nid, user["id"]):
+        return {"ok": False, "error": "notebook tidak ditemukan"}, 404
+    code = request.form.get("code", "")
+    if len(code) > nblib.CODE_CAP:
+        return {"status": "error", "error_type": "toolong",
+                "error": f"Kode terlalu panjang (maks {nblib.CODE_CAP} karakter).",
+                "stdout": "", "stderr": "", "result": None}
+    cell = request.form.get("cell") or None
+    result = nblib.run_cell(user["username"], code, cell=cell)
+    result["ok"] = result.get("status") in ("ok", "error")
+    return result
+
+
+@app.route("/api/notebook/<int:nid>/restart", methods=["POST"])
+@login_required
+def notebook_restart(nid):
+    user = _user()
+    if not db.notebook_get(nid, user["id"]):
+        return {"ok": False, "error": "notebook tidak ditemukan"}, 404
+    return nblib.kernel_restart(user["username"])
+
+
+@app.route("/api/notebook/<int:nid>/status")
+@login_required
+def notebook_status(nid):
+    user = _user()
+    if not db.notebook_get(nid, user["id"]):
+        return {"ok": False, "error": "notebook tidak ditemukan"}, 404
+    return nblib.kernel_status(user["username"])
+
+
+@app.route("/api/notebook/<int:nid>/hapus", methods=["POST"])
+@login_required
+def notebook_hapus(nid):
+    user = _user()
+    n = db.notebook_delete(nid, user["id"])
+    return {"ok": bool(n)}
 
 
 # ---------- Middleware subpath — akses via https://yan.tail51a905.ts.net/quant (Funnel 443) ----------

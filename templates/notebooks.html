@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}Notebook — QuantLab{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=3">
+{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <p class="kicker">Kaggle-style Workspace</p>
+  <h1>📓 Notebook</h1>
+  <p class="sub">Tulis &amp; jalankan kode Python sendiri — <b>variabel tersimpan antar sel</b>, seperti kernel di Kaggle. Data IDX nyata siap dibaca dari <code>/datasets/</code>, tanpa internet.</p>
+</section>
+
+<div class="nbstat">
+  <span class="chip">{{ rows|length }} notebook</span>
+  <span class="chip">{{ total_cells }} sel</span>
+  <span class="chip xp">{{ user.xp }} XP</span>
+  <span class="chip streak">🔥 {{ user.streak }}</span>
+</div>
+
+<details class="newnb" {% if not rows %}open{% endif %}>
+  <summary class="btn primary">➕ Notebook Baru</summary>
+  <p class="note">Pilih titik mulai — semuanya bisa diubah setelah dibuat.</p>
+  <div class="nbgallery">
+    {% for key, t in templates.items() %}
+    <form method="post" action="{{ url_for('notebook_baru') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="template" value="{{ key }}">
+      <button type="submit" class="tplcard">
+        <span class="tplemoji">{{ t.emoji }}</span>
+        <b>{{ t.nama }}</b>
+        <span class="tpldesc">{{ t.desc }}</span>
+      </button>
+    </form>
+    {% endfor %}
+  </div>
+</details>
+
+{% if rows %}
+<div class="nblist">
+  {% for r in rows %}
+  <div class="nbrow">
+    <a class="nblink" href="{{ url_for('notebook_editor', nid=r.id) }}">
+      <span class="nbemoji">{{ r.emoji }}</span>
+      <span class="nbinfo">
+        <b>{{ r.judul }}</b>
+        <span class="meta">{{ r.n_cells }} sel · diperbarui {{ r.updated_wib }} WIB</span>
+      </span>
+      <span class="arrow">→</span>
+    </a>
+    <form method="post" action="{{ url_for('notebook_hapus', nid=r.id) }}"
+          onsubmit="return confirm('Hapus notebook ini? Tidak bisa dikembalikan.');">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button type="submit" class="btn ghost small" title="Hapus notebook">🗑</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<div class="casebox">
+  <h3>Belum ada notebook 📓</h3>
+  <p class="note">Buat notebook pertamamu di atas — pilih <b>Pandas Pertama</b> kalau mau langsung main data IHSG, atau <b>Kosong</b> untuk mulai bebas.</p>
+</div>
+{% endif %}
+
+<p class="note nbdsnote">📦 Lihat semua <a href="{{ url_for('notebook_datasets') }}">dataset siap pakai →</a></p>
+{% endblock %}

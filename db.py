@@ -1,4 +1,5 @@
 """QuantLab — Database: users, solves, streak, XP, anti brute-force login."""
+import json
 import os
 import re
 import sqlite3
@@ -97,6 +98,15 @@ CREATE TABLE IF NOT EXISTS mentor_messages (
     content TEXT NOT NULL,
     bab INTEGER,
     created_at TEXT DEFAULT (datetime('now'))
+);
+CREATE TABLE IF NOT EXISTS notebooks (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    judul TEXT NOT NULL,
+    emoji TEXT NOT NULL DEFAULT '📓',
+    cells TEXT NOT NULL DEFAULT '[]',
+    created_at TEXT DEFAULT (datetime('now')),
+    updated_at TEXT DEFAULT (datetime('now'))
 );
 """
 
@@ -609,3 +619,55 @@ def mentor_clear(user_id):
     """Hapus semua riwayat chat mentor user."""
     with get_conn() as conn:
         conn.execute("DELETE FROM mentor_messages WHERE user_id = ?", (user_id,))
+
+
+# ---------- Notebook (ala Kaggle) ----------
+
+def notebook_create(user_id, judul, cells_json, emoji="📓"):
+    with get_conn() as conn:
+        cur = conn.execute(
+            "INSERT INTO notebooks (user_id, judul, emoji, cells) VALUES (?, ?, ?, ?)",
+            (user_id, judul[:80], emoji, cells_json),
+        )
+        return cur.lastrowid
+
+
+def notebook_list(user_id):
+    with get_conn() as conn:
+        rows = conn.execute(
+            "SELECT id, judul, emoji, created_at, updated_at, cells FROM notebooks "
+            "WHERE user_id = ? ORDER BY updated_at DESC, id DESC", (user_id,)
+        ).fetchall()
+    out = []
+    for r in rows:
+        d = dict(r)
+        try:
+            d["n_cells"] = len(json.loads(d.pop("cells") or "[]"))
+        except ValueError:
+            d["n_cells"] = 0
+        out.append(d)
+    return out
+
+
+def notebook_get(nid, user_id):
+    with get_conn() as conn:
+        return conn.execute(
+            "SELECT * FROM notebooks WHERE id = ? AND user_id = ?", (nid, user_id)
+        ).fetchone()
+
+
+def notebook_update(nid, user_id, judul, cells_json):
+    with get_conn() as conn:
+        cur = conn.execute(
+            "UPDATE notebooks SET judul = ?, cells = ?, updated_at = datetime('now') "
+            "WHERE id = ? AND user_id = ?", (judul[:80], cells_json, nid, user_id)
+        )
+        return cur.rowcount
+
+
+def notebook_delete(nid, user_id):
+    with get_conn() as conn:
+        cur = conn.execute(
+            "DELETE FROM notebooks WHERE id = ? AND user_id = ?", (nid, user_id)
+        )
+        return cur.rowcount

@@ -1,0 +1,14 @@
+[Unit]
+Description=QuantLab Notebook Kernel Daemon (sandbox bubblewrap)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/yuan/quantlab
+ExecStart=/home/yuan/quantlab/.venv/bin/python /home/yuan/quantlab/notebook_kerneld.py
+Environment=PYTHONUNBUFFERED=1
+Restart=on-failure
+RestartSec=3
+
+[Install]
+WantedBy=default.target

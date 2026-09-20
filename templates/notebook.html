@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}{{ nb.judul }} — Notebook QuantLab{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=3">
+{% endblock %}
+{% block content %}
+<section class="nbhead" data-nid="{{ nb.id }}" data-timeout="{{ exec_timeout }}">
+  <div class="nbheadtop">
+    <a class="nbbread" href="{{ url_for('notebook_list') }}">📓 Notebook</a>
+    <span class="nbsep">›</span>
+    <input id="nbTitle" class="nbtitle" value="{{ nb.judul }}" maxlength="80" aria-label="Judul notebook">
+  </div>
+  <div class="nbbar">
+    <span id="kernelPill" class="kpill" title="Status mesin Python">⚪ Kernel…</span>
+    <button id="btnRunAll" class="btn ghost small" type="button">▶▶ Jalankan Semua</button>
+    <button id="btnRestart" class="btn ghost small" type="button">⟳ Restart Kernel</button>
+    <button id="btnSave" class="btn ghost small" type="button">💾 Simpan</button>
+    <span id="saveState" class="savestate">tersimpan {{ updated_wib }} WIB</span>
+  </div>
+</section>
+
+<input type="hidden" id="csrf" value="{{ csrf_token() }}">
+
+<div class="nblayout">
+  <div class="nbcol">
+    <div id="cells"></div>
+    <div class="nbbottom">
+      <button id="btnAddCode" class="btn ghost small" type="button">＋ Kode</button>
+      <button id="btnAddMd" class="btn ghost small" type="button">＋ Markdown</button>
+      <span class="nbhint">Shift+Enter = jalankan &amp; lanjut · baris terakhir sel kode tampil sebagai Out</span>
+    </div>
+  </div>
+  <aside class="nbrail">
+    <h3>📦 Datasets</h3>
+    <p class="note railnote">Klik untuk menempel contoh baca data ke sel terakhir yang kamu tulis.</p>
+    <div id="dslist">
+      {% for d in datasets %}
+      <button class="dsitem" data-ds="{{ d.name }}" type="button">
+        <b>{{ d.name }}</b>
+        <span>{{ d.rows }} baris · {{ d.kb }} KB</span>
+      </button>
+      {% endfor %}
+    </div>
+    <p class="note railnote"><a href="{{ url_for('notebook_datasets') }}">Lihat detail dataset →</a></p>
+    <h3>ℹ️ Kernel</h3>
+    <p class="note railnote">Python berjalan di sandbox: tanpa internet dan tanpa akses file pribadi. File yang kamu tulis di <code>/work</code> tersimpan antar sesi.</p>
+  </aside>
+</div>
+
+<script type="application/json" id="cellData">{{ cells_json|safe }}</script>
+{% endblock %}
+{% block scripts_extra %}
+<script src="{{ url_for('static', filename='js/notebook.js') }}?v=2"></script>
+{% endblock %}

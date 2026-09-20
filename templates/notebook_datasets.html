@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Dataset — QuantLab{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=3">
+{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <p class="kicker">Siap Pakai · Tanpa Internet</p>
+  <h1>📦 Dataset</h1>
+  <p class="sub">Data nyata yang bisa langsung dibaca dari notebook: <code>pd.read_csv('/datasets/&lt;nama&gt;.csv')</code>. Semua <b>read-only</b> — eksperimenmu tidak akan merusaknya.</p>
+</section>
+
+<div class="dsgrid">
+  {% for it in items %}
+  <div class="dscard">
+    <div class="dshead">
+      <b>{{ it.name }}</b>
+      <span class="chip">{{ it.rows }} baris × {{ it.cols }} kolom · {{ it.kb }} KB</span>
+    </div>
+    <p class="dsdesc">{{ it.desc }}</p>
+    <code class="dssnip">pd.read_csv('/datasets/{{ it.name }}')</code>
+    {% if it.preview %}
+    <div class="dstablewrap">
+      <table class="dstable">
+        <tr>{% for h in it.preview.header %}<th>{{ h }}</th>{% endfor %}</tr>
+        {% for row in it.preview.rows %}<tr>{% for c in row %}<td>{{ c }}</td>{% endfor %}</tr>{% endfor %}
+      </table>
+    </div>
+    {% endif %}
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

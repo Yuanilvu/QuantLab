@@ -14,6 +14,7 @@
 <link rel="apple-touch-icon" href="{{ url_for('static', filename='icon-192.png') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/polish.css') }}">
+{% block head_extra %}{% endblock %}
 </head>
 <body>
 {% if user %}
@@ -28,6 +29,7 @@
     <a class="{{ 'active' if p.startswith('/mentor') }}" href="{{ url_for('mentor_page') }}">🤖 Mentor</a>
     <a class="{{ 'active' if p.startswith('/peta') }}" href="{{ url_for('peta') }}">Peta Belajar</a>
     <a class="{{ 'active' if p.startswith('/chart') }}" href="{{ url_for('chart_list') }}">📈 Teknikal</a>
+    <a class="{{ 'active' if p.startswith('/notebook') }}" href="{{ url_for('notebook_list') }}">📓 Notebook</a>
     <a class="{{ 'active' if p.startswith('/playground') }}" href="{{ url_for('playground') }}">Playground</a>
     <a class="{{ 'active' if p.startswith('/lab') }}" href="{{ url_for('lab') }}">Lab</a>
     <a class="{{ 'active' if p.startswith('/jurnal') }}" href="{{ url_for('jurnal') }}">Jurnal</a>
@@ -62,5 +64,6 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('{{ url_for("sw_js") }}').catch(() => {});
 }
 </script>
+{% block scripts_extra %}{% endblock %}
 </body>
 </html>

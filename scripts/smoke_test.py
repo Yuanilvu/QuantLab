@@ -54,6 +54,7 @@ def main():
     # 3. Sweep rute utama
     paths = ["/", "/peta", "/mentor", "/playground", "/lab", "/jurnal", "/ulas",
              "/analitik", "/leaderboard", "/badges", "/profil", "/cari?q=funding",
+             "/notebook", "/notebook/datasets",
              "/bab/1", "/bab/11", "/bab/27", "/skenario/s11-1",
              "/skenario/s11-1/hasil", "/soal/p25-1", "/ujian/math", "/sertifikat/math"]
     bad = []
@@ -127,7 +128,7 @@ def main():
     if row:
         uid = row["id"]
         for t in ("solves", "lesson_done", "soal_solved", "journal_entries",
-                  "exam_pass", "review_schedule", "mentor_messages"):
+                  "exam_pass", "review_schedule", "mentor_messages", "notebooks"):
             conn.execute(f"DELETE FROM {t} WHERE user_id=?", (uid,))
         conn.execute("DELETE FROM users WHERE id=?", (uid,))
         conn.commit()
