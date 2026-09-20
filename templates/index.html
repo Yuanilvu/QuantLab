@@ -55,6 +55,17 @@
 </section>
 {% endif %}
 
+<section class="challenge" aria-label="Notebook">
+  <a href="{{ url_for('notebook_list') }}" class="challengecard">
+    <div class="chleft">
+      <span class="chlabel">📓 NOTEBOOK</span>
+      <h2>Tulis &amp; jalankan kode Python sendiri — ala Kaggle</h2>
+      <span class="meta">Kernel hidup: variabel tersimpan antar sel, grafik &amp; dataset IDX siap pakai{% if notebook_n %} · <b>{{ notebook_n }} notebook milikmu</b>{% endif %}</span>
+    </div>
+    <span class="chbtn">Buka →</span>
+  </a>
+</section>
+
 <section class="dashcols" aria-label="Ringkasan kemampuan dan posisi">
   <div class="dashcol">
     <h3>🧭 Peta Kemampuan</h3>

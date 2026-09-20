@@ -426,7 +426,8 @@ def index():
                            soal_count=len(soal_solved_set),
                            leader=db.leaderboard(1),
                            radar=radar_svg(skills), challenge=challenge,
-                           tracks=tracks, nxt=nxt, review_n=review_n)
+                           tracks=tracks, nxt=nxt, review_n=review_n,
+                           notebook_n=db.notebook_count(user["id"]))
 
 
 @app.route("/peta")

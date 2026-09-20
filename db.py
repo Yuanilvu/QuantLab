@@ -671,3 +671,11 @@ def notebook_delete(nid, user_id):
             "DELETE FROM notebooks WHERE id = ? AND user_id = ?", (nid, user_id)
         )
         return cur.rowcount
+
+
+def notebook_count(user_id):
+    with get_conn() as conn:
+        row = conn.execute(
+            "SELECT COUNT(*) AS n FROM notebooks WHERE user_id = ?", (user_id,)
+        ).fetchone()
+    return row["n"] if row else 0
