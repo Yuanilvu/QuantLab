@@ -18,7 +18,7 @@
   {% if total == 0 %}
   <div class="casebox">
     <h3>😕 Tidak ditemukan</h3>
-    <p class="meta">Tidak ada materi cocok dengan <b>"{{ q }}"</b>. Coba kata lain, atau tanyakan ke 🤖 Mentor.</p>
+    <p class="meta">Tidak ada materi cocok dengan <b>"{{ q }}"</b>. Coba kata lain, atau buka <a href="{{ url_for('peta') }}">Peta Belajar</a>.</p>
   </div>
   {% else %}
   <p class="meta">{{ total }} hasil untuk <b>"{{ q }}"</b></p>

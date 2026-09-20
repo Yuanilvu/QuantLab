@@ -12,9 +12,6 @@
   <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
   <p class="sub">{{ bab.deskripsi }}</p>
   <p class="sub">🧭 Alur bab: 1️⃣ Teori → 2️⃣ Coding (kamu disuruh kerjakan) → 3️⃣ Uji keputusan</p>
-  <div class="scenactions">
-    <a class="btn small ghost" href="{{ url_for('mentor_page', bab=bab.bab) }}">🤖 Tanya Mentor soal bab ini</a>
-  </div>
 </section>
 
 {% if lessons %}

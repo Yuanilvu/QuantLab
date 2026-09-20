@@ -1,7 +1,7 @@
 """QuantLab — Belajar Quant Trading lewat Skenario.
 
 Flask app: auth (CSRF + anti brute-force DB-backed), kurikulum YAML,
-XP/streak/badges, leaderboard, playground (kalkulator + mini backtest MA).
+XP/streak/badges, leaderboard, notebook ala Kaggle, fitur Data Science.
 """
 import json
 import math
@@ -21,8 +21,6 @@ import curriculum
 import db
 import chartgen
 import judge
-import market
-import mentor
 import notebook as nblib
 
 # ── Output contoh kode pelajaran (dihitung sekali per proses, sandbox) ─────
@@ -71,101 +69,6 @@ db.init_db()
 
 LESSON_XP = db.LESSON_XP
 CHALLENGE_BONUS = 10
-
-# ---------- Playground: data sintetis deterministik (seed tetap) ----------
-_RNG = random.Random(7)
-_SERIES = []
-_price = 100.0
-for _ in range(300):
-    _price *= 1 + (0.0006 + _RNG.uniform(-0.018, 0.018))
-    _SERIES.append(round(_price, 4))
-TRADE_FEE = 0.001  # 0.1% per sisi
-
-
-def ma_series(n, series):
-    if len(series) < n:
-        return []
-    return [sum(series[i - n + 1:i + 1]) / n for i in range(n - 1, len(series))]
-
-
-def backtest_ma(fast, slow, series):
-    """Crossover MA: long saat MA_fast > MA_slow, flat sebaliknya. Net fee."""
-    if fast >= slow or fast < 2:
-        return None
-    fast_ma = ma_series(fast, series)
-    slow_ma = ma_series(slow, series)
-    offset = slow - fast
-    # indeks 0 di kedua array merujuk ke hari slow-1 di series
-    n = len(slow_ma)
-    equity, peak, maxdd = 100.0, 100.0, 0.0
-    in_pos = False
-    entry_i = 0
-    trades, wins = 0, 0
-    for i in range(1, n):
-        signal = fast_ma[i + offset - 1] > slow_ma[i]  # MA_fast hari ini vs MA_slow
-        if signal and not in_pos:
-            in_pos = True
-            entry_i = i
-            equity *= (1 - TRADE_FEE)
-        elif not signal and in_pos:
-            in_pos = False
-            trades += 1
-            ret = (series[i + slow - 1] / series[entry_i + slow - 1]) - 1
-            equity *= (1 + ret) * (1 - TRADE_FEE)
-            if ret > 0:
-                wins += 1
-            peak = max(peak, equity)
-            maxdd = max(maxdd, (peak - equity) / peak)
-    if in_pos:
-        trades += 1
-        ret = (series[-1] / series[entry_i + slow - 1]) - 1
-        equity *= (1 + ret) * (1 - TRADE_FEE)
-        if ret > 0:
-            wins += 1
-        peak = max(peak, equity)
-        maxdd = max(maxdd, (peak - equity) / peak)
-    return {
-        "fast": fast, "slow": slow,
-        "ret": round((equity - 100) / 100 * 100, 2),
-        "maxdd": round(maxdd * 100, 2),
-        "trades": trades,
-        "win": round(wins / trades * 100) if trades else 0,
-        "spark": _sparkline(equity_history(series, fast, slow)),
-    }
-
-
-def equity_history(series, fast, slow):
-    fast_ma = ma_series(fast, series)
-    slow_ma = ma_series(slow, series)
-    offset = slow - fast
-    n = len(slow_ma)
-    eq, in_pos, entry_i = 100.0, False, 0
-    out = [100.0]
-    for i in range(1, n):
-        signal = fast_ma[i + offset - 1] > slow_ma[i]
-        if signal and not in_pos:
-            in_pos = True
-            entry_i = i
-            eq *= (1 - TRADE_FEE)
-        elif not signal and in_pos:
-            in_pos = False
-            eq *= (series[i + slow - 1] / series[entry_i + slow - 1]) * (1 - TRADE_FEE)
-        out.append(round(eq, 4))
-    return out
-
-
-def _sparkline(hist):
-    lo, hi = min(hist), max(hist)
-    rng = (hi - lo) or 1.0
-    w, h = 240, 48
-    pts = []
-    for i, v in enumerate(hist):
-        x = i / (len(hist) - 1) * w
-        y = h - 4 - (v - lo) / rng * (h - 8)
-        pts.append(f"{x:.1f},{y:.1f}")
-    color = "#22c55e" if hist[-1] >= hist[0] else "#ef4444"
-    return (f"<svg viewBox='0 0 {w} {h}' class='spark'><polyline points='"
-            + " ".join(pts) + f"' fill='none' stroke='{color}' stroke-width='1.5'/></svg>")
 
 
 # ---------- Tantangan Harian (deterministik per tanggal WIB) ----------
@@ -408,6 +311,7 @@ def index():
     skills = skill_map(solved)
     soal_solved_set = db.get_soal_solved(user["id"])
     tracks = track_progress(solved, soal_solved_set)
+    ds_t = next((t for t in tracks if t["code"] == "ds"), None)
     nxt = next_unsolved(solved, soal_solved_set)
     review_n = db.review_count_due(user["id"])
     # Tantangan harian
@@ -426,7 +330,7 @@ def index():
                            soal_count=len(soal_solved_set),
                            leader=db.leaderboard(1),
                            radar=radar_svg(skills), challenge=challenge,
-                           tracks=tracks, nxt=nxt, review_n=review_n,
+                           tracks=tracks, nxt=nxt, review_n=review_n, ds_t=ds_t,
                            notebook_n=db.notebook_count(user["id"]))
 
 
@@ -933,62 +837,6 @@ def badges_page():
                            total=total, streak=streak, bab_clear=bab_clear)
 
 
-# ---------- Playground ----------
-
-@app.route("/playground", methods=["GET", "POST"])
-@login_required
-def playground():
-    result = None
-    if request.method == "POST":
-        mode = request.form.get("mode")
-        try:
-            if mode == "funding":
-                r = float(request.form.get("rate", 0)) / 100
-                daily = r * 3
-                annual = daily * 365
-                result = {"mode": "funding", "rate": r,
-                          "daily": daily * 100, "annual": annual * 100}
-            elif mode == "size":
-                eq = float(request.form.get("equity", 0))
-                rp = float(request.form.get("risk", 0)) / 100
-                sp = float(request.form.get("stop", 0)) / 100
-                notional = eq * rp / sp if sp > 0 else 0
-                result = {"mode": "size", "equity": eq, "risk": rp * 100,
-                          "stop": sp * 100, "notional": notional}
-            elif mode == "backtest":
-                fast = int(request.form.get("fast", 5))
-                slow = int(request.form.get("slow", 20))
-                bt = backtest_ma(fast, slow, _SERIES)
-                if bt:
-                    result = {"mode": "backtest", **bt}
-                else:
-                    result = {"mode": "backtest", "error": "Fast harus < slow dan ≥ 2."}
-            elif mode == "run":
-                if not _heavy_ok(f"pg:{_user()['id']}"):
-                    abort(429)
-                code = request.form.get("code", "")[:8000]
-                r = judge.run_code(code, request.form.get("stdin", ""))
-                result = {"mode": "run", "ok": r["ok"], "stdout": r["stdout"],
-                          "stderr": r["stderr"]}
-                if not r["ok"] and r["error_type"] not in ("timeout", "toolong"):
-                    result["friendly"] = judge.friendly_error(r["stderr"])
-            elif mode == "scan":
-                fasts = [int(x) for x in request.form.get("fasts", "3,5,10,20").split(",")]
-                slows = [int(x) for x in request.form.get("slows", "10,20,50,100").split(",")]
-                rows = []
-                for f in fasts:
-                    for s in slows:
-                        if f < s and f >= 2:
-                            bt = backtest_ma(f, s, _SERIES)
-                            if bt:
-                                rows.append(bt)
-                rows.sort(key=lambda r: r["ret"], reverse=True)
-                result = {"mode": "scan", "rows": rows[:12], "total": len(rows)}
-        except (ValueError, TypeError):
-            result = {"mode": "error", "error": "Input tidak valid."}
-    return render_template("playground.html", result=result)
-
-
 @app.route("/manifest.json")
 def manifest_route():
     """Manifest DINAMIS: start_url/icon menyesuaikan prefix funnel (/quant)."""
@@ -1014,8 +862,7 @@ def manifest_route():
             {"name": "Dashboard", "short_name": "Beranda", "url": base + "/"},
             {"name": "Lab Teknikal", "short_name": "Teknikal", "url": base + "/chart"},
             {"name": "Notebook", "short_name": "Notebook", "url": base + "/notebook"},
-            {"name": "Mentor AI", "short_name": "Mentor", "url": base + "/mentor"},
-            {"name": "Backtest Lab", "short_name": "Lab", "url": base + "/lab"},
+            {"name": "Data Science", "short_name": "Data", "url": base + "/data-science"},
         ],
     }
     return app.response_class(json.dumps(data), mimetype="application/manifest+json")
@@ -1023,7 +870,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v14';
+    sw = """const CACHE = 'quantlab-v15';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1303,139 +1150,6 @@ def ulas_soal(sid):
                            stage=stage, my_answer=my_answer)
 
 
-# ---------- Analitik Belajar ----------
-
-@app.route("/analitik")
-@login_required
-def analitik():
-    user = _user()
-    solves = db.get_solves(user["id"])
-    soal_solved_set = db.get_soal_solved(user["id"])
-    correct_n = sum(1 for s in solves.values() if s["correct"])
-    solved_n = len(solves)
-    # Akurasi per track & per kesulitan
-    tracks = track_progress(set(solves.keys()), soal_solved_set)
-    track_acc = []
-    for t in tracks:
-        t_ids = {s["id"] for b in t["babs"] for s in (b.get("skenario") or [])}
-        done = [s for sid, s in solves.items() if sid in t_ids]
-        if done:
-            acc = round(sum(1 for s in done if s["correct"]) / len(done) * 100)
-        else:
-            acc = None
-        track_acc.append({"code": t["code"], "name": t["name"], "emoji": t["emoji"],
-                          "done": len(done), "acc": acc})
-    diff_acc = []
-    for diff in ("mudah", "sedang", "sulit"):
-        ids_diff = {s["id"] for b in curriculum.get_babs() for s in (b.get("skenario") or []) if s.get("sulit") == diff}
-        done = [s for sid, s in solves.items() if sid in ids_diff]
-        if done:
-            acc = round(sum(1 for s in done if s["correct"]) / len(done) * 100)
-        else:
-            acc = None
-        diff_acc.append({"name": diff, "done": len(done), "acc": acc})
-    # XP per hari (14 hari terakhir) — dari solves ber-created_at
-    act = db.activity_dates(user["id"], days=14)
-    today = datetime.now(db.WIB).date()
-    days = []
-    for i in range(13, -1, -1):
-        d = (today - timedelta(days=i)).isoformat()
-        days.append({"date": d, "n": act.get(d, 0), "max": max(act.values()) if act else 0})
-    # Best streak dari 30 hari aktivitas
-    act30 = db.activity_dates(user["id"], days=60)
-    best = cur = 0
-    d = today
-    for i in range(60):
-        key = (d - timedelta(days=i)).isoformat()
-        if act30.get(key):
-            cur += 1
-            best = max(best, cur)
-        else:
-            cur = 0
-    lessons_n = len(db.get_lesson_done(user["id"]))
-    exam_n = db.exam_count(user["id"])
-    return render_template("analitik.html", solved_n=solved_n, correct_n=correct_n,
-                           acc=round(correct_n / solved_n * 100) if solved_n else 0,
-                           soal_n=len(soal_solved_set), lessons_n=lessons_n,
-                           exam_n=exam_n,
-                           tracks=track_acc, diffs=diff_acc, days=days,
-                           best_streak=best, journal_n=db.journal_stats(user["id"])["n"])
-
-
-# ---------- Backtest Lab (data pasar NYATA) ----------
-
-LAB_DEFAULTS = {"asset": "TLKM", "strategy": "ma", "fast": 10, "slow": 30,
-                "period": 14, "buy": 30, "sell": 70, "k": 2, "window": 20,
-                "fee": 0.15}
-
-
-@app.route("/lab", methods=["GET", "POST"])
-@login_required
-def lab():
-    result = None
-    form = dict(LAB_DEFAULTS)
-    if request.method == "POST":
-        try:
-            fee = float(request.form.get("fee", 0.15)) / 100
-            if not (0 <= fee <= 0.05):
-                raise ValueError
-            params = {
-                "fast": int(request.form.get("fast", 10)),
-                "slow": int(request.form.get("slow", 30)),
-                "period": int(request.form.get("period", 14)),
-                "buy": float(request.form.get("buy", 30)),
-                "sell": float(request.form.get("sell", 70)),
-                "k": float(request.form.get("k", 2)),
-                "window": int(request.form.get("window", 20)),
-            }
-            r = market.run_lab(request.form.get("asset", "TLKM"),
-                               request.form.get("strategy", "ma"), params, fee)
-            if "error" in r:
-                result = r
-            else:
-                result = {**r, "fee_pct": fee * 100}
-            for k, v in request.form.items():
-                if k in form:
-                    form[k] = v
-        except (ValueError, TypeError):
-            result = {"error": "Parameter tidak valid."}
-    assets = market.available()
-    return render_template("lab.html", assets=assets, result=result,
-                           strategies=market.STRATEGIES, form=form)
-
-
-@app.route("/lab/export")
-@login_required
-def lab_export():
-    import csv
-    import io
-    try:
-        fee = float(request.args.get("fee", 0.15)) / 100
-        params = {
-            "fast": int(request.args.get("fast", 10)),
-            "slow": int(request.args.get("slow", 30)),
-            "period": int(request.args.get("period", 14)),
-            "buy": float(request.args.get("buy", 30)),
-            "sell": float(request.args.get("sell", 70)),
-            "k": float(request.args.get("k", 2)),
-            "window": int(request.args.get("window", 20)),
-        }
-        r = market.run_lab(request.args.get("asset", "TLKM"),
-                           request.args.get("strategy", "ma"), params, fee)
-        if "error" in r:
-            abort(400)
-    except (ValueError, TypeError):
-        abort(400)
-    buf = io.StringIO()
-    w = csv.writer(buf)
-    w.writerow(["entry_date", "exit_date", "entry_price", "exit_price", "return_pct"])
-    for t in r["trades"]:
-        w.writerow([t["entry"], t["exit"], t["entry_px"], t["exit_px"], t["ret"]])
-    resp = app.response_class(buf.getvalue(), mimetype="text/csv")
-    resp.headers["Content-Disposition"] = f"attachment; filename=lab-{r['sym']}-{r['strategy']}.csv"
-    return resp
-
-
 @app.errorhandler(404)
 def not_found(e):
     return render_template("error.html", code=404, msg="Halaman tidak ditemukan."), 404
@@ -1495,90 +1209,33 @@ def cari():
                            res=res)
 
 
-# ---------- Mentor AI ----------
+# ---------- Data Science (pusat latihan kompetisi) ----------
 
-_mentor_rl: dict[int, list[float]] = {}
-
-
-def _mentor_rl_ok(uid: int) -> bool:
-    """Rate limit per user (in-memory, per worker): 8/menit, 40/jam."""
-    now = time.time()
-    ts = _mentor_rl.setdefault(uid, [])
-    ts[:] = [x for x in ts if now - x < 3600]
-    if len([x for x in ts if now - x < 60]) >= 8 or len(ts) >= 40:
-        return False
-    ts.append(now)
-    return True
-
-
-def _ctx_from_args():
-    """Parse ?bab=N&sid=sX-Y dari GET/POST. Return (bab_n, sid, bab, scen, scen_solved)."""
-    bab_n = 0
-    sid = None
-    try:
-        bab_n = int(request.args.get("bab") or request.form.get("bab") or 0)
-    except (TypeError, ValueError):
-        bab_n = 0
-    sid = request.args.get("sid") or request.form.get("sid") or None
-    bab = curriculum.get_bab(bab_n) if bab_n else None
-    scen = curriculum.get_scenario(sid) if sid else None
-    scen_solved = False
-    if scen and bab_n:
-        uid = _user()["id"]
-        scen_solved = sid in db.solved_ids(uid)
-    return bab_n, sid, bab, scen, scen_solved
-
-
-@app.route("/mentor")
+@app.route("/data-science")
 @login_required
-def mentor_page():
-    bab_n, sid, bab, scen, _ = _ctx_from_args()
-    ctx_name = None
-    if scen:
-        ctx_name = f"Bab {bab_n}: {scen['data']['judul']}"
-    elif bab:
-        ctx_name = f"{bab.get('emoji', '')} Bab {bab_n}: {bab.get('judul', '')}"
-    history = db.mentor_history(_user()["id"], 40)
-    return render_template("mentor.html", ctx_bab=bab_n, ctx_sid=sid,
-                           ctx_name=ctx_name, history=history)
-
-
-@app.route("/mentor/send", methods=["POST"])
-@login_required
-def mentor_send():
+def data_science():
+    """Hub fitur Data Science: 6 bab track ds + starter notebook + dataset."""
     user = _user()
-    uid = user["id"]
-    if not _mentor_rl_ok(uid):
-        return {"error": "Santai dulu — maksimal 8 pesan per menit."}, 429
-    msg = (request.form.get("msg") or "").strip()
-    if not msg:
-        return {"error": "Tulis pesan dulu."}, 400
-    if len(msg) > 500:
-        return {"error": "Pesan maksimal 500 karakter."}, 400
-
-    bab_n, sid, bab, scen, scen_solved = _ctx_from_args()
-    if sid and not scen:
-        return {"error": "Skenario tidak ditemukan."}, 400
-
-    db.mentor_add(uid, "user", msg, bab_n or None)
-    rows = db.mentor_history(uid, 12)
-    history = [
-        {"role": "assistant" if r["role"] == "mentor" else "user", "content": r["content"]}
-        for r in rows
-    ]
-    system = mentor.build_system(bab, scen, scen_solved)
-    reply = mentor.call_mentor(system, history, msg)
-    if not reply:
-        return {"error": "Mentor sedang sibuk — coba lagi sebentar lagi."}, 503
-    db.mentor_add(uid, "mentor", reply, bab_n or None)
-    return {"reply": reply}
-
-
-@app.route("/mentor/clear", methods=["POST"])
-@login_required
-def mentor_clear():
-    db.mentor_clear(_user()["id"])
-    return {"ok": True}
+    solved = db.solved_ids(user["id"])
+    soal_solved_set = db.get_soal_solved(user["id"])
+    tracks = track_progress(solved, soal_solved_set)
+    ds = next((t for t in tracks if t["code"] == "ds"), None)
+    cards = []
+    for b in (ds["babs"] if ds else []):
+        scens = b.get("skenario") or []
+        qs = b.get("soal") or []
+        done = sum(1 for s in scens if s["id"] in solved)
+        done += sum(1 for q in qs if q["id"] in soal_solved_set)
+        cards.append({
+            "bab": b["bab"], "judul": b["judul"], "emoji": b["emoji"],
+            "deskripsi": b.get("deskripsi", ""),
+            "done": done, "n": len(scens) + len(qs),
+        })
+    tpl_ds = {k: v for k, v in nblib.TEMPLATE_META.items() if v.get("group") == "ds"}
+    return render_template(
+        "data_science.html", cards=cards, ds=ds,
+        tpl_ds=tpl_ds, playbook=nblib.TEMPLATE_META.get("playbook"),
+        datasets=nblib.list_datasets())
 
 
 # ---------- Notebook (ala Kaggle) ----------

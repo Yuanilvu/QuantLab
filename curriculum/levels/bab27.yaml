@@ -29,7 +29,7 @@ pelajaran:
       - **Histogram** (`plt.hist`) → distribusi: sebaran return harian (Bab 12 — bentuknya memberi tahu risiko).
       - **Bar chart** (`plt.bar`) → perbandingan antar kategori: return per saham.
 
-      Di QuantLab: semua chart di **Backtest Lab** dibuat dengan konsep persis ini. Di Live Runner, output-nya teks (chart disimpan ke file di sandbox) — gunakan Lab untuk melihat chart penuh.
+      Di QuantLab: grafik di **Lab Teknikal** dan **Notebook** dibuat dengan konsep persis ini. Di sandbox soal, output-nya teks (grafik disimpan ke file) — gunakan **Notebook** untuk melihat grafiknya langsung di bawah sel.
     kode: |
       import matplotlib.pyplot as plt
       plt.plot([1, 2, 3], [100, 110, 105])

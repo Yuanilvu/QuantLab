@@ -64,7 +64,7 @@ pelajaran:
 
       Yang membedakan analyzer dari bot cuma satu lapisan: **keputusan + eksekusi + monitoring** (Bab 20). Proyek Akhir di Bab 21 sudah menunjukkan bentuknya. Kalau kamu bisa membangun analyzer ini dari nol tanpa catatan — kamu resmi "bisa coding untuk trading".
 
-      Tantangan terakhir: tulis analyzer-mu sendiri di halaman Soal Coding di bawah, lalu uji di Playground → Live Runner.
+      Tantangan terakhir: tulis analyzer-mu sendiri di halaman Soal Coding di bawah, lalu uji di **Notebook**.
     kode: |
       # Perjalananmu: print → variabel → if → loop → list →
       # fungsi → dict → try/except → analyzer → bot. 🎓

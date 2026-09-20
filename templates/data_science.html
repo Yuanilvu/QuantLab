@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% block title %}Data Science — QuantLab{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
+{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <span class="kicker">Fitur</span>
+  <h1>📊 Data Science</h1>
+  <p class="sub">Pusat latihan <b>kompetisi data science</b> — 6 bab terurut dari bersihin data sampai deep learning, <b>notebook ala Kaggle</b> di tiap bab, dan dataset siap pakai. Semua jalan langsung di browser.</p>
+  {% if ds %}<p class="meta">Progresmu: <b class="good">{{ ds.done }}/{{ ds.total }}</b> aktivitas · {{ ds.pct }}% selesai</p>{% endif %}
+</section>
+
+<section class="scenlist" aria-label="Paket bab Data Science">
+  <h3>📚 Paket 6 Bab — kerjakan berurutan</h3>
+  <p class="note">Tiap bab: teori singkat → latihan coding dinilai otomatis → notebook latihan → skenario keputusan nyata.</p>
+</section>
+<section class="babgrid" aria-label="Daftar bab Data Science">
+  {% for b in cards %}
+  <a class="babcard {{ 'done' if b.n and b.done == b.n }}" href="{{ url_for('bab_page', n=b.bab) }}">
+    <div class="babhead"><span class="babe" aria-hidden="true">{{ b.emoji }}</span>
+      <span class="babnum">BAB {{ b.bab }}</span>
+      {% if b.n and b.done == b.n %}<span class="tick" aria-label="Bab selesai">✓</span>{% endif %}
+    </div>
+    <h2>{{ b.judul }}</h2>
+    <p>{{ b.deskripsi }}</p>
+    <div class="progress">
+      <div class="bar"><div class="fill" style="width: {{ (b.done / b.n * 100) if b.n else 0 }}%"></div></div>
+      <span>{{ b.done }}/{{ b.n }} aktivitas</span>
+    </div>
+  </a>
+  {% endfor %}
+</section>
+
+<section class="scenlist" aria-label="Notebook latihan Data Science">
+  <h3>📓 Notebook Latihan — satu klik langsung jadi</h3>
+  <p class="note">Notebook terisi latihan siap jalan: kernel hidup, variabel tersimpan antar sel, dataset di <code>/datasets</code>, simpan otomatis.</p>
+  <div class="nbgallery">
+    {% for key, t in tpl_ds.items() %}
+    <form method="post" action="{{ url_for('notebook_baru') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="template" value="{{ key }}">
+      <button type="submit" class="tplcard">
+        <span class="tplemoji">{{ t.emoji }}</span>
+        <b>{{ t.nama }}</b>
+        <span class="tpldesc">{{ t.desc }}</span>
+      </button>
+    </form>
+    {% endfor %}
+    {% if playbook %}
+    <form method="post" action="{{ url_for('notebook_baru') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="template" value="playbook">
+      <button type="submit" class="tplcard">
+        <span class="tplemoji">{{ playbook.emoji }}</span>
+        <b>{{ playbook.nama }}</b>
+        <span class="tpldesc">{{ playbook.desc }}</span>
+      </button>
+    </form>
+    {% endif %}
+  </div>
+  <p class="note">Sudah punya notebook? <a href="{{ url_for('notebook_list') }}">Buka daftar notebookmu →</a></p>
+</section>
+
+<section class="scenlist" aria-label="Dataset latihan">
+  <h3>📦 Dataset Latihan</h3>
+  <p class="note">Semua bisa dibaca dari notebook: <code>pd.read_csv("/datasets/nama.csv")</code>. Paket kredit UMKM sengaja dibuat kotor — bahan latihan pembersihan (bab 28).</p>
+  {% for d in datasets %}
+  <a class="scenrow" href="{{ url_for('notebook_datasets') }}">
+    <span class="scenemoji" aria-hidden="true">📦</span>
+    <span class="scenmain"><b>{{ d.name }}</b><span class="meta">{{ d.desc }} · {{ d.rows }} baris · {{ d.cols }} kolom</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+  {% endfor %}
+</section>
+
+<div class="casebox">
+  <h3>🚀 Alur cepat</h3>
+  <p class="meta">
+    1️⃣ Selesaikan bab <b>28 → 33</b> berurutan — teori, soal coding, lalu skenario.<br>
+    2️⃣ Di tiap bab buka <b>notebook latihan</b> dan jalankan semua sel — ubah angkanya, lihat apa yang berubah.<br>
+    3️⃣ Tutup dengan <b>🏆 Playbook Kompetisi</b>: alur 8 langkah dari data mentah sampai berkas <code>submission.csv</code>.
+  </p>
+</div>
+{% endblock %}

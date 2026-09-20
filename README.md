@@ -6,9 +6,9 @@ yang belajar dari nol: **belajar teori → kerjakan latihan coding yang disuruh*
 (pilih keputusan → lihat hasil simulasi). Plus **Chart Drill** (latihan baca grafik
 harga nyata), **soal coding** yang dinilai otomatis di sandbox, **📓 Notebook**
 (workspace ala Kaggle: kernel Python hidup — variabel tersimpan antar sel — plus dataset
-IDX siap pakai di `/datasets`), dan **📊 Track Data Science** (jalur persiapan kompetisi:
-cleaning → EDA → feature engineering → ML → evaluasi → deep learning, lengkap dengan
-**starter notebook per bab**).
+IDX siap pakai di `/datasets`), dan **📊 Data Science** (jalur + halaman fitur persiapan
+kompetisi: cleaning → EDA → feature engineering → ML → evaluasi → deep learning —
+lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigasi).
 
 ## Isi
 
@@ -20,7 +20,7 @@ cleaning → EDA → feature engineering → ML → evaluasi → deep learning, 
   - Setiap bab: 2 pelajaran teori → **latihan coding** (semua bab punya!) → 10 skenario
 - **Skenario keputusan**: cerita kasus pasar (konteks Bybit funding, saham IDX) →
   4 pilihan → jawaban benar + hitungan + kode Python + hasil simulasi (return/drawdown/win rate).
-- **Soal coding (57, gaya Kaggle)**: SETIAP bab punya latihan coding — kotak **🎯 Tugasmu**
+- **Soal coding (69, gaya Kaggle)**: SETIAP bab punya latihan coding — kotak **🎯 Tugasmu**
   (langkah "disuruh apa") + **starter code** ber-`# TODO` yang terpasang otomatis di editor.
   Ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses file/internet dari kode
   user); termasuk 2 soal **"data nyata"** yang membaca snapshot harga di `/soaldata`.
@@ -43,10 +43,12 @@ cleaning → EDA → feature engineering → ML → evaluasi → deep learning, 
   Grafik SVG server-side (line & candlestick + volume + RSI), data dibekukan di
   `data/chart/*.csv` supaya kunci jawaban tidak pernah basi (dijaga `scripts/verify_charts.py`).
   Halaman `/chart` & `/chart/ujian`, XP 20/35/50 per tingkat.
-- **Backtest Lab**: data pasar nyata (`data/market/*.csv`, 1 tahun) + strategi
-  MA/RSI/Bollinger/Breakout → metrik + equity curve + export CSV.
+- **📊 Data Science (`/data-science`)** — halaman fitur: 6 bab terurut (28-33),
+  notebook latihan starter per bab + **🏆 Playbook Kompetisi** (end-to-end sampai
+  `submission.csv`), dan dataset latihan (kredit UMKM **sintetis, sengaja kotor** —
+  bahan latihan cleaning; read-only di `/datasets`).
 - Fitur lain: tantangan harian, radar kemampuan, ujian per track, ulasan cerdas
-  (spaced repetition), jurnal + export CSV, analitik, leaderboard, badge, sertifikat, PWA.
+  (spaced repetition), jurnal + export CSV, leaderboard, badge, sertifikat, PWA.
 
 ## Stack
 

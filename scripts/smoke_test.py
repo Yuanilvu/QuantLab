@@ -3,8 +3,8 @@
 
 Jalankan: cd ~/quantlab && .venv/bin/python scripts/smoke_test.py
 Cakupan: struktur kurikulum, sweep rute, alur skenario + pelajaran,
-soal coding + playground (sandbox), pencarian, header keamanan, rate limit.
-Butuh bubblewrap (judge) & DeepSeek key untuk tes mentor (SMOKE_AI=1).
+soal coding (sandbox), pencarian, header keamanan, rate limit, fitur Data Science.
+Butuh bubblewrap (judge).
 """
 import os
 import re
@@ -52,10 +52,10 @@ def main():
     check("register", r.status_code in (200, 302))
 
     # 3. Sweep rute utama
-    paths = ["/", "/peta", "/mentor", "/playground", "/lab", "/jurnal", "/ulas",
-             "/analitik", "/leaderboard", "/badges", "/profil", "/cari?q=funding",
+    paths = ["/", "/peta", "/data-science", "/jurnal", "/ulas",
+             "/leaderboard", "/badges", "/profil", "/cari?q=funding",
              "/notebook", "/notebook/datasets",
-             "/bab/1", "/bab/11", "/bab/27", "/skenario/s11-1",
+             "/bab/1", "/bab/11", "/bab/27", "/bab/28", "/skenario/s11-1",
              "/skenario/s11-1/hasil", "/soal/p25-1", "/ujian/math", "/sertifikat/math"]
     bad = []
     for p in paths:
@@ -96,30 +96,15 @@ def main():
                 break
     check("rate limit soal (429)", ok429)
 
-    # 7. Playground run
-    html = c.get("/playground").get_data(as_text=True)
-    tok = re.search(r'name="_csrf"[^>]*value="([^"]+)"', html)
-    if tok:
-        r = c.post("/playground", data={"_csrf": tok.group(1), "mode": "run",
-                                        "code": "print(21*2)", "stdin": ""})
-        check("playground run", r.status_code == 200 and "42" in r.get_data(as_text=True))
-    else:
-        check("playground run", False, "csrf tidak ada")
+    # 7. Halaman fitur Data Science
+    html = c.get("/data-science").get_data(as_text=True)
+    check("data-science memuat paket DS",
+          "Data Science" in html and "kredit_umkm" in html and "Playbook" in html)
 
     # 8. Header keamanan
     hdrs = c.get("/login").headers
     check("security headers", hdrs.get("X-Content-Type-Options") == "nosniff"
           and hdrs.get("X-Frame-Options") == "DENY")
-
-    # 9. Mentor (hanya jika SMOKE_AI=1 — butuh API eksternal)
-    if os.environ.get("SMOKE_AI") == "1":
-        html = c.get("/mentor").get_data(as_text=True)
-        tok = re.search(r'id="csrf" value="([^"]+)"', html)
-        if tok:
-            r = c.post("/mentor/send", data={"_csrf": tok.group(1), "msg": "Balas: ok",
-                                             "bab": "", "sid": ""})
-            check("mentor send", r.status_code == 200 and b'"reply"' in r.data,
-                  f"({r.status_code})")
 
     # Bersihkan user smoke
     import db  # noqa: E402

@@ -49,7 +49,7 @@ pelajaran:
       print(df["close"].mean())
       ```
 
-      (Di Live Runner kamu bisa coba ini — file CSV-nya terbaca read-only di dalam sandbox.)
+      (Di **Notebook** kamu bisa mencoba konsep ini — dataset siap pakai terbaca read-only di `/datasets`.)
 
       Filter ala Excel tapi satu baris:
       ```python

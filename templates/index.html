@@ -66,6 +66,17 @@
   </a>
 </section>
 
+<section class="challenge" aria-label="Data Science">
+  <a href="{{ url_for('data_science') }}" class="challengecard">
+    <div class="chleft">
+      <span class="chlabel">📊 DATA SCIENCE</span>
+      <h2>Latihan persiapan kompetisi — 6 bab, notebook &amp; dataset</h2>
+      <span class="meta">Bersihin data → EDA → fitur → ML → evaluasi → deep learning{% if ds_t %} · <b>{{ ds_t.done }}/{{ ds_t.total }} aktivitas</b>{% endif %}</span>
+    </div>
+    <span class="chbtn">Buka →</span>
+  </a>
+</section>
+
 <section class="dashcols" aria-label="Ringkasan kemampuan dan posisi">
   <div class="dashcol">
     <h3>🧭 Peta Kemampuan</h3>

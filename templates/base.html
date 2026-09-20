@@ -26,15 +26,12 @@
   </a>
   <nav aria-label="Navigasi utama">
     <a class="{{ 'active' if p == '/' }}" href="{{ url_for('index') }}">Dashboard</a>
-    <a class="{{ 'active' if p.startswith('/mentor') }}" href="{{ url_for('mentor_page') }}">🤖 Mentor</a>
     <a class="{{ 'active' if p.startswith('/peta') }}" href="{{ url_for('peta') }}">Peta Belajar</a>
     <a class="{{ 'active' if p.startswith('/chart') }}" href="{{ url_for('chart_list') }}">📈 Teknikal</a>
     <a class="{{ 'active' if p.startswith('/notebook') }}" href="{{ url_for('notebook_list') }}">📓 Notebook</a>
-    <a class="{{ 'active' if p.startswith('/playground') }}" href="{{ url_for('playground') }}">Playground</a>
-    <a class="{{ 'active' if p.startswith('/lab') }}" href="{{ url_for('lab') }}">Lab</a>
+    <a class="{{ 'active' if p.startswith('/data-science') }}" href="{{ url_for('data_science') }}">📊 Data Science</a>
     <a class="{{ 'active' if p.startswith('/jurnal') }}" href="{{ url_for('jurnal') }}">Jurnal</a>
     <a class="{{ 'active' if p.startswith('/ulas') }}" href="{{ url_for('ulas') }}">Ulasan{% if user._review_due %}<span class="navbadge">{{ user._review_due }}</span>{% endif %}</a>
-    <a class="{{ 'active' if p.startswith('/analitik') }}" href="{{ url_for('analitik') }}">Analitik</a>
     <a class="{{ 'active' if p.startswith('/leaderboard') }}" href="{{ url_for('leaderboard_page') }}">Papan Skor</a>
     <a class="{{ 'active' if p.startswith('/badges') }}" href="{{ url_for('badges_page') }}">Badges</a>
     <a class="{{ 'active' if p.startswith('/profil') }}" href="{{ url_for('profile') }}">Profil</a>

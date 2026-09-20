@@ -83,7 +83,7 @@
     <div class="scenactions">
       <button class="btn primary" type="submit">▶ Jalankan & Uji</button>
       <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
-      <span class="meta">Tes rahasia: {{ q.tes | length }} kasus. Bisa coba-coba pakai Playground → Live Runner dulu.</span>
+      <span class="meta">Tes rahasia: {{ q.tes | length }} kasus. Mau coba-coba dulu? Buka <a href="{{ url_for('notebook_list') }}">📓 Notebook</a>.</span>
     </div>
   </form>
 
