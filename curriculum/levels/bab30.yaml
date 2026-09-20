@@ -1,0 +1,607 @@
+# ============================================================
+# BAB 30 — FEATURE ENGINEERING (TRACK: DATA SCIENCE)
+# Kolom mentah jadi fitur berguna: rasio, binning, encoding, skala.
+# Data: /soaldata/kredit_umkm_bersih.csv (620 pengajuan bersih)
+# ============================================================
+bab: 30
+track: ds
+judul: "Feature Engineering"
+emoji: "🛠️"
+deskripsi: "Fitur = kolom masukan untuk model. Ubah kolom mentah (omzet, pinjaman, telat) jadi fitur yang lebih berguna: rasio, binning, encoding, dan skala."
+pelajaran:
+  - id: "30-1"
+    judul: "Dari Kolom Mentah ke Fitur Berguna"
+    menit: 5
+    materi: |
+      **Fitur** = kolom yang dipakai model untuk belajar: omzet, pinjaman, telat. Kolom mentah belum tentu berguna apa adanya.
+
+      Dua pengajuan:
+      - A: pinjaman 8,5 juta, omzet 16,6 juta → 8,5 ÷ 16,6 = **0,51**
+      - B: pinjaman 16 juta, omzet 40 juta → 16 ÷ 40 = **0,40**
+
+      Pinjaman B lebih besar, tapi bebannya lebih ringan. Angka 0,51 dan 0,40 disebut **rasio** (perbandingan): dibuat dengan membagi dua kolom.
+
+      Hitungan dari 620 data bersih: rata-rata rasio pinjaman ÷ omzet adalah **Lancar 0,59** dan **Macet 0,76**.
+
+      Pola fitur yang sering dipakai:
+      - **Rasio**: pinjaman ÷ omzet (beban utang), pinjaman ÷ jumlah karyawan.
+      - **Satuan baru**: lama usaha 90 bulan ÷ 12 = **7,5 tahun**.
+      - **Binning** (dibuat dua tingkat): telat 0-5 → "sering" kalau telat ≥ 3.
+      - **Interaksi**: dua kolom digabung jadi satu angka baru.
+
+      Aturan praktis: satu fitur baru harus bisa dijelaskan dalam satu kalimat. Kalau tidak bisa, jangan dibuat.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      df["rasio_pinjaman"] = df["pinjaman_diajukan_juta"] / df["omzet_bulanan_juta"]
+      print(df.groupby("status")["rasio_pinjaman"].mean().round(2).to_dict())
+    penjelasan: "Fitur baru = kolom hasil hitungan. Beban utang = pinjaman ÷ omzet (A 0,51 vs B 0,40). Di 620 data bersih: Lancar 0,59 vs Macet 0,76 — pemisahan jelas, model dapat sinyal."
+  - id: "30-2"
+    judul: "Ubah Kategori & Skala"
+    menit: 6
+    materi: |
+      Model hanya mengerti **angka**. Kolom teks harus diubah dulu:
+      - **Peta angka (map)**: "Ya" → 1, "Tidak" → 0. Contoh: punya_npwp.
+      - **One-hot (get_dummies)**: satu kolom per kategori, isi 0/1. Untuk kategori TANPA urutan.
+
+      Kenapa sektor tidak diberi nomor 1-6? Karena model membaca Fashion (6) seperti "enam kali Retail (1)" — padahal tidak ada artinya.
+
+      **Skala** juga penting. Bandingkan dua kolom:
+      - skor_kredit: rata-rata 533, sebaran 86,9 (nilai sekitar 400-700)
+      - omzet: rata-rata 31,4 juta, sebaran 19,5 (nilai 4,5-166)
+
+      Selisih 1 poin skor dan selisih 1 juta omzet itu beda jauh. Cara menyeragamkan (z-score): **z = (nilai - rata-rata) ÷ sebaran**. Contoh omzet 16,6: (16,6 - 31,4) ÷ 19,5 = **-0,76**. Artinya 0,76 sebaran di bawah rata-rata.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      df["npwp_num"] = df["punya_npwp"].map({"Ya": 1, "Tidak": 0})
+      print(f"npwp_num = 1: {df['npwp_num'].sum()} dari {len(df)} pengajuan")
+      print(df["sektor"].value_counts().to_dict())
+    penjelasan: "Teks jadi angka: map untuk ya/tidak (406 Ya, 214 Tidak), get_dummies untuk kategori tanpa urutan (6 sektor jadi 6 kolom 0/1). Skala: z = (x - rata-rata) ÷ sebaran, contoh omzet 16,6 jadi -0,76."
+skenario:
+  - id: "s30-1"
+    judul: "Rasio atau Kolom Mentah?"
+    emoji: "🧮"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Dua pengajuan. A: pinjaman 8,5 juta, omzet 16,6 juta. B: pinjaman 16 juta, omzet 40 juta. Kamu memilih fitur untuk model penilaian kredit. Mana yang paling berguna?
+    pilihan:
+      - "Dua kolom mentah (omzet + pinjaman) — biar model belajar sendiri"
+      - "Satu fitur rasio pinjaman ÷ omzet (A 0,51 dan B 0,40)"
+      - "Cukup nominal pinjaman — B dua kali lebih besar"
+      - "Cukup omzet — makin besar pasti makin aman"
+    jawaban: 1
+    penjelasan: |
+      A = 8,5 ÷ 16,6 = 0,51. B = 16 ÷ 40 = 0,40. Pinjaman B lebih besar, tapi bebannya lebih ringan. Rasio mengubah dua kolom jadi satu angka bermakna.
+
+      Bukti dari 620 data bersih: rata-rata rasio Lancar 0,59 vs Macet 0,76. Nominal pinjaman saja menyesatkan. Omzet saja juga: rata-rata omzet Macet 31,7 vs Lancar 31,3 — nyaris sama, tidak memisahkan. Dua kolom mentah boleh tetap ada, tapi rasio-lah yang memberi sinyal paling jelas dan hemat satu fitur.
+    kode: |
+      rasio_a = 8.5 / 16.6
+      rasio_b = 16.0 / 40.0
+      print(f"A: {rasio_a:.2f} | B: {rasio_b:.2f}")
+    hasil:
+      - ret: 1.5
+        dd: 9.0
+        win: 47
+        note: "Model bisa belajar dari dua kolom mentah, tapi lebih rawan salah waktu data sedikit."
+      - ret: 7.0
+        dd: 4.0
+        win: 74
+        note: "Benar: rasio menangkap beban utang. Lancar 0,59 vs Macet 0,76 — sinyal jelas."
+      - ret: 2.5
+        dd: 8.0
+        win: 50
+        note: "Nominal besar belum tentu berat: 16 juta dari omzet 40 juta justru lebih ringan."
+      - ret: 2.0
+        dd: 9.0
+        win: 45
+        note: "Omzet saja tidak memisahkan: Macet 31,7 vs Lancar 31,3 juta — hampir sama."
+    petunjuk:
+      - "Bagi pinjaman dengan omzet untuk tiap pengajuan."
+      - "Mana yang lebih berat bebannya: A 0,51 atau B 0,40?"
+  - id: "s30-2"
+    judul: "Kolom Identitas"
+    emoji: "🪪"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Tim menambah kolom `id_pengajuan` (K-0001 sampai K-0620) dan mengusulkan memakainya sebagai fitur angka 1-620. Apa jawabanmu?
+    pilihan:
+      - "Masukkan saja — makin banyak fitur makin baik"
+      - "Tolak: nomor urut tidak menjelaskan kualitas pengajuan"
+      - "Jadikan id_pengajuan sebagai target model"
+      - "Pecah jadi 620 kolom one-hot, satu kolom per id"
+    jawaban: 1
+    penjelasan: |
+      id = nomor urut baris, bukan sifat pengajuan. Hubungannya dengan status praktis nol: korelasi 0,017 (dihitung dari 620 baris).
+
+      Model yang memakai id bisa "menghafal" baris tertentu, tapi kalah waktu bertemu pengajuan baru. Target model tetap status (Lancar/Macet), bukan id. One-hot 620 kolom berarti 620 kolom untuk 620 baris: tidak ada yang bisa dipelajari. Syarat fitur: (1) sudah ada SEBELUM keputusan dibuat, (2) menjelaskan sesuatu tentang pengajuan itu.
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      y = (df["status"] == "Lancar").astype(int)
+      print("korelasi nomor baris vs status:", round(df.index.to_series().corr(y), 3))
+    hasil:
+      - ret: 1.0
+        dd: 9.0
+        win: 45
+        note: "Fitur sampah: model belajar dari nomor urut, bukan dari kualitas pengajuan."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: korelasi 0,017 hampir nol. Nomor urut tidak dipakai sebagai fitur."
+      - ret: 0.5
+        dd: 9.5
+        win: 42
+        note: "Target harus jawaban sebenarnya (status), bukan nomor baris."
+      - ret: 0.5
+        dd: 9.5
+        win: 40
+        note: "620 kolom untuk 620 baris = model tidak bisa belajar apa pun."
+    petunjuk:
+      - "Pikirkan: apa arti id 347 bagi kualitas pengajuan?"
+      - "Cek dulu korelasinya dengan status."
+  - id: "s30-3"
+    judul: "Telat: Dua Tingkat"
+    emoji: "🚦"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Kolom `riwayat_telat_12m` berisi 0 sampai 5 (berapa kali telat dalam 12 bulan). Kalau dibuat dua tingkat — "sering" untuk telat ≥ 3 — berapa persen pengajuan "sering" yang Macet?
+    pilihan:
+      - "13,5%"
+      - "42,1%"
+      - "26,5%"
+      - "72,7%"
+    jawaban: 1
+    penjelasan: |
+      Telat ≥ 3: 280 pengajuan, 118 di antaranya Macet → 118 ÷ 280 = 42,1%. Bandingkan telat < 3: 340 pengajuan, 46 Macet → 13,5%. Bedanya tiga kali lipat, dan cuma butuh satu kolom 0/1.
+
+      26,5% = angka seluruh data (164 dari 620) — tidak memisahkan apa pun. 72,7% = hanya yang telat 5 kali (22 pengajuan) — terlalu sedikit jadi patokan. Inilah guna binning: enam nilai dijadikan dua tingkat supaya pola lebih mudah dibaca.
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      sering = df[df["riwayat_telat_12m"] >= 3]
+      print(f"sering: {len(sering)} | Macet: {(sering['status'] == 'Macet').mean() * 100:.1f}%")
+    hasil:
+      - ret: 2.5
+        dd: 8.0
+        win: 48
+        note: "13,5% itu kelompok telat < 3 — justru kelompok yang aman."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: 118 dari 280 = 42,1%, tiga kali lipat kelompok aman."
+      - ret: 2.0
+        dd: 9.0
+        win: 45
+        note: "26,5% = angka seluruh data (164 dari 620) — tidak memisahkan apa pun."
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "72,7% cuma dari 22 pengajuan telat 5 kali — terlalu sedikit jadi patokan."
+    petunjuk:
+      - "Hitung dulu yang telat ≥ 3: ada 280 pengajuan."
+      - "Lalu bagi jumlah Macet di kelompok itu: 118 ÷ 280."
+  - id: "s30-4"
+    judul: "Fitur yang Bocor"
+    emoji: "🚰"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Rekanmu menambah kolom `sisa_tagihan_juta` (sisa utang pengajuan hari ini). Model yang memakainya mendapat akurasi 100% di data latih DAN data uji. Dia sangat senang. Apa masalahnya?
+    pilihan:
+      - "Tidak ada masalah — akurasi 100% berarti model sempurna"
+      - "Kebocoran data: kolom itu baru ada setelah pinjaman berjalan, tidak tersedia untuk pengajuan baru"
+      - "Modelnya kurang fitur — tambah kolom lain lagi"
+      - "Akurasi 100% tanda model kurang lama dilatih"
+    jawaban: 1
+    penjelasan: |
+      Kolom bocor (data leakage) = informasi yang belum ada saat keputusan diambil. Di data ini kolom itu rata-rata 1,99 untuk Lancar dan 9,02 untuk Macet — praktis menuliskan jawabannya, jadi akurasi latih dan uji 100%.
+
+      Di produksi, pengajuan baru tidak punya angka itu: kolomnya kosong dan model langsung tak berguna. Cara memeriksa, satu pertanyaan untuk setiap fitur: "apakah angka ini sudah diketahui SEBELUM pinjaman disetujui?" Kalau tidak, buang — sebagus apa pun akurasinya.
+    kode: |
+      import numpy as np
+      status = np.r_[np.ones(456), np.zeros(164)]
+      bocor = np.where(status == 1, 1.99, 9.02)
+      print("Lancar:", round(float(bocor[status == 1].mean()), 2), "| Macet:", round(float(bocor[status == 0].mean()), 2))
+    hasil:
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "Akurasi 100% itu palsu: kolomnya tidak ada saat pengajuan baru masuk."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: bocor. Lancar 1,99 vs Macet 9,02 — model cuma membaca jawabannya."
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Menambah fitur tidak menyembuhkan kebocoran — malah menambah masalah."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Melatih lebih lama tidak mengubah apa pun: kolomnya memang bocor."
+    petunjuk:
+      - "Tanya satu hal untuk setiap fitur: apakah angkanya ada sebelum pinjaman disetujui?"
+      - "Cek rata-rata kolom itu untuk Lancar vs Macet."
+  - id: "s30-5"
+    judul: "Sektor: Nomor atau One-Hot?"
+    emoji: "🔢"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kolom `sektor` berisi 6 kategori: Retail, Pertanian, Kerajinan, Jasa, Kuliner, Fashion. Rekan mengusulkan memberi nomor Retail = 1, Pertanian = 2, dan seterusnya sampai Fashion = 6. Apa masalahnya, dan apa yang benar?
+    pilihan:
+      - "Tidak masalah — nomor lebih hemat kolom"
+      - "Nomor menyiratkan urutan yang tidak ada; pakai one-hot (6 kolom 0/1)"
+      - "Hapus kolom sektor — semua kategori sama saja"
+      - "Urutkan sesuai abjad lalu beri nomor 1-6"
+    jawaban: 1
+    penjelasan: |
+      Kategori tanpa urutan tidak boleh dinomori: model membaca Fashion (6) seperti 6 kali Retail (1), padahal tidak ada artinya. One-hot membuat satu kolom per kategori berisi 0/1, jadi tiap sektor berdiri sendiri.
+
+      Jumlah pengajuan tiap sektor berdekatan: Kerajinan 113, Retail 112, Pertanian 107, Jasa 102, Fashion 93, Kuliner 93. Rasio Macet-nya juga berdekatan (22,3% sampai 33,3%) — jadi sektor bukan fitur kuat, tapi kolomnya tetap bisa dipakai lewat one-hot. Urutan abjad sama saja: urutan yang dikarang tetap dikarang. (Nomor urut tetap boleh untuk data berjenjang yang benar, misal telat 0-5.)
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      dummies = pd.get_dummies(df["sektor"])
+      print("kolom one-hot:", dummies.shape[1], "| contoh baris:", dummies.iloc[0].astype(int).to_dict())
+    hasil:
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Nomor 1-6 membuat model menganggap ada urutan sektor (Fashion di atas Retail)."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: 6 kolom 0/1, tiap sektor berdiri sendiri tanpa urutan palsu."
+      - ret: 2.0
+        dd: 8.0
+        win: 47
+        note: "Sektor lemah tapi bukan nol: Kuliner 33,3% Macet vs Retail 22,3%."
+      - ret: 1.5
+        dd: 8.5
+        win: 44
+        note: "Abjad juga urutan karangan — masalahnya sama saja."
+    petunjuk:
+      - "Pikirkan bagaimana model membaca angka 6 dibanding 1."
+      - "Kategori tanpa urutan sebaiknya jadi kolom 0/1 masing-masing."
+  - id: "s30-6"
+    judul: "Bulan atau Tahun?"
+    emoji: "📅"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Laporan risiko menulis "lama usaha rata-rata 96,6 bulan". Manajer bingung: itu lama atau sebentar? Kamu membuat fitur versi baru dari kolom yang sama. Versi mana yang paling tepat?
+    pilihan:
+      - "Biarkan bulan — satuannya sudah jelas"
+      - "Bagi 12 jadi tahun: rata-rata 8,05 tahun"
+      - "Bagi 100 jadi 0,97 satuan ratusan bulan"
+      - "Hapus kolom lama usaha — tidak penting"
+    jawaban: 1
+    penjelasan: |
+      Membagi 12 tidak mengubah urutan data, tapi membuat angkanya bisa dibaca: 96,6 bulan = 8,05 tahun (lebih dari 8 tahun). Manfaatnya terasa waktu membandingkan kelompok: Macet rata-rata 6,9 tahun vs Lancar 8,4 tahun — selisih 1,5 tahun, mudah dibayangkan.
+
+      Membagi 100 menghasilkan satuan karangan yang membingungkan. Menghapus kolom = membuang sinyal yang nyata. Aturan praktis: pilih satuan yang bisa dijelaskan ke orang lain dalam satu kalimat.
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      df["lama_tahun"] = df["lama_usaha_bulan"] / 12
+      print("rata-rata 96,6 bulan =", round(df["lama_usaha_bulan"].mean() / 12, 2), "tahun")
+      print(df.groupby("status")["lama_tahun"].mean().round(1).to_dict())
+    hasil:
+      - ret: 2.0
+        dd: 8.0
+        win: 48
+        note: "96,6 bulan itu benar, tapi 8,05 tahun langsung terbaca manusia."
+      - ret: 5.5
+        dd: 4.5
+        win: 72
+        note: "Benar: 96,6 ÷ 12 = 8,05 tahun. Macet 6,9 vs Lancar 8,4 tahun."
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "0,97 ratusan bulan = satuan karangan, tidak ada yang bisa membacanya."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Kolomnya berguna: selisih 1,5 tahun antara Macet dan Lancar."
+    petunjuk:
+      - "96,6 ÷ 12 = ?"
+      - "Bandingkan rata-rata lama usaha Macet dan Lancar setelah dibagi 12."
+  - id: "s30-7"
+    judul: "Fitur Tanggal: Kapan Berguna?"
+    emoji: "📆"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Data punya kolom `tanggal_pengajuan` (Juni 2024 sampai Juni 2026). Rekan mengusulkan tiga rencana. Mana yang paling masuk akal?
+    pilihan:
+      - "Pakai tanggal mentah 2024-10-12 sebagai fitur"
+      - "Ambil bulan & tahun sebagai angka, cek dulu pola Macet per bulan dan per tahun"
+      - "Buang kolom tanggal — tanggal tidak pernah berguna"
+      - "Jadikan tanggal sebagai target model"
+    jawaban: 1
+    penjelasan: |
+      Teks tanggal tidak bisa dihitung model, jadi harus diubah: bulan (1-12) dan tahun. Tapi fitur waktu WAJIB diuji dulu ada polanya atau tidak.
+
+      Data ini: rasio Macet per bulan Maret 35,4%, Juni 13,6%, Desember 18,0% — selisihnya kelihatan besar, padahal tiap bulan hanya sekitar 50 pengajuan, jadi bisa kebetulan. Per tahun: 2024 27,9%, 2025 24,1%, 2026 30,3% — tidak ada tren jelas. Jumlah pengajuan: 2024 ada 172, 2025 ada 316, 2026 ada 132. Kesimpulan: bulan/tahun berguna kalau ada pola; kalau tidak, cukup untuk audit data. Tanggal mentah tidak bisa dihitung, dan target model tetap status.
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      tahun = pd.to_datetime(df["tanggal_pengajuan"]).dt.year
+      print(tahun.value_counts().sort_index().to_dict())
+    hasil:
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Teks tanggal tidak bisa dihitung model — harus dipecah dulu."
+      - ret: 5.5
+        dd: 5.0
+        win: 71
+        note: "Benar: bulan & tahun berguna kalau polanya ada — dan itu harus diuji dulu."
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Tanggal tetap berguna untuk cek pola musiman dan audit data."
+      - ret: 0.5
+        dd: 9.5
+        win: 38
+        note: "Target model adalah status (Lancar/Macet), bukan tanggal."
+    petunjuk:
+      - "Fitur tanggal harus diubah jadi angka yang bisa dihitung."
+      - "Cek dulu: apakah rasio Macet berbeda nyata antar bulan?"
+  - id: "s30-8"
+    judul: "Rasio Mana Paling Memisahkan?"
+    emoji: "⚖️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Tiga calon fitur diuji ke 620 pengajuan. Rata-rata Macet vs Lancar: (1) pinjaman ÷ omzet = 0,76 vs 0,59; (2) pinjaman ÷ karyawan = 8,26 vs 6,39; (3) omzet ÷ karyawan = 10,68 vs 10,65. Kamu hanya boleh memilih satu. Mana yang paling berguna?
+    pilihan:
+      - "Fitur 1 — selisih 0,17 dengan sebaran 0,21 (paling jelas memisahkan)"
+      - "Fitur 2 — angkanya paling besar (8,26)"
+      - "Fitur 3 — omzet per karyawan paling wajar secara bisnis"
+      - "Semua sama — ketiganya dari kolom yang sama"
+    jawaban: 0
+    penjelasan: |
+      Pilih fitur dengan melihat selisih kelompok dibanding sebarannya, bukan besar angkanya. Fitur 1: selisih 0,17 ÷ sebaran 0,21 ≈ 0,79. Fitur 2: selisih 1,88 ÷ sebaran 8,89 ≈ 0,21. Fitur 3: selisih 0,03 ÷ sebaran 12,17 ≈ 0,00 — praktis tidak membedakan.
+
+      Bukti tambahan fitur 1: kalau pengajuan diurutkan menurut rasio lalu dibagi 5 kelompok sama besar, rasio Macet naik rapi 8,1% → 14,5% → 25,0% → 37,9% → 46,8%. Jadi fitur 1 paling kuat, dan fitur 3 hampir tanpa informasi meskipun secara bisnis terdengar wajar.
+    kode: |
+      import numpy as np
+      macet = np.array([0.761, 8.262, 10.675])
+      lancar = np.array([0.595, 6.386, 10.651])
+      sebaran = np.array([0.211, 8.887, 12.166])
+      print(np.round(np.abs(macet - lancar) / sebaran, 3))
+    hasil:
+      - ret: 7.0
+        dd: 4.0
+        win: 74
+        note: "Benar: 0,79 vs 0,21 vs 0,00 — fitur 1 paling memisahkan."
+      - ret: 2.0
+        dd: 8.5
+        win: 46
+        note: "Angka besar bukan tanda penting — 8,26 pakai satuan juta per orang."
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "Kedengarannya wajar, tapi Macet 10,68 vs Lancar 10,65 = nyaris nol informasi."
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "Asal kolomnya sama, tapi hasil pembagiannya jauh berbeda kualitasnya."
+    petunjuk:
+      - "Bandingkan selisih rata-rata dengan sebaran tiap fitur."
+      - "Fitur 3 bedanya cuma 0,03 — seberapa berarti?"
+  - id: "s30-9"
+    judul: "Membaca Koefisien: Skala"
+    emoji: "📏"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Model memberi koefisien: omzet +0,0762; lama +0,0095; pinjaman -0,1041; telat -0,5547; skor +0,0034. Rekan menyimpulkan "skor kredit hampir tidak penting — koefisiennya cuma 0,003". Betulkah?
+    pilihan:
+      - "Benar — koefisien skor paling kecil, berarti paling lemah"
+      - "Keliru — koefisien dibaca per satuan fitur, kalikan sebaran dulu (skor 86,9 poin, telat 1,44 kali)"
+      - "Benar — buang skor kredit, sisakan telat saja"
+      - "Keliru — koefisien tidak bisa dibaca sama sekali"
+    jawaban: 1
+    penjelasan: |
+      Koefisien dihitung per SATU satuan fitur, dan satuan tiap fitur beda jauh. Naik 1 poin skor itu peristiwa kecil; naik 1 kali telat itu peristiwa besar.
+
+      Setelah dikalikan sebaran: omzet +1,49; pinjaman -1,56; telat -0,80; lama +0,49; skor +0,30. Jadi skor memang bukan yang terkuat, tapi jauh dari "hampir nol". Contoh nyata: skor +100 poin memberi +0,34; telat +1 memberi -0,55. Membaca koefisien tanpa melihat satuan = salah tafsir. Kalau semua fitur di-scaling dulu, koefisiennya baru bisa dibandingkan langsung. Membuang skor berarti kehilangan sinyal: rata-rata skor Macet 487,9 vs Lancar 549,4.
+    kode: |
+      koef = [0.0762, 0.0095, -0.1041, -0.5547, 0.0034]
+      sebaran = [19.50, 51.42, 14.97, 1.44, 86.85]
+      for k, s in zip(koef, sebaran):
+          print("koef x sebaran:", round(k * s, 2))
+    hasil:
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "0,0034 itu per 1 poin skor — bukan ukuran kepentingan fitur."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: setelah dikali sebaran, skor memberi +0,30 (skor +100 = +0,34)."
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "Skor Macet 487,9 vs Lancar 549,4 — sinyalnya nyata, jangan dibuang."
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Koefisien BISA dibaca, asal tahu satuannya dan menyamakan skala dulu."
+    petunjuk:
+      - "Koefisien dibaca per satu satuan fitur (1 poin? 1 juta? 1 kali?)."
+      - "Kalikan tiap koefisien dengan sebaran fiturnya."
+  - id: "s30-10"
+    judul: "Terlalu Banyak Fitur?"
+    emoji: "🧪"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Data hanya 620 baris. Kamu menambah kolom sektor dan kota (one-hot) sampai total 17 fitur, lalu berlatih hanya dengan 80 baris. Hasil dua versi: 5 fitur → latih 83,8%, uji 79,1%; 17 fitur → latih 85,0%, uji 76,1%. Mana kesimpulan yang benar?
+    pilihan:
+      - "17 fitur lebih baik — akurasi latihnya tertinggi (85,0%)"
+      - "5 fitur lebih baik: akurasi latih naik 1,2 poin tapi akurasi uji turun 3,0 poin"
+      - "Abaikan keduanya — model tidak berguna"
+      - "Tambah lagi fitur yang lebih rinci supaya akurasi latih 90%"
+    jawaban: 1
+    penjelasan: |
+      Yang menentukan adalah akurasi data uji, bukan data latih. Menambah 12 kolom kategori menaikkan akurasi latih 83,8% → 85,0% (naik 1,2 poin), tapi akurasi uji justru TURUN 79,1% → 76,1% (turun 3,0 poin). Artinya fitur tambahan itu dipakai untuk menghafal, bukan untuk belajar.
+
+      Masalahnya bukan kategori itu buruk — masalahnya 17 fitur untuk 80 baris (kurang dari 5 baris per fitur). Pedomannya: cukupkan baris untuk setiap fitur (misalnya 20-50 baris per fitur), uji di data yang belum pernah dilihat, dan bandingkan dengan baseline 73,3%. Kalau akurasi uji tidak naik, fitur tambahan cuma menambah risiko.
+    kode: |
+      import os, pandas as pd
+      from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = pd.concat([df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]], pd.get_dummies(df[["sektor", "kota"]])], axis=1)
+      y = (df["status"] == "Lancar").astype(int)
+      m = LogisticRegression(max_iter=5000, C=1000).fit(X[:80], y[:80])
+      print(round(m.score(X[:80], y[:80]), 3), round(m.score(X[80:], y[80:]), 3))
+    hasil:
+      - ret: 1.5
+        dd: 9.0
+        win: 43
+        note: "Akurasi latih tinggi itu jebakan: yang dinilai adalah data uji."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: uji turun 3,0 poin (79,1% → 76,1%). 17 fitur terlalu banyak untuk 80 baris."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Model 5 fitur tetap berguna: akurasi uji 79,1% vs baseline 73,3%."
+      - ret: 0.5
+        dd: 9.5
+        win: 38
+        note: "Menambah fitur lagi hanya menambah hafalan, bukan pengetahuan."
+    petunjuk:
+      - "Bandingkan angka LATIH dan UJI kedua versi."
+      - "Selisih 79,1% dan 76,1% itu dari data uji — mana yang dipakai menilai model?"
+soal:
+  - id: "p30-1"
+    judul: "Fitur Baru: Rasio Pinjaman"
+    emoji: "🧾"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Baca data kredit dari path yang diberikan. Buat kolom baru `rasio_pinjaman` = pinjaman_diajukan_juta ÷ omzet_bulanan_juta. Lalu saring baris dengan riwayat_telat_12m ≥ batas (baris kedua input). Cetak dua baris: (1) jumlah baris yang lolos, (2) rata-rata rasio_pinjaman kelompok itu dengan 2 angka desimal.
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: batas riwayat telat (0-5).
+    output_spec: |
+      Baris 1: jumlah baris (bilangan bulat). Baris 2: rata-rata rasio_pinjaman (2 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n3"
+        output: "280\n0.64"
+      - input: "/soaldata/kredit_umkm_uji.csv\n0"
+        output: "150\n0.62"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n3"
+        output: "280\n0.64"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0"
+        output: "620\n0.64"
+      - input: "/soaldata/kredit_umkm_uji.csv\n3"
+        output: "64\n0.62"
+      - input: "/soaldata/kredit_umkm_uji.csv\n0"
+        output: "150\n0.62"
+    solusi: |
+      import pandas as pd
+      path = input().strip()
+      batas = int(input())
+      df = pd.read_csv(path)
+      df["rasio_pinjaman"] = df["pinjaman_diajukan_juta"] / df["omzet_bulanan_juta"]
+      lolos = df[df["riwayat_telat_12m"] >= batas]
+      print(len(lolos))
+      print(f"{lolos['rasio_pinjaman'].mean():.2f}")
+    petunjuk:
+      - "Baca path dan batas dari input, lalu buka CSV-nya dengan pd.read_csv."
+      - "Buat kolom rasio dengan membagi dua kolom, lalu saring dengan kondisi."
+      - "len() untuk jumlah baris, f-string 2 desimal untuk rata-rata."
+    tugas:
+      - "Baca path file di baris pertama input, lalu batas telat di baris kedua."
+      - "Buat kolom baru rasio_pinjaman = pinjaman_diajukan_juta ÷ omzet_bulanan_juta."
+      - "Saring baris dengan riwayat_telat_12m >= batas."
+      - "Cetak jumlah barisnya, lalu rata-rata rasio_pinjaman dengan 2 desimal."
+    starter: |
+      import pandas as pd
+      path = input().strip()
+      batas = int(input())
+      df = pd.read_csv(path)
+      # TODO: buat kolom baru rasio_pinjaman = pinjaman_diajukan_juta / omzet_bulanan_juta
+      # TODO: saring baris dengan riwayat_telat_12m >= batas
+      # TODO: cetak jumlah baris lolos, lalu rata-rata rasio_pinjaman (2 desimal)
+  - id: "p30-2"
+    judul: "Encode NPWP & Hitung Grup"
+    emoji: "🧷"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Baca data kredit dari path. Buat kolom `npwp_num`: "Ya" jadi 1, "Tidak" jadi 0. Ambil kelompok sesuai kata di baris kedua input ("Ya" atau "Tidak"). Cetak tiga baris: (1) jumlah pengajuan kelompok itu, (2) rata-rata skor_kredit (2 desimal), (3) rata-rata rasio pinjaman_diajukan_juta ÷ omzet_bulanan_juta (2 desimal).
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: "Ya" atau "Tidak".
+    output_spec: |
+      Baris 1: jumlah pengajuan (bulat). Baris 2: rata-rata skor_kredit (2 desimal). Baris 3: rata-rata rasio pinjaman/omzet (2 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nYa"
+        output: "406\n542.54\n0.64"
+      - input: "/soaldata/kredit_umkm_uji.csv\nTidak"
+        output: "53\n537.40\n0.60"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nYa"
+        output: "406\n542.54\n0.64"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nTidak"
+        output: "214\n515.18\n0.63"
+      - input: "/soaldata/kredit_umkm_uji.csv\nYa"
+        output: "97\n556.16\n0.64"
+      - input: "/soaldata/kredit_umkm_uji.csv\nTidak"
+        output: "53\n537.40\n0.60"
+    solusi: |
+      import pandas as pd
+      path = input().strip()
+      grup = input().strip()
+      df = pd.read_csv(path)
+      df["npwp_num"] = df["punya_npwp"].map({"Ya": 1, "Tidak": 0})
+      pilih = df[df["npwp_num"] == {"Ya": 1, "Tidak": 0}[grup]]
+      print(len(pilih))
+      print(f"{pilih['skor_kredit'].mean():.2f}")
+      print(f"{(pilih['pinjaman_diajukan_juta'] / pilih['omzet_bulanan_juta']).mean():.2f}")
+    petunjuk:
+      - "map({\"Ya\": 1, \"Tidak\": 0}) mengubah kolom teks jadi angka."
+      - "Saring baris dengan npwp_num sesuai kata di input."
+      - "tiga print: len, rata-rata skor, rata-rata rasio."
+    tugas:
+      - "Baca path dan kata grup (Ya/Tidak) dari input."
+      - "Buat kolom npwp_num dari kolom punya_npwp dengan map."
+      - "Ambil baris yang npwp_num-nya sesuai grup."
+      - "Cetak jumlah baris, rata-rata skor_kredit, dan rata-rata rasio pinjaman/omzet (semua 2 desimal kecuali jumlah)."
+    starter: |
+      import pandas as pd
+      path = input().strip()
+      grup = input().strip()
+      df = pd.read_csv(path)
+      # TODO: buat kolom npwp_num dari punya_npwp ("Ya" -> 1, "Tidak" -> 0)
+      # TODO: ambil baris yang npwp_num-nya sesuai "grup"
+      # TODO: cetak jumlah baris, rata-rata skor_kredit (2 desimal), rata-rata rasio pinjaman/omzet (2 desimal)

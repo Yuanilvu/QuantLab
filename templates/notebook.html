@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ nb.judul }} — Notebook QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=3">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
 {% endblock %}
 {% block content %}
 <section class="nbhead" data-nid="{{ nb.id }}" data-timeout="{{ exec_timeout }}">
@@ -50,5 +50,5 @@
 <script type="application/json" id="cellData">{{ cells_json|safe }}</script>
 {% endblock %}
 {% block scripts_extra %}
-<script src="{{ url_for('static', filename='js/notebook.js') }}?v=2"></script>
+<script src="{{ url_for('static', filename='js/notebook.js') }}?v=3"></script>
 {% endblock %}

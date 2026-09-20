@@ -1,0 +1,626 @@
+# ============================================================
+# BAB 33 — DEEP LEARNING DASAR (TRACK: DATA SCIENCE)
+# Neuron, jaringan saraf, dan MLP pertamamu di sklearn.
+# ============================================================
+bab: 33
+track: ds
+judul: "Deep Learning Dasar"
+emoji: "🧠"
+deskripsi: "Neuron, lapisan tersembunyi, dan MLP pertamamu. Deep learning bukan sihir — dia tetap butuh skala fitur, data cukup, dan validasi yang jujur seperti model lain."
+pelajaran:
+  - id: "33-1"
+    judul: "Neuron & Jaringan Saraf"
+    menit: 5
+    materi: |
+      **Neuron** = mesin hitung kecil dengan dua langkah:
+      1. Jumlahkan semua masukan yang sudah dikali bobot, lalu tambah bias: z = w1·x1 + w2·x2 + w3·x3 + b
+      2. Ubah z jadi angka 0 sampai 1 lewat **aktivasi** (contoh: sigmoid, rumusnya 1 / (1 + e pangkat −z)).
+
+      Analoginya: seorang penilai kredit. Tiap fakta (skor kredit, telat bayar, jumlah pinjaman) diberi timbangan (**bobot**). Fakta bagus menambah nilai, fakta buruk mengurangi. **Bias** = nada dasar si penilai — ada yang gampang curiga, ada yang santai.
+
+      Contoh angka nyata. Satu pengajuan: skor_kredit 500, telat 1 kali, pinjaman 20 juta. Bobot: +0,01 untuk skor, −0,6 untuk telat, +0,04 untuk pinjaman; bias −4,5.
+      - z = 0,01 x 500 + (−0,6) x 1 + 0,04 x 20 + (−4,5) = 5 − 0,6 + 0,8 − 4,5 = **0,7**
+      - aktivasi = 1 / (1 + e pangkat −0,7) = **0,67** → di atas 0,5, jadi model condong bilang Macet.
+
+      **Lapisan tersembunyi**: satu neuron terlalu sederhana. Jaringan saraf menyusun banyak neuron berlapis-lapis. Lapisan pertama menangkap pola sederhana, lapisan berikutnya menggabungkan pola itu jadi pola yang lebih rumit. Contoh arsitektur kecil: 3 masukan → 4 neuron tersembunyi → 1 keluaran.
+
+      Dua hal yang wajib diingat sebelum masuk deep learning: (1) butuh data lebih banyak daripada model biasa; (2) fitur harus diskalakan — angka ratusan seperti skor kredit akan menenggelamkan angka kecil seperti telat 0-5 kalau tidak disetarakan dulu.
+    kode: |
+      import numpy as np
+
+      # Satu pengajuan: skor_kredit 500, telat 1 kali, pinjaman 20 juta
+      x = np.array([500, 1, 20])
+      bobot = np.array([0.01, -0.6, 0.04])
+      bias = -4.5
+      z = bobot @ x + bias
+      print(f"z = w.x + b = {z:.2f}")
+      print(f"aktivasi = {1 / (1 + np.exp(-z)):.2f} (di atas 0.5 -> cenderung Macet)")
+
+      # Contoh kedua: telat 4 kali, pinjaman 30 juta
+      x2 = np.array([450, 4, 30])
+      z2 = bobot @ x2 + bias
+      print(f"z = {z2:.2f}")
+      print(f"aktivasi = {1 / (1 + np.exp(-z2)):.2f} (di bawah 0.5 -> cenderung Lancar)")
+    penjelasan: "Neuron = jumlah berbobot + bias, lalu aktivasi. Contoh: z = 5 − 0,6 + 0,8 − 4,5 = 0,7 dan aktivasi 0,67 (condong Macet). Contoh kedua: z = −1,2 dan aktivasi 0,23 (condong Lancar). Jaringan = neuron berlapis-lapis; butuh data banyak dan fitur diskalakan."
+  - id: "33-2"
+    judul: "MLP Pertamamu"
+    menit: 6
+    materi: |
+      **MLP** (Multi-Layer Perceptron) = jaringan saraf paling sederhana di sklearn: beberapa neuron di lapisan tersembunyi, semuanya saling terhubung. Melatihnya sama singkatnya dengan logreg.
+
+      **Aturan wajib: pakai StandardScaler.** StandardScaler mengubah tiap fitur jadi rata-rata 0 dan sebaran 1, sehingga skor_kredit (400-600) dan riwayat_telat (0-5) punya timbangan sebanding. Buktinya dari data kita: MLP yang sama dilatih tanpa skala → akurasi data uji **0,74** (itu cuma setara baseline 0,735!). Dengan StandardScaler → **0,80**. Di sklearn tulis `make_pipeline(StandardScaler(), MLPClassifier(...))` supaya scaler dan model jadi satu paket; data uji pun otomatis diskalakan dengan cara yang sama.
+
+      Parameter yang perlu kamu tahu: `hidden_layer_sizes=(8,)` artinya satu lapisan tersembunyi berisi 8 neuron; `max_iter` = berapa putaran pelatihan; `random_state=1` supaya hasilnya selalu sama setiap dijalankan. Kalau muncul ConvergenceWarning, artinya pelatihan belum stabil — bisa diabaikan dulu atau `max_iter` dinaikkan.
+
+      Untuk kompetisi nyata, orang biasanya pindah ke **PyTorch** atau **TensorFlow** di Google Colab: lebih kuat untuk gambar, teks, dan data besar. Tapi konsepnya SAMA — skala fitur, lapisan, aktivasi, lalu dinilai dengan data uji. Kalau MLP sklearn sudah paham, pindah ke PyTorch cuma soal sintaks.
+    kode: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.neural_network import MLPClassifier
+      from sklearn.pipeline import make_pipeline
+      from sklearn.preprocessing import StandardScaler
+
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+      X = data[fitur]
+      y = (data["status"] == "Macet").astype(int)
+      X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, random_state=1, stratify=y)
+
+      tanpa_skala = MLPClassifier(hidden_layer_sizes=(8,), max_iter=300, random_state=1)
+      tanpa_skala.fit(X_latih, y_latih)
+      print(f"Tanpa skala: akurasi {tanpa_skala.score(X_uji, y_uji):.2f}")
+
+      pakai_skala = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(8,), max_iter=300, random_state=1))
+      pakai_skala.fit(X_latih, y_latih)
+      print(f"Pakai StandardScaler: akurasi {pakai_skala.score(X_uji, y_uji):.2f}")
+    penjelasan: "StandardScaler = penyetara skala, wajib untuk MLP. Bukti nyata: tanpa skala 0,74 (setara baseline 0,735), dengan skala 0,80. random_state=1 supaya hasil selalu sama. Untuk kompetisi, orang lanjut ke PyTorch/TensorFlow di Colab — konsepnya sama."
+skenario:
+  - id: "s33-1"
+    judul: "Baca Kode: Satu Neuron"
+    emoji: "🔢"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      x = [500, 1, 20]
+      bobot = [0.01, -0.6, 0.04]
+      bias = -4.5
+      z = bobot[0] * x[0] + bobot[1] * x[1] + bobot[2] * x[2] + bias
+      print(round(z, 2))
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "0.7"
+      - "-1.2"
+      - "5.2"
+      - "0.67"
+    jawaban: 0
+    penjelasan: |
+      Kalikan satu per satu: 0,01 x 500 = 5,0; −0,6 x 1 = −0,6; 0,04 x 20 = 0,8. Jumlahkan: 5,0 − 0,6 + 0,8 = 5,2. Nah, di sini jebakannya: 5,2 BELUM nilai akhir, karena **bias** masih harus ditambahkan. z = 5,2 + (−4,5) = **0,7**. Opsi 5,2 = jawaban orang yang lupa bias. Opsi 0,67 = aktivasi sigmoid dari z (langkah berikutnya, bukan z). Opsi −1,2 = hasil kalau datanya beda (skor 450, telat 4, pinjaman 30). Ingat urutannya: jumlah berbobot DULU, bias TERAKHIR, lalu aktivasi.
+    kode: |
+      x = [500, 1, 20]
+      bobot = [0.01, -0.6, 0.04]
+      bias = -4.5
+      z = bobot[0] * x[0] + bobot[1] * x[1] + bobot[2] * x[2] + bias
+      print(f"z = {round(z, 2)}")
+    hasil:
+      - ret: 12.0
+        dd: 0.0
+        win: 85
+        note: "Benar: 5,0 - 0,6 + 0,8 - 4,5 = 0,7."
+      - ret: 1.0
+        dd: 0.0
+        win: 20
+        note: "-1,2 itu untuk data lain (450, 4, 30)."
+      - ret: 4.0
+        dd: 0.0
+        win: 30
+        note: "5,2 = jumlah sebelum bias ditambahkan."
+      - ret: 5.0
+        dd: 0.0
+        win: 25
+        note: "0,67 itu aktivasi, langkah setelah z."
+    petunjuk:
+      - "Hitung tiga perkalian dulu: 5,0; -0,6; 0,8."
+      - "Jangan lupa bias -4,5 ditambahkan di akhir."
+  - id: "s33-2"
+    judul: "Aktivasi: Dari Angka ke Peluang"
+    emoji: "🎚️"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Satu neuron menghasilkan z = 1,9. Aktivasi sigmoid mengubahnya jadi angka 0 sampai 1 → 1 / (1 + e pangkat −1,9) = 0,87. Bagaimana kamu membaca 0,87 itu?
+    pilihan:
+      - "Peluang Macet 0,87 — di atas 0,5, jadi model memvonis Macet"
+      - "Ada 87 pengajuan yang Macet"
+      - "Nilai aktivasi bisa besar juga, seperti z = 19"
+      - "Model salah, karena aktivasi seharusnya sama dengan z"
+    jawaban: 0
+    penjelasan: |
+      Aktivasi selalu berada di antara 0 dan 1 — itulah gunanya: z yang bisa −5 atau +9 diubah jadi angka yang bisa dibaca sebagai peluang. Nilai 0,87 berarti model memberi peluang Macet 87%. Aturan umum: di atas 0,5 → vonis Macet, di bawah 0,5 → vonis Lancar. Bandingkan dengan z = −1,9: aktivasi = 1/(1 + e pangkat 1,9) = 0,13 → peluang Macet 13%, vonis Lancar. Perhatikan 0,87 dan 0,13 itu simetris di sekitar 0,5. Karena itu, jangan pernah membaca z mentah sebagai peluang: z bisa negatif atau lebih besar dari 1. 0,87 juga bukan jumlah orang — itu peluang satu pengajuan.
+    kode: |
+      import math
+      for z in [1.9, -1.9]:
+          aktivasi = 1 / (1 + math.exp(-z))
+          vonis = "Macet" if aktivasi > 0.5 else "Lancar"
+          print(f"z = {z:+.1f} -> aktivasi {aktivasi:.2f} -> vonis {vonis}")
+    hasil:
+      - ret: 12.0
+        dd: 0.0
+        win: 85
+        note: "Benar: 0,87 = peluang Macet; di atas 0,5 -> vonis Macet."
+      - ret: 0.0
+        dd: 4.0
+        win: 20
+        note: "0,87 itu peluang satu pengajuan, bukan jumlah orang."
+      - ret: -2.0
+        dd: 18.0
+        win: 15
+        note: "Aktivasi selalu 0-1. Nilai besar seperti 19 mustahil."
+      - ret: -6.0
+        dd: 25.0
+        win: 10
+        note: "Aktivasi memang beda dari z — justru itu tugasnya."
+    petunjuk:
+      - "Aktivasi sigmoid selalu di antara 0 dan 1."
+      - "Di atas 0,5 artinya apa untuk vonis model?"
+  - id: "s33-3"
+    judul: "Hitung Bobot Jaringan"
+    emoji: "⚙️"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Arsitektur jaringan: 3 fitur masukan → lapisan tersembunyi 4 neuron → 1 neuron keluaran. Berapa TOTAL bobot + bias di seluruh jaringan?
+    pilihan:
+      - "7"
+      - "12"
+      - "21"
+      - "4"
+    jawaban: 2
+    penjelasan: |
+      Hitung per lapisan. Masukan → tersembunyi: setiap neuron tersembunyi menerima 3 masukan, jadi 3 x 4 = 12 bobot, ditambah 4 bias (satu per neuron) = 16. Tersembunyi → keluaran: 4 bobot + 1 bias = 5. Total 16 + 5 = **21**. Opsi 12 hanya bobot lapisan pertama (lupa bias dan lupa lapisan keluaran). Opsi 7 = 3 + 4, salah hitung. Opsi 4 = jumlah neuron tersembunyi. Jumlah parameter ini penting: makin banyak parameter, makin banyak data yang dibutuhkan supaya jaringan tidak menghafal. Jaringan dengan 21 parameter masih wajar untuk 620 baris data.
+    kode: |
+      masuk, tersembunyi, keluar = 3, 4, 1
+      lapis1 = masuk * tersembunyi + tersembunyi
+      lapis2 = tersembunyi * keluar + keluar
+      print(f"Lapisan 1: {lapis1} (12 bobot + 4 bias)")
+      print(f"Lapisan 2: {lapis2} (4 bobot + 1 bias)")
+      print(f"Total: {lapis1 + lapis2} parameter")
+    hasil:
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "7 = 3 + 4, bukan jumlah bobot."
+      - ret: 4.0
+        dd: 0.0
+        win: 25
+        note: "12 hanya bobot lapisan pertama; bias dan lapisan keluaran belum dihitung."
+      - ret: 12.0
+        dd: 0.0
+        win: 85
+        note: "Benar: (3x4 + 4) + (4x1 + 1) = 16 + 5 = 21."
+      - ret: 2.0
+        dd: 0.0
+        win: 20
+        note: "4 itu jumlah neuron tersembunyi, bukan jumlah bobot."
+    petunjuk:
+      - "Tiap neuron tersembunyi menerima 3 masukan + 1 bias."
+      - "Jangan lupa lapisan keluaran: 4 bobot + 1 bias."
+  - id: "s33-4"
+    judul: "Kenapa Akurasi MLP Jeblok"
+    emoji: "📏"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      MLP yang sama, data yang sama. Tanpa penyesuaian skala → akurasi data uji 0,74 (persis baseline). Dengan StandardScaler → 0,80. Apa penyebabnya?
+    pilihan:
+      - "skor_kredit bernilai ratusan sedangkan riwayat_telat 0-5, jadi kontribusi skor_kredit mendominasi; StandardScaler menyetarakan skala semua fitur"
+      - "MLP tidak bisa membaca angka ratusan"
+      - "StandardScaler menambah baris data baru, jadi model belajar lebih banyak"
+      - "Tidak ada penyebabnya, 0,74 dan 0,80 cuma keberuntungan"
+    jawaban: 0
+    penjelasan: |
+      Hitungan konkret dengan bobot 0,01: skor_kredit 500 menyumbang 5,0 sedangkan riwayat_telat 1 menyumbang 0,01 — **500 kali** lebih besar. Tanpa skala, pelatihan didominasi fitur besar; fitur kecil hampir tidak diperhitungkan, padahal riwayat telat itu sinyal penting. StandardScaler mengubah tiap fitur jadi (nilai − rata-rata) / sebaran, sehingga semua fitur berdiri sejajar. Scaler TIDAK menambah data — dia hanya mengubah skala angka; jumlah baris tetap 620. Buktinya akurasi naik dari 0,74 ke 0,80. Aturan: jaringan saraf hampir selalu butuh skala fitur; untuk logreg dan pohon biasanya tidak wajib, tapi tidak ada ruginya.
+    kode: |
+      skor_kredit = 500 * 0.01
+      telat = 1 * 0.01
+      print(f"skor_kredit x 0,01 = {skor_kredit:.1f}")
+      print(f"riwayat_telat x 0,01 = {telat:.2f}")
+      print(f"skor_kredit {skor_kredit / telat:.0f} kali lebih besar")
+    hasil:
+      - ret: 13.0
+        dd: 4.0
+        win: 85
+        note: "Benar: 5,0 vs 0,01 = 500 kali. Skala menyetarakan keduanya."
+      - ret: -4.0
+        dd: 22.0
+        win: 12
+        note: "MLP bisa membaca angka besar; masalahnya keseimbangan skala."
+      - ret: 2.0
+        dd: 15.0
+        win: 25
+        note: "Scaler tidak menambah data — hanya mengubah skala."
+      - ret: -8.0
+        dd: 28.0
+        win: 8
+        note: "Bukan kebetulan: tanpa skala MLP jatuh ke baseline 0,74."
+    petunjuk:
+      - "Bandingkan 500 x 0,01 dengan 1 x 0,01."
+      - "Fitur dengan angka besar akan mendominasi tanpa penskalaan."
+  - id: "s33-5"
+    judul: "620 Baris, Jaringan 1.000 Neuron"
+    emoji: "🐜"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Datamu 620 baris. Rekan mengusulkan jaringan 5 lapisan x 1.000 neuron, 2.000 epoch, plus sewa GPU. Sebagai pembanding, logreg dan pohon memberi CV 0,797 dalam waktu kurang dari 1 detik. Keputusanmu?
+    pilihan:
+      - "Pakai jaringan besar — lebih canggih biasanya lebih baik"
+      - "Mulai dari model sederhana; 620 baris terlalu kecil untuk 1.000 neuron (parameternya jutaan), dan CV 0,797 sudah batas yang layak"
+      - "Pakai jaringan besar tapi epoch dikurangi jadi 100"
+      - "Jangan pakai model sama sekali"
+    jawaban: 1
+    penjelasan: |
+      Hitung ukurannya. Jaringan 5 lapisan x 1.000 neuron dengan 5 fitur masukan punya sekitar **4.011.001 parameter**, sedangkan datamu cuma **620 baris** → sekitar **6.469 parameter untuk setiap baris data**. Model dengan parameter jauh lebih banyak daripada data akan menghafal, bukan belajar: skor latih bisa 1,00 tapi CV jatuh. Deep learning bersinar di data puluhan ribu ke atas (gambar, teks, suara). Untuk 620 baris: mulai dari logreg atau pohon (CV 0,797), perbaiki fitur, baru naik kelas kalau CV model sederhana sudah mentok. Menyewa GPU untuk 620 baris hanya membakar waktu.
+    kode: |
+      data = 620
+      neuron = [5] + [1000] * 5 + [1]
+      parameter = sum(neuron[i] * neuron[i + 1] + neuron[i + 1] for i in range(len(neuron) - 1))
+      print(f"Parameter jaringan: {parameter:,}")
+      print(f"Data cuma {data} baris -> {parameter / data:.0f} parameter per baris")
+    hasil:
+      - ret: -12.0
+        dd: 30.0
+        win: 10
+        note: "4 juta parameter untuk 620 baris = resep menghafal."
+      - ret: 13.0
+        dd: 4.0
+        win: 88
+        note: "Benar: mulai sederhana, CV 0,797 dulu dijadikan patokan."
+      - ret: -2.0
+        dd: 20.0
+        win: 20
+        note: "Mengurangi epoch tidak menyelesaikan masalah jumlah parameter."
+      - ret: -20.0
+        dd: 45.0
+        win: 5
+        note: "Tanpa model berarti tidak ada skor sama sekali."
+    petunjuk:
+      - "Hitung kasar parameternya: lapisan 1.000 x 1.000 sudah sejuta."
+      - "Bandingkan jumlah parameter dengan 620 baris data."
+  - id: "s33-6"
+    judul: "Ukuran Jaringan: Kecil atau Besar?"
+    emoji: "🧱"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Dua kandidat untuk 620 baris data dan 5 fitur. A: satu lapisan 8 neuron → latih 0,83, CV 0,80. B: tiga lapisan @200 neuron → latih 1,00, CV 0,65. Mana yang dipakai di kompetisi?
+    pilihan:
+      - "B — latih 1,00 artinya sempurna"
+      - "A — CV 0,80 vs 0,65; jaringan B menghafal (selisih latih-CV 0,35, A cuma 0,03)"
+      - "B — jaringan lebih dalam selalu lebih pandai"
+      - "A, tapi hanya karena lebih cepat dilatih"
+    jawaban: 1
+    penjelasan: |
+      Hitung selisihnya. Jaringan B: 1,00 − 0,65 = **0,35**. Jaringan A: 0,83 − 0,80 = **0,03**. Yang menentukan pilihan adalah skor CV (data yang belum pernah dilihat model), bukan skor latih. Jaringan B punya ratusan ribu parameter untuk 620 baris → dia hafal data latih tapi rapuh di data baru. Jaringan A hampir tidak punya selisih, tanda belajar pola. Kalau nanti ingin jaringan lebih besar, tambah dulu datanya, karena aturan kasar yang sehat: jumlah parameter sebaiknya tidak jauh melebihi jumlah baris data. Di kompetisi, model dengan CV terbaik yang dikirim, bukan model dengan latih terbaik.
+    kode: |
+      latih_a, cv_a = 0.83, 0.80
+      latih_b, cv_b = 1.00, 0.65
+      print(f"A (1 lapis 8 neuron): selisih {latih_a - cv_a:.2f}, CV {cv_a:.2f}")
+      print(f"B (3 lapis 200 neuron): selisih {latih_b - cv_b:.2f}, CV {cv_b:.2f}")
+    hasil:
+      - ret: -14.0
+        dd: 32.0
+        win: 10
+        note: "Latih 1,00 = hafalan; CV 0,65 jauh di bawah A."
+      - ret: 13.0
+        dd: 3.0
+        win: 88
+        note: "Benar: A menang CV 0,80 vs 0,65 dengan selisih latih-CV kecil."
+      - ret: -10.0
+        dd: 28.0
+        win: 12
+        note: "Lebih dalam tanpa data tambahan = menghafal."
+      - ret: 4.0
+        dd: 6.0
+        win: 35
+        note: "Kecepatan bukan alasan utama; CV-nya yang menentukan."
+    petunjuk:
+      - "Selisih = akurasi latih dikurangi CV. B: 1,00 - 0,65."
+      - "Skor CV yang menentukan, bukan skor latih."
+  - id: "s33-7"
+    judul: "MLP Tetap Wajib Diuji"
+    emoji: "🔬"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      MLP-mu mencetak akurasi LATIH 0,98. Teman bilang: "bagus, kirim sekarang!" Kamu cek dengan data uji: 0,71. Apa yang terjadi, dan apa tindakanmu?
+    pilihan:
+      - "Kirim saja — 0,98 lebih tinggi dari 0,71"
+      - "Itu overfitting: 0,98 hanya hafalan data latih. Perbaiki (kecilkan jaringan, tambah data, kurangi epoch), lalu nilai ulang dengan CV atau data uji"
+      - "Tambah epoch supaya akurasi latih jadi 1,00"
+      - "Ganti jaringan dengan regresi dan hapus data uji"
+    jawaban: 1
+    penjelasan: |
+      Selisih 0,98 − 0,71 = **0,27** → model menghafal, bukan belajar. Jaringan saraf mudah sekali overfitting karena parameternya banyak. MLP tidak punya keistimewaan: dia wajib diuji seperti model lain — CV untuk memilih model, data uji sekali di akhir. Cara memperbaiki: kecilkan jaringan (misal (8,) bukan (200, 200)), tambah data, kurangi `max_iter`, atau tambah regularisasi (parameter `alpha`). Menambah epoch justru memperparah hafalan. Menghapus data uji sama dengan menipu diri sendiri: laporan jadi bagus, tapi di kompetisi skormu jujur dan akan ketahuan.
+    kode: |
+      latih, uji = 0.98, 0.71
+      print(f"Akurasi latih {latih:.2f} vs uji {uji:.2f}")
+      print(f"Selisih {latih - uji:.2f} -> overfitting, bukan prestasi")
+    hasil:
+      - ret: -15.0
+        dd: 35.0
+        win: 8
+        note: "0,98 hafalan. Di kompetisi skornya 0,71."
+      - ret: 13.0
+        dd: 4.0
+        win: 85
+        note: "Benar: 0,27 selisih = overfitting. Perbaiki lalu validasi ulang."
+      - ret: -8.0
+        dd: 30.0
+        win: 10
+        note: "Epoch tambahan bikin hafalan makin parah."
+      - ret: -18.0
+        dd: 40.0
+        win: 5
+        note: "Menghapus data uji = menipu diri sendiri."
+    petunjuk:
+      - "Berapa selisih 0,98 - 0,71?"
+      - "MLP tetap butuh validasi, sama seperti model lain."
+  - id: "s33-8"
+    judul: "Forward Pass Dua Neuron"
+    emoji: "🧮"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Jaringan kecil untuk satu pengajuan (skor 500, telat 2). Lapisan tersembunyi punya 2 neuron, semua bias 0. Neuron h1 berbobot (0,01; −0,5); h2 berbobot (0,005; −1,0). Neuron keluaran berbobot (0,7; −0,4) dengan bias −0,2. Berapa aktivasi akhirnya, dan apa vonisnya?
+    pilihan:
+      - "0,56 — vonis Macet"
+      - "0,24 — vonis Lancar"
+      - "0,98 — vonis Macet"
+      - "0,62 — vonis Macet"
+    jawaban: 0
+    penjelasan: |
+      Kerjakan berurutan. h1: z = 0,01 x 500 − 0,5 x 2 = 5 − 1 = 4 → aktivasi 0,98. h2: z = 0,005 x 500 − 1,0 x 2 = 2,5 − 2 = 0,5 → aktivasi 0,62. Neuron keluaran menerima kedua aktivasi itu: z = 0,7 x 0,98 − 0,4 x 0,62 − 0,2 = 0,686 − 0,248 − 0,2 = 0,238 → aktivasi 1/(1 + e pangkat −0,238) = **0,56**. Karena 0,56 di atas 0,5 → vonis **Macet**. Opsi 0,98 dan 0,62 = aktivasi neuron tersembunyi, bukan keluaran akhir. Opsi 0,24 = nilai z keluaran sebelum diaktivasi. Inilah kekuatan lapisan tersembunyi: h1 dan h2 meringkas pola masing-masing, lalu neuron keluaran menggabungkan keduanya.
+    kode: |
+      import math
+      skor, telat = 500, 2
+      h1 = 1 / (1 + math.exp(-(0.01 * skor - 0.5 * telat)))
+      h2 = 1 / (1 + math.exp(-(0.005 * skor - 1.0 * telat)))
+      z_keluar = 0.7 * h1 - 0.4 * h2 - 0.2
+      aktivasi = 1 / (1 + math.exp(-z_keluar))
+      print(f"h1 = {h1:.2f}, h2 = {h2:.2f}")
+      print(f"keluaran = {aktivasi:.2f} -> vonis Macet")
+    hasil:
+      - ret: 16.0
+        dd: 3.0
+        win: 88
+        note: "Benar: 0,7 x 0,98 - 0,4 x 0,62 - 0,2 = 0,238 -> aktivasi 0,56 -> Macet."
+      - ret: -5.0
+        dd: 24.0
+        win: 15
+        note: "0,24 itu z keluaran sebelum diaktivasi."
+      - ret: 3.0
+        dd: 18.0
+        win: 25
+        note: "0,98 = aktivasi h1, salah satu neuron tersembunyi saja."
+      - ret: 1.0
+        dd: 20.0
+        win: 20
+        note: "0,62 = aktivasi h2, belum digabung neuron keluaran."
+    petunjuk:
+      - "Hitung h1 dan h2 dulu (masing-masing: jumlah berbobot, lalu aktivasi)."
+      - "Neuron keluaran memakai h1 dan h2 sebagai masukan."
+      - "Vonis Macet kalau aktivasi akhir di atas 0,5."
+  - id: "s33-9"
+    judul: "Dua Jaringan, Duit dan Waktu"
+    emoji: "⏱️"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Kompetisi memberimu waktu 2 jam (120 menit). Jaringan besar: CV 0,68, sekali latih 20 menit, sewa GPU Rp5.000 per menit. Jaringan kecil: CV 0,80, sekali latih 0,5 menit, gratis di laptop. Mana yang kamu pakai?
+    pilihan:
+      - "Jaringan besar — pakai GPU, lebih meyakinkan juri"
+      - "Jaringan kecil — CV 0,80 (lebih baik dari 0,68) dan dalam 120 menit bisa 240 percobaan, sedangkan jaringan besar cuma 6"
+      - "Jaringan besar, jalankan sekali saja lalu kirim"
+      - "Sewa 2 GPU supaya jaringan besar jadi 10 menit per latih"
+    jawaban: 1
+    penjelasan: |
+      Hitung jatah percobaan. Jaringan besar: 120 / 20 = **6 percobaan**, biaya 6 x 20 x Rp5.000 = **Rp600.000**, dan CV-nya lebih rendah (0,68 vs 0,80). Jaringan kecil: 120 / 0,5 = **240 percobaan**, gratis, CV 0,80. Menyewa 2 GPU mempercepat latih, tapi tetap jauh lebih mahal dan CV-nya tetap 0,68. Inti kompetisi bukan satu model paling besar, tapi berapa banyak percobaan yang sempat kamu selesaikan: dengan 240 percobaan kamu bisa menguji banyak kombinasi fitur dan parameter, sedangkan 6 percobaan hanya cukup untuk mencoba sana-sini. Strategi sehat: mulai dari model kecil dan cepat, habiskan waktu pada fitur dan validasi, lalu naikkan ukuran model kalau waktu masih ada dan CV masih naik.
+    kode: |
+      menit = 120
+      besar = menit // 20
+      kecil = int(menit / 0.5)
+      print(f"Jaringan besar: {besar} percobaan, CV 0,68")
+      print(f"Jaringan kecil: {kecil} percobaan, CV 0,80")
+      print(f"Sewa GPU jaringan besar: Rp{besar * 20 * 5000:,}")
+    hasil:
+      - ret: -16.0
+        dd: 34.0
+        win: 10
+        note: "6 percobaan, CV 0,68, biaya Rp600.000 — kalah di semua sisi."
+      - ret: 17.0
+        dd: 2.0
+        win: 90
+        note: "Benar: 240 percobaan gratis dengan CV lebih tinggi (0,80)."
+      - ret: -6.0
+        dd: 28.0
+        win: 15
+        note: "Satu percobaan = tidak ada kesempatan memperbaiki fitur."
+      - ret: -10.0
+        dd: 25.0
+        win: 12
+        note: "2 GPU = Rp300.000, tetap CV 0,68 dan cuma 12 percobaan."
+    petunjuk:
+      - "Berapa kali muat latih dalam 120 menit untuk masing-masing?"
+      - "Bandingkan CV-nya juga, bukan cuma kecepatan."
+  - id: "s33-10"
+    judul: "Pilih Konfigurasi MLP"
+    emoji: "🎛️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Tiga konfigurasi MLP pada data yang sama. A: tanpa skala, (8,), 300 epoch → akurasi uji 0,74 (sama dengan baseline 0,735). B: StandardScaler + (8,), 400 epoch → 0,83, latih ±3 detik. C: StandardScaler + (200, 200), 2.000 epoch → 0,83, latih 6 menit. Mana yang dikirim ke kompetisi?
+    pilihan:
+      - "A — paling cepat dan paling sederhana"
+      - "B — akurasi 0,83 setara C, tapi latihnya jauh lebih cepat; skala wajib, neuron besar belum perlu"
+      - "C — jaringan paling besar biasanya paling baik"
+      - "C — karena sama-sama pakai scaler, pilih yang terbesar"
+    jawaban: 1
+    penjelasan: |
+      Konfigurasi A (0,74) tidak berguna: sama dengan menebak Lancar semua (baseline 0,735) — dia gagal karena tanpa skala. B dan C memberi akurasi identik 0,83, tapi biayanya beda jauh: 3 detik vs 6 menit = 360 detik, sekitar **120 kali lebih lama** tanpa tambahan akurasi. Jadi ukuran jaringan besar hanya membakar waktu. Aturan yang sehat: naikkan ukuran model hanya kalau CV masih naik. Waktu yang dihemat bisa dipakai untuk mencoba fitur baru — biasanya itu yang menaikkan skor, bukan neuron tambahan. Untuk tabel hasil akhir, tulis juga waktu latihnya; juri suka solusi yang masuk akal, bukan yang paling berat.
+    kode: |
+      nama = ["A tanpa skala (8,)", "B skala (8,)", "C skala (200,200)"]
+      akurasi = [0.74, 0.83, 0.83]
+      detik = [2, 3, 360]
+      for n, a, d in zip(nama, akurasi, detik):
+          print(f"{n}: akurasi {a:.2f}, latih {d} detik")
+    hasil:
+      - ret: -12.0
+        dd: 30.0
+        win: 10
+        note: "0,74 = baseline. Tanpa skala, MLP tidak belajar apa pun."
+      - ret: 16.0
+        dd: 2.0
+        win: 90
+        note: "Benar: 0,83 sama dengan C, tapi 120 kali lebih cepat dilatih."
+      - ret: -4.0
+        dd: 20.0
+        win: 20
+        note: "Lebih besar tidak menambah akurasi di sini — cuma menambah waktu."
+      - ret: 2.0
+        dd: 12.0
+        win: 30
+        note: "Scaler-nya benar, tapi ukuran 200x200 tetap berlebihan."
+    petunjuk:
+      - "Bandingkan akurasi B dan C: sama atau beda?"
+      - "Lalu bandingkan waktu latihnya: 3 detik vs 6 menit."
+soal:
+  - id: "p33-1"
+    judul: "Forward Pass Satu Neuron"
+    emoji: "🧠"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Satu neuron dengan bobot TETAP: w1 = 0,01 (skor_kredit), w2 = −0,6 (riwayat_telat), w3 = 0,04 (pinjaman), bias = −4,5. Baca satu baris input berisi tiga angka x1 x2 x3 (mis. 500 1 20). Cetak dua baris: baris 1 = z = w1*x1 + w2*x2 + w3*x3 + bias (2 desimal), baris 2 = aktivasi = 1 / (1 + e pangkat −z) (2 desimal).
+    input_spec: |
+      Satu baris: x1 x2 x3 (angka, dipisah spasi).
+    output_spec: |
+      Baris 1: nilai z (2 desimal).
+      Baris 2: nilai aktivasi (2 desimal).
+    contoh:
+      - input: "500 1 20"
+        output: "0.70\n0.67"
+      - input: "450 4 30"
+        output: "-1.20\n0.23"
+    tes:
+      - input: "500 1 20"
+        output: "0.70\n0.67"
+      - input: "600 0 10"
+        output: "1.90\n0.87"
+      - input: "450 4 30"
+        output: "-1.20\n0.23"
+      - input: "500 3 25"
+        output: "-0.30\n0.43"
+    solusi: |
+      import math
+
+      x1, x2, x3 = [float(v) for v in input().split()]
+      z = 0.01 * x1 - 0.6 * x2 + 0.04 * x3 - 4.5
+      aktivasi = 1 / (1 + math.exp(-z))
+      print(f"{z:.2f}")
+      print(f"{aktivasi:.2f}")
+    petunjuk:
+      - "z = 0,01*x1 - 0,6*x2 + 0,04*x3 - 4,5."
+      - "Aktivasi = 1 / (1 + math.exp(-z))."
+      - "Cetak z dulu, lalu aktivasi, keduanya 2 desimal."
+    tugas:
+      - "Baca satu baris berisi tiga angka: x1 x2 x3."
+      - "Hitung z dengan bobot tetap dan bias -4,5."
+      - "Hitung aktivasi sigmoid dari z (pakai math.exp)."
+      - "Cetak z lalu aktivasi, masing-masing 2 desimal."
+    starter: |
+      import math
+
+      x1, x2, x3 = [float(v) for v in input().split()]
+      # TODO: hitung z = 0.01*x1 - 0.6*x2 + 0.04*x3 - 4.5
+      # TODO: hitung aktivasi = 1 / (1 + math.exp(-z))
+      # TODO: cetak z dengan 2 desimal, lalu aktivasi dengan 2 desimal
+  - id: "p33-2"
+    judul: "Latih MLP dengan StandardScaler"
+    emoji: "🤖"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Gunakan sklearn! Data ada di /soaldata/kredit_umkm_bersih.csv. Fitur: omzet_bulanan_juta, lama_usaha_bulan, pinjaman_diajukan_juta, riwayat_telat_12m, skor_kredit. Target: Macet = 1, Lancar = 0. Baca satu angka dari input: jumlah neuron di lapisan tersembunyi. Latih MLP dengan StandardScaler dalam satu pipeline: train_test_split(test_size=0.25, random_state=1, stratify=y) dan MLPClassifier(hidden_layer_sizes=(neuron,), max_iter=400, random_state=1). Cetak akurasi data uji dengan 2 desimal dan kunci hasilnya stabil: bulatkan dengan round(..., 2) sebelum dicetak.
+    input_spec: |
+      Satu baris: jumlah neuron lapisan tersembunyi (mis. 8).
+    output_spec: |
+      Satu baris: akurasi data uji dengan 2 desimal (mis. 0.83).
+    contoh:
+      - input: "8"
+        output: "0.83"
+      - input: "16"
+        output: "0.84"
+    tes:
+      - input: "3"
+        output: "0.80"
+      - input: "8"
+        output: "0.83"
+      - input: "16"
+        output: "0.84"
+      - input: "32"
+        output: "0.83"
+    solusi: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.neural_network import MLPClassifier
+      from sklearn.pipeline import make_pipeline
+      from sklearn.preprocessing import StandardScaler
+
+      neuron = int(input())
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+      X = data[fitur]
+      y = (data["status"] == "Macet").astype(int)
+      X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, random_state=1, stratify=y)
+      model = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(neuron,), max_iter=400, random_state=1))
+      model.fit(X_latih, y_latih)
+      akurasi = round(model.score(X_uji, y_uji), 2)
+      print(f"{akurasi:.2f}")
+    petunjuk:
+      - "Pipeline: make_pipeline(StandardScaler(), MLPClassifier(...))."
+      - "hidden_layer_sizes=(neuron,) — pakai koma supaya dianggap satu lapisan."
+      - "Skor data uji: model.score(X_uji, y_uji), lalu round(..., 2)."
+    tugas:
+      - "Baca jumlah neuron dari input."
+      - "Baca CSV /soaldata/kredit_umkm_bersih.csv, ambil 5 fitur, dan buat target Macet (1/0)."
+      - "Bagi data dengan train_test_split(test_size=0.25, random_state=1, stratify=y)."
+      - "Latih pipeline StandardScaler + MLPClassifier(hidden_layer_sizes=(neuron,), max_iter=400, random_state=1), lalu cetak akurasi data uji dengan 2 desimal."
+    starter: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.neural_network import MLPClassifier
+      from sklearn.pipeline import make_pipeline
+      from sklearn.preprocessing import StandardScaler
+
+      neuron = int(input())
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+      X = data[fitur]
+      # TODO: buat y = (data["status"] == "Macet").astype(int)
+      # TODO: bagi data dengan train_test_split(test_size=0.25, random_state=1, stratify=y)
+      # TODO: buat pipeline StandardScaler + MLPClassifier(hidden_layer_sizes=(neuron,), max_iter=400, random_state=1)
+      # TODO: latih model, lalu cetak round(model.score(X_uji, y_uji), 2) dengan 2 desimal

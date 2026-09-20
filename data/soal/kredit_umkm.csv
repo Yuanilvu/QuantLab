@@ -1,0 +1,637 @@
+id_pengajuan,tanggal_pengajuan,kota,sektor,omzet_bulanan_juta,lama_usaha_bulan,jumlah_karyawan,pinjaman_diajukan_juta,riwayat_telat_12m,punya_npwp,skor_kredit,status
+K-0001,2024-10-12,bandung,Retail,16.6,90.0,3.0,8.5,3.0,,425.0,Macet
+K-0002,2025-01-14,MDN,PERTANIAN,17.9,30.0,3.0,11.0,3.0,Tidak,494.0,Lancar
+K-0003,"Dec 03, 2024",Jakarta,kerajinan ,,158.0,2.0,37.8,,Ya,465.0,Lancar
+K-0004,22/01/2026,Jakarta,Kerajinan,66.6,34.0,4.0,54.9,1.0,Y,578.0,Macet
+K-0005,2024-12-29,Surabaya,JASA,15.1,39.0,6.0,8.2,4.0,1,483.0,Lancar
+K-0006,2025-07-05, Jakarta ,kerajinan,9000.0,6.0,2.0,10.4,3.0,Tidak,511.0,Lancar
+K-0007,27/09/2025,Jakarta,kerajinan ,9.3,66.0,2.0,8.6,3.0,Ya,456.0,Macet
+K-0008,2024-11-01,Makassar,JASA,40.7,35.0,7.0,33.6,,Ya,523.0,Macet
+K-0009,2024-06-29,BDG ,KULINER,42.5,28.0,1.0,33.5,2.0,1,577.0,Macet
+K-0010,2025-01-21,BDG ,pertanian,65.7,165.0,5.0,31.8,4.0,ya,491.0,Macet
+K-0011,"Jan 18, 2025",Medan,Fashion,29.0,178.0,4.0,13.0,3.0,Tidak,,Lancar
+K-0012,"Oct 05, 2024",Bandung,Kerajinan,,42.0,1.0,27.9,4.0,y,523.0,Lancar
+K-0013,02/12/2025,Jogja,kerajinan ,7.7,116.0,7.0,4.7,5.0,y,,Lancar
+K-0014,"Jun 15, 2025",Jakarta,pertanian,14.8,134.0,7.0,5.4,3.0,Tidak,474.0,Lancar
+K-0015,"Sep 29, 2024",makassar,Jasa,23.1,144.0,3.0,10.3,2.0,Ya,592.0,Lancar
+K-0016,2025-12-23,surabaya,PERTANIAN,18.3,26.0,,13.9,1.0,Ya,489.0,Lancar
+K-0017,2024-06-30,Jakarta,Jasa,16.8,175.0,3.0,10.8,3.0,ya,555.0,Lancar
+K-0018,2026-05-10,SBY,Pertanian,-50.0,70.0,8.0,16.0,,N,,Lancar
+K-0019,2026-02-16,Bandung,Jasa,7.4,104.0,8.0,7.4,,Ya,668.0,Lancar
+K-0020,2024-12-17,SBY,Fashion,112.3,56.0,7.0,60.0,1.0,Ya,556.0,Lancar
+K-0021,2024-08-24,surabaya,Jasa,15.0,169.0,6.0,15.4,1.0,Ya,553.0,Lancar
+K-0022,2024-06-15,Medan,fashion ,16.6,63.0,2.0,11.0,,Ya,,Lancar
+K-0023,"Jul 21, 2025",bandung,KULINER,,159.0,1.0,29.8,1.0,Ya,503.0,Lancar
+K-0024,2025-02-02,Bandung,Jasa,13.0,123.0,2.0,9.7,,tidak,536.0,Macet
+K-0025,2025-01-15,Medan,pertanian,40.7,78.0,,32.5,4.0,n,431.0,Macet
+K-0026,"Mar 09, 2026",Jakarta,Retail,58.5,,7.0,17.0,3.0,tidak,455.0,Lancar
+K-0027,2024-08-13,Bandung,JASA,,73.0,1.0,6.0,3.0,N,428.0,Lancar
+K-0028,2025-04-18,makassar,Pertanian,17.4,69.0,3.0,11.5,0.0,Tidak,,Lancar
+K-0029,27/06/2024,Jakarta,Fashion,11.6,28.0,3.0,3.9,2.0,Ya,552.0,Lancar
+K-0030,2025-08-07,Surabaya,,14.5,86.0,8.0,12.7,3.0,N,555.0,Lancar
+K-0031,"Nov 18, 2025", Jakarta ,Pertanian,,148.0,3.0,4.6,3.0,Ya,547.0,Lancar
+K-0032,2024-12-03,MDN,kerajinan ,43.6,44.0,3.0,30.0,,Tidak,567.0,Lancar
+K-0033,2025-08-20,Bandung,Retail,46.6,109.0,5.0,40.2,3.0,N,551.0,Macet
+K-0034,2025-06-23,JKT,pertanian,43.5,21.0,4.0,36.1,2.0,Ya,592.0,Lancar
+K-0035,2026-04-11,Surabaya,Jasa,21.6,99.0,1.0,8.8,4.0,Tidak,455.0,Macet
+K-0036,30/12/2025,Makassar,fashion ,16.0,40.0,2.0,16.7,4.0,Ya,368.0,Lancar
+K-0037,15/11/2025,surabaya,JASA,24.8,107.0,4.0,12.8,4.0,Ya,492.0,Lancar
+K-0038,2025-04-24,surabaya,Kerajinan,30.0,9.0,1.0,9.6,0.0,Ya,626.0,Lancar
+K-0039,2025-05-24,Medan,kuliner,12.0,167.0,4.0,3.7,2.0,Tidak,505.0,Lancar
+K-0040,2025-03-02,Yogyakarta,Jasa,49.8,102.0,3.0,39.0,1.0,Ya,569.0,Macet
+K-0041,2025-08-12,Surabaya,fashion ,30.2,175.0,5.0,13.7,0.0,Tidak,684.0,Lancar
+K-0042,2024-12-06,Jogja,kerajinan,51.0,136.0,1.0,19.9,3.0,,464.0,Lancar
+K-0043,19/05/2025,Jakarta,kerajinan ,29.8,999.0,2.0,22.0,3.0,Ya,549.0,Lancar
+K-0044,25/02/2025,Surabaya,kerajinan,43.3,156.0,7.0,18.3,0.0,n,600.0,Lancar
+K-0045,2024-06-05,medan ,Jasa,38.1,132.0,3.0,14.4,3.0,1,518.0,Lancar
+K-0046,2025-03-08,Yogyakarta,jasa,20.8,79.0,2.0,19.7,0.0,Y,693.0,Lancar
+K-0047,23/06/2025,MKS,Retail,,101.0,6.0,17.5,3.0,Ya,480.0,Lancar
+K-0048,2025-03-01,Jakarta,retail ,28.4,144.0,4.0,26.6,3.0,Ya,429.0,Lancar
+K-0049,29/07/2025,Makassar,kerajinan ,25.7,136.0,4.0,9.8,2.0,1,495.0,Lancar
+K-0050,2025-02-11,medan ,Retail,,,5.0,15.1,1.0,Ya,646.0,Lancar
+K-0051,05/03/2026,Jakarta,Fashion,14.3,74.0,6.0,5.1,3.0,Ya,446.0,Lancar
+K-0052,29/05/2026,,Retail,39.6,113.0,4.0,13.6,2.0,Ya,590.0,Lancar
+K-0053,2025-03-06,Jakarta,retail ,13.6,164.0,6.0,10.2,1.0,Ya,602.0,Lancar
+K-0054,2025-01-11,Medan,Kuliner,23.6,36.0,2.0,20.7,3.0,1,587.0,Macet
+K-0055,"Jun 22, 2025",medan ,pertanian,38.2,50.0,6.0,10.4,1.0,Ya,,Lancar
+K-0056,11/05/2026,Makassar,fashion ,20.3,118.0,1.0,20.6,4.0,Y,441.0,Macet
+K-0057,2025-10-09,Jakarta,Fashion,28.5,173.0,5.0,23.0,2.0,Ya,558.0,Lancar
+K-0058,2026-05-12,Jakarta,kuliner,32.3,78.0,3.0,27.7,1.0,Ya,623.0,Lancar
+K-0059,22/09/2025,jakarta,Kerajinan,24.1,12.0,,15.2,0.0,Y,597.0,Lancar
+K-0060,2024-07-09,Jakarta,kuliner,50.5,92.0,4.0,49.6,2.0,Tidak,512.0,Macet
+K-0061,2024-08-07,Medan,Kuliner,32.9,38.0,7.0,21.5,3.0,Tidak,550.0,Macet
+K-0062,30/10/2025,Surabaya,Fashion,48.3,115.0,7.0,45.9,1.0,Tidak,738.0,Lancar
+K-0063,2025-01-04,makassar,retail ,34.7,15.0,6.0,24.8,1.0,Ya,523.0,Lancar
+K-0064,"Aug 18, 2025",yogyakarta,Kuliner,14.5,137.0,2.0,14.9,0.0,Tidak,534.0,Lancar
+K-0065,2025-01-11,SBY,KULINER,31.5,93.0,5.0,19.5,4.0,T,422.0,Macet
+K-0066,2024-09-10,Surabaya,Kerajinan,16.9,126.0,6.0,9.6,2.0,Tidak,496.0,Lancar
+K-0067,2025-10-28,Jakarta,Retail,28.4,101.0,3.0,25.4,0.0,n,633.0,Lancar
+K-0068,2024-08-14,,Retail,37.5,22.0,2.0,34.9,3.0,n,485.0,Macet
+K-0069,2024-12-13,bandung,Kuliner,36.1,65.0,7.0,26.8,1.0,Tidak,602.0,Lancar
+K-0070,2025-08-09,,Retail,56.1,,1.0,42.4,1.0,,544.0,Lancar
+K-0071,2025-10-17, Jakarta ,Pertanian,38.0,150.0,8.0,26.9,4.0,Ya,362.0,Macet
+K-0071,2025-10-17, Jakarta ,Pertanian,38.0,150.0,8.0,26.9,4.0,Ya,362.0,Macet
+K-0072,27/06/2024,Surabaya,Kerajinan,22.3,105.0,7.0,18.6,0.0,Ya,670.0,Lancar
+K-0073,2024-10-28,BDG ,Kerajinan,49.6,98.0,7.0,29.3,2.0,Ya,514.0,Lancar
+K-0074,"Mar 03, 2025",Medan,JASA,16.3,10.0,,7.0,4.0,Ya,389.0,Macet
+K-0075,2025-11-15,Bandung,Pertanian,56.3,136.0,8.0,53.0,4.0,Y,571.0,Lancar
+K-0076,"Feb 09, 2026",bandung,kerajinan,27.7,37.0,8.0,7.6,4.0,,443.0,Lancar
+K-0077,2025-12-28,Surabaya,kuliner,10.2,110.0,6.0,3.2,3.0,ya,487.0,Lancar
+K-0078,2025-06-19, Jakarta ,,,87.0,7.0,9.6,1.0,Ya,631.0,Lancar
+K-0079,10/10/2025,,Kerajinan,,47.0,2.0,26.2,2.0,Y,536.0,Lancar
+K-0080,"Oct 25, 2025",SBY,PERTANIAN,24.1,,8.0,21.0,1.0,Tidak,607.0,Macet
+K-0081,2026-02-07,JKT,PERTANIAN,14.4,56.0,4.0,14.4,3.0,Tidak,556.0,Macet
+K-0082,"May 05, 2026",Surabaya,kerajinan ,16.6,163.0,5.0,7.4,2.0,Ya,,Lancar
+K-0083,21/07/2025,Yogyakarta,Kerajinan,38.3,160.0,1.0,30.0,3.0,Ya,552.0,Lancar
+K-0084,2026-03-25,JKT,Kerajinan,,14.0,1.0,29.6,4.0,Ya,468.0,Macet
+K-0085,2026-02-22,YOG ,kerajinan ,34.8,15.0,8.0,21.4,0.0,Tidak,673.0,Lancar
+K-0086,2024-07-14,MDN,fashion ,40.7,11.0,7.0,10.9,4.0,Ya,457.0,Lancar
+K-0087,08/06/2025,makassar,Kuliner,41.5,177.0,6.0,40.0,1.0,Y,662.0,Lancar
+K-0088,2025-05-18,Makassar,Kerajinan,31.5,83.0,2.0,19.5,0.0,Tidak,564.0,Lancar
+K-0089,12/01/2025,Bandung,KULINER,19.9,102.0,6.0,14.8,99.0,Tidak,,Macet
+K-0090,2025-10-17,Makassar,Fashion,74.9,62.0,5.0,57.7,2.0,1,544.0,Lancar
+K-0091,2025-08-31,Bandung,JASA,39.7,133.0,,23.2,4.0,Ya,,Lancar
+K-0092,2024-08-10,Jakarta,retail ,36.7,,,36.3,2.0,1,522.0,Lancar
+K-0093,02/02/2025,Surabaya,Retail,15.4,17.0,7.0,6.1,3.0,Ya,431.0,Lancar
+K-0094,2025-10-15,jakarta,Retail,43.0,109.0,7.0,31.3,1.0,1,566.0,Lancar
+K-0095,"May 06, 2025",Bandung,fashion,20.3,,5.0,7.5,2.0,Ya,648.0,Lancar
+K-0096,27/02/2026,Jogja,Kuliner,54.5,106.0,2.0,27.5,4.0,tidak,418.0,Lancar
+K-0097,2024-07-29,Surabaya,Retail,,81.0,3.0,13.7,4.0,T,,Macet
+K-0098,05/11/2025,JKT,Kerajinan,28.7,171.0,3.0,8.2,3.0,Ya,492.0,Lancar
+K-0099,2024-08-02,Jakarta,Retail,18.9,168.0,2.0,8.7,3.0,tidak,533.0,Lancar
+K-0100,2026-03-04,JKT,Pertanian,28.7,90.0,3.0,20.3,1.0,Ya,421.0,Lancar
+K-0101,2025-10-06,JKT,Fashion,,23.0,5.0,29.4,3.0,1,485.0,Macet
+K-0102,30/01/2026,yogyakarta,Kuliner,17.6,156.0,1.0,17.7,0.0,Tidak,565.0,Macet
+K-0103,2025-07-05,MDN,Pertanian,28.9,164.0,6.0,23.3,0.0,Ya,627.0,Lancar
+K-0104,2024-11-07,,Kuliner,47.4,120.0,1.0,22.4,5.0,,369.0,Macet
+K-0105,2026-02-14,Bandung,jasa,51.9,,6.0,21.3,3.0,Tidak,398.0,Lancar
+K-0106,2024-11-12,SBY,fashion ,57.8,179.0,2.0,23.2,4.0,Ya,412.0,Lancar
+K-0107,"Feb 10, 2025",,Retail,35.3,,4.0,9.5,2.0,ya,,Lancar
+K-0108,29/12/2025,Jakarta,Jasa,23.2,13.0,7.0,14.6,1.0,1,617.0,Lancar
+K-0109,2025-04-21,,pertanian,26.2,102.0,6.0,16.6,4.0,Tidak,454.0,Lancar
+K-0110,"Aug 11, 2024",Surabaya,Retail,48.7,23.0,5.0,18.2,2.0,Tidak,571.0,Lancar
+K-0111,2025-07-11,Yogyakarta,kerajinan,16.5,163.0,3.0,4.4,4.0,Tidak,451.0,Lancar
+K-0111,2025-07-11,Yogyakarta,kerajinan,16.5,163.0,3.0,4.4,4.0,Tidak,451.0,Lancar
+K-0112,2024-09-01,Bandung,PERTANIAN,19.7,39.0,7.0,12.2,3.0,Tidak,442.0,Macet
+K-0113,2025-09-22,jkt,,31.0,56.0,,11.7,2.0,N,468.0,Macet
+K-0114,2025-09-15,Jakarta,Kuliner,43.3,95.0,7.0,34.4,3.0,1,583.0,Lancar
+K-0115,2025-02-20,jakarta,JASA,29.8,80.0,6.0,16.4,0.0,,621.0,Lancar
+K-0116,2024-10-21,Jakarta,Kuliner,13.8,135.0,4.0,12.3,1.0,,636.0,Macet
+K-0117,"Jun 27, 2025",Jakarta,kerajinan ,26.0,37.0,5.0,13.2,1.0,Tidak,529.0,Lancar
+K-0118,"Jan 29, 2025",BDG ,Retail,,74.0,5.0,8.9,4.0,Ya,383.0,Lancar
+K-0119,2024-10-12,jakarta,PERTANIAN,9.8,146.0,2.0,8.1,0.0,Ya,517.0,Lancar
+K-0120,20/04/2026,Jakarta,Jasa,23.5,82.0,4.0,21.6,4.0,Tidak,365.0,Macet
+K-0121,18/10/2025,SBY,Kerajinan,10.4,51.0,5.0,8.5,3.0,Ya,573.0,Macet
+K-0122,2025-03-21,Medan,jasa,22.4,,5.0,13.7,1.0,n,548.0,Lancar
+K-0123,2025-06-23,medan ,Retail,47.6,160.0,4.0,47.9,1.0,ya,641.0,Lancar
+K-0124,"Jul 09, 2025",YOG ,Retail,41.8,62.0,7.0,19.5,1.0,N,476.0,Lancar
+K-0125,2024-11-16,JKT,KULINER,58.2,177.0,2.0,14.8,3.0,,559.0,Lancar
+K-0126,2024-10-15,JKT,Jasa,,17.0,1.0,24.5,0.0,Ya,665.0,Lancar
+K-0127,2025-07-18,medan ,Kerajinan,56.0,148.0,5.0,15.0,4.0,Ya,,Lancar
+K-0128,2024-11-14,Surabaya,Kerajinan,47.8,10.0,7.0,14.4,3.0,N,427.0,Lancar
+K-0129,"Jun 21, 2025",Surabaya,retail ,28.7,178.0,1.0,16.3,2.0,Tidak,500.0,Lancar
+K-0130,2025-03-09,Surabaya,JASA,,15.0,7.0,5.3,2.0,Y,435.0,Lancar
+K-0131,02/11/2024,medan ,fashion,7.0,38.0,5.0,4.0,3.0,Tidak,545.0,Macet
+K-0132,2026-01-09,Jakarta,Retail,55.5,27.0,7.0,41.3,3.0,Tidak,516.0,Macet
+K-0133,28/06/2025,Surabaya,retail ,59.5,155.0,3.0,15.1,4.0,Tidak,368.0,Lancar
+K-0134,2026-04-27,medan ,fashion ,23.3,92.0,6.0,-120.0,3.0,Ya,510.0,Macet
+K-0135,27/10/2024,bandung,KULINER,53.6,13.0,5.0,19.2,1.0,Tidak,629.0,Lancar
+K-0136,17/06/2025,Makassar,Kerajinan,34.7,161.0,2.0,28.6,2.0,Ya,,Lancar
+K-0137,2024-12-04,SBY,Retail,61.4,136.0,6.0,52.8,4.0,Tidak,442.0,Macet
+K-0138,18/11/2025,,Kerajinan,24.0,40.0,3.0,11.0,2.0,y,518.0,Lancar
+K-0139,"Oct 25, 2025",JKT,Jasa,19.7,56.0,1.0,5.7,0.0,Ya,688.0,Lancar
+K-0140,2025-06-01,Jakarta,Fashion,32.3,173.0,4.0,22.0,2.0,N,562.0,Lancar
+K-0141,2025-10-06,Bandung,Retail,,84.0,5.0,21.9,1.0,Tidak,,Macet
+K-0142,2026-04-15,SBY,Fashion,12.1,84.0,7.0,5.7,0.0,Ya,651.0,Lancar
+K-0142,2026-04-15,SBY,Fashion,12.1,84.0,7.0,5.7,0.0,Ya,651.0,Lancar
+K-0143,20/02/2025,Jakarta,Jasa,13.9,159.0,2.0,13.6,,Ya,598.0,Lancar
+K-0144,"Apr 13, 2026",Jakarta,Fashion,29.1,52.0,3.0,26.6,0.0,Ya,595.0,Lancar
+K-0145,11/02/2025,Makassar,fashion,34.8,152.0,5.0,35.7,3.0,Ya,426.0,Lancar
+K-0146,2025-02-06,Jakarta,Kerajinan,9.9,80.0,1.0,5.9,4.0,Ya,490.0,Lancar
+K-0147,2026-02-15,YOG ,Kerajinan,53.2,172.0,8.0,47.7,2.0,Y,562.0,Macet
+K-0148,"Nov 24, 2024",Bandung,PERTANIAN,49.9,94.0,8.0,29.0,3.0,y,499.0,Lancar
+K-0149,2025-03-05,jkt,Kuliner,59.6,,6.0,56.9,2.0,Tidak,517.0,Macet
+K-0150,2025-12-28,MKS,Pertanian,,119.0,2.0,24.1,4.0,Ya,394.0,Macet
+K-0151,02/04/2026,Jogja,KULINER,,58.0,8.0,38.5,3.0,,470.0,Macet
+K-0152,"Jun 25, 2025",jkt,Retail,12.9,165.0,4.0,4.8,1.0,ya,690.0,Lancar
+K-0153,2026-05-14,JKT,Pertanian,25.0,95.0,4.0,19.4,0.0,N,568.0,Lancar
+K-0154,2024-10-12,,retail ,14.6,7.0,5.0,9.0,1.0,Ya,598.0,Lancar
+K-0155,03/09/2025,Jakarta,Kuliner,20.7,159.0,2.0,14.4,1.0,ya,602.0,Lancar
+K-0156,19/12/2024,Surabaya,retail ,35.2,162.0,7.0,9.8,1.0,Tidak,467.0,Lancar
+K-0157,2026-02-03,Makassar,kerajinan ,102.4,111.0,6.0,70.0,0.0,Tidak,629.0,Lancar
+K-0158,27/11/2024,Bandung,Kerajinan,17.7,14.0,4.0,13.3,2.0,Ya,455.0,Macet
+K-0159,26/12/2024,Surabaya,fashion,12.7,173.0,7.0,11.7,2.0,Tidak,533.0,Lancar
+K-0160,15/02/2025,MKS,JASA,,39.0,5.0,13.1,,Ya,638.0,Lancar
+K-0161,2025-07-15,,Retail,20.9,86.0,1.0,6.2,4.0,Y,435.0,Lancar
+K-0162,2025-10-05,jkt,kerajinan,15.3,179.0,4.0,7.6,4.0,Tidak,433.0,Lancar
+K-0163,"Mar 19, 2025",YOG ,Retail,35.2,92.0,3.0,10.3,2.0,Tidak,523.0,Lancar
+K-0164,2024-12-01,Surabaya,Fashion,48.1,62.0,6.0,17.4,2.0,Ya,537.0,Lancar
+K-0165,2025-09-10,Medan,jasa,19.8,33.0,,9.0,1.0,Ya,563.0,Lancar
+K-0166,2025-07-22,JKT,Kerajinan,,168.0,8.0,14.2,2.0,Y,636.0,Lancar
+K-0167,13/08/2025,Surabaya,kerajinan,31.0,47.0,6.0,10.9,,ya,525.0,Lancar
+K-0168,"Mar 03, 2026",Bandung,kerajinan,19.0,104.0,2.0,18.3,3.0,n,505.0,Macet
+K-0169,13/02/2025,MDN,Fashion,33.2,55.0,,26.8,,Ya,462.0,Lancar
+K-0170,"May 17, 2025",Surabaya,,29.7,21.0,,30.3,4.0,Ya,495.0,Macet
+K-0171,12/07/2025,,,17.1,36.0,7.0,14.5,2.0,Tidak,509.0,Lancar
+K-0172,2025-09-25,BDG ,Pertanian,21.3,,4.0,15.4,1.0,T,612.0,Lancar
+K-0173,03/04/2026,Surabaya,Pertanian,21.4,114.0,7.0,13.8,4.0,Ya,498.0,Lancar
+K-0174,2025-10-02,YOG ,Jasa,25.2,64.0,2.0,19.6,3.0,ya,491.0,Lancar
+K-0175,2025-04-01,Jakarta,retail ,45.9,69.0,6.0,16.1,1.0,Y,618.0,Lancar
+K-0176,2025-02-12,Jakarta,pertanian,24.4,102.0,8.0,8.2,2.0,Ya,566.0,Lancar
+K-0177,2025-12-19,jkt,Retail,115.1,113.0,1.0,51.9,0.0,tidak,,Lancar
+K-0178,2025-04-02,medan ,Jasa,41.5,150.0,6.0,20.7,5.0,Tidak,316.0,Macet
+K-0179,"Dec 01, 2025",Makassar,Retail,30.2,55.0,7.0,16.5,1.0,Ya,,Lancar
+K-0180,2026-04-13, Jakarta ,Retail,17.9,41.0,6.0,10.7,0.0,Ya,656.0,Lancar
+K-0181,01/01/2026,MDN,retail ,27.4,50.0,4.0,21.7,3.0,y,473.0,Macet
+K-0182,2024-12-26,Jakarta,Retail,36.2,43.0,5.0,37.6,0.0,Ya,632.0,Lancar
+K-0183,2024-08-22,Makassar,JASA,15.2,49.0,5.0,10.4,0.0,Ya,675.0,Lancar
+K-0184,2026-03-16,Bandung,Fashion,,108.0,4.0,25.7,2.0,Tidak,560.0,Macet
+K-0185,2025-11-07,Surabaya,Jasa,25.1,93.0,2.0,21.5,1.0,Ya,443.0,Lancar
+K-0186,2025-02-13,YOG ,Jasa,35.5,57.0,5.0,26.5,3.0,Ya,530.0,Lancar
+K-0187,2025-03-13,bandung,KULINER,51.9,,2.0,48.1,5.0,Ya,377.0,Macet
+K-0188,"Apr 04, 2025",,Retail,38.0,96.0,5.0,15.2,0.0,Ya,714.0,Lancar
+K-0189,24/06/2024,Bandung,kerajinan,31.1,57.0,7.0,23.5,4.0,0,366.0,Lancar
+K-0190,"Jul 25, 2024",Medan,Retail,77.5,92.0,7.0,69.1,2.0,Ya,475.0,Macet
+K-0191,19/11/2025,Bandung,Fashion,23.1,135.0,,15.7,3.0,Ya,468.0,Lancar
+K-0192,16/03/2025,Jakarta,kuliner,21.6,93.0,4.0,16.3,2.0,,551.0,Lancar
+K-0193,2024-09-24,Jakarta,PERTANIAN,15.7,90.0,3.0,9.0,3.0,Ya,,Lancar
+K-0194,"May 30, 2026",Bandung,kerajinan ,,9.0,4.0,8.4,1.0,Ya,552.0,Lancar
+K-0195,2026-04-16,,retail ,34.0,164.0,2.0,24.2,3.0,Ya,493.0,Macet
+K-0196,2024-08-25,medan ,Retail,35.1,9.0,6.0,16.1,2.0,Tidak,516.0,Macet
+K-0197,20/04/2026,MDN,Kuliner,31.5,68.0,8.0,20.1,,Ya,583.0,Lancar
+K-0198,2024-10-05,BDG ,Fashion,15.0,20.0,3.0,8.9,0.0,1,585.0,Lancar
+K-0199,20/09/2024,,Fashion,23.1,,6.0,23.0,4.0,Ya,422.0,Macet
+K-0200,2025-11-27,Yogyakarta,Retail,,146.0,1.0,30.2,3.0,Y,554.0,Macet
+K-0201,"Jun 07, 2026",JKT,JASA,44.7,,8.0,14.8,3.0,Ya,495.0,Lancar
+K-0201,"Jun 07, 2026",JKT,JASA,44.7,,8.0,14.8,3.0,Ya,495.0,Lancar
+K-0202,2024-08-06,Bandung,Jasa,35.0,29.0,6.0,27.2,1.0,Ya,593.0,Lancar
+K-0203,2026-06-06,jkt,Jasa,58.1,132.0,2.0,18.5,0.0,Tidak,508.0,Lancar
+K-0204,2025-04-28,Medan,Pertanian,23.8,12.0,8.0,15.3,2.0,1,588.0,Lancar
+K-0205,2024-09-20,bandung,pertanian,17.1,120.0,1.0,13.3,3.0,Ya,,Lancar
+K-0206,2026-04-12,bandung,Pertanian,17.2,96.0,4.0,9.6,,Tidak,522.0,Lancar
+K-0207,16/11/2024,Jakarta,Kuliner,14.9,109.0,6.0,6.5,3.0,Tidak,538.0,Lancar
+K-0208,2026-05-23, Jakarta ,Fashion,,175.0,6.0,9.2,4.0,1,501.0,Lancar
+K-0209,22/08/2025,Surabaya,JASA,50.4,128.0,1.0,22.0,2.0,Tidak,547.0,Lancar
+K-0210,2025-12-03,MDN,Retail,,81.0,6.0,26.0,0.0,Tidak,528.0,Lancar
+K-0211,26/04/2025,jakarta,Fashion,13.1,87.0,250.0,4.9,2.0,Y,563.0,Lancar
+K-0212,2025-09-06,bandung,Pertanian,9.1,81.0,6.0,6.3,4.0,y,514.0,Lancar
+K-0213,2024-12-31,Medan,pertanian,37.3,174.0,2.0,29.9,2.0,Ya,524.0,Lancar
+K-0214,"Jun 06, 2026",Yogyakarta,Fashion,36.2,39.0,8.0,23.9,,Ya,431.0,Lancar
+K-0215,2025-10-06,BDG ,Fashion,41.6,148.0,5.0,19.2,,Ya,456.0,Lancar
+K-0216,"Sep 19, 2025",Bandung,,12.8,77.0,1.0,3.3,4.0,Tidak,454.0,Lancar
+K-0217,"Jan 16, 2026",surabaya,Retail,36.9,17.0,2.0,16.2,2.0,Ya,592.0,Lancar
+K-0218,"Jan 21, 2025",bandung,Jasa,22.0,24.0,1.0,14.7,3.0,Ya,494.0,Macet
+K-0219,2025-02-18,Jakarta,Jasa,,15.0,6.0,11.7,4.0,Y,410.0,Lancar
+K-0220,18/04/2025,yogyakarta,PERTANIAN,34.0,142.0,6.0,31.1,4.0,Ya,436.0,Lancar
+K-0221,2025-08-16,medan ,pertanian,28.0,129.0,2.0,29.3,3.0,Ya,436.0,Macet
+K-0222,2024-11-04,bandung,fashion ,31.9,106.0,5.0,14.1,2.0,Ya,590.0,Lancar
+K-0223,02/06/2025,Yogyakarta,fashion ,42.1,118.0,5.0,22.6,3.0,,,Lancar
+K-0224,2025-04-10,Surabaya,fashion ,18.1,40.0,2.0,11.8,3.0,ya,,Lancar
+K-0225,31/03/2026,SBY,Jasa,24.6,101.0,2.0,13.3,2.0,Tidak,486.0,Lancar
+K-0226,2025-01-01,Medan,retail ,32.7,60.0,7.0,28.5,2.0,ya,678.0,Lancar
+K-0227,2025-07-27,Surabaya,Retail,30.0,135.0,8.0,12.5,,Tidak,384.0,Macet
+K-0228,29/07/2025,Surabaya,Fashion,29.2,105.0,8.0,19.1,2.0,N,516.0,Macet
+K-0229,"Jun 08, 2026",jkt,,28.1,83.0,5.0,14.8,,T,541.0,Macet
+K-0230,08/07/2025,Jakarta,KULINER,18.1,85.0,5.0,11.2,0.0,Ya,690.0,Lancar
+K-0230,08/07/2025,Jakarta,KULINER,18.1,85.0,5.0,11.2,0.0,Ya,690.0,Lancar
+K-0231,2025-09-16,,Jasa,7.0,135.0,2.0,6.3,,Ya,553.0,Macet
+K-0232,2026-02-09,Surabaya,pertanian,19.4,99.0,4.0,14.8,3.0,Tidak,386.0,Macet
+K-0233,2026-03-24,Yogyakarta,JASA,28.2,131.0,2.0,20.6,2.0,Ya,432.0,Lancar
+K-0234,22/07/2024,Surabaya,Pertanian,32.1,7.0,2.0,26.5,4.0,n,399.0,Macet
+K-0235,18/11/2024,Surabaya,Retail,22.0,93.0,4.0,8.5,3.0,Ya,519.0,Lancar
+K-0236,2024-08-03,Makassar,retail ,99.8,74.0,5.0,55.5,2.0,Tidak,548.0,Lancar
+K-0237,2025-08-31,medan ,pertanian,16.6,165.0,3.0,13.0,4.0,y,491.0,Lancar
+K-0238,2025-05-01,Yogyakarta,Fashion,,97.0,6.0,10.6,1.0,Ya,653.0,Lancar
+K-0239,"Dec 09, 2024",Bandung,kerajinan,14.3,,5.0,8.8,1.0,Y,,Lancar
+K-0240,2024-11-07,Jakarta,kerajinan,,57.0,2.0,26.4,5.0,Tidak,427.0,Macet
+K-0241,2026-05-18,Yogyakarta,Fashion,40.7,37.0,,24.4,,T,517.0,Lancar
+K-0242,23/03/2026,Jakarta,Retail,16.9,55.0,3.0,8.5,0.0,n,603.0,Lancar
+K-0243,2026-04-14,BDG ,Kerajinan,27.1,84.0,7.0,20.1,5.0,tidak,353.0,Macet
+K-0244,"May 06, 2025",makassar,Fashion,33.8,120.0,5.0,22.2,,Tidak,586.0,Lancar
+K-0245,"Jun 17, 2025",jakarta,Kerajinan,34.6,152.0,7.0,24.8,0.0,ya,681.0,Lancar
+K-0246,"Apr 14, 2025",jakarta,kerajinan,21.5,87.0,3.0,13.3,0.0,Tidak,702.0,Lancar
+K-0247,2024-09-28,YOG ,Fashion,22.5,49.0,5.0,12.3,3.0,Ya,547.0,Macet
+K-0248,2026-01-09,SBY,kuliner,5.9,60.0,5.0,4.4,2.0,Tidak,419.0,Macet
+K-0249,08/06/2026,bandung,Kuliner,,164.0,7.0,17.8,3.0,Ya,568.0,Lancar
+K-0250,2025-07-06,Surabaya,PERTANIAN,11.1,121.0,,3.1,1.0,Ya,671.0,Lancar
+K-0250,2025-07-06,Surabaya,PERTANIAN,11.1,121.0,,3.1,1.0,Ya,671.0,Lancar
+K-0251,2025-01-22,Jakarta,jasa,50.9,111.0,2.0,37.5,2.0,Ya,539.0,Lancar
+K-0252,2026-05-05,jakarta,PERTANIAN,13.7,174.0,3.0,10.4,2.0,Ya,586.0,Lancar
+K-0253,19/07/2025,Jogja,pertanian,23.1,66.0,4.0,22.8,3.0,Ya,540.0,Macet
+K-0254,2025-01-08,Yogyakarta,Retail,,51.0,1.0,31.7,4.0,Ya,415.0,Lancar
+K-0255,2025-10-11,Bandung,Fashion,27.6,159.0,2.0,9.3,2.0,tidak,597.0,Lancar
+K-0256,2024-09-19,Yogyakarta,Retail,21.8,107.0,2.0,21.0,2.0,Ya,595.0,Lancar
+K-0257,2025-12-27,JKT,Kuliner,14.7,152.0,6.0,14.2,2.0,Y,524.0,Lancar
+K-0258,2025-09-27,Bandung,Fashion,38.1,26.0,4.0,24.0,2.0,Ya,701.0,Lancar
+K-0259,2025-05-26,MDN,Retail,29.5,,2.0,13.1,4.0,1,414.0,Lancar
+K-0259,2025-05-26,MDN,Retail,29.5,,2.0,13.1,4.0,1,414.0,Lancar
+K-0260,19/09/2024,Yogyakarta,Kerajinan,10.6,165.0,2.0,5.9,4.0,Ya,442.0,Lancar
+K-0261,2024-08-10,Jakarta,kerajinan,100.4,93.0,3.0,103.9,3.0,Tidak,484.0,Macet
+K-0262,2025-12-13,,pertanian,24.8,126.0,2.0,14.6,3.0,1,491.0,Lancar
+K-0263,15/05/2026,,jasa,28.3,122.0,3.0,26.4,1.0,Ya,,Lancar
+K-0264,2025-02-08,BDG ,Kuliner,25.5,100.0,8.0,12.0,4.0,Y,491.0,Lancar
+K-0265,"Apr 29, 2026",Yogyakarta,Retail,22.0,16.0,,13.1,2.0,Tidak,605.0,Macet
+K-0266,01/07/2025,BDG ,,44.7,17.0,8.0,17.2,0.0,Ya,,Lancar
+K-0267,"Jun 04, 2025",SBY,kuliner,34.9,165.0,6.0,10.9,2.0,Ya,517.0,Lancar
+K-0268,2025-08-14,MKS,Pertanian,34.1,,6.0,20.7,,Ya,649.0,Lancar
+K-0269,2026-04-15,BDG ,kerajinan ,28.1,104.0,4.0,20.1,0.0,1,612.0,Lancar
+K-0270,15/11/2025,medan ,retail ,51.4,79.0,4.0,33.1,4.0,T,488.0,Lancar
+K-0271,2024-08-16,SBY,jasa,49.4,171.0,4.0,29.2,5.0,,407.0,Macet
+K-0272,"Jan 31, 2025",surabaya,Pertanian,40.6,,1.0,12.6,4.0,Y,617.0,Macet
+K-0273,22/02/2026,surabaya,pertanian,22.9,115.0,8.0,19.6,1.0,Tidak,557.0,Lancar
+K-0274,"Sep 23, 2025",SBY,Kerajinan,44.7,167.0,2.0,16.7,2.0,tidak,571.0,Lancar
+K-0275,2025-11-14, Jakarta ,Jasa,17.2,39.0,5.0,7.9,3.0,T,457.0,Lancar
+K-0276,2024-10-25,yogyakarta,Kuliner,22.6,63.0,2.0,8.4,1.0,Tidak,588.0,Macet
+K-0277,2026-01-05,Jakarta,Kerajinan,54.9,39.0,1.0,21.5,3.0,Ya,627.0,Lancar
+K-0278,2026-02-15,Surabaya,Jasa,25.1,126.0,7.0,8.3,2.0,Ya,,Lancar
+K-0279,17/08/2025,Yogyakarta,pertanian,11.1,143.0,2.0,6.5,2.0,T,577.0,Lancar
+K-0280,19/08/2024,Jakarta,KULINER,50.5,158.0,,14.9,0.0,Ya,724.0,Lancar
+K-0281,"Jan 06, 2026",JKT,Kuliner,31.4,15.0,4.0,30.5,1.0,Ya,581.0,Lancar
+K-0282,2024-06-06,,fashion,18.7,144.0,1.0,18.8,2.0,Ya,611.0,Lancar
+K-0283,2026-01-24,Bandung,jasa,25.5,153.0,7.0,7.9,4.0,1,349.0,Lancar
+K-0284,2025-07-05,Surabaya,Pertanian,22.6,50.0,4.0,16.1,3.0,Ya,488.0,Macet
+K-0285,18/02/2025,BDG ,Fashion,40.8,155.0,4.0,39.7,3.0,1,581.0,Lancar
+K-0286,2024-08-24,medan ,JASA,90.6,120.0,8.0,92.4,3.0,Y,473.0,Lancar
+K-0287,2025-12-05, Jakarta ,Retail,53.5,96.0,6.0,20.7,4.0,1,487.0,Lancar
+K-0288,2025-08-12,medan ,Fashion,43.3,146.0,6.0,44.6,4.0,Ya,368.0,Macet
+K-0289,2024-06-15,Bandung,KULINER,21.5,174.0,5.0,21.5,2.0,1,576.0,Lancar
+K-0290,2025-02-04,yogyakarta,Retail,11.3,9.0,4.0,11.1,2.0,n,497.0,Macet
+K-0291,2024-06-14, Jakarta ,Fashion,12.1,74.0,7.0,6.2,1.0,Tidak,,Lancar
+K-0292,2025-09-26,Bandung,jasa,15.8,124.0,8.0,9.8,4.0,N,322.0,Macet
+K-0292,2025-09-26,Bandung,jasa,15.8,124.0,8.0,9.8,4.0,N,322.0,Macet
+K-0293,26/12/2025,surabaya,PERTANIAN,66.2,82.0,4.0,53.4,2.0,1,562.0,Macet
+K-0294,01/10/2025, Jakarta ,PERTANIAN,,115.0,6.0,15.5,3.0,1,496.0,Lancar
+K-0295,2024-06-06,Jakarta,KULINER,33.0,28.0,8.0,34.4,3.0,Tidak,442.0,Macet
+K-0295,2024-06-06,Jakarta,KULINER,33.0,28.0,8.0,34.4,3.0,Tidak,442.0,Macet
+K-0296,2024-08-10,MKS,Kuliner,19.8,31.0,4.0,8.3,2.0,y,624.0,Lancar
+K-0297,14/01/2026,Jakarta,JASA,17.0,120.0,5.0,10.4,4.0,Ya,407.0,Lancar
+K-0298,25/07/2025,Bandung,Kerajinan,18.7,147.0,6.0,7.8,1.0,Tidak,577.0,Lancar
+K-0299,21/06/2024,Bandung,Pertanian,42.1,138.0,6.0,30.8,1.0,Ya,658.0,Lancar
+K-0300,2025-06-07,Jakarta,Kerajinan,14.5,152.0,,9.2,1.0,Tidak,561.0,Lancar
+K-0301,2025-01-13,Surabaya,,24.0,50.0,2.0,7.7,1.0,Ya,660.0,Lancar
+K-0302,18/07/2025,Jakarta,Kerajinan,13.1,133.0,2.0,13.6,3.0,1,433.0,Lancar
+K-0303,2025-07-18,YOG ,retail ,25.7,107.0,2.0,23.2,3.0,Ya,494.0,Lancar
+K-0304,2026-05-01,Jakarta,Retail,41.7,54.0,6.0,13.2,0.0,Tidak,644.0,Lancar
+K-0305,2025-09-10,Makassar,Kuliner,18.9,49.0,6.0,7.8,3.0,1,520.0,Macet
+K-0306,"Nov 01, 2024",Bandung,Kuliner,41.5,14.0,5.0,31.9,3.0,n,501.0,Macet
+K-0307,"Nov 16, 2025", Jakarta ,Kerajinan,52.7,178.0,4.0,49.5,2.0,Y,512.0,Lancar
+K-0308,2024-12-14,Jakarta,Kerajinan,21.1,152.0,1.0,19.3,0.0,Tidak,623.0,Lancar
+K-0309,2024-06-16,Medan,Pertanian,32.6,161.0,1.0,18.1,,,473.0,Lancar
+K-0310,2025-07-27,Makassar,Fashion,25.3,67.0,6.0,6.5,0.0,Ya,638.0,Macet
+K-0311,2024-07-18,Jakarta,PERTANIAN,40.2,161.0,6.0,39.6,3.0,Tidak,477.0,Macet
+K-0312,10/08/2025,Surabaya,Kuliner,37.3,179.0,6.0,30.9,,Ya,644.0,Lancar
+K-0313,21/10/2025,bandung,kerajinan,27.3,29.0,4.0,22.1,0.0,y,513.0,Macet
+K-0314,2025-01-11,Medan,Pertanian,31.7,178.0,1.0,31.6,,Ya,601.0,Macet
+K-0315,2024-10-16,Jakarta,fashion ,14.5,160.0,4.0,10.5,2.0,1,526.0,Lancar
+K-0316,2024-06-24,Bandung,pertanian,37.5,103.0,2.0,38.1,3.0,Tidak,475.0,Macet
+K-0317,2025-03-19,medan ,JASA,31.0,159.0,7.0,14.0,4.0,1,479.0,Lancar
+K-0318,08/08/2024,Bandung,PERTANIAN,43.7,46.0,3.0,40.1,5.0,Tidak,413.0,Macet
+K-0319,2025-06-20,Yogyakarta,fashion,22.2,158.0,8.0,12.9,2.0,Tidak,527.0,Macet
+K-0320,2024-09-14,Bandung,fashion,33.6,33.0,2.0,16.1,2.0,1,569.0,Lancar
+K-0321,"Aug 19, 2025",,PERTANIAN,62.5,140.0,8.0,30.5,4.0,y,468.0,Lancar
+K-0322,08/03/2026,Surabaya,Kuliner,21.9,55.0,5.0,10.3,,Ya,,Lancar
+K-0323,2024-06-10,BDG ,Fashion,27.2,66.0,6.0,19.9,0.0,y,750.0,Lancar
+K-0324,2024-06-21,Jakarta,Pertanian,14.1,166.0,5.0,9.3,4.0,Ya,508.0,Lancar
+K-0325,2025-05-21,MKS,,22.4,163.0,2.0,15.0,5.0,Ya,435.0,Lancar
+K-0326,2026-01-08,Yogyakarta,Jasa,,175.0,4.0,20.4,4.0,Ya,508.0,Lancar
+K-0327,"Jun 29, 2024",Bandung,Jasa,22.9,64.0,,13.9,,ya,664.0,Lancar
+K-0328,08/05/2025, Jakarta ,Retail,,85.0,8.0,6.7,,Ya,477.0,Lancar
+K-0329,2024-07-17,medan ,Retail,48.1,37.0,6.0,15.4,1.0,Y,568.0,Lancar
+K-0330,2026-03-06,jkt,kerajinan,31.1,35.0,4.0,11.3,4.0,Tidak,482.0,Macet
+K-0331,01/11/2024,jakarta,PERTANIAN,6.4,84.0,5.0,6.1,2.0,Y,545.0,Macet
+K-0332,2025-02-05,medan ,retail ,,165.0,3.0,5.9,,Ya,588.0,Lancar
+K-0333,2026-05-29,Medan,JASA,18.0,75.0,1.0,15.2,5.0,Tidak,510.0,Macet
+K-0334,2024-11-06,jakarta,Retail,11.0,168.0,5.0,11.2,4.0,Tidak,463.0,Macet
+K-0335,2024-10-10,Makassar,Kerajinan,,120.0,7.0,7.2,2.0,Ya,473.0,Lancar
+K-0336,2024-12-18,Surabaya,Kerajinan,42.8,79.0,7.0,31.5,4.0,Tidak,452.0,Macet
+K-0337,2024-09-10, Jakarta ,Jasa,44.9,126.0,1.0,31.9,4.0,Tidak,,Macet
+K-0338,08/10/2024,Surabaya,Jasa,36.5,160.0,3.0,21.1,3.0,Tidak,438.0,Macet
+K-0338,08/10/2024,Surabaya,Jasa,36.5,160.0,3.0,21.1,3.0,Tidak,438.0,Macet
+K-0339,2025-02-10,Jogja,fashion ,,131.0,3.0,7.8,3.0,0,478.0,Lancar
+K-0340,18/03/2026,Jakarta,PERTANIAN,19.8,79.0,3.0,6.0,3.0,Ya,499.0,Lancar
+K-0341,2025-02-24,,,20.0,23.0,7.0,18.4,1.0,Tidak,523.0,Lancar
+K-0342,29/12/2025,Bandung,fashion,47.0,116.0,,46.1,5.0,Tidak,375.0,Macet
+K-0343,23/04/2025,Jakarta,Pertanian,18.3,48.0,,12.9,3.0,Y,,Macet
+K-0344,2024-08-25,Jakarta,PERTANIAN,,92.0,5.0,79.4,5.0,Tidak,527.0,Macet
+K-0345,2024-06-13,Bandung,fashion ,21.1,13.0,2.0,19.9,3.0,Ya,,Macet
+K-0346,13/10/2024,,Pertanian,48.9,140.0,7.0,51.0,0.0,Tidak,659.0,Lancar
+K-0347,"May 02, 2026",BDG ,Kuliner,90.6,99.0,4.0,79.9,4.0,Tidak,,Macet
+K-0348,2026-04-04,yogyakarta,kerajinan ,22.4,,6.0,8.0,2.0,Tidak,590.0,Lancar
+K-0349,2025-07-12,makassar,Kerajinan,19.5,151.0,3.0,13.8,4.0,Ya,349.0,Macet
+K-0350,08/02/2026,Jakarta,Pertanian,36.6,34.0,1.0,27.7,4.0,y,387.0,Macet
+K-0351,2026-05-29,Makassar,Retail,64.1,79.0,,34.8,0.0,Ya,755.0,Lancar
+K-0352,"Sep 02, 2025",Makassar,Retail,29.9,41.0,5.0,22.8,,1,454.0,Macet
+K-0353,2025-08-12,makassar,jasa,,99.0,6.0,7.7,3.0,y,483.0,Lancar
+K-0354,30/08/2025,SBY,Retail,31.2,,5.0,27.2,3.0,Ya,467.0,Lancar
+K-0355,"Aug 25, 2024", Jakarta ,Kerajinan,11.7,76.0,6.0,3.6,4.0,Ya,,Lancar
+K-0356,2025-09-18,jkt,Kerajinan,86.0,145.0,6.0,85.0,0.0,,617.0,Lancar
+K-0357,"Feb 09, 2026",Bandung,kuliner,16.1,,3.0,15.4,1.0,Ya,525.0,Lancar
+K-0358,2026-05-11,Surabaya,Jasa,66.1,56.0,7.0,18.0,1.0,,584.0,Lancar
+K-0359,10/01/2026,Jogja,Retail,6.4,6.0,7.0,2.3,4.0,Ya,499.0,Macet
+K-0360,06/10/2024,Surabaya,Retail,35.7,52.0,7.0,13.1,1.0,Ya,633.0,Lancar
+K-0361,"Nov 01, 2024",Medan,Kerajinan,46.4,136.0,5.0,30.9,4.0,Ya,441.0,Lancar
+K-0362,2025-04-18,,,64.6,59.0,6.0,42.8,1.0,Ya,640.0,Lancar
+K-0363,"Dec 20, 2025",jakarta,Retail,16.1,89.0,4.0,7.6,,Ya,,Lancar
+K-0364,27/08/2024,Bandung,Retail,35.3,169.0,3.0,15.4,0.0,ya,699.0,Lancar
+K-0365,2025-09-08,medan ,Pertanian,35.5,142.0,3.0,28.2,3.0,ya,486.0,Lancar
+K-0366,2024-09-14,Bandung,kuliner,66.7,52.0,7.0,32.8,3.0,Ya,556.0,Lancar
+K-0367,2024-08-08,surabaya,kerajinan ,30.0,92.0,6.0,16.7,3.0,Tidak,537.0,Lancar
+K-0368,2025-12-22,Medan,Kuliner,21.5,123.0,5.0,14.1,0.0,,691.0,Macet
+K-0369,2024-07-02,Jakarta,Kerajinan,15.8,97.0,2.0,6.5,3.0,Tidak,422.0,Macet
+K-0370,2026-06-03,yogyakarta,Fashion,14.8,177.0,1.0,3.8,2.0,N,473.0,Lancar
+K-0371,2025-01-25,Jogja,Kerajinan,11.4,170.0,6.0,4.6,5.0,1,429.0,Lancar
+K-0372,2025-05-14,bandung,Retail,27.2,22.0,3.0,16.4,0.0,Ya,590.0,Lancar
+K-0373,"Jul 05, 2024",SBY,Retail,54.6,76.0,8.0,30.7,1.0,Tidak,580.0,Lancar
+K-0374,2025-04-08,Bandung,kuliner,23.0,65.0,3.0,7.4,5.0,Ya,,Lancar
+K-0375,2025-05-01,MDN,Kerajinan,28.4,89.0,8.0,7.9,0.0,n,677.0,Lancar
+K-0376,17/11/2024,MKS,Retail,86.3,,5.0,29.4,1.0,Ya,659.0,Lancar
+K-0377,"Jan 03, 2026",Surabaya,Pertanian,19.9,92.0,3.0,12.1,4.0,Ya,470.0,Lancar
+K-0378,2025-10-13,Yogyakarta,kerajinan ,50.2,176.0,4.0,17.5,4.0,T,455.0,Lancar
+K-0379,2025-01-12,Surabaya,KULINER,27.5,154.0,6.0,19.6,5.0,0,450.0,Macet
+K-0380,2026-02-11,Bandung,,49.6,87.0,3.0,42.4,1.0,Ya,602.0,Lancar
+K-0381,2025-08-06,Jakarta,fashion,47.0,173.0,1.0,44.6,4.0,Tidak,308.0,Lancar
+K-0382,2024-09-14,Jakarta,JASA,15.6,59.0,4.0,10.6,4.0,Ya,409.0,Macet
+K-0383,"Feb 10, 2026",BDG ,kerajinan,22.9,100.0,1.0,20.1,2.0,Ya,537.0,Lancar
+K-0384,2026-01-05,Jakarta,retail ,48.6,138.0,7.0,33.7,2.0,tidak,488.0,Lancar
+K-0384,2026-01-05,Jakarta,retail ,48.6,138.0,7.0,33.7,2.0,tidak,488.0,Lancar
+K-0385,2024-10-04,Surabaya,Kerajinan,51.9,178.0,5.0,13.7,4.0,Tidak,422.0,Lancar
+K-0386,14/02/2025,Jakarta,PERTANIAN,30.4,108.0,1.0,20.6,3.0,0,451.0,Lancar
+K-0387,13/05/2025,Surabaya,PERTANIAN,15.3,109.0,6.0,5.3,2.0,Ya,,Lancar
+K-0388,2025-03-13,bandung,Jasa,21.1,,6.0,15.5,2.0,y,548.0,Lancar
+K-0388,2025-03-13,bandung,Jasa,21.1,,6.0,15.5,2.0,y,548.0,Lancar
+K-0389,2025-03-23,Surabaya,Kuliner,38.0,42.0,6.0,31.5,0.0,Ya,595.0,Lancar
+K-0390,2026-02-03,Jakarta,JASA,29.1,162.0,1.0,29.8,4.0,Tidak,482.0,Macet
+K-0391,25/08/2025,Yogyakarta,Fashion,25.7,32.0,1.0,11.9,2.0,1,662.0,Lancar
+K-0392,2024-08-01,bandung,Jasa,29.6,177.0,,27.7,0.0,Tidak,641.0,Macet
+K-0393,11/01/2026,,fashion ,133.6,126.0,2.0,67.0,1.0,Ya,639.0,Lancar
+K-0394,02/08/2024,BDG ,PERTANIAN,22.0,144.0,3.0,19.8,3.0,Y,575.0,Lancar
+K-0395,2025-02-24,Surabaya,kuliner,22.2,142.0,5.0,19.3,1.0,T,598.0,Macet
+K-0396,10/02/2026,,Jasa,,150.0,2.0,4.1,0.0,T,492.0,Lancar
+K-0397,2025-02-01,JKT,Retail,8.8,83.0,,7.2,5.0,ya,409.0,Lancar
+K-0398,2026-04-15,jakarta,Kuliner,26.8,97.0,3.0,24.0,2.0,Tidak,560.0,Macet
+K-0399,17/06/2025,Bandung,Kuliner,15.7,123.0,5.0,6.8,3.0,y,500.0,Lancar
+K-0400,2026-02-07,surabaya,Kerajinan,12.5,72.0,3.0,12.8,1.0,Tidak,598.0,Lancar
+K-0401,31/12/2024,JKT,jasa,65.0,175.0,6.0,45.5,4.0,Ya,512.0,Lancar
+K-0402,2026-06-01,Yogyakarta,retail ,18.3,24.0,3.0,17.6,3.0,y,440.0,Lancar
+K-0403,2026-01-26,bandung,Retail,27.0,78.0,1.0,23.1,3.0,Tidak,548.0,Macet
+K-0404,2025-05-21,Makassar,PERTANIAN,31.1,13.0,8.0,28.3,2.0,Tidak,580.0,Lancar
+K-0405,2025-02-06,Jakarta,Kerajinan,24.7,129.0,3.0,9.2,2.0,N,569.0,Lancar
+K-0406,2025-11-12,makassar,Retail,21.5,78.0,3.0,8.3,0.0,Y,690.0,Lancar
+K-0407,2024-06-02,SBY,retail ,75.1,74.0,,64.4,0.0,Ya,553.0,Lancar
+K-0408,"Aug 12, 2024",SBY,Fashion,16.2,158.0,8.0,7.7,4.0,tidak,592.0,Lancar
+K-0409,2026-03-12,Surabaya,Jasa,14.8,179.0,7.0,6.4,1.0,1,573.0,Lancar
+K-0410,2026-02-13,makassar,Retail,10.3,121.0,3.0,5.1,2.0,Tidak,492.0,Macet
+K-0411,08/05/2025,surabaya,Jasa,21.2,68.0,4.0,21.3,5.0,ya,400.0,Macet
+K-0412,2024-12-18,bandung,Pertanian,24.2,146.0,5.0,14.0,0.0,Tidak,,Lancar
+K-0413,2025-09-30,jakarta,fashion,50.4,,4.0,16.5,0.0,Ya,619.0,Lancar
+K-0414,2025-06-28,Medan,Jasa,31.5,41.0,8.0,22.7,3.0,Ya,644.0,Macet
+K-0415,"Jun 10, 2026",Surabaya,Kuliner,22.8,120.0,6.0,17.3,2.0,ya,561.0,Lancar
+K-0416,"Jul 08, 2025",MKS,Pertanian,21.1,107.0,1.0,6.2,2.0,n,444.0,Lancar
+K-0417,2024-07-11, Jakarta ,pertanian,22.0,178.0,,11.0,0.0,Ya,562.0,Lancar
+K-0418,20/09/2025,Makassar,pertanian,21.2,179.0,2.0,16.4,4.0,Ya,433.0,Lancar
+K-0419,17/01/2026,Jakarta,kerajinan,17.1,152.0,4.0,4.6,1.0,Tidak,650.0,Lancar
+K-0420,2026-02-09,YOG ,,31.5,81.0,2.0,12.4,,Tidak,605.0,Lancar
+K-0421,2025-08-20,Bandung,Jasa,44.0,21.0,4.0,18.2,5.0,Ya,368.0,Lancar
+K-0422,27/08/2025, Jakarta ,Kerajinan,,173.0,8.0,15.9,1.0,Ya,604.0,Macet
+K-0423,2024-06-07,jkt,Retail,18.6,95.0,5.0,7.9,4.0,Ya,433.0,Lancar
+K-0424,24/07/2024,Makassar,Retail,59.0,173.0,7.0,29.2,2.0,Ya,637.0,Lancar
+K-0425,21/02/2025,,Kuliner,34.8,8.0,1.0,12.7,0.0,Ya,658.0,Lancar
+K-0426,2025-11-06,BDG ,Retail,22.9,78.0,4.0,11.0,0.0,Ya,665.0,Lancar
+K-0427,"Aug 15, 2024",Bandung,kuliner,29.4,69.0,3.0,22.3,3.0,Tidak,,Macet
+K-0428,2025-01-09,jkt,Retail,42.3,75.0,7.0,44.1,0.0,Y,635.0,Lancar
+K-0429,16/11/2025, Jakarta ,kuliner,6.3,130.0,1.0,2.6,,Ya,646.0,Lancar
+K-0430,05/01/2026,jakarta,Retail,40.8,38.0,7.0,33.1,1.0,y,657.0,Lancar
+K-0431,2024-11-20,Jakarta,jasa,,134.0,6.0,27.2,2.0,Ya,510.0,Lancar
+K-0432,16/10/2024,SBY,Kerajinan,23.1,,6.0,7.1,4.0,Y,452.0,Macet
+K-0433,2025-11-14,yogyakarta,,62.2,40.0,1.0,49.8,1.0,y,622.0,Lancar
+K-0434,23/12/2024,medan ,Kuliner,21.7,154.0,6.0,13.2,1.0,Ya,575.0,Lancar
+K-0435,2024-08-13,jkt,kerajinan ,24.0,152.0,4.0,19.2,4.0,T,491.0,Macet
+K-0436,16/12/2025,YOG ,Pertanian,4.7,49.0,4.0,1.4,3.0,y,550.0,Lancar
+K-0436,16/12/2025,YOG ,Pertanian,4.7,49.0,4.0,1.4,3.0,y,550.0,Lancar
+K-0437,21/12/2024,SBY,PERTANIAN,22.1,141.0,8.0,22.4,3.0,1,467.0,Macet
+K-0438,"Apr 04, 2026",Medan,fashion,46.5,9.0,2.0,43.6,2.0,0,526.0,Macet
+K-0439,"Jan 10, 2026",surabaya,Kerajinan,68.2,107.0,5.0,26.9,1.0,1,638.0,Lancar
+K-0440,"Nov 11, 2024",Jogja,,49.7,106.0,7.0,25.7,3.0,Tidak,471.0,Lancar
+K-0441,2025-11-04,bandung,kuliner,,51.0,4.0,35.1,,Ya,602.0,Lancar
+K-0442,07/06/2024,Makassar,jasa,27.6,179.0,3.0,9.9,3.0,Tidak,426.0,Lancar
+K-0443,2025-06-22,Surabaya,Kerajinan,102.5,169.0,5.0,78.2,1.0,Tidak,682.0,Lancar
+K-0444,2025-10-10,Jakarta,Kuliner,,,7.0,10.7,2.0,ya,501.0,Lancar
+K-0445,2024-07-22,medan ,fashion,15.2,127.0,6.0,13.0,1.0,Ya,648.0,Lancar
+K-0446,14/12/2024,Surabaya,KULINER,70.1,149.0,8.0,38.3,1.0,ya,582.0,Lancar
+K-0447,2025-12-09,BDG ,Retail,14.6,145.0,7.0,12.0,0.0,Y,608.0,Lancar
+K-0448,2025-02-24,Makassar,Kerajinan,7.3,106.0,2.0,5.8,1.0,Tidak,543.0,Macet
+K-0449,2025-05-27,bandung,fashion ,48.7,,7.0,45.9,4.0,T,370.0,Macet
+K-0450,18/06/2025,SBY,Retail,22.4,150.0,1.0,16.8,2.0,Y,628.0,Lancar
+K-0451,"Dec 27, 2024",YOG ,kerajinan,30.7,121.0,3.0,19.1,3.0,tidak,477.0,Lancar
+K-0452,2024-07-26,Jakarta,Pertanian,44.8,137.0,3.0,44.8,1.0,T,557.0,Lancar
+K-0453,"Feb 10, 2025",makassar,pertanian,4.5,149.0,5.0,1.4,1.0,ya,627.0,Lancar
+K-0454,2024-06-07,jakarta,kerajinan ,22.5,29.0,4.0,7.4,,Y,,Macet
+K-0455,"May 17, 2025",JKT,fashion,14.3,135.0,3.0,14.9,0.0,1,569.0,Lancar
+K-0456,"Mar 23, 2026", Jakarta ,Kerajinan,48.7,147.0,7.0,41.4,3.0,ya,497.0,Macet
+K-0456,"Mar 23, 2026", Jakarta ,Kerajinan,48.7,147.0,7.0,41.4,3.0,ya,497.0,Macet
+K-0457,03/05/2025,Medan,Jasa,20.3,140.0,3.0,5.2,2.0,Ya,443.0,Lancar
+K-0458,2026-01-23,makassar,Kerajinan,22.2,7.0,4.0,10.1,3.0,Tidak,442.0,Lancar
+K-0459,"Dec 10, 2024",jkt,Jasa,,104.0,8.0,15.5,2.0,Ya,607.0,Lancar
+K-0460,2026-04-16,SBY,retail ,16.0,158.0,1.0,4.6,2.0,ya,624.0,Lancar
+K-0461,14/01/2025,,Kuliner,23.9,34.0,8.0,21.9,2.0,Y,524.0,Macet
+K-0462,2025-10-08, Jakarta ,Fashion,9.7,50.0,7.0,9.6,4.0,Ya,495.0,Macet
+K-0463,2025-03-17,Jakarta,Jasa,24.8,,2.0,18.4,1.0,Ya,640.0,Lancar
+K-0464,"Oct 28, 2025", Jakarta ,kerajinan,9.9,,5.0,6.7,0.0,Y,671.0,Lancar
+K-0465,2025-05-16,Surabaya,Kerajinan,18.2,116.0,1.0,18.2,3.0,Ya,578.0,Lancar
+K-0466,2026-02-20, Jakarta ,JASA,30.3,142.0,4.0,22.7,4.0,,436.0,Macet
+K-0467,2025-06-20,Surabaya,PERTANIAN,14.4,18.0,2.0,10.4,1.0,,624.0,Lancar
+K-0468,"Nov 02, 2024",Jakarta,Kerajinan,32.0,154.0,7.0,20.4,0.0,ya,634.0,Lancar
+K-0469,03/12/2025,bandung,KULINER,23.0,162.0,4.0,14.9,3.0,Ya,526.0,Lancar
+K-0470,17/06/2025,JKT,Kerajinan,,124.0,1.0,11.9,1.0,y,539.0,Lancar
+K-0471,2026-04-28,Surabaya,,40.3,140.0,2.0,28.4,0.0,Ya,542.0,Lancar
+K-0472,2024-09-09,Jakarta,fashion ,25.3,103.0,6.0,17.2,3.0,1,519.0,Macet
+K-0473,"Nov 27, 2025",Makassar,retail ,22.6,18.0,7.0,14.7,3.0,n,477.0,Macet
+K-0474,07/11/2025,Surabaya,pertanian,70.4,100.0,8.0,51.4,3.0,Y,493.0,Macet
+K-0475,30/10/2024,makassar,JASA,61.8,6.0,7.0,25.9,3.0,T,425.0,Macet
+K-0476,"Mar 28, 2026",Jakarta,Kuliner,18.0,98.0,7.0,12.7,2.0,ya,504.0,Macet
+K-0477,24/08/2024,,retail ,35.6,143.0,3.0,30.3,3.0,Ya,561.0,Lancar
+K-0478,2025-08-18,Medan,Kuliner,68.4,120.0,7.0,58.0,5.0,ya,436.0,Macet
+K-0479,21/03/2025,Bandung,Retail,13.9,37.0,5.0,14.4,,Tidak,588.0,Macet
+K-0480,20/01/2026,Surabaya,jasa,87.3,115.0,8.0,27.3,1.0,Ya,562.0,Lancar
+K-0481,28/05/2026,Bandung,retail ,22.2,29.0,3.0,11.3,4.0,Ya,372.0,Macet
+K-0482,2024-06-19,jakarta,Pertanian,22.9,43.0,2.0,12.2,2.0,,465.0,Lancar
+K-0483,2026-03-01,SBY,Kuliner,33.1,95.0,7.0,11.6,4.0,Ya,554.0,Lancar
+K-0484,2025-07-11,SBY,Pertanian,33.3,38.0,3.0,27.7,3.0,1,460.0,Lancar
+K-0485,25/08/2025,Surabaya,Kerajinan,46.4,72.0,8.0,45.9,1.0,Tidak,,Macet
+K-0486,2024-09-24,Makassar,kerajinan ,42.4,139.0,6.0,15.3,2.0,Ya,498.0,Lancar
+K-0487,2024-09-08,Makassar,Retail,30.4,152.0,2.0,24.0,0.0,Ya,641.0,Lancar
+K-0488,"Jan 26, 2026",bandung,jasa,29.1,70.0,4.0,11.4,0.0,Tidak,590.0,Lancar
+K-0489,24/10/2024,Jakarta,Pertanian,14.5,88.0,5.0,6.0,0.0,0,638.0,Lancar
+K-0490,"Mar 08, 2026",BDG ,fashion,18.8,81.0,,10.5,5.0,Ya,,Macet
+K-0491,22/01/2026,Surabaya,retail ,10.0,,4.0,3.6,1.0,Ya,561.0,Lancar
+K-0492,15/05/2025,medan ,Kerajinan,29.6,122.0,6.0,27.6,2.0,n,522.0,Lancar
+K-0493,2025-11-29,Bandung,pertanian,123.2,152.0,1.0,108.9,0.0,1,647.0,Lancar
+K-0494,2025-01-12,bandung,JASA,51.5,131.0,8.0,25.0,1.0,N,,Lancar
+K-0495,2025-10-28,surabaya,Jasa,29.1,166.0,8.0,10.1,3.0,0,509.0,Lancar
+K-0496,08/12/2024,Bandung,PERTANIAN,16.5,8.0,5.0,11.6,1.0,ya,634.0,Lancar
+K-0497,2025-02-07,bandung,jasa,15.1,10.0,1.0,7.0,1.0,Ya,598.0,Lancar
+K-0498,2026-06-01,Jakarta,jasa,26.7,11.0,2.0,6.7,1.0,Ya,521.0,Lancar
+K-0499,"Dec 22, 2024",Medan,pertanian,55.8,32.0,5.0,15.1,4.0,Ya,360.0,Macet
+K-0500,"Feb 05, 2025",Jakarta,Jasa,63.6,130.0,5.0,29.9,4.0,1,366.0,Lancar
+K-0501,2024-11-26,JKT,Kerajinan,28.9,97.0,8.0,22.6,0.0,Ya,720.0,Lancar
+K-0502,2025-02-21,makassar,Kerajinan,19.8,46.0,7.0,16.2,3.0,1,568.0,Macet
+K-0503,2025-05-30,BDG ,Pertanian,20.7,22.0,5.0,8.7,1.0,ya,706.0,Lancar
+K-0504,2026-05-09,SBY,Kuliner,21.5,109.0,7.0,15.6,1.0,Tidak,579.0,Lancar
+K-0505,2025-04-30,makassar,JASA,46.0,115.0,8.0,40.9,3.0,N,401.0,Macet
+K-0506,2025-03-13,Jakarta,kerajinan ,40.1,56.0,6.0,18.7,1.0,y,589.0,Macet
+K-0507,2026-03-29,Surabaya,pertanian,24.6,56.0,8.0,9.4,2.0,ya,657.0,Lancar
+K-0508,14/09/2025,Bandung,Kuliner,17.6,32.0,6.0,14.2,4.0,Tidak,,Macet
+K-0509,27/06/2025,bandung,,23.9,163.0,1.0,24.4,3.0,Y,505.0,Lancar
+K-0510,2024-06-10,Jakarta,Fashion,26.8,43.0,2.0,26.2,2.0,1,572.0,Lancar
+K-0511,"May 19, 2026",Bandung,KULINER,6.7,77.0,6.0,3.6,2.0,n,,Lancar
+K-0512,2024-08-24,Medan,Fashion,23.5,44.0,5.0,18.0,1.0,Tidak,485.0,Lancar
+K-0513,19/10/2025,BDG ,Kuliner,25.4,67.0,8.0,15.8,4.0,N,430.0,Macet
+K-0514,"Aug 31, 2025",jakarta,retail ,24.5,,5.0,21.0,4.0,1,421.0,Lancar
+K-0515,2026-01-28,Jogja,kerajinan,36.5,152.0,7.0,16.3,0.0,Y,614.0,Lancar
+K-0516,2025-01-11,YOG ,kuliner,41.3,111.0,1.0,31.9,1.0,Ya,683.0,Lancar
+K-0517,2025-04-14,bandung,Kuliner,12.2,,8.0,12.0,0.0,ya,665.0,Lancar
+K-0518,2026-02-20,Medan,Retail,,141.0,8.0,62.0,,Y,504.0,Lancar
+K-0519,03/03/2025,Jakarta,Retail,95.2,37.0,1.0,77.0,0.0,1,632.0,Lancar
+K-0520,2024-10-26,Yogyakarta,JASA,26.1,6.0,4.0,16.4,1.0,Tidak,562.0,Lancar
+K-0521,06/06/2025,,Jasa,24.4,9.0,8.0,8.4,4.0,Ya,,Lancar
+K-0522,"May 12, 2025",SBY,JASA,16.1,60.0,3.0,10.3,3.0,Y,442.0,Lancar
+K-0523,2025-01-14,surabaya,Kerajinan,11.8,158.0,1.0,5.1,1.0,Ya,654.0,Lancar
+K-0524,2026-04-10,bandung,Kerajinan,20.6,102.0,1.0,13.1,4.0,Ya,407.0,Lancar
+K-0525,20/06/2025, Jakarta ,Fashion,19.5,175.0,3.0,9.9,0.0,,,Lancar
+K-0526,2026-05-02,jkt,retail ,38.2,57.0,,33.6,3.0,,555.0,Macet
+K-0527,14/02/2025,surabaya,Retail,24.8,117.0,2.0,22.8,4.0,Tidak,431.0,Lancar
+K-0528,08/04/2025,Jakarta,Pertanian,40.1,77.0,3.0,32.5,,Ya,422.0,Lancar
+K-0529,14/10/2024,BDG ,Retail,48.9,136.0,6.0,15.6,3.0,1,538.0,Lancar
+K-0530,2026-03-30,jkt,Jasa,13.0,138.0,2.0,7.5,4.0,N,387.0,Macet
+K-0531,2024-07-17,MKS,pertanian,11.8,30.0,5.0,4.6,,T,566.0,Lancar
+K-0532,"Dec 09, 2024",Surabaya,fashion ,17.3,128.0,7.0,11.6,2.0,Tidak,587.0,Lancar
+K-0533,2026-03-07,bandung,,14.0,158.0,1.0,11.0,2.0,Ya,561.0,Lancar
+K-0534,2025-03-17,Yogyakarta,Kerajinan,,108.0,1.0,8.6,0.0,ya,752.0,Lancar
+K-0535,2025-01-16,Makassar,Fashion,28.2,168.0,1.0,19.2,0.0,Tidak,582.0,Macet
+K-0536,2025-06-18, Jakarta ,KULINER,8.3,49.0,3.0,4.1,1.0,Y,662.0,Lancar
+K-0537,2026-01-31,jkt,kerajinan,26.6,168.0,2.0,10.3,2.0,Ya,570.0,Lancar
+K-0538,2025-07-14,MDN,Kuliner,22.9,105.0,8.0,8.6,0.0,Ya,679.0,Lancar
+K-0539,2024-07-18,Makassar,kuliner,72.6,28.0,,22.3,3.0,Ya,502.0,Lancar
+K-0540,2025-04-29,Jogja,Kerajinan,6.4,171.0,4.0,3.4,1.0,Ya,562.0,Lancar
+K-0541,2025-04-16,yogyakarta,Pertanian,27.4,100.0,3.0,20.6,5.0,N,400.0,Macet
+K-0542,2025-08-17,surabaya,Jasa,10.9,,7.0,2.9,4.0,Tidak,426.0,Lancar
+K-0543,2025-09-06,SBY,Pertanian,,151.0,6.0,17.5,3.0,Ya,490.0,Lancar
+K-0544,2024-08-26,medan ,pertanian,19.5,138.0,5.0,19.6,0.0,Ya,559.0,Macet
+K-0545,2026-05-22,Bandung,PERTANIAN,27.6,81.0,1.0,16.3,4.0,Y,477.0,Lancar
+K-0546,2024-07-02, Jakarta ,PERTANIAN,34.8,,5.0,24.6,3.0,Ya,,Lancar
+K-0547,27/08/2024,JKT,JASA,41.8,105.0,8.0,31.7,1.0,Tidak,701.0,Lancar
+K-0548,2025-12-22,Bandung,PERTANIAN,36.1,102.0,4.0,27.1,2.0,Y,555.0,Lancar
+K-0549,2026-03-03,Jogja,kerajinan ,,124.0,6.0,30.7,0.0,Ya,565.0,Lancar
+K-0550,05/03/2025,Jakarta,Kerajinan,20.2,66.0,3.0,8.8,4.0,1,475.0,Lancar
+K-0551,2026-01-02,Bandung,Pertanian,34.5,72.0,8.0,16.3,3.0,,507.0,Lancar
+K-0552,25/03/2026,medan ,Fashion,20.4,127.0,6.0,19.1,3.0,Ya,543.0,Macet
+K-0553,26/05/2025,Jakarta,Fashion,32.3,27.0,1.0,30.6,4.0,Ya,,Macet
+K-0554,2025-04-06,Yogyakarta,Kuliner,7.0,10.0,6.0,7.0,4.0,Ya,425.0,Macet
+K-0555,2026-05-15,JKT,fashion ,13.7,19.0,3.0,12.2,1.0,Ya,724.0,Lancar
+K-0556,"Oct 03, 2025",,Kuliner,34.3,,,26.5,1.0,Y,589.0,Lancar
+K-0557,09/06/2025,Jakarta,PERTANIAN,56.0,136.0,3.0,42.2,3.0,Tidak,517.0,Macet
+K-0558,2025-07-21,Bandung,Pertanian,48.2,79.0,7.0,32.7,3.0,Tidak,424.0,Macet
+K-0559,2025-03-25,makassar,Fashion,23.4,110.0,7.0,10.9,1.0,Tidak,670.0,Lancar
+K-0560,2025-03-12,YOG ,fashion ,57.3,34.0,5.0,43.8,0.0,Ya,578.0,Macet
+K-0561,"May 14, 2025",JKT,Jasa,26.8,,1.0,12.9,3.0,Tidak,332.0,Lancar
+K-0562,08/09/2024,Medan,Kerajinan,15.2,46.0,7.0,9.7,2.0,Ya,521.0,Lancar
+K-0563,12/03/2026,Bandung,Kerajinan,35.8,70.0,5.0,22.7,5.0,Ya,382.0,Macet
+K-0564,2025-01-27,BDG ,Pertanian,41.6,108.0,4.0,34.7,2.0,Ya,500.0,Lancar
+K-0565,2025-01-20,Surabaya,Kuliner,10.8,18.0,6.0,6.9,0.0,Tidak,637.0,Lancar
+K-0565,2025-01-20,Surabaya,Kuliner,10.8,18.0,6.0,6.9,0.0,Tidak,637.0,Lancar
+K-0566,04/12/2025,MDN,Kerajinan,18.9,83.0,5.0,11.9,0.0,Ya,546.0,Lancar
+K-0567,2024-06-15, Jakarta ,,65.7,,2.0,22.6,0.0,Ya,670.0,Lancar
+K-0568,2025-05-06,jakarta,fashion,38.0,67.0,4.0,10.6,1.0,Tidak,599.0,Lancar
+K-0569,28/04/2026,Medan,fashion ,22.9,172.0,8.0,21.2,3.0,Ya,529.0,Macet
+K-0570,06/03/2025,Surabaya,,13.5,158.0,1.0,8.8,1.0,Ya,,Lancar
+K-0571,11/04/2026,Jakarta,retail ,19.2,138.0,3.0,6.9,1.0,Ya,740.0,Lancar
+K-0572,"May 22, 2026",MKS,PERTANIAN,166.3,40.0,6.0,69.6,1.0,Ya,573.0,Lancar
+K-0573,2024-12-05,Surabaya,JASA,36.5,163.0,4.0,32.6,4.0,Ya,454.0,Lancar
+K-0574,2024-07-10,JKT,Retail,27.0,35.0,4.0,10.9,1.0,Tidak,555.0,Lancar
+K-0575,2024-11-13,jakarta,fashion,,119.0,1.0,12.6,2.0,Ya,515.0,Lancar
+K-0576,2026-05-13,SBY,PERTANIAN,31.8,89.0,1.0,9.8,1.0,Tidak,488.0,Lancar
+K-0577,2025-04-20,Surabaya,kerajinan ,13.1,94.0,6.0,5.6,3.0,T,504.0,Macet
+K-0578,05/01/2025,Jakarta,Pertanian,4.6,95.0,7.0,2.1,3.0,ya,499.0,Lancar
+K-0579,"Mar 29, 2026",,kerajinan ,31.5,116.0,7.0,18.7,2.0,Ya,646.0,Lancar
+K-0580,2025-11-18,YOG ,Kuliner,33.6,105.0,2.0,30.8,4.0,ya,501.0,Macet
+K-0581,2025-08-14,,Jasa,11.6,73.0,8.0,10.7,0.0,Y,605.0,Macet
+K-0582,"May 15, 2025",Jakarta,Retail,16.2,,1.0,11.7,0.0,Ya,679.0,Lancar
+K-0583,01/02/2026,Jakarta,Kuliner,16.9,158.0,8.0,9.2,1.0,Ya,582.0,Lancar
+K-0584,05/10/2025,BDG ,kuliner,22.6,26.0,5.0,15.3,1.0,N,601.0,Lancar
+K-0585,"Aug 29, 2024",Jakarta,Kuliner,27.2,170.0,8.0,10.9,2.0,Ya,524.0,Lancar
+K-0586,2026-01-25,medan ,,7.3,149.0,7.0,3.9,2.0,Ya,,Lancar
+K-0587,2024-10-19,Medan,Pertanian,17.8,,1.0,14.8,3.0,Ya,515.0,Macet
+K-0588,2025-04-06,Medan,Jasa,30.2,41.0,1.0,22.4,4.0,N,438.0,Macet
+K-0589,2025-03-25,jkt,Fashion,18.8,,5.0,14.1,0.0,Ya,616.0,Lancar
+K-0590,06/01/2025,Yogyakarta,Fashion,25.2,175.0,2.0,21.5,3.0,1,494.0,Lancar
+K-0591,2025-10-07,bandung,KULINER,12.6,81.0,7.0,5.7,2.0,Y,527.0,Lancar
+K-0592,"Dec 02, 2024",jkt,kuliner,,168.0,2.0,5.0,0.0,Ya,,Lancar
+K-0593,05/06/2025,Yogyakarta,fashion,38.8,53.0,8.0,36.9,2.0,ya,603.0,Lancar
+K-0594,"Oct 15, 2025",Jakarta,Retail,4.8,79.0,2.0,1.5,3.0,tidak,447.0,Lancar
+K-0595,02/11/2025,Jakarta,Fashion,26.0,8.0,8.0,12.9,4.0,Ya,560.0,Lancar
+K-0596,20/12/2025,Surabaya,fashion ,19.6,178.0,7.0,8.9,4.0,Tidak,487.0,Macet
+K-0597,2026-06-05,Medan,Fashion,13.4,,5.0,13.5,4.0,Ya,426.0,Lancar
+K-0598,2025-05-21,Surabaya,Retail,16.4,136.0,6.0,4.2,4.0,n,404.0,Lancar
+K-0599,2024-07-21,Surabaya,Kuliner,23.9,113.0,7.0,9.5,4.0,Ya,476.0,Lancar
+K-0600,"Jan 16, 2025",Medan,Retail,53.7,59.0,1.0,42.0,1.0,Tidak,537.0,Macet
+K-0601,2024-10-25,Bandung,Jasa,33.1,140.0,,12.5,3.0,ya,545.0,Lancar
+K-0602,2025-09-23,bandung,fashion ,41.5,10.0,8.0,12.9,4.0,Ya,416.0,Lancar
+K-0603,21/02/2025,Surabaya,Kuliner,13.1,133.0,6.0,8.1,4.0,Y,433.0,Lancar
+K-0604,"Oct 24, 2024",Medan,Kerajinan,16.4,103.0,5.0,16.3,2.0,1,517.0,Lancar
+K-0605,"Apr 29, 2026",Yogyakarta,Pertanian,7.6,89.0,4.0,2.4,4.0,Ya,,Lancar
+K-0606,2026-04-30,Bandung,Fashion,,114.0,4.0,31.3,3.0,y,583.0,Lancar
+K-0607,2024-10-11,bandung,Kuliner,30.8,42.0,1.0,13.3,1.0,T,564.0,Lancar
+K-0608,2025-04-07,Medan,JASA,18.3,20.0,7.0,4.8,1.0,n,635.0,Lancar
+K-0609,"May 11, 2025",Medan,Retail,52.6,40.0,3.0,28.8,1.0,Tidak,580.0,Lancar
+K-0610,2024-10-19,MDN,Kerajinan,21.8,136.0,7.0,12.8,1.0,Tidak,595.0,Lancar
+K-0611,2024-07-31,JKT,KULINER,55.7,7.0,3.0,54.2,2.0,ya,530.0,Lancar
+K-0612,02/08/2024,surabaya,Jasa,85.7,175.0,2.0,79.6,3.0,ya,332.0,Lancar
+K-0613,16/09/2024,Surabaya,retail ,17.5,170.0,8.0,5.6,4.0,Ya,500.0,Lancar
+K-0613,16/09/2024,Surabaya,retail ,17.5,170.0,8.0,5.6,4.0,Ya,500.0,Lancar
+K-0614,10/12/2024,Surabaya,jasa,22.0,165.0,3.0,10.3,3.0,Ya,532.0,Lancar
+K-0615,2025-10-31,Jogja,jasa,18.8,98.0,6.0,16.5,1.0,y,611.0,Lancar
+K-0616,2025-01-12,,Kuliner,,105.0,,23.4,0.0,1,658.0,Lancar
+K-0617,14/01/2025,BDG ,,28.8,108.0,3.0,17.4,1.0,Ya,618.0,Lancar
+K-0618,2025-11-10,Surabaya,retail ,14.6,82.0,5.0,12.4,3.0,Ya,482.0,Lancar
+K-0619,25/06/2024,,Retail,25.4,178.0,,11.9,0.0,Ya,692.0,Lancar
+K-0620,2024-10-01,BDG ,kuliner,72.3,23.0,2.0,57.4,4.0,ya,460.0,Macet

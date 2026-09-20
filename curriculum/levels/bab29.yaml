@@ -1,0 +1,652 @@
+# ============================================================
+# BAB 29 — EDA: KENALAN SAMA DATA (TRACK: DATA SCIENCE)
+# Ringkasan, distribusi, kelompok, dan hubungan antar kolom.
+# ============================================================
+bab: 29
+track: ds
+judul: "EDA: Kenalan Sama Data"
+emoji: "🔍"
+deskripsi: "Sebelum model, kenalan dulu sama datanya: ringkasan angka, sebaran nilai, perbandingan antar kelompok, dan hubungan antar kolom."
+pelajaran:
+  - id: "29-1"
+    judul: "Ringkasan & Distribusi"
+    menit: 5
+    materi: |
+      Sebelum menghitung apa pun, kenali datamu. Tiga alat utama:
+
+      1. **`describe()`** — ringkasan satu kolom angka: count, mean, std, min, 25%, 50%, 75%, max.
+      2. **Kuartil** — 25% berarti seperempat data di bawahnya; 50% = median (nilai tengah); 75% = tiga perempat di bawahnya.
+      3. **`value_counts()`** — jumlah kemunculan tiap nilai pada kolom kategori (kota, sektor, status).
+
+      Contoh dari data bersih (620 baris): omzet min 4,5 · Q1 18,2 · median 26,8 · Q3 40,1 · max 166,3 juta. Jadi separuh nasabah beromzet antara 18,2 dan 40,1 juta.
+
+      **Mean** (rata-rata) omzet 31,4 juta; **median** 26,8 juta. Beda 4,6 juta itu petunjuk ada beberapa nilai besar di ekor kanan.
+
+      Pekerjaan ini disebut **EDA** (Exploratory Data Analysis) = menjelajah data sebelum mengolahnya.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      print(df[["omzet_bulanan_juta", "pinjaman_diajukan_juta"]].describe().round(1))
+    penjelasan: "`describe()` langsung memberi 8 angka ringkasan. Lihat kolom omzet: mean 31,4 tapi median 26,8 — selisih 4,6 juta tanda ada ekor kanan. Kolom pinjaman berpola sama: mean 20,1 dan median 15,8. Bandingkan mean vs median lebih dulu; kalau jauh berbeda, distribusinya tidak simetris."
+  - id: "29-2"
+    judul: "Cari Pola & Hubungan"
+    menit: 6
+    materi: |
+      EDA naik satu tingkat: bandingkan kelompok dan lihat hubungan antar kolom.
+
+      **groupby** memecah data per kelompok lalu meringkasnya:
+
+      ```python
+      df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100)
+      ```
+
+      Hasilnya tingkat Macet per sektor: Kuliner 33,3% · Pertanian 29,0% · Fashion 28,0% · Jasa 24,5% · Kerajinan 23,0% · Retail 22,3%.
+
+      **Bandingkan kelompok**: rata-rata riwayat_telat_12m kelompok Macet 3,02 vs kelompok Lancar 1,91 — Macet lebih sering telat.
+
+      **Korelasi** (`.corr()`) mengukur gerak bersama, nilainya -1 sampai +1. Contoh: riwayat_telat vs skor_kredit = **-0,77** — makin sering telat, makin rendah skornya.
+
+      Ingat: korelasi bukan sebab-akibat. Ia hanya bilang keduanya bergerak bersama.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      print(df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100).round(1).sort_values(ascending=False))
+      print(df.groupby("status")["riwayat_telat_12m"].mean().round(2))
+    penjelasan: "`groupby` = pisah data per kelompok lalu hitung ringkasannya. Dua contoh: tingkat Macet tiap sektor, dan perbandingan rata-rata telat antara Macet dan Lancar. Perhatikan arah angkanya: Macet 3,02 vs Lancar 1,91. Untuk gerak bersama antar dua kolom angka, pakai `.corr()`."
+skenario:
+  - id: "s29-1"
+    judul: "Baca Kode: Tabel Ringkasan"
+    emoji: "📋"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      print(df["omzet_bulanan_juta"].describe().round(1))
+      ```
+      Baris mana yang menunjukkan omzet TIPIKAL (nilai tengah)?
+    pilihan:
+      - "Baris 50% = 26.8"
+      - "Baris mean = 31.4"
+      - "Baris 25% = 18.2"
+      - "Baris max = 166.3"
+    jawaban: 0
+    penjelasan: |
+      `describe()` merangkum satu kolom: count 620, mean 31,4, std 19,5, min 4,5, 25% 18,2, 50% 26,8, 75% 40,1, max 166,3.
+
+      Baris **50% = kuartil kedua = median = 26,8 juta**: setengah nasabah beromzet di bawah angka itu, setengah di atas.
+
+      Mean 31,4 juta lebih tinggi karena beberapa omzet besar (sampai 166,3 juta). Baris 25% = 18,2 juta berarti seperempat nasabah di bawahnya. Max 166,3 juta itu nilai terbesar — bukan nilai yang tipikal.
+
+      Untuk kalimat "nasabah biasanya beromzet berapa", pakai 50% (median).
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      print(df["omzet_bulanan_juta"].describe().round(1))
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: 50% = median 26,8 juta — nilai tengah yang tipikal."
+      - ret: 60
+        dd: 35
+        win: 50
+        note: "Mean 31,4 juta ikut menarik nilai besar; untuk kata tipikal median lebih jujur."
+      - ret: 40
+        dd: 50
+        win: 35
+        note: "25% = 18,2 juta, batas seperempat data — bukan nilai tengah."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Max 166,3 juta itu nilai terbesar, bukan tipikal."
+    petunjuk:
+      - "50% di describe() = median."
+      - "Median = nilai tengah, bukan rata-rata."
+  - id: "s29-2"
+    judul: "Kotak Tengah Omzet"
+    emoji: "📏"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Dari 620 nasabah: Q1 = 18,2 juta, median = 26,8 juta, Q3 = 40,1 juta. Nilai terkecil 4,5 juta dan terbesar 166,3 juta. Apa arti rentang Q1 sampai Q3?
+    pilihan:
+      - "Setengah nasabah beromzet antara 18,2 dan 40,1 juta"
+      - "Semua nasabah beromzet antara 18,2 dan 40,1 juta"
+      - "Rata-rata omzet 18,2 juta"
+      - "18,2 dan 40,1 itu nilai minimum dan maksimum"
+    jawaban: 0
+    penjelasan: |
+      Kuartil membagi data yang sudah diurutkan jadi 4 bagian sama banyak. Q1 = 18,2 juta (25% nasabah di bawahnya) dan Q3 = 40,1 juta (75% di bawahnya).
+
+      Jadi separuh nasabah — dari Q1 ke Q3 — beromzet di antara dua angka itu: 50% x 620 = **310 nasabah**.
+
+      Bukan SEMUA nasabah: ada yang 4,5 juta dan ada yang 166,3 juta di luar rentang. 18,2 bukan rata-rata (mean 31,4 juta) dan bukan minimum (4,5 juta).
+
+      Membaca Q1-Q3 cepat menunjukkan di mana kumpulan data berada, tanpa terganggu nilai ekstrem.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      omzet = df["omzet_bulanan_juta"]
+      print(f"Q1: {omzet.quantile(0.25):.1f}")
+      print(f"Q3: {omzet.quantile(0.75):.1f}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: Q1-Q3 = kotak tengah, isinya separuh nasabah (310 orang)."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Bukan semua: ada 155 nasabah di bawah Q1 dan 155 di atas Q3."
+      - ret: 40
+        dd: 50
+        win: 35
+        note: "18,2 juta itu batas kuartil bawah, bukan rata-rata (mean 31,4 juta)."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "Minimum 4,5 juta dan maksimum 166,3 juta — jauh di luar Q1 dan Q3."
+    petunjuk:
+      - "Q1-Q3 = kotak tengah data."
+      - "Q3 berarti 75% data ada di bawahnya."
+  - id: "s29-3"
+    judul: "Kota dengan Nasabah Terbanyak"
+    emoji: "🏙️"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Setelah data bersih, kamu jalankan `df["kota"].value_counts()` untuk melihat sebaran nasabah. Kota mana yang nasabahnya paling banyak, dan berapa jumlahnya?
+    pilihan:
+      - "Jakarta 189"
+      - "Surabaya 121"
+      - "Bandung 118"
+      - "Medan 75"
+    jawaban: 0
+    penjelasan: |
+      `value_counts()` menghitung berapa kali tiap nilai muncul. Hasil data bersih (620 baris): Jakarta 189, Surabaya 121, Bandung 118, Medan 75, Yogyakarta 64, Makassar 53.
+
+      Cek totalnya: 189 + 121 + 118 + 75 + 64 + 53 = **620** — semua baris terhitung, tidak ada yang hilang.
+
+      Jakarta = 189 / 620 = **30,5%** data, jadi hampir sepertiga nasabah ada di Jakarta.
+
+      Bandingkan dengan data kotor: di sana "Jakarta" hanya terhitung 90 baris karena terpecah lima penulisan. Itu sebabnya kategori dirapikan sebelum dihitung.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      print(df["kota"].value_counts())
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: Jakarta 189 baris, kota terbesar."
+      - ret: 35
+        dd: 55
+        win: 30
+        note: "Surabaya 121 — urutan kedua, bukan terbanyak."
+      - ret: 30
+        dd: 60
+        win: 25
+        note: "Bandung 118 — urutan ketiga."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Medan 75 — urutan keempat."
+    petunjuk:
+      - "value_counts() menghitung banyaknya tiap nilai."
+      - "189 / 620 = 30,5%."
+  - id: "s29-4"
+    judul: "Tingkat Macet per Sektor"
+    emoji: "📊"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kamu kelompokkan 620 pengajuan per sektor lalu hitung persentase Macet: Kuliner 33,3% (93 nasabah), Pertanian 29,0% (107), Fashion 28,0% (93), Jasa 24,5% (102), Kerajinan 23,0% (113), Retail 22,3% (112). Sektor mana yang paling berisiko?
+    pilihan:
+      - "Kuliner 33,3% — tertinggi dari 6 sektor"
+      - "Kerajinan — nasabahnya paling banyak (113 orang)"
+      - "Jasa — Macetnya paling sedikit, cuma 25 orang"
+      - "Semua sektor sama saja, selisihnya kecil"
+    jawaban: 0
+    penjelasan: |
+      Persentase Macet tertinggi = **Kuliner 33,3%**: 31 Macet dari 93 nasabah (31 / 93 = 33,33%).
+
+      Retail terendah: 25 Macet dari 112 = 22,32%. Selisih Kuliner vs Retail = 33,33 - 22,32 = **11,0 poin persen**.
+
+      Jumlah nasabah bukan ukuran risiko — kita membandingkan PERSENTASE, bukan jumlah. Kerajinan punya nasabah terbanyak (113), tapi itu bukan artinya paling berisiko.
+
+      "Jasa Macetnya cuma 25" juga bukan alasan: Retail juga 25 Macet, tapi dari 112 orang. Karena penyebutnya berbeda, jumlah mentah menyesatkan; persen yang sebanding.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      macet = df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100)
+      print(macet.round(1).sort_values(ascending=False))
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: Kuliner 33,3% (31 dari 93) — tertinggi."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Nasabah terbanyak bukan berarti paling berisiko; Kerajinan cuma 23,0%."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "25 Macet dari 112 juga dimiliki Retail; jumlah mentah tidak sebanding."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Ada bedanya: 33,3% vs 22,3% = 11 poin persen, cukup terlihat."
+    petunjuk:
+      - "Bandingkan persentase, bukan jumlah nasabah."
+      - "33,3% - 22,3% = 11 poin."
+  - id: "s29-5"
+    judul: "Bandingkan Dua Kelompok"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Rata-rata skor_kredit: kelompok Macet 487,9 dan kelompok Lancar 549,4. Apa kesimpulan yang benar?
+    pilihan:
+      - "Rata-rata Macet sekitar 61,5 poin lebih rendah — skor berguna untuk memisahkan kelompok"
+      - "Skor kredit memastikan nasabah pasti macet"
+      - "Semua nasabah Macet skornya di bawah 487,9"
+      - "Skor kredit tidak berhubungan karena bedanya kecil"
+    jawaban: 0
+    penjelasan: |
+      Selisih rata-rata: 549,35 - 487,90 = **61,45 poin** (dibulatkan 61,5). Arahnya jelas — kelompok Macet lebih rendah. Kolom seperti ini berguna karena bisa memisahkan dua kelompok.
+
+      Tiga catatan penting. Pertama, 487,9 itu RATA-RATA, bukan batas per orang: banyak nasabah Macet berskor di atas itu. Kedua, rata-rata tidak membuktikan sebab-akibat — skor rendah dan Macet bisa sama-sama akibat usaha yang sedang sulit. Ketiga, 61 poin itu besar dibanding sebaran skor (standar deviasi sekitar 87 poin), jadi bukan selisih kecil.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      rata = df.groupby("status")["skor_kredit"].mean()
+      print(f"Macet: {rata['Macet']:.2f}")
+      print(f"Lancar: {rata['Lancar']:.2f}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: 549,35 - 487,90 = 61,45 poin lebih rendah untuk Macet."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Rata-rata tidak memastikan apa pun per orang — banyak pengecualian."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "487,9 itu rata-rata kelompok, bukan batas atas tiap nasabah Macet."
+      - ret: 30
+        dd: 60
+        win: 25
+        note: "61 poin itu besar dibanding sebaran skor (std sekitar 87 poin)."
+    petunjuk:
+      - "Selisih = 549,35 - 487,90."
+      - "Rata-rata itu ringkasan kelompok, bukan batas per orang."
+  - id: "s29-6"
+    judul: "Median atau Mean untuk Laporan?"
+    emoji: "📈"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Laporanmu menulis "omzet tipikal nasabah kami 31,4 juta". Padahal median 26,8 juta, dan tiga omzet terbesar 123,2, 133,6, serta 166,3 juta. Mana angka yang lebih jujur untuk kata tipikal?
+    pilihan:
+      - "Median 26,8 juta — mean 31,4 juta ketarik beberapa omzet besar"
+      - "Mean 31,4 juta — semua data ikut dihitung"
+      - "Omzet terbesar 166,3 juta"
+      - "Rata-rata dari mean dan median, yaitu 29,1 juta"
+    jawaban: 0
+    penjelasan: |
+      Distribusi omzet tidak simetris: mean 31,4 lebih besar dari median 26,8, artinya ada ekor panjang ke kanan. Selisihnya 31,4 - 26,8 = **4,6 juta**.
+
+      Tiga nilai terbesar (123,2 · 133,6 · 166,3) jauh di atas median, dan mean tertarik naik olehnya.
+
+      Mean tetap berguna untuk hal lain: total omzet semua nasabah = mean x 620 = 31,4 x 620 = **19.466 juta**.
+
+      Aturan praktis: laporan "tipikal" pakai median; laporan "total" pakai mean. Membagi dua antara mean dan median (29,1) tidak punya arti statistik.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      omzet = df["omzet_bulanan_juta"]
+      print(f"Mean: {omzet.mean():.1f} juta")
+      print(f"Median: {omzet.median():.1f} juta")
+      print(f"3 terbesar: {omzet.sort_values().tail(3).tolist()}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: median 26,8 juta — tidak tertarik tiga omzet besar."
+      - ret: 45
+        dd: 45
+        win: 35
+        note: "Mean 31,4 juta memakai semua nilai, termasuk ekor besar; kata tipikal jadi meleset."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "166,3 juta itu satu nasabah, bukan gambaran umum."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "29,1 itu angka karangan — tidak ada ukuran statistik seperti itu."
+    petunjuk:
+      - "Mean lebih besar dari median = ada ekor panjang ke kanan."
+      - "Tipikal pakai median; total pakai mean."
+  - id: "s29-7"
+    judul: "Baca Korelasi"
+    emoji: "🔗"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Korelasi riwayat_telat_12m dengan skor_kredit = -0,77. Bagaimana membacanya dengan benar?
+    pilihan:
+      - "Hubungan kuat dan berlawanan arah: makin banyak telat, makin rendah skornya"
+      - "Tidak ada hubungan — tanda minus artinya salah hitung"
+      - "Hubungan lemah karena 0,77 masih jauh dari 1"
+      - "0,77 artinya isi kedua kolom hampir sama"
+    jawaban: 0
+    penjelasan: |
+      Korelasi bergerak dari -1 sampai +1. Tanda minus = arah berlawanan: satu naik, yang lain turun. Angka 0,77 termasuk **kuat** (aturan kasar: di atas 0,7 kuat, 0,3-0,7 sedang, di bawah 0,3 lemah).
+
+      Jadi makin sering telat, makin rendah skor kredit — masuk akal karena keduanya berkaitan dengan perilaku bayar. Tanda minus bukan kesalahan; justru penunjuk arah.
+
+      Pembanding dari data yang sama: korelasi omzet dengan jumlah_karyawan hanya 0,03 — hampir tidak ada hubungan, jadi hampir tidak berguna untuk memisahkan kelompok.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      telat = df["riwayat_telat_12m"]
+      print(f"Korelasi telat vs skor: {telat.corr(df['skor_kredit']):.3f}")
+      print(f"Korelasi omzet vs karyawan: {df['omzet_bulanan_juta'].corr(df['jumlah_karyawan']):.3f}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: -0,77 hubungan kuat, arahnya berlawanan."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Tanda minus itu arah, bukan kesalahan hitung."
+      - ret: 35
+        dd: 55
+        win: 30
+        note: "0,77 sudah cukup kuat; di atas 0,7 termasuk kuat."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Korelasi mengukur gerak bersama, bukan kesamaan isi kolom."
+    petunjuk:
+      - "Tanda minus menunjukkan arah, bukan kekuatan."
+      - "Di atas 0,7 = kuat."
+  - id: "s29-8"
+    judul: "Kelompok Kecil, Angka Menipu"
+    emoji: "🔬"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Kuliner: 31 Macet dari 93 nasabah (33,3%). Retail: 25 dari 112 (22,3%). Manajemen mau menaikkan bunga untuk SEMUA nasabah Kuliner. Apa nasihat yang paling jujur?
+    pilihan:
+      - "Tahan dulu: cek apakah pola bertahan di potongan lain (per kota / per tahun) sebelum ubah kebijakan"
+      - "Langsung naikkan — 33,3% jelas paling berisiko"
+      - "Abaikan saja, datanya terlalu kecil untuk dipakai"
+      - "Naikkan untuk Retail juga supaya seimbang"
+    jawaban: 0
+    penjelasan: |
+      Selisihnya 33,33% vs 22,32% = **11,0 poin**, dihitung dari 93 vs 112 nasabah. Ukuran segini belum cukup untuk menghukum satu sektor.
+
+      Uji cepat: kalau 6 nasabah Kuliner yang Macet sebenarnya Lancar, angkanya jadi 25 / 93 = **26,9%** — hampir sama dengan Retail 22,3%. Artinya kesimpulan bisa berubah hanya karena beberapa nasabah.
+
+      Langkah lanjut yang benar: pecah data per kota atau per tahun, lalu tambahkan kolom lain (skor_kredit, riwayat_telat) untuk memastikan polanya bertahan. "Abaikan saja" juga salah — 11 poin itu petunjuk awal yang layak dicek, bukan dibuang.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      k = df[df["sektor"] == "Kuliner"]
+      r = df[df["sektor"] == "Retail"]
+      print(f"Kuliner: {(k['status'] == 'Macet').sum()} dari {len(k)}")
+      print(f"Retail: {(r['status'] == 'Macet').sum()} dari {len(r)}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 75
+        note: "Benar: cek ulang di potongan data lain dulu sebelum mengubah kebijakan."
+      - ret: 40
+        dd: 50
+        win: 35
+        note: "Selisih 11 poin dari 93-112 nasabah belum cukup jadi dasar kebijakan."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Mengabaikan juga salah — 11 poin itu petunjuk awal yang layak dicek."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Menaikkan Retail tanpa alasan angka berarti kebijakan karangan."
+    petunjuk:
+      - "31 dari 93 vs 25 dari 112."
+      - "Kalau 6 nasabah Kuliner berubah, angkanya jadi 26,9%."
+      - "Cek pola di potongan data lain sebelum ambil kebijakan."
+  - id: "s29-9"
+    judul: "Korelasi Bukan Sebab-Akibat"
+    emoji: "🤝"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Korelasi omzet_bulanan_juta dengan pinjaman_diajukan_juta = 0,82 — paling kuat di antara semua pasangan kolom angka. Seorang analis menyimpulkan: omzet besar MENYEBABKAN pengajuan pinjaman membesar. Tepatkah?
+    pilihan:
+      - "Belum tentu: 0,82 hanya gerak bersama; bisa keduanya akibat ukuran usaha"
+      - "Tepat — korelasi 0,82 membuktikan sebab-akibat"
+      - "Tepat, karena 0,82 lebih besar dari 0,5"
+      - "Tidak tepat — kedua kolom itu tidak punya hubungan"
+    jawaban: 0
+    penjelasan: |
+      Korelasi hanya mengukur gerak bersama, bukan sebab-akibat. Bacaan yang aman: nasabah beromzet besar CENDERUNG mengajukan pinjaman lebih besar (0,82 termasuk kuat).
+
+      Arah sebabnya tidak diketahui: bisa omzet mendorong pinjaman, bisa keduanya digerakkan hal ketiga (mis. ukuran usaha). Cek kolom lain di data yang sama: omzet vs jumlah_karyawan 0,03 dan omzet vs lama_usaha_bulan -0,02. Jadi ukuran usaha yang diukur lewat karyawan belum menjelaskan pola itu.
+
+      Untuk menguji sebab-akibat perlu eksperimen atau data waktu (bandingkan sebelum-sesudah), bukan satu angka korelasi. Menyimpulkan sebab dari korelasi adalah kesalahan klasik pemula.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      print(f"Omzet vs pinjaman: {df['omzet_bulanan_juta'].corr(df['pinjaman_diajukan_juta']):.2f}")
+      print(f"Omzet vs karyawan: {df['omzet_bulanan_juta'].corr(df['jumlah_karyawan']):.2f}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 75
+        note: "Benar: 0,82 = gerak bersama; arah sebabnya belum terbukti."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Korelasi tidak pernah membuktikan sebab-akibat."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "Besar angkanya bukan bukti arah sebab; tetap dua kolom bergerak bersama."
+      - ret: 15
+        dd: 75
+        win: 10
+        note: "Hubungannya ada dan kuat (0,82) — bukan berarti tidak ada hubungan."
+    petunjuk:
+      - "Korelasi = gerak bersama, bukan sebab-akibat."
+      - "Arah sebab butuh eksperimen atau data waktu."
+  - id: "s29-10"
+    judul: "Akurasi 66% Kalah dari 74%"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Tim mengusulkan aturan: skor_kredit di bawah 500 berarti prediksi Macet. Akurasinya 66,3%. Padahal menebak semua nasabah Lancar saja sudah 73,5%. Kenapa aturan yang kelihatan pintar justru kalah?
+    pilihan:
+      - "Karena Macet hanya 164 dari 620 (26,5%); aturan itu menuduh 229 nasabah Macet, banyak yang salah"
+      - "Karena kolom skor_kredit datanya rusak"
+      - "Karena 500 bukan batas yang tepat — ganti jadi 600 pasti menang"
+      - "Karena akurasi tidak boleh dipakai di data kredit"
+    jawaban: 0
+    penjelasan: |
+      Datanya timpang: Lancar 456 (73,5%) dan Macet 164 (26,5%). Menebak "semua Lancar" sudah dapat 73,5% tanpa melihat data sama sekali.
+
+      Aturan skor < 500 memprediksi Macet untuk **229 nasabah**, padahal Macet asli hanya 164 — banyak tuduhan meleset. Benar total: 319 Lancar + 92 Macet = 411 dari 620 = **66,3%**.
+
+      Pelajaran: pada data timpang, akurasi bisa menipu. Cek juga berapa Macet yang tertangkap: 92 dari 164 = **56,1%**.
+
+      Akurasi tetap sah dipakai, asal dibandingkan dengan baseline "tebak mayoritas" (73,5%).
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm_bersih.csv")
+      tebak = (df["skor_kredit"] >= 500).map({True: "Lancar", False: "Macet"})
+      print(f"Akurasi aturan: {(tebak == df['status']).mean() * 100:.1f}%")
+      print(f"Baseline semua Lancar: {(df['status'] == 'Lancar').mean() * 100:.1f}%")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 70
+        note: "Benar: 229 tuduhan Macet untuk 164 Macet asli — akurasi jatuh ke 66,3%."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Kolom skor_kredit utuh; masalahnya kelas Macet yang sedikit (26,5%)."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Mengganti batas belum menjawab masalah data timpang; harus dibandingkan baseline."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "Akurasi tetap sah — yang salah adalah memakainya tanpa pembanding."
+    petunjuk:
+      - "Tebak semua Lancar sudah dapat 73,5%."
+      - "Aturan itu memprediksi Macet 229 kali, padahal Macet asli 164."
+soal:
+  - id: "p29-1"
+    judul: "Hitung Isi Tiap Kelompok"
+    emoji: "🧮"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Gunakan pandas! Baca path CSV dari baris 1 dan nama kolom dari baris 2. Cetak jumlah baris untuk SETIAP nilai unik di kolom itu, urut A-Z, dengan format `nilai jumlah`.
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: nama kolom.
+    output_spec: |
+      Satu baris per nilai unik, urut A-Z, format `nilai jumlah` (contoh: `Jakarta 189`).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nkota"
+        output: "Bandung 118\nJakarta 189\nMakassar 53\nMedan 75\nSurabaya 121\nYogyakarta 64"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nstatus"
+        output: "Lancar 456\nMacet 164"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nkota"
+        output: "Bandung 118\nJakarta 189\nMakassar 53\nMedan 75\nSurabaya 121\nYogyakarta 64"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nsektor"
+        output: "Fashion 93\nJasa 102\nKerajinan 113\nKuliner 93\nPertanian 107\nRetail 112"
+      - input: "/soaldata/kredit_umkm_uji.csv\nkota"
+        output: "Bandung 19\nJakarta 49\nMakassar 14\nMedan 22\nSurabaya 32\nYogyakarta 14"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nstatus"
+        output: "Lancar 456\nMacet 164"
+    solusi: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path)
+      hitung = df[kolom].value_counts().sort_index()
+      for nama, jml in hitung.items():
+          print(f"{nama} {jml}")
+    petunjuk:
+      - "value_counts() menghitung tiap nilai, lalu sort_index() mengurutkan A-Z."
+      - "Loop hasilnya dengan .items() dan cetak nama serta jumlahnya."
+    tugas:
+      - "Baca path CSV dan nama kolom dari dua baris input."
+      - "Muat data, lalu hitung jumlah baris tiap nilai unik di kolom itu."
+      - "Urutkan hasilnya A-Z."
+      - "Cetak tiap nilai dengan jumlahnya, satu per baris, format nilai spasi jumlah."
+    starter: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path)
+      # TODO: hitung jumlah tiap nilai unik di kolom itu (value_counts)
+      # TODO: urutkan hasilnya A-Z (sort_index)
+      # TODO: cetak tiap pasangan nilai dan jumlahnya, satu per baris
+  - id: "p29-2"
+    judul: "Bandingkan Dua Kelompok"
+    emoji: "🆚"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Gunakan pandas! Baca path CSV dari baris 1 dan nama kolom angka dari baris 2. Data punya kolom `status` berisi Lancar dan Macet. Cetak rata-rata kolom itu untuk kelompok Macet, lalu Lancar, lalu selisihnya (Macet dikurangi Lancar). Semua dengan 2 angka desimal.
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: nama kolom angka.
+    output_spec: |
+      Baris 1: rata-rata kelompok Macet (2 desimal). Baris 2: rata-rata kelompok Lancar (2 desimal). Baris 3: selisih Macet - Lancar (2 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nskor_kredit"
+        output: "487.90\n549.35\n-61.45"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nriwayat_telat_12m"
+        output: "3.02\n1.91\n1.10"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\nskor_kredit"
+        output: "487.90\n549.35\n-61.45"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nriwayat_telat_12m"
+        output: "3.02\n1.91\n1.10"
+      - input: "/soaldata/kredit_umkm_bersih.csv\npinjaman_diajukan_juta"
+        output: "24.42\n18.52\n5.91"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nlama_usaha_bulan"
+        output: "83.25\n101.38\n-18.13"
+    solusi: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path)
+      rata = df.groupby("status")[kolom].mean()
+      print(f"{rata['Macet']:.2f}")
+      print(f"{rata['Lancar']:.2f}")
+      print(f"{rata['Macet'] - rata['Lancar']:.2f}")
+    petunjuk:
+      - "groupby(\"status\")[kolom].mean() memberi rata-rata per kelompok."
+      - "Ambil nilai Macet dan Lancar dengan rata['Macet'] dan rata['Lancar']."
+      - "Format 2 desimal: f\"{nilai:.2f}\"."
+    tugas:
+      - "Baca path CSV dan nama kolom angka dari dua baris input."
+      - "Kelompokkan data berdasarkan kolom status, lalu hitung rata-rata kolom angka per kelompok."
+      - "Ambil rata-rata Macet dan Lancar, lalu hitung selisihnya (Macet - Lancar)."
+      - "Cetak Macet, Lancar, dan selisih, masing-masing 2 desimal, satu per baris."
+    starter: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path)
+      # TODO: hitung rata-rata kolom per kelompok status (groupby)
+      # TODO: ambil rata-rata kelompok Macet dan kelompok Lancar
+      # TODO: cetak rata-rata Macet, lalu Lancar, lalu selisihnya (Macet - Lancar)
+      #       semuanya dengan 2 angka desimal

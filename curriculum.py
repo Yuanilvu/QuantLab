@@ -20,6 +20,7 @@ TRACKS = [
     ("quant", "Quant Integrasi", "📈", "Gabungkan semuanya: skenario trading, backtest, dan bot."),
     ("advanced", "Advanced: Data & Bot", "🚀", "Data, debugging, dan proyek mini — jembatan ke bot sungguhan."),
     ("libs", "Python Libraries", "📦", "NumPy, Pandas, Matplotlib — senjata standar analisis quant."),
+    ("ds", "Data Science", "📊", "Bersihin data, EDA, fitur, ML/DL & evaluasi — jalur persiapan kompetisi data science."),
 ]
 
 TRACK_ORDER = [t[0] for t in TRACKS]

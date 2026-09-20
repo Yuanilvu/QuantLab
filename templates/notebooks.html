@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Notebook — QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=3">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
 {% endblock %}
 {% block content %}
 <section class="pagehead">
@@ -33,6 +33,22 @@
     </form>
     {% endfor %}
   </div>
+{% if templates_ds %}
+  <p class="dsgt">📊 Latihan lapangan <b>Track Data Science</b> (bab 28-33) — juga bisa dibuka dari halaman bab:</p>
+  <div class="nbgallery">
+    {% for key, t in templates_ds.items() %}
+    <form method="post" action="{{ url_for('notebook_baru') }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="template" value="{{ key }}">
+      <button type="submit" class="tplcard">
+        <span class="tplemoji">{{ t.emoji }}</span>
+        <b>{{ t.nama }}</b>
+        <span class="tpldesc">{{ t.desc }}</span>
+      </button>
+    </form>
+    {% endfor %}
+  </div>
+{% endif %}
 </details>
 
 {% if rows %}

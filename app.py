@@ -518,6 +518,7 @@ def bab_page(n):
     return render_template("bab.html", bab=bab, scens=scens,
                            lessons=lessons, lessons_done=lessons_done,
                            soals=soals, soal_solved=soal_solved_set,
+                           nb_ready=nblib.bab_template_key(n) is not None,
                            render_md=curriculum.render_markdown)
 
 
@@ -1022,7 +1023,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v13';
+    sw = """const CACHE = 'quantlab-v14';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1598,10 +1599,13 @@ def notebook_list():
     rows = db.notebook_list(user["id"])
     for r in rows:
         r["updated_wib"] = _nb_wib(r["updated_at"])
+    tpl_umum = {k: v for k, v in nblib.TEMPLATE_META.items() if v.get("group") != "ds"}
+    tpl_ds = {k: v for k, v in nblib.TEMPLATE_META.items() if v.get("group") == "ds"}
     return render_template(
         "notebooks.html",
         rows=rows,
-        templates=nblib.TEMPLATE_META,
+        templates=tpl_umum,
+        templates_ds=tpl_ds,
         total_cells=sum(r["n_cells"] for r in rows),
     )
 
@@ -1647,6 +1651,22 @@ def notebook_datasets():
     for it in items:
         it["preview"] = nblib.dataset_preview(it["name"], 5)
     return render_template("notebook_datasets.html", items=items)
+
+
+@app.route("/bab/<int:n>/notebook", methods=["POST"])
+@login_required
+def bab_notebook(n):
+    """Buat (atau buka) starter notebook untuk bab yang punya template latihan."""
+    user = _user()
+    bab = curriculum.get_bab(n)
+    key = nblib.bab_template_key(n)
+    if not bab or not key:
+        abort(404)
+    cells = nblib.template_cells(key)
+    judul = f"Latihan Bab {n} — {bab['judul']}"[:80]
+    nid = db.notebook_create(user["id"], judul, nblib.cells_to_json(cells),
+                             emoji=bab.get("emoji") or "📊")
+    return redirect(url_for("notebook_editor", nid=nid))
 
 
 @app.route("/api/notebook/<int:nid>/simpan", methods=["POST"])

@@ -119,12 +119,298 @@ _TPL_BACKTEST = _cells(
            "2. Tambah biaya transaksi 0,15% setiap ganti posisi — masih untung?"),
 )
 
+_TPL_PLAYBOOK = _cells(
+    ("md", "# 🏆 Playbook Kompetisi — dari Data ke Submission\n\n"
+           "Alur standar 8 langkah. Nanti tinggal ganti dataset-nya dengan data lombamu; "
+           "strukturnya tetap sama:\n\n"
+           "1. Lihat data → 2. Bersihin → 3. EDA → 4. Fitur → 5. Split → 6. Model → "
+           "7. Evaluasi → 8. Prediksi & simpan."),
+    ("code", "import pandas as pd\n\n"
+             "latih = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "uji = pd.read_csv('/datasets/kredit_umkm_uji.csv')\n"
+             "print('Data latih:', latih.shape, '| Data uji:', uji.shape)\n"
+             "uji.head(2)"),
+    ("code", "def siapkan(df):\n"
+             "    hasil = df.copy()\n"
+             "    hasil['rasio_pinjaman'] = hasil['pinjaman_diajukan_juta'] / hasil['omzet_bulanan_juta']\n"
+             "    hasil['punya_npwp_angka'] = hasil['punya_npwp'].map({'Ya': 1, 'Tidak': 0})\n"
+             "    return hasil\n\n"
+             "latih = siapkan(latih)\n"
+             "uji = siapkan(uji)\n"
+             "print('Fitur baru siap ✔')"),
+    ("code", "from sklearn.model_selection import train_test_split\n"
+             "from sklearn.linear_model import LogisticRegression\n\n"
+             "fitur = ['omzet_bulanan_juta', 'lama_usaha_bulan', 'pinjaman_diajukan_juta',\n"
+             "         'riwayat_telat_12m', 'skor_kredit', 'rasio_pinjaman']\n"
+             "X = latih[fitur]\n"
+             "y = (latih['status'] == 'Macet').astype(int)\n"
+             "X_latih, X_val, y_latih, y_val = train_test_split(X, y, test_size=0.25, random_state=1)\n"
+             "model = LogisticRegression(max_iter=400).fit(X_latih, y_latih)\n"
+             "print('Akurasi validasi:', round(model.score(X_val, y_val), 3))"),
+    ("code", "# Langkah 8 — prediksi data uji & simpan submission\n"
+             "prediksi = model.predict(uji[fitur])\n"
+             "hasil = pd.DataFrame({\n"
+             "    'id_pengajuan': uji['id_pengajuan'],\n"
+             "    'status_prediksi': ['Macet' if p == 1 else 'Lancar' for p in prediksi],\n"
+             "})\n"
+             "hasil.to_csv('/work/submission.csv', index=False)\n"
+             "print('Tersimpan di /work/submission.csv —', len(hasil), 'baris')\n"
+             "hasil.head()"),
+    ("md", "## Checklist kompetisi 📝\n\n"
+           "- [ ] **Lihat data**: `shape`, `head`, `info` — catat kolom target.\n"
+           "- [ ] **Bersihin**: nilai kosong, duplikat, tipe, outlier.\n"
+           "- [ ] **EDA**: distribusi target, pola per kelompok.\n"
+           "- [ ] **Fitur**: rasio, encode kategori, scaling.\n"
+           "- [ ] **Split & validasi jujur** (jangan lihat test berkali-kali).\n"
+           "- [ ] **Model**: mulai simpel (logreg/pohon), baru yang canggih.\n"
+           "- [ ] **Evaluasi** sesuai metrik lomba (akurasi? F1? RMSE?).\n"
+           "- [ ] **Submission**: kolom sesuai aturan lomba, cek jumlah baris!\n\n"
+           "Selamat berlomba! 🚀"),
+)
+
+_TPL_DS28 = _cells(
+    ("md", "# Latihan Bab 28 — Bersihin Data Kotor\n\n"
+           "Dataset: `/datasets/kredit_umkm.csv` — data pengajuan kredit UMKM yang **kotor**: "
+           "ada nilai kosong, baris duplikat, tanggal campur format, teks kategori berantakan, "
+           "dan beberapa outlier.\n\n**Alur latihan:** ukur masalahnya → buang duplikat → rapikan tipe & teks "
+           "→ putuskan nilai kosong & outlier.\n\nJalankan sel satu per satu dengan ▶ atau `Shift+Enter`."),
+    ("code", "import pandas as pd\n\n"
+             "kotor = pd.read_csv('/datasets/kredit_umkm.csv')\n"
+             "print('Jumlah baris    :', len(kotor))\n"
+             "print('Baris duplikat  :', kotor.duplicated().sum())\n"
+             "print('Nilai kosong    :', kotor.isna().sum().sum(), 'sel')\n"
+             "kotor.head(3)"),
+    ("code", "# Langkah 1 — lihat nilai kosong PER KOLOM\n"
+             "kosong = kotor.isna().sum()\n"
+             "print(kosong[kosong > 0].sort_values(ascending=False))"),
+    ("code", "# Langkah 2 — buang baris duplikat\n"
+             "bersih = kotor.drop_duplicates()\n"
+             "print('Sebelum:', len(kotor), '→ sesudah:', len(bersih), 'baris')"),
+    ("code", "# Lihat contoh tanggal — ada 3 format berbeda, kan?\n"
+             "contoh_tanggal = kotor['tanggal_pengajuan'].dropna().unique()[:8]\n"
+             "print(list(contoh_tanggal))"),
+    ("code", "# Lihat contoh teks kategori — berantakan (huruf kecil, spasi, singkatan)\n"
+             "contoh_kota = kotor['kota'].dropna().unique()[:10]\n"
+             "print(list(contoh_kota))"),
+    ("code", "# TODO (giliranmu 1): rapikan teks kota & sektor\n"
+             "# bersih['kota']   = bersih['kota'].str.strip().str.title()\n"
+             "# bersih['sektor'] = bersih['sektor'].str.strip().str.title()\n"
+             "# lalu cek: print(bersih['kota'].dropna().unique()[:10])"),
+    ("code", "# TODO (giliranmu 2): temukan outlier omzet\n"
+             "# print(kotor['omzet_bulanan_juta'].nlargest(3))\n"
+             "# print(kotor['omzet_bulanan_juta'].nsmallest(3))\n"
+             "# Pertanyaan: dibuang, di-clip, atau dibiarkan? Jelaskan alasanmu di sel markdown."),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Hitung **rata-rata omzet** sebelum vs sesudah membuang nilai kosong "
+           "(`kotor['omzet_bulanan_juta'].mean()` vs `dropna().mean()`).\n"
+           "2. Cek `kotor['punya_npwp'].unique()` — berapa variasi penulisannya?\n"
+           "3. Lanjut kerjakan **soal Bab 28** di halaman bab (dinilai otomatis)."),
+)
+
+_TPL_DS29 = _cells(
+    ("md", "# Latihan Bab 29 — EDA: Kenalan Sama Data\n\n"
+           "Data: `/datasets/kredit_umkm_bersih.csv` (sudah bersih). EDA = menjawab pertanyaan "
+           "sederhana dengan angka: *seperti apa datanya? apa yang berkaitan dengan 'Macet'?*"),
+    ("code", "import pandas as pd\n\n"
+             "df = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "kolom_angka = ['omzet_bulanan_juta', 'pinjaman_diajukan_juta',\n"
+             "               'riwayat_telat_12m', 'skor_kredit']\n"
+             "df[kolom_angka].describe().round(1)"),
+    ("code", "# Distribusi target — kelas tidak seimbang!\n"
+             "print(df['status'].value_counts())\n"
+             "print('Porsi Macet:', round((df['status'] == 'Macet').mean(), 3))"),
+    ("code", "# Tingkat Macet per sektor\n"
+             "macet_sektor = (df.assign(macet=df['status'] == 'Macet')\n"
+             "                  .groupby('sektor')['macet'].mean()\n"
+             "                  .sort_values(ascending=False))\n"
+             "print((macet_sektor * 100).round(1))"),
+    ("code", "# Bandingkan riwayat telat: Lancar vs Macet\n"
+             "banding = df.groupby('status')['riwayat_telat_12m'].mean().round(2)\n"
+             "print(banding)"),
+    ("code", "# TODO (giliranmu 1): bandingkan OMZET Lancar vs Macet\n"
+             "# print(df.groupby('status')['omzet_bulanan_juta'].mean().round(1))"),
+    ("code", "# Korelasi antar kolom angka (1.00 = selalu bersama, 0 = tidak berkaitan)\n"
+             "print(df[kolom_angka[:-1]].corr().round(2))"),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Kota mana yang paling banyak Macet? (`groupby('kota')`)\n"
+           "2. Dari angka-angka di atas — fitur mana yang paling membedakan Macet vs Lancar?\n"
+           "3. Tulis 3 temuan terbaikmu: klik **＋ Markdown** di bawah dan catat di sana."),
+)
+
+_TPL_DS30 = _cells(
+    ("md", "# Latihan Bab 30 — Feature Engineering\n\n"
+           "Mengubah kolom mentah jadi fitur yang **lebih berguna**. Bintang utamanya: "
+           "`rasio_pinjaman = pinjaman ÷ omzet` — ukuran 'beban utang'."),
+    ("code", "import pandas as pd\n\n"
+             "df = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "df['rasio_pinjaman'] = (df['pinjaman_diajukan_juta']\n"
+             "                        / df['omzet_bulanan_juta']).round(3)\n"
+             "print(df.groupby('status')['rasio_pinjaman'].mean().round(3))"),
+    ("code", "# Fitur baru: umur usaha dalam TAHUN (biar skalanya ramah)\n"
+             "df['umur_usaha_tahun'] = (df['lama_usaha_bulan'] / 12).round(1)\n"
+             "print(df.groupby('status')['umur_usaha_tahun'].mean().round(2))"),
+    ("code", "# Encode kategori: Ya/Tidak → 1/0\n"
+             "df['punya_npwp_angka'] = df['punya_npwp'].map({'Ya': 1, 'Tidak': 0})\n"
+             "print(df['punya_npwp_angka'].value_counts())"),
+    ("code", "# TODO (giliranmu 1): binning riwayat telat jadi 3 kategori\n"
+             "# df['kategori_telat'] = pd.cut(df['riwayat_telat_12m'],\n"
+             "#     bins=[-1, 1, 3, 99], labels=['rendah', 'sedang', 'tinggi'])\n"
+             "# print(df.groupby('kategori_telat')['status']\n"
+             "#         .apply(lambda s: (s == 'Macet').mean().round(3)))"),
+    ("code", "# TODO (giliranmu 2): one-hot kolom sektor\n"
+             "# dum = pd.get_dummies(df['sektor'], prefix='sek')\n"
+             "# print(dum.head())"),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Jalankan TODO binning — kategori telat mana yang paling Macet?\n"
+           "2. Scaling (samakan skala): `(x - mean) / std` untuk kolom pinjaman — "
+           "kenapa ini penting untuk model seperti neural network (bab 33)?\n"
+           "3. Fitur rasio mana yang **beda paling jauh** antara Lancar vs Macet? Itu petunjuk fitur kuat!"),
+)
+
+_TPL_DS31 = _cells(
+    ("md", "# Latihan Bab 31 — Machine Learning Dasar\n\n"
+           "Resep ML: **fitur (X)** + **target (y)** → pisah latih/uji → latih model → ukur akurasi. "
+           "Target kita: apakah pengajuan akan **Macet**?"),
+    ("code", "import pandas as pd\n\n"
+             "df = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "fitur = ['omzet_bulanan_juta', 'lama_usaha_bulan', 'pinjaman_diajukan_juta',\n"
+             "         'riwayat_telat_12m', 'skor_kredit']\n"
+             "X = df[fitur]\n"
+             "y = (df['status'] == 'Macet').astype(int)\n"
+             "print('Jumlah data :', len(X))\n"
+             "print('Porsi Macet :', round(y.mean(), 3))"),
+    ("code", "# Pisah 75% untuk latih, 25% untuk uji — WAJIB\n"
+             "from sklearn.model_selection import train_test_split\n\n"
+             "X_latih, X_uji, y_latih, y_uji = train_test_split(\n"
+             "    X, y, test_size=0.25, random_state=1)\n"
+             "print('Latih:', len(X_latih), '| Uji:', len(X_uji))"),
+    ("code", "# Baseline: tebak SEMUA 'Lancar' — pembanding wajib untuk setiap model\n"
+             "baseline = 1 - y_uji.mean()\n"
+             "print('Akurasi baseline:', round(baseline, 3))"),
+    ("code", "# Model pertama: Logistic Regression\n"
+             "from sklearn.linear_model import LogisticRegression\n\n"
+             "model = LogisticRegression(max_iter=400)\n"
+             "model.fit(X_latih, y_latih)\n"
+             "print('Akurasi model:', round(model.score(X_uji, y_uji), 3))"),
+    ("code", "# TODO (giliranmu 1): coba ganti random_state (7, 42) — akurasinya berubah?\n"
+             "# lalu bandingkan: 5 fitur vs 3 fitur saja (omzet, telat, skor)"),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Model harus **lebih tinggi dari baseline** — kalau tidak, ada yang salah!\n"
+           "2. Coba tebak dulu di markdown: fitur mana yang paling berpengaruh? "
+           "Baru cek di bab 32 (evaluasi) & bandingkan dengan tebakanmu.\n"
+           "3. Kalau akurasi berubah-ubah saat `random_state` diganti — itu tandanya "
+           "satu split saja kurang cukup (bab 32 punya solusinya: cross-validation)."),
+)
+
+_TPL_DS32 = _cells(
+    ("md", "# Latihan Bab 32 — Evaluasi & Validasi Model\n\n"
+           "Akurasi saja menipu. Kita bongkar dengan **confusion matrix**, "
+           "**precision/recall**, dan **cross-validation**."),
+    ("code", "import pandas as pd\n"
+             "from sklearn.linear_model import LogisticRegression\n"
+             "from sklearn.model_selection import train_test_split\n"
+             "from sklearn.metrics import confusion_matrix\n\n"
+             "df = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "fitur = ['omzet_bulanan_juta', 'lama_usaha_bulan', 'pinjaman_diajukan_juta',\n"
+             "         'riwayat_telat_12m', 'skor_kredit']\n"
+             "X = df[fitur]\n"
+             "y = (df['status'] == 'Macet').astype(int)\n"
+             "X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, random_state=1)\n"
+             "model = LogisticRegression(max_iter=400).fit(X_latih, y_latih)\n"
+             "tebakan = model.predict(X_uji)\n"
+             "cm = confusion_matrix(y_uji, tebakan)\n"
+             "print(cm)"),
+    ("code", "# Bongkar 4 angka di atas\n"
+             "TN, FP, FN, TP = cm.ravel()\n"
+             "print('TP = benar tebak Macet  :', TP)\n"
+             "print('TN = benar tebak Lancar :', TN)\n"
+             "print('FP = salah tuduh        :', FP)\n"
+             "print('FN = Macet lolos        :', FN)\n"
+             "print('Akurasi  :', round((TP + TN) / (TP + TN + FP + FN), 3))\n"
+             "print('Precision:', round(TP / (TP + FP), 3), '(dari yang dituduh Macet, berapa yang benar)')\n"
+             "print('Recall   :', round(TP / (TP + FN), 3), '(dari Macet sungguhan, berapa yang tertangkap)')\n"
+             "print('Ingat baseline:', round(1 - y_uji.mean(), 3))"),
+    ("code", "# Cross-validation: ukur 5x di potongan berbeda\n"
+             "from sklearn.model_selection import cross_val_score\n\n"
+             "skor = cross_val_score(LogisticRegression(max_iter=400), X, y, cv=5)\n"
+             "print('Skor tiap fold:', skor.round(3))\n"
+             "print('Rata-rata     :', round(skor.mean(), 3), '| simpangan:', round(skor.std(), 3))"),
+    ("code", "# Overfitting: pohon tanpa batas vs dibatasi\n"
+             "from sklearn.tree import DecisionTreeClassifier\n\n"
+             "tanpa_batas = DecisionTreeClassifier(random_state=1)\n"
+             "print('Tanpa batas (CV-3):', round(cross_val_score(tanpa_batas, X, y, cv=3).mean(), 3))\n"
+             "dibatasi = DecisionTreeClassifier(max_depth=4, random_state=1)\n"
+             "print('max_depth=4 (CV-3):', round(cross_val_score(dibatasi, X, y, cv=3).mean(), 3))"),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Bank lebih takut **Macet lolos** daripada **salah tuduh** — metrik mana yang "
+           "harus dikejar: precision atau recall?\n"
+           "2. Coba `max_depth` = 2, 4, 8, None — mana CV terbaik?\n"
+           "3. Kenapa test set tidak boleh dipakai berulang-ulang untuk memilih model? "
+           "(Tulis jawabanmu di sel markdown baru.)"),
+)
+
+_TPL_DS33 = _cells(
+    ("md", "# Latihan Bab 33 — Deep Learning Dasar\n\n"
+           "Neuron = **jumlah berbobot** + bias → **aktivasi**. Jaringan = banyak neuron bersusun. "
+           "Kita mulai dari 1 neuron manual, lalu langsung pakai MLPClassifier."),
+    ("code", "import numpy as np\n\n"
+             "# 1 neuron manual: z = w·x + b, lalu aktivasi ReLU (negatif → 0)\n"
+             "x = np.array([2.0, 3.0, 1.0])    # 3 sinyal masuk (mis. 3 fitur)\n"
+             "w = np.array([0.5, 0.8, -0.2])   # bobot tiap sinyal\n"
+             "b = -0.4                         # bias\n"
+             "z = float(np.dot(w, x) + b)\n"
+             "keluaran = max(0.0, z)\n"
+             "print('z        =', round(z, 3))\n"
+             "print('aktivasi =', round(keluaran, 3))"),
+    ("code", "import pandas as pd\n"
+             "from sklearn.pipeline import make_pipeline\n"
+             "from sklearn.preprocessing import StandardScaler\n"
+             "from sklearn.neural_network import MLPClassifier\n"
+             "from sklearn.model_selection import train_test_split\n\n"
+             "df = pd.read_csv('/datasets/kredit_umkm_bersih.csv')\n"
+             "fitur = ['omzet_bulanan_juta', 'lama_usaha_bulan', 'pinjaman_diajukan_juta',\n"
+             "         'riwayat_telat_12m', 'skor_kredit']\n"
+             "X = df[fitur]\n"
+             "y = (df['status'] == 'Macet').astype(int)\n"
+             "X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, random_state=1)\n\n"
+             "mlp = make_pipeline(StandardScaler(),\n"
+             "                    MLPClassifier(hidden_layer_sizes=(8,), max_iter=400, random_state=1))\n"
+             "mlp.fit(X_latih, y_latih)\n"
+             "print('Akurasi MLP (DENGAN scaling):', round(mlp.score(X_uji, y_uji), 3))"),
+    ("code", "# Tanpa scaling — lihat sendiri kenapa scaling itu penting\n"
+             "import warnings\n"
+             "warnings.filterwarnings('ignore')\n\n"
+             "mlp2 = MLPClassifier(hidden_layer_sizes=(8,), max_iter=400, random_state=1)\n"
+             "mlp2.fit(X_latih, y_latih)\n"
+             "print('Akurasi MLP (TANPA scaling):', round(mlp2.score(X_uji, y_uji), 3))"),
+    ("md", "## Giliranmu 🎯\n\n"
+           "1. Ganti arsitektur: `hidden_layer_sizes=(4,)` vs `(16, 16)` — mana lebih baik di data ini?\n"
+           "2. Bandingkan MLP terbaik vs **LogisticRegression** (bab 31). Kalau selisihnya tipis: "
+           "data ini belum butuh deep learning — itu pelajaran penting!\n"
+           "3. Untuk kompetisi nyata, DL biasanya pakai **PyTorch/TensorFlow di Colab** — "
+           "konsep neuron, aktivasi, dan scaling-nya sama persis seperti di sini."),
+)
+
 TEMPLATES = {
     "kosong": _TPL_KOSONG,
     "pandas": _TPL_PANDAS,
     "saham": _TPL_SAHAM,
     "backtest": _TPL_BACKTEST,
+    "playbook": _TPL_PLAYBOOK,
+    "ds28": _TPL_DS28,
+    "ds29": _TPL_DS29,
+    "ds30": _TPL_DS30,
+    "ds31": _TPL_DS31,
+    "ds32": _TPL_DS32,
+    "ds33": _TPL_DS33,
 }
+
+# Bab track Data Science yang punya starter notebook (dibuat dari halaman bab).
+BAB_TEMPLATES = {28: "ds28", 29: "ds29", 30: "ds30", 31: "ds31", 32: "ds32", 33: "ds33"}
+
+
+def bab_template_key(n):
+    return BAB_TEMPLATES.get(int(n))
 
 TEMPLATE_META = {
     "kosong": {"nama": "Kosong", "emoji": "📄", "judul": "Notebook Pertamaku",
@@ -135,6 +421,20 @@ TEMPLATE_META = {
               "desc": "Bandingkan 6 saham: performa, volatilitas, korelasi."},
     "backtest": {"nama": "Backtest Mini", "emoji": "🔁", "judul": "Backtest Mini MA",
                  "desc": "Uji aturan moving average di IHSG — lihat hasilnya."},
+    "playbook": {"nama": "Playbook Kompetisi", "emoji": "🏆", "judul": "Playbook Kompetisi Data Science",
+                 "desc": "Alur lengkap 8 langkah: bersihin → fitur → model → submission."},
+    "ds28": {"nama": "Bersihin Data (Bab 28)", "emoji": "🧹", "judul": "Latihan Bab 28 — Bersihin Data",
+             "group": "ds", "desc": "Ukur & bersihkan data kotor langkah demi langkah."},
+    "ds29": {"nama": "EDA (Bab 29)", "emoji": "🔍", "judul": "Latihan Bab 29 — EDA",
+             "group": "ds", "desc": "Jelajahi data: distribusi target & pola per kelompok."},
+    "ds30": {"nama": "Feature Engineering (Bab 30)", "emoji": "🛠️", "judul": "Latihan Bab 30 — Fitur Baru",
+             "group": "ds", "desc": "Rasio, binning, encode kategori, dan scaling."},
+    "ds31": {"nama": "ML Dasar (Bab 31)", "emoji": "🤖", "judul": "Latihan Bab 31 — ML Pertama",
+             "group": "ds", "desc": "Split data, baseline, dan model klasifikasi pertama."},
+    "ds32": {"nama": "Evaluasi Model (Bab 32)", "emoji": "🎯", "judul": "Latihan Bab 32 — Evaluasi",
+             "group": "ds", "desc": "Confusion matrix, precision/recall, dan cross-validation."},
+    "ds33": {"nama": "Deep Learning (Bab 33)", "emoji": "🧠", "judul": "Latihan Bab 33 — Neuron & MLP",
+             "group": "ds", "desc": "Neuron manual sampai MLPClassifier dengan scaling."},
 }
 
 DATASET_META = {
@@ -142,6 +442,9 @@ DATASET_META = {
     "saham_watchlist.csv": "6 saham pantauan (ALII, BBRI, BRPT, CUAN, MPPA, TLKM) — format panjang, satu baris per tanggal+simbol.",
     "saham_lebar.csv": "Harga penutupan 6 saham yang sama — format lebar (satu kolom per saham), siap untuk banding performa & korelasi.",
     "btc_harian.csv": "Bitcoin (BTC-USD) harian — lebih dari 1 tahun, untuk latihan aset kripto.",
+    "kredit_umkm.csv": "Data pengajuan kredit UMKM (SINTETIS untuk latihan) — SENGAJA kotor: nilai kosong, duplikat, tanggal campur format, teks berantakan, outlier. 636 baris.",
+    "kredit_umkm_bersih.csv": "Versi BERSIH dari data kredit UMKM — siap untuk EDA, fitur, dan machine learning. 620 baris.",
+    "kredit_umkm_uji.csv": "Data uji kredit UMKM TANPA kolom status — bahan latihan prediksi & submission ala kompetisi. 150 baris.",
 }
 
 

@@ -9,6 +9,7 @@
 .newnb[open] > summary { margin-bottom: 10px; }
 .nbgallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin-top: 6px; }
 .nbgallery form { margin: 0; }
+.dsgt { margin: 16px 0 4px; font-size: .92rem; color: var(--txt); }
 .tplcard { width: 100%; text-align: left; display: flex; flex-direction: column; gap: 4px;
   background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
   padding: 14px 16px; color: var(--txt); cursor: pointer; transition: border-color .15s, transform .15s; }

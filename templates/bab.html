@@ -53,6 +53,15 @@
 <section class="scenlist">
   <h3>⌨️ Tahap 2 — Latihan Coding <span class="meta">{{ qdone }}/{{ soals | length }} lolos</span></h3>
   <p class="note">Gaya Kaggle: kamu <b>disuruh menyelesaikan tugas kecil</b> — tulis kode Python-nya, komputer menilai otomatis. Buka satu soal, baca <b>🎯 Tugasmu</b>, lalu kerjakan.</p>
+  {% if nb_ready %}
+  <div class="scenactions">
+    <form method="post" action="{{ url_for('bab_notebook', n=bab.bab) }}">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <button type="submit" class="btn small">📓 Buka Notebook Latihan Bab Ini (ala Kaggle)</button>
+    </form>
+    <span class="meta">kernel hidup · variabel tersimpan antar sel · dataset siap di <code>/datasets</code></span>
+  </div>
+  {% endif %}
   {% for q in soals %}
   <a class="scenrow {{ 'done' if q.id in soal_solved }}" href="{{ url_for('soal_page', qid=q.id) }}">
     <span class="scenemoji">⌨️</span>

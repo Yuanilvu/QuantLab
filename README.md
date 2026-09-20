@@ -4,15 +4,19 @@ Platform belajar **quant trading ala kelas interaktif (Kaggle-style)** — dibua
 yang belajar dari nol: **belajar teori → kerjakan latihan coding yang disuruh** (kotak
 "🎯 Tugasmu" + starter `# TODO` di editor) → uji pemahaman lewat **skenario keputusan**
 (pilih keputusan → lihat hasil simulasi). Plus **Chart Drill** (latihan baca grafik
-harga nyata), **soal coding** yang dinilai otomatis di sandbox, dan **📓 Notebook**
+harga nyata), **soal coding** yang dinilai otomatis di sandbox, **📓 Notebook**
 (workspace ala Kaggle: kernel Python hidup — variabel tersimpan antar sel — plus dataset
-IDX siap pakai di `/datasets`).
+IDX siap pakai di `/datasets`), dan **📊 Track Data Science** (jalur persiapan kompetisi:
+cleaning → EDA → feature engineering → ML → evaluasi → deep learning, lengkap dengan
+**starter notebook per bab**).
 
 ## Isi
 
-- **6 track · 27 bab · 270 skenario keputusan · 57 soal coding · 37 Lab Teknikal + Ujian**
+- **7 track · 33 bab · 330 skenario keputusan · 69 soal coding · 37 Lab Teknikal + Ujian**
   - 🧮 Math 1-3 → 🐍 Python 4-7 → 💰 Finance 8-10 → 📈 Quant 11-21
   - 🚀 Advanced 22-24 → 📦 Libraries 25-27 (NumPy/Pandas/Matplotlib)
+  - 📊 Data Science 28-33 (bersihin data → EDA → fitur → ML → evaluasi → deep learning;
+    setiap bab punya **starter notebook** yang bisa dibuka dari halaman bab)
   - Setiap bab: 2 pelajaran teori → **latihan coding** (semua bab punya!) → 10 skenario
 - **Skenario keputusan**: cerita kasus pasar (konteks Bybit funding, saham IDX) →
   4 pilihan → jawaban benar + hitungan + kode Python + hasil simulasi (return/drawdown/win rate).
@@ -59,7 +63,10 @@ restart service (kurikulum di-cache per proses).
 Data pendukung (beku, jangan di-refresh):
 `data/chart/*.csv` (grafik Lab Teknikal) · `data/soal/*.csv` (bahan soal "data nyata",
 di-bind read-only ke `/soaldata` dalam sandbox) · `data/ohlc/*.csv` (snapshot OHLCV —
-sumber beku drill candle; JANGAN dipakai langsung oleh drill).
+sumber beku drill candle; JANGAN dipakai langsung oleh drill) ·
+`data/notebook_datasets/*.csv` (dataset notebook, di-bind read-only ke `/datasets`;
+berisi juga 3 dataset **kredit UMKM sintetis** — kotor/bersih/uji — untuk track Data
+Science; regenerate: skrip generator deterministik).
 
 ## Verifikasi
 

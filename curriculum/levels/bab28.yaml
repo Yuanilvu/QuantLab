@@ -1,0 +1,665 @@
+# ============================================================
+# BAB 28 — DATA KOTOR & CARA MEMBERSIHKANNYA (TRACK: DATA SCIENCE)
+# Data mentah selalu kotor. Kenali kotorannya, lalu bersihkan bertahap.
+# ============================================================
+bab: 28
+track: ds
+judul: "Data Kotor & Cara Membersihkannya"
+emoji: "🧹"
+deskripsi: "Data nyata selalu kotor: sel kosong, baris kembar, angka mustahil, format campur. Berlatih mengenali kotorannya dan membersihkannya langkah demi langkah."
+pelajaran:
+  - id: "28-1"
+    judul: "Kenali Data Kotor"
+    menit: 5
+    materi: |
+      Data kompetisi hampir selalu kotor. Lima jenis kotoran yang paling sering muncul:
+
+      - **Nilai kosong** (missing): sel yang tidak diisi.
+      - **Baris kembar** (duplikat): satu pengajuan tercatat dua kali.
+      - **Nilai ekstrem** (outlier): angka kelewat besar atau mustahil, mis. omzet 9.000 juta atau -50 juta.
+      - **Format campur**: tanggal ditulis tiga cara berbeda.
+      - **Kategori tidak konsisten**: "Jakarta", "jakarta", dan "JKT" — satu kota, tiga nama.
+
+      File `/soaldata/kredit_umkm.csv` = data pengajuan kredit UMKM yang belum dibersihkan: 636 baris, 295 sel kosong, 16 baris kembar.
+
+      Cara memeriksa: `df.isna().sum()` menghitung sel kosong tiap kolom. `df.duplicated().sum()` menghitung baris kembar. Langkah pertama setiap proyek data: ukur dulu kotornya, baru bersihkan.
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+      print(df.isna().sum().sort_values(ascending=False))
+      print(f"Baris kembar: {df.duplicated().sum()}")
+    penjelasan: "`isna()` menandai sel kosong, `.sum()` menjumlahkannya per kolom — kelihatan kolom mana yang paling bocor. `duplicated()` menandai baris kembar dan `.sum()` menghitungnya: 16 baris. Urutkan dari terbesar supaya tahu mulai dari kolom mana."
+  - id: "28-2"
+    judul: "Bersihin Langkah demi Langkah"
+    menit: 6
+    materi: |
+      Urutan bersih-bersih yang aman:
+
+      ```python
+      df = df.drop_duplicates()                                 # 1. buang baris kembar
+      angka = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")   # 2. paksa jadi angka
+      df["omzet_bulanan_juta"] = angka.fillna(angka.median())    # 3. isi kosong dengan median
+      df["kota"] = df["kota"].str.strip().str.lower()            # 4. rapikan teks
+      df["kota"] = df["kota"].replace({"jkt": "jakarta"})        # 5. satukan singkatan
+      ```
+
+      **`errors="coerce"`** = sel yang gagal jadi angka diubah jadi kosong, kode tidak mati. Setelah itu wajib cetak berapa sel yang jadi kosong — jangan kehilangan data diam-diam.
+
+      **`fillna(median)`** = isi sel kosong dengan nilai tengah. Median tidak tertarik nilai ekstrem: mean omzet 46,5 juta, median 26,7 juta — jauh berbeda gara-gara satu outlier 9.000 juta.
+
+      **`clip(upper=...)`** memotong nilai di luar batas wajar, mis. `df["lama_usaha_bulan"].clip(upper=300)`.
+
+      Dedupe dulu, baru hitung statistik: median omzet 26,7 (masih ada kembar) vs 26,8 (sesudah bersih).
+    kode: |
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+      sebelum = len(df)
+      df = df.drop_duplicates()
+      df["kota"] = df["kota"].str.strip().str.lower()
+      omzet = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")
+      df["omzet_bulanan_juta"] = omzet.fillna(omzet.median())
+      print(f"Baris: {sebelum} -> {len(df)} | penulisan kota: 21 -> {df['kota'].nunique()}")
+    penjelasan: "Satu pipeline pendek: buang kembar (636 -> 620), seragamkan nama kota (21 -> 13 penulisan), lalu isi omzet kosong dengan median. Empat langkah ini membereskan mayoritas kotoran. Sisanya: outlier (clip) dan tanggal yang formatnya campur."
+skenario:
+  - id: "s28-1"
+    judul: "Kolom Paling Bocor"
+    emoji: "🧽"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Tim data menyerahkan `/soaldata/kredit_umkm.csv` berisi 636 pengajuan kredit UMKM. Kamu disuruh mulai membersihkan. Cara pertama: cek kolom mana yang paling banyak sel kosong. Kamu jalankan `df.isna().sum()` lalu urutkan dari besar ke kecil. Berapa sel kosong di kolom paling bocor itu?
+    pilihan:
+      - "53 sel kosong (omzet_bulanan_juta)"
+      - "50 sel kosong (skor_kredit)"
+      - "295 sel kosong (omzet_bulanan_juta)"
+      - "33 sel kosong (kota)"
+    jawaban: 0
+    penjelasan: |
+      Urutan kebocoran: omzet_bulanan_juta 53, skor_kredit 50, lama_usaha_bulan 44, riwayat_telat_12m 38, kota 33, jumlah_karyawan 32, sektor 23, punya_npwp 22. Jadi kolom paling bocor = omzet dengan **53 sel kosong**.
+
+      Angka 295 = TOTAL sel kosong seluruh tabel (jumlah semua kolom), bukan satu kolom. 50 milik skor_kredit, 33 milik kota.
+
+      Porsi kotorannya kecil: 636 baris x 12 kolom = 7.632 sel, yang kosong 295 = **3,9%**. Mulai dari kolom paling bocor supaya hasil bersih-bersihmu berdampak paling besar.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      kosong = df.isna().sum().sort_values(ascending=False)
+      print(kosong.head(3))
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: omzet_bulanan_juta 53 sel kosong — kolom paling bocor, mulai dari situ."
+      - ret: 70
+        dd: 25
+        win: 55
+        note: "50 sel itu skor_kredit, urutan kedua. Tetap berguna dibereskan, tapi bukan yang terbesar."
+      - ret: 40
+        dd: 50
+        win: 30
+        note: "295 = total sel kosong SEMUA kolom. Membagi perbaikan ke 12 kolom sekaligus bikin kerja tidak fokus."
+      - ret: 25
+        dd: 70
+        win: 20
+        note: "33 sel itu kolom kota, urutan kelima. Kolom dengan masalah lain menunggu lebih lama."
+    petunjuk:
+      - "Jalankan df.isna().sum() lalu urutkan menurun."
+      - "295 itu jumlah seluruh kolom, bukan satu kolom."
+      - "Kolom omzet ada di puncak daftar."
+  - id: "s28-2"
+    judul: "Baca Kode: Total Sel Kosong"
+    emoji: "🔢"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+      print(df.isna().sum().sum())
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "295"
+      - "636"
+      - "12"
+      - "7.632"
+    jawaban: 0
+    penjelasan: |
+      `df.isna()` menghasilkan tabel True/False: True = sel kosong. `.sum()` pertama menjumlahkan per kolom, `.sum()` kedua menjumlahkan hasilnya → **295**.
+
+      Bandingkan: 636 = jumlah baris, 12 = jumlah kolom, 7.632 = 636 x 12 = seluruh sel tabel. Jadi porsi sel kosong = 295 / 7.632 = **3,9%** — kotor, tapi sebagian besar data masih bersih.
+
+      Cek satu baris seperti ini dipakai di awal setiap proyek data: ukur dulu, baru putuskan cara bersih-bersihnya.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      print(df.isna().sum().sum())
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: 295 sel kosong di seluruh tabel."
+      - ret: 25
+        dd: 70
+        win: 15
+        note: "636 = jumlah baris. Cek kotornya jadi tidak terukur."
+      - ret: 45
+        dd: 45
+        win: 35
+        note: "12 = jumlah kolom — bukan jumlah sel kosong."
+      - ret: 20
+        dd: 75
+        win: 15
+        note: "7.632 = seluruh sel (636 x 12). Yang kosong cuma 295."
+    petunjuk:
+      - "isna() menandai sel kosong."
+      - "sum() dipanggil dua kali: per kolom, lalu total."
+      - "636 x 12 = 7.632 sel."
+  - id: "s28-3"
+    judul: "Baca Kode: Baris Kembar"
+    emoji: "👯"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      ```python
+      import pandas as pd
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+      print(len(df) - len(df.drop_duplicates()))
+      ```
+      Apa yang tercetak, dan apa artinya?
+    pilihan:
+      - "16 — ada 16 baris kembar yang harus dibuang"
+      - "620 — jumlah baris sesudah bersih"
+      - "636 — jumlah baris awal"
+      - "0 — datanya tidak punya baris kembar"
+    jawaban: 0
+    penjelasan: |
+      `drop_duplicates()` membuang baris yang seluruh isinya sama. Panjang awal 636, sesudah dedupe 620, jadi selisihnya **636 - 620 = 16 baris kembar**.
+
+      Angka 620 = hasil akhir (jumlah baris bersih), bukan jumlah kembarnya. Kembar berbahaya karena satu pengajuan terhitung dua kali: persentase Macet dan rata-rata omzet jadi miring. Kalau data dipakai untuk berlatih model, baris sama juga ikut terhitung dua kali.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      print(len(df) - len(df.drop_duplicates()))
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: 16 baris kembar siap dibuang."
+      - ret: 55
+        dd: 35
+        win: 45
+        note: "620 = baris SESUDAH buang kembar, bukan jumlah kembarnya."
+      - ret: 30
+        dd: 60
+        win: 25
+        note: "636 = baris awal sebelum dibersihkan."
+      - ret: 35
+        dd: 55
+        win: 30
+        note: "Nol berarti tidak ada kembar. File ini punya 16 pasang kembar."
+    petunjuk:
+      - "Bandingkan panjang sebelum dan sesudah drop_duplicates()."
+      - "636 - 620 = 16."
+  - id: "s28-4"
+    judul: "Isi Median, Bukan Mean"
+    emoji: "🎯"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kolom omzet_bulanan_juta kosong di 53 baris (8,3% dari 636). Kamu mau mengisi sel kosong itu. Rata-rata omzet 46,5 juta, median 26,7 juta — angkanya jauh berbeda. Dengan angka apa 53 sel kosong itu diisi?
+    pilihan:
+      - "Median 26,7 juta — mean 46,5 juta ketarik satu omzet 9.000 juta"
+      - "Mean 46,5 juta — semua nilai ikut dihitung"
+      - "Nol juta — netral dan aman"
+      - "Nilai terkecil 4,5 juta — paling hati-hati"
+    jawaban: 0
+    penjelasan: |
+      Satu baris punya omzet 9.000 juta = **337 kali median** (9.000 / 26,7). Satu nilai itu menarik MEAN naik ke 46,5 juta, padahal separuh nasabah beromzet di bawah 26,7 juta.
+
+      MEDIAN = nilai tengah setelah data diurutkan, jadi tidak terpengaruh nilai ekstrem. Isi 53 sel dengan median = nilai isian yang wajar.
+
+      Isi 0 salah: 0 juta bukan omzet tipikal dan malah jadi nilai ekstrem baru. Mengisi mean berarti menularkan efek outlier ke 53 sel sekaligus. Aturan: kolom dengan nilai ekstrem diisi median, bukan mean.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      omzet = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")
+      print(f"Mean: {omzet.mean():.1f} juta")
+      print(f"Median: {omzet.median():.1f} juta")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: median 26,7 juta — tidak tertarik omzet 9.000 juta."
+      - ret: 45
+        dd: 45
+        win: 35
+        note: "Mean 46,5 juta ketarik outlier; 53 sel isian jadi terlalu tinggi."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Isi 0 juta = menambah 53 nilai ekstrem baru ke kolom omzet."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "4,5 juta itu nilai terkecil, bukan nilai tipikal. Isian jadi terlalu rendah."
+    petunjuk:
+      - "9.000 / 26,7 = 337 kali median."
+      - "Median = nilai tengah, tidak tertarik ekstrem."
+      - "Ada 53 sel yang harus diisi."
+  - id: "s28-5"
+    judul: "Tanggal Format Campur"
+    emoji: "📅"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kolom tanggal_pengajuan ditulis tiga cara: 369 baris `2025-01-14`, 169 baris `14/01/2025`, dan 98 baris `Jan 14, 2025`. Kamu butuh satu format seragam. Langkah mana yang paling aman?
+    pilihan:
+      - "Pisahkan per pola, parse eksplisit (hari dulu untuk dd/mm), lalu simpan seragam"
+      - "Buang 267 baris yang bukan format ISO"
+      - "Biarkan teks apa adanya, urutkan secara alfabet"
+      - "Ganti semua tanggal jadi tanggal hari ini"
+    jawaban: 0
+    penjelasan: |
+      169 + 98 = **267 baris (42% dari 636)** bukan format ISO. Membuangnya = kehilangan 42% data.
+
+      Cara aman: pisahkan per pola lalu parse dengan format eksplisit — 369 baris ISO, 169 baris pakai `format="%d/%m/%Y"` (hari dulu), 98 baris format bulan-teks.
+
+      Bahaya baris dd/mm: 59 di antaranya berhari ≤12 (mis. 02/12/2025) sehingga bisa terbaca 2 Desember ATAU 12 Februari — bulan kacau tanpa pesan error. Uji dengan `pd.to_datetime` default: hanya 369 baris ISO yang berhasil, 267 sisanya jadi kosong.
+
+      Urut alfabet juga salah: `14/01/2025` akan dianggap mendahului `05/02/2025`.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      t = df["tanggal_pengajuan"]
+      print(f"ISO: {t.str.match(r'^[0-9]{4}-').sum()}")
+      print(f"dd/mm/yyyy: {t.str.match(r'^[0-9]{2}/').sum()}")
+      print(f"lain: {len(t) - t.str.match(r'^[0-9]').sum()}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 80
+        note: "Benar: parse per pola dengan format eksplisit — 636 baris terselamatkan."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Buang 267 baris = kehilangan 42% data. Analisis jadi timpang."
+      - ret: 30
+        dd: 60
+        win: 25
+        note: "Urut alfabet salah: 14/01/2025 dianggap sebelum 05/02/2025."
+      - ret: 15
+        dd: 75
+        win: 10
+        note: "Semua tanggal jadi sama — informasi waktu hilang total."
+    petunjuk:
+      - "Pisahkan per pola, baru parse dengan format eksplisit."
+      - "59 baris dd/mm berhari ≤12 — bisa tertukar bulan."
+      - "267 dari 636 baris = 42% data; jangan dibuang."
+  - id: "s28-6"
+    judul: "Konversi Tipe Gagal Diam-diam"
+    emoji: "🔧"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Kamu jalankan `pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")`. Apa yang terjadi pada sel yang tidak bisa jadi angka, dan apa yang wajib kamu lakukan sesudahnya?
+    pilihan:
+      - "Sel rusak jadi kosong (NaN); wajib cetak berapa yang jadi kosong supaya tahu data yang hilang"
+      - "Kode langsung berhenti dengan pesan error"
+      - "Sel rusak otomatis diubah jadi 0"
+      - "Sel rusak tetap berupa teks dan diabaikan"
+    jawaban: 0
+    penjelasan: |
+      Dengan `errors="coerce"`, sel yang gagal dikonversi berubah jadi nilai kosong dan kode tetap jalan. Mode lain, `errors="raise"` (bawaan), menghentikan program di sel rusak pertama.
+
+      `coerce` lebih aman untuk eksplorasi, tapi ada jebakan: sel kosong BARU tidak kelihatan. Karena itu langsung cek `omzet.isna().sum()`. Di file ini omzet kosong 53 sel sebelum konversi dan tetap 53 sesudahnya — tidak ada data baru yang hilang.
+
+      Kalau angkanya bertambah, berarti ada sel rusak (mis. teks `26,7` atau tanda `-`) yang harus dilihat dulu sebelum diisi.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      omzet = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")
+      print(f"Kosong sebelum: {df['omzet_bulanan_juta'].isna().sum()}")
+      print(f"Kosong sesudah: {omzet.isna().sum()}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: sel rusak jadi kosong, lalu dicek jumlahnya (53 sebelum = 53 sesudah)."
+      - ret: 40
+        dd: 45
+        win: 35
+        note: "Kode tidak berhenti — dengan raise memang berhenti, dengan coerce tetap jalan."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Sel rusak tidak jadi 0; jadi kosong. Isi 0 akan mengarang angka."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Teks yang gagal TIDAK diabaikan — ia berubah jadi kosong tanpa kamu sadari."
+    petunjuk:
+      - "coerce = paksa jadi angka; yang gagal jadi kosong."
+      - "Cek jumlah kosong sesudah konversi."
+  - id: "s28-7"
+    judul: "Satu Kota, Lima Tulisan"
+    emoji: "🏙️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Nama kota berantakan. Jakarta muncul sebagai `Jakarta` (90 baris), ` Jakarta` (27 baris, ada spasi di depan), `JKT` (25 baris), `jakarta` (19 baris), dan `jkt` (18 baris). Komputer membacanya sebagai kota BERBEDA. Berapa baris Jakarta yang sebenarnya ada, dan bagaimana merapikannya?
+    pilihan:
+      - "179 baris — bereskan dengan str.strip(), str.lower(), lalu replace singkatan"
+      - "136 baris — cukup str.strip() + str.lower(), singkatan dibiarkan"
+      - "90 baris — hanya hitungan 'Jakarta' persis yang benar"
+      - "Tidak perlu diapa-apakan — komputer paham maksudnya"
+    jawaban: 0
+    penjelasan: |
+      Jakarta muncul **179 kali**: 90 + 27 + 25 + 19 + 18. Urutan perbaikan:
+
+      `str.strip()` membuang spasi (27 ikut) lalu `str.lower()` menyeragamkan huruf (19 ikut) → tulisan `jakarta` jadi 136 baris. Lanjut `replace({"jkt": "jakarta"})` menyatukan singkatan (25 + 18 ikut) → **179 baris**.
+
+      Berhenti di lower saja menyisakan JKT dan jkt (43 baris) sebagai kota berbeda, jadi 136 bukan angka akhir. `Jakarta` persis hanya 90 baris — angka sebelum dibersihkan.
+
+      Membiarkan berarti Jakarta tampak 5x lebih kecil dari kenyataan, dan keputusan per kota jadi salah.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      kota = df["kota"].str.strip().str.lower()
+      rapi = kota.replace({"jkt": "jakarta"})
+      print(f"Sebelum: {df['kota'].nunique()} penulisan")
+      print(f"Sesudah: {rapi.nunique()} penulisan | jakarta: {rapi.eq('jakarta').sum()} baris")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 85
+        note: "Benar: 179 baris Jakarta setelah strip + lower + map singkatan."
+      - ret: 60
+        dd: 30
+        win: 50
+        note: "136 baru sebagian: JKT dan jkt (43 baris) masih dihitung kota lain."
+      - ret: 35
+        dd: 55
+        win: 30
+        note: "90 cuma tulisan persis. 89 baris Jakarta lain jadi kota terpisah."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Komputer membandingkan huruf per huruf — tidak ada yang paham maksud."
+    petunjuk:
+      - "90 + 27 + 25 + 19 + 18 = 179."
+      - "strip → lower → map singkatan."
+      - "Berhenti di lower saja masih menyisakan JKT."
+  - id: "s28-8"
+    judul: "Outlier 9.000 Juta dan -50 Juta"
+    emoji: "✂️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Dua baris bermasalah: omzet 9.000 juta (median hanya 26,7 juta) dan omzet -50 juta (mustahil). Akibat keduanya, rata-rata omzet jadi 46,5 juta. Apa tindakan yang paling tepat?
+    pilihan:
+      - "9.000 dipotong/ditandai, -50 dijadikan kosong lalu diisi median; barisnya tetap dipakai"
+      - "Buang dua baris itu seluruhnya, apa pun isi kolom lainnya"
+      - "Biarkan apa adanya — data harus utuh"
+      - "Hapus seluruh kolom omzet dari data"
+    jawaban: 0
+    penjelasan: |
+      Tanpa dua nilai itu, rata-rata omzet **31,2 juta**; dengan keduanya **46,5 juta**. Beda 15,3 juta hanya karena **2 baris dari 636** — bukti satu-dua nilai bisa menyesatkan laporan.
+
+      Nilai -50 juta mustahil (omzet tidak negatif). Nilai 9.000 juta = 337 kali median.
+
+      Perlakuan tepat: potong/tandai yang ekstrem, jadikan yang mustahil kosong lalu isi median. Barisnya masih menyimpan info lain yang lengkap (kota, sektor, skor). Membuang seluruh baris = membuang info bagus; membiarkan = laporan salah; menghapus kolom = membuang fitur penting hanya karena 2 baris.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      omzet = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")
+      wajar = omzet[(omzet >= 0) & (omzet <= 200)]
+      print(f"Mean semua: {omzet.mean():.1f} juta")
+      print(f"Mean tanpa 2 ekstrem: {wajar.mean():.1f} juta")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 80
+        note: "Benar: potong/tandai ekstrem, isi yang mustahil — 634 baris lain tetap terpakai."
+      - ret: 45
+        dd: 45
+        win: 35
+        note: "Dua baris itu juga menyimpan kota, sektor, dan skor yang lengkap."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Dibiarkan: mean tetap 46,5 juta dan laporan omzet salah 15,3 juta."
+      - ret: 30
+        dd: 55
+        win: 30
+        note: "Menghapus kolom omzet membuang fitur penting hanya karena 2 baris."
+    petunjuk:
+      - "Tanpa 2 baris itu mean jadi 31,2 juta."
+      - "-50 juta mustahil: omzet tidak negatif."
+      - "clip = potong nilai ke batas wajar."
+  - id: "s28-9"
+    judul: "Urutan Langkah: Dedupe Dulu"
+    emoji: "🔀"
+    sulit: "sulit"
+    xp: 50
+    menit: 6
+    cerita: |
+      Rencanamu: (1) isi sel kosong dengan median, (2) rapikan nama kota, (3) buang baris kembar. Temanmu bilang langkah buang kembar harus paling awal. Siapa yang benar, dan apa buktinya dari angka?
+    pilihan:
+      - "Temanmu — median dari data berisi kembar beda: 26,7 vs 26,8 sesudah dedupe"
+      - "Kamu — dedupe paling akhir supaya sel kosong sudah terisi"
+      - "Sama saja, tidak ada bedanya sedikit pun"
+      - "Dedupe tidak perlu kalau sel kosong sudah diisi"
+    jawaban: 0
+    penjelasan: |
+      Baris kembar membuat satu pengajuan dihitung dua kali, jadi angka ringkasan miring. Buktinya: median omzet **26,7** (masih ada 16 kembar) vs **26,8** (sesudah dedupe, 620 baris).
+
+      Angka itulah yang dipakai mengisi 53 sel kosong, jadi selisihnya menular ke semua isian. Dedupe juga murah: 636 -> 620 baris, sekali jalan.
+
+      Urutan yang benar: buang yang PASTI salah (kembar) dulu, baru isi yang kosong, karena isian dibuat dari ringkasan data yang harus sudah bersih. Dedupe di akhir bukan bencana, tapi isianmu memakai angka yang sedikit berbeda.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      print(f"Median (ada 16 kembar): {df['omzet_bulanan_juta'].median():.1f}")
+      bersih = df.drop_duplicates()
+      print(f"Median (620 baris): {bersih['omzet_bulanan_juta'].median():.1f}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 80
+        note: "Benar: dedupe dulu — median isian jadi 26,8 dari data yang sudah bersih."
+      - ret: 45
+        dd: 45
+        win: 35
+        note: "Isian median memakai angka 26,7 dari data yang masih berisi kembar."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Ada bedanya: 26,7 vs 26,8, dan angka itu menular ke 53 sel isian."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Dedupe tetap perlu: tanpa itu satu pengajuan dihitung dua kali."
+    petunjuk:
+      - "Isian median dibuat dari data, jadi datanya harus bersih dulu."
+      - "Kembar = satu baris dihitung dua kali."
+      - "636 -> 620 baris."
+  - id: "s28-10"
+    judul: "Kapan Baris Dibuang?"
+    emoji: "🗑️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Dua kasus berbeda. (A) Kolom punya_npwp kosong di 22 dari 636 baris (3,5%). (B) Sebuah kolom baru kosong di 380 dari 620 baris (61%). Apa perlakuan yang tepat untuk masing-masing?
+    pilihan:
+      - "A diisi (3,5% masih aman), B kolomnya dibuang (61% isian = karangan)"
+      - "Dua-duanya diisi dengan median"
+      - "Dua-duanya dibuang semua barisnya"
+      - "A baris-barisnya dibuang, B diisi dengan 0"
+    jawaban: 0
+    penjelasan: |
+      Aturan praktis: kosong sedikit (di bawah ~10%) masih aman diisi; kosong sangat banyak (di atas ~50%) hampir tidak bisa diselamatkan.
+
+      Kasus A: 22 / 636 = **3,5%** → isi dengan nilai paling masuk akal, mis. `Tidak` untuk NPWP yang tidak dilaporkan. Kasus B: 380 / 620 = **61%** → mengisi berarti 61% datamu karangan; lebih jujur kolomnya dibuang atau cari sumbernya.
+
+      Membuang baris di kasus A menyia-nyiakan 614 baris yang masih lengkap di kolom lain. Mengisi 0 di kasus B sama saja mengarang angka.
+    kode: |
+      import os
+      import pandas as pd
+      base = "/soaldata" if os.path.isdir("/soaldata") else "/home/yuan/quantlab/data/soal"
+      df = pd.read_csv(base + "/kredit_umkm.csv")
+      npwp = df["punya_npwp"]
+      print(f"NPWP kosong: {npwp.isna().sum()} dari {len(npwp)} = {npwp.isna().mean() * 100:.1f}%")
+      print(f"Nilai paling sering: {npwp.mode()[0]}")
+    hasil:
+      - ret: 100
+        dd: 5
+        win: 80
+        note: "Benar: A diisi (614 baris selamat), B kolomnya dibuang (61% karangan)."
+      - ret: 30
+        dd: 60
+        win: 25
+        note: "Kasus B diisi median = 61% data karangan; angka laporan tidak bisa dipercaya."
+      - ret: 20
+        dd: 70
+        win: 15
+        note: "Membuang semua baris kasus A menyia-nyiakan 614 baris yang masih lengkap."
+      - ret: 25
+        dd: 65
+        win: 20
+        note: "Membuang baris kasus A salah, dan isi 0 di kasus B tetap mengarang nilai."
+    petunjuk:
+      - "Bandingkan porsi kosong: 3,5% vs 61%."
+      - "Di atas ~50% kosong, isian = karangan."
+      - "Di bawah ~10% masih aman diisi."
+soal:
+  - id: "p28-1"
+    judul: "Ukur Kekotoran Data"
+    emoji: "🧮"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Gunakan pandas! Baca path file CSV dari input, lalu cetak 3 baris: jumlah baris, jumlah SEL KOSONG seluruh tabel, dan jumlah baris DUPLIKAT.
+    input_spec: |
+      Satu baris: path file CSV (mis. /soaldata/kredit_umkm.csv).
+    output_spec: |
+      Baris 1: jumlah baris (int). Baris 2: total sel kosong (int). Baris 3: jumlah baris duplikat (int).
+    contoh:
+      - input: "/soaldata/kredit_umkm.csv"
+        output: "636\n295\n16"
+      - input: "/soaldata/kredit_umkm_bersih.csv"
+        output: "620\n0\n0"
+    tes:
+      - input: "/soaldata/kredit_umkm.csv"
+        output: "636\n295\n16"
+      - input: "/soaldata/kredit_umkm_bersih.csv"
+        output: "620\n0\n0"
+      - input: "/soaldata/kredit_umkm_uji.csv"
+        output: "150\n0\n0"
+      - input: "/soaldata/harga_tlkm.csv"
+        output: "242\n0\n0"
+    solusi: |
+      import pandas as pd
+      path = input()
+      df = pd.read_csv(path)
+      print(len(df))
+      print(int(df.isna().sum().sum()))
+      print(int(df.duplicated().sum()))
+    petunjuk:
+      - "pd.read_csv(path) untuk membaca file."
+      - "Sel kosong: df.isna().sum().sum()."
+      - "Baris kembar: df.duplicated().sum()."
+    tugas:
+      - "Baca satu baris input berisi path file CSV."
+      - "Muat file itu dengan pd.read_csv."
+      - "Hitung jumlah baris, jumlah sel kosong seluruh tabel, dan jumlah baris duplikat."
+      - "Cetak ketiga angka itu, satu per baris, dengan urutan tersebut."
+    starter: |
+      import pandas as pd
+      path = input()
+      # TODO: muat CSV dari path dengan pd.read_csv
+      # TODO: cetak jumlah baris, pakai len(df)
+      # TODO: cetak jumlah sel kosong seluruh tabel, pakai df.isna().sum().sum()
+      # TODO: cetak jumlah baris duplikat, pakai df.duplicated().sum()
+  - id: "p28-2"
+    judul: "Bersihkan lalu Ringkas"
+    emoji: "🧼"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Gunakan pandas! Baca path CSV dan nama kolom angka dari input. Bersihkan: buang baris duplikat, konversi kolom itu ke angka (errors="coerce"), lalu isi yang kosong dengan median kolom itu. Cetak: jumlah baris sesudah dedupe, median, dan rata-rata kolom hasil bersih (dua angka terakhir 1 desimal).
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: nama kolom angka.
+    output_spec: |
+      Baris 1: jumlah baris sesudah buang duplikat (int). Baris 2: median kolom (1 desimal). Baris 3: rata-rata kolom (1 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm.csv\nomzet_bulanan_juta"
+        output: "620\n26.8\n45.3"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nomzet_bulanan_juta"
+        output: "620\n26.8\n31.4"
+    tes:
+      - input: "/soaldata/kredit_umkm.csv\nomzet_bulanan_juta"
+        output: "620\n26.8\n45.3"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nomzet_bulanan_juta"
+        output: "620\n26.8\n31.4"
+      - input: "/soaldata/kredit_umkm_uji.csv\nomzet_bulanan_juta"
+        output: "150\n24.6\n29.4"
+      - input: "/soaldata/kredit_umkm_bersih.csv\nriwayat_telat_12m"
+        output: "620\n2.0\n2.2"
+    solusi: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path).drop_duplicates()
+      angka = pd.to_numeric(df[kolom], errors="coerce")
+      angka = angka.fillna(angka.median())
+      print(len(df))
+      print(f"{angka.median():.1f}")
+      print(f"{angka.mean():.1f}")
+    petunjuk:
+      - "drop_duplicates() lalu len(df) untuk jumlah baris."
+      - "pd.to_numeric(..., errors=\"coerce\") untuk paksa jadi angka."
+      - "fillna(median) untuk isi yang kosong."
+    tugas:
+      - "Baca path CSV dan nama kolom angka dari dua baris input."
+      - "Muat data lalu buang baris duplikat."
+      - "Konversi kolom itu ke angka (errors coerce), lalu isi nilai kosong dengan median kolom."
+      - "Cetak jumlah baris, median, dan rata-rata (1 desimal) satu per baris."
+    starter: |
+      import pandas as pd
+      path = input()
+      kolom = input()
+      df = pd.read_csv(path)
+      # TODO: buang baris duplikat dari df
+      # TODO: konversi kolom ke angka dengan errors="coerce"
+      # TODO: isi nilai kosong dengan median kolom itu
+      # TODO: cetak jumlah baris, lalu median dan rata-rata (1 desimal), satu per baris

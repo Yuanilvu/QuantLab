@@ -1,0 +1,640 @@
+# ============================================================
+# BAB 31 — MACHINE LEARNING DASAR (TRACK: DATA SCIENCE)
+# Model pertama: split data, fitur vs target, akurasi, overfit.
+# Data: /soaldata/kredit_umkm_bersih.csv (620 pengajuan bersih)
+# ============================================================
+bab: 31
+track: ds
+judul: "Machine Learning Dasar"
+emoji: "🤖"
+deskripsi: "Model belajar dari contoh. Bab ini melatih model pertama: memisah data latih & uji, memilih fitur, membaca akurasi, dan mengenali overfit."
+pelajaran:
+  - id: "31-1"
+    judul: "Konsep ML & Memisah Data"
+    menit: 5
+    materi: |
+      **Model** = aturan yang belajar dari contoh. Bedanya dengan aturan biasa: model menemukan sendiri polanya dari data.
+
+      Istilah yang dipakai:
+      - **Fitur (X)** = kolom masukan: omzet, lama usaha, pinjaman, telat, skor.
+      - **Target (y)** = kolom jawaban yang mau diprediksi: status (Lancar = 1, Macet = 0).
+      - **Latih (train)** = bagian data untuk belajar. **Uji (test)** = bagian untuk menguji.
+
+      Kenapa harus dipisah? Karena model bisa menghafal. Kalau ia diuji di data yang sudah dihafalnya, nilainya selalu bagus — seperti murid yang diberi soal latihan sebagai ujian. Jadi latih di satu bagian, uji di bagian lain yang belum pernah dilihat.
+
+      **Baseline** = tebakan paling sederhana: "semua Lancar". Dari 620 data, 456 Lancar → 456 ÷ 620 = **73,5%** benar. Model harus mengalahkan angka ini, kalau tidak, ia tidak menambah apa pun.
+
+      Latihan pertama: `train_test_split` dengan test_size 0,25 → 465 baris latih, 155 baris uji.
+    kode: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      y = (df["status"] == "Lancar").astype(int)
+      ytr, yte = train_test_split(y, test_size=0.25, random_state=42)
+      print(len(ytr), len(yte), round(yte.mean(), 2))
+    penjelasan: "Fitur (X) vs target (y). Split: 465 latih, 155 uji. Baseline 'semua Lancar' di data uji = 71,6% (dibulatkan 72%). Model hanya berguna kalau lebih tinggi dari itu."
+  - id: "31-2"
+    judul: "Model Pertama: Logistic Regression"
+    menit: 6
+    materi: |
+      **Regresi logistik** = model klasifikasi paling dasar. Ia memberi setiap baris sebuah peluang antara 0 dan 1: peluang statusnya Lancar.
+
+      Tiga perintah intinya:
+      - `fit` → belajar dari data latih.
+      - `predict` → menebak jawaban.
+      - `score` → akurasi (berapa persen tebakan yang benar).
+
+      Hasil nyata dengan 5 fitur angka (omzet, lama usaha, pinjaman, telat, skor) pada 620 data bersih:
+      - Akurasi data LATIH: **79,6%**
+      - Akurasi data UJI: **78,7%** (test_size 0,25, random_state 42)
+      - Baseline "semua Lancar": **73,5%**
+
+      Jadi model menambah sekitar 5 poin di atas baseline. Tidak spektakuler, dan itu wajar untuk data kredit yang berisik.
+
+      Membaca **koefisien** (bobot tiap fitur per satu satuan): telat -0,5547 (makin sering telat, makin kecil peluang Lancar); pinjaman -0,1041 per juta; omzet +0,0762 per juta. Koefisien jangan dibandingkan mentah-mentah, karena satuannya beda: skor +0,0034 itu per 1 POIN, sedangkan telat -0,5547 per 1 KALI.
+    kode: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.linear_model import LogisticRegression
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]
+      y = (df["status"] == "Lancar").astype(int)
+      Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=42)
+      print(round(LogisticRegression(max_iter=1000).fit(Xtr, ytr).score(Xte, yte), 4))
+    penjelasan: "fit, predict, score. Lima fitur angka: akurasi uji 0,7871 (78,7%), latih 79,6%, baseline 73,5%. Koefisien telat -0,5547 = penalti terbesar per satuan."
+skenario:
+  - id: "s31-1"
+    judul: "Kenapa Data Dipisah?"
+    emoji: "🎓"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      Model kreditmu mencetak akurasi 98% — tapi dihitung pada data yang SAMA dengan data latih. Kamu diminta melaporkan performa yang jujur. Apa yang harus dilakukan?
+    pilihan:
+      - "Laporkan 98% — angkanya bagus"
+      - "Uji ulang di data yang belum pernah dipakai melatih, lalu bandingkan dengan baseline 73,5%"
+      - "Tambah data latih supaya akurasi jadi 99%"
+      - "Hapus beberapa baris supaya akurasinya stabil"
+    jawaban: 1
+    penjelasan: |
+      Akurasi di data latih selalu terlihat bagus: model sudah hafal baris-baris itu. Uji yang jujur memakai data yang belum pernah dilihat — pada data ini akurasi uji model 5 fitur 78,7%, bukan 98%.
+
+      Bandingkan selalu dengan baseline "semua Lancar" 73,5% (456 dari 620). Menambah data latih tidak menyelesaikan masalah pengukuran, dan menghapus baris juga bukan solusi. Aturan: nilai model dari data uji, dan sebut baseline-nya.
+    kode: |
+      import os, pandas as pd
+      from sklearn.model_selection import train_test_split
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      y = (df["status"] == "Lancar").astype(int)
+      ytr, yte = train_test_split(y, test_size=0.25, random_state=42)
+      print("latih", len(ytr), "| uji", len(yte), "| baseline uji", round(yte.mean(), 3))
+    hasil:
+      - ret: 1.0
+        dd: 9.5
+        win: 40
+        note: "98% di data latih = model sudah hafal baris-baris itu."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: uji di data baru (78,7%) dan bandingkan baseline 73,5%."
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "Menambah data latih tidak memperbaiki cara pengukuran."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Menghapus baris data bukan solusi — malah mengurangi bukti."
+    petunjuk:
+      - "Di data mana akurasi 98% itu dihitung?"
+      - "Nilai model dari data yang belum pernah dilihatnya."
+  - id: "s31-2"
+    judul: "Baseline Dulu, Baru Bangga"
+    emoji: "🧭"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Modelmu mendapat akurasi uji 78,7%. Sebelum melapor, kamu menghitung baseline "tebak semua Lancar": 456 dari 620 data = 73,5%. Apa arti angka baseline ini?
+    pilihan:
+      - "Baseline tidak penting — yang penting akurasi model"
+      - "Model menambah 5,2 poin di atas baseline; itu keunggulan nyatanya"
+      - "Model kalah dari baseline karena 78,7 kurang dari 100"
+      - "Baseline 73,5% artinya model harus mencapai 100%"
+    jawaban: 1
+    penjelasan: |
+      Baseline = nilai yang bisa dicapai tanpa model sama sekali. Di sini menebak "semua Lancar" sudah benar 73,5% (456 dari 620). Jadi akurasi 78,7% berarti model menambah 5,2 poin.
+
+      Tanpa baseline, angka 78,7% tidak bisa dinilai: kelihatan bagus, padahal tebakan bodoh sudah 73,5%. Model dengan akurasi 72% malah LEBIH BURUK dari tebakan bodoh, walau angkanya terlihat lumayan. Karena itu laporan model yang sehat selalu menulis dua angka: baseline dan hasil model.
+    kode: |
+      import os, pandas as pd
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      lancar = int((df["status"] == "Lancar").sum())
+      print(f"baseline semua Lancar: {lancar}/{len(df)} = {lancar / len(df) * 100:.1f}%")
+    hasil:
+      - ret: 1.5
+        dd: 9.0
+        win: 45
+        note: "Tanpa baseline, 78,7% tidak bisa dinilai bagus atau buruk."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: 78,7% - 73,5% = 5,2 poin keunggulan nyata."
+      - ret: 1.0
+        dd: 9.5
+        win: 40
+        note: "78,7% memang di atas baseline 73,5% — tidak kalah."
+      - ret: 0.5
+        dd: 9.5
+        win: 38
+        note: "Akurasi 100% tidak wajib; data kredit nyata tidak mungkin sempurna."
+    petunjuk:
+      - "Berapa yang benar kalau semua ditebak Lancar?"
+      - "Selisih 78,7% - 73,5% = ?"
+  - id: "s31-3"
+    judul: "Baca Kode: Ukuran Split"
+    emoji: "📐"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      from sklearn.model_selection import train_test_split
+      latih, uji = train_test_split(list(range(620)), test_size=0.25,
+                                    random_state=42)
+      print(len(latih), len(uji))
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "465 155"
+      - "155 465"
+      - "620 0.25"
+      - "456 164"
+    jawaban: 0
+    penjelasan: |
+      620 baris dikali 25% = 155 baris uji; sisanya 465 baris latih. Jadi cetakannya 465 lalu 155 — latih dulu, karena `train_test_split` mengembalikan latih di posisi pertama.
+
+      155 465 = urutannya tertukar. 620 0,25 = angka input, bukan hasil split. 456 164 = jumlah Lancar dan Macet di seluruh data, yaitu komposisi kelas. Ukuran split berpengaruh: dengan 155 baris uji, beda 1 tebakan = 0,65 poin akurasi, jadi wajar kalau hasilnya bergoyang sedikit antar split.
+    kode: |
+      from sklearn.model_selection import train_test_split
+      latih, uji = train_test_split(list(range(620)), test_size=0.25, random_state=42)
+      print("latih:", len(latih), "| uji:", len(uji))
+    hasil:
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: 465 latih, 155 uji."
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Urutan tertukar: train_test_split mengembalikan latih lebih dulu."
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "620 dan 0,25 itu angka input, bukan hasil."
+      - ret: 1.5
+        dd: 8.5
+        win: 44
+        note: "456 dan 164 = jumlah Lancar dan Macet di seluruh data."
+    petunjuk:
+      - "620 × 0,25 = 155 baris uji; sisanya jadi data latih."
+      - "train_test_split mengembalikan latih lebih dulu, baru uji."
+  - id: "s31-4"
+    judul: "X dan y: Jangan Mencontek"
+    emoji: "🧱"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Empat daftar kolom diusulkan sebagai X untuk melatih model yang memprediksi status. Mana yang benar?
+    pilihan:
+      - "id_pengajuan, tanggal_pengajuan, omzet, pinjaman, telat"
+      - "omzet, lama usaha, pinjaman, telat, skor — 5 kolom angka; sektor/kota di-encode dulu kalau mau dipakai"
+      - "status, omzet, pinjaman, telat, skor"
+      - "status saja"
+    jawaban: 1
+    penjelasan: |
+      X berisi fitur, sedangkan status adalah target. Kalau status ikut masuk X, model mencontek jawaban: akurasinya langsung 100% dan tidak berguna untuk pengajuan baru. Sama halnya kalau status dijadikan satu-satunya kolom.
+
+      Kolom id (nomor urut) dan tanggal mentah (teks) juga tidak bisa dipakai apa adanya. Yang benar: 5 kolom angka yang sudah ada sebelum keputusan, yaitu omzet, lama usaha, pinjaman, telat, skor → akurasi uji 78,7%, di atas baseline 73,5%. Kolom teks seperti sektor dan kota boleh ikut, tapi harus di-encode dulu (one-hot).
+    kode: |
+      import os, numpy as np, pandas as pd
+      from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      y = (df["status"] == "Lancar").astype(int).values
+      m = LogisticRegression(max_iter=1000).fit(np.c_[y, df["omzet_bulanan_juta"]], y)
+      print(round(m.score(np.c_[y, df["omzet_bulanan_juta"]], y), 3))
+    hasil:
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "id dan tanggal mentah tidak bisa dihitung model — hasilnya kacau."
+      - ret: 6.0
+        dd: 4.0
+        win: 73
+        note: "Benar: 5 fitur angka yang sudah ada sebelum keputusan. Uji 78,7%."
+      - ret: 0.5
+        dd: 9.5
+        win: 35
+        note: "Status di dalam X = mencontek: akurasi 100%, tapi tak berguna."
+      - ret: 0.5
+        dd: 9.5
+        win: 33
+        note: "Model butuh fitur, bukan cuma jawabannya."
+    petunjuk:
+      - "Target tidak boleh ada di dalam X."
+      - "Kolom teks harus diubah jadi angka dulu."
+  - id: "s31-5"
+    judul: "Overfit: Hafal vs Paham"
+    emoji: "🩺"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu menambah 500 kolom acak (angka random, tanpa arti) ke 5 fitur asli, lalu berlatih hanya dengan 60 baris. Hasilnya akurasi latih 100% dan akurasi uji 72,3% — sedangkan baseline 73,2%. Apa diagnosisnya?
+    pilihan:
+      - "Model bagus — akurasi latih 100% sempurna"
+      - "Overfit: model menghafal derau, akurasi uji jatuh di bawah baseline"
+      - "Kurang fitur — tambah 500 kolom acak lagi"
+      - "Data uji terlalu kecil — abaikan saja hasilnya"
+    jawaban: 1
+    penjelasan: |
+      Dengan 500 kolom acak, model bisa menemukan pola kebetulan yang hanya cocok untuk 60 baris latih — karena itu akurasi latih 100%. Di data baru pola itu hilang: akurasi uji 72,3%, malah di bawah baseline 73,2%. Jarak 100% - 72,3% = 27,7 poin, tanda khas overfit.
+
+      Kolom acak tidak punya arti apa pun, jadi kenaikan akurasi latih itu murni hafalan. Obatnya: pakai fitur yang bisa dijelaskan, tambah baris data, dan nilai dari akurasi uji. Model 5 fitur asli pada 60 baris yang sama memberi akurasi uji 75,0% — lebih baik daripada 505 kolom.
+    kode: |
+      import os, numpy as np, pandas as pd
+      from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = np.column_stack([df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]], np.random.default_rng(1).normal(size=(620, 500))])
+      y = (df["status"] == "Lancar").astype(int).values
+      m = LogisticRegression(max_iter=5000, C=1e4).fit(X[:60], y[:60])
+      print(round(m.score(X[:60], y[:60]), 3), round(m.score(X[60:], y[60:]), 3))
+    hasil:
+      - ret: 1.0
+        dd: 9.5
+        win: 40
+        note: "100% hanya di data latih — model menghafal 500 kolom acak."
+      - ret: 6.0
+        dd: 4.0
+        win: 73
+        note: "Benar: uji 72,3% di bawah baseline 73,2%. Overfit."
+      - ret: 0.5
+        dd: 9.5
+        win: 35
+        note: "Menambah kolom acak menambah hafalan, bukan pengetahuan."
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "Data uji justru satu-satunya ukuran yang jujur."
+    petunjuk:
+      - "Kolom acak tidak punya arti — kenapa akurasi latih bisa 100%?"
+      - "Bandingkan akurasi uji 72,3% dengan baseline 73,2%."
+  - id: "s31-6"
+    judul: "Jangan Lihat Test Berkali-kali"
+    emoji: "🔁"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Tim mencoba 20 variasi model lalu memilih yang akurasinya paling tinggi di data uji. Hasil terbaik: 81,7%, sedangkan rata-rata 20 percobaan itu 78,4%. Apa masalahnya?
+    pilihan:
+      - "Tidak masalah — juaranya memang paling akurat"
+      - "Masalah: memilih dari 20 percobaan membuat data uji terpakai berulang, jadi 81,7% terlalu optimistis"
+      - "Masalahnya kurang percobaan — coba 100 varian"
+      - "Tidak masalah asal data ujinya besar"
+    jawaban: 1
+    penjelasan: |
+      Data uji seharusnya dipakai SEKALI untuk menilai. Kalau dipakai 20 kali untuk memilih, uji itu pelan-pelan berubah jadi data latih: yang terpilih adalah model yang paling beruntung, bukan yang paling jujur.
+
+      Angka 81,7% berasal dari 20 percobaan yang rata-ratanya 78,4%, jadi kenaikan itu wajar terjadi karena keberuntungan. Cara sehat: pilih model memakai validasi atau cross-validation, baru uji SEKALI di data uji. Sebagai pembanding, model 5 fitur sendiri memberi akurasi uji 78,7%.
+    kode: |
+      import numpy as np
+      rng = np.random.default_rng(7)
+      coba = rng.normal(0.79, 0.02, 20)
+      print("terbaik:", round(float(coba.max()), 3), "| rata-rata:", round(float(coba.mean()), 3))
+    hasil:
+      - ret: 1.5
+        dd: 9.0
+        win: 44
+        note: "Memilih dari 20 percobaan = data uji ikut terpakai, angka jadi terlalu bagus."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: uji sekali saja; pilih model pakai CV, bukan data uji."
+      - ret: 0.5
+        dd: 9.5
+        win: 36
+        note: "Menambah percobaan memperburuk: makin banyak keberuntungan yang terpilih."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Ukuran data uji tidak memperbaiki cara pemilihannya."
+    petunjuk:
+      - "Data uji sebaiknya dipakai berapa kali?"
+      - "Hasil terbaik dari 20 percobaan: prestasi atau keberuntungan?"
+  - id: "s31-7"
+    judul: "Arti Koefisien Model"
+    emoji: "🧾"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Model 5 fitur dilatih pada seluruh 620 data dan mencetak koefisien: omzet +0,0773; lama +0,0101; pinjaman -0,1108; telat -0,4788; skor +0,0045. Pernyataan mana yang paling tepat membacanya?
+    pilihan:
+      - "Telat naik 1 kali membuat peluang Lancar naik"
+      - "Telat naik 1 kali menurunkan skor peluang 0,4788, sedangkan skor kredit naik 100 poin hanya menambah 0,45"
+      - "Telat tidak berpengaruh karena koefisiennya di bawah 1"
+      - "Koefisien cuma pajangan — tidak bisa dipakai menjelaskan model"
+    jawaban: 1
+    penjelasan: |
+      Tanda koefisien menunjukkan arah: negatif berarti peluang Lancar turun. Jadi telat naik 1 kali mengurangi skor model sebesar 0,4788, sedangkan skor kredit naik 100 poin hanya menambah 0,45 (0,0045 × 100).
+
+      Perhatikan satuannya: skor dibaca per 1 POIN, telat per 1 KALI. Jadi membandingkan 0,0045 dengan 0,4788 secara mentah itu salah — naik 100 poin skor (peristiwa wajar) setara dengan turun 1 kali telat. Koefisien berbeda sedikit kalau model dilatih pada data berbeda; yang penting cara membacanya, bukan angka persisnya.
+    kode: |
+      import os, pandas as pd
+      from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]
+      y = (df["status"] == "Lancar").astype(int)
+      m = LogisticRegression(max_iter=1000).fit(X, y)
+      print(m.coef_[0].round(4))
+    hasil:
+      - ret: 0.5
+        dd: 9.5
+        win: 38
+        note: "Arahnya kebalik: koefisien negatif berarti peluang Lancar turun."
+      - ret: 6.0
+        dd: 4.5
+        win: 72
+        note: "Benar: telat -0,4788 per kali; skor +100 poin hanya +0,45."
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "Angka kecil bisa besar artinya kalau satuannya kecil juga (per poin)."
+      - ret: 1.5
+        dd: 8.5
+        win: 45
+        note: "Koefisien bisa dibaca — asal tahu satuannya."
+    petunjuk:
+      - "Tanda minus berarti peluang Lancar turun, bukan naik."
+      - "Skor +100 poin = 0,0045 × 100."
+  - id: "s31-8"
+    judul: "Model Sederhana vs Kompleks"
+    emoji: "🧠"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Data hanya 620 baris. Dua pilihan: (A) 5 fitur angka — akurasi uji 78,7%, CV-5 rata-rata 79,7%; (B) 17 fitur (ditambah sektor & kota one-hot) — akurasi uji 80,0%, CV-5 rata-rata 78,4%. Mana yang kamu pilih untuk dipakai?
+    pilihan:
+      - "B — akurasi ujinya lebih tinggi (80,0% vs 78,7%)"
+      - "A — lebih sederhana, CV-nya lebih stabil; beda 1,3 poin itu dalam batas keberuntungan"
+      - "B — makin rumit berarti makin pintar"
+      - "Tidak bisa diputuskan tanpa perangkat keras lebih kuat"
+    jawaban: 1
+    penjelasan: |
+      Beda akurasi uji hanya 1,3 poin, dan dengan 155 baris uji satu tebakan bernilai 0,65 poin — jadi selisih itu cuma dua tebakan, mudah terjadi karena keberuntungan.
+
+      CV-5 menguji lima kali di bagian data yang berbeda: A rata-rata 79,7%, B 78,4%. Artinya A lebih stabil waktu datanya berganti, padahal fiturnya lebih sedikit dan lebih mudah dijelaskan. Untuk data 620 baris, model sederhana biasanya menang: risiko overfit lebih kecil. Aturan praktis: mulai dari model sederhana, catat angkanya sebagai patokan, baru coba yang lebih rumit dan buktikan lewat data uji maupun CV.
+    kode: |
+      import os, pandas as pd
+      from sklearn.model_selection import cross_val_score; from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]; y = (df["status"] == "Lancar").astype(int)
+      print("5 fitur: rata-rata CV", round(cross_val_score(LogisticRegression(max_iter=1000), X, y, cv=5).mean(), 4))
+      print("17 fitur: rata-rata CV", round(cross_val_score(LogisticRegression(max_iter=1000), pd.concat([X, pd.get_dummies(df[["sektor", "kota"]])], axis=1), y, cv=5).mean(), 4))
+    hasil:
+      - ret: 2.0
+        dd: 8.5
+        win: 48
+        note: "Unggul 1,3 poin saja, dan CV-nya justru lebih rendah (78,4% vs 79,7%)."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: sederhana + CV lebih stabil. Selisih 1,3 poin = dua tebakan."
+      - ret: 1.0
+        dd: 9.0
+        win: 40
+        note: "Lebih rumit bukan berarti lebih pintar — lihat angkanya."
+      - ret: 1.0
+        dd: 9.0
+        win: 38
+        note: "Keputusan ini tidak butuh perangkat lebih kuat — cukup data uji dan CV."
+    petunjuk:
+      - "Dengan 155 baris uji, satu tebakan bernilai berapa poin?"
+      - "CV menguji lima kali di bagian berbeda — mana yang lebih stabil?"
+  - id: "s31-9"
+    judul: "Akurasi Bisa Menipu"
+    emoji: "🎯"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Di 155 baris data uji ada 44 pengajuan Macet. Model 5 fitur mendapat akurasi 78,7%. Berapa pengajuan Macet yang benar-benar tertangkap model?
+    pilihan:
+      - "44 dari 44 — akurasi 78,7% cukup tinggi"
+      - "19 dari 44 (43,2%)"
+      - "128 dari 155"
+      - "0 dari 44"
+    jawaban: 1
+    penjelasan: |
+      Akurasi 78,7% berarti 122 tebakan benar dari 155 baris. Tapi rinciannya penting: model menebak "Lancar" 128 kali, dan dari 44 pengajuan yang sebenarnya Macet hanya 19 yang tertangkap (43,2%). Jadi 25 Macet lolos — di dunia nyata itu kredit yang gagal bayar.
+
+      128 = jumlah tebakan "Lancar", bukan jumlah Macet yang tertangkap. Karena Macet hanya 44 dari 155 (28,4%), menebak "semua Lancar" pun sudah 71,6% benar. Jadi akurasi tinggi bisa datang dari menebak kelas mayoritas. Untuk kasus kredit, lihat juga berapa Macet yang tertangkap, bukan hanya akurasinya.
+    kode: |
+      import os, pandas as pd
+      from sklearn.model_selection import train_test_split as tts; from sklearn.linear_model import LogisticRegression as LR
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]; y = (df["status"] == "Lancar").astype(int)
+      Xtr, Xte, ytr, yte = tts(X, y, test_size=0.25, random_state=42)
+      pred = LR(max_iter=1000).fit(Xtr, ytr).predict(Xte)
+      print("Macet tertangkap:", int(((yte == 0) & (pred == 0)).sum()), "dari", int((yte == 0).sum()))
+    hasil:
+      - ret: 0.5
+        dd: 9.5
+        win: 36
+        note: "Akurasi 78,7% tidak berarti semua Macet tertangkap — hanya 19 dari 44."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: 19 dari 44 Macet tertangkap (43,2%). Sisa 25 lolos."
+      - ret: 1.5
+        dd: 9.0
+        win: 45
+        note: "128 itu jumlah tebakan Lancar, bukan jumlah Macet yang tertangkap."
+      - ret: 0.5
+        dd: 9.5
+        win: 34
+        note: "Model tetap menangkap 19 Macet — bukan nol, tapi belum cukup."
+    petunjuk:
+      - "Hitung dulu: 78,7% dari 155 baris = berapa tebakan benar?"
+      - "Dari 44 Macet di data uji, berapa yang benar-benar terdeteksi?"
+  - id: "s31-10"
+    judul: "Uji Sekali atau Cross-Validation?"
+    emoji: "🛰️"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Model 5 fitur: satu kali uji (test 25%) memberi 78,7%. Cross-validation 5 lipatan memberi 76,6%, 78,2%, 78,2%, 81,5%, dan 83,9%. Cara pelaporan mana yang paling tepat?
+    pilihan:
+      - "Laporkan 83,9% — angka terbaik dari CV"
+      - "Laporkan rata-rata CV 79,7% dan sebutkan rentangnya 76,6% sampai 83,9%"
+      - "Laporkan 78,7% saja — itu dari data uji"
+      - "Laporkan 76,6% — angka terburuk supaya aman"
+    jawaban: 1
+    penjelasan: |
+      Satu kali uji pada 155 baris itu berisik: beda 1 tebakan = 0,65 poin. CV-5 membagi data jadi 5 bagian dan menguji 5 kali: 76,6%; 78,2%; 78,2%; 81,5%; 83,9% → rata-ratanya 79,7%. Rata-rata ini lebih stabil daripada satu angka.
+
+      Menyebut rentang itu penting: model yang hasilnya bergoyang lebih dari 7 poin di bagian data berbeda harus dicurigai, bukan dipuji. Memilih 83,9% itu curang (mengambil yang terbaik), memilih 76,6% terlalu pesimis (mengambil yang terburuk). Angka tunggal 78,7% tidak salah, tapi kehilangan informasi sebaran.
+    kode: |
+      import os, pandas as pd
+      from sklearn.model_selection import cross_val_score; from sklearn.linear_model import LogisticRegression
+      b = "/soaldata" if os.path.exists("/soaldata") else os.path.expanduser("~/quantlab/data/soal")
+      df = pd.read_csv(f"{b}/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]; y = (df["status"] == "Lancar").astype(int)
+      cv = cross_val_score(LogisticRegression(max_iter=1000), X, y, cv=5)
+      print([round(v, 4) for v in cv], "| rata-rata:", round(cv.mean(), 4))
+    hasil:
+      - ret: 1.0
+        dd: 9.5
+        win: 38
+        note: "Mengambil angka terbaik dari 5 lipatan = memilih keberuntungan."
+      - ret: 6.5
+        dd: 4.0
+        win: 74
+        note: "Benar: rata-rata 79,7% + rentang 76,6%-83,9% itu laporan yang jujur."
+      - ret: 2.5
+        dd: 8.0
+        win: 50
+        note: "Tidak salah, tapi satu angka menyembunyikan sebaran hasil."
+      - ret: 1.0
+        dd: 9.0
+        win: 42
+        note: "Angka terburuk juga pilih-pilih — sama tidak jujurnya."
+    petunjuk:
+      - "Rata-rata 5 lipatan: (76,6 + 78,2 + 78,2 + 81,5 + 83,9) ÷ 5 = ?"
+      - "Laporan yang baik menyebut pusat dan sebarannya."
+soal:
+  - id: "p31-1"
+    judul: "Split Data & Baseline"
+    emoji: "🗂️"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Baca data kredit dari path yang diberikan. Ambil kolom status jadi y: 1 kalau "Lancar", 0 kalau "Macet". Pisahkan dengan train_test_split(test_size sesuai baris kedua input, random_state=42). Cetak tiga baris: (1) jumlah baris latih, (2) jumlah baris uji, (3) baseline di data uji — persentase y = 1 (Lancar) dengan 2 angka desimal.
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: ukuran data uji (mis. 0.25).
+    output_spec: |
+      Baris 1: jumlah baris latih (bulat). Baris 2: jumlah baris uji (bulat). Baris 3: persentase Lancar di data uji (2 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.25"
+        output: "465\n155\n71.61"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.3"
+        output: "434\n186\n74.19"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.25"
+        output: "465\n155\n71.61"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.2"
+        output: "496\n124\n73.39"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.3"
+        output: "434\n186\n74.19"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.15"
+        output: "527\n93\n73.12"
+    solusi: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      path = input().strip()
+      ukuran_uji = float(input())
+      df = pd.read_csv(path)
+      y = (df["status"] == "Lancar").astype(int)
+      ytr, yte = train_test_split(y, test_size=ukuran_uji, random_state=42)
+      print(len(ytr))
+      print(len(yte))
+      print(f"{yte.mean() * 100:.2f}")
+    petunjuk:
+      - "y = 1 untuk Lancar, 0 untuk Macet: (df[\"status\"] == \"Lancar\").astype(int)."
+      - "train_test_split mengembalikan latih dulu, lalu uji."
+      - "Baseline Lancar = rata-rata y di data uji, dikali 100."
+    tugas:
+      - "Baca path dan ukuran data uji dari input."
+      - "Buat y: 1 kalau status Lancar, 0 kalau Macet."
+      - "Split dengan train_test_split(test_size=ukuran_uji, random_state=42)."
+      - "Cetak jumlah baris latih, jumlah baris uji, lalu baseline Lancar di data uji (persen, 2 desimal)."
+    starter: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      path = input().strip()
+      ukuran_uji = float(input())
+      df = pd.read_csv(path)
+      y = (df["status"] == "Lancar").astype(int)
+      # TODO: split y dengan train_test_split(test_size=ukuran_uji, random_state=42)
+      # TODO: cetak jumlah baris latih, jumlah baris uji
+      # TODO: cetak baseline Lancar di data uji dalam persen (2 desimal)
+  - id: "p31-2"
+    judul: "Model Pertama & Akurasi"
+    emoji: "🎛️"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Baca data kredit dari path. Ambil 5 kolom angka sebagai X: omzet_bulanan_juta, lama_usaha_bulan, pinjaman_diajukan_juta, riwayat_telat_12m, skor_kredit. y = 1 kalau status "Lancar", 0 kalau "Macet". Split dengan test_size sesuai baris kedua input dan random_state=42, latih LogisticRegression(max_iter=1000), lalu cetak akurasi data uji dalam persen dengan 2 angka desimal.
+    input_spec: |
+      Baris 1: path file CSV. Baris 2: ukuran data uji (mis. 0.25).
+    output_spec: |
+      Satu baris: akurasi data uji dalam persen (2 desimal).
+    contoh:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.25"
+        output: "78.71"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.3"
+        output: "78.49"
+    tes:
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.25"
+        output: "78.71"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.2"
+        output: "78.23"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.3"
+        output: "78.49"
+      - input: "/soaldata/kredit_umkm_bersih.csv\n0.15"
+        output: "77.42"
+    solusi: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.linear_model import LogisticRegression
+      path = input().strip()
+      ukuran_uji = float(input())
+      df = pd.read_csv(path)
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]
+      y = (df["status"] == "Lancar").astype(int)
+      Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=ukuran_uji, random_state=42)
+      model = LogisticRegression(max_iter=1000).fit(Xtr, ytr)
+      print(f"{model.score(Xte, yte) * 100:.2f}")
+    petunjuk:
+      - "X = 5 kolom angka, y = status yang jadi 1/0."
+      - "Latih dengan LogisticRegression(max_iter=1000) lalu .score() di data uji."
+      - "Kalikan 100 dan format 2 desimal supaya jadi persen."
+    tugas:
+      - "Baca path dan ukuran data uji dari input."
+      - "Susun X dari 5 kolom angka, dan y = 1 untuk Lancar."
+      - "Split test_size=ukuran_uji random_state=42, lalu latih LogisticRegression(max_iter=1000)."
+      - "Cetak akurasi data uji dalam persen dengan 2 desimal."
+    starter: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.linear_model import LogisticRegression
+      path = input().strip()
+      ukuran_uji = float(input())
+      df = pd.read_csv(path)
+      # TODO: ambil 5 kolom angka jadi X (omzet, lama, pinjaman, telat, skor)
+      # TODO: y = 1 kalau status "Lancar", 0 kalau "Macet"
+      # TODO: split test_size=ukuran_uji random_state=42, latih LogisticRegression(max_iter=1000)
+      # TODO: cetak akurasi data uji dalam persen dengan 2 desimal

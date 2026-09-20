@@ -1,0 +1,635 @@
+# ============================================================
+# BAB 32 — EVALUASI & VALIDASI MODEL (TRACK: DATA SCIENCE)
+# Akurasi menipu. Di sini model diuji dengan jujur.
+# ============================================================
+bab: 32
+track: ds
+judul: "Evaluasi & Validasi Model"
+emoji: "🎯"
+deskripsi: "Model sudah dilatih — tapi apakah benar-benar bagus? Pelajari confusion matrix, precision, recall, dan cross-validation. Inilah pembeda peserta pemula dan juara kompetisi."
+pelajaran:
+  - id: "32-1"
+    judul: "Confusion Matrix: Kenapa Akurasi Menipu"
+    menit: 5
+    materi: |
+      Data kita: **620 pengajuan pinjaman UMKM**. Hasil akhirnya: **164 Macet** dan **456 Lancar**. Jadi Macet hanya 164/620 = **26,5%** dari data.
+
+      Sekarang perhatikan: model yang tidak belajar apa pun dan SELALU menebak "Lancar" sudah benar 456 dari 620 → akurasi **0,735**. Angka ini disebut **baseline** — batas yang wajib dikalahkan. Kalau modelmu cuma 0,74, dia tidak lebih pintar dari tebakan buta.
+
+      **Akurasi** = (tebakan benar) / (semua data). Masalahnya: akurasi tidak bilang kesalahan JENIS APA yang terjadi.
+
+      **Confusion matrix** = tabel 4 kotak:
+      - **TP** (True Positive): aslinya Macet, ditebak Macet → tertangkap.
+      - **TN** (True Negative): aslinya Lancar, ditebak Lancar → aman.
+      - **FP** (False Positive): aslinya Lancar, ditebak Macet → alarm palsu.
+      - **FN** (False Negative): aslinya Macet, ditebak Lancar → LOLOS. Ini yang paling mahal bagi bank.
+
+      Contoh nyata: model logreg (5 fitur) diuji pada 155 pengajuan → TP = 22, TN = 106, FP = 8, FN = 19.
+      - Akurasi = (22 + 106) / 155 = 128/155 = **0,83**. Terlihat bagus!
+      - **Precision** = dari yang DITANGKAP, berapa yang benar Macet = TP / (TP + FP) = 22 / 30 = **0,73**.
+      - **Recall** = dari SEMUA Macet asli, berapa yang tertangkap = TP / (TP + FN) = 22 / 41 = **0,54**.
+
+      Recall 0,54 artinya 19 dari 41 Macet lolos dari deteksi. Akurasi 0,83 tidak memberi tahu itu. Di kelas tidak seimbang (26,5% vs 73,5%), precision dan recall lebih jujur daripada akurasi.
+    kode: |
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.linear_model import LogisticRegression
+      from sklearn.metrics import confusion_matrix
+
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+      X = data[fitur]
+      y = (data["status"] == "Macet").astype(int)
+      X_latih, X_uji, y_latih, y_uji = train_test_split(X, y, test_size=0.25, random_state=1, stratify=y)
+      model = LogisticRegression(max_iter=1000)
+      model.fit(X_latih, y_latih)
+      tn, fp, fn, tp = confusion_matrix(y_uji, model.predict(X_uji)).ravel()
+      print(f"TP = {tp} -- Macet, ditebak Macet (tertangkap)")
+      print(f"TN = {tn} -- Lancar, ditebak Lancar (aman)")
+      print(f"FP = {fp} -- Lancar, ditebak Macet (alarm palsu)")
+      print(f"FN = {fn} -- Macet, ditebak Lancar (LOLOS)")
+      print(f"Akurasi = {(tp + tn) / len(y_uji):.2f}")
+      print(f"Precision = {tp / (tp + fp):.2f} | Recall = {tp / (tp + fn):.2f}")
+    penjelasan: "Akurasi 0,83 terdengar bagus, padahal 26,5% data Macet dan model bodoh sudah dapat 0,735. Precision 0,73 = 22 dari 30 tangkapan benar. Recall 0,54 = baru 22 dari 41 Macet tertangkap, 19 lolos. Di kelas tidak seimbang, precision dan recall lebih penting daripada akurasi."
+  - id: "32-2"
+    judul: "Cross-Validation & Overfitting"
+    menit: 6
+    materi: |
+      Satu kali split bisa hoki atau sial. Buktinya dari data kita: model dan data sama, cuma `random_state` split yang diganti → akurasi data uji 0,774; 0,781; 0,794; 0,806; 0,813; 0,826. Mau melapor yang mana? Kalau kebetulan dapat 0,826, laporanmu terlalu bagus. Kalau dapat 0,774, terlalu jelek.
+
+      Obatnya: **cross-validation** (CV). Data dipotong jadi 5 bagian. Tiap bagian pernah jadi data uji, lalu hasilnya dirata-rata. Contoh nyata untuk logreg: lipatan 0,782; 0,815; 0,839; 0,766; 0,782 → CV-5 = **0,797**. Semua data kebagian jadi uji, tidak ada yang terbuang, dan hasilnya jauh lebih stabil.
+
+      **Overfitting** = model menghafal data latih, bukan belajar pola. Contoh nyata: pohon keputusan tanpa batas kedalaman → akurasi LATIH 1,000 (sempurna!), tapi CV-3 cuma 0,689. Pohon itu hafal 620 baris, tapi di data baru sering salah. Bandingkan `max_depth=4`: latih 0,792, CV-3 0,752. Aturan praktis: **selisih latih vs CV yang besar = tanda overfitting**.
+
+      Sebaliknya **underfitting**: latih dan CV sama-sama rendah (misal 0,65 dan 0,64) → model terlalu sederhana, tambah fitur atau kompleksitas.
+
+      Jadi: pilih model dari skor **CV**, bukan skor latih. Data uji disimpan untuk penilaian terakhir, sekali saja.
+    kode: |
+      import pandas as pd
+      from sklearn.model_selection import cross_val_score
+      from sklearn.tree import DecisionTreeClassifier
+
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      X = data[["riwayat_telat_12m", "skor_kredit", "pinjaman_diajukan_juta"]]
+      y = (data["status"] == "Macet").astype(int)
+
+      pohon_bebas = DecisionTreeClassifier(random_state=1)
+      cv_bebas = cross_val_score(pohon_bebas, X, y, cv=3).mean()
+      print(f"Tanpa batas: latih {pohon_bebas.fit(X, y).score(X, y):.3f} | CV-3 {cv_bebas:.3f}")
+
+      pohon_batas = DecisionTreeClassifier(max_depth=4, random_state=1)
+      cv_batas = cross_val_score(pohon_batas, X, y, cv=3).mean()
+      print(f"max_depth=4: latih {pohon_batas.fit(X, y).score(X, y):.3f} | CV-3 {cv_batas:.3f}")
+    penjelasan: "Satu split = satu lemparan dadu. Model sama, data sama, cuma random_state ganti → 0,774 sampai 0,826. CV-5 memotong data jadi 5, tiap potongan pernah jadi uji → 0,797 lebih stabil. Pohon tanpa batas: latih 1,000 tapi CV-3 0,689 = overfitting (hafal). max_depth=4: latih 0,792, CV-3 0,752."
+skenario:
+  - id: "s32-1"
+    judul: "Baca Kode: Akurasi dari Confusion Matrix"
+    emoji: "🔍"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      tp, tn, fp, fn = 22, 106, 8, 19
+      akurasi = (tp + tn) / (tp + tn + fp + fn)
+      print(round(akurasi, 2))
+      ```
+      Apa yang tercetak?
+    pilihan:
+      - "0.83"
+      - "0.54"
+      - "0.73"
+      - "1.0"
+    jawaban: 0
+    penjelasan: |
+      Isi confusion matrix: TP 22, TN 106, FP 8, FN 19. Total data uji = 22 + 106 + 8 + 19 = 155. Tebakan benar = TP + TN = 22 + 106 = 128. Akurasi = 128/155 = 0,8258 → dibulatkan **0,83**. Opsi 0,54 = recall (22/41) — hanya melihat kelas Macet. Opsi 0,73 = precision (22/30) — hanya melihat hasil tangkapan. 1,0 mustahil: ada 27 tebakan salah (8 alarm palsu + 19 Macet lolos). Perhatikan: satu tabel confusion matrix bisa menghasilkan tiga angka berbeda, dan ketiganya menjawab pertanyaan yang berbeda.
+    kode: |
+      tp, tn, fp, fn = 22, 106, 8, 19
+      akurasi = (tp + tn) / (tp + tn + fp + fn)
+      print(f"Akurasi: {round(akurasi, 2)}")
+    hasil:
+      - ret: 12.0
+        dd: 0.0
+        win: 85
+        note: "Benar: 128/155 = 0,83."
+      - ret: 2.0
+        dd: 0.0
+        win: 25
+        note: "0,54 itu recall (22/41) — kelas Macet saja, bukan seluruh data."
+      - ret: 3.0
+        dd: 0.0
+        win: 30
+        note: "0,73 itu precision (22/30) — dari yang ditangkap, bukan dari semua data."
+      - ret: -6.0
+        dd: 0.0
+        win: 10
+        note: "1,0 berarti semua benar. Ada 27 salah (8 FP + 19 FN)."
+    petunjuk:
+      - "Jumlahkan dulu semua kotak: 22 + 106 + 8 + 19 = ?"
+      - "Akurasi = (TP + TN) / total."
+  - id: "s32-2"
+    judul: "Kotak yang Paling Mahal"
+    emoji: "💸"
+    sulit: "mudah"
+    xp: 20
+    menit: 4
+    cerita: |
+      Model sudah diuji ke 155 pengajuan: TP 22, TN 106, FP 8, FN 19. Manajer bertanya: "kotak mana yang paling merugikan bank?" Kotak mana yang kamu tunjuk?
+    pilihan:
+      - "TP — 22 Macet tertangkap"
+      - "TN — 106 Lancar aman"
+      - "FP — 8 alarm palsu"
+      - "FN — 19 Macet lolos"
+    jawaban: 3
+    penjelasan: |
+      FN = aslinya Macet tapi ditebak Lancar. Pinjaman cair, uang tidak kembali. Ada 19 pengajuan lolos. Kalau satu kredit macet merugikan rata-rata 25 juta, potensi kerugiannya 19 x 25 = **475 juta**. Bandingkan FP = 8 calon nasabah baik ditolak; kalau margin satu nasabah 2 juta, kerugiannya 8 x 2 = **16 juta**. Selisihnya 459 juta — FN jauh lebih mahal. TP dan TN bukan kerugian: itu keputusan yang benar. Karena itu, di kelas tidak seimbang banyak proyek rela menekan FN (naikkan recall) walau FP ikut naik sedikit. Yang haram: akurasi tinggi tapi FN banyak.
+    kode: |
+      tp, tn, fp, fn = 22, 106, 8, 19
+      rugi_lolos = fn * 25
+      rugi_palsu = fp * 2
+      print(f"FN {fn} x 25 juta = {rugi_lolos} juta -- Macet lolos")
+      print(f"FP {fp} x 2 juta = {rugi_palsu} juta -- calon baik ditolak")
+      print(f"Selisih {rugi_lolos - rugi_palsu} juta lebih mahal di FN")
+    hasil:
+      - ret: 2.0
+        dd: 0.0
+        win: 30
+        note: "TP itu keberhasilan: Macet berhasil ditangkap."
+      - ret: 3.0
+        dd: 0.0
+        win: 35
+        note: "TN juga benar: Lancar ditebak Lancar."
+      - ret: 5.0
+        dd: 0.0
+        win: 40
+        note: "FP hanya kehilangan calon nasabah baik, bukan uang pinjaman."
+      - ret: 15.0
+        dd: 0.0
+        win: 85
+        note: "Benar: 19 Macet lolos x 25 juta = 475 juta. Paling mahal."
+    petunjuk:
+      - "Kotak mana yang uangnya benar-benar hilang?"
+      - "Macet yang ditebak Lancar = pinjaman tetap cair."
+  - id: "s32-3"
+    judul: "Baca Angka Baseline"
+    emoji: "📉"
+    sulit: "mudah"
+    xp: 20
+    menit: 3
+    cerita: |
+      ```python
+      lancar = 456
+      semua = 620
+      print(round(lancar / semua, 4))
+      ```
+      Ini model yang menebak "Lancar" untuk SEMUA pengajuan. Apa arti 0.7355?
+    pilihan:
+      - "Akurasi model yang tidak belajar apa pun — angka acuan yang wajib dikalahkan"
+      - "Akurasi yang bagus, model ini layak dikirim ke kompetisi"
+      - "Recall kelas Macet dari model itu"
+      - "Precision kelas Macet dari model itu"
+    jawaban: 0
+    penjelasan: |
+      456/620 = 0,7355. Karena 73,5% data memang Lancar, tebakan buta pun kelihatan 0,74. Ini **baseline**: lantai, bukan target. Model yang skornya 0,74 biasanya memang menebak Lancar terus — tidak belajar apa pun. Cek precision kelas Macet model seperti itu: dia tidak pernah bilang Macet, jadi tidak ada tangkapan sama sekali (precision 0) dan tidak ada Macet tertangkap (recall 0). Karena itu, laporan yang hanya menulis "akurasi 0,74" menyembunyikan fakta bahwa model itu tidak berguna. Di kompetisi, tulis juga baseline-nya — kalau modelmu tidak jauh di atas 0,735, juri tahu kamu belum dapat sinyal.
+    kode: |
+      lancar = 456
+      semua = 620
+      print(f"Baseline (tebak Lancar semua): {lancar / semua:.4f}")
+      print(f"Angka wajib dikalahkan: {lancar / semua:.3f}")
+    hasil:
+      - ret: 12.0
+        dd: 0.0
+        win: 85
+        note: "Benar: 456/620 = 0,7355 — lantai, bukan prestasi."
+      - ret: -4.0
+        dd: 12.0
+        win: 15
+        note: "0,7355 itu akurasi tebakan buta. Kirim model ini = kirim tidak ada model."
+      - ret: 0.0
+        dd: 0.0
+        win: 20
+        note: "Recall Macet model ini 0 — tidak pernah bilang Macet."
+      - ret: 0.0
+        dd: 0.0
+        win: 15
+        note: "Precision Macet juga 0 — tidak ada tangkapan sama sekali."
+    petunjuk:
+      - "73,5% data memang Lancar. Apa artinya kalau semua ditebak Lancar?"
+      - "Baseline = batas bawah yang harus dilewati."
+  - id: "s32-4"
+    judul: "Akurasi Tinggi, Recall Rendah"
+    emoji: "⚖️"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Dua model diuji pada 155 pengajuan yang sama (41 di antaranya Macet asli). Model A: akurasi 0,90, tapi hanya menangkap 8 dari 41 Macet. Model B: akurasi 0,78, menangkap 29 dari 41 Macet. Bank mau menekan kerugian Macet. Pilih model mana?
+    pilihan:
+      - "A — akurasi 0,90 jauh lebih tinggi"
+      - "B — 29 dari 41 Macet tertangkap, A cuma 8"
+      - "A, tapi laporkan juga recall B"
+      - "Tunggu model ketiga yang akurasinya di atas 0,95"
+    jawaban: 1
+    penjelasan: |
+      Hitung langsung dampaknya. Model A: 8 Macet tertangkap → 41 - 8 = **33 Macet lolos**. Model B: 29 tertangkap → 41 - 29 = **12 Macet lolos**. Kalau satu Macet merugikan 25 juta: A = 33 x 25 = 825 juta, B = 12 x 25 = 300 juta. Selisih 525 juta. Akurasi A lebih tinggi karena dia jago menebak kelas mayoritas (Lancar, 114 dari 155 data), bukan karena menangkap Macet. Untuk tujuan "jangan sampai Macet lolos", B jelas lebih berguna. Menunggu model akurasi 0,95 tanpa memperhatikan recall hanya membuang waktu — di kompetisi, juri menilai metrik yang kamu pilih dan alasannya.
+    kode: |
+      total_macet = 41
+      tangkap_a = round(41 * 0.20)
+      tangkap_b = round(41 * 0.70)
+      print(f"Model A: tangkap {tangkap_a}, lolos {total_macet - tangkap_a}")
+      print(f"Model B: tangkap {tangkap_b}, lolos {total_macet - tangkap_b}")
+      print(f"Selisih Macet lolos: {total_macet - tangkap_a - (total_macet - tangkap_b)}")
+    hasil:
+      - ret: -10.0
+        dd: 22.0
+        win: 15
+        note: "Akurasi 0,90 menipu: 33 Macet lolos x 25 juta = 825 juta."
+      - ret: 14.0
+        dd: 6.0
+        win: 85
+        note: "Benar: hanya 12 Macet lolos. Kerugian 300 juta vs 825 juta."
+      - ret: 4.0
+        dd: 18.0
+        win: 30
+        note: "Melaporkan recall tidak menutup kerugian — modelnya tetap dipakai."
+      - ret: -2.0
+        dd: 4.0
+        win: 20
+        note: "Menunggu bisa kelamaan; dan akurasi tinggi belum tentu recall tinggi."
+    petunjuk:
+      - "Hitung Macet yang LOLOS: total Macet dikurangi yang tertangkap."
+      - "Model A: 8 tertangkap, berarti berapa lolos?"
+      - "Bandingkan 33 vs 12 pengajuan yang berpotensi rugi."
+  - id: "s32-5"
+    judul: "Split Sekali atau Cross-Validation?"
+    emoji: "🔁"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Datamu cuma 200 baris. Kamu split sekali (150 latih / 50 uji) → akurasi 0,86. Teman hanya mengubah `random_state` → 0,61. Mana angka yang kamu laporkan?
+    pilihan:
+      - "0,86 — angka terbaik, itu yang dicari juri"
+      - "Pakai cross-validation 5-fold: semua baris kebagian jadi data uji, hasilnya rata-rata 5 pengukuran"
+      - "0,61 — pilih yang paling pesimis biar aman"
+      - "Rata-rata keduanya: (0,86 + 0,61) / 2 = 0,735"
+    jawaban: 1
+    penjelasan: |
+      Dengan 200 baris, satu split menyisakan 50 baris uji. Satu tebakan salah = 1/50 = **0,02** perubahan akurasi. Nasib 5-10 baris sudah bisa menggeser laporan sebesar 0,1 — itu yang terjadi saat 0,86 berubah jadi 0,61 hanya karena `random_state` berganti. Split tunggal di data kecil tidak bisa dipercaya. CV 5-fold: 200/5 = **40 baris** jadi uji, diulang 5 kali sampai semua baris pernah jadi uji, lalu dirata-rata. Mengambil angka terbaik = menipu diri; mengambil yang terburuk = terlalu takut; rata-rata dua split tetap cuma dua sampel. Yang benar: ukur berkali-kali secara sistematis.
+    kode: |
+      total = 200
+      baris_uji = total // 4
+      print(f"Satu split: {baris_uji} baris uji -> 1 salah = {1 / baris_uji * 100:.1f}%")
+      print(f"CV-5: {total // 5} baris uji x 5 putaran, semua kebagian uji")
+    hasil:
+      - ret: -6.0
+        dd: 25.0
+        win: 20
+        note: "0,86 cuma satu lemparan dadu. Di data uji lain bisa 0,61."
+      - ret: 13.0
+        dd: 5.0
+        win: 85
+        note: "Benar: CV-5 memakai semua 200 baris sebagai uji, hasilnya stabil."
+      - ret: 2.0
+        dd: 5.0
+        win: 30
+        note: "0,61 juga benar tapi terlalu pesimis — masih satu split saja."
+      - ret: 3.0
+        dd: 10.0
+        win: 35
+        note: "Rata-rata dua split bukan pengukuran sistematis."
+    petunjuk:
+      - "Di data kecil, satu split = nasib 50 baris saja."
+      - "CV berputar: tiap bagian pernah jadi uji, lalu dirata-rata."
+  - id: "s32-6"
+    judul: "Overfit atau Wajar?"
+    emoji: "🌳"
+    sulit: "sedang"
+    xp: 35
+    menit: 5
+    cerita: |
+      Pohon A tanpa batas kedalaman: akurasi latih 1,000, CV-3 0,689. Pohon B dengan `max_depth=4`: latih 0,792, CV-3 0,752. Mana yang kamu kirim ke kompetisi?
+    pilihan:
+      - "A — latihnya sempurna, 1,000"
+      - "B — selisih latih vs CV kecil (0,04); selisih A besar (0,31) tanda menghafal"
+      - "A — pohon yang lebih dalam selalu lebih pintar"
+      - "Kirim keduanya, biar juri yang memilih"
+    jawaban: 1
+    penjelasan: |
+      Hitung selisihnya. Pohon A: 1,000 - 0,689 = **0,311**. Pohon tanpa batas menghafal 620 baris latih sampai sempurna, tapi di data yang belum pernah dilihat (lipatan CV) dia jatuh ke 0,689 — lebih buruk daripada pohon dangkal. Pohon B: 0,792 - 0,752 = **0,040**. Selisih kecil = model belajar pola, bukan hafalan. Pemilihan model memakai skor CV (data yang belum dilihat), bukan skor latih. Catatan penting: CV-3 B = 0,752 masih di atas baseline 0,735, tapi hanya tipis. Langkah berikutnya bukan menambah kedalaman pohon, melainkan menambah atau memperbaiki fitur.
+    kode: |
+      latih_a, cv_a = 1.000, 0.689
+      latih_b, cv_b = 0.792, 0.752
+      print(f"Pohon A: selisih latih-CV {latih_a - cv_a:.3f} (hafal)")
+      print(f"Pohon B: selisih latih-CV {latih_b - cv_b:.3f} (wajar)")
+    hasil:
+      - ret: -12.0
+        dd: 30.0
+        win: 10
+        note: "Latih 1,000 itu hafalan. Di data baru jatuh ke 0,689."
+      - ret: 13.0
+        dd: 4.0
+        win: 85
+        note: "Benar: selisih 0,04 vs 0,31. B lebih jujur."
+      - ret: -8.0
+        dd: 28.0
+        win: 15
+        note: "Lebih dalam tanpa batas = lebih cepat menghafal."
+      - ret: 1.0
+        dd: 15.0
+        win: 25
+        note: "Kirim dua model? Kompetisi minta satu. Pilih dari skor CV."
+    petunjuk:
+      - "Selisih = akurasi latih dikurangi akurasi CV."
+      - "Selisih 0,31 vs 0,04 — mana yang menghafal?"
+  - id: "s32-7"
+    judul: "Test Set Dicicipi 20 Kali"
+    emoji: "👀"
+    sulit: "sedang"
+    xp: 35
+    menit: 6
+    cerita: |
+      Kamu mencoba 20 kombinasi fitur dan model. Semuanya diukur di test set yang SAMA, lalu kamu ambil yang terbaik: 0,842. Padahal rata-rata 20 percobaan itu 0,773. Apa risikonya?
+    pilihan:
+      - "Tidak ada risiko — memilih yang terbaik itu wajar"
+      - "Skor 0,842 sebagian hoki: test set ikut jadi bahan pemilihan. Pilih model pakai CV di data latih; test set dibuka SEKALI di akhir"
+      - "Risikonya cuma waktu komputasi 20 kali"
+      - "Aman, asal 20 model itu dilatih dengan data yang sama"
+    jawaban: 1
+    penjelasan: |
+      Rata-rata 20 percobaan = 0,773, yang terbaik = 0,842. Selisih 0,069 itu sebagian bukan keunggulan model, tapi keberuntungan pada satu test set. Kalau model juara diuji di test set lain, skornya biasanya turun. Ini disebut test set bocor ke proses pemilihan: kamu memakai test set berkali-kali sebagai "penilai", jadi keputusanmu ikut menyesuaikan kebetulan data itu. Aturan yang benar: pilih model dan atur parameternya memakai CV di DATA LATIH. Test set disimpan rapat dan dibuka sekali saja di akhir — seperti ujian akhir, bukan latihan harian.
+    kode: |
+      import random
+      rng = random.Random(1)
+      skor = [round(rng.uniform(0.70, 0.85), 3) for _ in range(20)]
+      print(f"Rata-rata 20 percobaan: {sum(skor) / len(skor):.3f}")
+      print(f"Skor terbaik: {max(skor)} <- sebagian hoki")
+    hasil:
+      - ret: -10.0
+        dd: 26.0
+        win: 15
+        note: "Skor 0,842 optimistis; di test set lain bisa jatuh."
+      - ret: 14.0
+        dd: 4.0
+        win: 88
+        note: "Benar: CV untuk memilih, test set sekali di akhir."
+      - ret: 2.0
+        dd: 10.0
+        win: 30
+        note: "Waktu memang terpakai, tapi masalahnya bukan itu."
+      - ret: -4.0
+        dd: 20.0
+        win: 20
+        note: "Data latih sama bukan pelindung; test set tetap tercemar."
+    petunjuk:
+      - "Bandingkan 0,842 dengan rata-rata 0,773."
+      - "Untuk apa test set kalau dilihat 20 kali?"
+  - id: "s32-8"
+    judul: "Hitung Precision & Recall Lalu Bertindak"
+    emoji: "🧮"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      Model menolak 30 pengajuan (ditebak Macet). Dari 30 itu, 22 benar Macet dan 8 ternyata Lancar. Di data uji ada 41 Macet asli. Berapa precision dan recall model ini, dan tindakan mana yang paling masuk akal?
+    pilihan:
+      - "Precision 0,54 dan recall 0,73 — naikkan ambang vonis"
+      - "Precision 0,73 dan recall 0,54 — turunkan ambang vonis Macet supaya lebih banyak Macet tertangkap, sambil memantau precision"
+      - "Precision 0,73 dan recall 0,54 — sudah bagus, tidak usah diapa-apakan"
+      - "Recall 0,54 artinya 54% tebakan Macet salah"
+    jawaban: 1
+    penjelasan: |
+      Precision = 22 / (22 + 8) = 22/30 = **0,733**. Recall = 22 / 41 = **0,537**. Jadi 41 - 22 = **19 Macet lolos** — hampir setengah. Akurasi model ini 0,83 dan kelihatan aman, padahal separuh kasus mahal terlewat. Tindakan: turunkan ambang keputusan (misal dari 0,5 ke 0,35) supaya lebih banyak pengajuan dicurigai Macet → recall naik, walau precision turun karena alarm palsu bertambah. Bisa juga tambah fitur yang benar-benar relevan. Yang jelas salah: diam saja karena akurasi sudah 0,83. Dan 0,54 BUKAN "54% tebakan salah" — artinya 54% Macet asli berhasil tertangkap; sisanya 46% lolos. Membalik precision dan recall artinya salah membaca arah pecahan (yang dibagi berapa).
+    kode: |
+      tertangkap, salah_tangkap, total_macet = 22, 8, 41
+      presisi = tertangkap / (tertangkap + salah_tangkap)
+      recall = tertangkap / total_macet
+      print(f"Precision = {tertangkap}/{tertangkap + salah_tangkap} = {presisi:.3f}")
+      print(f"Recall = {tertangkap}/{total_macet} = {recall:.3f}")
+      print(f"Macet lolos = {total_macet - tertangkap} pengajuan")
+    hasil:
+      - ret: -6.0
+        dd: 24.0
+        win: 12
+        note: "Pecahannya kebalik: precision 0,73, recall 0,54. Naikkan ambang = makin banyak lolos."
+      - ret: 15.0
+        dd: 7.0
+        win: 85
+        note: "Benar: precision 0,73, recall 0,54, 19 Macet lolos → turunkan ambang."
+      - ret: 3.0
+        dd: 20.0
+        win: 25
+        note: "Akurasi 0,83 tidak menyelamatkan 19 Macet yang lolos."
+      - ret: -8.0
+        dd: 30.0
+        win: 10
+        note: "Recall 0,54 = 54% Macet tertangkap, bukan 54% tebakan salah."
+    petunjuk:
+      - "Precision = 22 dibagi (22 + 8). Recall = 22 dibagi 41."
+      - "Berapa Macet yang lolos? 41 - 22 = ?"
+      - "Kalau Macet lolos banyak, ambang vonis perlu diturunkan."
+  - id: "s32-9"
+    judul: "Dua Split, Dua Cerita"
+    emoji: "🎲"
+    sulit: "sulit"
+    xp: 50
+    menit: 8
+    cerita: |
+      Model sama, data sama (620 baris). Kamu ganti `random_state` split 25%: dapat 0,774 dan 0,826. CV-5 memberi lipatan 0,782; 0,815; 0,839; 0,766; 0,782. Laporan mana yang paling jujur, dan berapa selisih dua split itu?
+    pilihan:
+      - "0,826 — angka terbaik"
+      - "0,774 — angka terburuk, biar tidak sombong"
+      - "CV-5 = 0,797; selisih dua split = 0,052"
+      - "Rata-rata dua split = 0,800, jadi sama saja dengan CV"
+    jawaban: 2
+    penjelasan: |
+      Model dan data tidak berubah — yang berubah hanya pembagian data. Hasilnya 0,774 sampai 0,826: selisihnya 0,826 - 0,774 = **0,052** (5,2 poin persen). Satu split cuma satu lemparan dadu. CV-5 lebih jujur karena semua baris pernah jadi data uji: (0,782 + 0,815 + 0,839 + 0,766 + 0,782) / 5 = 3,984 / 5 = **0,797**. Laporan yang baik menulis CV-5 0,797 sekaligus rentang lipatan 0,766-0,839, karena rentang menunjukkan kestabilan. Rata-rata dua split kebetulan 0,800 — tapi itu hanya dua sampel, bukan pengukuran sistematis; kalau split ketiga dicoba, angkanya bisa bergeser lagi.
+    kode: |
+      lipatan = [0.782, 0.815, 0.839, 0.766, 0.782]
+      cv5 = sum(lipatan) / len(lipatan)
+      print(f"CV-5 = {cv5:.3f} (rentang {min(lipatan):.3f}-{max(lipatan):.3f})")
+      print(f"Dua split: 0.774 dan 0.826 -> selisih {0.826 - 0.774:.3f}")
+    hasil:
+      - ret: -8.0
+        dd: 28.0
+        win: 12
+        note: "0,826 = split yang hoki; di data lain bisa 0,774."
+      - ret: 2.0
+        dd: 6.0
+        win: 30
+        note: "0,774 juga satu lemparan dadu, cuma arah sebaliknya."
+      - ret: 16.0
+        dd: 3.0
+        win: 88
+        note: "Benar: CV-5 0,797 dan selisih split 0,052."
+      - ret: 4.0
+        dd: 18.0
+        win: 28
+        note: "Kebetulan 0,800, tapi rata-rata dua sampel bukan CV."
+    petunjuk:
+      - "Selisih = 0,826 - 0,774."
+      - "Jumlahkan 5 lipatan, lalu bagi 5."
+      - "Rentang lipatan memberi tahu seberapa stabil modelnya."
+  - id: "s32-10"
+    judul: "Hitung Biaya Dua Ambang"
+    emoji: "💰"
+    sulit: "sulit"
+    xp: 50
+    menit: 7
+    cerita: |
+      1.000 pengajuan, 265 di antaranya Macet asli. Model ketat: menolak 200 pengajuan, 180 benar Macet. Model longgar: menolak 400 pengajuan, 240 benar Macet. Satu kredit Macet merugikan 25 juta; satu calon baik yang ditolak menghilangkan keuntungan 2 juta. Total kerugian mana yang lebih kecil?
+    pilihan:
+      - "Model ketat — 180 x 25 = 4.500 juta"
+      - "Model longgar — 625 + 320 = 945 juta, sedangkan model ketat 2.125 + 40 = 2.165 juta"
+      - "Sama saja, karena Macet asli tetap 265"
+      - "Model ketat, karena precision-nya 0,90"
+    jawaban: 1
+    penjelasan: |
+      Hitung dua-duanya sampai tuntas. Model ketat: Macet lolos = 265 - 180 = 85 → 85 x 25 juta = **2.125 juta**. Calon baik ditolak = 200 - 180 = 20 → 20 x 2 juta = **40 juta**. Total **2.165 juta**. Model longgar: Macet lolos = 265 - 240 = 25 → 25 x 25 juta = **625 juta**. Calon baik ditolak = 400 - 240 = 160 → 160 x 2 juta = **320 juta**. Total **945 juta**. Model ketat memang punya precision lebih tinggi (180/200 = 0,90 vs 240/400 = 0,60), tapi kerugiannya 2.165/945 ≈ **2,3 kali lebih besar**. Rahasianya: satu Macet lolos menelan 25 juta, sedangkan satu calon baik hilang cuma 2 juta — 12,5 kali lebih murah. Jadi di kompetisi, hitung dulu biaya tiap jenis kesalahan sebelum memilih metrik.
+    kode: |
+      ketat = (265 - 180) * 25 + (200 - 180) * 2
+      longgar = (265 - 240) * 25 + (400 - 240) * 2
+      print(f"Ambang ketat: {ketat} juta")
+      print(f"Ambang longgar: {longgar} juta")
+      print(f"Ketat {ketat / longgar:.1f} kali lebih mahal")
+    hasil:
+      - ret: -14.0
+        dd: 32.0
+        win: 10
+        note: "180 x 25 bukan total kerugian: Macet lolos 85 dan calon baik ditolak 20 juga dihitung."
+      - ret: 17.0
+        dd: 2.0
+        win: 90
+        note: "Benar: 2.165 vs 945 juta. Longgar 2,3 kali lebih murah."
+      - ret: 0.0
+        dd: 15.0
+        win: 20
+        note: "Macet asli sama, tapi berapa yang lolos berbeda-beda."
+      - ret: -10.0
+        dd: 25.0
+        win: 18
+        note: "Precision 0,90 tidak menghapus 85 Macet yang lolos."
+    petunjuk:
+      - "Macet lolos = 265 - yang tertangkap. Lalu x 25 juta."
+      - "Calon baik ditolak = total ditolak - yang benar Macet. Lalu x 2 juta."
+      - "Jumlahkan dua kerugian itu untuk tiap model."
+soal:
+  - id: "p32-1"
+    judul: "Hitung Akurasi, Precision, Recall"
+    emoji: "🧾"
+    tingkat: mudah
+    xp: 25
+    menit: 6
+    cerita: |
+      Confusion matrix memberi 4 angka. Baca TP, TN, FP, FN (satu angka per baris). Hitung tiga metrik tanpa sklearn, lalu cetak dengan 2 desimal dalam PERSEN:
+      baris 1 = akurasi = (TP + TN) / (TP + TN + FP + FN) x 100
+      baris 2 = precision = TP / (TP + FP) x 100
+      baris 3 = recall = TP / (TP + FN) x 100
+    input_spec: |
+      4 baris: TP, TN, FP, FN (angka bulat).
+    output_spec: |
+      3 baris: akurasi, precision, recall — persen dengan 2 desimal.
+    contoh:
+      - input: "22\n106\n8\n19"
+        output: "82.58\n73.33\n53.66"
+      - input: "50\n40\n10\n0"
+        output: "90.00\n83.33\n100.00"
+    tes:
+      - input: "22\n106\n8\n19"
+        output: "82.58\n73.33\n53.66"
+      - input: "50\n40\n10\n0"
+        output: "90.00\n83.33\n100.00"
+      - input: "5\n80\n15\n5"
+        output: "80.95\n25.00\n50.00"
+      - input: "1\n1\n1\n1"
+        output: "50.00\n50.00\n50.00"
+    solusi: |
+      tp = int(input())
+      tn = int(input())
+      fp = int(input())
+      fn = int(input())
+      total = tp + tn + fp + fn
+      akurasi = (tp + tn) / total * 100
+      precision = tp / (tp + fp) * 100
+      recall = tp / (tp + fn) * 100
+      print(f"{akurasi:.2f}")
+      print(f"{precision:.2f}")
+      print(f"{recall:.2f}")
+    petunjuk:
+      - "Akurasi memakai SEMUA empat kotak: (TP + TN) / total."
+      - "Precision hanya dari yang ditangkap: TP / (TP + FP)."
+      - "Recall dari semua Macet asli: TP / (TP + FN)."
+    tugas:
+      - "Baca 4 angka: TP, TN, FP, FN (satu per baris)."
+      - "Hitung akurasi, precision, dan recall dalam persen."
+      - "Cetak ketiganya dengan 2 desimal, satu per baris."
+    starter: |
+      tp = int(input())
+      tn = int(input())
+      fp = int(input())
+      fn = int(input())
+      # TODO: hitung total = tp + tn + fp + fn
+      # TODO: hitung akurasi, precision, recall (dalam persen)
+      # TODO: cetak akurasi, precision, recall dengan 2 desimal (satu per baris)
+  - id: "p32-2"
+    judul: "Bandingkan Dua Model dengan CV"
+    emoji: "🔬"
+    tingkat: sedang
+    xp: 40
+    menit: 7
+    cerita: |
+      Gunakan sklearn! Data ada di /soaldata/kredit_umkm_bersih.csv. Fitur: riwayat_telat_12m, skor_kredit, pinjaman_diajukan_juta. Target: Macet = 1, Lancar = 0. Baca satu angka dari input: jumlah lipatan (fold). Nilai DUA model dengan cross_val_score pada SEMUA data, lalu cetak rata-rata skornya: baris 1 = LogisticRegression(max_iter=1000), baris 2 = DecisionTreeClassifier(max_depth=4, random_state=1). Format 3 desimal.
+    input_spec: |
+      Satu baris: jumlah lipatan CV (mis. 3 atau 5).
+    output_spec: |
+      Baris 1: rata-rata skor CV LogisticRegression (3 desimal).
+      Baris 2: rata-rata skor CV DecisionTreeClassifier (3 desimal).
+    contoh:
+      - input: "3"
+        output: "0.765\n0.752"
+      - input: "5"
+        output: "0.771\n0.747"
+    tes:
+      - input: "3"
+        output: "0.765\n0.752"
+      - input: "5"
+        output: "0.771\n0.747"
+      - input: "8"
+        output: "0.766\n0.753"
+      - input: "10"
+        output: "0.763\n0.745"
+    solusi: |
+      import pandas as pd
+      from sklearn.model_selection import cross_val_score
+      from sklearn.linear_model import LogisticRegression
+      from sklearn.tree import DecisionTreeClassifier
+
+      lipatan = int(input())
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      X = data[["riwayat_telat_12m", "skor_kredit", "pinjaman_diajukan_juta"]]
+      y = (data["status"] == "Macet").astype(int)
+      skor_logreg = cross_val_score(LogisticRegression(max_iter=1000), X, y, cv=lipatan).mean()
+      skor_pohon = cross_val_score(DecisionTreeClassifier(max_depth=4, random_state=1), X, y, cv=lipatan).mean()
+      print(f"{skor_logreg:.3f}")
+      print(f"{skor_pohon:.3f}")
+    petunjuk:
+      - "cross_val_score(model, X, y, cv=lipatan) lalu .mean()."
+      - "Uji dua model di data yang sama, bandingkan skor rata-ratanya."
+    tugas:
+      - "Baca jumlah lipatan CV dari input."
+      - "Baca CSV /soaldata/kredit_umkm_bersih.csv, ambil 3 fitur, dan buat target Macet (1/0)."
+      - "Nilai dua model dengan cross_val_score: LogisticRegression dan DecisionTreeClassifier(max_depth=4, random_state=1)."
+      - "Cetak rata-rata skor tiap model dengan 3 desimal, satu per baris."
+    starter: |
+      import pandas as pd
+      from sklearn.model_selection import cross_val_score
+      from sklearn.linear_model import LogisticRegression
+      from sklearn.tree import DecisionTreeClassifier
+
+      lipatan = int(input())
+      data = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      X = data[["riwayat_telat_12m", "skor_kredit", "pinjaman_diajukan_juta"]]
+      # TODO: buat y = (data["status"] == "Macet").astype(int)
+      # TODO: hitung skor CV LogisticRegression(max_iter=1000) -> skor_logreg
+      # TODO: hitung skor CV DecisionTreeClassifier(max_depth=4, random_state=1) -> skor_pohon
+      # TODO: cetak skor_logreg lalu skor_pohon dengan 3 desimal, satu per baris

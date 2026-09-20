@@ -40,7 +40,7 @@ def main():
         ids += [s["id"] for s in b.get("skenario", [])]
         ids += [q["id"] for q in b.get("soal", [])]
         ids += [l["id"] for l in b.get("pelajaran", [])]
-    check("kurikulum 27 bab", len(curriculum.get_babs() or []) == 27)
+    check("kurikulum 33 bab", len(curriculum.get_babs() or []) == 33)
     check("id unik", len(ids) == len(set(ids)), f"({len(ids)} vs {len(set(ids))})")
 
     # 2. User baru
