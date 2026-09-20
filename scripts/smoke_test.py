@@ -100,6 +100,8 @@ def main():
     html = c.get("/data-science").get_data(as_text=True)
     check("data-science memuat paket DS",
           "Data Science" in html and "kredit_umkm" in html and "Playbook" in html)
+    html = c.get("/notebook/datasets").get_data(as_text=True)
+    check("dataset + upload hadir", "Upload Datamu" in html and "uploads" in html)
 
     # 8. Header keamanan
     hdrs = c.get("/login").headers

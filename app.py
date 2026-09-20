@@ -11,6 +11,7 @@ import re
 import secrets
 import time
 from datetime import datetime, timedelta
+from urllib.parse import quote
 
 from flask import (
     Flask, abort, g, redirect, render_template, request, session, url_for
@@ -60,7 +61,7 @@ app.config["SECRET_KEY"] = os.environ.get(
     "SECRET_KEY", secrets.token_hex(32)
 )
 app.config["MAX_FORM_MEMORY_SIZE"] = 2_000_000  # sel notebook + output bisa besar
-app.config["MAX_CONTENT_LENGTH"] = 2 * 1024 * 1024  # notebook: payload sel + output bisa besar
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # notebook + upload CSV (maks 5 MB)
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_NAME"] = "ql_session"
@@ -312,6 +313,7 @@ def index():
     soal_solved_set = db.get_soal_solved(user["id"])
     tracks = track_progress(solved, soal_solved_set)
     ds_t = next((t for t in tracks if t["code"] == "ds"), None)
+    ds_lv = ds_level(ds_t["done"], ds_t["total"]) if ds_t else None
     nxt = next_unsolved(solved, soal_solved_set)
     review_n = db.review_count_due(user["id"])
     # Tantangan harian
@@ -330,7 +332,7 @@ def index():
                            soal_count=len(soal_solved_set),
                            leader=db.leaderboard(1),
                            radar=radar_svg(skills), challenge=challenge,
-                           tracks=tracks, nxt=nxt, review_n=review_n, ds_t=ds_t,
+                           tracks=tracks, nxt=nxt, review_n=review_n, ds_t=ds_t, ds_lv=ds_lv,
                            notebook_n=db.notebook_count(user["id"]))
 
 
@@ -870,7 +872,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v15';
+    sw = """const CACHE = 'quantlab-v16';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1166,6 +1168,12 @@ def too_many(e):
                            msg="Terlalu cepat — tunggu sebentar lalu coba lagi."), 429
 
 
+@app.errorhandler(413)
+def too_large(e):
+    return render_template("error.html", code=413,
+                           msg="File/permintaan terlalu besar — upload maksimal 5 MB."), 413
+
+
 # ---------- Rate limit aksi berat (jalankan kode user) ----------
 
 _heavy_rl: dict[str, list[float]] = {}
@@ -1211,31 +1219,72 @@ def cari():
 
 # ---------- Data Science (pusat latihan kompetisi) ----------
 
+DS_LEVELS = [
+    (100, "🏆", "Data Scientist Bersertifikat"),
+    (90, "🧠", "Calon Data Scientist"),
+    (75, "🎯", "Penilai Model"),
+    (60, "🤖", "Pemodel Pemula"),
+    (45, "🛠️", "Perakit Fitur"),
+    (30, "🔍", "Penjelajah Data"),
+    (15, "🧹", "Tukang Bersih Data"),
+    (0, "🌱", "Baru Kenalan"),
+]
+
+
+def ds_level(done, total):
+    """Level belajar Data Science dari progres aktivitas track ds (72 aktivitas)."""
+    pct = round(done / total * 100) if total else 0
+    cur = DS_LEVELS[-1]
+    for t, emoji, nama in DS_LEVELS:
+        if pct >= t:
+            cur = (t, emoji, nama)
+            break
+    nxt = None
+    for t, emoji, nama in DS_LEVELS:
+        if t <= pct:
+            break
+        nxt = {"t": t, "emoji": emoji, "nama": nama}
+    return {"pct": pct, "emoji": cur[1], "nama": cur[2], "next": nxt,
+            "done": done, "total": total}
+
+
 @app.route("/data-science")
 @login_required
 def data_science():
-    """Hub fitur Data Science: 6 bab track ds + starter notebook + dataset."""
+    """Hub fitur Data Science: roadmap 6 bab + notebook + dataset + ujian & level."""
     user = _user()
     solved = db.solved_ids(user["id"])
     soal_solved_set = db.get_soal_solved(user["id"])
+    lessons_done = db.get_lesson_done(user["id"])
+    nb_judul = [r["judul"] for r in db.notebook_list(user["id"])]
     tracks = track_progress(solved, soal_solved_set)
     ds = next((t for t in tracks if t["code"] == "ds"), None)
     cards = []
     for b in (ds["babs"] if ds else []):
         scens = b.get("skenario") or []
         qs = b.get("soal") or []
-        done = sum(1 for s in scens if s["id"] in solved)
-        done += sum(1 for q in qs if q["id"] in soal_solved_set)
+        ls = b.get("pelajaran") or []
+        done_s = sum(1 for s in scens if s["id"] in solved)
+        done_q = sum(1 for q in qs if q["id"] in soal_solved_set)
+        done_l = sum(1 for l in ls if l["id"] in lessons_done)
+        nb_done = any(j.startswith(f"Latihan Bab {b['bab']}") for j in nb_judul)
         cards.append({
             "bab": b["bab"], "judul": b["judul"], "emoji": b["emoji"],
             "deskripsi": b.get("deskripsi", ""),
-            "done": done, "n": len(scens) + len(qs),
+            "done": done_s + done_q, "n": len(scens) + len(qs),
+            "l_done": done_l, "l_n": len(ls),
+            "q_done": done_q, "q_n": len(qs),
+            "s_done": done_s, "s_n": len(scens),
+            "nb": nb_done,
         })
+    level = ds_level(ds["done"] if ds else 0, ds["total"] if ds else 0)
     tpl_ds = {k: v for k, v in nblib.TEMPLATE_META.items() if v.get("group") == "ds"}
     return render_template(
-        "data_science.html", cards=cards, ds=ds,
+        "data_science.html", cards=cards, ds=ds, level=level,
+        exam=db.exam_passed(user["id"], "ds"),
         tpl_ds=tpl_ds, playbook=nblib.TEMPLATE_META.get("playbook"),
-        datasets=nblib.list_datasets())
+        datasets=nblib.list_datasets(),
+        uploads_n=len(nblib.list_uploads(user["username"])))
 
 
 # ---------- Notebook (ala Kaggle) ----------
@@ -1296,6 +1345,7 @@ def notebook_editor(nid):
         nb=row,
         cells_json=nblib.cells_for_js(cells),
         datasets=nblib.list_datasets(),
+        uploads=nblib.list_uploads(user["username"]),
         exec_timeout=int(nblib.EXEC_TIMEOUT_S),
         updated_wib=_nb_wib(row["updated_at"]),
     )
@@ -1304,10 +1354,14 @@ def notebook_editor(nid):
 @app.route("/notebook/datasets")
 @login_required
 def notebook_datasets():
+    user = _user()
     items = nblib.list_datasets()
     for it in items:
         it["preview"] = nblib.dataset_preview(it["name"], 5)
-    return render_template("notebook_datasets.html", items=items)
+    uploads = nblib.list_uploads(user["username"])
+    for up in uploads:
+        up["preview"] = nblib.upload_preview(user["username"], up["name"])
+    return render_template("notebook_datasets.html", items=items, uploads=uploads)
 
 
 @app.route("/bab/<int:n>/notebook", methods=["POST"])
@@ -1381,6 +1435,36 @@ def notebook_hapus(nid):
     user = _user()
     n = db.notebook_delete(nid, user["id"])
     return {"ok": bool(n)}
+
+
+# ---------- Upload CSV user (data latihan/lomba) ----------
+
+def _nb_back(key, val):
+    """Redirect balik ke halaman notebook (editor/dataset) dengan pesan singkat."""
+    nxt = request.form.get("next") or ""
+    if not nxt.startswith("/notebook"):
+        nxt = url_for("notebook_datasets")
+    sep = "&" if "?" in nxt else "?"
+    return f"{nxt}{sep}{key}={quote(str(val))}"
+
+
+@app.route("/notebook/upload", methods=["POST"])
+@login_required
+def notebook_upload():
+    user = _user()
+    f = request.files.get("file")
+    if f is None or not (f.filename or "").strip():
+        return redirect(_nb_back("uploaderr", "Pilih file dulu."))
+    ok, res = nblib.save_upload(user["username"], f)
+    return redirect(_nb_back("uploaded" if ok else "uploaderr", res))
+
+
+@app.route("/notebook/upload/hapus", methods=["POST"])
+@login_required
+def notebook_upload_hapus():
+    user = _user()
+    ok, res = nblib.delete_upload(user["username"], request.form.get("name", ""))
+    return redirect(_nb_back("uploadhapus" if ok else "uploaderr", res))
 
 
 # ---------- Middleware subpath — akses via https://yan.tail51a905.ts.net/quant (Funnel 443) ----------

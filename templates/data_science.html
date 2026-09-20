@@ -1,19 +1,38 @@
 {% extends "base.html" %}
 {% block title %}Data Science — QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=5">
 {% endblock %}
 {% block content %}
 <section class="pagehead">
   <span class="kicker">Fitur</span>
   <h1>📊 Data Science</h1>
-  <p class="sub">Pusat latihan <b>kompetisi data science</b> — 6 bab terurut dari bersihin data sampai deep learning, <b>notebook ala Kaggle</b> di tiap bab, dan dataset siap pakai. Semua jalan langsung di browser.</p>
-  {% if ds %}<p class="meta">Progresmu: <b class="good">{{ ds.done }}/{{ ds.total }}</b> aktivitas · {{ ds.pct }}% selesai</p>{% endif %}
+  <p class="sub">Pusat latihan <b>kompetisi data science</b> — 6 bab terurut dari bersihin data sampai deep learning, notebook ala Kaggle, dataset siap pakai, dan tempat menaruh <b>data lombamu sendiri</b>.</p>
+</section>
+
+<section class="dslevel" aria-label="Level belajarmu">
+  <div class="dslvhead">
+    <span class="dslvemoji" aria-hidden="true">{{ level.emoji }}</span>
+    <div>
+      <span class="dslvlabel">LEVEL KAMU</span>
+      <h2>{{ level.nama }}</h2>
+    </div>
+    <span class="dslvpct">{{ level.done }}/{{ level.total }} aktivitas · {{ level.pct }}%</span>
+  </div>
+  <div class="progress" role="progressbar" aria-label="Progres level: {{ level.pct }}%"
+       aria-valuenow="{{ level.pct }}" aria-valuemin="0" aria-valuemax="100">
+    <div class="bar"><div class="fill" style="width: {{ level.pct }}%"></div></div>
+  </div>
+  {% if level.next %}
+  <p class="note" style="margin:8px 0 0">Level berikutnya: <b>{{ level.next.emoji }} {{ level.next.nama }}</b> di {{ level.next.t }}% — ayo lanjut! 💪</p>
+  {% else %}
+  <p class="note" style="margin:8px 0 0">Level tertinggi! 🎉 Kamu resmi <b>Data Scientist</b> — ambil sertifikatmu di bawah.</p>
+  {% endif %}
 </section>
 
 <section class="scenlist" aria-label="Paket bab Data Science">
   <h3>📚 Paket 6 Bab — kerjakan berurutan</h3>
-  <p class="note">Tiap bab: teori singkat → latihan coding dinilai otomatis → notebook latihan → skenario keputusan nyata.</p>
+  <p class="note">Tiap bab: teori → latihan coding → notebook → skenario. Checklist di kartu menunjukkan bagian mana yang sudah lengkap.</p>
 </section>
 <section class="babgrid" aria-label="Daftar bab Data Science">
   {% for b in cards %}
@@ -24,6 +43,7 @@
     </div>
     <h2>{{ b.judul }}</h2>
     <p>{{ b.deskripsi }}</p>
+    <span class="badmini">📖 {{ b.l_done }}/{{ b.l_n }} · ⌨️ {{ b.q_done }}/{{ b.q_n }} · 🎯 {{ b.s_done }}/{{ b.s_n }} · 📓 {{ '✓' if b.nb else '–' }}</span>
     <div class="progress">
       <div class="bar"><div class="fill" style="width: {{ (b.done / b.n * 100) if b.n else 0 }}%"></div></div>
       <span>{{ b.done }}/{{ b.n }} aktivitas</span>
@@ -64,7 +84,7 @@
 
 <section class="scenlist" aria-label="Dataset latihan">
   <h3>📦 Dataset Latihan</h3>
-  <p class="note">Semua bisa dibaca dari notebook: <code>pd.read_csv("/datasets/nama.csv")</code>. Paket kredit UMKM sengaja dibuat kotor — bahan latihan pembersihan (bab 28).</p>
+  <p class="note">Dibaca dari notebook: <code>pd.read_csv("/datasets/nama.csv")</code>. Paket kredit UMKM sengaja kotor + ada <b>sample submission</b> ala kompetisi.{% if uploads_n %} File upload-mu: <b>{{ uploads_n }}</b>.{% endif %} <a href="{{ url_for('notebook_datasets') }}">Upload data lombamu sendiri →</a></p>
   {% for d in datasets %}
   <a class="scenrow" href="{{ url_for('notebook_datasets') }}">
     <span class="scenemoji" aria-hidden="true">📦</span>
@@ -74,12 +94,27 @@
   {% endfor %}
 </section>
 
+<section class="scenlist" aria-label="Ujian dan sertifikat">
+  <h3>🎓 Ujian &amp; Sertifikat</h3>
+  <a class="scenrow" href="{{ url_for('ujian', track='ds') }}">
+    <span class="scenemoji" aria-hidden="true">🏆</span>
+    <span class="scenmain"><b>Ujian Data Science</b><span class="meta">8 soal acak dari 6 bab · lulus ≥70% → +50 XP sekali{% if exam %} · <span class="good">✓ sudah lulus</span>{% endif %}</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+  <a class="scenrow" href="{{ url_for('sertifikat', track='ds') }}">
+    <span class="scenemoji" aria-hidden="true">🎓</span>
+    <span class="scenmain"><b>Sertifikat Data Science</b><span class="meta">{{ level.done }}/{{ level.total }} aktivitas — terbuka setelah semua selesai (bisa dicetak PDF)</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</section>
+
 <div class="casebox">
   <h3>🚀 Alur cepat</h3>
   <p class="meta">
     1️⃣ Selesaikan bab <b>28 → 33</b> berurutan — teori, soal coding, lalu skenario.<br>
     2️⃣ Di tiap bab buka <b>notebook latihan</b> dan jalankan semua sel — ubah angkanya, lihat apa yang berubah.<br>
-    3️⃣ Tutup dengan <b>🏆 Playbook Kompetisi</b>: alur 8 langkah dari data mentah sampai berkas <code>submission.csv</code>.
+    3️⃣ Punya data lomba? <b>Upload CSV-mu</b> (📦 halaman Dataset) → baca di notebook dari <code>/work/uploads/</code>.<br>
+    4️⃣ Tutup dengan <b>🏆 Playbook Kompetisi</b>: alur 8 langkah dari data mentah sampai <code>submission.csv</code>.
   </p>
 </div>
 {% endblock %}

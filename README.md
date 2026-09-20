@@ -28,12 +28,14 @@ lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigas
   persisten per user** (variabel tersimpan antar sel), output di bawah sel (teks, nilai
   `Out[n]`, grafik matplotlib), **▶▶ Jalankan Semua** & **⟳ Restart Kernel**, simpan
   otomatis, template siap pakai (Kosong / Pandas / Watchlist / Backtest Mini), rail
-  **📦 Dataset** (klik = contoh kode). Sandbox bubblewrap terpisah (`notebook_kerneld.py`
+  **📦 Dataset** (klik = contoh kode), **⬆️ upload CSV sendiri** (data latihan/lombamu — maks
+  5 MB, terbaca dari `/work/uploads/`, preview + kelola di `/notebook/datasets`). Sandbox bubblewrap terpisah (`notebook_kerneld.py`
   + worker `notebook_kernel.py`, service `quantlab-kernel.service`, port 5211, timeout
   30 dtk/sel); file tulis per user di `/work` (tersimpan antar sesi).
 - **📦 Dataset notebook** (`/notebook/datasets`): snapshot nyata dari `data/ohlc` —
   `ihsg_harian`, `saham_watchlist` (6 saham, format panjang), `saham_lebar` (format
-  lebar, siap korelasi), `btc_harian`; di-bind **read-only** ke `/datasets`.
+  lebar, siap korelasi), `btc_harian`, dan paket **kredit UMKM** (kotor / bersih /
+  uji / sample submission); di-bind **read-only** ke `/datasets`.
 - **📈 Lab Teknikal (37 drill, 4 modul, + Ujian Teknikal)** — latihan analisa teknikal pakai
   grafik harga NYATA (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC): baca candle & tren → level &
   struktur → indikator & risiko → **praktik klik langsung di grafik** (tandai support, pasang
@@ -43,10 +45,11 @@ lengkap dengan **starter notebook per bab** dan menu **Data Science** di navigas
   Grafik SVG server-side (line & candlestick + volume + RSI), data dibekukan di
   `data/chart/*.csv` supaya kunci jawaban tidak pernah basi (dijaga `scripts/verify_charts.py`).
   Halaman `/chart` & `/chart/ujian`, XP 20/35/50 per tingkat.
-- **📊 Data Science (`/data-science`)** — halaman fitur: 6 bab terurut (28-33),
+- **📊 Data Science (`/data-science`)** — halaman fitur: **kartu level** (8 tingkat 🌱→🏆),
+  **checklist per bab** (teori/coding/skenario/notebook), 6 bab terurut (28-33),
   notebook latihan starter per bab + **🏆 Playbook Kompetisi** (end-to-end sampai
-  `submission.csv`), dan dataset latihan (kredit UMKM **sintetis, sengaja kotor** —
-  bahan latihan cleaning; read-only di `/datasets`).
+  `submission.csv`), kartu **Ujian & Sertifikat**, dan dataset latihan (kredit UMKM
+  **sintetis, sengaja kotor** + **sample submission** ala kompetisi; read-only di `/datasets`).
 - Fitur lain: tantangan harian, radar kemampuan, ujian per track, ulasan cerdas
   (spaced repetition), jurnal + export CSV, leaderboard, badge, sertifikat, PWA.
 

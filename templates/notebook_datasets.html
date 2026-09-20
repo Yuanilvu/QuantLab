@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Dataset — QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=5">
 {% endblock %}
 {% block content %}
 <section class="pagehead">
@@ -9,6 +9,50 @@
   <h1>📦 Dataset</h1>
   <p class="sub">Data nyata yang bisa langsung dibaca dari notebook: <code>pd.read_csv('/datasets/&lt;nama&gt;.csv')</code>. Semua <b>read-only</b> — eksperimenmu tidak akan merusaknya.</p>
 </section>
+
+{% if request.args.get('uploaded') %}<p class="upmsg ok">✅ Terupload: <b>{{ request.args.get('uploaded') }}</b> — buka notebook dan baca dari <code>/work/uploads/…</code></p>{% endif %}
+{% if request.args.get('uploaderr') %}<p class="upmsg err">⚠️ {{ request.args.get('uploaderr') }}</p>{% endif %}
+{% if request.args.get('uploadhapus') %}<p class="upmsg ok">🗑️ Terhapus: <b>{{ request.args.get('uploadhapus') }}</b></p>{% endif %}
+
+<section class="dscard" aria-label="Upload data sendiri" style="margin-bottom:18px">
+  <div class="dshead">
+    <b>⬆️ Upload Datamu Sendiri</b>
+    <span class="chip">maks 5 MB · .csv / .tsv / .txt</span>
+  </div>
+  <p class="dsdesc">Punya data latihan atau <b>data lombamu</b>? Upload di sini — tersimpan aman per akun dan langsung terbaca dari notebook: <code>pd.read_csv('/work/uploads/nama.csv')</code>.</p>
+  <form class="upform" method="post" action="{{ url_for('notebook_upload') }}" enctype="multipart/form-data">
+    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+    <input type="hidden" name="next" value="{{ url_for('notebook_datasets') }}">
+    <input type="file" name="file" accept=".csv,.tsv,.txt" required>
+    <button type="submit" class="btn small">Upload ⬆</button>
+  </form>
+</section>
+
+{% if uploads %}
+<h3 style="margin: 4px 0 12px">📤 File Upload-mu ({{ uploads | length }})</h3>
+<div class="dsgrid" style="margin-bottom:18px">
+  {% for u in uploads %}
+  <div class="dscard">
+    <div class="dshead"><b>{{ u.name }}</b><span class="chip">{{ u.rows }} baris × {{ u.cols }} kolom · {{ u.kb }} KB</span></div>
+    <code class="dssnip">pd.read_csv('/work/uploads/{{ u.name }}')</code>
+    {% if u.preview %}
+    <div class="dstablewrap">
+      <table class="dstable">
+        <tr>{% for h in u.preview.header %}<th>{{ h }}</th>{% endfor %}</tr>
+        {% for row in u.preview.rows %}<tr>{% for c in row %}<td>{{ c }}</td>{% endfor %}</tr>{% endfor %}
+      </table>
+    </div>
+    {% endif %}
+    <form method="post" action="{{ url_for('notebook_upload_hapus') }}" onsubmit="return confirm('Hapus file ini? Tidak bisa dikembalikan.');" style="margin-top:10px">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ url_for('notebook_datasets') }}">
+      <input type="hidden" name="name" value="{{ u.name }}">
+      <button type="submit" class="btn ghost small" style="width:auto">🗑 Hapus</button>
+    </form>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
 
 <div class="dsgrid">
   {% for it in items %}

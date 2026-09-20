@@ -7,6 +7,7 @@ tersimpan antar sel). Flask memanggil notebook_kerneld.py via HTTP lokal
 import csv
 import json
 import os
+import re
 import urllib.error
 import urllib.parse
 import urllib.request
@@ -121,7 +122,7 @@ _TPL_BACKTEST = _cells(
 
 _TPL_PLAYBOOK = _cells(
     ("md", "# 🏆 Playbook Kompetisi — dari Data ke Submission\n\n"
-           "Alur standar 8 langkah. Nanti tinggal ganti dataset-nya dengan data lombamu; "
+           "Alur standar 8 langkah. Nanti tinggal ganti dataset-nya dengan data lombamu (upload CSV-mu di panel kanan, baca dari /work/uploads/); "
            "strukturnya tetap sama:\n\n"
            "1. Lihat data → 2. Bersihin → 3. EDA → 4. Fitur → 5. Split → 6. Model → "
            "7. Evaluasi → 8. Prediksi & simpan."),
@@ -445,6 +446,7 @@ DATASET_META = {
     "kredit_umkm.csv": "Data pengajuan kredit UMKM (SINTETIS untuk latihan) — SENGAJA kotor: nilai kosong, duplikat, tanggal campur format, teks berantakan, outlier. 636 baris.",
     "kredit_umkm_bersih.csv": "Versi BERSIH dari data kredit UMKM — siap untuk EDA, fitur, dan machine learning. 620 baris.",
     "kredit_umkm_uji.csv": "Data uji kredit UMKM TANPA kolom status — bahan latihan prediksi & submission ala kompetisi. 150 baris.",
+    "sample_submission-kredit_umkm.csv": "Contoh FORMAT submission ala kompetisi — kolom id_pengajuan + status_prediksi (isi placeholder 'Lancar'; ganti dengan hasil prediksimu). 150 baris.",
 }
 
 
@@ -490,6 +492,164 @@ def dataset_preview(name, n=5):
         return None
     try:
         with open(path, newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            header = next(reader, [])
+            rows = []
+            for i, row in enumerate(reader):
+                if i >= n:
+                    break
+                rows.append(row)
+    except OSError:
+        return None
+    return {"header": header, "rows": rows}
+
+
+# ---------- Upload CSV sendiri (data latihan / data lomba user) ----------
+
+WORKROOT = os.path.join(REPO, "data", "notebook_work")
+UPLOAD_DIRNAME = "uploads"
+UPLOAD_MAX_MB = 5
+UPLOAD_MAX_FILES = 30
+UPLOAD_EXTS = (".csv", ".tsv", ".txt")
+
+
+def uploads_dir(username):
+    """Folder uploads user = subfolder /work user (terlihat di sandbox sebagai /work/uploads)."""
+    safe = "".join(ch for ch in str(username or "") if ch.isalnum() or ch in "._-") or "user"
+    return os.path.join(WORKROOT, safe, UPLOAD_DIRNAME)
+
+
+def safe_upload_name(filename):
+    """Nama file aman: basename saja, charset terbatas, ekstensi .csv/.tsv/.txt."""
+    name = os.path.basename(str(filename or "").strip())
+    name = re.sub(r"[^A-Za-z0-9._-]", "_", name).lstrip(".")
+    if not name:
+        return None
+    base, ext = os.path.splitext(name)
+    if ext.lower() not in UPLOAD_EXTS:
+        return None
+    return (base[:60] or "data") + ext.lower()
+
+
+def _up_meta_path(username):
+    return os.path.join(uploads_dir(username), "_meta.json")
+
+
+def _up_load_meta(username):
+    try:
+        with open(_up_meta_path(username), encoding="utf-8") as f:
+            data = json.load(f)
+        return data if isinstance(data, dict) else {}
+    except (OSError, ValueError):
+        return {}
+
+
+def _up_save_meta(username, meta):
+    os.makedirs(uploads_dir(username), exist_ok=True)
+    with open(_up_meta_path(username), "w", encoding="utf-8") as f:
+        json.dump(meta, f, indent=1)
+
+
+def _count_csv(path, cap=500_000):
+    try:
+        with open(path, newline="", encoding="utf-8", errors="replace") as f:
+            reader = csv.reader(f)
+            header = next(reader, [])
+            rows = 0
+            for _ in reader:
+                rows += 1
+                if rows >= cap:
+                    break
+        return {"rows": rows, "cols": len(header)}
+    except (OSError, csv.Error):
+        return {"rows": 0, "cols": 0}
+
+
+def list_uploads(username):
+    """Daftar file upload user: [{name, rows, cols, kb}] (baca cache _meta.json)."""
+    d = uploads_dir(username)
+    if not os.path.isdir(d):
+        return []
+    meta = _up_load_meta(username)
+    out = []
+    for name in sorted(os.listdir(d)):
+        if name == "_meta.json" or name.startswith("."):
+            continue
+        p = os.path.join(d, name)
+        if not os.path.isfile(p):
+            continue
+        info = meta.get(name)
+        if not info:
+            info = {**_count_csv(p), "kb": max(1, os.path.getsize(p) // 1024)}
+            meta[name] = info
+        out.append({"name": name, "rows": info.get("rows", 0),
+                    "cols": info.get("cols", 0), "kb": info.get("kb", 1)})
+    names = {o["name"] for o in out}
+    if set(meta) - names:
+        meta = {k: v for k, v in meta.items() if k in names}
+        _up_save_meta(username, meta)
+    return out
+
+
+def save_upload(username, file_storage):
+    """Simpan upload user -> /work/uploads. return (ok, nama_atau_pesan)."""
+    name = safe_upload_name(getattr(file_storage, "filename", ""))
+    if not name:
+        return False, "Hanya file .csv / .tsv / .txt yang bisa diupload."
+    d = uploads_dir(username)
+    meta = _up_load_meta(username)
+    stream = file_storage.stream
+    try:
+        stream.seek(0, os.SEEK_END)
+        size = stream.tell()
+        stream.seek(0)
+    except (OSError, AttributeError):
+        size = 0
+    if size <= 0:
+        return False, "File kosong / tidak terbaca."
+    if size > UPLOAD_MAX_MB * 1024 * 1024:
+        return False, f"Ukuran maksimal {UPLOAD_MAX_MB} MB."
+    if name not in meta and len(meta) >= UPLOAD_MAX_FILES:
+        return False, f"Maksimal {UPLOAD_MAX_FILES} file \u2014 hapus dulu yang tidak terpakai."
+    base, ext = os.path.splitext(name)
+    nama, n = name, 2
+    while nama in meta or os.path.exists(os.path.join(d, nama)):
+        nama = f"{base}-{n}{ext}"
+        n += 1
+        if n > 99:
+            return False, "Terlalu banyak file dengan nama sama."
+    os.makedirs(d, exist_ok=True)
+    path = os.path.join(d, nama)
+    file_storage.save(path)
+    info = _count_csv(path)
+    meta[nama] = {**info, "kb": max(1, size // 1024)}
+    _up_save_meta(username, meta)
+    return True, nama
+
+
+def delete_upload(username, name):
+    name = safe_upload_name(name)
+    if not name:
+        return False, "Nama file tidak valid."
+    path = os.path.join(uploads_dir(username), name)
+    if not os.path.isfile(path):
+        return False, "File tidak ditemukan."
+    os.remove(path)
+    meta = _up_load_meta(username)
+    if meta.pop(name, None) is not None:
+        _up_save_meta(username, meta)
+    return True, name
+
+
+def upload_preview(username, name, n=4):
+    name = safe_upload_name(name)
+    if not name:
+        return None
+    path = os.path.join(uploads_dir(username), name)
+    if not os.path.isfile(path):
+        return None
+    try:
+        with open(path, newline="", encoding="utf-8", errors="replace") as f:
             reader = csv.reader(f)
             header = next(reader, [])
             rows = []

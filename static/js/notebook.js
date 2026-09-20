@@ -445,6 +445,18 @@
     });
   }
 
+  // ---------- uploads rail (file upload user) ----------
+  var uplist = document.getElementById('uplist');
+  if (uplist) {
+    uplist.addEventListener('click', function (e) {
+      var b = e.target.closest('.dsitem');
+      if (!b) { return; }
+      var uname = b.getAttribute('data-up');
+      var usnip = "import pandas as pd\n\ndf = pd.read_csv('/work/uploads/" + uname + "')\ndf.head()";
+      insertIntoActive(usnip);
+    });
+  }
+
   function insertIntoActive(text) {
     syncAll();
     var i = lastFocusIdx;
@@ -461,6 +473,10 @@
     }
     var cur = cells[i].source || '';
     cells[i].source = (cur.replace(/\s+$/, '') ? cur.replace(/\s+$/, '') + '\n\n' : '') + text;
+    // renderCells() memanggil syncAll() -> baca nilai DOM; tulis dulu ke textarea
+    // supaya hasil sisipan tidak tertimpa nilai lama (bug: sisipan hilang sebelum ini).
+    var elI = cellAt(i), taI = elI && elI.querySelector('.nbtext');
+    if (taI) { taI.value = cells[i].source; }
     renderCells(); focusCell(i);
     scheduleSave();
   }

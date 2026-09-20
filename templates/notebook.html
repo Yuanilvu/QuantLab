@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ nb.judul }} — Notebook QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=4">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=5">
 {% endblock %}
 {% block content %}
 <section class="nbhead" data-nid="{{ nb.id }}" data-timeout="{{ exec_timeout }}">
@@ -20,6 +20,10 @@
 </section>
 
 <input type="hidden" id="csrf" value="{{ csrf_token() }}">
+
+{% if request.args.get('uploaded') %}<p class="upmsg ok">✅ Terupload: <b>{{ request.args.get('uploaded') }}</b> — klik di panel "Datamu" untuk menempel contoh kode.</p>{% endif %}
+{% if request.args.get('uploaderr') %}<p class="upmsg err">⚠️ {{ request.args.get('uploaderr') }}</p>{% endif %}
+{% if request.args.get('uploadhapus') %}<p class="upmsg ok">🗑️ Terhapus: <b>{{ request.args.get('uploadhapus') }}</b></p>{% endif %}
 
 <div class="nblayout">
   <div class="nbcol">
@@ -42,6 +46,25 @@
       {% endfor %}
     </div>
     <p class="note railnote"><a href="{{ url_for('notebook_datasets') }}">Lihat detail dataset →</a></p>
+    <h3>⬆️ Datamu</h3>
+    <p class="note railnote">Upload CSV-mu sendiri (maks 5 MB) — data latihan/lomba. Terbaca dari <code>/work/uploads/</code>.</p>
+    <form class="upform" method="post" action="{{ url_for('notebook_upload') }}" enctype="multipart/form-data">
+      <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+      <input type="hidden" name="next" value="{{ request.path }}">
+      <input type="file" name="file" accept=".csv,.tsv,.txt" required>
+      <button type="submit" class="btn ghost small">Upload ⬆</button>
+    </form>
+    {% if uploads %}
+    <div id="uplist">
+      {% for u in uploads %}
+      <button class="dsitem" data-up="{{ u.name }}" type="button">
+        <b>{{ u.name }}</b>
+        <span>{{ u.rows }} baris · {{ u.kb }} KB</span>
+      </button>
+      {% endfor %}
+    </div>
+    {% endif %}
+    <p class="note railnote"><a href="{{ url_for('notebook_datasets') }}">Kelola file upload →</a></p>
     <h3>ℹ️ Kernel</h3>
     <p class="note railnote">Python berjalan di sandbox: tanpa internet dan tanpa akses file pribadi. File yang kamu tulis di <code>/work</code> tersimpan antar sesi.</p>
   </aside>
@@ -50,5 +73,5 @@
 <script type="application/json" id="cellData">{{ cells_json|safe }}</script>
 {% endblock %}
 {% block scripts_extra %}
-<script src="{{ url_for('static', filename='js/notebook.js') }}?v=3"></script>
+<script src="{{ url_for('static', filename='js/notebook.js') }}?v=5"></script>
 {% endblock %}
