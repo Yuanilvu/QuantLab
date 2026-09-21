@@ -362,3 +362,10 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
 #pilih-readout { color: #22d3ee; font-variant-numeric: tabular-nums; }
 .warna-user { color: #22d3ee; font-weight: 700; }
 .warna-kunci { color: #f59e0b; font-weight: 700; }
+
+/* ── Fix overflow kotak Input/Output halaman soal (21 Sep 2026) ─────────────
+   Grid .io 1fr×1fr: item default min-width:auto + <pre> spesifikasi satu baris
+   panjang = kolom meledak ke luar layar (terukur scrollWidth 1665px vs viewport
+   1356px di /soal/p28-1). Kunci: item grid boleh menyusut + pre membungkus. */
+.io > div { min-width: 0; }
+.io pre.block-code { white-space: pre-wrap; overflow-wrap: anywhere; }
