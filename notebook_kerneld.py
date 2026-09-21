@@ -25,6 +25,7 @@ REPO = os.path.dirname(os.path.abspath(__file__))
 VENV = os.path.join(REPO, ".venv")
 WORKER = os.path.join(REPO, "notebook_kernel.py")
 DATASETS = os.path.join(REPO, "data", "notebook_datasets")
+SOAL_DATA = os.path.join(REPO, "data", "soal")
 WORKROOT = os.path.join(REPO, "data", "notebook_work")
 HOST = os.environ.get("KERNELD_HOST", "127.0.0.1")
 PORT = int(os.environ.get("KERNELD_PORT", "5211"))
@@ -93,6 +94,11 @@ class Kernel:
     def _cmd(self):
         work = os.path.join(WORKROOT, self.user)
         os.makedirs(work, mode=0o700, exist_ok=True)
+        # /soaldata = folder soal (sama dgn judge) — folder dataset dua-duanya
+        # mirror, jadi path '/soaldata/...' yang dipakai di soal coding juga
+        # jalan di notebook.
+        bind_soal = (["--ro-bind", SOAL_DATA, "/soaldata"]
+                     if os.path.isdir(SOAL_DATA) else [])
         return [
             "/usr/bin/bwrap", "--unshare-all", "--die-with-parent",
             "--ro-bind", "/usr", "/usr",
@@ -105,6 +111,7 @@ class Kernel:
             "--dev", "/dev",
             "--ro-bind", VENV, "/venv",
             "--ro-bind", DATASETS, "/datasets",
+            *bind_soal,
             "--ro-bind", WORKER, "/kernel.py",
             "--bind", work, "/work",
             "--tmpfs", "/tmp",

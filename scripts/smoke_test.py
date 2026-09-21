@@ -102,6 +102,17 @@ def main():
           "Data Science" in html and "kredit_umkm" in html and "Playbook" in html)
     html = c.get("/notebook/datasets").get_data(as_text=True)
     check("dataset + upload hadir", "Upload Datamu" in html and "uploads" in html)
+    check("dataset: kategori & dua path",
+          "Pasar &amp; Saham" in html and "/soaldata/" in html
+          and "transaksi_umkm.csv" in html and "log_server.csv" in html)
+    html = c.get("/soal/p28-1").get_data(as_text=True)
+    check("soal: kotak Data + path jelas",
+          "Data untuk soal ini" in html and "/soaldata/kredit_umkm.csv" in html)
+    check("editor.js disajikan", c.get("/static/js/editor.js").status_code == 200)
+    import judge as _judge  # noqa: E402
+    rj = _judge.run_code("import pandas as pd\ndf = pd.read_csv('/datasets/harga_saham_harian.csv')\nprint('baris', len(df))")
+    check("judge baca /datasets (cross-mount)", rj["ok"] and "baris 1250" in rj["stdout"],
+          rj["stderr"][:150])
     html = c.get("/kompetisi").get_data(as_text=True)
     check("halaman kompetisi", "Lomba Kredit UMKM" in html and "submission.csv" in html)
 

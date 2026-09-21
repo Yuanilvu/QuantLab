@@ -84,7 +84,7 @@
 
 <section class="scenlist" aria-label="Dataset latihan">
   <h3>📦 Dataset Latihan</h3>
-  <p class="note">Dibaca dari notebook: <code>pd.read_csv("/datasets/nama.csv")</code>. Paket kredit UMKM sengaja kotor + ada <b>sample submission</b> ala kompetisi.{% if uploads_n %} File upload-mu: <b>{{ uploads_n }}</b>.{% endif %} <a href="{{ url_for('notebook_datasets') }}">Upload data lombamu sendiri →</a></p>
+  <p class="note"><b>{{ datasets | length }} dataset</b> siap pakai — di notebook: <code>pd.read_csv("/datasets/nama.csv")</code> · di soal coding: <code>pd.read_csv("/soaldata/nama.csv")</code>. Paket kredit UMKM sengaja kotor + ada <b>sample submission</b> ala kompetisi.{% if uploads_n %} File upload-mu: <b>{{ uploads_n }}</b>.{% endif %} <a href="{{ url_for('notebook_datasets') }}">Lihat semua & upload data lombamu →</a></p>
   {% for d in datasets %}
   <a class="scenrow" href="{{ url_for('notebook_datasets') }}">
     <span class="scenemoji" aria-hidden="true">📦</span>

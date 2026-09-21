@@ -1,0 +1,1201 @@
+id_pelanggan,umur,kota,paket,lama_berlangganan_bulan,tagihan_bulanan,churn
+C-0001,53,Makassar,Hemat,16,56000,1
+C-0002,27,Medan,Sultan,37,161000,0
+C-0003,33,Makassar,Sultan+,51,263000,0
+C-0004,25,Medan,Hemat,39,53000,0
+C-0005,60,Medan,Sultan,60,145000,0
+C-0006,38,Bandung,Sultan,46,146000,0
+C-0007,23,Semarang,Data Only,14,98000,0
+C-0008,33,Makassar,Data Only,53,96000,0
+C-0009,65,Surabaya,Data Only,52,80000,0
+C-0010,48,Bandung,Data Only,51,91000,0
+C-0011,70,Semarang,Sultan,36,149000,0
+C-0012,41,Jakarta,Data Only,32,82000,0
+C-0013,27,Semarang,Sultan,37,165000,0
+C-0014,37,Bandung,Hemat,46,63000,1
+C-0015,18,Makassar,Data Only,17,86000,0
+C-0016,21,Surabaya,Hemat,17,67000,0
+C-0017,19,Medan,Data Only,33,85000,0
+C-0018,21,Jakarta,Data Only,37,85000,0
+C-0019,45,Semarang,Sultan+,27,249000,0
+C-0020,19,Medan,Sultan,33,158000,0
+C-0021,35,Medan,Sultan+,27,245000,0
+C-0022,49,Semarang,Sultan+,5,251000,0
+C-0023,48,Makassar,Data Only,58,90000,0
+C-0024,69,Surabaya,Hemat,17,54000,1
+C-0025,61,Bandung,Sultan,42,155000,0
+C-0026,69,Surabaya,Sultan,30,153000,1
+C-0027,52,Semarang,Data Only,22,89000,0
+C-0028,69,Jakarta,Sultan,17,157000,0
+C-0029,22,Surabaya,Data Only,2,100000,0
+C-0030,67,Bandung,Sultan,39,145000,0
+C-0031,50,Bandung,Hemat,20,55000,0
+C-0032,64,Medan,Sultan+,21,248000,0
+C-0033,62,Medan,Sultan,33,156000,0
+C-0034,44,Jakarta,Sultan,36,150000,0
+C-0035,67,Surabaya,Hemat,4,57000,0
+C-0036,31,Medan,Sultan+,49,262000,0
+C-0037,25,Medan,Hemat,30,59000,0
+C-0038,59,Bandung,Sultan+,30,261000,0
+C-0039,24,Jakarta,Data Only,1,83000,0
+C-0040,38,Jakarta,Sultan+,24,263000,0
+C-0041,22,Medan,Hemat,8,58000,0
+C-0042,59,Surabaya,Sultan+,41,255000,1
+C-0043,58,Jakarta,Data Only,29,100000,0
+C-0044,24,Makassar,Hemat,5,53000,1
+C-0045,30,Bandung,Data Only,44,99000,0
+C-0046,56,Makassar,Hemat,6,58000,1
+C-0047,68,Bandung,Sultan,28,164000,0
+C-0048,65,Semarang,Data Only,51,91000,0
+C-0049,39,Bandung,Data Only,29,92000,0
+C-0050,27,Bandung,Sultan,47,154000,0
+C-0051,41,Makassar,Sultan,44,156000,0
+C-0052,56,Makassar,Sultan,3,156000,0
+C-0053,43,Jakarta,Sultan+,41,249000,0
+C-0054,57,Semarang,Sultan+,57,249000,0
+C-0055,23,Semarang,Data Only,3,90000,0
+C-0056,22,Semarang,Sultan+,9,254000,0
+C-0057,49,Jakarta,Hemat,12,69000,0
+C-0058,42,Jakarta,Data Only,23,86000,0
+C-0059,21,Surabaya,Data Only,39,95000,0
+C-0060,59,Bandung,Data Only,37,94000,0
+C-0061,58,Surabaya,Hemat,21,62000,1
+C-0062,68,Jakarta,Sultan,58,149000,0
+C-0063,19,Surabaya,Hemat,55,66000,0
+C-0064,54,Jakarta,Sultan+,29,245000,0
+C-0065,22,Jakarta,Hemat,1,65000,1
+C-0066,69,Bandung,Hemat,14,63000,0
+C-0067,67,Bandung,Sultan+,33,262000,0
+C-0068,39,Semarang,Sultan,16,155000,0
+C-0069,64,Surabaya,Sultan+,35,264000,0
+C-0070,47,Semarang,Sultan,58,145000,0
+C-0071,41,Makassar,Data Only,43,81000,0
+C-0072,17,Jakarta,Sultan,19,145000,0
+C-0073,26,Makassar,Hemat,36,60000,0
+C-0074,59,Semarang,Sultan,27,163000,0
+C-0075,50,Medan,Sultan+,14,251000,0
+C-0076,69,Semarang,Hemat,47,61000,0
+C-0077,35,Surabaya,Data Only,43,99000,0
+C-0078,53,Surabaya,Hemat,52,61000,0
+C-0079,50,Bandung,Hemat,29,52000,0
+C-0080,17,Semarang,Sultan,49,149000,1
+C-0081,63,Bandung,Hemat,31,68000,0
+C-0082,46,Makassar,Sultan,34,157000,0
+C-0083,27,Jakarta,Hemat,39,59000,0
+C-0084,68,Bandung,Sultan+,47,248000,1
+C-0085,44,Semarang,Sultan+,58,246000,0
+C-0086,39,Semarang,Sultan,36,158000,0
+C-0087,36,Medan,Data Only,18,90000,1
+C-0088,17,Bandung,Hemat,53,67000,0
+C-0089,26,Makassar,Data Only,50,88000,0
+C-0090,28,Bandung,Sultan,30,147000,0
+C-0091,40,Semarang,Data Only,29,97000,0
+C-0092,67,Surabaya,Data Only,44,96000,1
+C-0093,31,Makassar,Data Only,18,100000,0
+C-0094,62,Jakarta,Sultan+,23,260000,0
+C-0095,67,Bandung,Hemat,34,58000,0
+C-0096,19,Makassar,Sultan+,53,257000,0
+C-0097,29,Bandung,Data Only,40,87000,0
+C-0098,66,Makassar,Data Only,16,90000,0
+C-0099,37,Bandung,Sultan+,44,250000,0
+C-0100,26,Bandung,Sultan+,8,264000,1
+C-0101,65,Medan,Data Only,31,85000,0
+C-0102,44,Semarang,Data Only,21,85000,0
+C-0103,67,Semarang,Sultan+,12,254000,1
+C-0104,22,Bandung,Data Only,59,90000,1
+C-0105,53,Bandung,Sultan,53,151000,0
+C-0106,69,Medan,Sultan,41,160000,0
+C-0107,17,Surabaya,Data Only,23,91000,0
+C-0108,56,Medan,Sultan,36,147000,0
+C-0109,40,Semarang,Sultan+,58,264000,0
+C-0110,23,Surabaya,Data Only,59,87000,0
+C-0111,39,Semarang,Sultan,25,152000,0
+C-0112,25,Jakarta,Sultan,48,153000,0
+C-0113,32,Surabaya,Data Only,5,85000,0
+C-0114,26,Semarang,Data Only,57,93000,1
+C-0115,30,Bandung,Data Only,8,99000,0
+C-0116,30,Bandung,Sultan+,49,265000,0
+C-0117,23,Surabaya,Hemat,15,68000,0
+C-0118,17,Surabaya,Data Only,7,99000,0
+C-0119,55,Medan,Sultan,55,150000,0
+C-0120,43,Surabaya,Hemat,31,54000,1
+C-0121,19,Makassar,Hemat,35,55000,0
+C-0122,56,Surabaya,Data Only,55,88000,0
+C-0123,22,Medan,Data Only,37,92000,0
+C-0124,66,Medan,Sultan,44,164000,0
+C-0125,69,Surabaya,Sultan+,32,263000,0
+C-0126,28,Surabaya,Sultan+,35,260000,0
+C-0127,42,Semarang,Sultan,33,152000,0
+C-0128,31,Medan,Data Only,60,82000,0
+C-0129,20,Makassar,Hemat,40,57000,0
+C-0130,48,Jakarta,Sultan,4,148000,1
+C-0131,48,Bandung,Data Only,43,80000,0
+C-0132,44,Surabaya,Sultan+,60,265000,0
+C-0133,45,Medan,Data Only,5,87000,0
+C-0134,47,Makassar,Sultan,12,157000,1
+C-0135,23,Bandung,Sultan,17,152000,0
+C-0136,41,Makassar,Sultan+,55,252000,0
+C-0137,29,Semarang,Hemat,54,56000,0
+C-0138,68,Jakarta,Sultan,55,147000,0
+C-0139,38,Bandung,Sultan,22,165000,0
+C-0140,45,Bandung,Data Only,7,96000,0
+C-0141,50,Makassar,Sultan+,51,252000,0
+C-0142,30,Surabaya,Data Only,29,84000,0
+C-0143,43,Jakarta,Data Only,58,81000,0
+C-0144,70,Jakarta,Data Only,2,81000,0
+C-0145,41,Jakarta,Sultan,38,156000,0
+C-0146,39,Makassar,Sultan,36,149000,0
+C-0147,33,Jakarta,Hemat,12,56000,0
+C-0148,23,Semarang,Data Only,57,89000,0
+C-0149,23,Bandung,Sultan,58,145000,0
+C-0150,44,Jakarta,Data Only,57,88000,0
+C-0151,44,Bandung,Hemat,27,64000,0
+C-0152,60,Surabaya,Data Only,59,89000,0
+C-0153,19,Makassar,Sultan+,57,253000,0
+C-0154,61,Semarang,Data Only,18,90000,0
+C-0155,60,Surabaya,Data Only,34,96000,1
+C-0156,39,Bandung,Data Only,56,82000,0
+C-0157,61,Semarang,Data Only,21,89000,0
+C-0158,57,Jakarta,Sultan+,9,246000,0
+C-0159,59,Medan,Data Only,41,93000,0
+C-0160,23,Medan,Sultan,19,146000,0
+C-0161,69,Surabaya,Hemat,42,68000,0
+C-0162,42,Bandung,Hemat,52,60000,0
+C-0163,41,Medan,Sultan,55,160000,0
+C-0164,43,Surabaya,Sultan,56,164000,0
+C-0165,25,Semarang,Data Only,4,81000,0
+C-0166,24,Semarang,Hemat,57,60000,0
+C-0167,23,Semarang,Hemat,28,50000,0
+C-0168,22,Jakarta,Data Only,34,85000,0
+C-0169,45,Makassar,Sultan+,38,259000,0
+C-0170,64,Makassar,Sultan+,4,262000,0
+C-0171,21,Medan,Data Only,35,91000,0
+C-0172,49,Bandung,Hemat,7,53000,1
+C-0173,61,Surabaya,Sultan+,19,259000,0
+C-0174,55,Bandung,Data Only,32,94000,0
+C-0175,54,Surabaya,Data Only,29,95000,0
+C-0176,19,Makassar,Data Only,58,88000,0
+C-0177,48,Semarang,Data Only,60,85000,0
+C-0178,22,Jakarta,Sultan,10,155000,0
+C-0179,59,Makassar,Data Only,23,99000,0
+C-0180,61,Medan,Sultan+,5,246000,1
+C-0181,20,Semarang,Hemat,31,51000,0
+C-0182,35,Surabaya,Data Only,39,83000,0
+C-0183,28,Surabaya,Sultan+,57,247000,0
+C-0184,22,Semarang,Sultan+,18,264000,0
+C-0185,68,Surabaya,Sultan+,2,263000,1
+C-0186,58,Medan,Hemat,1,63000,0
+C-0187,44,Medan,Sultan,21,156000,0
+C-0188,51,Medan,Sultan,31,164000,0
+C-0189,60,Jakarta,Sultan,13,157000,0
+C-0190,20,Semarang,Data Only,6,85000,0
+C-0191,62,Makassar,Data Only,34,97000,0
+C-0192,37,Bandung,Data Only,33,100000,0
+C-0193,68,Medan,Data Only,59,85000,0
+C-0194,20,Jakarta,Data Only,49,100000,0
+C-0195,62,Surabaya,Hemat,25,57000,0
+C-0196,61,Jakarta,Data Only,34,89000,0
+C-0197,67,Semarang,Sultan,17,149000,0
+C-0198,28,Makassar,Sultan+,12,261000,0
+C-0199,21,Semarang,Sultan,30,161000,0
+C-0200,56,Surabaya,Sultan,33,146000,0
+C-0201,44,Makassar,Data Only,34,93000,0
+C-0202,59,Jakarta,Data Only,5,84000,0
+C-0203,67,Makassar,Hemat,10,70000,0
+C-0204,40,Semarang,Sultan+,59,246000,0
+C-0205,57,Bandung,Sultan,9,160000,0
+C-0206,66,Jakarta,Data Only,42,83000,0
+C-0207,17,Surabaya,Hemat,27,64000,0
+C-0208,45,Medan,Sultan,11,152000,0
+C-0209,23,Jakarta,Hemat,56,55000,0
+C-0210,54,Jakarta,Data Only,38,96000,0
+C-0211,41,Bandung,Data Only,46,89000,1
+C-0212,21,Semarang,Sultan,29,145000,0
+C-0213,50,Jakarta,Hemat,25,65000,0
+C-0214,66,Makassar,Hemat,8,65000,0
+C-0215,51,Medan,Hemat,20,52000,0
+C-0216,55,Medan,Hemat,12,66000,0
+C-0217,69,Makassar,Data Only,47,94000,0
+C-0218,51,Medan,Sultan+,3,248000,1
+C-0219,31,Surabaya,Data Only,42,92000,0
+C-0220,40,Surabaya,Data Only,9,94000,0
+C-0221,63,Bandung,Data Only,14,97000,0
+C-0222,58,Surabaya,Sultan+,14,264000,1
+C-0223,19,Jakarta,Sultan+,35,255000,0
+C-0224,22,Surabaya,Sultan+,10,257000,1
+C-0225,27,Medan,Hemat,26,61000,0
+C-0226,48,Jakarta,Sultan+,4,261000,0
+C-0227,26,Semarang,Data Only,11,99000,0
+C-0228,63,Medan,Sultan,40,157000,0
+C-0229,34,Surabaya,Data Only,55,80000,0
+C-0230,30,Jakarta,Sultan,9,155000,0
+C-0231,47,Jakarta,Data Only,56,89000,0
+C-0232,19,Medan,Data Only,7,92000,0
+C-0233,57,Bandung,Hemat,13,53000,0
+C-0234,20,Makassar,Data Only,54,87000,0
+C-0235,21,Bandung,Sultan+,59,245000,0
+C-0236,19,Medan,Sultan+,39,265000,0
+C-0237,39,Surabaya,Hemat,28,55000,0
+C-0238,54,Surabaya,Sultan+,54,254000,0
+C-0239,26,Semarang,Sultan,15,162000,0
+C-0240,64,Medan,Data Only,55,86000,0
+C-0241,21,Makassar,Data Only,16,82000,0
+C-0242,22,Makassar,Hemat,60,50000,0
+C-0243,56,Jakarta,Sultan+,47,257000,0
+C-0244,26,Makassar,Sultan+,34,248000,0
+C-0245,63,Bandung,Hemat,31,63000,0
+C-0246,20,Jakarta,Data Only,4,80000,0
+C-0247,50,Bandung,Hemat,2,68000,1
+C-0248,23,Bandung,Sultan,2,160000,0
+C-0249,29,Bandung,Hemat,7,58000,1
+C-0250,25,Surabaya,Hemat,53,64000,0
+C-0251,63,Bandung,Data Only,11,87000,0
+C-0252,41,Makassar,Sultan+,35,258000,0
+C-0253,34,Medan,Hemat,23,51000,0
+C-0254,29,Jakarta,Sultan+,24,261000,0
+C-0255,20,Medan,Sultan,19,151000,0
+C-0256,41,Jakarta,Sultan+,48,263000,0
+C-0257,17,Bandung,Sultan+,40,245000,0
+C-0258,23,Bandung,Sultan,30,161000,0
+C-0259,65,Jakarta,Hemat,1,60000,0
+C-0260,54,Bandung,Sultan,41,149000,0
+C-0261,56,Makassar,Hemat,51,69000,0
+C-0262,27,Medan,Hemat,18,61000,0
+C-0263,64,Bandung,Hemat,1,52000,1
+C-0264,69,Medan,Data Only,13,97000,0
+C-0265,30,Makassar,Data Only,60,82000,0
+C-0266,52,Medan,Hemat,37,63000,0
+C-0267,33,Jakarta,Data Only,3,95000,1
+C-0268,20,Medan,Sultan+,51,253000,0
+C-0269,45,Surabaya,Hemat,36,69000,1
+C-0270,31,Jakarta,Sultan,12,153000,0
+C-0271,55,Makassar,Sultan+,6,256000,0
+C-0272,32,Makassar,Data Only,5,88000,0
+C-0273,55,Semarang,Hemat,19,60000,0
+C-0274,59,Surabaya,Data Only,41,84000,0
+C-0275,37,Surabaya,Sultan,14,159000,0
+C-0276,45,Surabaya,Sultan+,11,254000,0
+C-0277,57,Semarang,Data Only,11,90000,0
+C-0278,19,Jakarta,Sultan+,23,251000,0
+C-0279,67,Surabaya,Sultan+,20,261000,0
+C-0280,25,Semarang,Hemat,32,69000,0
+C-0281,64,Semarang,Data Only,19,83000,0
+C-0282,39,Medan,Hemat,26,57000,0
+C-0283,19,Semarang,Sultan+,13,261000,0
+C-0284,44,Semarang,Sultan,24,145000,0
+C-0285,37,Jakarta,Data Only,36,82000,0
+C-0286,18,Semarang,Sultan+,58,258000,1
+C-0287,31,Jakarta,Data Only,51,86000,0
+C-0288,28,Surabaya,Hemat,9,50000,1
+C-0289,57,Surabaya,Sultan,23,160000,0
+C-0290,33,Makassar,Sultan,12,163000,0
+C-0291,41,Surabaya,Hemat,30,64000,0
+C-0292,50,Medan,Sultan,49,161000,0
+C-0293,38,Makassar,Sultan,28,146000,0
+C-0294,19,Jakarta,Sultan,57,151000,0
+C-0295,34,Surabaya,Sultan+,8,254000,0
+C-0296,55,Medan,Sultan,50,159000,0
+C-0297,28,Semarang,Sultan+,53,253000,0
+C-0298,22,Surabaya,Sultan+,42,262000,0
+C-0299,20,Semarang,Hemat,41,61000,0
+C-0300,27,Semarang,Sultan+,54,252000,0
+C-0301,47,Medan,Hemat,33,58000,0
+C-0302,25,Bandung,Hemat,25,55000,0
+C-0303,61,Jakarta,Data Only,21,100000,0
+C-0304,42,Makassar,Data Only,34,80000,0
+C-0305,65,Surabaya,Sultan,38,160000,1
+C-0306,59,Makassar,Sultan+,39,247000,1
+C-0307,33,Jakarta,Data Only,25,84000,0
+C-0308,65,Surabaya,Sultan+,16,256000,0
+C-0309,20,Medan,Hemat,27,61000,0
+C-0310,36,Semarang,Sultan,39,160000,0
+C-0311,56,Semarang,Hemat,36,52000,0
+C-0312,45,Makassar,Data Only,9,80000,1
+C-0313,61,Jakarta,Sultan,23,158000,0
+C-0314,42,Surabaya,Sultan+,55,254000,1
+C-0315,61,Semarang,Data Only,29,88000,0
+C-0316,63,Medan,Sultan+,39,257000,0
+C-0317,25,Medan,Data Only,20,81000,1
+C-0318,23,Makassar,Sultan,2,164000,1
+C-0319,50,Surabaya,Data Only,28,83000,0
+C-0320,38,Jakarta,Data Only,6,92000,0
+C-0321,19,Semarang,Data Only,26,99000,0
+C-0322,42,Semarang,Hemat,11,62000,0
+C-0323,29,Semarang,Hemat,27,64000,0
+C-0324,41,Medan,Hemat,57,57000,0
+C-0325,37,Jakarta,Sultan+,11,250000,0
+C-0326,49,Medan,Data Only,22,81000,1
+C-0327,24,Bandung,Sultan+,17,261000,0
+C-0328,54,Jakarta,Sultan+,38,246000,0
+C-0329,26,Jakarta,Hemat,29,69000,0
+C-0330,46,Semarang,Sultan,29,148000,0
+C-0331,33,Surabaya,Hemat,54,53000,0
+C-0332,68,Surabaya,Sultan+,43,249000,0
+C-0333,19,Surabaya,Sultan,44,149000,0
+C-0334,54,Semarang,Sultan+,55,245000,0
+C-0335,23,Semarang,Sultan,60,159000,0
+C-0336,42,Jakarta,Sultan+,5,257000,0
+C-0337,49,Surabaya,Hemat,32,53000,0
+C-0338,36,Makassar,Sultan,6,158000,0
+C-0339,38,Medan,Sultan,53,163000,0
+C-0340,63,Semarang,Sultan,52,155000,0
+C-0341,66,Surabaya,Data Only,25,98000,0
+C-0342,47,Semarang,Data Only,36,91000,0
+C-0343,31,Jakarta,Hemat,60,52000,0
+C-0344,30,Bandung,Sultan,37,163000,0
+C-0345,36,Jakarta,Hemat,57,70000,0
+C-0346,65,Medan,Sultan+,34,255000,0
+C-0347,65,Surabaya,Hemat,49,51000,0
+C-0348,19,Medan,Sultan,38,155000,0
+C-0349,22,Makassar,Data Only,16,99000,0
+C-0350,29,Medan,Sultan,51,159000,0
+C-0351,20,Medan,Sultan+,44,252000,0
+C-0352,21,Bandung,Hemat,22,58000,0
+C-0353,27,Jakarta,Data Only,23,86000,0
+C-0354,63,Bandung,Sultan,58,164000,0
+C-0355,53,Semarang,Data Only,8,82000,0
+C-0356,33,Bandung,Sultan+,7,252000,1
+C-0357,51,Surabaya,Sultan+,49,246000,0
+C-0358,37,Bandung,Sultan,48,156000,0
+C-0359,38,Medan,Data Only,8,94000,0
+C-0360,66,Jakarta,Hemat,38,59000,0
+C-0361,26,Medan,Data Only,51,98000,0
+C-0362,57,Bandung,Sultan,23,145000,0
+C-0363,62,Medan,Hemat,40,59000,0
+C-0364,67,Semarang,Sultan,47,158000,0
+C-0365,26,Medan,Sultan,48,145000,0
+C-0366,61,Surabaya,Hemat,17,51000,1
+C-0367,41,Jakarta,Sultan+,54,250000,0
+C-0368,27,Jakarta,Data Only,49,87000,0
+C-0369,29,Jakarta,Data Only,42,91000,1
+C-0370,61,Bandung,Hemat,49,64000,0
+C-0371,31,Surabaya,Hemat,60,57000,1
+C-0372,33,Medan,Hemat,43,69000,0
+C-0373,40,Jakarta,Sultan,22,147000,0
+C-0374,68,Jakarta,Sultan+,55,260000,0
+C-0375,56,Surabaya,Hemat,23,67000,1
+C-0376,65,Jakarta,Hemat,58,57000,0
+C-0377,17,Surabaya,Data Only,45,97000,0
+C-0378,39,Bandung,Sultan+,22,255000,0
+C-0379,20,Makassar,Sultan,34,159000,0
+C-0380,26,Jakarta,Sultan,51,150000,0
+C-0381,57,Medan,Hemat,46,54000,0
+C-0382,32,Makassar,Data Only,54,93000,0
+C-0383,66,Medan,Hemat,4,69000,0
+C-0384,70,Semarang,Data Only,4,95000,0
+C-0385,40,Makassar,Data Only,25,83000,0
+C-0386,29,Semarang,Sultan+,36,252000,0
+C-0387,67,Bandung,Sultan+,52,251000,1
+C-0388,52,Makassar,Sultan,7,161000,1
+C-0389,29,Makassar,Data Only,53,91000,0
+C-0390,46,Jakarta,Sultan,40,163000,0
+C-0391,21,Bandung,Sultan,51,161000,0
+C-0392,29,Makassar,Sultan,6,152000,0
+C-0393,47,Makassar,Hemat,18,60000,0
+C-0394,25,Makassar,Sultan,31,163000,0
+C-0395,70,Surabaya,Hemat,10,50000,0
+C-0396,33,Medan,Data Only,19,81000,0
+C-0397,68,Medan,Sultan,39,158000,0
+C-0398,62,Surabaya,Data Only,57,100000,0
+C-0399,20,Semarang,Sultan+,16,261000,0
+C-0400,25,Makassar,Data Only,18,86000,0
+C-0401,29,Medan,Data Only,29,84000,0
+C-0402,63,Surabaya,Sultan,15,159000,0
+C-0403,51,Semarang,Sultan+,59,248000,0
+C-0404,17,Surabaya,Hemat,16,57000,1
+C-0405,26,Bandung,Sultan+,44,258000,0
+C-0406,37,Bandung,Hemat,45,57000,1
+C-0407,58,Surabaya,Sultan+,29,256000,0
+C-0408,37,Semarang,Sultan+,10,258000,0
+C-0409,24,Jakarta,Sultan+,53,262000,1
+C-0410,26,Medan,Hemat,46,61000,1
+C-0411,49,Medan,Data Only,36,84000,0
+C-0412,66,Medan,Sultan,55,163000,1
+C-0413,49,Makassar,Sultan+,34,254000,0
+C-0414,61,Bandung,Sultan+,28,264000,0
+C-0415,50,Makassar,Hemat,31,64000,0
+C-0416,55,Makassar,Sultan,55,161000,0
+C-0417,20,Jakarta,Data Only,22,86000,0
+C-0418,20,Surabaya,Sultan+,28,264000,0
+C-0419,38,Semarang,Sultan+,14,262000,0
+C-0420,27,Medan,Data Only,48,94000,0
+C-0421,17,Medan,Sultan,4,162000,1
+C-0422,18,Bandung,Sultan,4,145000,0
+C-0423,29,Bandung,Sultan,51,164000,0
+C-0424,40,Bandung,Data Only,57,82000,0
+C-0425,58,Makassar,Hemat,55,50000,0
+C-0426,67,Surabaya,Sultan,48,158000,0
+C-0427,46,Bandung,Data Only,35,88000,0
+C-0428,23,Bandung,Data Only,21,91000,0
+C-0429,32,Jakarta,Data Only,49,89000,1
+C-0430,46,Jakarta,Sultan,32,165000,0
+C-0431,50,Makassar,Sultan,1,162000,0
+C-0432,61,Semarang,Data Only,40,99000,0
+C-0433,65,Bandung,Hemat,13,54000,0
+C-0434,18,Surabaya,Hemat,16,66000,0
+C-0435,65,Surabaya,Hemat,40,70000,0
+C-0436,46,Surabaya,Data Only,6,92000,0
+C-0437,43,Semarang,Hemat,1,63000,0
+C-0438,40,Semarang,Sultan+,9,253000,0
+C-0439,65,Jakarta,Sultan,18,147000,1
+C-0440,22,Surabaya,Hemat,27,52000,0
+C-0441,63,Semarang,Sultan+,19,246000,0
+C-0442,28,Bandung,Data Only,32,82000,0
+C-0443,50,Bandung,Sultan+,1,261000,0
+C-0444,58,Surabaya,Sultan,34,151000,0
+C-0445,38,Semarang,Data Only,27,80000,0
+C-0446,21,Medan,Sultan+,33,255000,0
+C-0447,47,Surabaya,Hemat,44,65000,0
+C-0448,59,Semarang,Sultan,32,162000,0
+C-0449,43,Semarang,Sultan+,56,252000,0
+C-0450,59,Semarang,Sultan+,32,261000,0
+C-0451,48,Bandung,Sultan,51,163000,0
+C-0452,53,Semarang,Sultan+,4,251000,0
+C-0453,32,Bandung,Hemat,44,66000,0
+C-0454,25,Semarang,Data Only,4,89000,1
+C-0455,63,Surabaya,Data Only,7,98000,1
+C-0456,28,Bandung,Sultan+,22,256000,1
+C-0457,31,Makassar,Hemat,9,68000,1
+C-0458,31,Jakarta,Sultan,24,157000,0
+C-0459,32,Medan,Sultan+,50,251000,0
+C-0460,47,Medan,Data Only,50,90000,0
+C-0461,41,Bandung,Sultan+,20,248000,1
+C-0462,18,Jakarta,Sultan,4,160000,0
+C-0463,40,Medan,Sultan,43,160000,0
+C-0464,56,Bandung,Hemat,48,69000,1
+C-0465,44,Makassar,Sultan,59,146000,1
+C-0466,50,Jakarta,Sultan+,8,252000,0
+C-0467,69,Jakarta,Sultan+,17,255000,0
+C-0468,48,Jakarta,Hemat,44,51000,0
+C-0469,51,Bandung,Sultan,11,145000,0
+C-0470,58,Bandung,Sultan,59,153000,0
+C-0471,50,Bandung,Sultan,42,165000,0
+C-0472,32,Surabaya,Sultan+,9,261000,0
+C-0473,25,Bandung,Hemat,32,51000,0
+C-0474,19,Medan,Sultan,27,146000,0
+C-0475,32,Semarang,Sultan+,43,257000,0
+C-0476,48,Makassar,Sultan,6,153000,0
+C-0477,41,Jakarta,Sultan+,48,254000,0
+C-0478,46,Medan,Sultan,20,149000,0
+C-0479,60,Makassar,Sultan+,12,261000,0
+C-0480,20,Jakarta,Sultan,37,160000,1
+C-0481,51,Jakarta,Sultan+,42,260000,0
+C-0482,22,Bandung,Sultan+,56,257000,0
+C-0483,35,Surabaya,Sultan+,9,250000,0
+C-0484,60,Semarang,Data Only,53,90000,0
+C-0485,27,Jakarta,Data Only,46,87000,1
+C-0486,26,Makassar,Sultan+,3,257000,0
+C-0487,39,Makassar,Data Only,19,97000,0
+C-0488,34,Medan,Hemat,60,61000,0
+C-0489,53,Semarang,Sultan+,35,256000,0
+C-0490,67,Semarang,Data Only,43,87000,0
+C-0491,43,Surabaya,Hemat,11,63000,0
+C-0492,66,Bandung,Hemat,41,66000,0
+C-0493,43,Makassar,Data Only,17,92000,0
+C-0494,44,Jakarta,Sultan+,12,264000,0
+C-0495,56,Makassar,Data Only,25,90000,0
+C-0496,59,Surabaya,Hemat,25,50000,1
+C-0497,22,Semarang,Sultan,22,158000,0
+C-0498,57,Bandung,Sultan,55,147000,0
+C-0499,43,Bandung,Sultan+,52,251000,0
+C-0500,32,Surabaya,Hemat,44,58000,1
+C-0501,67,Semarang,Sultan,33,149000,0
+C-0502,63,Medan,Sultan+,43,256000,0
+C-0503,45,Makassar,Data Only,45,92000,0
+C-0504,57,Semarang,Sultan+,34,254000,0
+C-0505,64,Semarang,Data Only,54,81000,0
+C-0506,53,Surabaya,Sultan,31,155000,0
+C-0507,60,Bandung,Sultan,10,162000,0
+C-0508,27,Semarang,Sultan+,30,254000,0
+C-0509,27,Makassar,Data Only,30,84000,0
+C-0510,36,Jakarta,Hemat,49,69000,0
+C-0511,20,Makassar,Data Only,20,98000,1
+C-0512,18,Bandung,Hemat,49,56000,0
+C-0513,20,Semarang,Sultan+,19,265000,0
+C-0514,63,Bandung,Data Only,28,93000,0
+C-0515,33,Makassar,Sultan+,50,246000,0
+C-0516,49,Semarang,Sultan,17,153000,0
+C-0517,40,Makassar,Sultan+,45,256000,0
+C-0518,61,Bandung,Sultan+,5,260000,0
+C-0519,65,Medan,Data Only,18,99000,0
+C-0520,48,Makassar,Data Only,15,94000,0
+C-0521,52,Bandung,Data Only,28,90000,0
+C-0522,21,Makassar,Data Only,55,87000,0
+C-0523,42,Medan,Hemat,17,52000,1
+C-0524,30,Medan,Sultan+,37,249000,0
+C-0525,19,Surabaya,Hemat,59,70000,0
+C-0526,50,Semarang,Sultan,16,146000,0
+C-0527,27,Medan,Hemat,36,59000,0
+C-0528,52,Surabaya,Sultan+,11,250000,0
+C-0529,56,Bandung,Sultan+,39,258000,0
+C-0530,38,Semarang,Data Only,56,82000,0
+C-0531,42,Surabaya,Sultan+,1,262000,0
+C-0532,49,Makassar,Sultan+,26,251000,0
+C-0533,27,Bandung,Hemat,20,65000,0
+C-0534,34,Semarang,Data Only,41,87000,0
+C-0535,37,Semarang,Sultan+,9,248000,0
+C-0536,47,Surabaya,Sultan,59,150000,0
+C-0537,61,Surabaya,Data Only,31,81000,0
+C-0538,48,Jakarta,Sultan,31,161000,0
+C-0539,24,Surabaya,Sultan,59,158000,0
+C-0540,49,Bandung,Data Only,8,96000,0
+C-0541,39,Bandung,Hemat,58,69000,0
+C-0542,37,Semarang,Data Only,54,95000,0
+C-0543,33,Medan,Sultan,55,147000,0
+C-0544,41,Semarang,Hemat,30,60000,0
+C-0545,33,Semarang,Sultan+,6,248000,0
+C-0546,48,Semarang,Hemat,57,63000,0
+C-0547,23,Bandung,Data Only,25,94000,0
+C-0548,68,Medan,Hemat,36,63000,0
+C-0549,62,Medan,Sultan,56,146000,0
+C-0550,31,Jakarta,Data Only,10,87000,0
+C-0551,55,Makassar,Sultan+,33,263000,0
+C-0552,30,Jakarta,Hemat,51,53000,1
+C-0553,68,Medan,Sultan,37,156000,0
+C-0554,32,Semarang,Hemat,52,52000,0
+C-0555,35,Jakarta,Sultan,6,163000,1
+C-0556,50,Makassar,Data Only,42,91000,0
+C-0557,25,Jakarta,Sultan+,14,257000,0
+C-0558,24,Makassar,Hemat,36,64000,0
+C-0559,47,Jakarta,Sultan,12,150000,0
+C-0560,27,Bandung,Sultan,9,153000,0
+C-0561,37,Surabaya,Hemat,21,50000,0
+C-0562,65,Bandung,Hemat,33,56000,0
+C-0563,54,Semarang,Sultan,25,156000,0
+C-0564,41,Surabaya,Sultan,59,165000,0
+C-0565,68,Jakarta,Sultan,48,145000,0
+C-0566,66,Surabaya,Data Only,47,97000,0
+C-0567,19,Surabaya,Sultan,51,164000,0
+C-0568,26,Semarang,Sultan,3,150000,0
+C-0569,41,Jakarta,Sultan,29,156000,0
+C-0570,24,Medan,Sultan,18,161000,0
+C-0571,70,Semarang,Hemat,53,61000,0
+C-0572,62,Medan,Sultan+,41,257000,0
+C-0573,68,Medan,Sultan+,40,256000,0
+C-0574,69,Semarang,Sultan+,5,257000,0
+C-0575,41,Surabaya,Sultan+,47,256000,0
+C-0576,60,Semarang,Data Only,23,97000,0
+C-0577,39,Bandung,Sultan+,51,251000,0
+C-0578,40,Makassar,Sultan+,2,246000,0
+C-0579,24,Makassar,Sultan,1,164000,0
+C-0580,65,Makassar,Sultan+,48,249000,0
+C-0581,56,Medan,Data Only,44,93000,0
+C-0582,54,Semarang,Data Only,54,94000,1
+C-0583,58,Medan,Data Only,24,90000,1
+C-0584,37,Semarang,Sultan+,19,252000,0
+C-0585,34,Bandung,Data Only,29,83000,0
+C-0586,21,Makassar,Hemat,7,69000,1
+C-0587,32,Jakarta,Data Only,58,92000,0
+C-0588,25,Jakarta,Sultan,14,160000,1
+C-0589,18,Jakarta,Sultan,34,156000,0
+C-0590,70,Bandung,Sultan+,40,264000,0
+C-0591,29,Surabaya,Data Only,53,97000,0
+C-0592,60,Makassar,Sultan,56,158000,0
+C-0593,66,Surabaya,Data Only,23,99000,0
+C-0594,53,Jakarta,Sultan,32,154000,0
+C-0595,45,Makassar,Sultan+,30,246000,0
+C-0596,26,Semarang,Data Only,3,86000,0
+C-0597,45,Makassar,Hemat,12,70000,1
+C-0598,55,Jakarta,Sultan,20,145000,0
+C-0599,37,Semarang,Data Only,49,88000,0
+C-0600,33,Jakarta,Sultan,54,145000,0
+C-0601,65,Surabaya,Hemat,18,54000,0
+C-0602,27,Makassar,Hemat,47,55000,0
+C-0603,27,Surabaya,Sultan+,6,262000,0
+C-0604,63,Medan,Data Only,40,80000,0
+C-0605,47,Makassar,Sultan+,30,248000,0
+C-0606,50,Bandung,Data Only,5,97000,0
+C-0607,67,Bandung,Sultan+,4,254000,0
+C-0608,62,Semarang,Data Only,5,93000,0
+C-0609,48,Jakarta,Sultan+,54,248000,0
+C-0610,48,Bandung,Sultan,9,163000,0
+C-0611,20,Semarang,Data Only,11,87000,0
+C-0612,53,Semarang,Sultan,57,162000,0
+C-0613,39,Jakarta,Sultan,56,158000,0
+C-0614,40,Surabaya,Sultan,37,152000,0
+C-0615,48,Medan,Data Only,18,91000,0
+C-0616,64,Bandung,Data Only,53,83000,1
+C-0617,34,Semarang,Sultan,31,160000,0
+C-0618,65,Surabaya,Hemat,11,69000,0
+C-0619,47,Bandung,Sultan,18,150000,0
+C-0620,33,Jakarta,Sultan,13,157000,0
+C-0621,70,Bandung,Sultan+,56,261000,1
+C-0622,34,Makassar,Data Only,4,95000,0
+C-0623,29,Semarang,Hemat,39,67000,0
+C-0624,40,Surabaya,Sultan+,39,256000,0
+C-0625,64,Medan,Hemat,53,55000,0
+C-0626,50,Surabaya,Hemat,9,70000,0
+C-0627,28,Surabaya,Hemat,58,54000,0
+C-0628,64,Jakarta,Sultan,10,161000,0
+C-0629,41,Surabaya,Sultan+,3,247000,0
+C-0630,64,Jakarta,Sultan+,36,246000,1
+C-0631,24,Semarang,Sultan+,18,247000,0
+C-0632,17,Bandung,Data Only,39,82000,0
+C-0633,56,Makassar,Hemat,21,59000,0
+C-0634,49,Medan,Sultan,11,148000,1
+C-0635,62,Jakarta,Hemat,47,62000,0
+C-0636,20,Bandung,Data Only,56,97000,0
+C-0637,63,Medan,Sultan+,20,257000,0
+C-0638,48,Jakarta,Sultan,52,145000,0
+C-0639,64,Jakarta,Sultan+,51,261000,0
+C-0640,23,Makassar,Sultan,42,162000,0
+C-0641,30,Medan,Hemat,52,62000,0
+C-0642,37,Semarang,Sultan+,6,261000,0
+C-0643,18,Medan,Data Only,32,97000,0
+C-0644,57,Semarang,Sultan,38,159000,0
+C-0645,37,Jakarta,Data Only,15,84000,0
+C-0646,67,Semarang,Data Only,49,87000,0
+C-0647,55,Makassar,Hemat,45,60000,0
+C-0648,70,Makassar,Sultan+,38,262000,0
+C-0649,41,Bandung,Sultan+,14,264000,1
+C-0650,61,Surabaya,Sultan,60,154000,0
+C-0651,41,Surabaya,Hemat,16,54000,0
+C-0652,41,Makassar,Sultan,23,159000,0
+C-0653,38,Medan,Hemat,28,56000,0
+C-0654,58,Bandung,Sultan+,43,250000,0
+C-0655,54,Medan,Sultan,24,157000,0
+C-0656,42,Makassar,Sultan,7,154000,0
+C-0657,63,Bandung,Sultan+,44,260000,0
+C-0658,48,Makassar,Hemat,43,63000,0
+C-0659,58,Makassar,Data Only,50,90000,0
+C-0660,27,Jakarta,Sultan,4,149000,0
+C-0661,39,Jakarta,Sultan+,46,265000,0
+C-0662,46,Bandung,Hemat,37,52000,0
+C-0663,20,Bandung,Sultan+,10,251000,0
+C-0664,62,Jakarta,Hemat,23,55000,0
+C-0665,30,Medan,Hemat,31,50000,0
+C-0666,53,Jakarta,Sultan,40,159000,0
+C-0667,44,Semarang,Sultan+,59,247000,0
+C-0668,46,Semarang,Hemat,18,67000,0
+C-0669,60,Jakarta,Sultan+,43,249000,0
+C-0670,70,Jakarta,Data Only,52,98000,0
+C-0671,55,Jakarta,Sultan,41,155000,0
+C-0672,47,Semarang,Sultan,49,151000,0
+C-0673,23,Bandung,Hemat,15,50000,0
+C-0674,49,Semarang,Hemat,42,58000,0
+C-0675,60,Semarang,Sultan,5,163000,1
+C-0676,36,Makassar,Sultan+,26,255000,1
+C-0677,60,Jakarta,Data Only,8,87000,0
+C-0678,60,Semarang,Sultan,38,146000,0
+C-0679,27,Bandung,Data Only,11,97000,0
+C-0680,50,Medan,Sultan+,52,261000,1
+C-0681,22,Jakarta,Hemat,57,55000,0
+C-0682,26,Medan,Data Only,19,83000,0
+C-0683,62,Bandung,Data Only,24,92000,1
+C-0684,67,Medan,Sultan,50,159000,0
+C-0685,33,Medan,Hemat,58,56000,0
+C-0686,49,Semarang,Hemat,47,52000,0
+C-0687,49,Makassar,Sultan,29,159000,0
+C-0688,28,Surabaya,Sultan+,3,265000,0
+C-0689,49,Semarang,Sultan,13,157000,0
+C-0690,34,Medan,Hemat,26,68000,0
+C-0691,26,Semarang,Data Only,14,81000,0
+C-0692,48,Medan,Sultan+,34,248000,0
+C-0693,23,Medan,Data Only,5,80000,0
+C-0694,36,Medan,Sultan,12,149000,0
+C-0695,65,Semarang,Sultan,21,157000,0
+C-0696,25,Semarang,Data Only,34,83000,1
+C-0697,53,Makassar,Sultan+,57,247000,0
+C-0698,70,Makassar,Data Only,56,82000,0
+C-0699,33,Bandung,Data Only,28,88000,0
+C-0700,26,Jakarta,Sultan+,55,257000,0
+C-0701,38,Semarang,Sultan+,48,248000,0
+C-0702,38,Semarang,Data Only,39,91000,0
+C-0703,63,Bandung,Sultan+,32,259000,0
+C-0704,26,Makassar,Hemat,23,60000,0
+C-0705,20,Semarang,Data Only,1,97000,0
+C-0706,54,Jakarta,Data Only,20,84000,1
+C-0707,58,Makassar,Data Only,51,83000,0
+C-0708,38,Makassar,Sultan+,15,265000,0
+C-0709,32,Jakarta,Sultan,12,159000,1
+C-0710,20,Medan,Hemat,30,61000,0
+C-0711,22,Bandung,Sultan+,12,247000,0
+C-0712,62,Surabaya,Sultan+,60,255000,0
+C-0713,30,Makassar,Data Only,42,80000,0
+C-0714,57,Semarang,Sultan+,21,264000,0
+C-0715,46,Medan,Data Only,54,85000,0
+C-0716,41,Semarang,Sultan,51,146000,1
+C-0717,65,Medan,Hemat,49,64000,1
+C-0718,20,Jakarta,Data Only,50,93000,0
+C-0719,52,Surabaya,Data Only,4,90000,0
+C-0720,42,Jakarta,Sultan,31,149000,0
+C-0721,48,Makassar,Hemat,12,50000,0
+C-0722,70,Jakarta,Hemat,9,64000,1
+C-0723,59,Makassar,Sultan+,57,251000,1
+C-0724,51,Semarang,Sultan,15,145000,0
+C-0725,50,Medan,Hemat,17,59000,0
+C-0726,28,Makassar,Hemat,6,69000,1
+C-0727,51,Bandung,Sultan+,60,255000,1
+C-0728,31,Makassar,Sultan,45,155000,0
+C-0729,52,Medan,Sultan,19,152000,0
+C-0730,68,Semarang,Sultan,44,149000,0
+C-0731,61,Semarang,Data Only,42,98000,0
+C-0732,61,Surabaya,Hemat,13,68000,0
+C-0733,63,Medan,Sultan+,6,247000,0
+C-0734,21,Surabaya,Sultan+,52,252000,0
+C-0735,40,Jakarta,Sultan+,37,246000,0
+C-0736,51,Surabaya,Sultan+,44,262000,0
+C-0737,68,Semarang,Hemat,16,59000,0
+C-0738,67,Medan,Hemat,48,64000,0
+C-0739,19,Semarang,Data Only,59,97000,0
+C-0740,18,Semarang,Hemat,52,65000,0
+C-0741,31,Semarang,Sultan+,15,265000,0
+C-0742,42,Medan,Sultan,60,162000,0
+C-0743,53,Bandung,Sultan+,40,248000,0
+C-0744,45,Makassar,Sultan,39,161000,0
+C-0745,70,Jakarta,Sultan+,25,252000,0
+C-0746,58,Jakarta,Data Only,18,80000,0
+C-0747,17,Surabaya,Hemat,32,54000,0
+C-0748,41,Jakarta,Sultan,59,160000,1
+C-0749,60,Medan,Sultan,30,163000,0
+C-0750,38,Surabaya,Sultan,55,155000,0
+C-0751,41,Semarang,Data Only,38,88000,0
+C-0752,43,Jakarta,Sultan,37,158000,0
+C-0753,68,Bandung,Hemat,43,51000,0
+C-0754,67,Semarang,Hemat,10,63000,1
+C-0755,42,Makassar,Data Only,43,86000,0
+C-0756,35,Jakarta,Hemat,2,70000,1
+C-0757,33,Makassar,Sultan,57,157000,0
+C-0758,61,Jakarta,Hemat,60,53000,0
+C-0759,46,Makassar,Sultan+,35,263000,0
+C-0760,29,Bandung,Hemat,1,60000,0
+C-0761,64,Semarang,Data Only,22,93000,0
+C-0762,61,Jakarta,Hemat,26,51000,0
+C-0763,31,Jakarta,Hemat,8,53000,0
+C-0764,18,Bandung,Data Only,51,95000,0
+C-0765,54,Surabaya,Hemat,42,58000,0
+C-0766,69,Makassar,Hemat,49,53000,0
+C-0767,44,Bandung,Data Only,31,87000,0
+C-0768,68,Jakarta,Sultan+,42,255000,0
+C-0769,38,Makassar,Hemat,12,61000,0
+C-0770,55,Bandung,Sultan,8,165000,1
+C-0771,20,Surabaya,Hemat,47,68000,0
+C-0772,44,Semarang,Sultan+,39,257000,0
+C-0773,54,Surabaya,Sultan+,57,255000,0
+C-0774,22,Medan,Sultan+,60,264000,0
+C-0775,41,Jakarta,Hemat,3,69000,0
+C-0776,59,Bandung,Hemat,47,56000,0
+C-0777,42,Bandung,Data Only,7,97000,0
+C-0778,59,Bandung,Sultan+,11,257000,1
+C-0779,54,Medan,Sultan+,8,250000,0
+C-0780,65,Jakarta,Data Only,52,84000,0
+C-0781,63,Makassar,Hemat,45,50000,0
+C-0782,35,Semarang,Hemat,5,50000,0
+C-0783,61,Makassar,Sultan+,10,258000,0
+C-0784,39,Jakarta,Sultan+,52,265000,1
+C-0785,48,Surabaya,Sultan+,23,258000,1
+C-0786,58,Semarang,Sultan,47,159000,0
+C-0787,31,Semarang,Sultan+,8,264000,1
+C-0788,60,Surabaya,Sultan+,21,247000,0
+C-0789,65,Medan,Sultan+,35,250000,0
+C-0790,42,Makassar,Sultan+,34,245000,0
+C-0791,60,Makassar,Sultan+,21,253000,0
+C-0792,57,Jakarta,Hemat,22,60000,1
+C-0793,69,Makassar,Sultan+,52,264000,0
+C-0794,68,Jakarta,Sultan+,47,257000,1
+C-0795,68,Medan,Sultan,59,145000,0
+C-0796,61,Medan,Sultan,5,157000,1
+C-0797,28,Jakarta,Data Only,33,84000,0
+C-0798,31,Surabaya,Data Only,8,83000,0
+C-0799,17,Bandung,Sultan,8,153000,1
+C-0800,29,Surabaya,Hemat,44,56000,1
+C-0801,33,Medan,Data Only,21,91000,0
+C-0802,58,Surabaya,Sultan,38,151000,0
+C-0803,36,Jakarta,Sultan,21,159000,0
+C-0804,24,Medan,Data Only,28,80000,0
+C-0805,46,Medan,Sultan+,40,248000,0
+C-0806,45,Jakarta,Data Only,55,81000,0
+C-0807,38,Surabaya,Sultan+,58,263000,0
+C-0808,57,Jakarta,Sultan+,37,261000,0
+C-0809,28,Semarang,Data Only,25,97000,0
+C-0810,58,Jakarta,Sultan+,24,256000,0
+C-0811,39,Bandung,Sultan+,23,247000,0
+C-0812,67,Medan,Data Only,1,83000,1
+C-0813,45,Jakarta,Sultan,42,149000,0
+C-0814,67,Semarang,Sultan,46,149000,0
+C-0815,24,Jakarta,Sultan+,34,246000,0
+C-0816,57,Jakarta,Data Only,36,91000,0
+C-0817,59,Jakarta,Data Only,40,95000,0
+C-0818,60,Medan,Data Only,27,87000,0
+C-0819,37,Semarang,Sultan+,48,252000,0
+C-0820,23,Medan,Sultan+,29,250000,0
+C-0821,35,Makassar,Sultan,55,157000,0
+C-0822,52,Surabaya,Data Only,37,81000,0
+C-0823,50,Semarang,Data Only,25,95000,0
+C-0824,68,Bandung,Sultan,8,145000,1
+C-0825,55,Bandung,Sultan,21,158000,0
+C-0826,35,Surabaya,Hemat,53,54000,0
+C-0827,20,Surabaya,Sultan,26,163000,0
+C-0828,24,Semarang,Sultan+,30,260000,1
+C-0829,45,Bandung,Sultan+,38,264000,0
+C-0830,36,Makassar,Data Only,21,84000,0
+C-0831,19,Jakarta,Sultan,44,152000,0
+C-0832,43,Medan,Data Only,53,94000,0
+C-0833,54,Medan,Hemat,60,56000,1
+C-0834,68,Surabaya,Data Only,10,90000,1
+C-0835,69,Surabaya,Hemat,37,50000,0
+C-0836,47,Surabaya,Hemat,43,68000,0
+C-0837,60,Medan,Sultan,3,165000,0
+C-0838,42,Medan,Sultan,52,162000,0
+C-0839,43,Semarang,Sultan+,12,251000,1
+C-0840,70,Semarang,Hemat,7,56000,0
+C-0841,52,Surabaya,Sultan+,22,261000,0
+C-0842,36,Semarang,Data Only,34,89000,0
+C-0843,46,Jakarta,Sultan,41,156000,0
+C-0844,42,Semarang,Hemat,54,70000,0
+C-0845,37,Makassar,Data Only,8,95000,0
+C-0846,63,Jakarta,Sultan+,44,251000,0
+C-0847,59,Makassar,Data Only,57,88000,0
+C-0848,65,Surabaya,Sultan+,46,265000,0
+C-0849,66,Medan,Sultan,11,164000,0
+C-0850,19,Semarang,Sultan+,56,245000,0
+C-0851,51,Bandung,Hemat,57,69000,0
+C-0852,19,Semarang,Sultan,40,159000,0
+C-0853,30,Medan,Sultan+,48,248000,0
+C-0854,59,Surabaya,Sultan+,18,246000,0
+C-0855,18,Bandung,Data Only,39,91000,0
+C-0856,43,Bandung,Sultan,45,149000,0
+C-0857,42,Semarang,Sultan,43,162000,0
+C-0858,37,Bandung,Data Only,49,86000,0
+C-0859,60,Surabaya,Sultan+,1,250000,1
+C-0860,38,Medan,Data Only,52,95000,0
+C-0861,24,Makassar,Data Only,46,99000,1
+C-0862,20,Medan,Hemat,3,60000,1
+C-0863,23,Semarang,Sultan,53,165000,0
+C-0864,35,Jakarta,Hemat,11,50000,0
+C-0865,27,Semarang,Data Only,51,97000,0
+C-0866,28,Bandung,Sultan+,28,255000,0
+C-0867,26,Makassar,Sultan+,44,246000,0
+C-0868,44,Jakarta,Hemat,49,56000,1
+C-0869,28,Bandung,Sultan+,60,259000,0
+C-0870,68,Jakarta,Data Only,26,100000,0
+C-0871,35,Surabaya,Sultan,3,149000,0
+C-0872,33,Bandung,Sultan+,48,256000,0
+C-0873,45,Makassar,Sultan,15,149000,0
+C-0874,23,Medan,Data Only,53,85000,0
+C-0875,39,Makassar,Hemat,39,67000,1
+C-0876,26,Semarang,Sultan+,43,257000,0
+C-0877,31,Semarang,Sultan,34,152000,0
+C-0878,51,Makassar,Hemat,27,60000,0
+C-0879,45,Jakarta,Hemat,46,58000,1
+C-0880,49,Bandung,Hemat,42,56000,1
+C-0881,68,Bandung,Hemat,53,66000,0
+C-0882,21,Jakarta,Sultan,59,165000,0
+C-0883,57,Makassar,Data Only,52,85000,0
+C-0884,68,Makassar,Sultan+,18,248000,1
+C-0885,59,Surabaya,Data Only,20,89000,0
+C-0886,21,Bandung,Sultan+,2,245000,1
+C-0887,52,Medan,Sultan+,24,263000,0
+C-0888,45,Bandung,Hemat,27,69000,0
+C-0889,48,Semarang,Sultan,10,160000,0
+C-0890,51,Jakarta,Data Only,22,82000,0
+C-0891,18,Semarang,Data Only,46,82000,0
+C-0892,45,Surabaya,Data Only,2,94000,0
+C-0893,33,Semarang,Sultan+,13,262000,0
+C-0894,38,Bandung,Sultan+,7,253000,0
+C-0895,52,Medan,Sultan+,30,250000,0
+C-0896,48,Jakarta,Hemat,54,54000,0
+C-0897,56,Surabaya,Hemat,26,59000,0
+C-0898,34,Bandung,Sultan+,19,258000,0
+C-0899,63,Medan,Sultan+,1,257000,0
+C-0900,19,Makassar,Hemat,41,62000,1
+C-0901,25,Jakarta,Data Only,48,98000,0
+C-0902,61,Jakarta,Hemat,3,54000,0
+C-0903,36,Makassar,Hemat,25,51000,0
+C-0904,42,Jakarta,Sultan,40,150000,0
+C-0905,35,Surabaya,Sultan+,52,257000,0
+C-0906,68,Medan,Sultan+,9,258000,1
+C-0907,63,Surabaya,Hemat,45,60000,0
+C-0908,45,Medan,Sultan,15,163000,0
+C-0909,33,Surabaya,Data Only,26,82000,0
+C-0910,33,Medan,Data Only,20,80000,0
+C-0911,46,Jakarta,Sultan+,12,262000,0
+C-0912,46,Surabaya,Sultan,37,156000,0
+C-0913,30,Medan,Data Only,16,86000,0
+C-0914,53,Medan,Data Only,58,81000,0
+C-0915,30,Surabaya,Data Only,50,97000,0
+C-0916,60,Medan,Hemat,38,52000,1
+C-0917,37,Semarang,Hemat,17,68000,0
+C-0918,66,Semarang,Sultan,22,148000,0
+C-0919,25,Medan,Hemat,5,54000,1
+C-0920,64,Jakarta,Sultan,2,155000,1
+C-0921,69,Bandung,Sultan,8,162000,0
+C-0922,40,Surabaya,Sultan+,38,256000,0
+C-0923,60,Surabaya,Sultan+,31,255000,0
+C-0924,25,Surabaya,Hemat,15,53000,1
+C-0925,48,Makassar,Hemat,56,67000,0
+C-0926,67,Medan,Sultan,52,151000,0
+C-0927,46,Surabaya,Sultan+,12,261000,0
+C-0928,69,Surabaya,Data Only,1,85000,0
+C-0929,60,Semarang,Sultan+,25,253000,0
+C-0930,62,Semarang,Sultan+,32,261000,0
+C-0931,70,Makassar,Data Only,18,87000,0
+C-0932,25,Jakarta,Sultan,13,158000,0
+C-0933,33,Jakarta,Sultan+,34,248000,0
+C-0934,61,Makassar,Sultan,16,159000,0
+C-0935,29,Surabaya,Sultan,24,151000,0
+C-0936,55,Jakarta,Sultan,53,145000,0
+C-0937,60,Makassar,Data Only,40,87000,0
+C-0938,30,Medan,Sultan+,8,264000,1
+C-0939,52,Bandung,Sultan+,1,250000,0
+C-0940,41,Makassar,Data Only,32,91000,0
+C-0941,26,Makassar,Sultan,37,150000,0
+C-0942,49,Bandung,Data Only,49,85000,0
+C-0943,56,Makassar,Data Only,40,99000,0
+C-0944,32,Makassar,Hemat,21,58000,0
+C-0945,47,Makassar,Sultan,42,155000,0
+C-0946,27,Semarang,Sultan+,46,257000,0
+C-0947,70,Semarang,Hemat,46,55000,0
+C-0948,18,Semarang,Sultan+,38,253000,0
+C-0949,54,Jakarta,Data Only,11,83000,1
+C-0950,30,Semarang,Sultan,46,146000,0
+C-0951,51,Makassar,Sultan+,59,256000,0
+C-0952,39,Makassar,Data Only,33,90000,0
+C-0953,46,Medan,Hemat,26,65000,0
+C-0954,61,Makassar,Data Only,7,87000,0
+C-0955,39,Jakarta,Sultan+,57,264000,0
+C-0956,37,Semarang,Sultan,1,161000,0
+C-0957,38,Medan,Sultan+,4,253000,1
+C-0958,51,Bandung,Data Only,14,82000,0
+C-0959,32,Bandung,Data Only,30,95000,0
+C-0960,59,Surabaya,Data Only,9,83000,0
+C-0961,18,Medan,Hemat,44,69000,0
+C-0962,39,Surabaya,Data Only,13,88000,0
+C-0963,26,Medan,Sultan,33,157000,0
+C-0964,60,Medan,Sultan+,42,249000,0
+C-0965,17,Semarang,Sultan,38,160000,0
+C-0966,46,Semarang,Sultan+,18,264000,0
+C-0967,69,Medan,Data Only,54,88000,0
+C-0968,40,Surabaya,Sultan,2,148000,0
+C-0969,59,Surabaya,Data Only,14,100000,0
+C-0970,57,Jakarta,Hemat,45,64000,1
+C-0971,68,Surabaya,Sultan+,39,265000,0
+C-0972,42,Medan,Hemat,26,54000,0
+C-0973,24,Bandung,Sultan,59,160000,0
+C-0974,69,Medan,Data Only,30,89000,0
+C-0975,64,Semarang,Hemat,28,54000,1
+C-0976,36,Surabaya,Hemat,48,52000,0
+C-0977,32,Medan,Hemat,1,56000,0
+C-0978,48,Bandung,Hemat,51,63000,0
+C-0979,67,Makassar,Sultan,11,155000,0
+C-0980,68,Makassar,Sultan,31,152000,0
+C-0981,27,Surabaya,Sultan,12,164000,0
+C-0982,35,Semarang,Data Only,6,94000,0
+C-0983,64,Surabaya,Sultan,32,151000,0
+C-0984,66,Medan,Data Only,34,92000,0
+C-0985,23,Bandung,Sultan+,48,259000,0
+C-0986,34,Semarang,Sultan+,54,264000,0
+C-0987,31,Medan,Hemat,14,58000,0
+C-0988,19,Semarang,Hemat,27,64000,0
+C-0989,44,Makassar,Data Only,30,94000,0
+C-0990,22,Makassar,Hemat,59,68000,1
+C-0991,25,Medan,Sultan,33,153000,0
+C-0992,23,Medan,Sultan+,27,260000,1
+C-0993,46,Bandung,Sultan,27,147000,0
+C-0994,64,Bandung,Sultan+,54,261000,0
+C-0995,43,Bandung,Hemat,7,53000,1
+C-0996,42,Jakarta,Data Only,39,100000,0
+C-0997,19,Medan,Sultan+,18,265000,0
+C-0998,63,Makassar,Sultan+,52,263000,1
+C-0999,57,Semarang,Hemat,56,60000,0
+C-1000,45,Bandung,Sultan,30,146000,0
+C-1001,55,Surabaya,Data Only,13,99000,0
+C-1002,32,Surabaya,Data Only,1,86000,0
+C-1003,38,Bandung,Hemat,37,62000,0
+C-1004,53,Bandung,Sultan+,13,245000,0
+C-1005,50,Bandung,Hemat,8,52000,0
+C-1006,28,Semarang,Hemat,29,51000,0
+C-1007,32,Surabaya,Sultan+,44,248000,0
+C-1008,69,Semarang,Sultan,24,150000,0
+C-1009,43,Bandung,Hemat,54,70000,0
+C-1010,38,Makassar,Data Only,38,81000,0
+C-1011,66,Bandung,Hemat,34,57000,1
+C-1012,18,Makassar,Data Only,24,90000,0
+C-1013,42,Makassar,Data Only,31,92000,0
+C-1014,64,Medan,Data Only,56,98000,0
+C-1015,57,Makassar,Hemat,27,53000,0
+C-1016,61,Surabaya,Sultan+,14,253000,1
+C-1017,42,Semarang,Sultan,10,164000,0
+C-1018,63,Medan,Sultan,22,165000,0
+C-1019,43,Makassar,Hemat,17,68000,0
+C-1020,41,Jakarta,Data Only,9,94000,0
+C-1021,68,Medan,Sultan,59,150000,0
+C-1022,44,Bandung,Hemat,60,54000,0
+C-1023,42,Surabaya,Sultan,29,161000,0
+C-1024,48,Surabaya,Data Only,26,100000,0
+C-1025,68,Semarang,Sultan,2,145000,0
+C-1026,53,Jakarta,Sultan+,2,260000,0
+C-1027,65,Semarang,Sultan+,31,263000,0
+C-1028,28,Jakarta,Hemat,32,55000,0
+C-1029,55,Surabaya,Sultan+,10,254000,0
+C-1030,31,Bandung,Sultan,43,152000,0
+C-1031,65,Medan,Sultan,55,146000,0
+C-1032,18,Bandung,Data Only,37,87000,0
+C-1033,26,Surabaya,Sultan+,12,262000,0
+C-1034,50,Jakarta,Sultan,1,151000,0
+C-1035,35,Makassar,Data Only,10,82000,1
+C-1036,67,Medan,Data Only,21,84000,1
+C-1037,45,Bandung,Sultan,13,162000,0
+C-1038,64,Makassar,Sultan+,19,262000,0
+C-1039,57,Medan,Sultan,19,163000,0
+C-1040,18,Medan,Hemat,24,50000,0
+C-1041,61,Semarang,Sultan,47,145000,0
+C-1042,55,Jakarta,Sultan,17,160000,0
+C-1043,41,Bandung,Data Only,31,85000,0
+C-1044,20,Jakarta,Data Only,3,94000,0
+C-1045,41,Semarang,Sultan,5,165000,0
+C-1046,52,Surabaya,Sultan+,19,264000,0
+C-1047,53,Surabaya,Sultan+,53,248000,0
+C-1048,32,Jakarta,Sultan+,56,254000,0
+C-1049,47,Surabaya,Data Only,42,95000,0
+C-1050,22,Semarang,Hemat,7,64000,0
+C-1051,17,Bandung,Sultan,9,161000,1
+C-1052,25,Semarang,Data Only,6,80000,1
+C-1053,47,Jakarta,Hemat,4,62000,1
+C-1054,38,Bandung,Hemat,43,58000,0
+C-1055,17,Semarang,Hemat,56,51000,0
+C-1056,68,Makassar,Sultan,2,162000,0
+C-1057,40,Makassar,Data Only,16,94000,0
+C-1058,70,Makassar,Hemat,14,50000,0
+C-1059,42,Bandung,Sultan,12,153000,0
+C-1060,21,Surabaya,Sultan+,23,245000,0
+C-1061,50,Surabaya,Hemat,22,50000,0
+C-1062,38,Semarang,Sultan,29,147000,0
+C-1063,29,Surabaya,Sultan+,3,263000,1
+C-1064,21,Makassar,Sultan,48,156000,0
+C-1065,21,Jakarta,Hemat,11,52000,0
+C-1066,17,Makassar,Hemat,45,60000,1
+C-1067,41,Medan,Data Only,45,91000,0
+C-1068,29,Makassar,Sultan,42,147000,0
+C-1069,51,Medan,Hemat,13,57000,0
+C-1070,42,Makassar,Data Only,30,91000,0
+C-1071,25,Jakarta,Hemat,3,57000,1
+C-1072,49,Surabaya,Hemat,30,65000,0
+C-1073,40,Medan,Sultan+,50,245000,0
+C-1074,67,Medan,Sultan,60,148000,0
+C-1075,38,Bandung,Data Only,25,82000,0
+C-1076,69,Surabaya,Sultan+,14,262000,0
+C-1077,57,Semarang,Sultan,45,160000,1
+C-1078,60,Jakarta,Sultan+,8,256000,0
+C-1079,65,Semarang,Sultan,49,159000,0
+C-1080,62,Makassar,Sultan+,54,260000,0
+C-1081,49,Jakarta,Sultan,48,155000,0
+C-1082,62,Semarang,Hemat,57,60000,0
+C-1083,46,Surabaya,Data Only,41,100000,0
+C-1084,24,Semarang,Sultan,41,157000,0
+C-1085,53,Surabaya,Sultan,32,149000,0
+C-1086,22,Bandung,Sultan+,24,262000,0
+C-1087,69,Semarang,Sultan,7,148000,0
+C-1088,44,Surabaya,Sultan+,50,265000,0
+C-1089,17,Medan,Sultan+,11,255000,0
+C-1090,48,Medan,Sultan,5,160000,0
+C-1091,62,Medan,Hemat,34,69000,0
+C-1092,64,Makassar,Data Only,20,90000,0
+C-1093,32,Makassar,Sultan+,7,245000,0
+C-1094,42,Jakarta,Hemat,21,62000,0
+C-1095,65,Jakarta,Sultan+,13,265000,0
+C-1096,54,Surabaya,Data Only,12,80000,0
+C-1097,35,Bandung,Hemat,34,53000,0
+C-1098,23,Semarang,Hemat,6,68000,0
+C-1099,20,Bandung,Data Only,19,98000,1
+C-1100,44,Surabaya,Hemat,12,59000,0
+C-1101,52,Jakarta,Hemat,43,68000,1
+C-1102,27,Jakarta,Sultan+,7,247000,0
+C-1103,20,Bandung,Hemat,51,60000,0
+C-1104,27,Semarang,Sultan,53,148000,0
+C-1105,19,Surabaya,Sultan+,37,263000,0
+C-1106,23,Makassar,Hemat,29,62000,0
+C-1107,24,Semarang,Hemat,17,65000,0
+C-1108,19,Jakarta,Sultan,22,164000,0
+C-1109,63,Surabaya,Sultan+,31,245000,0
+C-1110,50,Semarang,Hemat,21,70000,0
+C-1111,17,Semarang,Data Only,10,80000,0
+C-1112,27,Medan,Sultan,37,149000,0
+C-1113,19,Makassar,Hemat,13,63000,1
+C-1114,54,Jakarta,Sultan,39,145000,0
+C-1115,39,Medan,Sultan,44,155000,0
+C-1116,21,Makassar,Sultan+,3,257000,0
+C-1117,61,Surabaya,Data Only,49,96000,0
+C-1118,62,Surabaya,Data Only,50,83000,0
+C-1119,52,Semarang,Hemat,36,68000,0
+C-1120,68,Semarang,Sultan,57,146000,0
+C-1121,47,Medan,Sultan+,21,265000,0
+C-1122,36,Makassar,Sultan,58,158000,0
+C-1123,38,Surabaya,Sultan,19,153000,0
+C-1124,24,Jakarta,Data Only,7,80000,0
+C-1125,63,Semarang,Sultan+,43,259000,0
+C-1126,50,Bandung,Data Only,30,99000,0
+C-1127,50,Surabaya,Data Only,57,87000,0
+C-1128,37,Makassar,Hemat,23,54000,0
+C-1129,40,Bandung,Data Only,9,97000,0
+C-1130,36,Bandung,Sultan,38,151000,0
+C-1131,62,Makassar,Sultan,21,158000,0
+C-1132,27,Semarang,Sultan,46,156000,0
+C-1133,33,Jakarta,Hemat,20,54000,0
+C-1134,34,Semarang,Sultan+,58,246000,0
+C-1135,55,Medan,Sultan,27,165000,0
+C-1136,67,Jakarta,Hemat,29,69000,0
+C-1137,59,Semarang,Sultan+,58,248000,0
+C-1138,47,Semarang,Hemat,14,64000,1
+C-1139,42,Medan,Sultan,7,148000,0
+C-1140,26,Semarang,Hemat,9,68000,0
+C-1141,43,Surabaya,Data Only,10,94000,1
+C-1142,59,Bandung,Data Only,34,85000,0
+C-1143,31,Surabaya,Sultan,52,160000,0
+C-1144,59,Jakarta,Hemat,60,56000,0
+C-1145,25,Semarang,Sultan+,24,255000,0
+C-1146,57,Semarang,Sultan,39,146000,0
+C-1147,65,Makassar,Sultan,18,151000,0
+C-1148,27,Semarang,Hemat,19,65000,0
+C-1149,47,Makassar,Data Only,1,99000,1
+C-1150,23,Jakarta,Data Only,30,85000,0
+C-1151,61,Jakarta,Sultan+,57,260000,0
+C-1152,54,Medan,Data Only,45,88000,0
+C-1153,26,Bandung,Hemat,48,57000,0
+C-1154,24,Makassar,Sultan+,53,249000,0
+C-1155,66,Bandung,Sultan+,57,254000,0
+C-1156,69,Medan,Sultan+,43,247000,0
+C-1157,59,Makassar,Hemat,38,65000,0
+C-1158,37,Bandung,Data Only,7,88000,0
+C-1159,39,Semarang,Hemat,38,63000,0
+C-1160,26,Surabaya,Sultan,22,161000,0
+C-1161,53,Jakarta,Data Only,9,91000,0
+C-1162,34,Makassar,Hemat,5,54000,0
+C-1163,33,Jakarta,Sultan,59,152000,0
+C-1164,33,Medan,Sultan,8,161000,0
+C-1165,55,Semarang,Sultan,41,150000,0
+C-1166,29,Medan,Sultan+,49,261000,0
+C-1167,29,Semarang,Data Only,29,92000,0
+C-1168,69,Medan,Hemat,47,62000,0
+C-1169,47,Semarang,Data Only,6,81000,0
+C-1170,41,Makassar,Hemat,32,69000,0
+C-1171,33,Medan,Sultan+,50,249000,0
+C-1172,36,Medan,Hemat,58,66000,1
+C-1173,23,Semarang,Sultan,34,151000,0
+C-1174,54,Surabaya,Hemat,57,52000,0
+C-1175,51,Makassar,Sultan,28,163000,0
+C-1176,60,Makassar,Hemat,1,55000,0
+C-1177,41,Semarang,Sultan+,25,256000,0
+C-1178,59,Surabaya,Data Only,27,80000,0
+C-1179,28,Semarang,Sultan+,19,254000,1
+C-1180,53,Makassar,Data Only,30,100000,0
+C-1181,43,Makassar,Hemat,55,59000,0
+C-1182,52,Bandung,Sultan+,6,248000,0
+C-1183,28,Semarang,Sultan,46,163000,0
+C-1184,53,Makassar,Data Only,11,93000,1
+C-1185,27,Jakarta,Data Only,58,87000,0
+C-1186,30,Jakarta,Data Only,4,97000,0
+C-1187,46,Bandung,Hemat,47,59000,1
+C-1188,36,Bandung,Data Only,3,85000,1
+C-1189,43,Medan,Sultan+,4,248000,1
+C-1190,34,Medan,Data Only,17,83000,0
+C-1191,65,Medan,Data Only,45,82000,0
+C-1192,32,Makassar,Data Only,8,80000,0
+C-1193,62,Medan,Sultan,46,149000,0
+C-1194,60,Medan,Sultan,45,149000,0
+C-1195,62,Bandung,Sultan,15,152000,0
+C-1196,25,Jakarta,Sultan+,34,245000,0
+C-1197,65,Makassar,Sultan+,51,248000,0
+C-1198,58,Surabaya,Data Only,27,86000,0
+C-1199,59,Medan,Sultan,23,161000,0
+C-1200,45,Semarang,Hemat,15,62000,1

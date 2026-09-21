@@ -439,15 +439,79 @@ TEMPLATE_META = {
 }
 
 DATASET_META = {
+    # 📈 Pasar & saham
     "ihsg_harian.csv": "IHSG (indeks bursa) harian — date, open, high, low, close, volume. 1 tahun.",
     "saham_watchlist.csv": "6 saham pantauan (ALII, BBRI, BRPT, CUAN, MPPA, TLKM) — format panjang, satu baris per tanggal+simbol.",
     "saham_lebar.csv": "Harga penutupan 6 saham yang sama — format lebar (satu kolom per saham), siap untuk banding performa & korelasi.",
+    "harga_saham_harian.csv": "5 emiten (ANTM, ASII, BBRI, BRPT, TLKM) x 250 hari bursa — format PANJANG: satu baris per tanggal+kode. Latihan: groupby, hitung return, banding volume.",
+    "harga_bbri.csv": "Harga penutupan BBRI harian (snapshot beku) — date, close. Cocok untuk latihan tren & moving average.",
+    "harga_tlkm.csv": "Harga penutupan TLKM harian (snapshot beku) — date, close.",
+    "harga_ihsg.csv": "IHSG harian versi kecil (snapshot beku) — date, close.",
     "btc_harian.csv": "Bitcoin (BTC-USD) harian — lebih dari 1 tahun, untuk latihan aset kripto.",
+    "harga_btc.csv": "Harga penutupan BTC harian versi kecil (snapshot beku) — date, close.",
+    # 🏪 Bisnis & UMKM
+    "transaksi_toko.csv": "2.000 transaksi toko (Jan-Jun 2026) — produk, kategori, jumlah, harga satuan, total, kota. Latihan: total per kategori, produk terlaris, tren per kota.",
+    "transaksi_umkm.csv": "20.000 transaksi UMKM (data BESAR) — kota, kategori usaha, nominal (juta), metode bayar, status lunas. Latihan groupby/pivot skala ribuan baris.",
+    "gaji_karyawan.csv": "500 karyawan — divisi, masa kerja, gaji (juta), lembur, pendidikan. Latihan: rata-rata per divisi, korelasi masa kerja vs gaji.",
     "kredit_umkm.csv": "Data pengajuan kredit UMKM (SINTETIS untuk latihan) — SENGAJA kotor: nilai kosong, duplikat, tanggal campur format, teks berantakan, outlier. 636 baris.",
     "kredit_umkm_bersih.csv": "Versi BERSIH dari data kredit UMKM — siap untuk EDA, fitur, dan machine learning. 620 baris.",
     "kredit_umkm_uji.csv": "Data uji kredit UMKM TANPA kolom status — bahan latihan prediksi & submission ala kompetisi. 150 baris.",
     "sample_submission-kredit_umkm.csv": "Contoh FORMAT submission ala kompetisi — kolom id_pengajuan + status_prediksi (isi placeholder 'Lancar'; ganti dengan hasil prediksimu). 150 baris.",
+    # 🧑‍💻 Sehari-hari
+    "cuaca_jakarta.csv": "Cuaca Jakarta 365 hari (Sep 2025 - Agu 2026) — suhu min/max, curah hujan (mm), kelembapan. Latihan: tren musiman, cari hari terbasah.",
+    "nilai_siswa.csv": "400 siswa kelas 7-9 — nilai matematika/ipa/ips + kehadiran (%). Latihan: statistik, ranking, korelasi kehadiran vs nilai.",
+    "kalori_makanan.csv": "40 masakan Indonesia x 3 ukuran porsi — kalori & gizi PERKIRAAN untuk latihan. Latihan: sort, filter kalori, makanan paling berprotein.",
+    "film_nonton.csv": "300 film fiktif (2005-2026) — genre, rating, jumlah penonton (juta). Latihan: film terbaik per genre, korelasi tahun vs rating.",
+    # 🤖 ML & teks
+    "pelanggan_telco.csv": "1.200 pelanggan operator — umur, kota, paket, lama berlangganan, tagihan bulanan, churn (0/1). Latihan EDA + prediksi churn.",
+    "log_server.csv": "3.000 baris log server Agustus 2026 — level (INFO/WARN/ERROR), pesan, durasi (ms), status. Latihan: filter ERROR, rata-rata durasi, olah teks pesan.",
 }
+
+# Kategori untuk halaman Dataset (urutan tampil mengikuti urutan kunci).
+DATASET_KATEGORI = {
+    "📈 Pasar & Saham": [
+        "ihsg_harian.csv", "harga_ihsg.csv", "harga_saham_harian.csv",
+        "saham_watchlist.csv", "saham_lebar.csv",
+        "harga_bbri.csv", "harga_tlkm.csv", "btc_harian.csv", "harga_btc.csv",
+    ],
+    "🏪 Bisnis & UMKM": [
+        "transaksi_toko.csv", "transaksi_umkm.csv", "gaji_karyawan.csv",
+        "kredit_umkm.csv", "kredit_umkm_bersih.csv", "kredit_umkm_uji.csv",
+        "sample_submission-kredit_umkm.csv",
+    ],
+    "🧑‍💻 Data Sehari-hari": [
+        "cuaca_jakarta.csv", "nilai_siswa.csv", "kalori_makanan.csv",
+        "film_nonton.csv",
+    ],
+    "🤖 ML & Teks": [
+        "pelanggan_telco.csv", "log_server.csv",
+    ],
+}
+KATEGORI_KUNCI = list(DATASET_KATEGORI)
+
+
+def kategori_dataset(name):
+    """Kategori tampil untuk sebuah file dataset."""
+    for kat, daftar in DATASET_KATEGORI.items():
+        if name in daftar:
+            return kat
+    return "📦 Lainnya"
+
+
+def group_datasets(items):
+    """Kelompokkan item dataset per kategori, urutan tetap (kategori kosong dibuang)."""
+    grup = {kat: [] for kat in KATEGORI_KUNCI}
+    lainnya = []
+    for it in items:
+        kat = kategori_dataset(it.get("name", ""))
+        if kat in grup:
+            grup[kat].append(it)
+        else:
+            lainnya.append(it)
+    hasil = [(kat, isi) for kat, isi in grup.items() if isi]
+    if lainnya:
+        hasil.append(("📦 Lainnya", lainnya))
+    return hasil
 
 
 def template_cells(tpl):
@@ -480,7 +544,8 @@ def list_datasets():
         except OSError:
             continue
         out.append({"name": name, "rows": rows, "cols": len(header), "kb": size_kb,
-                    "desc": DATASET_META.get(name, "")})
+                    "desc": DATASET_META.get(name, ""), "header": header,
+                    "kategori": kategori_dataset(name)})
     return out
 
 

@@ -23,20 +23,26 @@ dinilai otomatis, dapat skor & medali).
   4 pilihan → jawaban benar + hitungan + kode Python + hasil simulasi (return/drawdown/win rate).
 - **Soal coding (69, gaya Kaggle)**: SETIAP bab punya latihan coding — kotak **🎯 Tugasmu**
   (langkah "disuruh apa") + **starter code** ber-`# TODO` yang terpasang otomatis di editor.
-  Ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses file/internet dari kode
-  user); termasuk 2 soal **"data nyata"** yang membaca snapshot harga di `/soaldata`.
+  Kalau soal memakai data, muncul kotak **📂 Data untuk soal ini** (path + jumlah baris/kolom).
+  **Editor pintar**: kurung & kutip menutup otomatis, Tab = 4 spasi (Shift+Tab kurangi),
+  Enter ikut indentasi. Ditulis & dinilai di sandbox terisolasi (bubblewrap — tanpa akses
+  file/internet dari kode user); termasuk soal **"data nyata"** yang membaca CSV di `/soaldata`.
 - **📓 Notebook (ala Kaggle)** — workspace Python ber-sel (kode + markdown): **kernel
   persisten per user** (variabel tersimpan antar sel), output di bawah sel (teks, nilai
   `Out[n]`, grafik matplotlib), **▶▶ Jalankan Semua** & **⟳ Restart Kernel**, simpan
-  otomatis, template siap pakai (Kosong / Pandas / Watchlist / Backtest Mini), rail
-  **📦 Dataset** (klik = contoh kode), **⬆️ upload CSV sendiri** (data latihan/lombamu — maks
-  5 MB, terbaca dari `/work/uploads/`, preview + kelola di `/notebook/datasets`). Sandbox bubblewrap terpisah (`notebook_kerneld.py`
+  otomatis, **editor sel pintar** (auto-tutup kurung/kutip, Tab blok, Enter indent), template
+  siap pakai (Kosong / Pandas / Watchlist / Backtest Mini), rail **📦 Dataset** (klik = contoh
+  kode), **⬆️ upload CSV sendiri** (data latihan/lombamu — maks 5 MB, terbaca dari
+  `/work/uploads/`, preview + kelola di `/notebook/datasets`). Sandbox bubblewrap terpisah (`notebook_kerneld.py`
   + worker `notebook_kernel.py`, service `quantlab-kernel.service`, port 5211, timeout
   30 dtk/sel); file tulis per user di `/work` (tersimpan antar sesi).
-- **📦 Dataset notebook** (`/notebook/datasets`): snapshot nyata dari `data/ohlc` —
-  `ihsg_harian`, `saham_watchlist` (6 saham, format panjang), `saham_lebar` (format
-  lebar, siap korelasi), `btc_harian`, dan paket **kredit UMKM** (kotor / bersih /
-  uji / sample submission); di-bind **read-only** ke `/datasets`.
+- **📦 Dataset latihan (22, `/notebook/datasets`)**: dikelompokkan per kategori — **Pasar &
+  Saham** (IHSG, watchlist panjang/lebar, harga 5 emiten × 250 hari, BBRI/TLKM/BTC),
+  **Bisnis & UMKM** (transaksi toko 2.000, transaksi UMKM 20.000 baris, gaji karyawan, kredit
+  UMKM kotor/bersih/uji + sample submission), **Data Sehari-hari** (cuaca Jakarta, nilai
+  siswa, kalori makanan, film) dan **ML & Teks** (pelanggan telco, log server). Semua
+  read-only, dua alamat yang sama-sama jalan: `/datasets/...` (Notebook) & `/soaldata/...`
+  (soal coding). Generator deterministik: `scripts/gen_dataset_latihan.py`.
 - **📈 Lab Teknikal (37 drill, 4 modul, + Ujian Teknikal)** — latihan analisa teknikal pakai
   grafik harga NYATA (BBRI, TLKM, IHSG, BRPT, CUAN, ALII, BTC): baca candle & tren → level &
   struktur → indikator & risiko → **praktik klik langsung di grafik** (tandai support, pasang

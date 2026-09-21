@@ -1,0 +1,3001 @@
+waktu,level,pesan,durasi_ms,status
+2026-08-01T00:59:33,WARN,respons lambat endpoint=/api/harga,1149,429
+2026-08-01T01:02:07,ERROR,gagal koneksi database,1202,500
+2026-08-01T01:46:05,INFO,backup harian selesai,44,200
+2026-08-01T02:01:06,INFO,sinkronisasi data selesai,18,200
+2026-08-01T02:06:21,INFO,cache diperbarui,154,200
+2026-08-01T02:22:06,INFO,sinkronisasi data selesai,246,200
+2026-08-01T02:48:51,INFO,halaman dashboard dimuat,77,200
+2026-08-01T03:04:02,INFO,email notifikasi terkirim,237,200
+2026-08-01T03:07:25,INFO,backup harian selesai,113,200
+2026-08-01T03:13:55,INFO,halaman dashboard dimuat,9,200
+2026-08-01T03:16:10,INFO,login berhasil user=user-020,46,200
+2026-08-01T03:28:38,WARN,memori 80% terpakai,653,200
+2026-08-01T03:35:52,INFO,halaman dashboard dimuat,26,200
+2026-08-01T03:46:34,ERROR,gagal koneksi database,3046,500
+2026-08-01T03:46:59,WARN,respons lambat endpoint=/api/harga,661,200
+2026-08-01T03:47:51,ERROR,pembayaran gagal order=INV-2116,3253,500
+2026-08-01T04:02:26,INFO,login berhasil user=user-399,251,200
+2026-08-01T04:12:13,WARN,retry koneksi database,314,429
+2026-08-01T04:13:37,WARN,respons lambat endpoint=/api/harga,1352,200
+2026-08-01T05:13:38,WARN,token kedaluwarsa user=user-304,314,200
+2026-08-01T05:38:07,INFO,halaman dashboard dimuat,107,200
+2026-08-01T05:44:31,INFO,backup harian selesai,285,200
+2026-08-01T05:56:24,ERROR,gagal koneksi database,3646,500
+2026-08-01T06:00:30,INFO,backup harian selesai,103,200
+2026-08-01T06:05:45,ERROR,gagal koneksi database,1833,500
+2026-08-01T06:19:14,INFO,cache diperbarui,118,200
+2026-08-01T06:19:48,INFO,cache diperbarui,194,200
+2026-08-01T07:17:50,ERROR,gagal koneksi database,1456,404
+2026-08-01T07:18:15,INFO,login berhasil user=user-229,268,200
+2026-08-01T07:31:20,INFO,email notifikasi terkirim,188,200
+2026-08-01T07:35:32,INFO,login berhasil user=user-031,84,200
+2026-08-01T07:42:42,ERROR,file tidak ditemukan /data/9167.csv,843,404
+2026-08-01T08:38:27,INFO,cache diperbarui,87,200
+2026-08-01T08:45:10,INFO,login berhasil user=user-321,82,200
+2026-08-01T08:49:46,INFO,sinkronisasi data selesai,198,200
+2026-08-01T08:55:48,INFO,halaman dashboard dimuat,176,200
+2026-08-01T09:05:34,INFO,halaman dashboard dimuat,115,200
+2026-08-01T09:10:32,INFO,email notifikasi terkirim,72,200
+2026-08-01T09:14:59,INFO,login berhasil user=user-060,159,200
+2026-08-01T09:24:54,INFO,halaman dashboard dimuat,80,200
+2026-08-01T09:31:54,INFO,email notifikasi terkirim,271,200
+2026-08-01T09:32:24,INFO,halaman dashboard dimuat,76,200
+2026-08-01T09:36:58,WARN,retry koneksi database,1024,429
+2026-08-01T10:07:09,WARN,respons lambat endpoint=/api/harga,1691,200
+2026-08-01T10:44:38,INFO,backup harian selesai,7,200
+2026-08-01T11:06:35,WARN,respons lambat endpoint=/api/harga,1532,200
+2026-08-01T11:12:37,INFO,halaman dashboard dimuat,153,200
+2026-08-01T11:15:52,INFO,halaman dashboard dimuat,78,200
+2026-08-01T11:38:22,INFO,login berhasil user=user-133,29,200
+2026-08-01T11:49:52,INFO,halaman dashboard dimuat,170,200
+2026-08-01T11:51:13,INFO,sinkronisasi data selesai,282,200
+2026-08-01T12:05:44,WARN,memori 80% terpakai,715,200
+2026-08-01T12:08:32,INFO,email notifikasi terkirim,172,200
+2026-08-01T12:17:33,WARN,memori 80% terpakai,391,429
+2026-08-01T12:26:15,INFO,login berhasil user=user-126,263,200
+2026-08-01T12:26:46,INFO,email notifikasi terkirim,66,200
+2026-08-01T12:41:42,INFO,login berhasil user=user-337,57,200
+2026-08-01T12:58:07,WARN,memori 80% terpakai,1165,200
+2026-08-01T13:15:39,INFO,cache diperbarui,185,200
+2026-08-01T14:06:09,WARN,respons lambat endpoint=/api/harga,768,200
+2026-08-01T14:08:21,INFO,sinkronisasi data selesai,244,200
+2026-08-01T14:16:01,INFO,sinkronisasi data selesai,241,200
+2026-08-01T14:19:35,WARN,memori 80% terpakai,1303,200
+2026-08-01T14:48:25,INFO,email notifikasi terkirim,116,200
+2026-08-01T15:02:15,ERROR,timeout endpoint=/api/laporan,3570,500
+2026-08-01T15:46:21,ERROR,file tidak ditemukan /data/8610.csv,1284,500
+2026-08-01T15:47:52,ERROR,timeout endpoint=/api/laporan,2034,500
+2026-08-01T16:02:49,INFO,halaman dashboard dimuat,250,200
+2026-08-01T16:05:18,INFO,login berhasil user=user-367,124,200
+2026-08-01T16:28:04,INFO,cache diperbarui,89,200
+2026-08-01T16:48:37,INFO,halaman dashboard dimuat,198,200
+2026-08-01T16:51:54,INFO,backup harian selesai,139,200
+2026-08-01T17:04:30,ERROR,file tidak ditemukan /data/1337.csv,1521,404
+2026-08-01T17:18:34,INFO,sinkronisasi data selesai,146,200
+2026-08-01T17:19:00,INFO,email notifikasi terkirim,118,200
+2026-08-01T17:20:48,ERROR,file tidak ditemukan /data/1197.csv,3335,500
+2026-08-01T17:20:59,INFO,cache diperbarui,54,200
+2026-08-01T17:50:51,INFO,backup harian selesai,264,200
+2026-08-01T17:55:39,INFO,cache diperbarui,104,200
+2026-08-01T18:05:31,INFO,sinkronisasi data selesai,299,200
+2026-08-01T18:22:52,WARN,token kedaluwarsa user=user-344,1707,429
+2026-08-01T18:39:00,INFO,login berhasil user=user-101,234,200
+2026-08-01T19:09:43,WARN,respons lambat endpoint=/api/harga,1603,429
+2026-08-01T19:20:42,WARN,token kedaluwarsa user=user-144,804,429
+2026-08-01T19:40:59,INFO,login berhasil user=user-034,281,200
+2026-08-01T19:53:32,INFO,email notifikasi terkirim,135,200
+2026-08-01T19:54:59,INFO,halaman dashboard dimuat,299,200
+2026-08-01T20:01:47,WARN,respons lambat endpoint=/api/harga,793,429
+2026-08-01T20:07:10,INFO,backup harian selesai,253,200
+2026-08-01T20:07:38,INFO,login berhasil user=user-063,178,200
+2026-08-01T20:15:41,ERROR,pembayaran gagal order=INV-9697,2223,404
+2026-08-01T20:25:08,INFO,backup harian selesai,175,200
+2026-08-01T22:37:53,INFO,sinkronisasi data selesai,174,200
+2026-08-01T23:37:48,INFO,email notifikasi terkirim,266,200
+2026-08-01T23:41:11,INFO,cache diperbarui,52,200
+2026-08-01T23:46:25,INFO,sinkronisasi data selesai,11,200
+2026-08-01T23:57:30,WARN,respons lambat endpoint=/api/harga,1505,200
+2026-08-02T00:19:17,INFO,sinkronisasi data selesai,46,200
+2026-08-02T01:00:14,WARN,token kedaluwarsa user=user-166,1710,200
+2026-08-02T01:18:31,INFO,halaman dashboard dimuat,122,200
+2026-08-02T01:30:51,WARN,memori 80% terpakai,1834,200
+2026-08-02T01:54:03,INFO,email notifikasi terkirim,234,200
+2026-08-02T01:54:25,INFO,login berhasil user=user-035,96,200
+2026-08-02T02:18:39,INFO,backup harian selesai,163,200
+2026-08-02T02:58:17,INFO,cache diperbarui,263,200
+2026-08-02T03:00:41,WARN,token kedaluwarsa user=user-145,1847,429
+2026-08-02T03:24:16,INFO,sinkronisasi data selesai,124,200
+2026-08-02T03:32:41,ERROR,gagal koneksi database,2393,500
+2026-08-02T03:40:51,WARN,retry koneksi database,817,429
+2026-08-02T05:03:28,ERROR,gagal koneksi database,1809,500
+2026-08-02T05:03:49,WARN,memori 80% terpakai,534,200
+2026-08-02T05:04:20,INFO,halaman dashboard dimuat,196,200
+2026-08-02T05:51:28,WARN,respons lambat endpoint=/api/harga,1135,200
+2026-08-02T05:53:32,INFO,halaman dashboard dimuat,102,200
+2026-08-02T06:11:56,INFO,sinkronisasi data selesai,190,200
+2026-08-02T06:21:34,INFO,backup harian selesai,118,200
+2026-08-02T06:33:57,INFO,backup harian selesai,67,200
+2026-08-02T06:34:37,INFO,login berhasil user=user-060,136,200
+2026-08-02T06:35:13,ERROR,file tidak ditemukan /data/3036.csv,3210,404
+2026-08-02T06:40:53,INFO,cache diperbarui,229,200
+2026-08-02T07:01:32,INFO,login berhasil user=user-045,93,200
+2026-08-02T07:06:04,WARN,respons lambat endpoint=/api/harga,452,429
+2026-08-02T07:12:35,INFO,halaman dashboard dimuat,108,200
+2026-08-02T07:35:13,ERROR,pembayaran gagal order=INV-1272,1778,500
+2026-08-02T07:50:34,INFO,email notifikasi terkirim,124,200
+2026-08-02T07:56:08,INFO,backup harian selesai,190,200
+2026-08-02T07:59:12,ERROR,pembayaran gagal order=INV-5521,1345,404
+2026-08-02T08:41:32,INFO,email notifikasi terkirim,242,200
+2026-08-02T08:44:36,INFO,backup harian selesai,74,200
+2026-08-02T08:45:19,WARN,retry koneksi database,800,429
+2026-08-02T08:53:44,INFO,backup harian selesai,257,200
+2026-08-02T09:30:22,INFO,sinkronisasi data selesai,227,200
+2026-08-02T09:30:36,WARN,memori 80% terpakai,940,200
+2026-08-02T09:46:28,INFO,sinkronisasi data selesai,168,200
+2026-08-02T10:07:48,INFO,login berhasil user=user-253,155,200
+2026-08-02T10:13:57,INFO,login berhasil user=user-226,291,200
+2026-08-02T10:37:20,INFO,email notifikasi terkirim,161,200
+2026-08-02T11:25:43,WARN,token kedaluwarsa user=user-099,369,200
+2026-08-02T12:18:36,ERROR,timeout endpoint=/api/laporan,3647,500
+2026-08-02T12:25:38,INFO,halaman dashboard dimuat,136,200
+2026-08-02T12:38:05,INFO,email notifikasi terkirim,244,200
+2026-08-02T12:42:32,INFO,backup harian selesai,50,200
+2026-08-02T12:43:21,INFO,login berhasil user=user-140,181,200
+2026-08-02T12:46:45,INFO,cache diperbarui,221,200
+2026-08-02T12:47:36,INFO,halaman dashboard dimuat,238,200
+2026-08-02T13:34:12,INFO,sinkronisasi data selesai,151,200
+2026-08-02T13:35:55,INFO,login berhasil user=user-027,102,200
+2026-08-02T13:55:06,INFO,sinkronisasi data selesai,166,200
+2026-08-02T13:57:46,INFO,backup harian selesai,197,200
+2026-08-02T14:30:49,INFO,email notifikasi terkirim,142,200
+2026-08-02T14:44:18,INFO,sinkronisasi data selesai,51,200
+2026-08-02T14:50:36,INFO,login berhasil user=user-092,54,200
+2026-08-02T15:04:43,WARN,respons lambat endpoint=/api/harga,888,429
+2026-08-02T15:07:34,INFO,sinkronisasi data selesai,48,200
+2026-08-02T15:26:26,WARN,token kedaluwarsa user=user-302,781,429
+2026-08-02T16:11:39,INFO,backup harian selesai,161,200
+2026-08-02T16:15:43,ERROR,pembayaran gagal order=INV-2752,1328,500
+2026-08-02T16:19:51,INFO,backup harian selesai,45,200
+2026-08-02T16:22:04,INFO,halaman dashboard dimuat,258,200
+2026-08-02T16:24:10,INFO,sinkronisasi data selesai,176,200
+2026-08-02T16:37:18,INFO,backup harian selesai,123,200
+2026-08-02T16:49:51,INFO,cache diperbarui,166,200
+2026-08-02T17:10:05,INFO,login berhasil user=user-328,141,200
+2026-08-02T17:21:18,INFO,cache diperbarui,112,200
+2026-08-02T17:22:05,INFO,email notifikasi terkirim,285,200
+2026-08-02T17:34:10,INFO,backup harian selesai,205,200
+2026-08-02T17:38:47,INFO,cache diperbarui,274,200
+2026-08-02T17:47:45,INFO,sinkronisasi data selesai,168,200
+2026-08-02T18:04:58,ERROR,file tidak ditemukan /data/8548.csv,3655,404
+2026-08-02T18:13:41,INFO,email notifikasi terkirim,50,200
+2026-08-02T18:23:59,INFO,sinkronisasi data selesai,87,200
+2026-08-02T18:57:16,INFO,halaman dashboard dimuat,71,200
+2026-08-02T19:02:19,INFO,cache diperbarui,238,200
+2026-08-02T19:05:22,INFO,cache diperbarui,255,200
+2026-08-02T19:16:07,INFO,sinkronisasi data selesai,36,200
+2026-08-02T20:08:15,ERROR,file tidak ditemukan /data/5486.csv,816,404
+2026-08-02T20:30:47,INFO,email notifikasi terkirim,61,200
+2026-08-02T20:34:06,WARN,retry koneksi database,1647,429
+2026-08-02T20:40:07,ERROR,pembayaran gagal order=INV-5739,1814,404
+2026-08-02T20:45:27,INFO,backup harian selesai,22,200
+2026-08-02T21:06:47,ERROR,pembayaran gagal order=INV-2923,1416,500
+2026-08-02T21:24:12,INFO,cache diperbarui,99,200
+2026-08-02T21:33:32,INFO,email notifikasi terkirim,198,200
+2026-08-02T21:56:58,INFO,backup harian selesai,271,200
+2026-08-02T22:26:15,INFO,backup harian selesai,253,200
+2026-08-02T22:30:57,INFO,sinkronisasi data selesai,266,200
+2026-08-02T22:56:27,INFO,sinkronisasi data selesai,15,200
+2026-08-02T23:03:03,INFO,backup harian selesai,115,200
+2026-08-02T23:22:14,WARN,token kedaluwarsa user=user-145,529,200
+2026-08-03T00:11:06,INFO,email notifikasi terkirim,24,200
+2026-08-03T00:18:17,ERROR,pembayaran gagal order=INV-8720,2896,500
+2026-08-03T00:31:37,INFO,sinkronisasi data selesai,242,200
+2026-08-03T00:49:13,INFO,backup harian selesai,259,200
+2026-08-03T00:52:13,WARN,retry koneksi database,1669,200
+2026-08-03T01:29:17,INFO,cache diperbarui,201,200
+2026-08-03T01:42:04,INFO,backup harian selesai,7,200
+2026-08-03T01:47:21,INFO,backup harian selesai,227,200
+2026-08-03T01:48:14,WARN,token kedaluwarsa user=user-183,1374,429
+2026-08-03T02:24:55,INFO,email notifikasi terkirim,291,200
+2026-08-03T03:00:12,INFO,halaman dashboard dimuat,31,200
+2026-08-03T03:06:01,ERROR,pembayaran gagal order=INV-8332,1043,404
+2026-08-03T03:08:27,INFO,cache diperbarui,130,200
+2026-08-03T03:28:16,INFO,sinkronisasi data selesai,77,200
+2026-08-03T03:29:29,ERROR,file tidak ditemukan /data/5560.csv,1236,404
+2026-08-03T03:36:34,INFO,halaman dashboard dimuat,230,200
+2026-08-03T03:46:27,WARN,memori 80% terpakai,391,429
+2026-08-03T03:49:02,WARN,token kedaluwarsa user=user-255,1283,429
+2026-08-03T03:49:17,WARN,token kedaluwarsa user=user-205,578,200
+2026-08-03T03:58:31,INFO,cache diperbarui,213,200
+2026-08-03T04:12:13,INFO,backup harian selesai,151,200
+2026-08-03T04:50:13,INFO,backup harian selesai,99,200
+2026-08-03T04:50:35,ERROR,file tidak ditemukan /data/4062.csv,2421,500
+2026-08-03T04:51:38,WARN,token kedaluwarsa user=user-322,807,429
+2026-08-03T05:09:34,INFO,login berhasil user=user-370,217,200
+2026-08-03T05:13:46,ERROR,pembayaran gagal order=INV-6805,958,500
+2026-08-03T06:47:41,WARN,respons lambat endpoint=/api/harga,795,200
+2026-08-03T07:25:07,INFO,sinkronisasi data selesai,25,200
+2026-08-03T07:27:42,ERROR,timeout endpoint=/api/laporan,584,500
+2026-08-03T07:37:36,INFO,login berhasil user=user-388,90,200
+2026-08-03T08:02:35,INFO,cache diperbarui,50,200
+2026-08-03T08:17:19,ERROR,timeout endpoint=/api/laporan,641,500
+2026-08-03T08:28:56,INFO,halaman dashboard dimuat,218,200
+2026-08-03T08:29:49,INFO,login berhasil user=user-249,186,200
+2026-08-03T08:38:07,INFO,sinkronisasi data selesai,223,200
+2026-08-03T08:43:16,INFO,halaman dashboard dimuat,241,200
+2026-08-03T08:47:32,WARN,token kedaluwarsa user=user-141,655,429
+2026-08-03T08:49:35,ERROR,pembayaran gagal order=INV-2462,2527,404
+2026-08-03T08:56:41,INFO,cache diperbarui,298,200
+2026-08-03T08:57:19,INFO,backup harian selesai,53,200
+2026-08-03T09:12:08,INFO,cache diperbarui,273,200
+2026-08-03T09:23:30,WARN,memori 80% terpakai,707,429
+2026-08-03T09:27:46,INFO,backup harian selesai,289,200
+2026-08-03T09:37:23,INFO,email notifikasi terkirim,101,200
+2026-08-03T09:37:46,INFO,email notifikasi terkirim,259,200
+2026-08-03T09:58:00,INFO,backup harian selesai,203,200
+2026-08-03T10:09:36,WARN,token kedaluwarsa user=user-225,833,200
+2026-08-03T10:19:04,WARN,token kedaluwarsa user=user-323,1413,429
+2026-08-03T10:21:27,INFO,email notifikasi terkirim,225,200
+2026-08-03T10:32:31,INFO,sinkronisasi data selesai,57,200
+2026-08-03T11:14:18,ERROR,gagal koneksi database,1381,500
+2026-08-03T11:54:06,INFO,cache diperbarui,166,200
+2026-08-03T11:58:13,WARN,memori 80% terpakai,1721,200
+2026-08-03T12:00:01,INFO,cache diperbarui,174,200
+2026-08-03T13:16:11,INFO,cache diperbarui,37,200
+2026-08-03T14:02:04,WARN,token kedaluwarsa user=user-015,1264,429
+2026-08-03T14:09:52,INFO,halaman dashboard dimuat,12,200
+2026-08-03T14:13:02,INFO,cache diperbarui,9,200
+2026-08-03T14:18:44,INFO,halaman dashboard dimuat,285,200
+2026-08-03T14:18:48,INFO,email notifikasi terkirim,12,200
+2026-08-03T14:31:41,INFO,email notifikasi terkirim,277,200
+2026-08-03T14:43:08,ERROR,timeout endpoint=/api/laporan,2886,500
+2026-08-03T14:54:41,INFO,halaman dashboard dimuat,92,200
+2026-08-03T15:02:09,INFO,login berhasil user=user-073,211,200
+2026-08-03T15:09:06,INFO,halaman dashboard dimuat,137,200
+2026-08-03T15:26:54,INFO,backup harian selesai,187,200
+2026-08-03T15:35:14,WARN,token kedaluwarsa user=user-396,1581,429
+2026-08-03T16:12:41,WARN,token kedaluwarsa user=user-202,1297,429
+2026-08-03T16:23:59,INFO,sinkronisasi data selesai,275,200
+2026-08-03T16:38:35,INFO,sinkronisasi data selesai,77,200
+2026-08-03T16:47:21,WARN,token kedaluwarsa user=user-049,601,429
+2026-08-03T16:49:54,INFO,backup harian selesai,109,200
+2026-08-03T16:50:36,INFO,email notifikasi terkirim,129,200
+2026-08-03T16:56:50,INFO,halaman dashboard dimuat,70,200
+2026-08-03T17:29:29,INFO,email notifikasi terkirim,138,200
+2026-08-03T17:31:13,INFO,email notifikasi terkirim,157,200
+2026-08-03T17:34:11,WARN,retry koneksi database,512,200
+2026-08-03T17:57:42,INFO,halaman dashboard dimuat,101,200
+2026-08-03T18:10:38,ERROR,gagal koneksi database,2059,500
+2026-08-03T18:20:23,WARN,memori 80% terpakai,1656,200
+2026-08-03T18:46:47,INFO,backup harian selesai,62,200
+2026-08-03T18:51:33,INFO,login berhasil user=user-306,202,200
+2026-08-03T19:02:20,INFO,sinkronisasi data selesai,120,200
+2026-08-03T19:18:48,WARN,token kedaluwarsa user=user-384,1936,429
+2026-08-03T19:49:23,INFO,email notifikasi terkirim,281,200
+2026-08-03T19:56:34,WARN,memori 80% terpakai,510,200
+2026-08-03T20:02:47,INFO,sinkronisasi data selesai,71,200
+2026-08-03T20:13:30,INFO,sinkronisasi data selesai,81,200
+2026-08-03T20:23:58,INFO,login berhasil user=user-062,247,200
+2026-08-03T20:56:38,WARN,retry koneksi database,1588,200
+2026-08-03T21:09:32,ERROR,pembayaran gagal order=INV-5531,1543,500
+2026-08-03T21:45:57,INFO,email notifikasi terkirim,170,200
+2026-08-03T22:13:59,INFO,login berhasil user=user-363,44,200
+2026-08-03T22:43:32,INFO,email notifikasi terkirim,66,200
+2026-08-03T22:51:40,WARN,retry koneksi database,1975,429
+2026-08-03T23:16:20,INFO,backup harian selesai,46,200
+2026-08-03T23:25:02,INFO,halaman dashboard dimuat,78,200
+2026-08-03T23:34:49,INFO,halaman dashboard dimuat,99,200
+2026-08-03T23:47:12,INFO,email notifikasi terkirim,48,200
+2026-08-03T23:59:06,WARN,respons lambat endpoint=/api/harga,1706,200
+2026-08-04T00:25:11,INFO,halaman dashboard dimuat,49,200
+2026-08-04T01:39:48,INFO,halaman dashboard dimuat,164,200
+2026-08-04T02:16:59,INFO,backup harian selesai,91,200
+2026-08-04T02:23:50,ERROR,pembayaran gagal order=INV-9140,2757,500
+2026-08-04T02:29:39,INFO,email notifikasi terkirim,111,200
+2026-08-04T02:44:17,INFO,backup harian selesai,243,200
+2026-08-04T03:00:31,INFO,halaman dashboard dimuat,195,200
+2026-08-04T03:06:35,INFO,cache diperbarui,234,200
+2026-08-04T03:14:40,INFO,sinkronisasi data selesai,293,200
+2026-08-04T04:30:35,INFO,cache diperbarui,255,200
+2026-08-04T04:43:13,INFO,email notifikasi terkirim,256,200
+2026-08-04T05:08:11,INFO,sinkronisasi data selesai,80,200
+2026-08-04T05:18:29,INFO,backup harian selesai,134,200
+2026-08-04T05:22:51,INFO,sinkronisasi data selesai,165,200
+2026-08-04T05:44:02,ERROR,file tidak ditemukan /data/8890.csv,2265,500
+2026-08-04T05:52:35,INFO,halaman dashboard dimuat,186,200
+2026-08-04T06:15:05,WARN,memori 80% terpakai,1639,429
+2026-08-04T06:24:27,INFO,backup harian selesai,213,200
+2026-08-04T06:31:36,INFO,login berhasil user=user-341,166,200
+2026-08-04T06:36:48,INFO,cache diperbarui,44,200
+2026-08-04T06:41:11,INFO,sinkronisasi data selesai,176,200
+2026-08-04T06:48:21,INFO,halaman dashboard dimuat,106,200
+2026-08-04T07:05:20,WARN,memori 80% terpakai,648,200
+2026-08-04T07:06:28,INFO,cache diperbarui,25,200
+2026-08-04T07:37:54,INFO,login berhasil user=user-105,175,200
+2026-08-04T07:42:04,INFO,email notifikasi terkirim,71,200
+2026-08-04T07:45:45,WARN,respons lambat endpoint=/api/harga,1046,200
+2026-08-04T07:47:37,INFO,cache diperbarui,55,200
+2026-08-04T07:50:47,INFO,cache diperbarui,254,200
+2026-08-04T08:06:27,WARN,token kedaluwarsa user=user-306,1724,429
+2026-08-04T08:09:34,INFO,login berhasil user=user-399,135,200
+2026-08-04T08:24:14,INFO,cache diperbarui,183,200
+2026-08-04T08:36:37,WARN,memori 80% terpakai,1331,200
+2026-08-04T08:37:42,WARN,respons lambat endpoint=/api/harga,1284,429
+2026-08-04T08:48:01,INFO,cache diperbarui,22,200
+2026-08-04T09:40:13,INFO,halaman dashboard dimuat,243,200
+2026-08-04T09:44:20,WARN,retry koneksi database,1781,429
+2026-08-04T09:53:34,INFO,cache diperbarui,167,200
+2026-08-04T10:47:48,INFO,backup harian selesai,125,200
+2026-08-04T10:54:46,INFO,login berhasil user=user-280,174,200
+2026-08-04T11:17:04,WARN,retry koneksi database,1822,429
+2026-08-04T11:28:54,INFO,backup harian selesai,94,200
+2026-08-04T11:52:30,INFO,login berhasil user=user-181,153,200
+2026-08-04T12:05:35,WARN,retry koneksi database,1659,429
+2026-08-04T12:49:32,INFO,cache diperbarui,228,200
+2026-08-04T12:59:58,INFO,halaman dashboard dimuat,9,200
+2026-08-04T13:03:46,INFO,sinkronisasi data selesai,39,200
+2026-08-04T13:05:34,INFO,sinkronisasi data selesai,254,200
+2026-08-04T13:08:42,INFO,halaman dashboard dimuat,66,200
+2026-08-04T13:33:35,INFO,sinkronisasi data selesai,253,200
+2026-08-04T13:38:04,WARN,retry koneksi database,1852,200
+2026-08-04T14:12:59,INFO,sinkronisasi data selesai,232,200
+2026-08-04T14:42:48,INFO,login berhasil user=user-316,175,200
+2026-08-04T14:56:34,INFO,backup harian selesai,238,200
+2026-08-04T15:07:36,WARN,token kedaluwarsa user=user-074,1118,429
+2026-08-04T15:23:41,INFO,sinkronisasi data selesai,233,200
+2026-08-04T15:33:23,INFO,halaman dashboard dimuat,254,200
+2026-08-04T15:39:39,INFO,sinkronisasi data selesai,221,200
+2026-08-04T16:25:40,INFO,email notifikasi terkirim,252,200
+2026-08-04T17:10:06,INFO,backup harian selesai,39,200
+2026-08-04T17:16:34,ERROR,gagal koneksi database,2439,500
+2026-08-04T17:28:56,WARN,respons lambat endpoint=/api/harga,1422,200
+2026-08-04T17:41:00,WARN,retry koneksi database,1200,200
+2026-08-04T18:10:40,WARN,memori 80% terpakai,315,429
+2026-08-04T18:10:58,INFO,cache diperbarui,20,200
+2026-08-04T18:12:59,INFO,halaman dashboard dimuat,244,200
+2026-08-04T18:25:17,ERROR,timeout endpoint=/api/laporan,1030,404
+2026-08-04T18:25:52,WARN,token kedaluwarsa user=user-015,1288,429
+2026-08-04T18:34:16,INFO,backup harian selesai,273,200
+2026-08-04T18:52:08,ERROR,gagal koneksi database,1353,404
+2026-08-04T18:56:03,INFO,email notifikasi terkirim,30,200
+2026-08-04T19:01:18,WARN,retry koneksi database,958,429
+2026-08-04T19:08:50,INFO,login berhasil user=user-099,80,200
+2026-08-04T19:17:38,INFO,halaman dashboard dimuat,14,200
+2026-08-04T20:07:45,ERROR,gagal koneksi database,875,500
+2026-08-04T20:36:27,INFO,login berhasil user=user-119,292,200
+2026-08-04T20:47:28,INFO,sinkronisasi data selesai,97,200
+2026-08-04T20:56:57,WARN,respons lambat endpoint=/api/harga,1224,429
+2026-08-04T21:55:00,WARN,respons lambat endpoint=/api/harga,1333,429
+2026-08-04T23:03:35,WARN,retry koneksi database,1390,200
+2026-08-04T23:09:28,INFO,login berhasil user=user-240,273,200
+2026-08-04T23:10:24,INFO,login berhasil user=user-248,164,200
+2026-08-04T23:49:17,INFO,backup harian selesai,208,200
+2026-08-05T00:07:02,INFO,email notifikasi terkirim,74,200
+2026-08-05T00:11:25,ERROR,gagal koneksi database,1890,404
+2026-08-05T00:46:13,INFO,sinkronisasi data selesai,268,200
+2026-08-05T00:54:37,INFO,email notifikasi terkirim,114,200
+2026-08-05T01:26:53,INFO,sinkronisasi data selesai,230,200
+2026-08-05T01:42:43,INFO,email notifikasi terkirim,33,200
+2026-08-05T01:51:00,WARN,respons lambat endpoint=/api/harga,1773,200
+2026-08-05T03:13:02,INFO,cache diperbarui,66,200
+2026-08-05T03:23:08,INFO,login berhasil user=user-309,48,200
+2026-08-05T04:15:54,WARN,memori 80% terpakai,1129,429
+2026-08-05T04:19:19,INFO,cache diperbarui,247,200
+2026-08-05T04:32:14,INFO,login berhasil user=user-091,209,200
+2026-08-05T04:41:31,WARN,token kedaluwarsa user=user-119,1064,200
+2026-08-05T04:42:07,INFO,cache diperbarui,65,200
+2026-08-05T05:43:53,INFO,cache diperbarui,219,200
+2026-08-05T05:46:42,INFO,halaman dashboard dimuat,271,200
+2026-08-05T06:33:53,ERROR,gagal koneksi database,3728,404
+2026-08-05T07:14:45,INFO,cache diperbarui,35,200
+2026-08-05T07:41:02,WARN,token kedaluwarsa user=user-265,1753,429
+2026-08-05T08:00:28,INFO,login berhasil user=user-046,226,200
+2026-08-05T08:10:04,WARN,token kedaluwarsa user=user-068,941,429
+2026-08-05T08:48:39,ERROR,timeout endpoint=/api/laporan,1096,404
+2026-08-05T09:31:14,INFO,email notifikasi terkirim,280,200
+2026-08-05T10:11:43,INFO,login berhasil user=user-105,117,200
+2026-08-05T10:13:11,INFO,login berhasil user=user-153,125,200
+2026-08-05T10:22:37,INFO,cache diperbarui,34,200
+2026-08-05T10:52:46,INFO,login berhasil user=user-045,103,200
+2026-08-05T11:02:42,INFO,sinkronisasi data selesai,212,200
+2026-08-05T11:24:13,INFO,halaman dashboard dimuat,207,200
+2026-08-05T11:30:32,INFO,backup harian selesai,176,200
+2026-08-05T11:30:54,INFO,backup harian selesai,241,200
+2026-08-05T12:38:46,INFO,halaman dashboard dimuat,248,200
+2026-08-05T12:47:43,INFO,sinkronisasi data selesai,7,200
+2026-08-05T13:11:01,INFO,backup harian selesai,112,200
+2026-08-05T13:28:25,ERROR,file tidak ditemukan /data/2785.csv,1122,404
+2026-08-05T13:30:27,INFO,backup harian selesai,113,200
+2026-08-05T13:37:50,WARN,retry koneksi database,486,429
+2026-08-05T13:43:35,INFO,email notifikasi terkirim,118,200
+2026-08-05T14:30:38,WARN,respons lambat endpoint=/api/harga,1220,200
+2026-08-05T14:38:17,WARN,retry koneksi database,1677,200
+2026-08-05T14:43:57,INFO,login berhasil user=user-245,269,200
+2026-08-05T14:50:22,INFO,halaman dashboard dimuat,150,200
+2026-08-05T14:59:37,ERROR,gagal koneksi database,3541,404
+2026-08-05T15:25:05,WARN,token kedaluwarsa user=user-362,1816,429
+2026-08-05T15:48:56,INFO,backup harian selesai,130,200
+2026-08-05T15:50:16,INFO,cache diperbarui,157,200
+2026-08-05T15:53:31,INFO,login berhasil user=user-152,101,200
+2026-08-05T16:03:14,INFO,sinkronisasi data selesai,165,200
+2026-08-05T16:19:51,INFO,email notifikasi terkirim,135,200
+2026-08-05T16:38:11,INFO,backup harian selesai,197,200
+2026-08-05T17:03:39,WARN,respons lambat endpoint=/api/harga,1349,200
+2026-08-05T17:36:33,INFO,cache diperbarui,148,200
+2026-08-05T17:53:19,WARN,memori 80% terpakai,1686,200
+2026-08-05T18:15:28,ERROR,timeout endpoint=/api/laporan,1530,404
+2026-08-05T18:25:39,INFO,backup harian selesai,154,200
+2026-08-05T19:01:31,INFO,email notifikasi terkirim,96,200
+2026-08-05T19:55:27,INFO,login berhasil user=user-323,28,200
+2026-08-05T20:00:12,INFO,backup harian selesai,195,200
+2026-08-05T20:07:23,INFO,cache diperbarui,96,200
+2026-08-05T20:13:22,ERROR,file tidak ditemukan /data/3855.csv,2401,404
+2026-08-05T20:33:12,ERROR,pembayaran gagal order=INV-7639,1578,404
+2026-08-05T20:48:28,ERROR,file tidak ditemukan /data/7510.csv,3148,404
+2026-08-05T20:52:28,INFO,halaman dashboard dimuat,260,200
+2026-08-05T21:05:27,INFO,login berhasil user=user-083,120,200
+2026-08-05T21:12:56,INFO,login berhasil user=user-008,166,200
+2026-08-05T21:41:46,INFO,halaman dashboard dimuat,79,200
+2026-08-05T21:50:47,WARN,token kedaluwarsa user=user-255,315,429
+2026-08-05T21:51:19,INFO,email notifikasi terkirim,79,200
+2026-08-05T21:58:37,WARN,token kedaluwarsa user=user-258,630,429
+2026-08-05T22:06:16,INFO,backup harian selesai,139,200
+2026-08-05T22:18:45,INFO,cache diperbarui,261,200
+2026-08-05T22:25:49,INFO,halaman dashboard dimuat,204,200
+2026-08-05T22:47:35,INFO,halaman dashboard dimuat,166,200
+2026-08-05T23:04:38,INFO,login berhasil user=user-211,23,200
+2026-08-05T23:17:28,INFO,cache diperbarui,296,200
+2026-08-05T23:24:25,INFO,sinkronisasi data selesai,226,200
+2026-08-05T23:46:13,INFO,login berhasil user=user-278,22,200
+2026-08-06T00:00:08,WARN,respons lambat endpoint=/api/harga,1313,200
+2026-08-06T00:04:09,INFO,backup harian selesai,130,200
+2026-08-06T00:22:28,ERROR,file tidak ditemukan /data/5344.csv,1087,404
+2026-08-06T00:45:18,INFO,email notifikasi terkirim,261,200
+2026-08-06T01:05:59,ERROR,gagal koneksi database,1309,500
+2026-08-06T01:13:40,INFO,login berhasil user=user-384,241,200
+2026-08-06T01:35:29,INFO,cache diperbarui,275,200
+2026-08-06T01:42:20,INFO,login berhasil user=user-101,161,200
+2026-08-06T01:51:57,INFO,backup harian selesai,25,200
+2026-08-06T02:01:52,INFO,halaman dashboard dimuat,162,200
+2026-08-06T02:18:43,INFO,cache diperbarui,116,200
+2026-08-06T02:34:29,INFO,login berhasil user=user-209,281,200
+2026-08-06T02:57:02,INFO,login berhasil user=user-038,68,200
+2026-08-06T03:13:34,INFO,login berhasil user=user-029,54,200
+2026-08-06T03:24:05,INFO,cache diperbarui,87,200
+2026-08-06T03:40:06,INFO,backup harian selesai,290,200
+2026-08-06T03:49:03,INFO,email notifikasi terkirim,257,200
+2026-08-06T03:50:33,INFO,sinkronisasi data selesai,50,200
+2026-08-06T04:03:52,ERROR,timeout endpoint=/api/laporan,2832,500
+2026-08-06T04:18:36,INFO,sinkronisasi data selesai,296,200
+2026-08-06T04:19:17,INFO,cache diperbarui,235,200
+2026-08-06T04:26:40,INFO,cache diperbarui,175,200
+2026-08-06T04:29:48,WARN,respons lambat endpoint=/api/harga,1278,429
+2026-08-06T04:39:07,INFO,halaman dashboard dimuat,208,200
+2026-08-06T04:44:34,INFO,email notifikasi terkirim,73,200
+2026-08-06T04:57:34,ERROR,file tidak ditemukan /data/5576.csv,1292,404
+2026-08-06T05:34:53,INFO,email notifikasi terkirim,209,200
+2026-08-06T05:37:38,INFO,cache diperbarui,6,200
+2026-08-06T05:50:45,INFO,email notifikasi terkirim,23,200
+2026-08-06T05:52:56,INFO,cache diperbarui,159,200
+2026-08-06T06:10:26,INFO,sinkronisasi data selesai,249,200
+2026-08-06T06:21:10,ERROR,pembayaran gagal order=INV-3269,3077,404
+2026-08-06T06:23:45,WARN,memori 80% terpakai,649,429
+2026-08-06T06:36:06,INFO,email notifikasi terkirim,185,200
+2026-08-06T07:39:22,ERROR,pembayaran gagal order=INV-9930,2111,500
+2026-08-06T08:46:47,INFO,login berhasil user=user-065,299,200
+2026-08-06T09:03:08,INFO,sinkronisasi data selesai,115,200
+2026-08-06T09:06:51,INFO,cache diperbarui,291,200
+2026-08-06T09:27:20,INFO,cache diperbarui,242,200
+2026-08-06T09:53:38,INFO,halaman dashboard dimuat,247,200
+2026-08-06T10:11:47,INFO,cache diperbarui,211,200
+2026-08-06T10:18:05,INFO,backup harian selesai,59,200
+2026-08-06T10:47:23,WARN,respons lambat endpoint=/api/harga,1843,429
+2026-08-06T11:03:02,INFO,halaman dashboard dimuat,262,200
+2026-08-06T11:18:38,INFO,backup harian selesai,263,200
+2026-08-06T11:52:38,WARN,token kedaluwarsa user=user-101,556,429
+2026-08-06T11:55:09,INFO,backup harian selesai,101,200
+2026-08-06T12:17:51,INFO,login berhasil user=user-273,174,200
+2026-08-06T12:53:31,WARN,retry koneksi database,1569,429
+2026-08-06T13:02:00,WARN,respons lambat endpoint=/api/harga,1200,200
+2026-08-06T13:36:26,INFO,email notifikasi terkirim,59,200
+2026-08-06T13:50:47,INFO,backup harian selesai,252,200
+2026-08-06T14:08:10,INFO,halaman dashboard dimuat,146,200
+2026-08-06T15:01:44,INFO,backup harian selesai,13,200
+2026-08-06T15:09:18,INFO,email notifikasi terkirim,275,200
+2026-08-06T15:19:15,INFO,login berhasil user=user-226,124,200
+2026-08-06T15:48:33,INFO,sinkronisasi data selesai,138,200
+2026-08-06T16:03:57,WARN,token kedaluwarsa user=user-061,1575,429
+2026-08-06T16:08:24,ERROR,gagal koneksi database,3630,404
+2026-08-06T16:23:53,WARN,token kedaluwarsa user=user-213,1398,429
+2026-08-06T16:24:48,WARN,token kedaluwarsa user=user-091,1452,429
+2026-08-06T16:48:42,WARN,token kedaluwarsa user=user-322,1047,429
+2026-08-06T17:22:20,INFO,halaman dashboard dimuat,102,200
+2026-08-06T17:25:05,WARN,token kedaluwarsa user=user-286,1812,429
+2026-08-06T17:30:33,INFO,cache diperbarui,283,200
+2026-08-06T17:48:57,INFO,halaman dashboard dimuat,266,200
+2026-08-06T17:54:51,ERROR,file tidak ditemukan /data/3653.csv,2981,404
+2026-08-06T17:56:53,INFO,login berhasil user=user-303,62,200
+2026-08-06T18:46:50,INFO,sinkronisasi data selesai,229,200
+2026-08-06T18:53:49,WARN,retry koneksi database,1382,200
+2026-08-06T18:57:26,ERROR,timeout endpoint=/api/laporan,2120,404
+2026-08-06T19:22:39,INFO,login berhasil user=user-013,130,200
+2026-08-06T19:43:55,INFO,sinkronisasi data selesai,217,200
+2026-08-06T19:57:08,INFO,email notifikasi terkirim,277,200
+2026-08-06T20:17:52,WARN,memori 80% terpakai,1146,200
+2026-08-06T20:29:07,INFO,sinkronisasi data selesai,152,200
+2026-08-06T20:32:22,ERROR,gagal koneksi database,2316,404
+2026-08-06T20:35:44,WARN,retry koneksi database,1575,429
+2026-08-06T20:38:03,INFO,email notifikasi terkirim,11,200
+2026-08-06T20:53:39,INFO,login berhasil user=user-133,199,200
+2026-08-06T21:02:31,INFO,halaman dashboard dimuat,133,200
+2026-08-06T21:03:38,INFO,backup harian selesai,47,200
+2026-08-06T21:04:09,INFO,login berhasil user=user-075,112,200
+2026-08-06T21:18:48,INFO,halaman dashboard dimuat,11,200
+2026-08-06T21:31:13,WARN,respons lambat endpoint=/api/harga,1162,200
+2026-08-06T21:34:02,WARN,token kedaluwarsa user=user-320,1381,200
+2026-08-06T21:40:41,INFO,login berhasil user=user-179,138,200
+2026-08-06T21:48:34,WARN,memori 80% terpakai,958,200
+2026-08-06T22:07:13,WARN,token kedaluwarsa user=user-303,904,429
+2026-08-06T22:10:15,INFO,sinkronisasi data selesai,115,200
+2026-08-06T22:30:37,INFO,login berhasil user=user-270,198,200
+2026-08-06T22:32:33,INFO,sinkronisasi data selesai,223,200
+2026-08-06T23:11:55,INFO,login berhasil user=user-244,259,200
+2026-08-06T23:20:32,ERROR,file tidak ditemukan /data/9466.csv,1489,404
+2026-08-06T23:47:30,ERROR,pembayaran gagal order=INV-8630,3903,500
+2026-08-06T23:48:07,INFO,cache diperbarui,192,200
+2026-08-06T23:52:51,WARN,retry koneksi database,1373,200
+2026-08-07T00:02:07,INFO,email notifikasi terkirim,41,200
+2026-08-07T00:21:23,INFO,login berhasil user=user-293,250,200
+2026-08-07T00:34:46,INFO,halaman dashboard dimuat,110,200
+2026-08-07T00:41:18,INFO,login berhasil user=user-397,85,200
+2026-08-07T01:34:46,ERROR,pembayaran gagal order=INV-4819,1895,404
+2026-08-07T01:43:02,INFO,cache diperbarui,77,200
+2026-08-07T02:11:57,INFO,halaman dashboard dimuat,300,200
+2026-08-07T02:26:13,INFO,halaman dashboard dimuat,93,200
+2026-08-07T02:30:15,INFO,cache diperbarui,282,200
+2026-08-07T02:50:42,INFO,email notifikasi terkirim,196,200
+2026-08-07T03:09:07,INFO,email notifikasi terkirim,12,200
+2026-08-07T03:25:11,INFO,backup harian selesai,212,200
+2026-08-07T03:26:58,ERROR,timeout endpoint=/api/laporan,1055,404
+2026-08-07T03:36:05,INFO,backup harian selesai,8,200
+2026-08-07T03:38:03,WARN,memori 80% terpakai,540,429
+2026-08-07T03:40:28,WARN,memori 80% terpakai,484,200
+2026-08-07T03:49:20,INFO,cache diperbarui,140,200
+2026-08-07T04:08:56,ERROR,file tidak ditemukan /data/1640.csv,2163,500
+2026-08-07T04:20:23,WARN,retry koneksi database,1745,429
+2026-08-07T04:23:43,ERROR,gagal koneksi database,2166,500
+2026-08-07T04:44:01,INFO,email notifikasi terkirim,224,200
+2026-08-07T04:54:30,INFO,login berhasil user=user-106,112,200
+2026-08-07T05:27:25,INFO,sinkronisasi data selesai,74,200
+2026-08-07T05:47:14,INFO,halaman dashboard dimuat,170,200
+2026-08-07T05:50:15,INFO,backup harian selesai,130,200
+2026-08-07T06:09:10,WARN,memori 80% terpakai,653,429
+2026-08-07T06:23:15,INFO,sinkronisasi data selesai,221,200
+2026-08-07T06:25:20,INFO,email notifikasi terkirim,122,200
+2026-08-07T06:25:44,INFO,backup harian selesai,221,200
+2026-08-07T06:52:04,INFO,halaman dashboard dimuat,206,200
+2026-08-07T07:38:19,INFO,halaman dashboard dimuat,19,200
+2026-08-07T07:40:26,ERROR,file tidak ditemukan /data/6337.csv,1315,500
+2026-08-07T07:53:30,ERROR,timeout endpoint=/api/laporan,2889,404
+2026-08-07T07:56:41,INFO,backup harian selesai,79,200
+2026-08-07T08:12:05,ERROR,gagal koneksi database,1580,404
+2026-08-07T08:24:35,INFO,login berhasil user=user-212,219,200
+2026-08-07T08:25:54,ERROR,gagal koneksi database,2998,500
+2026-08-07T08:31:25,INFO,cache diperbarui,228,200
+2026-08-07T08:34:35,INFO,backup harian selesai,205,200
+2026-08-07T08:40:59,INFO,login berhasil user=user-306,142,200
+2026-08-07T08:46:19,WARN,respons lambat endpoint=/api/harga,1596,429
+2026-08-07T08:59:50,INFO,cache diperbarui,15,200
+2026-08-07T09:23:14,INFO,backup harian selesai,95,200
+2026-08-07T09:25:28,INFO,halaman dashboard dimuat,203,200
+2026-08-07T09:36:28,INFO,halaman dashboard dimuat,121,200
+2026-08-07T09:47:14,ERROR,timeout endpoint=/api/laporan,3990,404
+2026-08-07T09:49:40,INFO,email notifikasi terkirim,115,200
+2026-08-07T09:50:35,INFO,email notifikasi terkirim,145,200
+2026-08-07T10:05:57,INFO,cache diperbarui,60,200
+2026-08-07T10:55:04,INFO,login berhasil user=user-239,209,200
+2026-08-07T11:09:11,INFO,sinkronisasi data selesai,227,200
+2026-08-07T11:25:42,INFO,login berhasil user=user-018,37,200
+2026-08-07T11:26:22,ERROR,pembayaran gagal order=INV-2561,2893,404
+2026-08-07T11:32:26,INFO,login berhasil user=user-013,33,200
+2026-08-07T11:51:04,INFO,halaman dashboard dimuat,124,200
+2026-08-07T11:55:55,INFO,backup harian selesai,200,200
+2026-08-07T12:05:53,INFO,backup harian selesai,223,200
+2026-08-07T12:16:09,INFO,cache diperbarui,136,200
+2026-08-07T12:20:37,INFO,cache diperbarui,71,200
+2026-08-07T12:54:59,INFO,cache diperbarui,133,200
+2026-08-07T13:37:00,ERROR,file tidak ditemukan /data/7924.csv,3628,500
+2026-08-07T13:44:03,ERROR,gagal koneksi database,1901,500
+2026-08-07T13:56:28,INFO,sinkronisasi data selesai,135,200
+2026-08-07T14:00:56,INFO,email notifikasi terkirim,111,200
+2026-08-07T14:01:13,INFO,cache diperbarui,43,200
+2026-08-07T14:30:28,WARN,respons lambat endpoint=/api/harga,1664,429
+2026-08-07T14:35:00,INFO,halaman dashboard dimuat,254,200
+2026-08-07T15:08:55,ERROR,pembayaran gagal order=INV-7337,1241,500
+2026-08-07T15:34:19,INFO,email notifikasi terkirim,185,200
+2026-08-07T15:35:50,ERROR,pembayaran gagal order=INV-8652,1001,404
+2026-08-07T15:38:29,INFO,halaman dashboard dimuat,227,200
+2026-08-07T15:42:40,WARN,memori 80% terpakai,475,200
+2026-08-07T15:58:25,INFO,login berhasil user=user-072,39,200
+2026-08-07T16:13:30,INFO,email notifikasi terkirim,160,200
+2026-08-07T16:25:49,INFO,halaman dashboard dimuat,255,200
+2026-08-07T16:46:15,INFO,halaman dashboard dimuat,164,200
+2026-08-07T16:57:02,INFO,email notifikasi terkirim,257,200
+2026-08-07T16:58:37,INFO,backup harian selesai,105,200
+2026-08-07T17:16:25,INFO,backup harian selesai,5,200
+2026-08-07T17:21:58,WARN,token kedaluwarsa user=user-316,741,429
+2026-08-07T17:24:03,WARN,retry koneksi database,497,429
+2026-08-07T17:43:14,WARN,retry koneksi database,874,429
+2026-08-07T17:43:24,INFO,login berhasil user=user-228,66,200
+2026-08-07T17:47:46,WARN,token kedaluwarsa user=user-330,765,429
+2026-08-07T17:48:31,ERROR,gagal koneksi database,597,500
+2026-08-07T17:52:59,INFO,email notifikasi terkirim,282,200
+2026-08-07T17:56:59,WARN,retry koneksi database,1263,429
+2026-08-07T18:04:15,INFO,backup harian selesai,263,200
+2026-08-07T18:10:34,INFO,email notifikasi terkirim,152,200
+2026-08-07T18:49:47,WARN,memori 80% terpakai,749,429
+2026-08-07T18:50:51,ERROR,timeout endpoint=/api/laporan,2128,404
+2026-08-07T19:13:36,INFO,backup harian selesai,238,200
+2026-08-07T19:16:35,WARN,respons lambat endpoint=/api/harga,809,429
+2026-08-07T19:20:04,INFO,cache diperbarui,228,200
+2026-08-07T19:22:06,INFO,backup harian selesai,40,200
+2026-08-07T19:25:53,INFO,sinkronisasi data selesai,163,200
+2026-08-07T19:27:28,INFO,sinkronisasi data selesai,81,200
+2026-08-07T19:28:26,INFO,email notifikasi terkirim,112,200
+2026-08-07T19:32:43,INFO,cache diperbarui,212,200
+2026-08-07T19:35:20,WARN,retry koneksi database,1963,200
+2026-08-07T19:40:55,INFO,cache diperbarui,149,200
+2026-08-07T20:21:15,INFO,login berhasil user=user-174,44,200
+2026-08-07T20:25:51,WARN,retry koneksi database,1013,429
+2026-08-07T20:31:39,INFO,email notifikasi terkirim,52,200
+2026-08-07T21:03:14,WARN,memori 80% terpakai,1036,200
+2026-08-07T21:11:17,INFO,login berhasil user=user-171,166,200
+2026-08-07T21:11:51,INFO,email notifikasi terkirim,298,200
+2026-08-07T21:13:23,INFO,email notifikasi terkirim,135,200
+2026-08-07T21:22:33,INFO,backup harian selesai,24,200
+2026-08-07T21:48:51,INFO,email notifikasi terkirim,90,200
+2026-08-07T21:55:02,WARN,memori 80% terpakai,1933,200
+2026-08-07T21:57:46,WARN,respons lambat endpoint=/api/harga,1410,200
+2026-08-07T22:02:55,INFO,cache diperbarui,223,200
+2026-08-07T22:31:27,INFO,email notifikasi terkirim,252,200
+2026-08-07T22:47:50,INFO,sinkronisasi data selesai,46,200
+2026-08-07T22:50:44,INFO,sinkronisasi data selesai,187,200
+2026-08-07T22:53:30,WARN,token kedaluwarsa user=user-203,866,200
+2026-08-07T22:55:10,WARN,respons lambat endpoint=/api/harga,1383,429
+2026-08-07T22:56:42,INFO,sinkronisasi data selesai,193,200
+2026-08-07T23:07:41,INFO,sinkronisasi data selesai,233,200
+2026-08-07T23:09:12,INFO,login berhasil user=user-198,46,200
+2026-08-07T23:19:41,INFO,email notifikasi terkirim,283,200
+2026-08-07T23:22:21,INFO,cache diperbarui,140,200
+2026-08-07T23:26:11,INFO,halaman dashboard dimuat,299,200
+2026-08-07T23:31:43,INFO,halaman dashboard dimuat,299,200
+2026-08-07T23:45:00,WARN,retry koneksi database,1837,200
+2026-08-07T23:46:57,ERROR,timeout endpoint=/api/laporan,1000,500
+2026-08-07T23:49:22,INFO,backup harian selesai,282,200
+2026-08-08T00:23:00,INFO,cache diperbarui,161,200
+2026-08-08T00:35:19,INFO,halaman dashboard dimuat,26,200
+2026-08-08T00:36:31,INFO,sinkronisasi data selesai,76,200
+2026-08-08T00:42:18,INFO,email notifikasi terkirim,89,200
+2026-08-08T00:46:32,INFO,backup harian selesai,107,200
+2026-08-08T01:26:36,INFO,login berhasil user=user-002,169,200
+2026-08-08T01:26:37,WARN,retry koneksi database,1178,200
+2026-08-08T01:27:37,INFO,login berhasil user=user-189,20,200
+2026-08-08T01:47:19,INFO,sinkronisasi data selesai,228,200
+2026-08-08T01:52:58,INFO,sinkronisasi data selesai,261,200
+2026-08-08T02:24:04,INFO,email notifikasi terkirim,63,200
+2026-08-08T02:54:23,INFO,cache diperbarui,51,200
+2026-08-08T02:56:25,ERROR,timeout endpoint=/api/laporan,3899,500
+2026-08-08T03:13:21,INFO,sinkronisasi data selesai,264,200
+2026-08-08T03:15:59,INFO,sinkronisasi data selesai,81,200
+2026-08-08T03:23:19,INFO,cache diperbarui,217,200
+2026-08-08T03:38:11,INFO,halaman dashboard dimuat,119,200
+2026-08-08T03:45:17,INFO,cache diperbarui,247,200
+2026-08-08T04:24:21,ERROR,gagal koneksi database,727,404
+2026-08-08T05:02:59,ERROR,file tidak ditemukan /data/2364.csv,2455,404
+2026-08-08T05:10:31,INFO,cache diperbarui,80,200
+2026-08-08T05:19:29,INFO,cache diperbarui,21,200
+2026-08-08T05:55:00,INFO,backup harian selesai,198,200
+2026-08-08T06:19:56,INFO,halaman dashboard dimuat,208,200
+2026-08-08T06:30:39,WARN,retry koneksi database,522,200
+2026-08-08T06:32:18,ERROR,timeout endpoint=/api/laporan,640,404
+2026-08-08T06:58:17,INFO,login berhasil user=user-133,171,200
+2026-08-08T07:06:05,WARN,token kedaluwarsa user=user-204,689,429
+2026-08-08T07:21:45,INFO,halaman dashboard dimuat,171,200
+2026-08-08T07:36:07,WARN,retry koneksi database,1088,200
+2026-08-08T08:24:12,INFO,email notifikasi terkirim,23,200
+2026-08-08T08:26:58,INFO,backup harian selesai,265,200
+2026-08-08T08:40:24,INFO,sinkronisasi data selesai,235,200
+2026-08-08T08:50:52,INFO,sinkronisasi data selesai,238,200
+2026-08-08T09:12:31,INFO,sinkronisasi data selesai,24,200
+2026-08-08T09:24:09,INFO,email notifikasi terkirim,271,200
+2026-08-08T09:28:32,WARN,retry koneksi database,1807,429
+2026-08-08T09:45:33,WARN,memori 80% terpakai,1918,200
+2026-08-08T09:52:36,INFO,backup harian selesai,176,200
+2026-08-08T10:29:09,INFO,halaman dashboard dimuat,86,200
+2026-08-08T10:48:55,INFO,backup harian selesai,272,200
+2026-08-08T10:52:55,INFO,login berhasil user=user-298,121,200
+2026-08-08T10:57:23,WARN,respons lambat endpoint=/api/harga,1051,200
+2026-08-08T11:05:33,INFO,halaman dashboard dimuat,218,200
+2026-08-08T12:21:43,INFO,backup harian selesai,294,200
+2026-08-08T13:23:12,INFO,email notifikasi terkirim,220,200
+2026-08-08T13:29:42,INFO,sinkronisasi data selesai,229,200
+2026-08-08T13:39:31,INFO,email notifikasi terkirim,65,200
+2026-08-08T14:04:43,INFO,cache diperbarui,49,200
+2026-08-08T14:10:40,INFO,email notifikasi terkirim,268,200
+2026-08-08T14:35:57,WARN,retry koneksi database,1949,429
+2026-08-08T14:38:33,INFO,sinkronisasi data selesai,31,200
+2026-08-08T14:42:19,WARN,respons lambat endpoint=/api/harga,1908,200
+2026-08-08T14:43:07,ERROR,gagal koneksi database,2855,404
+2026-08-08T14:44:12,INFO,email notifikasi terkirim,57,200
+2026-08-08T15:08:04,INFO,sinkronisasi data selesai,289,200
+2026-08-08T15:08:34,WARN,token kedaluwarsa user=user-196,1878,200
+2026-08-08T15:24:57,ERROR,pembayaran gagal order=INV-5284,1648,500
+2026-08-08T15:38:35,WARN,respons lambat endpoint=/api/harga,945,200
+2026-08-08T15:39:19,INFO,sinkronisasi data selesai,45,200
+2026-08-08T15:57:28,INFO,login berhasil user=user-393,234,200
+2026-08-08T16:02:23,WARN,respons lambat endpoint=/api/harga,335,429
+2026-08-08T16:08:44,INFO,cache diperbarui,42,200
+2026-08-08T16:41:05,ERROR,file tidak ditemukan /data/6885.csv,1727,404
+2026-08-08T16:55:39,INFO,sinkronisasi data selesai,57,200
+2026-08-08T17:35:15,WARN,token kedaluwarsa user=user-223,1354,429
+2026-08-08T18:03:08,INFO,backup harian selesai,157,200
+2026-08-08T18:35:55,INFO,cache diperbarui,254,200
+2026-08-08T18:55:04,INFO,email notifikasi terkirim,149,200
+2026-08-08T18:58:41,INFO,cache diperbarui,127,200
+2026-08-08T19:12:41,ERROR,file tidak ditemukan /data/3942.csv,2909,404
+2026-08-08T19:20:00,INFO,email notifikasi terkirim,159,200
+2026-08-08T19:26:06,WARN,memori 80% terpakai,580,429
+2026-08-08T19:36:07,WARN,respons lambat endpoint=/api/harga,783,200
+2026-08-08T19:47:41,INFO,backup harian selesai,246,200
+2026-08-08T20:09:52,WARN,respons lambat endpoint=/api/harga,619,429
+2026-08-08T20:13:08,WARN,token kedaluwarsa user=user-127,1598,429
+2026-08-08T20:14:35,INFO,sinkronisasi data selesai,10,200
+2026-08-08T20:20:43,ERROR,file tidak ditemukan /data/9348.csv,1508,404
+2026-08-08T20:32:37,INFO,email notifikasi terkirim,119,200
+2026-08-08T21:14:17,INFO,halaman dashboard dimuat,37,200
+2026-08-08T21:18:36,WARN,retry koneksi database,1761,200
+2026-08-08T21:48:56,INFO,email notifikasi terkirim,98,200
+2026-08-08T22:07:16,ERROR,timeout endpoint=/api/laporan,3818,500
+2026-08-08T22:09:33,INFO,backup harian selesai,247,200
+2026-08-08T22:24:08,INFO,halaman dashboard dimuat,263,200
+2026-08-08T22:55:21,WARN,memori 80% terpakai,455,429
+2026-08-08T23:15:18,WARN,token kedaluwarsa user=user-020,1411,429
+2026-08-08T23:27:19,INFO,sinkronisasi data selesai,231,200
+2026-08-08T23:57:42,INFO,email notifikasi terkirim,100,200
+2026-08-09T00:01:44,INFO,login berhasil user=user-344,226,200
+2026-08-09T00:02:23,INFO,email notifikasi terkirim,109,200
+2026-08-09T00:07:53,ERROR,gagal koneksi database,1395,500
+2026-08-09T00:17:50,INFO,email notifikasi terkirim,170,200
+2026-08-09T00:46:12,INFO,email notifikasi terkirim,166,200
+2026-08-09T00:50:06,ERROR,pembayaran gagal order=INV-7131,1734,404
+2026-08-09T01:17:58,INFO,email notifikasi terkirim,182,200
+2026-08-09T01:21:44,INFO,sinkronisasi data selesai,159,200
+2026-08-09T01:28:36,INFO,cache diperbarui,50,200
+2026-08-09T01:43:50,ERROR,gagal koneksi database,2149,404
+2026-08-09T01:44:57,WARN,respons lambat endpoint=/api/harga,1647,429
+2026-08-09T02:05:09,INFO,email notifikasi terkirim,164,200
+2026-08-09T02:13:01,INFO,sinkronisasi data selesai,209,200
+2026-08-09T02:37:43,WARN,retry koneksi database,452,429
+2026-08-09T02:48:52,INFO,halaman dashboard dimuat,138,200
+2026-08-09T03:22:46,INFO,email notifikasi terkirim,275,200
+2026-08-09T03:34:26,INFO,sinkronisasi data selesai,201,200
+2026-08-09T03:57:05,INFO,sinkronisasi data selesai,209,200
+2026-08-09T04:00:07,INFO,halaman dashboard dimuat,144,200
+2026-08-09T04:02:40,WARN,respons lambat endpoint=/api/harga,761,200
+2026-08-09T04:13:16,INFO,email notifikasi terkirim,76,200
+2026-08-09T04:49:15,ERROR,timeout endpoint=/api/laporan,2630,404
+2026-08-09T04:58:02,INFO,login berhasil user=user-081,34,200
+2026-08-09T05:19:24,ERROR,gagal koneksi database,3967,500
+2026-08-09T05:29:51,WARN,respons lambat endpoint=/api/harga,1834,429
+2026-08-09T05:30:32,INFO,cache diperbarui,269,200
+2026-08-09T05:40:28,WARN,retry koneksi database,765,200
+2026-08-09T06:10:25,WARN,respons lambat endpoint=/api/harga,1446,200
+2026-08-09T06:16:59,INFO,halaman dashboard dimuat,10,200
+2026-08-09T06:23:05,WARN,retry koneksi database,1267,429
+2026-08-09T06:26:37,INFO,email notifikasi terkirim,178,200
+2026-08-09T06:31:01,INFO,sinkronisasi data selesai,131,200
+2026-08-09T06:45:02,INFO,email notifikasi terkirim,240,200
+2026-08-09T06:53:27,INFO,cache diperbarui,82,200
+2026-08-09T07:26:08,WARN,retry koneksi database,814,429
+2026-08-09T07:32:33,INFO,cache diperbarui,236,200
+2026-08-09T08:23:47,INFO,cache diperbarui,283,200
+2026-08-09T08:35:36,WARN,retry koneksi database,1601,200
+2026-08-09T08:36:56,INFO,halaman dashboard dimuat,149,200
+2026-08-09T09:06:41,INFO,halaman dashboard dimuat,143,200
+2026-08-09T09:28:11,INFO,email notifikasi terkirim,88,200
+2026-08-09T09:29:12,INFO,login berhasil user=user-372,225,200
+2026-08-09T09:39:47,WARN,memori 80% terpakai,328,200
+2026-08-09T09:47:49,INFO,halaman dashboard dimuat,19,200
+2026-08-09T09:58:06,INFO,email notifikasi terkirim,253,200
+2026-08-09T10:02:48,ERROR,gagal koneksi database,2329,500
+2026-08-09T10:13:55,INFO,cache diperbarui,44,200
+2026-08-09T10:16:46,WARN,memori 80% terpakai,1372,200
+2026-08-09T10:31:48,INFO,backup harian selesai,119,200
+2026-08-09T10:46:03,INFO,halaman dashboard dimuat,297,200
+2026-08-09T11:09:30,INFO,backup harian selesai,248,200
+2026-08-09T11:15:56,INFO,backup harian selesai,188,200
+2026-08-09T12:29:29,WARN,retry koneksi database,540,200
+2026-08-09T12:34:55,INFO,cache diperbarui,98,200
+2026-08-09T12:42:11,WARN,token kedaluwarsa user=user-248,1400,429
+2026-08-09T12:56:57,ERROR,timeout endpoint=/api/laporan,3253,404
+2026-08-09T13:07:20,ERROR,pembayaran gagal order=INV-2373,2891,500
+2026-08-09T13:21:03,WARN,memori 80% terpakai,1152,200
+2026-08-09T13:44:26,INFO,backup harian selesai,67,200
+2026-08-09T14:16:37,INFO,cache diperbarui,27,200
+2026-08-09T14:33:15,INFO,backup harian selesai,242,200
+2026-08-09T15:28:55,INFO,backup harian selesai,225,200
+2026-08-09T15:46:51,INFO,halaman dashboard dimuat,172,200
+2026-08-09T16:15:57,INFO,cache diperbarui,279,200
+2026-08-09T16:28:54,INFO,login berhasil user=user-021,198,200
+2026-08-09T16:37:11,INFO,cache diperbarui,162,200
+2026-08-09T16:54:17,INFO,login berhasil user=user-261,44,200
+2026-08-09T17:11:55,INFO,backup harian selesai,257,200
+2026-08-09T17:15:43,INFO,backup harian selesai,198,200
+2026-08-09T17:27:07,WARN,memori 80% terpakai,1479,429
+2026-08-09T17:27:11,INFO,cache diperbarui,258,200
+2026-08-09T17:33:02,INFO,backup harian selesai,189,200
+2026-08-09T17:34:47,INFO,login berhasil user=user-284,161,200
+2026-08-09T17:35:37,WARN,token kedaluwarsa user=user-010,848,429
+2026-08-09T17:38:29,INFO,cache diperbarui,238,200
+2026-08-09T17:39:03,ERROR,file tidak ditemukan /data/7159.csv,1388,500
+2026-08-09T17:57:01,INFO,email notifikasi terkirim,272,200
+2026-08-09T17:57:51,INFO,email notifikasi terkirim,12,200
+2026-08-09T18:04:42,INFO,email notifikasi terkirim,284,200
+2026-08-09T18:16:02,WARN,memori 80% terpakai,1342,200
+2026-08-09T18:28:39,INFO,backup harian selesai,104,200
+2026-08-09T18:30:02,WARN,token kedaluwarsa user=user-292,1245,200
+2026-08-09T18:57:42,INFO,cache diperbarui,63,200
+2026-08-09T19:04:40,INFO,halaman dashboard dimuat,27,200
+2026-08-09T19:11:28,INFO,login berhasil user=user-164,93,200
+2026-08-09T19:27:26,INFO,sinkronisasi data selesai,206,200
+2026-08-09T19:40:45,ERROR,timeout endpoint=/api/laporan,2239,404
+2026-08-09T20:21:09,WARN,retry koneksi database,1575,200
+2026-08-09T20:43:30,ERROR,file tidak ditemukan /data/5657.csv,2313,404
+2026-08-09T20:55:33,WARN,retry koneksi database,1732,429
+2026-08-09T21:05:29,INFO,sinkronisasi data selesai,8,200
+2026-08-09T21:30:51,INFO,cache diperbarui,120,200
+2026-08-09T21:32:50,INFO,halaman dashboard dimuat,211,200
+2026-08-09T21:36:12,INFO,halaman dashboard dimuat,114,200
+2026-08-09T22:51:36,INFO,halaman dashboard dimuat,97,200
+2026-08-09T23:19:32,INFO,email notifikasi terkirim,131,200
+2026-08-09T23:22:49,INFO,backup harian selesai,62,200
+2026-08-09T23:27:39,INFO,cache diperbarui,161,200
+2026-08-09T23:48:05,INFO,halaman dashboard dimuat,164,200
+2026-08-10T00:01:34,INFO,cache diperbarui,231,200
+2026-08-10T00:09:01,INFO,backup harian selesai,62,200
+2026-08-10T00:21:06,INFO,halaman dashboard dimuat,237,200
+2026-08-10T00:32:19,INFO,backup harian selesai,117,200
+2026-08-10T00:56:31,INFO,cache diperbarui,159,200
+2026-08-10T01:54:14,ERROR,pembayaran gagal order=INV-2578,1914,404
+2026-08-10T02:07:20,INFO,email notifikasi terkirim,58,200
+2026-08-10T02:07:55,INFO,halaman dashboard dimuat,166,200
+2026-08-10T02:11:43,INFO,cache diperbarui,13,200
+2026-08-10T02:22:02,WARN,retry koneksi database,1304,200
+2026-08-10T02:27:50,INFO,email notifikasi terkirim,111,200
+2026-08-10T02:35:05,INFO,login berhasil user=user-321,56,200
+2026-08-10T03:06:40,INFO,backup harian selesai,43,200
+2026-08-10T03:17:53,INFO,backup harian selesai,88,200
+2026-08-10T03:52:21,WARN,retry koneksi database,327,429
+2026-08-10T04:23:30,INFO,sinkronisasi data selesai,165,200
+2026-08-10T04:31:39,INFO,sinkronisasi data selesai,288,200
+2026-08-10T04:49:53,INFO,email notifikasi terkirim,212,200
+2026-08-10T05:19:11,INFO,cache diperbarui,279,200
+2026-08-10T05:27:30,INFO,halaman dashboard dimuat,17,200
+2026-08-10T05:58:20,WARN,token kedaluwarsa user=user-041,489,200
+2026-08-10T06:24:00,INFO,backup harian selesai,175,200
+2026-08-10T06:43:08,WARN,respons lambat endpoint=/api/harga,1685,429
+2026-08-10T06:46:31,INFO,halaman dashboard dimuat,165,200
+2026-08-10T07:15:00,INFO,sinkronisasi data selesai,213,200
+2026-08-10T07:33:13,WARN,token kedaluwarsa user=user-345,670,200
+2026-08-10T07:48:08,INFO,backup harian selesai,185,200
+2026-08-10T07:55:57,INFO,backup harian selesai,50,200
+2026-08-10T08:25:59,WARN,retry koneksi database,449,429
+2026-08-10T08:58:35,INFO,halaman dashboard dimuat,173,200
+2026-08-10T08:58:53,INFO,email notifikasi terkirim,248,200
+2026-08-10T08:59:33,INFO,login berhasil user=user-319,173,200
+2026-08-10T09:14:22,INFO,login berhasil user=user-189,131,200
+2026-08-10T09:22:00,INFO,cache diperbarui,163,200
+2026-08-10T09:26:14,INFO,cache diperbarui,166,200
+2026-08-10T09:32:58,INFO,halaman dashboard dimuat,132,200
+2026-08-10T09:55:08,INFO,backup harian selesai,91,200
+2026-08-10T10:02:17,INFO,halaman dashboard dimuat,93,200
+2026-08-10T10:22:37,ERROR,file tidak ditemukan /data/2508.csv,2030,404
+2026-08-10T10:41:13,INFO,cache diperbarui,259,200
+2026-08-10T10:43:16,INFO,cache diperbarui,94,200
+2026-08-10T10:44:15,WARN,retry koneksi database,1145,429
+2026-08-10T10:53:34,INFO,cache diperbarui,23,200
+2026-08-10T11:04:04,INFO,login berhasil user=user-119,192,200
+2026-08-10T11:33:55,INFO,halaman dashboard dimuat,203,200
+2026-08-10T11:45:24,INFO,sinkronisasi data selesai,295,200
+2026-08-10T12:09:25,INFO,sinkronisasi data selesai,118,200
+2026-08-10T12:22:55,ERROR,gagal koneksi database,2503,404
+2026-08-10T13:06:41,INFO,cache diperbarui,135,200
+2026-08-10T13:12:52,WARN,retry koneksi database,436,200
+2026-08-10T13:31:27,INFO,halaman dashboard dimuat,173,200
+2026-08-10T13:41:30,INFO,cache diperbarui,275,200
+2026-08-10T14:33:50,ERROR,file tidak ditemukan /data/2353.csv,3642,500
+2026-08-10T14:45:37,WARN,retry koneksi database,1918,429
+2026-08-10T15:02:24,WARN,respons lambat endpoint=/api/harga,658,429
+2026-08-10T15:36:56,INFO,cache diperbarui,37,200
+2026-08-10T15:40:54,INFO,halaman dashboard dimuat,8,200
+2026-08-10T15:52:41,INFO,login berhasil user=user-225,50,200
+2026-08-10T16:10:46,INFO,cache diperbarui,197,200
+2026-08-10T16:28:59,INFO,sinkronisasi data selesai,284,200
+2026-08-10T16:31:08,INFO,email notifikasi terkirim,11,200
+2026-08-10T16:32:34,ERROR,timeout endpoint=/api/laporan,3428,404
+2026-08-10T16:40:15,INFO,login berhasil user=user-239,203,200
+2026-08-10T16:51:42,ERROR,timeout endpoint=/api/laporan,843,500
+2026-08-10T17:03:13,INFO,sinkronisasi data selesai,134,200
+2026-08-10T17:10:55,WARN,retry koneksi database,996,429
+2026-08-10T17:36:08,INFO,email notifikasi terkirim,226,200
+2026-08-10T17:58:55,INFO,halaman dashboard dimuat,103,200
+2026-08-10T17:59:27,INFO,login berhasil user=user-147,84,200
+2026-08-10T18:00:26,INFO,login berhasil user=user-283,270,200
+2026-08-10T18:01:10,ERROR,pembayaran gagal order=INV-5997,1231,500
+2026-08-10T18:01:19,INFO,email notifikasi terkirim,90,200
+2026-08-10T18:32:12,INFO,login berhasil user=user-137,261,200
+2026-08-10T18:44:57,INFO,halaman dashboard dimuat,112,200
+2026-08-10T18:47:19,INFO,backup harian selesai,206,200
+2026-08-10T18:53:45,INFO,login berhasil user=user-152,257,200
+2026-08-10T18:56:33,INFO,cache diperbarui,200,200
+2026-08-10T19:02:08,WARN,memori 80% terpakai,1069,200
+2026-08-10T19:21:07,INFO,email notifikasi terkirim,34,200
+2026-08-10T19:21:39,INFO,backup harian selesai,233,200
+2026-08-10T19:36:28,INFO,email notifikasi terkirim,57,200
+2026-08-10T19:49:43,INFO,backup harian selesai,153,200
+2026-08-10T19:52:22,INFO,cache diperbarui,50,200
+2026-08-10T20:01:13,INFO,sinkronisasi data selesai,90,200
+2026-08-10T20:39:40,WARN,token kedaluwarsa user=user-027,1661,429
+2026-08-10T20:46:53,INFO,halaman dashboard dimuat,72,200
+2026-08-10T20:53:59,INFO,backup harian selesai,200,200
+2026-08-10T21:02:02,INFO,login berhasil user=user-227,60,200
+2026-08-10T21:11:45,INFO,cache diperbarui,236,200
+2026-08-10T21:27:32,INFO,backup harian selesai,181,200
+2026-08-10T21:41:30,INFO,sinkronisasi data selesai,51,200
+2026-08-10T21:54:53,INFO,login berhasil user=user-048,106,200
+2026-08-10T22:02:19,INFO,halaman dashboard dimuat,74,200
+2026-08-10T22:05:23,INFO,backup harian selesai,266,200
+2026-08-10T22:05:25,WARN,respons lambat endpoint=/api/harga,1232,200
+2026-08-10T22:12:01,INFO,email notifikasi terkirim,89,200
+2026-08-10T22:38:24,INFO,cache diperbarui,274,200
+2026-08-10T22:51:22,ERROR,gagal koneksi database,1390,500
+2026-08-10T22:59:00,WARN,respons lambat endpoint=/api/harga,301,200
+2026-08-10T23:24:21,INFO,sinkronisasi data selesai,197,200
+2026-08-10T23:43:50,WARN,token kedaluwarsa user=user-152,501,429
+2026-08-11T00:28:13,WARN,respons lambat endpoint=/api/harga,328,200
+2026-08-11T00:29:22,ERROR,pembayaran gagal order=INV-3755,2650,404
+2026-08-11T00:29:42,ERROR,pembayaran gagal order=INV-4008,2207,404
+2026-08-11T00:34:29,INFO,email notifikasi terkirim,57,200
+2026-08-11T01:04:06,INFO,backup harian selesai,164,200
+2026-08-11T01:22:52,INFO,login berhasil user=user-225,294,200
+2026-08-11T01:35:07,INFO,login berhasil user=user-304,281,200
+2026-08-11T01:54:17,INFO,halaman dashboard dimuat,131,200
+2026-08-11T02:43:17,WARN,respons lambat endpoint=/api/harga,1023,429
+2026-08-11T02:46:08,INFO,cache diperbarui,230,200
+2026-08-11T02:52:03,INFO,backup harian selesai,146,200
+2026-08-11T02:59:25,ERROR,file tidak ditemukan /data/3897.csv,2986,500
+2026-08-11T03:26:34,WARN,respons lambat endpoint=/api/harga,1191,200
+2026-08-11T03:36:26,INFO,halaman dashboard dimuat,149,200
+2026-08-11T04:53:37,WARN,token kedaluwarsa user=user-307,890,429
+2026-08-11T05:15:30,INFO,cache diperbarui,157,200
+2026-08-11T05:19:58,WARN,respons lambat endpoint=/api/harga,1009,200
+2026-08-11T05:29:51,INFO,login berhasil user=user-077,24,200
+2026-08-11T05:33:48,INFO,login berhasil user=user-121,231,200
+2026-08-11T05:53:07,INFO,login berhasil user=user-105,286,200
+2026-08-11T06:14:07,INFO,backup harian selesai,200,200
+2026-08-11T06:14:26,INFO,sinkronisasi data selesai,203,200
+2026-08-11T06:23:32,INFO,login berhasil user=user-393,280,200
+2026-08-11T06:34:01,INFO,login berhasil user=user-349,76,200
+2026-08-11T07:13:59,INFO,cache diperbarui,77,200
+2026-08-11T07:24:24,INFO,login berhasil user=user-056,54,200
+2026-08-11T07:50:26,INFO,halaman dashboard dimuat,209,200
+2026-08-11T07:59:03,INFO,backup harian selesai,108,200
+2026-08-11T08:08:50,INFO,login berhasil user=user-023,34,200
+2026-08-11T08:26:24,WARN,memori 80% terpakai,1535,200
+2026-08-11T08:26:37,ERROR,gagal koneksi database,2143,404
+2026-08-11T08:35:22,INFO,email notifikasi terkirim,245,200
+2026-08-11T08:42:06,INFO,backup harian selesai,259,200
+2026-08-11T08:53:40,INFO,backup harian selesai,217,200
+2026-08-11T08:54:35,ERROR,file tidak ditemukan /data/7155.csv,3661,500
+2026-08-11T09:20:48,INFO,halaman dashboard dimuat,213,200
+2026-08-11T09:33:43,INFO,login berhasil user=user-031,127,200
+2026-08-11T09:57:57,INFO,email notifikasi terkirim,93,200
+2026-08-11T10:02:41,ERROR,gagal koneksi database,2329,500
+2026-08-11T10:09:30,WARN,respons lambat endpoint=/api/harga,1918,200
+2026-08-11T10:18:24,INFO,login berhasil user=user-148,106,200
+2026-08-11T10:22:14,INFO,cache diperbarui,80,200
+2026-08-11T10:39:36,INFO,email notifikasi terkirim,110,200
+2026-08-11T10:41:56,INFO,sinkronisasi data selesai,110,200
+2026-08-11T11:05:50,INFO,cache diperbarui,10,200
+2026-08-11T11:14:02,WARN,token kedaluwarsa user=user-004,1774,200
+2026-08-11T11:34:45,WARN,retry koneksi database,1037,429
+2026-08-11T11:42:19,INFO,login berhasil user=user-005,47,200
+2026-08-11T12:06:21,INFO,email notifikasi terkirim,138,200
+2026-08-11T12:29:26,WARN,retry koneksi database,438,429
+2026-08-11T12:53:04,INFO,login berhasil user=user-116,8,200
+2026-08-11T12:56:20,INFO,login berhasil user=user-132,300,200
+2026-08-11T12:57:43,INFO,email notifikasi terkirim,46,200
+2026-08-11T13:36:17,WARN,memori 80% terpakai,599,200
+2026-08-11T13:42:39,WARN,token kedaluwarsa user=user-163,1224,429
+2026-08-11T13:53:02,WARN,memori 80% terpakai,501,429
+2026-08-11T13:53:05,WARN,retry koneksi database,1157,200
+2026-08-11T14:09:37,INFO,backup harian selesai,60,200
+2026-08-11T14:25:04,WARN,respons lambat endpoint=/api/harga,1770,200
+2026-08-11T14:41:14,INFO,cache diperbarui,116,200
+2026-08-11T14:46:37,ERROR,timeout endpoint=/api/laporan,1621,500
+2026-08-11T14:57:58,WARN,token kedaluwarsa user=user-099,437,200
+2026-08-11T15:02:45,INFO,halaman dashboard dimuat,157,200
+2026-08-11T15:03:03,INFO,login berhasil user=user-162,278,200
+2026-08-11T15:07:08,INFO,cache diperbarui,223,200
+2026-08-11T15:10:44,INFO,halaman dashboard dimuat,31,200
+2026-08-11T15:13:44,ERROR,pembayaran gagal order=INV-2613,3061,500
+2026-08-11T15:41:58,INFO,email notifikasi terkirim,178,200
+2026-08-11T16:00:36,WARN,token kedaluwarsa user=user-008,985,200
+2026-08-11T16:16:03,WARN,retry koneksi database,1092,429
+2026-08-11T16:16:42,INFO,login berhasil user=user-081,153,200
+2026-08-11T17:00:58,ERROR,gagal koneksi database,2357,500
+2026-08-11T17:38:27,ERROR,timeout endpoint=/api/laporan,748,500
+2026-08-11T17:52:20,INFO,backup harian selesai,5,200
+2026-08-11T18:40:24,WARN,memori 80% terpakai,1430,200
+2026-08-11T19:07:33,INFO,sinkronisasi data selesai,146,200
+2026-08-11T19:20:03,INFO,login berhasil user=user-261,193,200
+2026-08-11T19:26:50,INFO,backup harian selesai,44,200
+2026-08-11T19:49:58,ERROR,gagal koneksi database,586,404
+2026-08-11T19:55:54,INFO,backup harian selesai,276,200
+2026-08-11T19:58:57,WARN,respons lambat endpoint=/api/harga,1156,429
+2026-08-11T20:01:12,ERROR,gagal koneksi database,1203,404
+2026-08-11T20:30:54,ERROR,timeout endpoint=/api/laporan,3642,500
+2026-08-11T20:37:07,INFO,cache diperbarui,172,200
+2026-08-11T20:42:56,INFO,backup harian selesai,186,200
+2026-08-11T20:47:27,ERROR,gagal koneksi database,767,404
+2026-08-11T20:54:14,INFO,backup harian selesai,161,200
+2026-08-11T21:24:31,INFO,sinkronisasi data selesai,197,200
+2026-08-11T22:03:21,WARN,token kedaluwarsa user=user-119,330,200
+2026-08-11T22:22:57,WARN,memori 80% terpakai,1816,200
+2026-08-11T22:57:18,INFO,email notifikasi terkirim,209,200
+2026-08-11T23:04:25,INFO,sinkronisasi data selesai,299,200
+2026-08-11T23:06:06,WARN,retry koneksi database,1111,200
+2026-08-11T23:30:36,ERROR,pembayaran gagal order=INV-8525,3002,404
+2026-08-11T23:37:05,WARN,token kedaluwarsa user=user-084,1903,429
+2026-08-11T23:53:53,WARN,memori 80% terpakai,1904,200
+2026-08-11T23:54:28,WARN,respons lambat endpoint=/api/harga,1232,200
+2026-08-12T00:01:51,INFO,sinkronisasi data selesai,189,200
+2026-08-12T00:42:57,INFO,backup harian selesai,169,200
+2026-08-12T00:56:27,INFO,email notifikasi terkirim,182,200
+2026-08-12T01:07:04,INFO,sinkronisasi data selesai,282,200
+2026-08-12T01:16:05,INFO,cache diperbarui,105,200
+2026-08-12T01:28:57,INFO,halaman dashboard dimuat,257,200
+2026-08-12T01:35:06,INFO,login berhasil user=user-065,6,200
+2026-08-12T01:50:48,INFO,login berhasil user=user-060,237,200
+2026-08-12T02:32:02,INFO,login berhasil user=user-351,58,200
+2026-08-12T03:03:28,INFO,email notifikasi terkirim,89,200
+2026-08-12T03:05:09,INFO,login berhasil user=user-251,37,200
+2026-08-12T03:41:30,INFO,halaman dashboard dimuat,39,200
+2026-08-12T03:52:53,WARN,memori 80% terpakai,1911,200
+2026-08-12T04:05:59,INFO,cache diperbarui,177,200
+2026-08-12T04:37:02,WARN,respons lambat endpoint=/api/harga,1433,429
+2026-08-12T04:56:26,WARN,token kedaluwarsa user=user-304,879,429
+2026-08-12T04:58:49,INFO,sinkronisasi data selesai,40,200
+2026-08-12T05:16:55,WARN,token kedaluwarsa user=user-335,1550,429
+2026-08-12T06:05:47,ERROR,pembayaran gagal order=INV-1967,3873,404
+2026-08-12T06:58:00,WARN,memori 80% terpakai,949,429
+2026-08-12T07:14:58,WARN,token kedaluwarsa user=user-343,1355,200
+2026-08-12T07:40:10,INFO,email notifikasi terkirim,71,200
+2026-08-12T07:43:37,WARN,token kedaluwarsa user=user-166,1077,200
+2026-08-12T08:20:07,INFO,halaman dashboard dimuat,181,200
+2026-08-12T08:20:11,INFO,halaman dashboard dimuat,48,200
+2026-08-12T08:52:33,INFO,email notifikasi terkirim,170,200
+2026-08-12T09:02:53,INFO,cache diperbarui,222,200
+2026-08-12T09:14:18,WARN,token kedaluwarsa user=user-242,617,429
+2026-08-12T09:28:29,INFO,halaman dashboard dimuat,299,200
+2026-08-12T09:56:33,INFO,halaman dashboard dimuat,263,200
+2026-08-12T10:13:49,INFO,cache diperbarui,211,200
+2026-08-12T10:16:40,INFO,login berhasil user=user-020,55,200
+2026-08-12T10:20:26,INFO,email notifikasi terkirim,219,200
+2026-08-12T10:28:29,WARN,respons lambat endpoint=/api/harga,592,200
+2026-08-12T10:30:25,INFO,sinkronisasi data selesai,100,200
+2026-08-12T10:39:13,INFO,backup harian selesai,221,200
+2026-08-12T10:48:34,INFO,halaman dashboard dimuat,104,200
+2026-08-12T10:49:40,ERROR,timeout endpoint=/api/laporan,2578,500
+2026-08-12T10:56:22,INFO,login berhasil user=user-106,153,200
+2026-08-12T11:03:58,INFO,login berhasil user=user-022,124,200
+2026-08-12T11:07:07,WARN,respons lambat endpoint=/api/harga,1621,429
+2026-08-12T11:10:37,WARN,memori 80% terpakai,1713,200
+2026-08-12T11:51:47,INFO,cache diperbarui,140,200
+2026-08-12T12:16:53,INFO,backup harian selesai,11,200
+2026-08-12T12:20:48,INFO,email notifikasi terkirim,54,200
+2026-08-12T12:38:46,INFO,sinkronisasi data selesai,115,200
+2026-08-12T12:58:53,ERROR,timeout endpoint=/api/laporan,1083,404
+2026-08-12T13:11:33,WARN,memori 80% terpakai,1156,200
+2026-08-12T13:39:25,ERROR,gagal koneksi database,1816,404
+2026-08-12T13:47:37,WARN,token kedaluwarsa user=user-232,694,200
+2026-08-12T13:48:11,INFO,login berhasil user=user-312,190,200
+2026-08-12T13:55:41,INFO,backup harian selesai,32,200
+2026-08-12T14:00:45,INFO,email notifikasi terkirim,259,200
+2026-08-12T14:28:34,INFO,sinkronisasi data selesai,244,200
+2026-08-12T14:36:25,INFO,sinkronisasi data selesai,268,200
+2026-08-12T14:56:31,WARN,respons lambat endpoint=/api/harga,1328,200
+2026-08-12T14:59:05,INFO,halaman dashboard dimuat,5,200
+2026-08-12T15:28:41,INFO,email notifikasi terkirim,149,200
+2026-08-12T15:36:10,INFO,cache diperbarui,260,200
+2026-08-12T15:43:37,INFO,cache diperbarui,297,200
+2026-08-12T15:50:29,ERROR,gagal koneksi database,983,500
+2026-08-12T16:12:09,INFO,sinkronisasi data selesai,172,200
+2026-08-12T16:34:50,INFO,sinkronisasi data selesai,244,200
+2026-08-12T16:36:17,INFO,login berhasil user=user-278,178,200
+2026-08-12T17:09:22,INFO,cache diperbarui,16,200
+2026-08-12T17:12:36,INFO,sinkronisasi data selesai,12,200
+2026-08-12T17:15:41,INFO,email notifikasi terkirim,36,200
+2026-08-12T17:24:09,WARN,memori 80% terpakai,658,429
+2026-08-12T17:34:57,INFO,login berhasil user=user-075,11,200
+2026-08-12T17:55:22,INFO,sinkronisasi data selesai,55,200
+2026-08-12T18:10:30,INFO,backup harian selesai,83,200
+2026-08-12T18:12:13,INFO,sinkronisasi data selesai,16,200
+2026-08-12T18:26:48,INFO,sinkronisasi data selesai,32,200
+2026-08-12T18:29:03,INFO,backup harian selesai,244,200
+2026-08-12T18:29:07,ERROR,gagal koneksi database,901,500
+2026-08-12T18:30:52,INFO,cache diperbarui,272,200
+2026-08-12T19:03:38,INFO,cache diperbarui,147,200
+2026-08-12T19:26:12,INFO,halaman dashboard dimuat,254,200
+2026-08-12T19:35:31,INFO,backup harian selesai,268,200
+2026-08-12T20:23:52,WARN,token kedaluwarsa user=user-226,1982,200
+2026-08-12T20:29:18,INFO,email notifikasi terkirim,38,200
+2026-08-12T20:52:13,INFO,login berhasil user=user-172,298,200
+2026-08-12T21:15:57,INFO,backup harian selesai,261,200
+2026-08-12T21:16:19,WARN,memori 80% terpakai,1320,429
+2026-08-12T21:20:07,ERROR,timeout endpoint=/api/laporan,3806,404
+2026-08-12T21:43:23,WARN,memori 80% terpakai,800,429
+2026-08-12T22:04:22,INFO,login berhasil user=user-180,42,200
+2026-08-12T22:24:41,INFO,backup harian selesai,203,200
+2026-08-12T22:26:45,WARN,respons lambat endpoint=/api/harga,1183,429
+2026-08-12T22:29:15,WARN,respons lambat endpoint=/api/harga,1077,200
+2026-08-12T23:07:09,INFO,email notifikasi terkirim,267,200
+2026-08-12T23:09:48,WARN,token kedaluwarsa user=user-268,1459,200
+2026-08-12T23:18:55,INFO,backup harian selesai,248,200
+2026-08-12T23:25:16,INFO,login berhasil user=user-059,283,200
+2026-08-12T23:28:58,WARN,token kedaluwarsa user=user-203,447,200
+2026-08-12T23:50:50,INFO,login berhasil user=user-232,135,200
+2026-08-12T23:54:37,WARN,memori 80% terpakai,843,429
+2026-08-13T00:01:37,INFO,halaman dashboard dimuat,256,200
+2026-08-13T00:08:23,INFO,cache diperbarui,260,200
+2026-08-13T00:11:52,INFO,email notifikasi terkirim,167,200
+2026-08-13T00:20:19,INFO,sinkronisasi data selesai,96,200
+2026-08-13T00:34:05,INFO,email notifikasi terkirim,292,200
+2026-08-13T00:46:38,INFO,login berhasil user=user-009,270,200
+2026-08-13T00:50:00,WARN,token kedaluwarsa user=user-170,1795,200
+2026-08-13T01:01:07,ERROR,gagal koneksi database,3683,500
+2026-08-13T01:37:28,ERROR,file tidak ditemukan /data/6848.csv,882,404
+2026-08-13T02:09:28,WARN,respons lambat endpoint=/api/harga,1193,200
+2026-08-13T02:18:52,ERROR,gagal koneksi database,1517,500
+2026-08-13T02:28:53,INFO,cache diperbarui,226,200
+2026-08-13T02:43:21,INFO,login berhasil user=user-304,225,200
+2026-08-13T02:48:26,WARN,respons lambat endpoint=/api/harga,1008,429
+2026-08-13T03:00:10,INFO,sinkronisasi data selesai,35,200
+2026-08-13T03:17:48,INFO,cache diperbarui,145,200
+2026-08-13T03:30:31,INFO,sinkronisasi data selesai,15,200
+2026-08-13T03:56:15,INFO,backup harian selesai,132,200
+2026-08-13T04:10:59,INFO,cache diperbarui,153,200
+2026-08-13T04:35:04,INFO,cache diperbarui,235,200
+2026-08-13T04:38:32,WARN,memori 80% terpakai,458,200
+2026-08-13T04:38:54,INFO,halaman dashboard dimuat,98,200
+2026-08-13T04:52:34,INFO,login berhasil user=user-210,221,200
+2026-08-13T05:06:25,INFO,cache diperbarui,134,200
+2026-08-13T05:25:55,INFO,backup harian selesai,120,200
+2026-08-13T05:37:23,INFO,cache diperbarui,44,200
+2026-08-13T05:41:28,INFO,backup harian selesai,228,200
+2026-08-13T05:50:09,INFO,backup harian selesai,22,200
+2026-08-13T06:09:32,WARN,token kedaluwarsa user=user-263,685,200
+2026-08-13T06:45:25,INFO,sinkronisasi data selesai,155,200
+2026-08-13T06:59:32,INFO,cache diperbarui,191,200
+2026-08-13T07:13:39,INFO,login berhasil user=user-260,276,200
+2026-08-13T07:30:01,INFO,email notifikasi terkirim,163,200
+2026-08-13T07:51:21,WARN,respons lambat endpoint=/api/harga,1166,200
+2026-08-13T07:58:59,INFO,cache diperbarui,117,200
+2026-08-13T08:23:34,INFO,sinkronisasi data selesai,28,200
+2026-08-13T08:44:21,INFO,backup harian selesai,107,200
+2026-08-13T09:20:32,INFO,email notifikasi terkirim,209,200
+2026-08-13T09:21:08,INFO,sinkronisasi data selesai,218,200
+2026-08-13T09:24:08,INFO,cache diperbarui,172,200
+2026-08-13T09:26:27,INFO,cache diperbarui,226,200
+2026-08-13T09:29:30,INFO,cache diperbarui,280,200
+2026-08-13T09:58:18,INFO,halaman dashboard dimuat,104,200
+2026-08-13T10:12:51,INFO,login berhasil user=user-290,242,200
+2026-08-13T10:15:32,INFO,cache diperbarui,124,200
+2026-08-13T10:32:02,WARN,retry koneksi database,510,429
+2026-08-13T10:42:05,INFO,halaman dashboard dimuat,39,200
+2026-08-13T10:51:10,WARN,token kedaluwarsa user=user-274,828,200
+2026-08-13T10:52:46,INFO,halaman dashboard dimuat,133,200
+2026-08-13T11:05:05,INFO,halaman dashboard dimuat,259,200
+2026-08-13T11:28:35,INFO,halaman dashboard dimuat,42,200
+2026-08-13T11:53:28,INFO,sinkronisasi data selesai,39,200
+2026-08-13T12:01:03,INFO,email notifikasi terkirim,268,200
+2026-08-13T12:06:11,INFO,backup harian selesai,298,200
+2026-08-13T12:14:10,INFO,halaman dashboard dimuat,264,200
+2026-08-13T12:32:05,WARN,token kedaluwarsa user=user-293,367,200
+2026-08-13T12:55:03,INFO,halaman dashboard dimuat,251,200
+2026-08-13T13:05:34,INFO,halaman dashboard dimuat,133,200
+2026-08-13T13:07:32,INFO,sinkronisasi data selesai,123,200
+2026-08-13T13:22:59,WARN,memori 80% terpakai,1124,429
+2026-08-13T13:28:33,INFO,halaman dashboard dimuat,260,200
+2026-08-13T14:37:29,INFO,sinkronisasi data selesai,189,200
+2026-08-13T14:59:49,WARN,token kedaluwarsa user=user-056,916,200
+2026-08-13T15:02:32,WARN,token kedaluwarsa user=user-043,1408,200
+2026-08-13T15:44:23,INFO,login berhasil user=user-125,186,200
+2026-08-13T16:03:08,INFO,email notifikasi terkirim,121,200
+2026-08-13T16:17:39,ERROR,pembayaran gagal order=INV-1735,3796,404
+2026-08-13T16:38:04,ERROR,file tidak ditemukan /data/4833.csv,2331,404
+2026-08-13T17:03:32,INFO,sinkronisasi data selesai,268,200
+2026-08-13T18:19:43,INFO,sinkronisasi data selesai,262,200
+2026-08-13T18:19:51,ERROR,gagal koneksi database,3708,500
+2026-08-13T18:24:18,INFO,login berhasil user=user-171,98,200
+2026-08-13T19:04:12,INFO,backup harian selesai,285,200
+2026-08-13T19:05:43,WARN,token kedaluwarsa user=user-351,1353,429
+2026-08-13T19:10:31,INFO,sinkronisasi data selesai,294,200
+2026-08-13T19:17:36,WARN,retry koneksi database,1922,200
+2026-08-13T19:19:17,INFO,sinkronisasi data selesai,185,200
+2026-08-13T19:23:40,INFO,halaman dashboard dimuat,26,200
+2026-08-13T19:41:27,INFO,sinkronisasi data selesai,144,200
+2026-08-13T19:56:58,INFO,backup harian selesai,238,200
+2026-08-13T20:20:20,INFO,login berhasil user=user-025,159,200
+2026-08-13T20:27:46,INFO,login berhasil user=user-375,115,200
+2026-08-13T20:32:46,INFO,halaman dashboard dimuat,14,200
+2026-08-13T20:46:00,INFO,cache diperbarui,234,200
+2026-08-13T20:55:11,WARN,token kedaluwarsa user=user-337,635,429
+2026-08-13T21:31:41,INFO,email notifikasi terkirim,148,200
+2026-08-13T21:41:22,WARN,token kedaluwarsa user=user-233,1994,429
+2026-08-13T21:50:26,INFO,halaman dashboard dimuat,5,200
+2026-08-13T21:56:49,INFO,login berhasil user=user-312,66,200
+2026-08-13T22:11:54,INFO,cache diperbarui,192,200
+2026-08-13T22:17:09,WARN,respons lambat endpoint=/api/harga,896,429
+2026-08-13T22:45:22,INFO,email notifikasi terkirim,268,200
+2026-08-13T22:53:50,WARN,respons lambat endpoint=/api/harga,1054,200
+2026-08-13T23:40:05,INFO,halaman dashboard dimuat,7,200
+2026-08-13T23:51:06,INFO,email notifikasi terkirim,15,200
+2026-08-14T00:39:57,INFO,sinkronisasi data selesai,72,200
+2026-08-14T00:42:39,WARN,retry koneksi database,1341,200
+2026-08-14T00:45:29,INFO,cache diperbarui,79,200
+2026-08-14T00:57:57,INFO,backup harian selesai,155,200
+2026-08-14T01:27:08,INFO,email notifikasi terkirim,292,200
+2026-08-14T01:31:32,WARN,retry koneksi database,409,200
+2026-08-14T01:33:09,WARN,memori 80% terpakai,558,429
+2026-08-14T02:05:44,WARN,token kedaluwarsa user=user-378,1936,200
+2026-08-14T02:20:34,INFO,halaman dashboard dimuat,214,200
+2026-08-14T02:35:44,ERROR,timeout endpoint=/api/laporan,2871,404
+2026-08-14T02:43:17,INFO,email notifikasi terkirim,276,200
+2026-08-14T03:15:10,WARN,token kedaluwarsa user=user-182,753,429
+2026-08-14T03:28:57,INFO,cache diperbarui,130,200
+2026-08-14T03:50:32,INFO,sinkronisasi data selesai,276,200
+2026-08-14T03:52:20,ERROR,pembayaran gagal order=INV-7684,2873,404
+2026-08-14T03:56:06,INFO,halaman dashboard dimuat,91,200
+2026-08-14T03:57:00,ERROR,file tidak ditemukan /data/7222.csv,519,404
+2026-08-14T04:10:03,INFO,sinkronisasi data selesai,231,200
+2026-08-14T04:16:37,INFO,backup harian selesai,161,200
+2026-08-14T04:53:25,INFO,cache diperbarui,243,200
+2026-08-14T05:18:49,INFO,cache diperbarui,158,200
+2026-08-14T05:37:22,INFO,login berhasil user=user-087,70,200
+2026-08-14T05:43:26,INFO,login berhasil user=user-279,39,200
+2026-08-14T05:54:01,WARN,respons lambat endpoint=/api/harga,1560,429
+2026-08-14T05:54:02,WARN,memori 80% terpakai,1836,200
+2026-08-14T05:54:52,WARN,respons lambat endpoint=/api/harga,1892,429
+2026-08-14T05:55:50,INFO,halaman dashboard dimuat,159,200
+2026-08-14T06:35:47,WARN,retry koneksi database,1547,200
+2026-08-14T06:41:51,WARN,respons lambat endpoint=/api/harga,469,429
+2026-08-14T06:52:24,INFO,halaman dashboard dimuat,100,200
+2026-08-14T07:06:45,INFO,login berhasil user=user-147,297,200
+2026-08-14T07:26:04,INFO,email notifikasi terkirim,156,200
+2026-08-14T07:29:24,INFO,email notifikasi terkirim,39,200
+2026-08-14T07:46:31,INFO,cache diperbarui,98,200
+2026-08-14T08:32:17,ERROR,file tidak ditemukan /data/9374.csv,3884,500
+2026-08-14T08:49:03,INFO,email notifikasi terkirim,37,200
+2026-08-14T08:51:33,WARN,token kedaluwarsa user=user-206,1693,200
+2026-08-14T09:00:46,WARN,respons lambat endpoint=/api/harga,1717,429
+2026-08-14T09:26:02,INFO,backup harian selesai,161,200
+2026-08-14T09:56:00,WARN,retry koneksi database,334,200
+2026-08-14T09:57:21,INFO,login berhasil user=user-003,245,200
+2026-08-14T10:09:39,INFO,email notifikasi terkirim,127,200
+2026-08-14T10:11:41,INFO,cache diperbarui,132,200
+2026-08-14T10:19:43,INFO,halaman dashboard dimuat,237,200
+2026-08-14T10:30:26,INFO,sinkronisasi data selesai,281,200
+2026-08-14T10:37:01,INFO,email notifikasi terkirim,8,200
+2026-08-14T10:46:25,WARN,token kedaluwarsa user=user-146,1625,429
+2026-08-14T11:03:19,INFO,login berhasil user=user-369,92,200
+2026-08-14T11:08:43,ERROR,gagal koneksi database,2342,404
+2026-08-14T11:15:44,WARN,token kedaluwarsa user=user-304,870,429
+2026-08-14T11:22:34,WARN,token kedaluwarsa user=user-109,1449,200
+2026-08-14T11:32:32,WARN,token kedaluwarsa user=user-169,772,200
+2026-08-14T11:38:43,WARN,token kedaluwarsa user=user-163,1938,429
+2026-08-14T11:40:59,INFO,halaman dashboard dimuat,287,200
+2026-08-14T12:00:15,WARN,token kedaluwarsa user=user-209,1417,200
+2026-08-14T12:17:47,WARN,retry koneksi database,422,429
+2026-08-14T12:18:42,WARN,respons lambat endpoint=/api/harga,1423,200
+2026-08-14T12:38:31,ERROR,file tidak ditemukan /data/8387.csv,3935,404
+2026-08-14T13:00:03,INFO,sinkronisasi data selesai,284,200
+2026-08-14T13:07:47,INFO,cache diperbarui,147,200
+2026-08-14T13:22:45,WARN,token kedaluwarsa user=user-399,1610,429
+2026-08-14T13:25:21,INFO,email notifikasi terkirim,162,200
+2026-08-14T13:40:09,INFO,halaman dashboard dimuat,232,200
+2026-08-14T13:54:05,INFO,backup harian selesai,60,200
+2026-08-14T13:58:03,INFO,sinkronisasi data selesai,112,200
+2026-08-14T14:15:26,INFO,login berhasil user=user-083,278,200
+2026-08-14T14:21:33,INFO,backup harian selesai,217,200
+2026-08-14T15:05:44,WARN,token kedaluwarsa user=user-163,1725,429
+2026-08-14T15:05:45,INFO,email notifikasi terkirim,232,200
+2026-08-14T15:07:33,INFO,halaman dashboard dimuat,87,200
+2026-08-14T15:16:01,INFO,email notifikasi terkirim,118,200
+2026-08-14T15:23:46,INFO,login berhasil user=user-060,69,200
+2026-08-14T15:57:24,INFO,backup harian selesai,248,200
+2026-08-14T16:25:23,INFO,backup harian selesai,170,200
+2026-08-14T16:33:25,INFO,email notifikasi terkirim,38,200
+2026-08-14T16:42:18,WARN,retry koneksi database,1927,200
+2026-08-14T16:58:32,INFO,cache diperbarui,9,200
+2026-08-14T17:17:23,INFO,backup harian selesai,92,200
+2026-08-14T17:40:10,INFO,cache diperbarui,99,200
+2026-08-14T18:14:00,INFO,login berhasil user=user-086,175,200
+2026-08-14T18:24:55,INFO,halaman dashboard dimuat,148,200
+2026-08-14T18:27:51,INFO,backup harian selesai,239,200
+2026-08-14T18:30:44,WARN,token kedaluwarsa user=user-282,800,429
+2026-08-14T19:02:25,INFO,sinkronisasi data selesai,166,200
+2026-08-14T19:29:33,INFO,login berhasil user=user-111,162,200
+2026-08-14T19:39:58,ERROR,timeout endpoint=/api/laporan,3326,500
+2026-08-14T20:02:48,INFO,halaman dashboard dimuat,245,200
+2026-08-14T20:09:43,INFO,cache diperbarui,233,200
+2026-08-14T20:12:28,WARN,token kedaluwarsa user=user-195,857,200
+2026-08-14T20:21:24,INFO,login berhasil user=user-321,9,200
+2026-08-14T20:42:11,INFO,halaman dashboard dimuat,225,200
+2026-08-14T21:40:49,INFO,login berhasil user=user-132,189,200
+2026-08-14T21:41:26,INFO,email notifikasi terkirim,144,200
+2026-08-14T22:08:27,WARN,retry koneksi database,432,200
+2026-08-14T22:31:59,INFO,sinkronisasi data selesai,11,200
+2026-08-14T22:33:02,ERROR,gagal koneksi database,1136,404
+2026-08-14T22:39:55,INFO,backup harian selesai,146,200
+2026-08-14T22:45:39,WARN,retry koneksi database,982,429
+2026-08-14T23:16:29,INFO,cache diperbarui,11,200
+2026-08-14T23:35:24,INFO,email notifikasi terkirim,141,200
+2026-08-14T23:39:16,INFO,backup harian selesai,167,200
+2026-08-14T23:44:59,INFO,backup harian selesai,259,200
+2026-08-15T00:00:25,WARN,respons lambat endpoint=/api/harga,1462,200
+2026-08-15T00:15:21,WARN,respons lambat endpoint=/api/harga,1672,200
+2026-08-15T00:17:29,INFO,backup harian selesai,11,200
+2026-08-15T00:41:13,INFO,halaman dashboard dimuat,40,200
+2026-08-15T00:49:33,INFO,backup harian selesai,55,200
+2026-08-15T00:58:40,INFO,backup harian selesai,69,200
+2026-08-15T01:18:33,ERROR,gagal koneksi database,2169,500
+2026-08-15T01:26:41,INFO,email notifikasi terkirim,109,200
+2026-08-15T01:35:01,INFO,email notifikasi terkirim,127,200
+2026-08-15T01:45:20,WARN,token kedaluwarsa user=user-069,1116,200
+2026-08-15T01:48:43,INFO,sinkronisasi data selesai,49,200
+2026-08-15T02:58:03,INFO,cache diperbarui,268,200
+2026-08-15T03:04:47,WARN,retry koneksi database,1314,200
+2026-08-15T03:11:18,INFO,email notifikasi terkirim,222,200
+2026-08-15T03:18:05,WARN,token kedaluwarsa user=user-016,719,200
+2026-08-15T03:31:39,WARN,retry koneksi database,1040,200
+2026-08-15T03:47:37,INFO,email notifikasi terkirim,27,200
+2026-08-15T04:02:24,INFO,halaman dashboard dimuat,24,200
+2026-08-15T04:16:49,ERROR,pembayaran gagal order=INV-7983,715,404
+2026-08-15T04:39:28,WARN,retry koneksi database,1713,200
+2026-08-15T04:42:09,WARN,memori 80% terpakai,1156,200
+2026-08-15T04:47:38,INFO,cache diperbarui,101,200
+2026-08-15T05:14:52,INFO,backup harian selesai,288,200
+2026-08-15T05:58:42,INFO,backup harian selesai,286,200
+2026-08-15T06:16:33,INFO,halaman dashboard dimuat,278,200
+2026-08-15T06:24:00,INFO,cache diperbarui,96,200
+2026-08-15T06:48:09,INFO,login berhasil user=user-297,257,200
+2026-08-15T07:02:55,INFO,sinkronisasi data selesai,100,200
+2026-08-15T07:11:38,INFO,login berhasil user=user-188,47,200
+2026-08-15T07:47:59,INFO,cache diperbarui,166,200
+2026-08-15T08:10:00,INFO,cache diperbarui,45,200
+2026-08-15T08:11:28,ERROR,gagal koneksi database,966,404
+2026-08-15T08:39:36,INFO,sinkronisasi data selesai,222,200
+2026-08-15T08:50:09,INFO,email notifikasi terkirim,213,200
+2026-08-15T09:00:56,INFO,halaman dashboard dimuat,189,200
+2026-08-15T09:20:01,INFO,sinkronisasi data selesai,108,200
+2026-08-15T09:24:34,INFO,backup harian selesai,131,200
+2026-08-15T09:25:59,INFO,email notifikasi terkirim,113,200
+2026-08-15T09:48:16,INFO,sinkronisasi data selesai,218,200
+2026-08-15T10:00:18,INFO,halaman dashboard dimuat,109,200
+2026-08-15T10:19:42,INFO,halaman dashboard dimuat,214,200
+2026-08-15T10:49:28,ERROR,file tidak ditemukan /data/1260.csv,2730,500
+2026-08-15T11:01:10,ERROR,file tidak ditemukan /data/7542.csv,3633,500
+2026-08-15T11:05:11,INFO,login berhasil user=user-232,63,200
+2026-08-15T11:12:31,INFO,email notifikasi terkirim,70,200
+2026-08-15T11:40:13,INFO,halaman dashboard dimuat,24,200
+2026-08-15T12:02:29,INFO,backup harian selesai,21,200
+2026-08-15T12:10:16,INFO,cache diperbarui,91,200
+2026-08-15T12:21:22,ERROR,gagal koneksi database,3720,500
+2026-08-15T12:25:21,ERROR,file tidak ditemukan /data/8406.csv,1905,500
+2026-08-15T12:55:34,INFO,sinkronisasi data selesai,29,200
+2026-08-15T13:02:45,INFO,backup harian selesai,271,200
+2026-08-15T13:04:43,WARN,respons lambat endpoint=/api/harga,317,200
+2026-08-15T13:05:40,INFO,login berhasil user=user-032,188,200
+2026-08-15T13:17:05,INFO,cache diperbarui,287,200
+2026-08-15T13:27:05,INFO,backup harian selesai,121,200
+2026-08-15T13:34:27,INFO,backup harian selesai,220,200
+2026-08-15T13:37:29,WARN,memori 80% terpakai,448,200
+2026-08-15T13:53:44,INFO,email notifikasi terkirim,273,200
+2026-08-15T14:02:58,INFO,sinkronisasi data selesai,174,200
+2026-08-15T14:08:06,ERROR,pembayaran gagal order=INV-9806,1954,500
+2026-08-15T14:47:23,ERROR,timeout endpoint=/api/laporan,2166,404
+2026-08-15T15:23:18,WARN,memori 80% terpakai,923,429
+2026-08-15T15:51:49,INFO,backup harian selesai,180,200
+2026-08-15T15:53:08,WARN,respons lambat endpoint=/api/harga,1545,429
+2026-08-15T16:05:50,INFO,login berhasil user=user-298,110,200
+2026-08-15T17:04:25,INFO,login berhasil user=user-105,81,200
+2026-08-15T17:06:19,INFO,halaman dashboard dimuat,100,200
+2026-08-15T17:33:43,INFO,cache diperbarui,213,200
+2026-08-15T18:34:14,INFO,cache diperbarui,143,200
+2026-08-15T18:44:34,INFO,backup harian selesai,247,200
+2026-08-15T18:50:47,INFO,halaman dashboard dimuat,109,200
+2026-08-15T19:01:26,INFO,cache diperbarui,217,200
+2026-08-15T19:32:49,ERROR,file tidak ditemukan /data/3186.csv,985,500
+2026-08-15T19:54:52,WARN,respons lambat endpoint=/api/harga,797,200
+2026-08-15T19:59:17,INFO,email notifikasi terkirim,24,200
+2026-08-15T20:08:59,INFO,login berhasil user=user-012,237,200
+2026-08-15T20:15:33,INFO,login berhasil user=user-297,21,200
+2026-08-15T20:30:21,INFO,email notifikasi terkirim,227,200
+2026-08-15T20:33:25,INFO,sinkronisasi data selesai,284,200
+2026-08-15T20:47:33,INFO,halaman dashboard dimuat,298,200
+2026-08-15T21:05:25,INFO,email notifikasi terkirim,176,200
+2026-08-15T21:27:23,INFO,cache diperbarui,214,200
+2026-08-15T21:30:00,WARN,retry koneksi database,1987,200
+2026-08-15T21:44:08,INFO,cache diperbarui,259,200
+2026-08-15T21:47:56,INFO,halaman dashboard dimuat,285,200
+2026-08-15T21:49:48,ERROR,pembayaran gagal order=INV-1691,2863,404
+2026-08-15T22:03:20,WARN,token kedaluwarsa user=user-384,1696,429
+2026-08-15T22:10:04,INFO,cache diperbarui,46,200
+2026-08-15T22:16:37,INFO,halaman dashboard dimuat,214,200
+2026-08-15T22:17:44,WARN,memori 80% terpakai,870,200
+2026-08-15T22:35:55,ERROR,file tidak ditemukan /data/9789.csv,1803,404
+2026-08-15T22:37:32,INFO,sinkronisasi data selesai,244,200
+2026-08-15T22:37:50,INFO,email notifikasi terkirim,143,200
+2026-08-15T22:43:09,INFO,backup harian selesai,30,200
+2026-08-15T22:46:27,INFO,email notifikasi terkirim,37,200
+2026-08-15T23:20:57,INFO,halaman dashboard dimuat,260,200
+2026-08-15T23:21:06,ERROR,gagal koneksi database,1539,404
+2026-08-15T23:22:47,WARN,token kedaluwarsa user=user-262,616,200
+2026-08-15T23:57:45,INFO,email notifikasi terkirim,253,200
+2026-08-16T00:04:42,INFO,cache diperbarui,167,200
+2026-08-16T00:07:39,INFO,sinkronisasi data selesai,250,200
+2026-08-16T00:07:51,WARN,retry koneksi database,874,200
+2026-08-16T00:14:07,INFO,sinkronisasi data selesai,107,200
+2026-08-16T00:16:54,INFO,email notifikasi terkirim,251,200
+2026-08-16T01:13:21,INFO,login berhasil user=user-356,163,200
+2026-08-16T01:25:39,INFO,backup harian selesai,37,200
+2026-08-16T01:33:15,INFO,login berhasil user=user-081,146,200
+2026-08-16T02:15:24,INFO,backup harian selesai,261,200
+2026-08-16T02:23:25,WARN,retry koneksi database,343,429
+2026-08-16T02:33:03,INFO,halaman dashboard dimuat,147,200
+2026-08-16T02:39:34,WARN,respons lambat endpoint=/api/harga,1636,200
+2026-08-16T02:47:41,INFO,cache diperbarui,168,200
+2026-08-16T02:50:37,INFO,sinkronisasi data selesai,114,200
+2026-08-16T02:51:52,INFO,halaman dashboard dimuat,48,200
+2026-08-16T03:17:20,INFO,sinkronisasi data selesai,237,200
+2026-08-16T03:31:42,INFO,login berhasil user=user-162,144,200
+2026-08-16T03:35:31,INFO,backup harian selesai,44,200
+2026-08-16T03:37:12,INFO,sinkronisasi data selesai,273,200
+2026-08-16T03:58:47,INFO,email notifikasi terkirim,211,200
+2026-08-16T04:14:32,WARN,respons lambat endpoint=/api/harga,1943,200
+2026-08-16T04:39:35,INFO,login berhasil user=user-019,12,200
+2026-08-16T04:41:08,ERROR,pembayaran gagal order=INV-6848,3949,500
+2026-08-16T05:02:42,INFO,sinkronisasi data selesai,198,200
+2026-08-16T05:26:06,INFO,login berhasil user=user-284,80,200
+2026-08-16T05:35:34,INFO,cache diperbarui,242,200
+2026-08-16T05:52:49,INFO,sinkronisasi data selesai,157,200
+2026-08-16T06:05:14,INFO,cache diperbarui,197,200
+2026-08-16T06:23:02,INFO,halaman dashboard dimuat,291,200
+2026-08-16T06:27:16,INFO,cache diperbarui,162,200
+2026-08-16T06:43:17,WARN,retry koneksi database,1374,429
+2026-08-16T06:51:33,INFO,cache diperbarui,177,200
+2026-08-16T07:25:50,INFO,login berhasil user=user-152,78,200
+2026-08-16T07:33:11,ERROR,gagal koneksi database,2020,500
+2026-08-16T07:34:32,WARN,retry koneksi database,1812,200
+2026-08-16T08:13:39,ERROR,pembayaran gagal order=INV-5288,1405,404
+2026-08-16T08:15:41,INFO,cache diperbarui,135,200
+2026-08-16T08:39:14,INFO,halaman dashboard dimuat,83,200
+2026-08-16T08:44:50,INFO,cache diperbarui,10,200
+2026-08-16T09:17:01,ERROR,file tidak ditemukan /data/3076.csv,1407,404
+2026-08-16T09:17:13,INFO,halaman dashboard dimuat,7,200
+2026-08-16T09:17:14,ERROR,file tidak ditemukan /data/8293.csv,773,500
+2026-08-16T09:57:11,WARN,token kedaluwarsa user=user-214,550,200
+2026-08-16T09:59:14,INFO,login berhasil user=user-038,188,200
+2026-08-16T10:12:50,INFO,sinkronisasi data selesai,273,200
+2026-08-16T10:14:46,INFO,halaman dashboard dimuat,59,200
+2026-08-16T10:20:06,WARN,memori 80% terpakai,977,200
+2026-08-16T11:13:03,INFO,login berhasil user=user-062,61,200
+2026-08-16T11:23:47,INFO,email notifikasi terkirim,107,200
+2026-08-16T11:34:50,ERROR,file tidak ditemukan /data/1733.csv,1960,500
+2026-08-16T11:44:58,INFO,backup harian selesai,291,200
+2026-08-16T11:47:12,WARN,token kedaluwarsa user=user-342,915,429
+2026-08-16T11:47:51,WARN,token kedaluwarsa user=user-244,1183,200
+2026-08-16T12:09:41,INFO,cache diperbarui,226,200
+2026-08-16T12:14:04,ERROR,timeout endpoint=/api/laporan,2832,404
+2026-08-16T12:19:34,WARN,token kedaluwarsa user=user-277,1414,429
+2026-08-16T12:28:49,WARN,respons lambat endpoint=/api/harga,931,429
+2026-08-16T12:52:28,INFO,login berhasil user=user-315,145,200
+2026-08-16T13:27:00,INFO,sinkronisasi data selesai,58,200
+2026-08-16T13:31:50,INFO,login berhasil user=user-220,149,200
+2026-08-16T13:33:10,INFO,backup harian selesai,164,200
+2026-08-16T13:36:46,WARN,retry koneksi database,1219,429
+2026-08-16T13:38:58,INFO,cache diperbarui,128,200
+2026-08-16T13:49:50,INFO,backup harian selesai,10,200
+2026-08-16T13:55:49,INFO,cache diperbarui,23,200
+2026-08-16T14:02:20,ERROR,timeout endpoint=/api/laporan,1186,500
+2026-08-16T15:02:54,ERROR,file tidak ditemukan /data/3681.csv,1639,500
+2026-08-16T15:05:40,INFO,backup harian selesai,300,200
+2026-08-16T15:18:04,ERROR,file tidak ditemukan /data/9711.csv,2720,404
+2026-08-16T15:19:02,WARN,retry koneksi database,545,200
+2026-08-16T15:24:33,INFO,halaman dashboard dimuat,102,200
+2026-08-16T15:28:37,ERROR,pembayaran gagal order=INV-6435,3002,500
+2026-08-16T15:31:32,INFO,email notifikasi terkirim,248,200
+2026-08-16T15:54:49,ERROR,file tidak ditemukan /data/2598.csv,3418,500
+2026-08-16T16:20:19,INFO,cache diperbarui,15,200
+2026-08-16T16:41:23,INFO,cache diperbarui,253,200
+2026-08-16T16:47:37,INFO,email notifikasi terkirim,266,200
+2026-08-16T17:17:53,ERROR,file tidak ditemukan /data/2731.csv,1379,404
+2026-08-16T17:30:44,INFO,backup harian selesai,144,200
+2026-08-16T17:52:44,INFO,sinkronisasi data selesai,186,200
+2026-08-16T18:07:54,INFO,cache diperbarui,183,200
+2026-08-16T18:17:11,INFO,email notifikasi terkirim,162,200
+2026-08-16T18:26:32,INFO,backup harian selesai,297,200
+2026-08-16T18:27:56,INFO,login berhasil user=user-193,242,200
+2026-08-16T19:10:40,INFO,halaman dashboard dimuat,82,200
+2026-08-16T19:14:14,ERROR,pembayaran gagal order=INV-4170,2660,404
+2026-08-16T19:15:49,INFO,backup harian selesai,290,200
+2026-08-16T19:17:18,INFO,halaman dashboard dimuat,184,200
+2026-08-16T19:35:08,ERROR,pembayaran gagal order=INV-3447,1500,500
+2026-08-16T19:52:18,ERROR,file tidak ditemukan /data/9451.csv,2004,404
+2026-08-16T19:58:37,INFO,cache diperbarui,119,200
+2026-08-16T20:02:45,INFO,login berhasil user=user-335,119,200
+2026-08-16T20:20:44,INFO,login berhasil user=user-274,267,200
+2026-08-16T21:09:23,INFO,sinkronisasi data selesai,109,200
+2026-08-16T21:14:51,INFO,cache diperbarui,249,200
+2026-08-16T21:15:44,ERROR,timeout endpoint=/api/laporan,964,404
+2026-08-16T21:24:23,WARN,token kedaluwarsa user=user-360,1279,429
+2026-08-16T21:44:05,INFO,sinkronisasi data selesai,93,200
+2026-08-16T21:59:43,INFO,backup harian selesai,270,200
+2026-08-16T22:10:49,WARN,memori 80% terpakai,1138,200
+2026-08-16T22:38:08,ERROR,pembayaran gagal order=INV-7545,3679,404
+2026-08-16T23:10:30,INFO,cache diperbarui,36,200
+2026-08-16T23:23:13,WARN,token kedaluwarsa user=user-394,1457,200
+2026-08-16T23:32:24,INFO,halaman dashboard dimuat,28,200
+2026-08-16T23:47:13,WARN,respons lambat endpoint=/api/harga,1884,429
+2026-08-17T00:24:30,INFO,login berhasil user=user-314,99,200
+2026-08-17T00:30:50,INFO,login berhasil user=user-397,165,200
+2026-08-17T01:09:35,INFO,login berhasil user=user-099,162,200
+2026-08-17T01:10:03,INFO,cache diperbarui,105,200
+2026-08-17T01:23:25,INFO,cache diperbarui,19,200
+2026-08-17T01:37:35,INFO,cache diperbarui,296,200
+2026-08-17T01:41:21,WARN,token kedaluwarsa user=user-274,1823,429
+2026-08-17T02:02:07,INFO,halaman dashboard dimuat,202,200
+2026-08-17T02:02:49,WARN,token kedaluwarsa user=user-076,1456,429
+2026-08-17T02:05:07,WARN,respons lambat endpoint=/api/harga,865,429
+2026-08-17T02:05:10,ERROR,pembayaran gagal order=INV-8213,3735,404
+2026-08-17T02:18:19,ERROR,pembayaran gagal order=INV-7263,869,404
+2026-08-17T02:24:37,INFO,backup harian selesai,43,200
+2026-08-17T02:36:05,INFO,email notifikasi terkirim,155,200
+2026-08-17T03:01:08,INFO,cache diperbarui,204,200
+2026-08-17T03:12:17,INFO,login berhasil user=user-034,157,200
+2026-08-17T03:12:40,INFO,backup harian selesai,31,200
+2026-08-17T03:29:34,INFO,email notifikasi terkirim,90,200
+2026-08-17T03:49:50,INFO,sinkronisasi data selesai,44,200
+2026-08-17T03:51:06,INFO,email notifikasi terkirim,117,200
+2026-08-17T03:55:51,WARN,token kedaluwarsa user=user-372,1874,429
+2026-08-17T04:23:39,INFO,backup harian selesai,153,200
+2026-08-17T04:35:15,INFO,halaman dashboard dimuat,184,200
+2026-08-17T04:40:30,ERROR,timeout endpoint=/api/laporan,3304,404
+2026-08-17T04:48:40,INFO,login berhasil user=user-342,111,200
+2026-08-17T05:05:56,ERROR,gagal koneksi database,2417,500
+2026-08-17T05:07:52,INFO,login berhasil user=user-341,186,200
+2026-08-17T05:11:31,WARN,memori 80% terpakai,1469,200
+2026-08-17T05:32:23,INFO,sinkronisasi data selesai,130,200
+2026-08-17T05:45:31,INFO,login berhasil user=user-238,267,200
+2026-08-17T05:53:41,INFO,email notifikasi terkirim,71,200
+2026-08-17T06:00:34,ERROR,file tidak ditemukan /data/6423.csv,580,404
+2026-08-17T06:12:42,INFO,email notifikasi terkirim,119,200
+2026-08-17T07:01:37,WARN,retry koneksi database,1468,200
+2026-08-17T07:12:01,INFO,cache diperbarui,102,200
+2026-08-17T07:50:29,WARN,token kedaluwarsa user=user-056,982,429
+2026-08-17T08:06:37,INFO,cache diperbarui,139,200
+2026-08-17T08:08:27,INFO,backup harian selesai,150,200
+2026-08-17T08:28:04,WARN,retry koneksi database,1739,429
+2026-08-17T08:45:13,INFO,backup harian selesai,122,200
+2026-08-17T08:59:17,INFO,sinkronisasi data selesai,76,200
+2026-08-17T09:01:27,INFO,halaman dashboard dimuat,113,200
+2026-08-17T09:19:43,INFO,login berhasil user=user-255,141,200
+2026-08-17T09:43:48,ERROR,pembayaran gagal order=INV-8311,928,404
+2026-08-17T10:10:35,WARN,memori 80% terpakai,1660,200
+2026-08-17T10:19:20,INFO,cache diperbarui,259,200
+2026-08-17T10:25:35,INFO,halaman dashboard dimuat,111,200
+2026-08-17T10:26:10,ERROR,pembayaran gagal order=INV-3524,1144,404
+2026-08-17T10:45:04,INFO,cache diperbarui,178,200
+2026-08-17T11:04:55,INFO,login berhasil user=user-338,126,200
+2026-08-17T11:25:05,INFO,halaman dashboard dimuat,203,200
+2026-08-17T11:46:39,WARN,token kedaluwarsa user=user-225,610,429
+2026-08-17T11:57:01,WARN,token kedaluwarsa user=user-196,821,200
+2026-08-17T12:10:26,INFO,halaman dashboard dimuat,122,200
+2026-08-17T12:14:35,INFO,login berhasil user=user-023,162,200
+2026-08-17T12:32:00,INFO,cache diperbarui,77,200
+2026-08-17T12:36:12,ERROR,timeout endpoint=/api/laporan,993,500
+2026-08-17T12:43:16,INFO,backup harian selesai,110,200
+2026-08-17T13:37:24,WARN,memori 80% terpakai,1024,200
+2026-08-17T14:06:28,INFO,sinkronisasi data selesai,233,200
+2026-08-17T14:18:06,INFO,login berhasil user=user-082,89,200
+2026-08-17T14:22:09,INFO,cache diperbarui,109,200
+2026-08-17T14:26:49,INFO,backup harian selesai,233,200
+2026-08-17T14:29:49,INFO,cache diperbarui,61,200
+2026-08-17T14:32:53,INFO,login berhasil user=user-263,65,200
+2026-08-17T14:33:48,INFO,halaman dashboard dimuat,30,200
+2026-08-17T14:51:10,WARN,retry koneksi database,875,200
+2026-08-17T14:54:27,INFO,sinkronisasi data selesai,274,200
+2026-08-17T15:05:52,WARN,respons lambat endpoint=/api/harga,509,429
+2026-08-17T15:11:13,INFO,login berhasil user=user-277,69,200
+2026-08-17T15:13:31,INFO,email notifikasi terkirim,188,200
+2026-08-17T15:26:56,WARN,token kedaluwarsa user=user-366,1447,200
+2026-08-17T15:28:31,ERROR,timeout endpoint=/api/laporan,1023,404
+2026-08-17T15:52:45,INFO,halaman dashboard dimuat,39,200
+2026-08-17T15:58:15,INFO,login berhasil user=user-227,102,200
+2026-08-17T16:05:00,INFO,cache diperbarui,184,200
+2026-08-17T16:05:24,WARN,token kedaluwarsa user=user-152,1731,429
+2026-08-17T16:16:54,INFO,cache diperbarui,201,200
+2026-08-17T16:19:12,WARN,retry koneksi database,982,429
+2026-08-17T16:29:17,WARN,token kedaluwarsa user=user-322,799,200
+2026-08-17T16:31:53,INFO,halaman dashboard dimuat,259,200
+2026-08-17T17:36:06,ERROR,gagal koneksi database,3747,404
+2026-08-17T19:02:44,INFO,halaman dashboard dimuat,103,200
+2026-08-17T19:40:02,WARN,memori 80% terpakai,604,200
+2026-08-17T19:59:12,INFO,cache diperbarui,166,200
+2026-08-17T20:17:39,INFO,login berhasil user=user-160,213,200
+2026-08-17T20:22:22,INFO,cache diperbarui,268,200
+2026-08-17T20:38:26,INFO,sinkronisasi data selesai,91,200
+2026-08-17T20:39:47,WARN,token kedaluwarsa user=user-121,1128,200
+2026-08-17T20:53:15,INFO,sinkronisasi data selesai,278,200
+2026-08-17T21:17:30,WARN,retry koneksi database,595,200
+2026-08-17T21:24:23,WARN,token kedaluwarsa user=user-322,593,200
+2026-08-17T21:31:48,INFO,backup harian selesai,144,200
+2026-08-17T21:40:44,INFO,login berhasil user=user-360,25,200
+2026-08-17T21:57:16,ERROR,gagal koneksi database,2571,404
+2026-08-17T21:58:26,INFO,sinkronisasi data selesai,196,200
+2026-08-17T21:59:43,INFO,backup harian selesai,123,200
+2026-08-17T22:01:41,INFO,halaman dashboard dimuat,257,200
+2026-08-17T22:09:36,INFO,login berhasil user=user-183,20,200
+2026-08-17T22:12:36,INFO,cache diperbarui,257,200
+2026-08-17T22:21:25,INFO,halaman dashboard dimuat,30,200
+2026-08-17T22:27:44,INFO,email notifikasi terkirim,7,200
+2026-08-17T23:09:31,INFO,login berhasil user=user-089,100,200
+2026-08-17T23:14:41,INFO,login berhasil user=user-302,210,200
+2026-08-17T23:16:28,INFO,login berhasil user=user-201,225,200
+2026-08-17T23:22:33,INFO,sinkronisasi data selesai,177,200
+2026-08-17T23:46:48,INFO,email notifikasi terkirim,224,200
+2026-08-17T23:47:54,WARN,memori 80% terpakai,561,429
+2026-08-17T23:53:17,INFO,halaman dashboard dimuat,160,200
+2026-08-18T00:09:45,ERROR,file tidak ditemukan /data/7637.csv,1155,404
+2026-08-18T00:13:08,INFO,cache diperbarui,161,200
+2026-08-18T00:21:55,INFO,email notifikasi terkirim,205,200
+2026-08-18T00:22:58,INFO,halaman dashboard dimuat,68,200
+2026-08-18T00:25:38,INFO,login berhasil user=user-027,160,200
+2026-08-18T00:57:05,INFO,cache diperbarui,238,200
+2026-08-18T01:34:28,INFO,email notifikasi terkirim,86,200
+2026-08-18T01:44:11,WARN,memori 80% terpakai,934,429
+2026-08-18T02:01:35,INFO,halaman dashboard dimuat,134,200
+2026-08-18T02:02:11,WARN,retry koneksi database,1336,200
+2026-08-18T02:25:18,INFO,email notifikasi terkirim,170,200
+2026-08-18T02:36:39,INFO,login berhasil user=user-202,29,200
+2026-08-18T03:06:47,ERROR,gagal koneksi database,1086,500
+2026-08-18T03:07:37,INFO,login berhasil user=user-165,133,200
+2026-08-18T03:31:44,WARN,respons lambat endpoint=/api/harga,1753,429
+2026-08-18T04:15:54,INFO,email notifikasi terkirim,133,200
+2026-08-18T04:51:08,INFO,email notifikasi terkirim,279,200
+2026-08-18T05:04:58,INFO,cache diperbarui,238,200
+2026-08-18T05:22:05,ERROR,pembayaran gagal order=INV-4509,2206,500
+2026-08-18T05:37:22,ERROR,gagal koneksi database,3733,404
+2026-08-18T05:38:45,ERROR,timeout endpoint=/api/laporan,616,500
+2026-08-18T05:39:17,INFO,cache diperbarui,63,200
+2026-08-18T06:27:23,INFO,cache diperbarui,40,200
+2026-08-18T07:22:26,ERROR,timeout endpoint=/api/laporan,2801,404
+2026-08-18T08:06:09,WARN,respons lambat endpoint=/api/harga,794,200
+2026-08-18T08:25:30,INFO,cache diperbarui,244,200
+2026-08-18T08:39:25,INFO,backup harian selesai,94,200
+2026-08-18T08:56:44,INFO,backup harian selesai,254,200
+2026-08-18T08:57:27,WARN,memori 80% terpakai,658,200
+2026-08-18T09:16:44,WARN,token kedaluwarsa user=user-163,1287,200
+2026-08-18T09:21:47,INFO,cache diperbarui,258,200
+2026-08-18T09:24:23,INFO,login berhasil user=user-099,104,200
+2026-08-18T09:38:45,ERROR,pembayaran gagal order=INV-8198,2530,404
+2026-08-18T10:15:32,INFO,email notifikasi terkirim,187,200
+2026-08-18T10:26:17,INFO,halaman dashboard dimuat,295,200
+2026-08-18T10:28:30,INFO,sinkronisasi data selesai,36,200
+2026-08-18T10:46:00,INFO,halaman dashboard dimuat,262,200
+2026-08-18T10:47:29,WARN,retry koneksi database,1737,200
+2026-08-18T10:54:34,INFO,login berhasil user=user-395,44,200
+2026-08-18T10:55:17,INFO,halaman dashboard dimuat,52,200
+2026-08-18T11:06:36,INFO,backup harian selesai,8,200
+2026-08-18T11:42:16,INFO,login berhasil user=user-307,86,200
+2026-08-18T12:07:13,INFO,backup harian selesai,105,200
+2026-08-18T12:49:54,WARN,memori 80% terpakai,1676,429
+2026-08-18T12:56:11,INFO,halaman dashboard dimuat,180,200
+2026-08-18T12:57:25,ERROR,gagal koneksi database,1767,404
+2026-08-18T13:20:57,INFO,cache diperbarui,7,200
+2026-08-18T13:28:31,INFO,halaman dashboard dimuat,119,200
+2026-08-18T13:31:54,INFO,email notifikasi terkirim,155,200
+2026-08-18T13:43:55,INFO,login berhasil user=user-212,45,200
+2026-08-18T13:44:50,INFO,sinkronisasi data selesai,30,200
+2026-08-18T14:09:15,INFO,login berhasil user=user-263,190,200
+2026-08-18T14:33:33,INFO,backup harian selesai,136,200
+2026-08-18T14:47:51,INFO,halaman dashboard dimuat,107,200
+2026-08-18T14:58:13,INFO,email notifikasi terkirim,267,200
+2026-08-18T15:12:58,INFO,cache diperbarui,186,200
+2026-08-18T15:21:39,INFO,halaman dashboard dimuat,68,200
+2026-08-18T15:34:20,ERROR,file tidak ditemukan /data/7382.csv,3200,500
+2026-08-18T15:59:16,WARN,memori 80% terpakai,399,429
+2026-08-18T16:08:16,INFO,backup harian selesai,157,200
+2026-08-18T16:22:33,INFO,halaman dashboard dimuat,91,200
+2026-08-18T16:25:18,INFO,email notifikasi terkirim,290,200
+2026-08-18T16:31:43,INFO,login berhasil user=user-057,158,200
+2026-08-18T16:38:15,INFO,sinkronisasi data selesai,189,200
+2026-08-18T16:43:11,INFO,backup harian selesai,269,200
+2026-08-18T16:47:03,WARN,token kedaluwarsa user=user-386,1831,429
+2026-08-18T17:11:27,INFO,sinkronisasi data selesai,226,200
+2026-08-18T17:24:53,INFO,login berhasil user=user-252,136,200
+2026-08-18T17:52:41,WARN,retry koneksi database,1845,200
+2026-08-18T18:20:16,INFO,email notifikasi terkirim,274,200
+2026-08-18T19:12:58,WARN,respons lambat endpoint=/api/harga,1201,429
+2026-08-18T19:59:14,INFO,halaman dashboard dimuat,71,200
+2026-08-18T20:47:53,INFO,backup harian selesai,7,200
+2026-08-18T20:48:49,ERROR,pembayaran gagal order=INV-4308,2724,404
+2026-08-18T20:51:08,INFO,email notifikasi terkirim,14,200
+2026-08-18T21:29:55,WARN,memori 80% terpakai,1355,429
+2026-08-18T21:29:57,INFO,halaman dashboard dimuat,162,200
+2026-08-18T21:31:06,ERROR,timeout endpoint=/api/laporan,665,500
+2026-08-18T21:47:37,INFO,sinkronisasi data selesai,129,200
+2026-08-18T22:00:06,INFO,sinkronisasi data selesai,293,200
+2026-08-18T22:39:35,ERROR,timeout endpoint=/api/laporan,897,404
+2026-08-18T22:47:52,WARN,token kedaluwarsa user=user-021,1480,200
+2026-08-18T23:09:29,WARN,retry koneksi database,463,200
+2026-08-18T23:10:37,ERROR,timeout endpoint=/api/laporan,2623,404
+2026-08-18T23:25:46,INFO,cache diperbarui,237,200
+2026-08-18T23:29:48,INFO,sinkronisasi data selesai,113,200
+2026-08-19T00:00:50,INFO,cache diperbarui,293,200
+2026-08-19T00:11:51,INFO,sinkronisasi data selesai,293,200
+2026-08-19T00:22:40,ERROR,timeout endpoint=/api/laporan,821,500
+2026-08-19T00:40:01,INFO,backup harian selesai,205,200
+2026-08-19T01:20:31,INFO,email notifikasi terkirim,268,200
+2026-08-19T01:20:40,WARN,token kedaluwarsa user=user-029,984,429
+2026-08-19T01:26:27,INFO,cache diperbarui,46,200
+2026-08-19T01:37:51,INFO,halaman dashboard dimuat,55,200
+2026-08-19T01:43:57,INFO,sinkronisasi data selesai,190,200
+2026-08-19T02:00:12,INFO,email notifikasi terkirim,5,200
+2026-08-19T02:26:04,INFO,cache diperbarui,68,200
+2026-08-19T02:40:25,INFO,halaman dashboard dimuat,6,200
+2026-08-19T02:47:30,INFO,cache diperbarui,90,200
+2026-08-19T02:49:52,ERROR,file tidak ditemukan /data/9889.csv,2657,500
+2026-08-19T02:57:51,WARN,token kedaluwarsa user=user-028,1571,200
+2026-08-19T03:00:25,INFO,backup harian selesai,78,200
+2026-08-19T03:45:11,INFO,halaman dashboard dimuat,266,200
+2026-08-19T03:50:45,INFO,email notifikasi terkirim,157,200
+2026-08-19T04:27:39,INFO,email notifikasi terkirim,211,200
+2026-08-19T04:30:58,INFO,cache diperbarui,85,200
+2026-08-19T04:56:04,INFO,cache diperbarui,275,200
+2026-08-19T04:56:14,ERROR,pembayaran gagal order=INV-7669,1195,500
+2026-08-19T05:17:29,INFO,sinkronisasi data selesai,271,200
+2026-08-19T05:34:58,WARN,respons lambat endpoint=/api/harga,1742,429
+2026-08-19T05:41:40,WARN,respons lambat endpoint=/api/harga,1656,429
+2026-08-19T05:53:32,INFO,login berhasil user=user-188,84,200
+2026-08-19T05:57:17,WARN,token kedaluwarsa user=user-035,1529,200
+2026-08-19T06:37:29,INFO,email notifikasi terkirim,75,200
+2026-08-19T06:45:06,WARN,respons lambat endpoint=/api/harga,587,200
+2026-08-19T07:27:38,INFO,cache diperbarui,136,200
+2026-08-19T07:29:36,INFO,login berhasil user=user-212,260,200
+2026-08-19T07:32:21,INFO,cache diperbarui,186,200
+2026-08-19T07:39:11,WARN,token kedaluwarsa user=user-062,571,200
+2026-08-19T08:12:18,WARN,respons lambat endpoint=/api/harga,1255,429
+2026-08-19T08:23:24,INFO,halaman dashboard dimuat,223,200
+2026-08-19T08:24:21,INFO,login berhasil user=user-037,86,200
+2026-08-19T08:37:44,WARN,retry koneksi database,1057,200
+2026-08-19T08:42:17,ERROR,file tidak ditemukan /data/7899.csv,3309,500
+2026-08-19T09:10:31,INFO,backup harian selesai,125,200
+2026-08-19T09:16:08,INFO,halaman dashboard dimuat,190,200
+2026-08-19T09:19:55,INFO,sinkronisasi data selesai,142,200
+2026-08-19T10:08:01,INFO,email notifikasi terkirim,159,200
+2026-08-19T10:42:28,INFO,email notifikasi terkirim,79,200
+2026-08-19T11:04:06,INFO,backup harian selesai,81,200
+2026-08-19T11:08:55,INFO,sinkronisasi data selesai,108,200
+2026-08-19T11:12:14,INFO,backup harian selesai,56,200
+2026-08-19T11:12:16,INFO,email notifikasi terkirim,283,200
+2026-08-19T11:21:29,ERROR,pembayaran gagal order=INV-7128,1987,500
+2026-08-19T11:54:56,ERROR,timeout endpoint=/api/laporan,1677,404
+2026-08-19T12:09:12,WARN,respons lambat endpoint=/api/harga,695,200
+2026-08-19T12:21:30,INFO,login berhasil user=user-040,268,200
+2026-08-19T12:24:02,ERROR,file tidak ditemukan /data/9909.csv,3823,500
+2026-08-19T12:49:57,INFO,cache diperbarui,37,200
+2026-08-19T13:53:45,ERROR,timeout endpoint=/api/laporan,1290,500
+2026-08-19T14:25:43,WARN,retry koneksi database,1530,200
+2026-08-19T15:29:31,INFO,email notifikasi terkirim,217,200
+2026-08-19T15:42:18,WARN,memori 80% terpakai,1422,200
+2026-08-19T16:15:27,INFO,login berhasil user=user-286,124,200
+2026-08-19T16:19:11,INFO,backup harian selesai,295,200
+2026-08-19T16:46:24,INFO,backup harian selesai,103,200
+2026-08-19T16:56:23,INFO,email notifikasi terkirim,122,200
+2026-08-19T17:05:16,INFO,backup harian selesai,29,200
+2026-08-19T17:14:20,WARN,memori 80% terpakai,1875,429
+2026-08-19T17:17:09,INFO,email notifikasi terkirim,176,200
+2026-08-19T17:45:06,ERROR,timeout endpoint=/api/laporan,1485,500
+2026-08-19T18:25:05,INFO,login berhasil user=user-123,298,200
+2026-08-19T18:44:25,INFO,login berhasil user=user-028,149,200
+2026-08-19T18:48:19,INFO,halaman dashboard dimuat,57,200
+2026-08-19T19:12:39,INFO,email notifikasi terkirim,53,200
+2026-08-19T19:23:53,WARN,memori 80% terpakai,1647,200
+2026-08-19T19:25:32,INFO,sinkronisasi data selesai,11,200
+2026-08-19T19:26:15,INFO,backup harian selesai,36,200
+2026-08-19T19:32:37,INFO,halaman dashboard dimuat,240,200
+2026-08-19T19:33:47,INFO,email notifikasi terkirim,167,200
+2026-08-19T20:00:44,INFO,sinkronisasi data selesai,218,200
+2026-08-19T20:02:16,INFO,cache diperbarui,80,200
+2026-08-19T20:03:50,INFO,halaman dashboard dimuat,241,200
+2026-08-19T20:08:24,INFO,backup harian selesai,276,200
+2026-08-19T20:11:48,INFO,backup harian selesai,168,200
+2026-08-19T20:19:52,INFO,halaman dashboard dimuat,291,200
+2026-08-19T20:38:21,INFO,sinkronisasi data selesai,263,200
+2026-08-19T20:45:02,ERROR,file tidak ditemukan /data/6911.csv,3534,404
+2026-08-19T20:45:55,INFO,halaman dashboard dimuat,252,200
+2026-08-19T20:51:29,INFO,login berhasil user=user-226,202,200
+2026-08-19T20:58:28,INFO,cache diperbarui,76,200
+2026-08-19T21:05:43,INFO,sinkronisasi data selesai,43,200
+2026-08-19T21:14:48,WARN,retry koneksi database,338,200
+2026-08-19T21:22:14,WARN,respons lambat endpoint=/api/harga,1066,429
+2026-08-19T21:36:57,WARN,retry koneksi database,307,200
+2026-08-19T21:48:56,WARN,respons lambat endpoint=/api/harga,1402,429
+2026-08-19T21:50:35,INFO,sinkronisasi data selesai,56,200
+2026-08-19T21:52:19,INFO,backup harian selesai,87,200
+2026-08-19T22:07:57,INFO,login berhasil user=user-264,203,200
+2026-08-19T22:10:01,ERROR,timeout endpoint=/api/laporan,2721,404
+2026-08-19T22:13:42,WARN,memori 80% terpakai,1022,200
+2026-08-19T22:51:13,INFO,sinkronisasi data selesai,98,200
+2026-08-19T22:57:55,INFO,email notifikasi terkirim,221,200
+2026-08-19T23:03:27,INFO,sinkronisasi data selesai,254,200
+2026-08-19T23:16:02,ERROR,timeout endpoint=/api/laporan,1171,404
+2026-08-19T23:36:38,INFO,email notifikasi terkirim,100,200
+2026-08-20T00:21:25,INFO,cache diperbarui,110,200
+2026-08-20T00:21:42,INFO,cache diperbarui,206,200
+2026-08-20T00:22:18,INFO,cache diperbarui,94,200
+2026-08-20T00:26:43,INFO,email notifikasi terkirim,262,200
+2026-08-20T00:38:24,WARN,token kedaluwarsa user=user-227,1932,200
+2026-08-20T00:53:38,INFO,sinkronisasi data selesai,65,200
+2026-08-20T00:56:53,INFO,sinkronisasi data selesai,227,200
+2026-08-20T01:06:31,ERROR,file tidak ditemukan /data/3950.csv,3632,404
+2026-08-20T01:07:08,INFO,login berhasil user=user-126,61,200
+2026-08-20T02:25:56,INFO,halaman dashboard dimuat,97,200
+2026-08-20T02:35:25,WARN,token kedaluwarsa user=user-022,1395,429
+2026-08-20T02:35:36,ERROR,pembayaran gagal order=INV-2699,3879,500
+2026-08-20T03:02:14,INFO,backup harian selesai,200,200
+2026-08-20T04:14:41,INFO,halaman dashboard dimuat,216,200
+2026-08-20T04:17:56,INFO,halaman dashboard dimuat,286,200
+2026-08-20T04:43:12,INFO,login berhasil user=user-320,11,200
+2026-08-20T04:57:07,WARN,token kedaluwarsa user=user-348,1414,429
+2026-08-20T05:01:00,INFO,halaman dashboard dimuat,51,200
+2026-08-20T05:06:07,ERROR,timeout endpoint=/api/laporan,1304,500
+2026-08-20T05:06:08,INFO,sinkronisasi data selesai,201,200
+2026-08-20T05:16:01,INFO,cache diperbarui,255,200
+2026-08-20T05:20:43,INFO,sinkronisasi data selesai,259,200
+2026-08-20T05:37:17,INFO,login berhasil user=user-380,13,200
+2026-08-20T05:47:54,INFO,email notifikasi terkirim,177,200
+2026-08-20T07:06:11,INFO,cache diperbarui,78,200
+2026-08-20T07:07:18,INFO,email notifikasi terkirim,92,200
+2026-08-20T07:48:53,ERROR,pembayaran gagal order=INV-2509,834,404
+2026-08-20T08:10:25,INFO,sinkronisasi data selesai,258,200
+2026-08-20T08:13:57,INFO,halaman dashboard dimuat,148,200
+2026-08-20T08:30:10,ERROR,timeout endpoint=/api/laporan,1476,500
+2026-08-20T09:06:19,WARN,respons lambat endpoint=/api/harga,858,429
+2026-08-20T09:08:53,INFO,backup harian selesai,207,200
+2026-08-20T09:09:37,ERROR,timeout endpoint=/api/laporan,3505,500
+2026-08-20T09:20:31,WARN,respons lambat endpoint=/api/harga,1877,429
+2026-08-20T09:27:42,INFO,halaman dashboard dimuat,28,200
+2026-08-20T09:49:24,INFO,halaman dashboard dimuat,26,200
+2026-08-20T09:53:37,ERROR,gagal koneksi database,2400,404
+2026-08-20T10:01:43,INFO,sinkronisasi data selesai,214,200
+2026-08-20T10:14:19,INFO,login berhasil user=user-176,283,200
+2026-08-20T10:37:27,INFO,email notifikasi terkirim,87,200
+2026-08-20T11:00:55,INFO,login berhasil user=user-362,294,200
+2026-08-20T11:14:35,INFO,cache diperbarui,90,200
+2026-08-20T11:20:52,ERROR,pembayaran gagal order=INV-3886,1228,404
+2026-08-20T11:57:37,INFO,halaman dashboard dimuat,133,200
+2026-08-20T11:58:29,INFO,email notifikasi terkirim,156,200
+2026-08-20T11:59:44,INFO,cache diperbarui,49,200
+2026-08-20T12:03:38,WARN,memori 80% terpakai,1854,200
+2026-08-20T12:44:08,INFO,cache diperbarui,228,200
+2026-08-20T12:53:28,INFO,backup harian selesai,106,200
+2026-08-20T12:55:39,WARN,token kedaluwarsa user=user-204,1463,200
+2026-08-20T13:05:48,INFO,login berhasil user=user-131,251,200
+2026-08-20T13:11:56,INFO,login berhasil user=user-375,78,200
+2026-08-20T13:34:39,INFO,login berhasil user=user-216,205,200
+2026-08-20T13:43:03,INFO,email notifikasi terkirim,24,200
+2026-08-20T13:46:15,INFO,login berhasil user=user-141,154,200
+2026-08-20T13:51:09,INFO,cache diperbarui,203,200
+2026-08-20T14:06:59,INFO,halaman dashboard dimuat,200,200
+2026-08-20T14:08:09,INFO,sinkronisasi data selesai,144,200
+2026-08-20T14:10:23,INFO,login berhasil user=user-294,47,200
+2026-08-20T14:28:19,ERROR,pembayaran gagal order=INV-5656,707,404
+2026-08-20T14:39:45,ERROR,gagal koneksi database,3150,404
+2026-08-20T14:40:06,ERROR,pembayaran gagal order=INV-7176,788,404
+2026-08-20T15:26:27,INFO,backup harian selesai,42,200
+2026-08-20T15:27:32,WARN,respons lambat endpoint=/api/harga,809,200
+2026-08-20T15:36:20,ERROR,file tidak ditemukan /data/8369.csv,715,500
+2026-08-20T15:40:36,INFO,login berhasil user=user-291,147,200
+2026-08-20T16:29:56,INFO,halaman dashboard dimuat,185,200
+2026-08-20T16:30:40,INFO,backup harian selesai,74,200
+2026-08-20T16:41:41,WARN,respons lambat endpoint=/api/harga,1866,200
+2026-08-20T16:52:57,INFO,halaman dashboard dimuat,259,200
+2026-08-20T16:57:40,INFO,sinkronisasi data selesai,33,200
+2026-08-20T17:28:51,INFO,backup harian selesai,194,200
+2026-08-20T17:55:57,INFO,backup harian selesai,75,200
+2026-08-20T18:15:38,WARN,token kedaluwarsa user=user-360,1558,429
+2026-08-20T18:31:52,INFO,login berhasil user=user-344,56,200
+2026-08-20T18:55:26,INFO,sinkronisasi data selesai,20,200
+2026-08-20T19:14:13,INFO,backup harian selesai,215,200
+2026-08-20T19:32:02,INFO,halaman dashboard dimuat,132,200
+2026-08-20T20:10:52,INFO,sinkronisasi data selesai,218,200
+2026-08-20T20:14:43,ERROR,pembayaran gagal order=INV-3845,2400,404
+2026-08-20T20:16:56,INFO,cache diperbarui,27,200
+2026-08-20T20:28:24,WARN,retry koneksi database,1982,200
+2026-08-20T20:52:47,INFO,backup harian selesai,193,200
+2026-08-20T20:59:42,INFO,login berhasil user=user-285,276,200
+2026-08-20T21:03:24,INFO,login berhasil user=user-021,75,200
+2026-08-20T21:19:36,INFO,halaman dashboard dimuat,158,200
+2026-08-20T21:21:29,ERROR,file tidak ditemukan /data/6648.csv,805,500
+2026-08-20T21:59:16,INFO,halaman dashboard dimuat,72,200
+2026-08-20T22:14:26,INFO,cache diperbarui,153,200
+2026-08-20T22:19:40,INFO,login berhasil user=user-328,284,200
+2026-08-20T22:29:27,INFO,halaman dashboard dimuat,201,200
+2026-08-20T22:59:15,INFO,sinkronisasi data selesai,66,200
+2026-08-20T23:15:00,INFO,sinkronisasi data selesai,147,200
+2026-08-20T23:24:26,INFO,email notifikasi terkirim,27,200
+2026-08-20T23:49:45,WARN,retry koneksi database,1051,429
+2026-08-20T23:53:18,INFO,login berhasil user=user-302,231,200
+2026-08-21T00:31:01,INFO,cache diperbarui,300,200
+2026-08-21T00:44:54,WARN,respons lambat endpoint=/api/harga,1800,429
+2026-08-21T00:59:27,INFO,login berhasil user=user-192,214,200
+2026-08-21T01:15:04,ERROR,gagal koneksi database,3233,404
+2026-08-21T01:23:13,INFO,sinkronisasi data selesai,293,200
+2026-08-21T02:04:10,ERROR,pembayaran gagal order=INV-6072,1867,404
+2026-08-21T02:23:08,WARN,respons lambat endpoint=/api/harga,855,429
+2026-08-21T02:44:48,WARN,memori 80% terpakai,336,429
+2026-08-21T03:02:05,INFO,sinkronisasi data selesai,165,200
+2026-08-21T03:49:31,INFO,halaman dashboard dimuat,268,200
+2026-08-21T04:14:35,INFO,login berhasil user=user-159,237,200
+2026-08-21T04:36:50,WARN,memori 80% terpakai,310,200
+2026-08-21T04:46:18,ERROR,file tidak ditemukan /data/5203.csv,2215,404
+2026-08-21T04:52:03,WARN,respons lambat endpoint=/api/harga,1114,429
+2026-08-21T05:04:34,INFO,login berhasil user=user-099,187,200
+2026-08-21T05:28:30,WARN,respons lambat endpoint=/api/harga,1826,200
+2026-08-21T05:29:44,INFO,sinkronisasi data selesai,179,200
+2026-08-21T06:26:39,INFO,halaman dashboard dimuat,213,200
+2026-08-21T06:31:37,INFO,backup harian selesai,220,200
+2026-08-21T06:53:28,INFO,backup harian selesai,120,200
+2026-08-21T07:22:12,INFO,halaman dashboard dimuat,266,200
+2026-08-21T07:45:16,ERROR,timeout endpoint=/api/laporan,2655,404
+2026-08-21T08:12:32,INFO,login berhasil user=user-351,56,200
+2026-08-21T08:32:51,INFO,halaman dashboard dimuat,114,200
+2026-08-21T08:34:20,WARN,retry koneksi database,1689,200
+2026-08-21T08:40:15,WARN,memori 80% terpakai,1018,429
+2026-08-21T08:44:08,WARN,respons lambat endpoint=/api/harga,1619,429
+2026-08-21T09:04:32,ERROR,gagal koneksi database,3851,404
+2026-08-21T09:22:26,WARN,memori 80% terpakai,1630,429
+2026-08-21T09:24:37,INFO,email notifikasi terkirim,97,200
+2026-08-21T09:55:02,INFO,login berhasil user=user-151,136,200
+2026-08-21T10:06:47,INFO,halaman dashboard dimuat,159,200
+2026-08-21T11:04:59,WARN,respons lambat endpoint=/api/harga,912,429
+2026-08-21T11:05:27,INFO,halaman dashboard dimuat,274,200
+2026-08-21T11:37:11,INFO,backup harian selesai,131,200
+2026-08-21T11:59:36,INFO,login berhasil user=user-229,291,200
+2026-08-21T12:25:34,WARN,retry koneksi database,1934,429
+2026-08-21T12:28:49,INFO,halaman dashboard dimuat,294,200
+2026-08-21T12:37:43,INFO,login berhasil user=user-322,248,200
+2026-08-21T12:47:26,INFO,cache diperbarui,198,200
+2026-08-21T12:53:44,INFO,halaman dashboard dimuat,59,200
+2026-08-21T13:07:58,INFO,sinkronisasi data selesai,227,200
+2026-08-21T13:26:03,INFO,halaman dashboard dimuat,125,200
+2026-08-21T13:27:27,INFO,email notifikasi terkirim,300,200
+2026-08-21T14:15:30,INFO,sinkronisasi data selesai,49,200
+2026-08-21T14:30:06,INFO,sinkronisasi data selesai,241,200
+2026-08-21T14:35:33,INFO,login berhasil user=user-156,55,200
+2026-08-21T14:50:23,WARN,memori 80% terpakai,1417,200
+2026-08-21T14:52:36,INFO,login berhasil user=user-396,24,200
+2026-08-21T15:11:36,INFO,login berhasil user=user-143,7,200
+2026-08-21T15:18:08,INFO,cache diperbarui,245,200
+2026-08-21T15:20:43,INFO,login berhasil user=user-258,191,200
+2026-08-21T15:38:54,INFO,cache diperbarui,281,200
+2026-08-21T15:56:38,WARN,memori 80% terpakai,1822,429
+2026-08-21T16:34:36,INFO,cache diperbarui,73,200
+2026-08-21T16:46:57,INFO,halaman dashboard dimuat,25,200
+2026-08-21T17:01:00,INFO,cache diperbarui,65,200
+2026-08-21T17:01:41,INFO,sinkronisasi data selesai,136,200
+2026-08-21T17:20:19,WARN,token kedaluwarsa user=user-189,1348,200
+2026-08-21T17:42:41,INFO,halaman dashboard dimuat,66,200
+2026-08-21T17:58:47,INFO,email notifikasi terkirim,277,200
+2026-08-21T18:20:29,INFO,email notifikasi terkirim,8,200
+2026-08-21T18:24:06,INFO,cache diperbarui,174,200
+2026-08-21T18:28:16,INFO,email notifikasi terkirim,253,200
+2026-08-21T18:46:08,INFO,email notifikasi terkirim,198,200
+2026-08-21T18:48:18,INFO,sinkronisasi data selesai,273,200
+2026-08-21T18:50:36,INFO,backup harian selesai,257,200
+2026-08-21T18:57:25,INFO,backup harian selesai,249,200
+2026-08-21T19:09:54,INFO,backup harian selesai,44,200
+2026-08-21T19:15:35,INFO,backup harian selesai,202,200
+2026-08-21T19:18:29,INFO,login berhasil user=user-300,46,200
+2026-08-21T19:40:20,INFO,halaman dashboard dimuat,78,200
+2026-08-21T19:43:27,INFO,backup harian selesai,228,200
+2026-08-21T19:59:30,INFO,backup harian selesai,133,200
+2026-08-21T20:20:50,WARN,respons lambat endpoint=/api/harga,1235,200
+2026-08-21T20:22:03,INFO,halaman dashboard dimuat,77,200
+2026-08-21T20:31:46,INFO,login berhasil user=user-134,46,200
+2026-08-21T20:38:15,INFO,cache diperbarui,222,200
+2026-08-21T20:44:28,INFO,email notifikasi terkirim,166,200
+2026-08-21T20:50:06,ERROR,file tidak ditemukan /data/2034.csv,3078,500
+2026-08-21T21:15:15,INFO,login berhasil user=user-267,85,200
+2026-08-21T21:37:52,INFO,halaman dashboard dimuat,278,200
+2026-08-21T22:40:26,INFO,cache diperbarui,83,200
+2026-08-21T22:55:33,INFO,cache diperbarui,68,200
+2026-08-21T23:44:13,INFO,backup harian selesai,254,200
+2026-08-22T00:04:41,INFO,sinkronisasi data selesai,10,200
+2026-08-22T00:05:23,INFO,login berhasil user=user-342,102,200
+2026-08-22T00:12:33,INFO,login berhasil user=user-052,185,200
+2026-08-22T00:28:36,INFO,backup harian selesai,193,200
+2026-08-22T00:29:37,INFO,login berhasil user=user-230,285,200
+2026-08-22T00:54:54,WARN,memori 80% terpakai,464,200
+2026-08-22T01:11:11,INFO,cache diperbarui,168,200
+2026-08-22T01:13:44,ERROR,pembayaran gagal order=INV-7455,780,500
+2026-08-22T01:51:25,INFO,halaman dashboard dimuat,17,200
+2026-08-22T01:56:34,INFO,email notifikasi terkirim,204,200
+2026-08-22T01:59:57,INFO,email notifikasi terkirim,237,200
+2026-08-22T02:05:54,INFO,halaman dashboard dimuat,276,200
+2026-08-22T02:17:44,ERROR,gagal koneksi database,994,404
+2026-08-22T02:30:20,INFO,halaman dashboard dimuat,24,200
+2026-08-22T02:44:26,WARN,token kedaluwarsa user=user-272,1165,200
+2026-08-22T03:04:01,INFO,login berhasil user=user-352,106,200
+2026-08-22T03:26:10,INFO,halaman dashboard dimuat,42,200
+2026-08-22T03:28:46,ERROR,gagal koneksi database,3604,500
+2026-08-22T03:40:58,WARN,respons lambat endpoint=/api/harga,738,429
+2026-08-22T03:49:46,INFO,login berhasil user=user-350,237,200
+2026-08-22T03:56:23,INFO,email notifikasi terkirim,40,200
+2026-08-22T04:10:42,INFO,login berhasil user=user-026,77,200
+2026-08-22T04:18:31,WARN,retry koneksi database,918,429
+2026-08-22T04:25:34,WARN,respons lambat endpoint=/api/harga,750,429
+2026-08-22T04:33:54,WARN,respons lambat endpoint=/api/harga,486,200
+2026-08-22T04:53:18,INFO,cache diperbarui,214,200
+2026-08-22T05:06:23,INFO,backup harian selesai,57,200
+2026-08-22T05:06:34,WARN,retry koneksi database,858,200
+2026-08-22T05:19:42,INFO,sinkronisasi data selesai,130,200
+2026-08-22T05:19:52,INFO,halaman dashboard dimuat,208,200
+2026-08-22T05:42:40,WARN,token kedaluwarsa user=user-332,1929,429
+2026-08-22T05:47:31,INFO,sinkronisasi data selesai,183,200
+2026-08-22T06:42:55,INFO,cache diperbarui,76,200
+2026-08-22T06:44:07,ERROR,gagal koneksi database,991,404
+2026-08-22T06:54:17,ERROR,gagal koneksi database,1053,404
+2026-08-22T06:55:49,INFO,halaman dashboard dimuat,187,200
+2026-08-22T07:08:07,INFO,email notifikasi terkirim,246,200
+2026-08-22T07:29:43,INFO,login berhasil user=user-396,296,200
+2026-08-22T07:42:39,INFO,halaman dashboard dimuat,108,200
+2026-08-22T07:44:01,INFO,email notifikasi terkirim,231,200
+2026-08-22T07:44:05,WARN,memori 80% terpakai,1645,429
+2026-08-22T07:56:09,INFO,cache diperbarui,237,200
+2026-08-22T08:07:22,WARN,retry koneksi database,382,429
+2026-08-22T08:18:15,WARN,token kedaluwarsa user=user-344,1501,200
+2026-08-22T08:27:29,INFO,backup harian selesai,287,200
+2026-08-22T08:32:39,WARN,memori 80% terpakai,991,429
+2026-08-22T08:36:26,INFO,sinkronisasi data selesai,253,200
+2026-08-22T08:38:46,INFO,cache diperbarui,299,200
+2026-08-22T08:57:31,INFO,sinkronisasi data selesai,257,200
+2026-08-22T09:02:52,INFO,sinkronisasi data selesai,151,200
+2026-08-22T09:07:21,WARN,respons lambat endpoint=/api/harga,1820,200
+2026-08-22T09:15:11,WARN,memori 80% terpakai,1021,200
+2026-08-22T09:27:53,WARN,token kedaluwarsa user=user-323,697,429
+2026-08-22T10:05:29,INFO,backup harian selesai,165,200
+2026-08-22T10:22:33,ERROR,timeout endpoint=/api/laporan,1596,500
+2026-08-22T10:38:44,INFO,login berhasil user=user-244,190,200
+2026-08-22T11:34:46,INFO,login berhasil user=user-059,234,200
+2026-08-22T12:28:08,INFO,cache diperbarui,85,200
+2026-08-22T12:30:52,INFO,cache diperbarui,176,200
+2026-08-22T13:13:36,WARN,respons lambat endpoint=/api/harga,1520,200
+2026-08-22T13:35:08,INFO,cache diperbarui,214,200
+2026-08-22T13:35:55,INFO,backup harian selesai,58,200
+2026-08-22T13:40:52,INFO,halaman dashboard dimuat,155,200
+2026-08-22T14:13:19,INFO,halaman dashboard dimuat,218,200
+2026-08-22T14:25:34,INFO,cache diperbarui,136,200
+2026-08-22T14:50:52,ERROR,pembayaran gagal order=INV-8314,1755,404
+2026-08-22T15:10:40,WARN,token kedaluwarsa user=user-360,1781,200
+2026-08-22T15:50:59,WARN,memori 80% terpakai,394,429
+2026-08-22T16:08:32,INFO,email notifikasi terkirim,96,200
+2026-08-22T16:32:43,INFO,cache diperbarui,285,200
+2026-08-22T17:19:11,INFO,halaman dashboard dimuat,229,200
+2026-08-22T17:55:02,WARN,token kedaluwarsa user=user-066,1852,429
+2026-08-22T18:09:44,WARN,memori 80% terpakai,1744,429
+2026-08-22T18:10:56,WARN,retry koneksi database,544,429
+2026-08-22T18:25:25,INFO,login berhasil user=user-359,98,200
+2026-08-22T18:26:37,WARN,memori 80% terpakai,961,429
+2026-08-22T18:42:13,INFO,halaman dashboard dimuat,132,200
+2026-08-22T18:55:07,ERROR,gagal koneksi database,2200,404
+2026-08-22T18:59:10,ERROR,timeout endpoint=/api/laporan,3390,500
+2026-08-22T19:05:58,WARN,retry koneksi database,1331,200
+2026-08-22T19:13:57,INFO,sinkronisasi data selesai,212,200
+2026-08-22T19:14:21,INFO,halaman dashboard dimuat,24,200
+2026-08-22T19:15:31,WARN,memori 80% terpakai,1806,200
+2026-08-22T19:20:30,INFO,backup harian selesai,5,200
+2026-08-22T19:51:23,WARN,respons lambat endpoint=/api/harga,1491,429
+2026-08-22T19:58:03,ERROR,timeout endpoint=/api/laporan,946,500
+2026-08-22T20:11:34,ERROR,timeout endpoint=/api/laporan,565,500
+2026-08-22T20:22:34,WARN,memori 80% terpakai,1620,200
+2026-08-22T20:26:58,INFO,login berhasil user=user-170,191,200
+2026-08-22T20:31:02,INFO,halaman dashboard dimuat,53,200
+2026-08-22T20:42:53,WARN,memori 80% terpakai,802,429
+2026-08-22T20:51:12,INFO,email notifikasi terkirim,119,200
+2026-08-22T21:21:42,INFO,email notifikasi terkirim,110,200
+2026-08-22T21:33:34,WARN,memori 80% terpakai,1481,200
+2026-08-22T21:41:38,INFO,halaman dashboard dimuat,65,200
+2026-08-22T21:46:35,INFO,backup harian selesai,239,200
+2026-08-22T22:04:50,WARN,memori 80% terpakai,1571,429
+2026-08-22T22:07:56,INFO,halaman dashboard dimuat,10,200
+2026-08-22T22:45:05,INFO,login berhasil user=user-160,42,200
+2026-08-22T22:47:39,WARN,respons lambat endpoint=/api/harga,1386,429
+2026-08-22T23:04:30,WARN,memori 80% terpakai,1472,200
+2026-08-22T23:17:28,WARN,token kedaluwarsa user=user-384,1663,429
+2026-08-22T23:23:53,INFO,login berhasil user=user-028,259,200
+2026-08-22T23:28:17,INFO,email notifikasi terkirim,85,200
+2026-08-22T23:45:53,INFO,email notifikasi terkirim,286,200
+2026-08-23T00:23:27,INFO,email notifikasi terkirim,266,200
+2026-08-23T00:32:16,INFO,cache diperbarui,216,200
+2026-08-23T00:54:08,WARN,memori 80% terpakai,586,429
+2026-08-23T01:00:48,ERROR,file tidak ditemukan /data/7928.csv,1592,404
+2026-08-23T01:01:38,INFO,backup harian selesai,90,200
+2026-08-23T01:07:29,ERROR,file tidak ditemukan /data/6648.csv,3001,500
+2026-08-23T01:28:10,WARN,retry koneksi database,806,200
+2026-08-23T01:31:58,INFO,email notifikasi terkirim,248,200
+2026-08-23T01:38:53,INFO,halaman dashboard dimuat,34,200
+2026-08-23T01:49:11,INFO,sinkronisasi data selesai,107,200
+2026-08-23T01:52:37,INFO,backup harian selesai,83,200
+2026-08-23T02:17:10,WARN,memori 80% terpakai,506,429
+2026-08-23T02:48:10,INFO,backup harian selesai,103,200
+2026-08-23T02:57:31,ERROR,timeout endpoint=/api/laporan,682,500
+2026-08-23T03:01:28,INFO,backup harian selesai,300,200
+2026-08-23T03:21:32,INFO,email notifikasi terkirim,289,200
+2026-08-23T03:21:48,WARN,respons lambat endpoint=/api/harga,1454,200
+2026-08-23T04:41:49,WARN,memori 80% terpakai,1732,429
+2026-08-23T05:05:25,INFO,backup harian selesai,76,200
+2026-08-23T05:09:02,INFO,email notifikasi terkirim,260,200
+2026-08-23T05:12:53,INFO,backup harian selesai,138,200
+2026-08-23T05:38:18,INFO,email notifikasi terkirim,52,200
+2026-08-23T05:41:20,INFO,backup harian selesai,140,200
+2026-08-23T06:23:27,INFO,sinkronisasi data selesai,204,200
+2026-08-23T06:24:08,INFO,cache diperbarui,171,200
+2026-08-23T06:37:44,WARN,token kedaluwarsa user=user-172,1772,200
+2026-08-23T06:41:41,INFO,cache diperbarui,200,200
+2026-08-23T06:56:21,WARN,memori 80% terpakai,1229,429
+2026-08-23T07:02:50,WARN,memori 80% terpakai,1825,429
+2026-08-23T07:16:04,INFO,sinkronisasi data selesai,167,200
+2026-08-23T07:35:14,ERROR,timeout endpoint=/api/laporan,1666,404
+2026-08-23T07:47:01,INFO,sinkronisasi data selesai,151,200
+2026-08-23T07:48:42,INFO,backup harian selesai,215,200
+2026-08-23T08:03:01,ERROR,pembayaran gagal order=INV-7548,3346,500
+2026-08-23T08:20:37,INFO,backup harian selesai,5,200
+2026-08-23T08:24:13,INFO,email notifikasi terkirim,143,200
+2026-08-23T08:27:45,INFO,halaman dashboard dimuat,175,200
+2026-08-23T08:28:16,INFO,cache diperbarui,179,200
+2026-08-23T08:58:36,INFO,backup harian selesai,196,200
+2026-08-23T08:59:32,INFO,sinkronisasi data selesai,287,200
+2026-08-23T09:04:58,ERROR,file tidak ditemukan /data/7061.csv,3477,500
+2026-08-23T09:06:22,INFO,cache diperbarui,283,200
+2026-08-23T09:13:44,INFO,cache diperbarui,128,200
+2026-08-23T09:16:37,ERROR,file tidak ditemukan /data/3993.csv,2470,404
+2026-08-23T09:19:43,INFO,backup harian selesai,180,200
+2026-08-23T09:39:23,ERROR,file tidak ditemukan /data/3336.csv,2652,500
+2026-08-23T09:39:57,INFO,halaman dashboard dimuat,27,200
+2026-08-23T10:34:22,WARN,memori 80% terpakai,1554,429
+2026-08-23T10:54:31,WARN,memori 80% terpakai,1977,200
+2026-08-23T11:13:30,INFO,email notifikasi terkirim,84,200
+2026-08-23T11:29:39,INFO,sinkronisasi data selesai,212,200
+2026-08-23T11:33:16,INFO,cache diperbarui,14,200
+2026-08-23T11:39:42,ERROR,pembayaran gagal order=INV-5066,914,404
+2026-08-23T12:12:17,INFO,sinkronisasi data selesai,218,200
+2026-08-23T12:47:15,INFO,login berhasil user=user-362,52,200
+2026-08-23T12:54:29,INFO,login berhasil user=user-175,124,200
+2026-08-23T13:16:18,INFO,sinkronisasi data selesai,8,200
+2026-08-23T13:24:06,INFO,sinkronisasi data selesai,260,200
+2026-08-23T13:49:08,INFO,email notifikasi terkirim,92,200
+2026-08-23T13:52:14,WARN,respons lambat endpoint=/api/harga,1535,429
+2026-08-23T13:56:39,WARN,retry koneksi database,1022,200
+2026-08-23T14:13:46,INFO,sinkronisasi data selesai,181,200
+2026-08-23T14:39:30,INFO,halaman dashboard dimuat,191,200
+2026-08-23T15:34:05,INFO,halaman dashboard dimuat,68,200
+2026-08-23T15:41:00,INFO,halaman dashboard dimuat,101,200
+2026-08-23T15:48:54,INFO,cache diperbarui,195,200
+2026-08-23T16:25:00,INFO,halaman dashboard dimuat,222,200
+2026-08-23T16:32:00,INFO,backup harian selesai,78,200
+2026-08-23T16:46:10,INFO,cache diperbarui,163,200
+2026-08-23T17:07:01,WARN,token kedaluwarsa user=user-055,1950,429
+2026-08-23T17:08:56,INFO,email notifikasi terkirim,143,200
+2026-08-23T17:16:55,INFO,sinkronisasi data selesai,253,200
+2026-08-23T17:55:18,INFO,backup harian selesai,28,200
+2026-08-23T18:06:20,INFO,cache diperbarui,86,200
+2026-08-23T18:12:30,INFO,login berhasil user=user-263,69,200
+2026-08-23T18:43:30,INFO,sinkronisasi data selesai,163,200
+2026-08-23T19:04:17,INFO,backup harian selesai,228,200
+2026-08-23T19:18:23,INFO,cache diperbarui,236,200
+2026-08-23T19:25:51,WARN,retry koneksi database,1817,200
+2026-08-23T19:55:25,INFO,login berhasil user=user-216,243,200
+2026-08-23T19:55:39,INFO,halaman dashboard dimuat,44,200
+2026-08-23T20:01:38,INFO,cache diperbarui,267,200
+2026-08-23T20:04:55,INFO,cache diperbarui,294,200
+2026-08-23T20:37:07,WARN,token kedaluwarsa user=user-133,1779,429
+2026-08-23T20:39:01,ERROR,gagal koneksi database,1618,500
+2026-08-23T20:44:44,INFO,backup harian selesai,156,200
+2026-08-23T20:46:31,INFO,halaman dashboard dimuat,147,200
+2026-08-23T20:47:12,INFO,email notifikasi terkirim,195,200
+2026-08-23T20:52:09,INFO,email notifikasi terkirim,234,200
+2026-08-23T20:55:43,INFO,email notifikasi terkirim,212,200
+2026-08-23T20:57:48,INFO,login berhasil user=user-331,258,200
+2026-08-23T21:05:32,WARN,retry koneksi database,1013,429
+2026-08-23T21:23:02,INFO,cache diperbarui,294,200
+2026-08-23T22:02:17,WARN,retry koneksi database,785,200
+2026-08-23T22:14:29,WARN,respons lambat endpoint=/api/harga,540,200
+2026-08-23T23:09:24,INFO,cache diperbarui,266,200
+2026-08-23T23:16:35,INFO,email notifikasi terkirim,100,200
+2026-08-23T23:31:54,INFO,sinkronisasi data selesai,117,200
+2026-08-23T23:37:30,INFO,login berhasil user=user-208,292,200
+2026-08-23T23:50:05,INFO,login berhasil user=user-157,170,200
+2026-08-23T23:57:59,INFO,backup harian selesai,224,200
+2026-08-24T00:12:04,INFO,email notifikasi terkirim,180,200
+2026-08-24T00:17:44,INFO,cache diperbarui,268,200
+2026-08-24T00:35:49,WARN,respons lambat endpoint=/api/harga,931,429
+2026-08-24T00:39:02,INFO,cache diperbarui,115,200
+2026-08-24T00:41:50,INFO,cache diperbarui,242,200
+2026-08-24T01:29:40,INFO,email notifikasi terkirim,37,200
+2026-08-24T02:46:47,INFO,halaman dashboard dimuat,31,200
+2026-08-24T03:09:25,INFO,sinkronisasi data selesai,23,200
+2026-08-24T03:17:50,INFO,sinkronisasi data selesai,63,200
+2026-08-24T03:18:41,INFO,cache diperbarui,7,200
+2026-08-24T03:31:55,INFO,backup harian selesai,10,200
+2026-08-24T03:41:55,INFO,email notifikasi terkirim,71,200
+2026-08-24T03:43:05,INFO,login berhasil user=user-020,271,200
+2026-08-24T03:51:02,INFO,login berhasil user=user-369,140,200
+2026-08-24T04:21:45,INFO,sinkronisasi data selesai,246,200
+2026-08-24T04:26:35,INFO,login berhasil user=user-322,282,200
+2026-08-24T04:35:11,INFO,halaman dashboard dimuat,276,200
+2026-08-24T04:44:32,WARN,retry koneksi database,1870,429
+2026-08-24T04:45:37,ERROR,pembayaran gagal order=INV-2047,2513,404
+2026-08-24T04:48:31,WARN,respons lambat endpoint=/api/harga,1666,200
+2026-08-24T04:53:24,INFO,login berhasil user=user-241,7,200
+2026-08-24T04:56:46,INFO,sinkronisasi data selesai,247,200
+2026-08-24T05:07:23,INFO,sinkronisasi data selesai,84,200
+2026-08-24T05:40:45,INFO,sinkronisasi data selesai,78,200
+2026-08-24T05:41:42,INFO,email notifikasi terkirim,113,200
+2026-08-24T05:53:25,ERROR,file tidak ditemukan /data/6721.csv,1407,404
+2026-08-24T06:06:28,INFO,cache diperbarui,152,200
+2026-08-24T06:15:49,ERROR,pembayaran gagal order=INV-3606,2442,500
+2026-08-24T06:34:55,INFO,backup harian selesai,121,200
+2026-08-24T06:50:00,INFO,halaman dashboard dimuat,25,200
+2026-08-24T07:00:35,ERROR,gagal koneksi database,3602,404
+2026-08-24T07:00:59,ERROR,gagal koneksi database,2291,404
+2026-08-24T07:35:42,INFO,backup harian selesai,280,200
+2026-08-24T07:54:27,INFO,sinkronisasi data selesai,245,200
+2026-08-24T08:02:06,WARN,memori 80% terpakai,1936,200
+2026-08-24T08:05:09,INFO,cache diperbarui,199,200
+2026-08-24T08:26:18,INFO,login berhasil user=user-123,35,200
+2026-08-24T09:03:02,WARN,retry koneksi database,1365,429
+2026-08-24T09:12:19,ERROR,file tidak ditemukan /data/2742.csv,3302,404
+2026-08-24T09:25:54,INFO,backup harian selesai,41,200
+2026-08-24T09:46:05,INFO,email notifikasi terkirim,268,200
+2026-08-24T09:51:46,ERROR,file tidak ditemukan /data/8658.csv,847,500
+2026-08-24T10:47:44,WARN,token kedaluwarsa user=user-042,1653,200
+2026-08-24T11:57:04,WARN,memori 80% terpakai,318,429
+2026-08-24T12:09:30,ERROR,gagal koneksi database,874,500
+2026-08-24T12:14:04,INFO,cache diperbarui,56,200
+2026-08-24T13:36:53,INFO,backup harian selesai,300,200
+2026-08-24T13:51:18,INFO,cache diperbarui,45,200
+2026-08-24T13:53:35,INFO,backup harian selesai,108,200
+2026-08-24T14:02:55,INFO,sinkronisasi data selesai,47,200
+2026-08-24T14:25:47,INFO,backup harian selesai,170,200
+2026-08-24T14:27:57,INFO,login berhasil user=user-231,147,200
+2026-08-24T15:19:02,INFO,cache diperbarui,252,200
+2026-08-24T15:35:49,INFO,cache diperbarui,272,200
+2026-08-24T16:17:32,WARN,token kedaluwarsa user=user-197,930,200
+2026-08-24T16:18:05,INFO,backup harian selesai,251,200
+2026-08-24T17:00:36,ERROR,file tidak ditemukan /data/8866.csv,1239,404
+2026-08-24T17:05:00,INFO,backup harian selesai,289,200
+2026-08-24T17:07:04,ERROR,pembayaran gagal order=INV-8219,624,404
+2026-08-24T17:24:10,INFO,halaman dashboard dimuat,96,200
+2026-08-24T17:51:06,INFO,sinkronisasi data selesai,269,200
+2026-08-24T18:07:57,INFO,halaman dashboard dimuat,242,200
+2026-08-24T18:37:36,INFO,email notifikasi terkirim,108,200
+2026-08-24T18:43:59,INFO,email notifikasi terkirim,123,200
+2026-08-24T18:54:12,INFO,login berhasil user=user-147,253,200
+2026-08-24T18:57:03,INFO,halaman dashboard dimuat,76,200
+2026-08-24T19:25:18,INFO,cache diperbarui,137,200
+2026-08-24T19:26:06,INFO,cache diperbarui,165,200
+2026-08-24T19:33:02,ERROR,gagal koneksi database,3370,500
+2026-08-24T19:45:03,INFO,halaman dashboard dimuat,174,200
+2026-08-24T20:15:10,ERROR,timeout endpoint=/api/laporan,1831,404
+2026-08-24T20:31:23,INFO,halaman dashboard dimuat,170,200
+2026-08-24T20:49:55,ERROR,timeout endpoint=/api/laporan,3022,500
+2026-08-24T20:51:07,WARN,respons lambat endpoint=/api/harga,339,429
+2026-08-24T21:38:02,INFO,email notifikasi terkirim,189,200
+2026-08-24T21:55:36,WARN,token kedaluwarsa user=user-018,1759,200
+2026-08-24T22:16:30,INFO,login berhasil user=user-253,277,200
+2026-08-24T22:18:43,INFO,login berhasil user=user-004,75,200
+2026-08-24T22:31:00,ERROR,file tidak ditemukan /data/3720.csv,1353,404
+2026-08-24T22:47:19,INFO,email notifikasi terkirim,23,200
+2026-08-24T23:10:05,WARN,retry koneksi database,1529,200
+2026-08-24T23:14:35,INFO,login berhasil user=user-365,113,200
+2026-08-24T23:35:39,INFO,sinkronisasi data selesai,10,200
+2026-08-24T23:37:46,INFO,backup harian selesai,168,200
+2026-08-24T23:43:51,WARN,retry koneksi database,768,429
+2026-08-25T00:01:12,WARN,memori 80% terpakai,1393,429
+2026-08-25T00:34:00,ERROR,pembayaran gagal order=INV-9842,2659,404
+2026-08-25T00:44:56,WARN,respons lambat endpoint=/api/harga,844,200
+2026-08-25T00:45:44,INFO,halaman dashboard dimuat,286,200
+2026-08-25T00:48:23,INFO,login berhasil user=user-041,7,200
+2026-08-25T01:29:23,ERROR,timeout endpoint=/api/laporan,2783,500
+2026-08-25T01:36:25,INFO,halaman dashboard dimuat,147,200
+2026-08-25T01:51:39,WARN,memori 80% terpakai,705,429
+2026-08-25T02:00:40,WARN,retry koneksi database,961,200
+2026-08-25T02:26:34,INFO,backup harian selesai,172,200
+2026-08-25T02:30:18,WARN,respons lambat endpoint=/api/harga,406,200
+2026-08-25T03:01:49,WARN,token kedaluwarsa user=user-064,488,200
+2026-08-25T03:12:39,ERROR,timeout endpoint=/api/laporan,3010,500
+2026-08-25T03:16:03,INFO,backup harian selesai,149,200
+2026-08-25T03:39:19,INFO,backup harian selesai,101,200
+2026-08-25T03:50:57,ERROR,pembayaran gagal order=INV-8876,1204,500
+2026-08-25T04:04:56,WARN,retry koneksi database,1828,200
+2026-08-25T04:32:02,INFO,sinkronisasi data selesai,273,200
+2026-08-25T04:53:46,INFO,cache diperbarui,88,200
+2026-08-25T04:55:48,ERROR,gagal koneksi database,2773,500
+2026-08-25T05:03:10,INFO,sinkronisasi data selesai,151,200
+2026-08-25T05:16:42,WARN,token kedaluwarsa user=user-326,1605,200
+2026-08-25T05:16:57,INFO,backup harian selesai,21,200
+2026-08-25T05:41:33,INFO,cache diperbarui,221,200
+2026-08-25T05:52:50,WARN,memori 80% terpakai,509,429
+2026-08-25T06:11:16,WARN,token kedaluwarsa user=user-308,922,200
+2026-08-25T06:25:29,INFO,cache diperbarui,163,200
+2026-08-25T06:32:49,INFO,backup harian selesai,280,200
+2026-08-25T06:33:19,WARN,memori 80% terpakai,1250,200
+2026-08-25T06:38:39,INFO,email notifikasi terkirim,24,200
+2026-08-25T06:44:20,INFO,login berhasil user=user-072,279,200
+2026-08-25T06:53:52,INFO,email notifikasi terkirim,288,200
+2026-08-25T07:05:24,INFO,sinkronisasi data selesai,283,200
+2026-08-25T07:17:47,ERROR,file tidak ditemukan /data/5520.csv,1277,404
+2026-08-25T07:36:15,INFO,login berhasil user=user-385,252,200
+2026-08-25T09:13:56,ERROR,file tidak ditemukan /data/9943.csv,1330,500
+2026-08-25T10:05:42,INFO,email notifikasi terkirim,239,200
+2026-08-25T10:12:59,INFO,login berhasil user=user-105,107,200
+2026-08-25T10:16:38,INFO,sinkronisasi data selesai,59,200
+2026-08-25T10:20:49,INFO,cache diperbarui,91,200
+2026-08-25T10:21:31,INFO,sinkronisasi data selesai,55,200
+2026-08-25T10:38:22,INFO,cache diperbarui,155,200
+2026-08-25T11:24:22,INFO,sinkronisasi data selesai,72,200
+2026-08-25T11:52:23,INFO,login berhasil user=user-107,77,200
+2026-08-25T11:57:29,INFO,email notifikasi terkirim,52,200
+2026-08-25T12:00:04,WARN,token kedaluwarsa user=user-328,1309,429
+2026-08-25T12:17:37,WARN,memori 80% terpakai,913,200
+2026-08-25T12:19:04,WARN,respons lambat endpoint=/api/harga,1929,200
+2026-08-25T12:36:30,INFO,cache diperbarui,161,200
+2026-08-25T12:44:08,INFO,login berhasil user=user-133,199,200
+2026-08-25T13:16:40,INFO,login berhasil user=user-015,166,200
+2026-08-25T13:49:22,INFO,sinkronisasi data selesai,156,200
+2026-08-25T14:14:05,INFO,email notifikasi terkirim,43,200
+2026-08-25T14:35:20,INFO,backup harian selesai,76,200
+2026-08-25T14:49:41,INFO,backup harian selesai,214,200
+2026-08-25T16:46:33,INFO,sinkronisasi data selesai,173,200
+2026-08-25T16:47:01,INFO,sinkronisasi data selesai,275,200
+2026-08-25T16:51:28,INFO,cache diperbarui,35,200
+2026-08-25T16:51:56,INFO,email notifikasi terkirim,244,200
+2026-08-25T17:00:19,INFO,backup harian selesai,8,200
+2026-08-25T17:03:57,INFO,sinkronisasi data selesai,45,200
+2026-08-25T17:11:58,INFO,email notifikasi terkirim,49,200
+2026-08-25T17:24:19,INFO,halaman dashboard dimuat,35,200
+2026-08-25T17:26:48,INFO,cache diperbarui,210,200
+2026-08-25T17:38:27,INFO,email notifikasi terkirim,227,200
+2026-08-25T17:49:12,WARN,memori 80% terpakai,449,200
+2026-08-25T17:54:46,INFO,halaman dashboard dimuat,23,200
+2026-08-25T18:19:37,INFO,halaman dashboard dimuat,222,200
+2026-08-25T18:19:57,INFO,halaman dashboard dimuat,152,200
+2026-08-25T18:40:57,ERROR,timeout endpoint=/api/laporan,2152,500
+2026-08-25T18:42:17,INFO,cache diperbarui,90,200
+2026-08-25T18:46:19,INFO,sinkronisasi data selesai,71,200
+2026-08-25T19:06:30,INFO,sinkronisasi data selesai,16,200
+2026-08-25T19:32:26,INFO,login berhasil user=user-093,124,200
+2026-08-25T19:35:52,INFO,sinkronisasi data selesai,66,200
+2026-08-25T19:41:49,WARN,respons lambat endpoint=/api/harga,933,200
+2026-08-25T19:53:41,INFO,sinkronisasi data selesai,258,200
+2026-08-25T19:59:14,INFO,backup harian selesai,133,200
+2026-08-25T19:59:49,ERROR,gagal koneksi database,1932,500
+2026-08-25T20:33:35,INFO,halaman dashboard dimuat,141,200
+2026-08-25T20:44:07,INFO,backup harian selesai,170,200
+2026-08-25T20:57:31,INFO,login berhasil user=user-117,80,200
+2026-08-25T21:45:39,INFO,halaman dashboard dimuat,239,200
+2026-08-25T21:51:18,WARN,respons lambat endpoint=/api/harga,1066,429
+2026-08-25T22:19:22,INFO,backup harian selesai,110,200
+2026-08-25T22:38:04,INFO,backup harian selesai,45,200
+2026-08-25T23:19:42,WARN,retry koneksi database,1378,200
+2026-08-25T23:41:08,INFO,email notifikasi terkirim,27,200
+2026-08-26T01:07:30,INFO,backup harian selesai,16,200
+2026-08-26T01:09:43,INFO,sinkronisasi data selesai,230,200
+2026-08-26T01:26:45,INFO,cache diperbarui,93,200
+2026-08-26T01:33:11,INFO,sinkronisasi data selesai,162,200
+2026-08-26T01:41:38,WARN,retry koneksi database,1017,200
+2026-08-26T01:41:52,INFO,cache diperbarui,102,200
+2026-08-26T02:09:56,INFO,cache diperbarui,44,200
+2026-08-26T02:27:08,INFO,halaman dashboard dimuat,122,200
+2026-08-26T02:27:39,INFO,login berhasil user=user-298,67,200
+2026-08-26T03:15:37,INFO,login berhasil user=user-155,61,200
+2026-08-26T03:21:40,INFO,cache diperbarui,177,200
+2026-08-26T03:23:25,ERROR,pembayaran gagal order=INV-8817,1292,500
+2026-08-26T03:38:55,INFO,login berhasil user=user-328,82,200
+2026-08-26T03:40:17,INFO,login berhasil user=user-059,152,200
+2026-08-26T04:13:41,WARN,retry koneksi database,1628,200
+2026-08-26T04:43:19,INFO,backup harian selesai,110,200
+2026-08-26T04:48:12,INFO,halaman dashboard dimuat,218,200
+2026-08-26T04:57:34,INFO,halaman dashboard dimuat,185,200
+2026-08-26T05:03:09,INFO,backup harian selesai,122,200
+2026-08-26T05:54:24,INFO,login berhasil user=user-252,72,200
+2026-08-26T06:05:33,INFO,backup harian selesai,32,200
+2026-08-26T06:11:20,WARN,retry koneksi database,1892,429
+2026-08-26T06:54:50,WARN,token kedaluwarsa user=user-284,1792,429
+2026-08-26T06:54:55,INFO,sinkronisasi data selesai,278,200
+2026-08-26T07:08:23,INFO,login berhasil user=user-219,110,200
+2026-08-26T07:11:31,INFO,email notifikasi terkirim,228,200
+2026-08-26T07:20:00,WARN,retry koneksi database,1469,429
+2026-08-26T07:23:38,INFO,login berhasil user=user-128,226,200
+2026-08-26T07:33:29,WARN,token kedaluwarsa user=user-188,1919,429
+2026-08-26T07:40:05,INFO,sinkronisasi data selesai,149,200
+2026-08-26T07:44:35,INFO,sinkronisasi data selesai,104,200
+2026-08-26T08:07:30,ERROR,pembayaran gagal order=INV-8309,1513,404
+2026-08-26T08:17:02,WARN,token kedaluwarsa user=user-078,1897,429
+2026-08-26T08:19:44,WARN,respons lambat endpoint=/api/harga,1804,429
+2026-08-26T09:01:39,WARN,respons lambat endpoint=/api/harga,542,200
+2026-08-26T09:14:48,INFO,halaman dashboard dimuat,272,200
+2026-08-26T09:19:53,WARN,token kedaluwarsa user=user-373,1820,200
+2026-08-26T09:21:01,INFO,cache diperbarui,5,200
+2026-08-26T09:32:59,INFO,halaman dashboard dimuat,283,200
+2026-08-26T09:42:06,WARN,retry koneksi database,744,200
+2026-08-26T10:07:48,INFO,login berhasil user=user-004,173,200
+2026-08-26T10:09:15,INFO,halaman dashboard dimuat,241,200
+2026-08-26T10:17:50,INFO,backup harian selesai,256,200
+2026-08-26T10:30:49,WARN,retry koneksi database,1504,429
+2026-08-26T10:58:27,INFO,login berhasil user=user-338,125,200
+2026-08-26T10:59:13,INFO,cache diperbarui,90,200
+2026-08-26T11:16:03,INFO,halaman dashboard dimuat,297,200
+2026-08-26T11:38:23,WARN,memori 80% terpakai,869,200
+2026-08-26T11:43:08,INFO,email notifikasi terkirim,27,200
+2026-08-26T11:58:20,INFO,sinkronisasi data selesai,32,200
+2026-08-26T12:55:49,ERROR,timeout endpoint=/api/laporan,1737,500
+2026-08-26T12:57:32,INFO,halaman dashboard dimuat,219,200
+2026-08-26T13:23:28,INFO,email notifikasi terkirim,249,200
+2026-08-26T13:39:54,INFO,cache diperbarui,158,200
+2026-08-26T13:41:17,INFO,login berhasil user=user-387,134,200
+2026-08-26T13:41:20,INFO,email notifikasi terkirim,114,200
+2026-08-26T13:44:01,WARN,token kedaluwarsa user=user-189,1242,429
+2026-08-26T13:47:30,INFO,login berhasil user=user-317,152,200
+2026-08-26T13:49:07,INFO,backup harian selesai,246,200
+2026-08-26T13:55:32,INFO,backup harian selesai,26,200
+2026-08-26T14:18:09,INFO,email notifikasi terkirim,199,200
+2026-08-26T14:27:04,INFO,backup harian selesai,223,200
+2026-08-26T15:01:24,INFO,login berhasil user=user-146,217,200
+2026-08-26T15:41:19,INFO,halaman dashboard dimuat,254,200
+2026-08-26T15:58:29,WARN,memori 80% terpakai,703,200
+2026-08-26T16:02:00,INFO,cache diperbarui,280,200
+2026-08-26T16:18:24,INFO,cache diperbarui,253,200
+2026-08-26T16:24:32,INFO,halaman dashboard dimuat,293,200
+2026-08-26T16:30:19,WARN,memori 80% terpakai,308,200
+2026-08-26T16:46:31,INFO,halaman dashboard dimuat,268,200
+2026-08-26T16:52:26,WARN,memori 80% terpakai,658,429
+2026-08-26T17:25:36,INFO,sinkronisasi data selesai,172,200
+2026-08-26T17:35:09,INFO,halaman dashboard dimuat,270,200
+2026-08-26T17:36:45,INFO,backup harian selesai,290,200
+2026-08-26T17:37:35,ERROR,pembayaran gagal order=INV-5592,1321,500
+2026-08-26T18:01:17,INFO,cache diperbarui,62,200
+2026-08-26T18:58:52,INFO,email notifikasi terkirim,59,200
+2026-08-26T19:27:28,INFO,halaman dashboard dimuat,202,200
+2026-08-26T19:34:34,ERROR,timeout endpoint=/api/laporan,1119,404
+2026-08-26T20:01:35,INFO,sinkronisasi data selesai,143,200
+2026-08-26T20:24:03,INFO,email notifikasi terkirim,173,200
+2026-08-26T20:55:59,WARN,retry koneksi database,1603,200
+2026-08-26T21:24:41,INFO,sinkronisasi data selesai,83,200
+2026-08-26T21:28:06,INFO,login berhasil user=user-304,284,200
+2026-08-26T21:47:17,INFO,backup harian selesai,219,200
+2026-08-26T21:58:23,INFO,email notifikasi terkirim,253,200
+2026-08-26T22:01:41,INFO,cache diperbarui,211,200
+2026-08-26T22:02:40,WARN,token kedaluwarsa user=user-115,1767,200
+2026-08-26T22:41:38,ERROR,gagal koneksi database,2662,500
+2026-08-26T22:45:47,ERROR,pembayaran gagal order=INV-9287,2576,500
+2026-08-26T22:52:32,INFO,sinkronisasi data selesai,229,200
+2026-08-26T23:27:13,INFO,email notifikasi terkirim,276,200
+2026-08-26T23:28:07,WARN,token kedaluwarsa user=user-129,1447,429
+2026-08-27T00:02:55,WARN,respons lambat endpoint=/api/harga,738,429
+2026-08-27T00:03:20,INFO,backup harian selesai,229,200
+2026-08-27T00:04:28,INFO,halaman dashboard dimuat,261,200
+2026-08-27T00:05:24,INFO,cache diperbarui,193,200
+2026-08-27T00:12:30,INFO,login berhasil user=user-105,148,200
+2026-08-27T00:25:08,INFO,backup harian selesai,258,200
+2026-08-27T00:54:26,INFO,backup harian selesai,158,200
+2026-08-27T01:30:55,INFO,cache diperbarui,63,200
+2026-08-27T01:42:38,WARN,respons lambat endpoint=/api/harga,1976,200
+2026-08-27T01:53:28,WARN,retry koneksi database,530,200
+2026-08-27T02:02:27,INFO,email notifikasi terkirim,29,200
+2026-08-27T02:02:54,WARN,respons lambat endpoint=/api/harga,560,200
+2026-08-27T02:39:07,INFO,email notifikasi terkirim,149,200
+2026-08-27T02:49:27,INFO,login berhasil user=user-295,75,200
+2026-08-27T03:36:01,WARN,token kedaluwarsa user=user-121,1314,200
+2026-08-27T04:28:25,ERROR,gagal koneksi database,3663,404
+2026-08-27T04:53:17,INFO,halaman dashboard dimuat,49,200
+2026-08-27T04:57:55,WARN,memori 80% terpakai,506,200
+2026-08-27T05:34:43,WARN,retry koneksi database,673,429
+2026-08-27T06:00:57,WARN,token kedaluwarsa user=user-191,1877,429
+2026-08-27T06:13:42,INFO,sinkronisasi data selesai,219,200
+2026-08-27T06:26:29,INFO,email notifikasi terkirim,269,200
+2026-08-27T06:54:58,INFO,sinkronisasi data selesai,102,200
+2026-08-27T07:19:18,WARN,memori 80% terpakai,1351,200
+2026-08-27T07:31:18,INFO,sinkronisasi data selesai,288,200
+2026-08-27T07:45:28,INFO,halaman dashboard dimuat,36,200
+2026-08-27T07:56:55,WARN,token kedaluwarsa user=user-202,425,200
+2026-08-27T08:14:25,ERROR,file tidak ditemukan /data/2973.csv,1521,404
+2026-08-27T08:52:45,INFO,login berhasil user=user-234,85,200
+2026-08-27T09:18:04,INFO,email notifikasi terkirim,213,200
+2026-08-27T09:23:55,INFO,sinkronisasi data selesai,76,200
+2026-08-27T09:33:27,WARN,memori 80% terpakai,1605,429
+2026-08-27T09:36:51,ERROR,gagal koneksi database,3785,500
+2026-08-27T09:53:59,INFO,halaman dashboard dimuat,101,200
+2026-08-27T09:58:43,INFO,backup harian selesai,129,200
+2026-08-27T10:10:49,WARN,token kedaluwarsa user=user-241,1282,200
+2026-08-27T10:15:31,WARN,retry koneksi database,532,200
+2026-08-27T11:33:40,WARN,memori 80% terpakai,1590,200
+2026-08-27T12:22:50,INFO,sinkronisasi data selesai,107,200
+2026-08-27T12:24:44,INFO,email notifikasi terkirim,62,200
+2026-08-27T12:34:12,INFO,cache diperbarui,7,200
+2026-08-27T13:30:05,WARN,respons lambat endpoint=/api/harga,1120,429
+2026-08-27T14:03:35,INFO,backup harian selesai,191,200
+2026-08-27T14:32:20,INFO,halaman dashboard dimuat,72,200
+2026-08-27T14:37:33,INFO,halaman dashboard dimuat,97,200
+2026-08-27T14:42:44,INFO,email notifikasi terkirim,234,200
+2026-08-27T14:55:53,INFO,login berhasil user=user-063,34,200
+2026-08-27T14:59:16,WARN,memori 80% terpakai,1163,200
+2026-08-27T15:06:41,WARN,retry koneksi database,1741,429
+2026-08-27T15:13:38,WARN,memori 80% terpakai,518,429
+2026-08-27T15:17:06,INFO,login berhasil user=user-216,115,200
+2026-08-27T15:28:53,INFO,email notifikasi terkirim,227,200
+2026-08-27T15:30:09,INFO,login berhasil user=user-105,201,200
+2026-08-27T15:51:53,INFO,login berhasil user=user-303,34,200
+2026-08-27T15:57:27,INFO,halaman dashboard dimuat,78,200
+2026-08-27T16:14:16,INFO,sinkronisasi data selesai,63,200
+2026-08-27T16:17:34,INFO,login berhasil user=user-056,121,200
+2026-08-27T16:41:14,INFO,cache diperbarui,172,200
+2026-08-27T17:04:32,INFO,sinkronisasi data selesai,291,200
+2026-08-27T17:16:24,INFO,email notifikasi terkirim,243,200
+2026-08-27T17:17:42,INFO,email notifikasi terkirim,173,200
+2026-08-27T17:19:08,WARN,memori 80% terpakai,1465,200
+2026-08-27T17:21:47,INFO,email notifikasi terkirim,267,200
+2026-08-27T17:39:07,INFO,sinkronisasi data selesai,193,200
+2026-08-27T17:52:25,ERROR,timeout endpoint=/api/laporan,1453,500
+2026-08-27T18:04:12,INFO,cache diperbarui,9,200
+2026-08-27T18:08:40,INFO,halaman dashboard dimuat,205,200
+2026-08-27T18:36:59,INFO,email notifikasi terkirim,60,200
+2026-08-27T18:42:52,INFO,halaman dashboard dimuat,31,200
+2026-08-27T19:00:57,INFO,login berhasil user=user-081,174,200
+2026-08-27T19:03:58,INFO,sinkronisasi data selesai,87,200
+2026-08-27T19:05:41,INFO,cache diperbarui,157,200
+2026-08-27T19:28:30,INFO,sinkronisasi data selesai,221,200
+2026-08-27T19:33:09,INFO,login berhasil user=user-174,124,200
+2026-08-27T19:54:23,WARN,memori 80% terpakai,1958,200
+2026-08-27T19:54:36,WARN,token kedaluwarsa user=user-310,426,200
+2026-08-27T20:08:15,WARN,memori 80% terpakai,1555,200
+2026-08-27T20:36:57,WARN,token kedaluwarsa user=user-105,844,200
+2026-08-27T20:52:53,WARN,memori 80% terpakai,1281,200
+2026-08-27T22:04:09,INFO,cache diperbarui,67,200
+2026-08-27T22:05:35,INFO,login berhasil user=user-217,223,200
+2026-08-27T22:12:44,INFO,login berhasil user=user-009,289,200
+2026-08-27T22:25:21,INFO,backup harian selesai,216,200
+2026-08-27T22:39:58,ERROR,timeout endpoint=/api/laporan,1907,500
+2026-08-27T23:30:19,INFO,backup harian selesai,205,200
+2026-08-28T00:52:09,ERROR,pembayaran gagal order=INV-5229,1790,500
+2026-08-28T00:54:09,ERROR,file tidak ditemukan /data/5271.csv,2370,404
+2026-08-28T01:01:52,INFO,cache diperbarui,124,200
+2026-08-28T01:10:53,INFO,halaman dashboard dimuat,48,200
+2026-08-28T01:57:38,WARN,respons lambat endpoint=/api/harga,1735,200
+2026-08-28T02:12:08,WARN,memori 80% terpakai,751,200
+2026-08-28T02:22:36,INFO,backup harian selesai,13,200
+2026-08-28T02:59:35,INFO,halaman dashboard dimuat,219,200
+2026-08-28T03:28:07,INFO,sinkronisasi data selesai,238,200
+2026-08-28T03:31:58,INFO,login berhasil user=user-338,225,200
+2026-08-28T03:47:15,INFO,email notifikasi terkirim,211,200
+2026-08-28T03:52:40,ERROR,pembayaran gagal order=INV-4246,510,500
+2026-08-28T03:53:31,INFO,email notifikasi terkirim,253,200
+2026-08-28T04:13:59,INFO,cache diperbarui,86,200
+2026-08-28T04:59:04,INFO,email notifikasi terkirim,133,200
+2026-08-28T05:13:14,INFO,halaman dashboard dimuat,283,200
+2026-08-28T05:32:48,INFO,sinkronisasi data selesai,25,200
+2026-08-28T05:33:47,WARN,memori 80% terpakai,1866,429
+2026-08-28T05:49:13,INFO,backup harian selesai,85,200
+2026-08-28T05:57:16,WARN,token kedaluwarsa user=user-096,431,200
+2026-08-28T06:14:34,WARN,retry koneksi database,1439,429
+2026-08-28T06:51:41,INFO,backup harian selesai,72,200
+2026-08-28T06:52:16,INFO,backup harian selesai,203,200
+2026-08-28T07:09:39,ERROR,file tidak ditemukan /data/9373.csv,3484,500
+2026-08-28T07:45:56,INFO,backup harian selesai,14,200
+2026-08-28T08:28:48,WARN,memori 80% terpakai,1680,200
+2026-08-28T08:38:28,WARN,respons lambat endpoint=/api/harga,1619,429
+2026-08-28T08:43:25,INFO,email notifikasi terkirim,127,200
+2026-08-28T08:46:36,INFO,backup harian selesai,67,200
+2026-08-28T09:05:13,ERROR,gagal koneksi database,1602,404
+2026-08-28T09:13:28,INFO,sinkronisasi data selesai,42,200
+2026-08-28T09:25:34,INFO,backup harian selesai,145,200
+2026-08-28T09:42:56,WARN,token kedaluwarsa user=user-049,853,429
+2026-08-28T09:42:59,WARN,retry koneksi database,1845,429
+2026-08-28T09:44:45,ERROR,pembayaran gagal order=INV-4622,2648,500
+2026-08-28T09:59:17,INFO,backup harian selesai,198,200
+2026-08-28T10:07:55,INFO,sinkronisasi data selesai,147,200
+2026-08-28T10:22:33,INFO,email notifikasi terkirim,238,200
+2026-08-28T10:38:39,INFO,halaman dashboard dimuat,261,200
+2026-08-28T10:39:23,INFO,login berhasil user=user-363,109,200
+2026-08-28T10:39:59,INFO,halaman dashboard dimuat,133,200
+2026-08-28T10:42:23,ERROR,file tidak ditemukan /data/5494.csv,3374,500
+2026-08-28T10:50:54,INFO,halaman dashboard dimuat,99,200
+2026-08-28T11:18:47,ERROR,gagal koneksi database,1771,500
+2026-08-28T11:41:06,INFO,sinkronisasi data selesai,156,200
+2026-08-28T11:54:34,WARN,respons lambat endpoint=/api/harga,1472,429
+2026-08-28T11:56:46,INFO,cache diperbarui,44,200
+2026-08-28T12:16:48,INFO,email notifikasi terkirim,226,200
+2026-08-28T12:23:56,WARN,token kedaluwarsa user=user-129,1305,429
+2026-08-28T12:25:09,ERROR,file tidak ditemukan /data/9089.csv,2795,500
+2026-08-28T12:50:30,WARN,retry koneksi database,326,200
+2026-08-28T12:57:43,ERROR,pembayaran gagal order=INV-6200,1632,404
+2026-08-28T13:01:07,INFO,sinkronisasi data selesai,206,200
+2026-08-28T13:08:36,WARN,memori 80% terpakai,1279,200
+2026-08-28T13:10:04,INFO,email notifikasi terkirim,176,200
+2026-08-28T13:24:21,WARN,respons lambat endpoint=/api/harga,1858,429
+2026-08-28T13:41:44,INFO,backup harian selesai,5,200
+2026-08-28T13:55:32,INFO,backup harian selesai,17,200
+2026-08-28T14:05:32,INFO,cache diperbarui,216,200
+2026-08-28T14:22:05,WARN,retry koneksi database,329,429
+2026-08-28T14:33:24,INFO,sinkronisasi data selesai,299,200
+2026-08-28T14:58:15,INFO,cache diperbarui,19,200
+2026-08-28T15:17:19,INFO,halaman dashboard dimuat,182,200
+2026-08-28T15:37:46,INFO,login berhasil user=user-385,140,200
+2026-08-28T15:53:43,INFO,cache diperbarui,291,200
+2026-08-28T15:55:04,INFO,halaman dashboard dimuat,268,200
+2026-08-28T16:38:06,WARN,token kedaluwarsa user=user-388,1780,429
+2026-08-28T16:51:45,INFO,login berhasil user=user-072,250,200
+2026-08-28T16:52:17,WARN,retry koneksi database,1974,200
+2026-08-28T16:57:44,ERROR,gagal koneksi database,2613,500
+2026-08-28T17:12:12,INFO,login berhasil user=user-388,190,200
+2026-08-28T17:20:25,ERROR,pembayaran gagal order=INV-7340,1870,500
+2026-08-28T17:24:59,INFO,login berhasil user=user-226,214,200
+2026-08-28T18:03:01,ERROR,gagal koneksi database,3053,404
+2026-08-28T18:44:21,INFO,halaman dashboard dimuat,15,200
+2026-08-28T18:45:04,INFO,login berhasil user=user-006,23,200
+2026-08-28T19:11:46,WARN,token kedaluwarsa user=user-258,783,429
+2026-08-28T19:13:52,INFO,cache diperbarui,144,200
+2026-08-28T19:30:57,INFO,halaman dashboard dimuat,101,200
+2026-08-28T19:39:11,WARN,token kedaluwarsa user=user-369,1376,200
+2026-08-28T19:42:20,WARN,token kedaluwarsa user=user-222,1649,200
+2026-08-28T19:51:34,INFO,login berhasil user=user-347,285,200
+2026-08-28T19:58:15,WARN,token kedaluwarsa user=user-382,837,200
+2026-08-28T20:01:11,WARN,retry koneksi database,1902,200
+2026-08-28T20:14:13,INFO,backup harian selesai,32,200
+2026-08-28T20:23:22,INFO,login berhasil user=user-030,87,200
+2026-08-28T20:45:54,INFO,backup harian selesai,8,200
+2026-08-28T20:57:49,INFO,cache diperbarui,96,200
+2026-08-28T21:21:13,ERROR,pembayaran gagal order=INV-6722,1192,404
+2026-08-28T22:14:45,WARN,token kedaluwarsa user=user-204,1968,429
+2026-08-28T22:54:07,INFO,cache diperbarui,62,200
+2026-08-28T22:56:34,INFO,backup harian selesai,212,200
+2026-08-28T23:01:01,WARN,memori 80% terpakai,1554,429
+2026-08-28T23:27:49,INFO,login berhasil user=user-377,143,200
+2026-08-28T23:27:54,ERROR,file tidak ditemukan /data/5875.csv,1352,500
+2026-08-28T23:36:44,INFO,email notifikasi terkirim,32,200
+2026-08-28T23:44:38,INFO,cache diperbarui,174,200
+2026-08-28T23:59:48,INFO,login berhasil user=user-081,107,200
+2026-08-29T00:03:29,INFO,halaman dashboard dimuat,224,200
+2026-08-29T00:10:25,WARN,respons lambat endpoint=/api/harga,887,200
+2026-08-29T00:16:12,ERROR,pembayaran gagal order=INV-8034,2059,500
+2026-08-29T00:31:30,ERROR,gagal koneksi database,2766,500
+2026-08-29T00:34:12,INFO,sinkronisasi data selesai,125,200
+2026-08-29T01:00:14,WARN,retry koneksi database,772,200
+2026-08-29T01:00:49,WARN,respons lambat endpoint=/api/harga,493,200
+2026-08-29T01:01:22,WARN,memori 80% terpakai,753,200
+2026-08-29T01:14:02,ERROR,timeout endpoint=/api/laporan,1100,500
+2026-08-29T01:16:34,ERROR,timeout endpoint=/api/laporan,2308,404
+2026-08-29T01:27:52,WARN,token kedaluwarsa user=user-105,1381,429
+2026-08-29T01:31:42,INFO,login berhasil user=user-198,139,200
+2026-08-29T01:46:16,INFO,sinkronisasi data selesai,180,200
+2026-08-29T01:47:10,INFO,login berhasil user=user-140,88,200
+2026-08-29T02:08:20,INFO,email notifikasi terkirim,73,200
+2026-08-29T02:14:44,INFO,backup harian selesai,282,200
+2026-08-29T02:27:36,INFO,login berhasil user=user-332,178,200
+2026-08-29T02:42:17,INFO,login berhasil user=user-059,27,200
+2026-08-29T03:08:33,INFO,halaman dashboard dimuat,117,200
+2026-08-29T03:15:12,ERROR,gagal koneksi database,3787,500
+2026-08-29T03:50:03,INFO,cache diperbarui,34,200
+2026-08-29T03:58:33,WARN,respons lambat endpoint=/api/harga,1058,200
+2026-08-29T04:15:09,INFO,email notifikasi terkirim,71,200
+2026-08-29T04:18:45,ERROR,gagal koneksi database,3278,404
+2026-08-29T04:25:52,WARN,respons lambat endpoint=/api/harga,606,429
+2026-08-29T04:29:13,INFO,backup harian selesai,58,200
+2026-08-29T04:41:17,WARN,retry koneksi database,426,200
+2026-08-29T04:43:21,WARN,token kedaluwarsa user=user-144,318,429
+2026-08-29T05:03:55,INFO,backup harian selesai,137,200
+2026-08-29T05:08:29,INFO,cache diperbarui,120,200
+2026-08-29T05:50:24,INFO,backup harian selesai,92,200
+2026-08-29T06:17:27,INFO,login berhasil user=user-288,71,200
+2026-08-29T06:36:23,INFO,sinkronisasi data selesai,268,200
+2026-08-29T06:58:10,ERROR,file tidak ditemukan /data/6451.csv,1591,500
+2026-08-29T07:06:13,ERROR,timeout endpoint=/api/laporan,3874,404
+2026-08-29T07:21:55,INFO,sinkronisasi data selesai,288,200
+2026-08-29T07:35:53,INFO,email notifikasi terkirim,157,200
+2026-08-29T08:03:26,WARN,respons lambat endpoint=/api/harga,687,429
+2026-08-29T08:07:54,WARN,memori 80% terpakai,1999,200
+2026-08-29T08:09:23,INFO,backup harian selesai,208,200
+2026-08-29T08:17:18,WARN,retry koneksi database,1677,429
+2026-08-29T08:37:11,WARN,token kedaluwarsa user=user-134,1812,200
+2026-08-29T08:47:01,WARN,token kedaluwarsa user=user-242,1904,200
+2026-08-29T08:59:36,INFO,login berhasil user=user-185,202,200
+2026-08-29T09:01:35,INFO,login berhasil user=user-196,189,200
+2026-08-29T10:18:42,INFO,cache diperbarui,78,200
+2026-08-29T10:34:55,WARN,respons lambat endpoint=/api/harga,1387,200
+2026-08-29T10:36:35,INFO,sinkronisasi data selesai,174,200
+2026-08-29T10:44:51,WARN,respons lambat endpoint=/api/harga,1101,429
+2026-08-29T11:03:20,ERROR,timeout endpoint=/api/laporan,2106,404
+2026-08-29T11:14:54,INFO,cache diperbarui,14,200
+2026-08-29T11:35:54,INFO,sinkronisasi data selesai,280,200
+2026-08-29T11:42:24,INFO,cache diperbarui,30,200
+2026-08-29T12:00:18,WARN,respons lambat endpoint=/api/harga,1070,200
+2026-08-29T12:12:18,ERROR,file tidak ditemukan /data/1104.csv,1146,500
+2026-08-29T12:38:05,INFO,sinkronisasi data selesai,188,200
+2026-08-29T13:17:59,INFO,login berhasil user=user-111,165,200
+2026-08-29T13:20:33,INFO,email notifikasi terkirim,168,200
+2026-08-29T13:32:41,INFO,halaman dashboard dimuat,156,200
+2026-08-29T13:40:48,WARN,memori 80% terpakai,1531,429
+2026-08-29T13:40:55,INFO,sinkronisasi data selesai,201,200
+2026-08-29T14:02:45,INFO,login berhasil user=user-122,23,200
+2026-08-29T14:28:58,INFO,email notifikasi terkirim,56,200
+2026-08-29T14:30:44,ERROR,file tidak ditemukan /data/7095.csv,3605,500
+2026-08-29T15:36:37,INFO,backup harian selesai,152,200
+2026-08-29T15:45:55,INFO,halaman dashboard dimuat,167,200
+2026-08-29T15:46:50,INFO,cache diperbarui,154,200
+2026-08-29T15:49:28,INFO,email notifikasi terkirim,23,200
+2026-08-29T15:49:31,ERROR,file tidak ditemukan /data/6272.csv,1573,500
+2026-08-29T15:56:49,WARN,retry koneksi database,1772,429
+2026-08-29T15:59:10,INFO,sinkronisasi data selesai,78,200
+2026-08-29T16:25:08,INFO,login berhasil user=user-382,283,200
+2026-08-29T16:41:37,INFO,sinkronisasi data selesai,63,200
+2026-08-29T16:41:55,INFO,login berhasil user=user-067,155,200
+2026-08-29T16:46:14,INFO,halaman dashboard dimuat,57,200
+2026-08-29T16:49:43,INFO,halaman dashboard dimuat,154,200
+2026-08-29T17:05:05,INFO,cache diperbarui,288,200
+2026-08-29T17:15:12,ERROR,file tidak ditemukan /data/8850.csv,2407,404
+2026-08-29T17:25:24,INFO,cache diperbarui,227,200
+2026-08-29T17:27:14,INFO,login berhasil user=user-152,198,200
+2026-08-29T18:10:12,WARN,retry koneksi database,1209,429
+2026-08-29T18:28:29,INFO,halaman dashboard dimuat,115,200
+2026-08-29T18:33:01,WARN,token kedaluwarsa user=user-166,1925,200
+2026-08-29T18:36:53,INFO,cache diperbarui,97,200
+2026-08-29T18:57:16,INFO,sinkronisasi data selesai,222,200
+2026-08-29T18:57:52,INFO,cache diperbarui,162,200
+2026-08-29T19:05:33,WARN,memori 80% terpakai,2000,429
+2026-08-29T19:41:16,INFO,sinkronisasi data selesai,178,200
+2026-08-29T20:01:08,INFO,sinkronisasi data selesai,288,200
+2026-08-29T20:09:15,ERROR,pembayaran gagal order=INV-9450,2740,404
+2026-08-29T20:29:40,INFO,sinkronisasi data selesai,279,200
+2026-08-29T20:54:29,INFO,sinkronisasi data selesai,156,200
+2026-08-29T21:14:07,INFO,halaman dashboard dimuat,200,200
+2026-08-29T21:17:58,INFO,login berhasil user=user-020,231,200
+2026-08-29T21:26:24,INFO,backup harian selesai,220,200
+2026-08-29T21:51:13,WARN,token kedaluwarsa user=user-266,1943,429
+2026-08-29T22:02:44,INFO,backup harian selesai,180,200
+2026-08-29T22:20:29,INFO,cache diperbarui,75,200
+2026-08-29T22:31:50,INFO,halaman dashboard dimuat,109,200
+2026-08-29T22:41:16,INFO,login berhasil user=user-045,175,200
+2026-08-29T23:35:53,ERROR,pembayaran gagal order=INV-9550,2626,500
+2026-08-30T00:00:08,INFO,email notifikasi terkirim,150,200
+2026-08-30T00:13:14,INFO,login berhasil user=user-293,35,200
+2026-08-30T00:25:48,WARN,memori 80% terpakai,1330,429
+2026-08-30T00:27:01,INFO,cache diperbarui,92,200
+2026-08-30T00:42:03,INFO,backup harian selesai,76,200
+2026-08-30T00:49:35,INFO,halaman dashboard dimuat,187,200
+2026-08-30T01:40:36,WARN,respons lambat endpoint=/api/harga,1448,200
+2026-08-30T01:43:23,INFO,sinkronisasi data selesai,190,200
+2026-08-30T01:44:53,INFO,backup harian selesai,57,200
+2026-08-30T01:59:48,INFO,login berhasil user=user-303,243,200
+2026-08-30T02:02:58,WARN,retry koneksi database,1051,200
+2026-08-30T02:24:58,INFO,login berhasil user=user-225,197,200
+2026-08-30T02:42:59,WARN,respons lambat endpoint=/api/harga,787,429
+2026-08-30T02:49:31,INFO,cache diperbarui,99,200
+2026-08-30T03:11:56,INFO,halaman dashboard dimuat,117,200
+2026-08-30T03:25:49,WARN,token kedaluwarsa user=user-122,442,429
+2026-08-30T03:28:54,INFO,cache diperbarui,197,200
+2026-08-30T03:33:10,ERROR,file tidak ditemukan /data/1591.csv,1661,404
+2026-08-30T03:34:23,INFO,login berhasil user=user-168,47,200
+2026-08-30T03:35:43,INFO,backup harian selesai,118,200
+2026-08-30T03:48:39,INFO,cache diperbarui,32,200
+2026-08-30T04:05:10,WARN,memori 80% terpakai,582,200
+2026-08-30T04:35:03,WARN,memori 80% terpakai,653,429
+2026-08-30T04:37:36,WARN,token kedaluwarsa user=user-187,1423,200
+2026-08-30T04:52:53,INFO,email notifikasi terkirim,69,200
+2026-08-30T05:02:32,INFO,halaman dashboard dimuat,67,200
+2026-08-30T05:04:08,INFO,backup harian selesai,153,200
+2026-08-30T05:09:27,ERROR,timeout endpoint=/api/laporan,1841,404
+2026-08-30T05:15:04,ERROR,timeout endpoint=/api/laporan,2613,500
+2026-08-30T05:19:50,INFO,sinkronisasi data selesai,283,200
+2026-08-30T05:28:55,WARN,retry koneksi database,376,200
+2026-08-30T05:37:53,ERROR,gagal koneksi database,2923,500
+2026-08-30T06:01:44,WARN,memori 80% terpakai,1739,429
+2026-08-30T06:02:50,WARN,respons lambat endpoint=/api/harga,454,429
+2026-08-30T06:05:21,INFO,email notifikasi terkirim,130,200
+2026-08-30T06:32:00,INFO,halaman dashboard dimuat,253,200
+2026-08-30T06:33:58,INFO,halaman dashboard dimuat,31,200
+2026-08-30T06:40:25,INFO,backup harian selesai,223,200
+2026-08-30T06:41:53,ERROR,timeout endpoint=/api/laporan,3069,404
+2026-08-30T06:44:23,WARN,respons lambat endpoint=/api/harga,1610,429
+2026-08-30T07:01:48,INFO,halaman dashboard dimuat,253,200
+2026-08-30T07:08:30,INFO,cache diperbarui,228,200
+2026-08-30T07:12:57,WARN,memori 80% terpakai,819,200
+2026-08-30T07:33:10,WARN,memori 80% terpakai,1316,429
+2026-08-30T07:43:33,INFO,sinkronisasi data selesai,234,200
+2026-08-30T07:51:23,ERROR,timeout endpoint=/api/laporan,777,500
+2026-08-30T08:05:58,INFO,halaman dashboard dimuat,100,200
+2026-08-30T08:25:13,INFO,backup harian selesai,44,200
+2026-08-30T08:41:33,INFO,cache diperbarui,165,200
+2026-08-30T08:51:00,WARN,token kedaluwarsa user=user-048,752,200
+2026-08-30T09:03:02,WARN,respons lambat endpoint=/api/harga,1735,200
+2026-08-30T09:37:49,INFO,cache diperbarui,201,200
+2026-08-30T09:43:16,INFO,sinkronisasi data selesai,214,200
+2026-08-30T10:42:36,INFO,sinkronisasi data selesai,232,200
+2026-08-30T10:48:52,INFO,backup harian selesai,259,200
+2026-08-30T11:15:24,INFO,halaman dashboard dimuat,19,200
+2026-08-30T11:23:22,ERROR,timeout endpoint=/api/laporan,1461,404
+2026-08-30T11:24:43,INFO,cache diperbarui,82,200
+2026-08-30T11:34:35,INFO,cache diperbarui,131,200
+2026-08-30T12:42:45,INFO,cache diperbarui,287,200
+2026-08-30T12:45:37,INFO,email notifikasi terkirim,20,200
+2026-08-30T12:55:36,INFO,cache diperbarui,190,200
+2026-08-30T13:27:17,INFO,cache diperbarui,152,200
+2026-08-30T13:40:01,WARN,respons lambat endpoint=/api/harga,439,429
+2026-08-30T13:49:07,ERROR,gagal koneksi database,3946,500
+2026-08-30T13:53:22,WARN,token kedaluwarsa user=user-345,1930,200
+2026-08-30T14:00:21,INFO,sinkronisasi data selesai,55,200
+2026-08-30T14:02:10,INFO,sinkronisasi data selesai,27,200
+2026-08-30T14:04:09,ERROR,pembayaran gagal order=INV-8132,960,404
+2026-08-30T14:18:36,INFO,sinkronisasi data selesai,214,200
+2026-08-30T14:48:57,WARN,token kedaluwarsa user=user-289,1044,429
+2026-08-30T15:16:53,INFO,email notifikasi terkirim,261,200
+2026-08-30T15:34:19,WARN,token kedaluwarsa user=user-290,967,429
+2026-08-30T15:40:12,WARN,respons lambat endpoint=/api/harga,1902,200
+2026-08-30T15:50:28,INFO,backup harian selesai,280,200
+2026-08-30T15:51:12,INFO,cache diperbarui,292,200
+2026-08-30T16:04:55,WARN,token kedaluwarsa user=user-030,1900,200
+2026-08-30T16:05:56,INFO,backup harian selesai,26,200
+2026-08-30T16:33:01,WARN,memori 80% terpakai,824,200
+2026-08-30T16:40:59,WARN,retry koneksi database,621,429
+2026-08-30T17:21:01,INFO,login berhasil user=user-264,273,200
+2026-08-30T17:58:11,INFO,halaman dashboard dimuat,224,200
+2026-08-30T18:02:29,ERROR,gagal koneksi database,2532,404
+2026-08-30T18:03:06,INFO,sinkronisasi data selesai,143,200
+2026-08-30T18:04:53,INFO,login berhasil user=user-263,46,200
+2026-08-30T18:13:12,ERROR,file tidak ditemukan /data/3750.csv,520,500
+2026-08-30T18:30:25,INFO,halaman dashboard dimuat,161,200
+2026-08-30T18:43:40,ERROR,pembayaran gagal order=INV-4001,749,404
+2026-08-30T18:57:39,ERROR,timeout endpoint=/api/laporan,1647,500
+2026-08-30T18:58:43,INFO,sinkronisasi data selesai,207,200
+2026-08-30T18:59:59,INFO,cache diperbarui,100,200
+2026-08-30T19:06:19,INFO,cache diperbarui,7,200
+2026-08-30T19:15:04,INFO,cache diperbarui,248,200
+2026-08-30T19:19:44,INFO,login berhasil user=user-284,77,200
+2026-08-30T19:40:49,INFO,halaman dashboard dimuat,123,200
+2026-08-30T19:43:07,INFO,email notifikasi terkirim,283,200
+2026-08-30T20:43:15,INFO,halaman dashboard dimuat,295,200
+2026-08-30T21:18:03,ERROR,gagal koneksi database,3528,500
+2026-08-30T21:48:17,INFO,cache diperbarui,50,200
+2026-08-30T21:49:18,INFO,login berhasil user=user-187,238,200
+2026-08-30T21:58:23,ERROR,timeout endpoint=/api/laporan,3356,404
+2026-08-30T22:59:19,ERROR,pembayaran gagal order=INV-6021,3013,500
+2026-08-30T23:17:14,WARN,respons lambat endpoint=/api/harga,1954,429
+2026-08-30T23:28:08,INFO,email notifikasi terkirim,185,200
+2026-08-31T00:07:48,INFO,sinkronisasi data selesai,196,200
+2026-08-31T00:28:04,INFO,sinkronisasi data selesai,251,200
+2026-08-31T00:37:31,INFO,cache diperbarui,160,200
+2026-08-31T00:40:35,INFO,backup harian selesai,103,200
+2026-08-31T01:07:47,INFO,login berhasil user=user-340,101,200
+2026-08-31T01:23:11,INFO,email notifikasi terkirim,266,200
+2026-08-31T01:41:41,INFO,login berhasil user=user-059,165,200
+2026-08-31T02:13:22,WARN,token kedaluwarsa user=user-387,1748,429
+2026-08-31T02:58:04,WARN,respons lambat endpoint=/api/harga,648,200
+2026-08-31T03:04:46,INFO,email notifikasi terkirim,291,200
+2026-08-31T03:28:18,ERROR,pembayaran gagal order=INV-1125,500,500
+2026-08-31T03:42:58,ERROR,pembayaran gagal order=INV-4039,2538,500
+2026-08-31T03:49:49,INFO,email notifikasi terkirim,86,200
+2026-08-31T04:12:26,INFO,cache diperbarui,155,200
+2026-08-31T04:17:11,INFO,cache diperbarui,146,200
+2026-08-31T04:22:25,WARN,memori 80% terpakai,1171,429
+2026-08-31T04:24:52,INFO,halaman dashboard dimuat,247,200
+2026-08-31T04:26:00,INFO,sinkronisasi data selesai,180,200
+2026-08-31T04:27:42,WARN,token kedaluwarsa user=user-057,1878,429
+2026-08-31T04:33:16,ERROR,pembayaran gagal order=INV-2421,2660,404
+2026-08-31T04:36:38,ERROR,file tidak ditemukan /data/1562.csv,1184,404
+2026-08-31T04:59:53,INFO,halaman dashboard dimuat,262,200
+2026-08-31T05:05:06,WARN,token kedaluwarsa user=user-101,1681,200
+2026-08-31T05:45:10,INFO,backup harian selesai,192,200
+2026-08-31T06:01:28,ERROR,gagal koneksi database,1448,404
+2026-08-31T06:18:06,INFO,backup harian selesai,260,200
+2026-08-31T06:30:21,WARN,respons lambat endpoint=/api/harga,1725,200
+2026-08-31T06:47:24,INFO,backup harian selesai,255,200
+2026-08-31T06:56:58,ERROR,file tidak ditemukan /data/1099.csv,3960,404
+2026-08-31T07:19:46,WARN,memori 80% terpakai,388,429
+2026-08-31T07:25:07,WARN,retry koneksi database,1392,429
+2026-08-31T07:38:15,WARN,retry koneksi database,1995,429
+2026-08-31T08:09:37,INFO,email notifikasi terkirim,258,200
+2026-08-31T08:25:48,INFO,cache diperbarui,53,200
+2026-08-31T08:36:03,WARN,retry koneksi database,970,200
+2026-08-31T08:46:30,WARN,memori 80% terpakai,1551,429
+2026-08-31T08:48:20,INFO,halaman dashboard dimuat,139,200
+2026-08-31T09:09:58,INFO,backup harian selesai,192,200
+2026-08-31T09:29:14,INFO,backup harian selesai,161,200
+2026-08-31T09:35:12,INFO,sinkronisasi data selesai,102,200
+2026-08-31T09:42:28,INFO,cache diperbarui,32,200
+2026-08-31T09:55:06,INFO,halaman dashboard dimuat,249,200
+2026-08-31T10:18:21,INFO,login berhasil user=user-343,154,200
+2026-08-31T10:19:52,INFO,halaman dashboard dimuat,147,200
+2026-08-31T10:39:04,INFO,email notifikasi terkirim,221,200
+2026-08-31T10:46:04,INFO,sinkronisasi data selesai,252,200
+2026-08-31T11:03:33,INFO,cache diperbarui,253,200
+2026-08-31T11:27:09,INFO,cache diperbarui,209,200
+2026-08-31T11:40:42,WARN,memori 80% terpakai,1596,429
+2026-08-31T11:43:36,ERROR,gagal koneksi database,2377,500
+2026-08-31T13:26:10,INFO,sinkronisasi data selesai,20,200
+2026-08-31T13:28:44,INFO,email notifikasi terkirim,170,200
+2026-08-31T13:32:57,INFO,sinkronisasi data selesai,244,200
+2026-08-31T14:17:51,INFO,login berhasil user=user-381,41,200
+2026-08-31T14:23:50,INFO,sinkronisasi data selesai,225,200
+2026-08-31T15:01:27,INFO,halaman dashboard dimuat,282,200
+2026-08-31T15:07:38,INFO,cache diperbarui,8,200
+2026-08-31T15:15:22,INFO,email notifikasi terkirim,296,200
+2026-08-31T15:28:38,INFO,halaman dashboard dimuat,238,200
+2026-08-31T15:28:52,INFO,login berhasil user=user-276,140,200
+2026-08-31T15:32:17,INFO,sinkronisasi data selesai,139,200
+2026-08-31T15:38:08,INFO,cache diperbarui,244,200
+2026-08-31T15:51:29,WARN,retry koneksi database,1654,429
+2026-08-31T16:17:47,INFO,sinkronisasi data selesai,166,200
+2026-08-31T16:18:10,ERROR,file tidak ditemukan /data/6280.csv,3923,500
+2026-08-31T16:19:46,INFO,halaman dashboard dimuat,247,200
+2026-08-31T16:20:03,INFO,backup harian selesai,163,200
+2026-08-31T17:06:14,INFO,email notifikasi terkirim,214,200
+2026-08-31T17:18:11,ERROR,gagal koneksi database,2002,500
+2026-08-31T17:33:46,INFO,email notifikasi terkirim,235,200
+2026-08-31T18:04:39,INFO,email notifikasi terkirim,80,200
+2026-08-31T18:17:34,INFO,cache diperbarui,17,200
+2026-08-31T18:19:26,INFO,login berhasil user=user-231,171,200
+2026-08-31T18:45:37,INFO,halaman dashboard dimuat,189,200
+2026-08-31T18:48:56,ERROR,gagal koneksi database,2545,500
+2026-08-31T19:09:19,INFO,login berhasil user=user-268,182,200
+2026-08-31T19:43:23,ERROR,file tidak ditemukan /data/5929.csv,3458,500
+2026-08-31T19:45:24,INFO,sinkronisasi data selesai,246,200
+2026-08-31T19:57:58,INFO,email notifikasi terkirim,206,200
+2026-08-31T20:11:34,INFO,backup harian selesai,9,200
+2026-08-31T20:20:42,INFO,login berhasil user=user-114,247,200
+2026-08-31T20:33:17,INFO,cache diperbarui,50,200
+2026-08-31T20:50:53,ERROR,file tidak ditemukan /data/2104.csv,1518,500
+2026-08-31T20:53:16,INFO,backup harian selesai,189,200
+2026-08-31T20:57:07,ERROR,timeout endpoint=/api/laporan,1682,404
+2026-08-31T21:02:24,INFO,sinkronisasi data selesai,83,200
+2026-08-31T21:13:47,WARN,retry koneksi database,658,200
+2026-08-31T21:19:16,INFO,halaman dashboard dimuat,94,200
+2026-08-31T21:25:12,INFO,login berhasil user=user-337,45,200
+2026-08-31T21:33:48,INFO,login berhasil user=user-159,282,200
+2026-08-31T21:43:32,INFO,cache diperbarui,76,200
+2026-08-31T21:47:40,INFO,login berhasil user=user-011,188,200
+2026-08-31T21:58:31,INFO,login berhasil user=user-378,47,200
+2026-08-31T22:25:53,WARN,respons lambat endpoint=/api/harga,1906,200
+2026-08-31T23:17:19,WARN,memori 80% terpakai,810,429
+2026-08-31T23:36:54,ERROR,pembayaran gagal order=INV-4629,1332,404
+2026-08-31T23:42:19,INFO,sinkronisasi data selesai,276,200
+2026-08-31T23:45:19,INFO,email notifikasi terkirim,110,200
+2026-08-31T23:49:39,WARN,retry koneksi database,781,200
+2026-08-31T23:51:31,ERROR,pembayaran gagal order=INV-5394,1582,404
+2026-08-31T23:51:39,INFO,backup harian selesai,275,200
+2026-08-31T23:52:20,INFO,backup harian selesai,6,200
+2026-08-31T23:55:59,INFO,sinkronisasi data selesai,149,200
+2026-08-31T23:56:40,INFO,sinkronisasi data selesai,29,200

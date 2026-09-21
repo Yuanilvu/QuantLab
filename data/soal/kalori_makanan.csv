@@ -1,0 +1,121 @@
+nama_makanan,porsi,kalori,protein_g,lemak_g,karbohidrat_g
+Nasi Goreng,1 porsi,520,12.0,18.0,62.0
+Nasi Goreng,1 porsi besar,832,19.2,28.8,99.2
+Nasi Goreng,100 gram,286,6.6,9.9,34.1
+Mie Goreng,1 porsi,480,10.0,16.0,60.0
+Mie Goreng,1 porsi besar,768,16.0,25.6,96.0
+Mie Goreng,100 gram,264,5.5,8.8,33.0
+Mie Ayam,1 porsi,430,14.0,12.0,58.0
+Mie Ayam,1 porsi besar,688,22.4,19.2,92.8
+Mie Ayam,100 gram,237,7.7,6.6,31.9
+Bakso,1 porsi,350,16.0,12.0,42.0
+Bakso,1 porsi besar,560,25.6,19.2,67.2
+Bakso,100 gram,193,8.8,6.6,23.1
+Soto Ayam,1 porsi,300,18.0,9.0,32.0
+Soto Ayam,1 porsi besar,480,28.8,14.4,51.2
+Soto Ayam,100 gram,165,9.9,5.0,17.6
+Rendang,1 porsi,470,24.0,34.0,12.0
+Rendang,1 porsi besar,752,38.4,54.4,19.2
+Rendang,100 gram,258,13.2,18.7,6.6
+Sate Ayam,1 porsi,380,26.0,20.0,18.0
+Sate Ayam,1 porsi besar,608,41.6,32.0,28.8
+Sate Ayam,100 gram,209,14.3,11.0,9.9
+Gado-Gado,1 porsi,350,12.0,18.0,34.0
+Gado-Gado,1 porsi besar,560,19.2,28.8,54.4
+Gado-Gado,100 gram,193,6.6,9.9,18.7
+Ayam Geprek,1 porsi,560,28.0,30.0,40.0
+Ayam Geprek,1 porsi besar,896,44.8,48.0,64.0
+Ayam Geprek,100 gram,308,15.4,16.5,22.0
+Nasi Padang,1 porsi,640,26.0,28.0,70.0
+Nasi Padang,1 porsi besar,1024,41.6,44.8,112.0
+Nasi Padang,100 gram,352,14.3,15.4,38.5
+Nasi Uduk,1 porsi,500,11.0,16.0,72.0
+Nasi Uduk,1 porsi besar,800,17.6,25.6,115.2
+Nasi Uduk,100 gram,275,6.1,8.8,39.6
+Bubur Ayam,1 porsi,370,15.0,10.0,52.0
+Bubur Ayam,1 porsi besar,592,24.0,16.0,83.2
+Bubur Ayam,100 gram,204,8.2,5.5,28.6
+Ketoprak,1 porsi,400,13.0,15.0,52.0
+Ketoprak,1 porsi besar,640,20.8,24.0,83.2
+Ketoprak,100 gram,220,7.2,8.2,28.6
+Nasi Kuning,1 porsi,460,10.0,12.0,76.0
+Nasi Kuning,1 porsi besar,736,16.0,19.2,121.6
+Nasi Kuning,100 gram,253,5.5,6.6,41.8
+Rawon,1 porsi,420,22.0,26.0,20.0
+Rawon,1 porsi besar,672,35.2,41.6,32.0
+Rawon,100 gram,231,12.1,14.3,11.0
+Gudeg,1 porsi,480,12.0,14.0,74.0
+Gudeg,1 porsi besar,768,19.2,22.4,118.4
+Gudeg,100 gram,264,6.6,7.7,40.7
+Pecel Lele,1 porsi,450,24.0,26.0,30.0
+Pecel Lele,1 porsi besar,720,38.4,41.6,48.0
+Pecel Lele,100 gram,248,13.2,14.3,16.5
+Martabak Manis,1 porsi,640,12.0,24.0,88.0
+Martabak Manis,1 porsi besar,1024,19.2,38.4,140.8
+Martabak Manis,100 gram,352,6.6,13.2,48.4
+Martabak Telur,1 porsi,550,20.0,32.0,40.0
+Martabak Telur,1 porsi besar,880,32.0,51.2,64.0
+Martabak Telur,100 gram,302,11.0,17.6,22.0
+Pisang Goreng,1 porsi,240,3.0,12.0,32.0
+Pisang Goreng,1 porsi besar,384,4.8,19.2,51.2
+Pisang Goreng,100 gram,132,1.7,6.6,17.6
+Tahu Isi,1 porsi,180,6.0,10.0,16.0
+Tahu Isi,1 porsi besar,288,9.6,16.0,25.6
+Tahu Isi,100 gram,99,3.3,5.5,8.8
+Risoles,1 porsi,200,5.0,11.0,20.0
+Risoles,1 porsi besar,320,8.0,17.6,32.0
+Risoles,100 gram,110,2.8,6.1,11.0
+Batagor,1 porsi,320,12.0,16.0,30.0
+Batagor,1 porsi besar,512,19.2,25.6,48.0
+Batagor,100 gram,176,6.6,8.8,16.5
+Siomay,1 porsi,300,11.0,14.0,30.0
+Siomay,1 porsi besar,480,17.6,22.4,48.0
+Siomay,100 gram,165,6.1,7.7,16.5
+Pempek,1 porsi,340,13.0,13.0,40.0
+Pempek,1 porsi besar,544,20.8,20.8,64.0
+Pempek,100 gram,187,7.2,7.2,22.0
+Kerak Telor,1 porsi,400,14.0,20.0,38.0
+Kerak Telor,1 porsi besar,640,22.4,32.0,60.8
+Kerak Telor,100 gram,220,7.7,11.0,20.9
+Nasi Kari,1 porsi,520,15.0,18.0,68.0
+Nasi Kari,1 porsi besar,832,24.0,28.8,108.8
+Nasi Kari,100 gram,286,8.2,9.9,37.4
+Bakmi Jawa,1 porsi,470,13.0,15.0,60.0
+Bakmi Jawa,1 porsi besar,752,20.8,24.0,96.0
+Bakmi Jawa,100 gram,258,7.2,8.2,33.0
+Kupat Tahu,1 porsi,330,10.0,12.0,42.0
+Kupat Tahu,1 porsi besar,528,16.0,19.2,67.2
+Kupat Tahu,100 gram,182,5.5,6.6,23.1
+Lontong Sayur,1 porsi,420,11.0,16.0,56.0
+Lontong Sayur,1 porsi besar,672,17.6,25.6,89.6
+Lontong Sayur,100 gram,231,6.1,8.8,30.8
+Sate Padang,1 porsi,400,22.0,18.0,34.0
+Sate Padang,1 porsi besar,640,35.2,28.8,54.4
+Sate Padang,100 gram,220,12.1,9.9,18.7
+Ayam Bakar,1 porsi,480,30.0,28.0,20.0
+Ayam Bakar,1 porsi besar,768,48.0,44.8,32.0
+Ayam Bakar,100 gram,264,16.5,15.4,11.0
+Ikan Bakar,1 porsi,420,32.0,22.0,10.0
+Ikan Bakar,1 porsi besar,672,51.2,35.2,16.0
+Ikan Bakar,100 gram,231,17.6,12.1,5.5
+Pepes Ikan,1 porsi,300,28.0,14.0,8.0
+Pepes Ikan,1 porsi besar,480,44.8,22.4,12.8
+Pepes Ikan,100 gram,165,15.4,7.7,4.4
+Capcay,1 porsi,220,8.0,10.0,22.0
+Capcay,1 porsi besar,352,12.8,16.0,35.2
+Capcay,100 gram,121,4.4,5.5,12.1
+Sayur Asem,1 porsi,120,4.0,5.0,16.0
+Sayur Asem,1 porsi besar,192,6.4,8.0,25.6
+Sayur Asem,100 gram,66,2.2,2.8,8.8
+Tempe Orek,1 porsi,260,12.0,14.0,20.0
+Tempe Orek,1 porsi besar,416,19.2,22.4,32.0
+Tempe Orek,100 gram,143,6.6,7.7,11.0
+Perkedel,1 porsi,190,5.0,11.0,18.0
+Perkedel,1 porsi besar,304,8.0,17.6,28.8
+Perkedel,100 gram,105,2.8,6.1,9.9
+Telur Balado,1 porsi,300,15.0,20.0,10.0
+Telur Balado,1 porsi besar,480,24.0,32.0,16.0
+Telur Balado,100 gram,165,8.2,11.0,5.5
+Kue Lapis,1 porsi,190,2.0,6.0,32.0
+Kue Lapis,1 porsi besar,304,3.2,9.6,51.2
+Kue Lapis,100 gram,105,1.1,3.3,17.6

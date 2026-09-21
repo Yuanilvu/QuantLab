@@ -367,6 +367,43 @@ def sertifikat(track):
 
 SOAL_XP = {"mudah": 25, "sedang": 40, "sulit": 55}
 
+_JUDGE_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "soal")
+_SOALDATA_RE = re.compile(r"/soaldata/([\w.\-]+)")
+_SOALDATA_INFO = {}  # (nama, mtime) -> {rows, cols, kb}
+
+
+def _soal_data_files(q):
+    """File /soaldata/... yang disinggung soal (cerita/tugas/tes/contoh) + info baris/kolom.
+
+    Dipakai kotak "📂 Data untuk soal ini" di halaman soal supaya user tahu
+    PERSIS path yang bisa dibaca dari kodenya.
+    """
+    teks = json.dumps(q, ensure_ascii=False, default=str)
+    nama_unik = []
+    for nama in _SOALDATA_RE.findall(teks):
+        if nama not in nama_unik:
+            nama_unik.append(nama)
+    hasil = []
+    for nama in nama_unik[:8]:
+        info = {"name": nama, "path": f"/soaldata/{nama}", "rows": None, "cols": None}
+        path = os.path.join(_JUDGE_DATA, nama)
+        if os.path.isfile(path):
+            st = os.stat(path)
+            kunci = (nama, st.st_mtime)
+            if kunci not in _SOALDATA_INFO:
+                try:
+                    with open(path, newline="", encoding="utf-8") as f:
+                        reader = csv.reader(f)
+                        header = next(reader, [])
+                        baris = sum(1 for _ in reader)
+                    _SOALDATA_INFO[kunci] = {"rows": baris, "cols": len(header),
+                                             "kb": max(1, st.st_size // 1024)}
+                except OSError:
+                    _SOALDATA_INFO[kunci] = {}
+            info.update(_SOALDATA_INFO.get(kunci, {}))
+        hasil.append(info)
+    return hasil
+
 
 @app.route("/soal/<qid>", methods=["GET", "POST"])
 @login_required
@@ -377,6 +414,7 @@ def soal_page(qid):
     user = _user()
     soal_solved_set = db.get_soal_solved(user["id"])
     q = entry["data"]
+    data_files = _soal_data_files(q)
     done = qid in soal_solved_set
     result = None
     code = ""
@@ -399,7 +437,7 @@ def soal_page(qid):
                 first_err = next((x["error"] for x in r["results"] if x["error"]), "")
                 result["friendly"] = judge.friendly_error(first_err) if first_err else None
     return render_template("soal.html", bab=entry["bab"], q=q, done=done,
-                           result=result, code=code,
+                           result=result, code=code, data_files=data_files,
                            render_md=curriculum.render_markdown)
 
 
@@ -873,7 +911,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v18';
+    sw = """const CACHE = 'quantlab-v19';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1507,7 +1545,8 @@ def notebook_datasets():
     uploads = nblib.list_uploads(user["username"])
     for up in uploads:
         up["preview"] = nblib.upload_preview(user["username"], up["name"])
-    return render_template("notebook_datasets.html", items=items, uploads=uploads)
+    return render_template("notebook_datasets.html", items=items,
+                           groups=nblib.group_datasets(items), uploads=uploads)
 
 
 @app.route("/bab/<int:n>/notebook", methods=["POST"])

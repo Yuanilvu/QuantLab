@@ -159,3 +159,15 @@
   font-size: .85rem; margin: 10px 0; }
 .upmsg.ok { border-color: #1e4d33; color: #7ee2a8; background: rgba(34, 197, 94, .07); }
 .upmsg.err { border-color: #4d2020; color: #ff9d9d; background: rgba(239, 68, 68, .07); }
+
+/* ---------- Halaman dataset: grup kategori + dua path (21 Sep 2026) ---------- */
+.pathlist { margin: 8px 0 4px; padding-left: 20px; }
+.pathlist li { margin: 3px 0; }
+.pathlist code { font-family: var(--mono); font-size: .82rem; }
+.dsgroup { margin-top: 24px; }
+.dsgroup > h3 { margin: 0 0 10px; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.dskolom { color: var(--dim); font-size: .78rem; margin: 6px 0 2px; line-height: 1.7; }
+.dskolom code { font-family: var(--mono); font-size: .74rem; background: var(--panel2);
+  border: 1px solid var(--line); border-radius: 5px; padding: 0 5px; }
+.dssnip + .dssnip { margin-top: -4px; }
+.dssnip.alt { color: var(--dim); }

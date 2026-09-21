@@ -23,6 +23,11 @@ OUTPUT_LIMIT = 2 * 1024 * 1024   # 2MB per stream
 # Hanya folder ini yang di-bind — file repo lain (DB, .env, dll) TETAP tak terlihat.
 SOAL_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data", "soal")
 
+# Dataset latihan (folder sama dengan mount /datasets notebook) → /datasets.
+# Supaya path '/datasets/...' juga jalan saat mengerjakan soal coding.
+DATASETS_DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                             "data", "notebook_datasets")
+
 LIB_RE = re.compile(r"^\s*(import|from)\s+(numpy|pandas|matplotlib)\b", re.M)
 
 
@@ -56,6 +61,9 @@ def _sandbox_command(code):
     if os.path.isdir(SOAL_DATA):
         # data/soal (snapshot harga utk soal "data nyata") → /soaldata read-only
         cmd += ["--ro-bind", SOAL_DATA, "/soaldata"]
+    if os.path.isdir(DATASETS_DATA):
+        # dataset latihan → /datasets read-only (path notebook ikut jalan di sini)
+        cmd += ["--ro-bind", DATASETS_DATA, "/datasets"]
     cmd += [
         "--tmpfs", "/tmp",
         "--tmpfs", "/home",

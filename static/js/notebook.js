@@ -373,31 +373,12 @@
       });
       return;
     }
-    if (e.key === 'Tab') {
-      e.preventDefault();
-      syncFromDom(i);
-      if (e.target.value === undefined) { return; }
-      var s = ta.selectionStart, en = ta.selectionEnd;
-      ta.value = ta.value.slice(0, s) + '    ' + ta.value.slice(en);
-      ta.selectionStart = ta.selectionEnd = s + 4;
+    // Tab / Enter pintar (auto-pair kurung-kutip, auto-indent) — editor.js.
+    // Sebelumnya blok Tab & Enter ditangani manual di sini; kini satu sumber.
+    if (root.QL_EDITOR && root.QL_EDITOR.handleKey(ta, e,
+        { pairs: !!(cells[i] && cells[i].type === 'code') })) {
       syncFromDom(i); scheduleSave();
       return;
-    }
-    if (e.key === 'Enter' && !e.shiftKey) {
-      var pos = ta.selectionStart;
-      var before = ta.value.slice(0, pos);
-      var lineStart = before.lastIndexOf('\n') + 1;
-      var currentLine = before.slice(lineStart);
-      var mm = currentLine.match(/^(\s*)/);
-      var indent = mm ? mm[1] : '';
-      if (/:\s*$/.test(currentLine)) { indent += '    '; }
-      if (indent) {
-        e.preventDefault();
-        var ins = '\n' + indent;
-        ta.value = ta.value.slice(0, pos) + ins + ta.value.slice(ta.selectionEnd);
-        ta.selectionStart = ta.selectionEnd = pos + ins.length;
-        syncFromDom(i); scheduleSave();
-      }
     }
   });
 

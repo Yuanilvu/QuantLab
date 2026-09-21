@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block title %}{{ nb.judul }} — Notebook QuantLab{% endblock %}
 {% block head_extra %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=5">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/notebook.css') }}?v=6">
 {% endblock %}
 {% block content %}
 <section class="nbhead" data-nid="{{ nb.id }}" data-timeout="{{ exec_timeout }}">
@@ -31,7 +31,7 @@
     <div class="nbbottom">
       <button id="btnAddCode" class="btn ghost small" type="button">＋ Kode</button>
       <button id="btnAddMd" class="btn ghost small" type="button">＋ Markdown</button>
-      <span class="nbhint">Shift+Enter = jalankan &amp; lanjut · baris terakhir sel kode tampil sebagai Out</span>
+      <span class="nbhint">Shift+Enter = jalankan &amp; lanjut · kurung/kutip menutup otomatis · Tab = 4 spasi · baris terakhir sel kode tampil sebagai Out</span>
     </div>
   </div>
   <aside class="nbrail">
@@ -73,5 +73,6 @@
 <script type="application/json" id="cellData">{{ cells_json|safe }}</script>
 {% endblock %}
 {% block scripts_extra %}
-<script src="{{ url_for('static', filename='js/notebook.js') }}?v=5"></script>
+<script src="{{ url_for('static', filename='js/editor.js') }}?v=1"></script>
+<script src="{{ url_for('static', filename='js/notebook.js') }}?v=6"></script>
 {% endblock %}

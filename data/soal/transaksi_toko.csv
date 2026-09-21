@@ -1,0 +1,2001 @@
+tanggal,id_transaksi,produk,kategori,jumlah,harga_satuan,total,kota
+2026-04-15,TRX-0001,Pisang Goreng,Snack,4,10500,42000,Bandung
+2026-01-15,TRX-0002,Air Mineral,Minuman,4,5000,20000,Medan
+2026-05-16,TRX-0003,Sate Ayam,Makanan,1,30500,30500,Surabaya
+2026-06-11,TRX-0004,Air Mineral,Minuman,4,4000,16000,Makassar
+2026-04-13,TRX-0005,Pisang Goreng,Snack,2,11000,22000,Surabaya
+2026-04-30,TRX-0006,Sate Ayam,Makanan,4,30000,120000,Jakarta
+2026-04-25,TRX-0007,Ayam Geprek,Makanan,3,22000,66000,Medan
+2026-01-12,TRX-0008,Martabak,Snack,3,35500,106500,Bandung
+2026-01-10,TRX-0009,Martabak,Snack,1,36000,36000,Medan
+2026-02-24,TRX-0010,Susu UHT,Minuman,2,7000,14000,Bandung
+2026-02-26,TRX-0011,Teh Manis,Minuman,2,8500,17000,Bandung
+2026-06-16,TRX-0012,Mie Ayam,Makanan,3,20000,60000,Surabaya
+2026-03-28,TRX-0013,Air Mineral,Minuman,3,4500,13500,Medan
+2026-01-15,TRX-0014,Pisang Goreng,Snack,3,10000,30000,Makassar
+2026-05-14,TRX-0015,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-02-10,TRX-0016,Nasi Goreng,Makanan,4,25500,102000,Bandung
+2026-01-29,TRX-0017,Ayam Geprek,Makanan,3,22500,67500,Bandung
+2026-01-21,TRX-0018,Bakso,Makanan,1,18500,18500,Makassar
+2026-01-27,TRX-0019,Mie Ayam,Makanan,3,21000,63000,Surabaya
+2026-06-02,TRX-0020,Kue Lapis,Snack,3,15000,45000,Medan
+2026-05-24,TRX-0021,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-02-04,TRX-0022,Keripik,Snack,4,13000,52000,Medan
+2026-03-30,TRX-0023,Kopi Susu,Minuman,2,18000,36000,Medan
+2026-01-07,TRX-0024,Sate Ayam,Makanan,2,31000,62000,Medan
+2026-06-13,TRX-0025,Teh Manis,Minuman,2,8000,16000,Jakarta
+2026-05-08,TRX-0026,Kopi Susu,Minuman,1,19000,19000,Medan
+2026-05-14,TRX-0027,Kopi Susu,Minuman,2,18500,37000,Jakarta
+2026-01-10,TRX-0028,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-03-04,TRX-0029,Susu UHT,Minuman,4,7500,30000,Bandung
+2026-06-04,TRX-0030,Martabak,Snack,4,36000,144000,Bandung
+2026-05-01,TRX-0031,Teh Manis,Minuman,4,8000,32000,Makassar
+2026-05-22,TRX-0032,Pisang Goreng,Snack,1,10000,10000,Bandung
+2026-01-16,TRX-0033,Kopi Susu,Minuman,4,18000,72000,Surabaya
+2026-04-11,TRX-0034,Ayam Geprek,Makanan,4,23000,92000,Makassar
+2026-03-21,TRX-0035,Martabak,Snack,3,35500,106500,Bandung
+2026-06-04,TRX-0036,Air Mineral,Minuman,1,4000,4000,Makassar
+2026-05-07,TRX-0037,Ayam Geprek,Makanan,4,23000,92000,Medan
+2026-03-06,TRX-0038,Ayam Geprek,Makanan,1,23000,23000,Bandung
+2026-05-21,TRX-0039,Keripik,Snack,4,12500,50000,Jakarta
+2026-02-26,TRX-0040,Bakso,Makanan,3,19000,57000,Surabaya
+2026-02-08,TRX-0041,Bakso,Makanan,4,18500,74000,Jakarta
+2026-05-02,TRX-0042,Bakso,Makanan,2,19000,38000,Surabaya
+2026-02-28,TRX-0043,Nasi Goreng,Makanan,2,25000,50000,Jakarta
+2026-06-12,TRX-0044,Nasi Goreng,Makanan,3,26000,78000,Bandung
+2026-02-20,TRX-0045,Martabak,Snack,3,35000,105000,Bandung
+2026-06-27,TRX-0046,Sate Ayam,Makanan,1,30000,30000,Surabaya
+2026-02-21,TRX-0047,Pisang Goreng,Snack,3,10500,31500,Bandung
+2026-01-04,TRX-0048,Es Teh,Minuman,4,7000,28000,Jakarta
+2026-03-23,TRX-0049,Kopi Susu,Minuman,4,18500,74000,Bandung
+2026-01-13,TRX-0050,Bakso,Makanan,4,18000,72000,Makassar
+2026-03-14,TRX-0051,Sate Ayam,Makanan,2,30500,61000,Surabaya
+2026-02-14,TRX-0052,Ayam Geprek,Makanan,3,22500,67500,Bandung
+2026-04-16,TRX-0053,Susu UHT,Minuman,2,8000,16000,Surabaya
+2026-03-15,TRX-0054,Sate Ayam,Makanan,2,31000,62000,Bandung
+2026-02-25,TRX-0055,Martabak,Snack,4,35000,140000,Bandung
+2026-03-28,TRX-0056,Ayam Geprek,Makanan,3,22000,66000,Bandung
+2026-03-27,TRX-0057,Teh Manis,Minuman,2,9000,18000,Surabaya
+2026-02-12,TRX-0058,Air Mineral,Minuman,3,4500,13500,Medan
+2026-04-21,TRX-0059,Bakso,Makanan,3,18500,55500,Medan
+2026-01-20,TRX-0060,Bakso,Makanan,2,18500,37000,Jakarta
+2026-06-20,TRX-0061,Nasi Goreng,Makanan,2,25000,50000,Bandung
+2026-04-18,TRX-0062,Kue Lapis,Snack,2,15000,30000,Makassar
+2026-01-02,TRX-0063,Susu UHT,Minuman,2,7500,15000,Jakarta
+2026-01-20,TRX-0064,Martabak,Snack,4,35000,140000,Jakarta
+2026-04-07,TRX-0065,Pisang Goreng,Snack,3,11000,33000,Surabaya
+2026-03-09,TRX-0066,Ayam Geprek,Makanan,2,22500,45000,Jakarta
+2026-01-16,TRX-0067,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-05-14,TRX-0068,Nasi Goreng,Makanan,4,26000,104000,Bandung
+2026-02-20,TRX-0069,Ayam Geprek,Makanan,2,22500,45000,Surabaya
+2026-01-05,TRX-0070,Keripik,Snack,4,13000,52000,Makassar
+2026-02-06,TRX-0071,Es Teh,Minuman,1,6000,6000,Makassar
+2026-05-07,TRX-0072,Martabak,Snack,4,35000,140000,Makassar
+2026-06-19,TRX-0073,Bakso,Makanan,3,19000,57000,Surabaya
+2026-03-10,TRX-0074,Susu UHT,Minuman,4,8000,32000,Bandung
+2026-05-28,TRX-0075,Kopi Susu,Minuman,3,18500,55500,Bandung
+2026-04-24,TRX-0076,Nasi Goreng,Makanan,1,25500,25500,Jakarta
+2026-05-03,TRX-0077,Ayam Geprek,Makanan,4,23000,92000,Medan
+2026-02-02,TRX-0078,Es Teh,Minuman,2,7000,14000,Medan
+2026-05-15,TRX-0079,Pisang Goreng,Snack,2,10500,21000,Surabaya
+2026-03-13,TRX-0080,Martabak,Snack,1,35000,35000,Medan
+2026-02-15,TRX-0081,Keripik,Snack,3,12000,36000,Bandung
+2026-01-17,TRX-0082,Air Mineral,Minuman,1,5000,5000,Surabaya
+2026-01-20,TRX-0083,Martabak,Snack,1,36000,36000,Jakarta
+2026-03-16,TRX-0084,Ayam Geprek,Makanan,4,22500,90000,Medan
+2026-04-18,TRX-0085,Ayam Geprek,Makanan,1,22000,22000,Surabaya
+2026-03-03,TRX-0086,Kopi Susu,Minuman,4,18000,72000,Medan
+2026-01-02,TRX-0087,Air Mineral,Minuman,2,4000,8000,Makassar
+2026-01-14,TRX-0088,Nasi Goreng,Makanan,2,25500,51000,Surabaya
+2026-06-01,TRX-0089,Mie Ayam,Makanan,2,21000,42000,Surabaya
+2026-01-07,TRX-0090,Susu UHT,Minuman,3,7000,21000,Bandung
+2026-02-22,TRX-0091,Susu UHT,Minuman,1,8000,8000,Makassar
+2026-02-18,TRX-0092,Nasi Goreng,Makanan,4,26000,104000,Jakarta
+2026-01-24,TRX-0093,Susu UHT,Minuman,2,8000,16000,Medan
+2026-04-23,TRX-0094,Martabak,Snack,4,36000,144000,Jakarta
+2026-03-05,TRX-0095,Sate Ayam,Makanan,3,31000,93000,Jakarta
+2026-01-08,TRX-0096,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-03-21,TRX-0097,Bakso,Makanan,2,18500,37000,Medan
+2026-04-21,TRX-0098,Susu UHT,Minuman,4,7500,30000,Makassar
+2026-01-14,TRX-0099,Ayam Geprek,Makanan,4,22000,88000,Medan
+2026-02-13,TRX-0100,Teh Manis,Minuman,3,8000,24000,Surabaya
+2026-03-23,TRX-0101,Mie Ayam,Makanan,4,20500,82000,Makassar
+2026-01-05,TRX-0102,Nasi Goreng,Makanan,4,25000,100000,Surabaya
+2026-04-21,TRX-0103,Kue Lapis,Snack,2,16000,32000,Makassar
+2026-03-16,TRX-0104,Teh Manis,Minuman,1,9000,9000,Makassar
+2026-01-16,TRX-0105,Sate Ayam,Makanan,1,30000,30000,Bandung
+2026-06-24,TRX-0106,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-05-25,TRX-0107,Teh Manis,Minuman,2,8000,16000,Surabaya
+2026-06-07,TRX-0108,Air Mineral,Minuman,2,5000,10000,Makassar
+2026-05-16,TRX-0109,Sate Ayam,Makanan,2,30500,61000,Medan
+2026-01-13,TRX-0110,Sate Ayam,Makanan,2,30500,61000,Surabaya
+2026-01-06,TRX-0111,Pisang Goreng,Snack,4,10500,42000,Makassar
+2026-04-10,TRX-0112,Bakso,Makanan,4,19000,76000,Surabaya
+2026-06-27,TRX-0113,Teh Manis,Minuman,4,9000,36000,Jakarta
+2026-06-05,TRX-0114,Keripik,Snack,4,12000,48000,Makassar
+2026-05-12,TRX-0115,Es Teh,Minuman,4,6000,24000,Makassar
+2026-06-27,TRX-0116,Sate Ayam,Makanan,4,30000,120000,Jakarta
+2026-04-17,TRX-0117,Keripik,Snack,1,12500,12500,Jakarta
+2026-05-24,TRX-0118,Air Mineral,Minuman,3,4500,13500,Makassar
+2026-02-27,TRX-0119,Nasi Goreng,Makanan,3,26000,78000,Surabaya
+2026-02-22,TRX-0120,Bakso,Makanan,3,18000,54000,Bandung
+2026-04-18,TRX-0121,Nasi Goreng,Makanan,4,25000,100000,Bandung
+2026-06-04,TRX-0122,Keripik,Snack,2,12000,24000,Medan
+2026-02-28,TRX-0123,Teh Manis,Minuman,3,8500,25500,Medan
+2026-04-02,TRX-0124,Martabak,Snack,1,35000,35000,Surabaya
+2026-02-10,TRX-0125,Susu UHT,Minuman,2,7000,14000,Surabaya
+2026-06-02,TRX-0126,Bakso,Makanan,2,19000,38000,Surabaya
+2026-05-12,TRX-0127,Pisang Goreng,Snack,3,10000,30000,Bandung
+2026-05-23,TRX-0128,Kue Lapis,Snack,2,15000,30000,Medan
+2026-01-17,TRX-0129,Kopi Susu,Minuman,4,18500,74000,Medan
+2026-01-13,TRX-0130,Ayam Geprek,Makanan,1,22500,22500,Medan
+2026-06-07,TRX-0131,Pisang Goreng,Snack,3,11000,33000,Makassar
+2026-03-11,TRX-0132,Es Teh,Minuman,4,7000,28000,Surabaya
+2026-05-23,TRX-0133,Martabak,Snack,3,35000,105000,Surabaya
+2026-03-24,TRX-0134,Keripik,Snack,4,12000,48000,Bandung
+2026-01-09,TRX-0135,Kue Lapis,Snack,1,16000,16000,Jakarta
+2026-06-06,TRX-0136,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-02-21,TRX-0137,Bakso,Makanan,3,18500,55500,Surabaya
+2026-01-26,TRX-0138,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-06-13,TRX-0139,Pisang Goreng,Snack,2,11000,22000,Bandung
+2026-05-21,TRX-0140,Pisang Goreng,Snack,2,10500,21000,Medan
+2026-04-01,TRX-0141,Martabak,Snack,1,35000,35000,Jakarta
+2026-06-01,TRX-0142,Air Mineral,Minuman,4,4000,16000,Bandung
+2026-06-29,TRX-0143,Air Mineral,Minuman,1,4500,4500,Jakarta
+2026-05-10,TRX-0144,Teh Manis,Minuman,1,8500,8500,Medan
+2026-02-07,TRX-0145,Pisang Goreng,Snack,4,10500,42000,Makassar
+2026-01-16,TRX-0146,Air Mineral,Minuman,3,4500,13500,Medan
+2026-01-06,TRX-0147,Nasi Goreng,Makanan,1,25500,25500,Bandung
+2026-04-19,TRX-0148,Kopi Susu,Minuman,3,19000,57000,Jakarta
+2026-05-05,TRX-0149,Susu UHT,Minuman,1,8000,8000,Medan
+2026-01-26,TRX-0150,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-01-26,TRX-0151,Keripik,Snack,2,12000,24000,Medan
+2026-05-06,TRX-0152,Susu UHT,Minuman,4,7500,30000,Surabaya
+2026-04-18,TRX-0153,Keripik,Snack,3,13000,39000,Medan
+2026-06-01,TRX-0154,Ayam Geprek,Makanan,4,22000,88000,Medan
+2026-04-16,TRX-0155,Kue Lapis,Snack,4,15500,62000,Medan
+2026-02-01,TRX-0156,Bakso,Makanan,3,18000,54000,Makassar
+2026-05-29,TRX-0157,Martabak,Snack,2,35500,71000,Makassar
+2026-03-29,TRX-0158,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-05-25,TRX-0159,Keripik,Snack,2,13000,26000,Makassar
+2026-04-25,TRX-0160,Bakso,Makanan,1,18500,18500,Surabaya
+2026-06-14,TRX-0161,Martabak,Snack,3,35000,105000,Bandung
+2026-05-20,TRX-0162,Bakso,Makanan,3,19000,57000,Makassar
+2026-05-23,TRX-0163,Kopi Susu,Minuman,1,18000,18000,Bandung
+2026-03-01,TRX-0164,Martabak,Snack,2,36000,72000,Surabaya
+2026-04-30,TRX-0165,Teh Manis,Minuman,4,9000,36000,Medan
+2026-05-23,TRX-0166,Ayam Geprek,Makanan,1,23000,23000,Bandung
+2026-01-16,TRX-0167,Pisang Goreng,Snack,3,10500,31500,Surabaya
+2026-03-24,TRX-0168,Nasi Goreng,Makanan,1,26000,26000,Bandung
+2026-03-27,TRX-0169,Sate Ayam,Makanan,4,30000,120000,Bandung
+2026-06-14,TRX-0170,Pisang Goreng,Snack,3,11000,33000,Jakarta
+2026-06-06,TRX-0171,Air Mineral,Minuman,1,5000,5000,Surabaya
+2026-06-11,TRX-0172,Bakso,Makanan,4,18500,74000,Bandung
+2026-03-15,TRX-0173,Mie Ayam,Makanan,3,21000,63000,Makassar
+2026-02-03,TRX-0174,Bakso,Makanan,3,18500,55500,Surabaya
+2026-03-19,TRX-0175,Kue Lapis,Snack,1,16000,16000,Bandung
+2026-03-19,TRX-0176,Air Mineral,Minuman,1,5000,5000,Medan
+2026-01-12,TRX-0177,Bakso,Makanan,2,18000,36000,Medan
+2026-04-15,TRX-0178,Bakso,Makanan,4,18500,74000,Bandung
+2026-04-10,TRX-0179,Pisang Goreng,Snack,2,11000,22000,Bandung
+2026-05-13,TRX-0180,Mie Ayam,Makanan,3,21000,63000,Medan
+2026-01-25,TRX-0181,Nasi Goreng,Makanan,2,25500,51000,Jakarta
+2026-04-02,TRX-0182,Bakso,Makanan,4,18500,74000,Medan
+2026-05-06,TRX-0183,Teh Manis,Minuman,2,9000,18000,Jakarta
+2026-03-11,TRX-0184,Ayam Geprek,Makanan,3,23000,69000,Jakarta
+2026-01-02,TRX-0185,Mie Ayam,Makanan,3,20000,60000,Medan
+2026-03-25,TRX-0186,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-01-26,TRX-0187,Nasi Goreng,Makanan,3,25000,75000,Bandung
+2026-06-18,TRX-0188,Martabak,Snack,4,35500,142000,Medan
+2026-05-06,TRX-0189,Ayam Geprek,Makanan,2,23000,46000,Makassar
+2026-03-03,TRX-0190,Pisang Goreng,Snack,3,11000,33000,Bandung
+2026-06-24,TRX-0191,Susu UHT,Minuman,1,7500,7500,Jakarta
+2026-04-22,TRX-0192,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-04-11,TRX-0193,Pisang Goreng,Snack,2,10000,20000,Jakarta
+2026-04-04,TRX-0194,Bakso,Makanan,3,18000,54000,Jakarta
+2026-04-05,TRX-0195,Air Mineral,Minuman,2,4500,9000,Makassar
+2026-03-11,TRX-0196,Kue Lapis,Snack,4,15000,60000,Makassar
+2026-02-15,TRX-0197,Ayam Geprek,Makanan,2,22500,45000,Surabaya
+2026-04-10,TRX-0198,Pisang Goreng,Snack,2,10500,21000,Bandung
+2026-05-26,TRX-0199,Pisang Goreng,Snack,4,11000,44000,Surabaya
+2026-01-02,TRX-0200,Sate Ayam,Makanan,1,30000,30000,Bandung
+2026-04-18,TRX-0201,Es Teh,Minuman,1,6500,6500,Surabaya
+2026-04-22,TRX-0202,Martabak,Snack,3,36000,108000,Bandung
+2026-06-28,TRX-0203,Martabak,Snack,3,35000,105000,Jakarta
+2026-04-23,TRX-0204,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-03-31,TRX-0205,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-03-06,TRX-0206,Sate Ayam,Makanan,2,30500,61000,Bandung
+2026-03-24,TRX-0207,Pisang Goreng,Snack,4,10000,40000,Bandung
+2026-03-31,TRX-0208,Bakso,Makanan,3,18500,55500,Bandung
+2026-03-19,TRX-0209,Keripik,Snack,4,13000,52000,Jakarta
+2026-02-15,TRX-0210,Susu UHT,Minuman,2,8000,16000,Medan
+2026-03-12,TRX-0211,Nasi Goreng,Makanan,4,25000,100000,Medan
+2026-03-01,TRX-0212,Kopi Susu,Minuman,1,18000,18000,Jakarta
+2026-03-22,TRX-0213,Kopi Susu,Minuman,4,19000,76000,Medan
+2026-05-10,TRX-0214,Bakso,Makanan,3,18500,55500,Bandung
+2026-05-30,TRX-0215,Bakso,Makanan,2,18500,37000,Bandung
+2026-05-15,TRX-0216,Susu UHT,Minuman,1,7000,7000,Surabaya
+2026-02-17,TRX-0217,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-01-10,TRX-0218,Es Teh,Minuman,3,6000,18000,Surabaya
+2026-05-09,TRX-0219,Susu UHT,Minuman,3,7500,22500,Makassar
+2026-05-23,TRX-0220,Ayam Geprek,Makanan,4,23000,92000,Surabaya
+2026-06-11,TRX-0221,Keripik,Snack,3,12000,36000,Surabaya
+2026-04-28,TRX-0222,Bakso,Makanan,4,18000,72000,Surabaya
+2026-04-29,TRX-0223,Teh Manis,Minuman,4,9000,36000,Jakarta
+2026-04-11,TRX-0224,Bakso,Makanan,3,18000,54000,Makassar
+2026-06-28,TRX-0225,Mie Ayam,Makanan,3,20000,60000,Medan
+2026-05-20,TRX-0226,Pisang Goreng,Snack,4,10000,40000,Makassar
+2026-04-26,TRX-0227,Kopi Susu,Minuman,2,18000,36000,Makassar
+2026-05-31,TRX-0228,Ayam Geprek,Makanan,4,22000,88000,Jakarta
+2026-02-15,TRX-0229,Sate Ayam,Makanan,1,30500,30500,Makassar
+2026-06-11,TRX-0230,Nasi Goreng,Makanan,2,26000,52000,Surabaya
+2026-04-12,TRX-0231,Bakso,Makanan,1,18000,18000,Medan
+2026-06-26,TRX-0232,Martabak,Snack,2,35500,71000,Surabaya
+2026-05-29,TRX-0233,Teh Manis,Minuman,1,8500,8500,Jakarta
+2026-05-16,TRX-0234,Susu UHT,Minuman,4,7500,30000,Medan
+2026-03-16,TRX-0235,Es Teh,Minuman,2,7000,14000,Surabaya
+2026-05-22,TRX-0236,Mie Ayam,Makanan,3,21000,63000,Surabaya
+2026-01-02,TRX-0237,Air Mineral,Minuman,2,4500,9000,Makassar
+2026-06-14,TRX-0238,Es Teh,Minuman,1,6000,6000,Medan
+2026-01-02,TRX-0239,Teh Manis,Minuman,2,8000,16000,Makassar
+2026-01-09,TRX-0240,Mie Ayam,Makanan,3,20500,61500,Bandung
+2026-04-21,TRX-0241,Kopi Susu,Minuman,4,18000,72000,Makassar
+2026-01-08,TRX-0242,Air Mineral,Minuman,3,4500,13500,Jakarta
+2026-04-24,TRX-0243,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-05-25,TRX-0244,Ayam Geprek,Makanan,2,22000,44000,Surabaya
+2026-01-15,TRX-0245,Keripik,Snack,4,12000,48000,Surabaya
+2026-04-28,TRX-0246,Keripik,Snack,1,13000,13000,Medan
+2026-06-14,TRX-0247,Nasi Goreng,Makanan,1,26000,26000,Surabaya
+2026-04-04,TRX-0248,Susu UHT,Minuman,2,7000,14000,Bandung
+2026-04-13,TRX-0249,Bakso,Makanan,4,18000,72000,Bandung
+2026-01-01,TRX-0250,Martabak,Snack,1,36000,36000,Jakarta
+2026-04-11,TRX-0251,Air Mineral,Minuman,1,4000,4000,Jakarta
+2026-06-12,TRX-0252,Sate Ayam,Makanan,1,31000,31000,Bandung
+2026-01-19,TRX-0253,Martabak,Snack,4,35500,142000,Surabaya
+2026-02-16,TRX-0254,Pisang Goreng,Snack,4,10000,40000,Medan
+2026-06-05,TRX-0255,Sate Ayam,Makanan,4,31000,124000,Medan
+2026-06-20,TRX-0256,Pisang Goreng,Snack,1,11000,11000,Jakarta
+2026-02-27,TRX-0257,Mie Ayam,Makanan,1,20000,20000,Bandung
+2026-05-30,TRX-0258,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-03-25,TRX-0259,Sate Ayam,Makanan,1,30500,30500,Bandung
+2026-06-19,TRX-0260,Nasi Goreng,Makanan,3,25500,76500,Makassar
+2026-03-10,TRX-0261,Teh Manis,Minuman,3,8000,24000,Surabaya
+2026-05-26,TRX-0262,Mie Ayam,Makanan,4,20500,82000,Makassar
+2026-05-18,TRX-0263,Ayam Geprek,Makanan,4,23000,92000,Jakarta
+2026-02-27,TRX-0264,Ayam Geprek,Makanan,1,23000,23000,Makassar
+2026-02-04,TRX-0265,Martabak,Snack,2,35500,71000,Medan
+2026-01-27,TRX-0266,Susu UHT,Minuman,1,8000,8000,Medan
+2026-02-07,TRX-0267,Nasi Goreng,Makanan,2,25000,50000,Medan
+2026-05-04,TRX-0268,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-01-18,TRX-0269,Sate Ayam,Makanan,4,31000,124000,Makassar
+2026-06-27,TRX-0270,Kopi Susu,Minuman,2,18500,37000,Jakarta
+2026-02-03,TRX-0271,Nasi Goreng,Makanan,3,25000,75000,Bandung
+2026-05-14,TRX-0272,Air Mineral,Minuman,1,4500,4500,Medan
+2026-02-11,TRX-0273,Mie Ayam,Makanan,4,20500,82000,Jakarta
+2026-04-24,TRX-0274,Susu UHT,Minuman,2,8000,16000,Bandung
+2026-02-18,TRX-0275,Ayam Geprek,Makanan,4,22500,90000,Surabaya
+2026-06-22,TRX-0276,Sate Ayam,Makanan,3,31000,93000,Makassar
+2026-01-31,TRX-0277,Bakso,Makanan,3,18000,54000,Bandung
+2026-05-13,TRX-0278,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-01-21,TRX-0279,Air Mineral,Minuman,4,4500,18000,Bandung
+2026-03-11,TRX-0280,Ayam Geprek,Makanan,4,22500,90000,Bandung
+2026-05-26,TRX-0281,Air Mineral,Minuman,3,4000,12000,Bandung
+2026-01-23,TRX-0282,Susu UHT,Minuman,2,7000,14000,Surabaya
+2026-04-06,TRX-0283,Kue Lapis,Snack,4,15500,62000,Bandung
+2026-06-29,TRX-0284,Air Mineral,Minuman,3,4500,13500,Surabaya
+2026-04-21,TRX-0285,Ayam Geprek,Makanan,3,22500,67500,Surabaya
+2026-06-13,TRX-0286,Es Teh,Minuman,1,6500,6500,Surabaya
+2026-01-02,TRX-0287,Kopi Susu,Minuman,1,18500,18500,Surabaya
+2026-06-13,TRX-0288,Martabak,Snack,4,36000,144000,Makassar
+2026-02-14,TRX-0289,Susu UHT,Minuman,2,8000,16000,Jakarta
+2026-01-18,TRX-0290,Nasi Goreng,Makanan,2,26000,52000,Jakarta
+2026-04-07,TRX-0291,Susu UHT,Minuman,4,8000,32000,Bandung
+2026-05-13,TRX-0292,Keripik,Snack,4,13000,52000,Jakarta
+2026-06-07,TRX-0293,Teh Manis,Minuman,2,8500,17000,Bandung
+2026-05-03,TRX-0294,Kopi Susu,Minuman,1,19000,19000,Surabaya
+2026-04-24,TRX-0295,Susu UHT,Minuman,2,8000,16000,Surabaya
+2026-05-31,TRX-0296,Susu UHT,Minuman,3,7500,22500,Bandung
+2026-03-26,TRX-0297,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-03-12,TRX-0298,Martabak,Snack,2,35000,70000,Surabaya
+2026-02-14,TRX-0299,Nasi Goreng,Makanan,2,25000,50000,Jakarta
+2026-04-26,TRX-0300,Kue Lapis,Snack,3,15500,46500,Jakarta
+2026-03-03,TRX-0301,Susu UHT,Minuman,1,7000,7000,Bandung
+2026-05-10,TRX-0302,Bakso,Makanan,4,18500,74000,Bandung
+2026-02-07,TRX-0303,Kopi Susu,Minuman,1,19000,19000,Surabaya
+2026-04-19,TRX-0304,Kue Lapis,Snack,2,15000,30000,Makassar
+2026-05-02,TRX-0305,Pisang Goreng,Snack,2,10000,20000,Makassar
+2026-05-13,TRX-0306,Ayam Geprek,Makanan,3,22000,66000,Medan
+2026-03-24,TRX-0307,Teh Manis,Minuman,2,8500,17000,Bandung
+2026-03-11,TRX-0308,Kue Lapis,Snack,3,15500,46500,Surabaya
+2026-04-06,TRX-0309,Bakso,Makanan,3,18500,55500,Bandung
+2026-03-20,TRX-0310,Mie Ayam,Makanan,4,20500,82000,Medan
+2026-02-19,TRX-0311,Pisang Goreng,Snack,4,10500,42000,Surabaya
+2026-06-14,TRX-0312,Martabak,Snack,3,35000,105000,Bandung
+2026-02-01,TRX-0313,Ayam Geprek,Makanan,2,23000,46000,Jakarta
+2026-01-03,TRX-0314,Keripik,Snack,4,12000,48000,Surabaya
+2026-05-16,TRX-0315,Ayam Geprek,Makanan,4,23000,92000,Jakarta
+2026-05-19,TRX-0316,Mie Ayam,Makanan,2,20000,40000,Medan
+2026-05-17,TRX-0317,Bakso,Makanan,3,19000,57000,Jakarta
+2026-05-21,TRX-0318,Air Mineral,Minuman,3,4500,13500,Surabaya
+2026-02-11,TRX-0319,Mie Ayam,Makanan,4,20000,80000,Surabaya
+2026-02-03,TRX-0320,Air Mineral,Minuman,3,5000,15000,Makassar
+2026-06-13,TRX-0321,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-05-02,TRX-0322,Nasi Goreng,Makanan,1,25500,25500,Medan
+2026-02-15,TRX-0323,Es Teh,Minuman,2,6000,12000,Bandung
+2026-02-12,TRX-0324,Keripik,Snack,4,13000,52000,Surabaya
+2026-03-22,TRX-0325,Pisang Goreng,Snack,4,10000,40000,Medan
+2026-04-14,TRX-0326,Air Mineral,Minuman,1,4500,4500,Makassar
+2026-04-15,TRX-0327,Air Mineral,Minuman,1,5000,5000,Jakarta
+2026-03-13,TRX-0328,Nasi Goreng,Makanan,4,26000,104000,Jakarta
+2026-03-31,TRX-0329,Mie Ayam,Makanan,3,20500,61500,Jakarta
+2026-01-25,TRX-0330,Keripik,Snack,1,12000,12000,Surabaya
+2026-02-13,TRX-0331,Martabak,Snack,1,35000,35000,Surabaya
+2026-01-01,TRX-0332,Mie Ayam,Makanan,2,20500,41000,Makassar
+2026-06-23,TRX-0333,Kopi Susu,Minuman,3,18500,55500,Surabaya
+2026-04-18,TRX-0334,Pisang Goreng,Snack,3,10000,30000,Jakarta
+2026-02-26,TRX-0335,Pisang Goreng,Snack,3,11000,33000,Bandung
+2026-05-18,TRX-0336,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-03-08,TRX-0337,Bakso,Makanan,4,18000,72000,Jakarta
+2026-01-24,TRX-0338,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-06-23,TRX-0339,Pisang Goreng,Snack,1,10000,10000,Makassar
+2026-04-23,TRX-0340,Bakso,Makanan,4,18000,72000,Medan
+2026-01-07,TRX-0341,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-06-27,TRX-0342,Nasi Goreng,Makanan,3,25000,75000,Bandung
+2026-02-16,TRX-0343,Kopi Susu,Minuman,2,18500,37000,Bandung
+2026-03-23,TRX-0344,Martabak,Snack,3,35000,105000,Bandung
+2026-02-19,TRX-0345,Nasi Goreng,Makanan,4,25500,102000,Jakarta
+2026-01-14,TRX-0346,Ayam Geprek,Makanan,3,22000,66000,Jakarta
+2026-02-21,TRX-0347,Keripik,Snack,2,12500,25000,Surabaya
+2026-02-11,TRX-0348,Nasi Goreng,Makanan,3,25500,76500,Medan
+2026-03-13,TRX-0349,Mie Ayam,Makanan,4,20000,80000,Medan
+2026-06-03,TRX-0350,Air Mineral,Minuman,4,5000,20000,Makassar
+2026-04-07,TRX-0351,Sate Ayam,Makanan,3,30000,90000,Surabaya
+2026-06-22,TRX-0352,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-05-18,TRX-0353,Keripik,Snack,4,12500,50000,Medan
+2026-04-05,TRX-0354,Es Teh,Minuman,3,6000,18000,Medan
+2026-02-17,TRX-0355,Susu UHT,Minuman,3,7000,21000,Jakarta
+2026-04-01,TRX-0356,Susu UHT,Minuman,3,7500,22500,Surabaya
+2026-05-27,TRX-0357,Ayam Geprek,Makanan,4,22500,90000,Bandung
+2026-03-24,TRX-0358,Sate Ayam,Makanan,4,30500,122000,Makassar
+2026-04-16,TRX-0359,Nasi Goreng,Makanan,2,25000,50000,Bandung
+2026-06-14,TRX-0360,Kue Lapis,Snack,1,15500,15500,Makassar
+2026-02-03,TRX-0361,Air Mineral,Minuman,3,4500,13500,Makassar
+2026-01-18,TRX-0362,Susu UHT,Minuman,1,7500,7500,Medan
+2026-01-14,TRX-0363,Air Mineral,Minuman,3,4500,13500,Bandung
+2026-04-14,TRX-0364,Es Teh,Minuman,4,6000,24000,Bandung
+2026-01-23,TRX-0365,Pisang Goreng,Snack,4,10500,42000,Surabaya
+2026-06-04,TRX-0366,Kue Lapis,Snack,1,16000,16000,Surabaya
+2026-02-28,TRX-0367,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-05-22,TRX-0368,Susu UHT,Minuman,2,7500,15000,Bandung
+2026-05-05,TRX-0369,Martabak,Snack,4,36000,144000,Medan
+2026-01-31,TRX-0370,Martabak,Snack,3,35000,105000,Bandung
+2026-05-28,TRX-0371,Martabak,Snack,2,35000,70000,Medan
+2026-01-18,TRX-0372,Es Teh,Minuman,1,6500,6500,Jakarta
+2026-01-31,TRX-0373,Martabak,Snack,3,36000,108000,Bandung
+2026-05-24,TRX-0374,Bakso,Makanan,4,18000,72000,Bandung
+2026-04-19,TRX-0375,Keripik,Snack,4,12000,48000,Bandung
+2026-02-08,TRX-0376,Es Teh,Minuman,4,7000,28000,Medan
+2026-06-07,TRX-0377,Kue Lapis,Snack,3,15000,45000,Surabaya
+2026-03-27,TRX-0378,Martabak,Snack,1,36000,36000,Medan
+2026-04-20,TRX-0379,Air Mineral,Minuman,2,5000,10000,Makassar
+2026-01-20,TRX-0380,Sate Ayam,Makanan,2,31000,62000,Bandung
+2026-02-16,TRX-0381,Bakso,Makanan,3,18000,54000,Surabaya
+2026-04-21,TRX-0382,Martabak,Snack,4,35000,140000,Surabaya
+2026-01-19,TRX-0383,Mie Ayam,Makanan,2,20500,41000,Bandung
+2026-04-16,TRX-0384,Susu UHT,Minuman,1,7000,7000,Bandung
+2026-05-17,TRX-0385,Ayam Geprek,Makanan,1,22000,22000,Medan
+2026-03-05,TRX-0386,Keripik,Snack,3,13000,39000,Jakarta
+2026-05-01,TRX-0387,Susu UHT,Minuman,3,7500,22500,Bandung
+2026-05-20,TRX-0388,Martabak,Snack,4,36000,144000,Bandung
+2026-03-28,TRX-0389,Bakso,Makanan,2,18500,37000,Makassar
+2026-05-28,TRX-0390,Kue Lapis,Snack,1,15000,15000,Medan
+2026-04-13,TRX-0391,Mie Ayam,Makanan,1,20500,20500,Surabaya
+2026-02-06,TRX-0392,Mie Ayam,Makanan,3,21000,63000,Surabaya
+2026-03-05,TRX-0393,Ayam Geprek,Makanan,4,22500,90000,Makassar
+2026-04-29,TRX-0394,Teh Manis,Minuman,4,9000,36000,Medan
+2026-06-01,TRX-0395,Nasi Goreng,Makanan,4,25000,100000,Medan
+2026-03-14,TRX-0396,Sate Ayam,Makanan,2,30500,61000,Bandung
+2026-05-03,TRX-0397,Keripik,Snack,1,13000,13000,Surabaya
+2026-05-14,TRX-0398,Keripik,Snack,3,13000,39000,Bandung
+2026-04-04,TRX-0399,Susu UHT,Minuman,2,7000,14000,Makassar
+2026-04-06,TRX-0400,Susu UHT,Minuman,4,7000,28000,Makassar
+2026-01-25,TRX-0401,Kue Lapis,Snack,3,15000,45000,Jakarta
+2026-02-10,TRX-0402,Bakso,Makanan,4,18000,72000,Jakarta
+2026-01-23,TRX-0403,Es Teh,Minuman,4,6000,24000,Makassar
+2026-01-01,TRX-0404,Bakso,Makanan,1,19000,19000,Makassar
+2026-06-19,TRX-0405,Ayam Geprek,Makanan,1,22000,22000,Jakarta
+2026-06-19,TRX-0406,Keripik,Snack,1,13000,13000,Bandung
+2026-04-25,TRX-0407,Martabak,Snack,2,35500,71000,Medan
+2026-06-16,TRX-0408,Susu UHT,Minuman,2,8000,16000,Medan
+2026-04-24,TRX-0409,Teh Manis,Minuman,4,8000,32000,Surabaya
+2026-02-28,TRX-0410,Martabak,Snack,3,35500,106500,Surabaya
+2026-01-18,TRX-0411,Air Mineral,Minuman,4,5000,20000,Makassar
+2026-03-05,TRX-0412,Pisang Goreng,Snack,2,11000,22000,Bandung
+2026-02-20,TRX-0413,Kue Lapis,Snack,4,16000,64000,Bandung
+2026-01-24,TRX-0414,Kue Lapis,Snack,4,16000,64000,Bandung
+2026-01-04,TRX-0415,Kue Lapis,Snack,2,15500,31000,Medan
+2026-04-17,TRX-0416,Kopi Susu,Minuman,1,18500,18500,Jakarta
+2026-01-08,TRX-0417,Bakso,Makanan,2,18500,37000,Jakarta
+2026-06-28,TRX-0418,Ayam Geprek,Makanan,3,22500,67500,Makassar
+2026-04-29,TRX-0419,Kopi Susu,Minuman,4,18500,74000,Medan
+2026-05-04,TRX-0420,Keripik,Snack,4,12500,50000,Jakarta
+2026-02-09,TRX-0421,Mie Ayam,Makanan,4,20000,80000,Jakarta
+2026-06-12,TRX-0422,Kue Lapis,Snack,2,16000,32000,Jakarta
+2026-03-08,TRX-0423,Kue Lapis,Snack,4,15500,62000,Makassar
+2026-02-28,TRX-0424,Susu UHT,Minuman,1,8000,8000,Medan
+2026-02-02,TRX-0425,Sate Ayam,Makanan,2,30500,61000,Makassar
+2026-03-15,TRX-0426,Es Teh,Minuman,3,6500,19500,Surabaya
+2026-04-03,TRX-0427,Mie Ayam,Makanan,4,20000,80000,Makassar
+2026-06-18,TRX-0428,Mie Ayam,Makanan,2,20500,41000,Surabaya
+2026-05-31,TRX-0429,Bakso,Makanan,2,19000,38000,Makassar
+2026-02-06,TRX-0430,Air Mineral,Minuman,2,4000,8000,Medan
+2026-05-13,TRX-0431,Susu UHT,Minuman,1,8000,8000,Makassar
+2026-02-10,TRX-0432,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-05-04,TRX-0433,Susu UHT,Minuman,1,7500,7500,Bandung
+2026-01-14,TRX-0434,Sate Ayam,Makanan,4,31000,124000,Makassar
+2026-01-29,TRX-0435,Nasi Goreng,Makanan,4,25000,100000,Makassar
+2026-04-23,TRX-0436,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-04-18,TRX-0437,Keripik,Snack,3,12000,36000,Bandung
+2026-06-05,TRX-0438,Es Teh,Minuman,4,6000,24000,Jakarta
+2026-06-11,TRX-0439,Keripik,Snack,2,12000,24000,Medan
+2026-04-25,TRX-0440,Susu UHT,Minuman,3,7500,22500,Jakarta
+2026-05-04,TRX-0441,Pisang Goreng,Snack,4,10500,42000,Makassar
+2026-04-28,TRX-0442,Pisang Goreng,Snack,4,10500,42000,Jakarta
+2026-03-26,TRX-0443,Air Mineral,Minuman,4,4000,16000,Medan
+2026-01-06,TRX-0444,Es Teh,Minuman,1,6500,6500,Jakarta
+2026-01-03,TRX-0445,Keripik,Snack,4,12000,48000,Makassar
+2026-01-13,TRX-0446,Nasi Goreng,Makanan,1,25500,25500,Medan
+2026-04-11,TRX-0447,Kue Lapis,Snack,4,15500,62000,Surabaya
+2026-05-27,TRX-0448,Es Teh,Minuman,4,6000,24000,Makassar
+2026-06-01,TRX-0449,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-02-01,TRX-0450,Keripik,Snack,2,13000,26000,Medan
+2026-05-08,TRX-0451,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-06-29,TRX-0452,Nasi Goreng,Makanan,3,26000,78000,Makassar
+2026-02-07,TRX-0453,Martabak,Snack,3,35500,106500,Bandung
+2026-03-15,TRX-0454,Sate Ayam,Makanan,3,30500,91500,Jakarta
+2026-06-06,TRX-0455,Nasi Goreng,Makanan,1,25000,25000,Jakarta
+2026-06-21,TRX-0456,Kue Lapis,Snack,4,15000,60000,Bandung
+2026-06-27,TRX-0457,Ayam Geprek,Makanan,3,22000,66000,Surabaya
+2026-04-12,TRX-0458,Kopi Susu,Minuman,4,18500,74000,Jakarta
+2026-04-17,TRX-0459,Mie Ayam,Makanan,1,20500,20500,Medan
+2026-03-19,TRX-0460,Ayam Geprek,Makanan,1,22500,22500,Surabaya
+2026-02-20,TRX-0461,Air Mineral,Minuman,2,4500,9000,Bandung
+2026-01-04,TRX-0462,Kue Lapis,Snack,3,15000,45000,Jakarta
+2026-01-20,TRX-0463,Martabak,Snack,4,36000,144000,Makassar
+2026-05-24,TRX-0464,Kue Lapis,Snack,3,16000,48000,Surabaya
+2026-03-28,TRX-0465,Bakso,Makanan,2,18000,36000,Jakarta
+2026-01-15,TRX-0466,Pisang Goreng,Snack,4,10000,40000,Bandung
+2026-06-15,TRX-0467,Sate Ayam,Makanan,4,30500,122000,Surabaya
+2026-05-14,TRX-0468,Mie Ayam,Makanan,2,20500,41000,Jakarta
+2026-02-06,TRX-0469,Air Mineral,Minuman,3,5000,15000,Bandung
+2026-04-05,TRX-0470,Sate Ayam,Makanan,2,30500,61000,Medan
+2026-02-26,TRX-0471,Martabak,Snack,2,35000,70000,Makassar
+2026-05-17,TRX-0472,Pisang Goreng,Snack,3,10500,31500,Jakarta
+2026-01-29,TRX-0473,Sate Ayam,Makanan,4,30000,120000,Surabaya
+2026-06-28,TRX-0474,Kue Lapis,Snack,3,15000,45000,Surabaya
+2026-01-05,TRX-0475,Bakso,Makanan,2,18500,37000,Makassar
+2026-03-19,TRX-0476,Keripik,Snack,1,12000,12000,Makassar
+2026-06-25,TRX-0477,Es Teh,Minuman,4,7000,28000,Makassar
+2026-03-11,TRX-0478,Sate Ayam,Makanan,3,30000,90000,Bandung
+2026-06-26,TRX-0479,Pisang Goreng,Snack,4,11000,44000,Jakarta
+2026-03-24,TRX-0480,Susu UHT,Minuman,3,7500,22500,Makassar
+2026-04-20,TRX-0481,Bakso,Makanan,4,19000,76000,Makassar
+2026-05-20,TRX-0482,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-05-09,TRX-0483,Es Teh,Minuman,4,7000,28000,Jakarta
+2026-06-14,TRX-0484,Teh Manis,Minuman,1,8500,8500,Jakarta
+2026-04-27,TRX-0485,Susu UHT,Minuman,1,7500,7500,Jakarta
+2026-05-22,TRX-0486,Martabak,Snack,1,36000,36000,Surabaya
+2026-03-14,TRX-0487,Pisang Goreng,Snack,4,11000,44000,Jakarta
+2026-02-27,TRX-0488,Air Mineral,Minuman,4,4000,16000,Medan
+2026-01-21,TRX-0489,Bakso,Makanan,4,18000,72000,Jakarta
+2026-06-20,TRX-0490,Ayam Geprek,Makanan,4,22000,88000,Bandung
+2026-03-23,TRX-0491,Teh Manis,Minuman,2,8000,16000,Medan
+2026-05-16,TRX-0492,Keripik,Snack,4,13000,52000,Jakarta
+2026-02-15,TRX-0493,Nasi Goreng,Makanan,1,26000,26000,Makassar
+2026-01-01,TRX-0494,Kopi Susu,Minuman,4,19000,76000,Medan
+2026-06-09,TRX-0495,Pisang Goreng,Snack,2,10500,21000,Surabaya
+2026-05-10,TRX-0496,Keripik,Snack,3,13000,39000,Makassar
+2026-03-04,TRX-0497,Nasi Goreng,Makanan,2,25500,51000,Bandung
+2026-05-18,TRX-0498,Pisang Goreng,Snack,4,10500,42000,Jakarta
+2026-04-10,TRX-0499,Martabak,Snack,1,35500,35500,Jakarta
+2026-05-03,TRX-0500,Kue Lapis,Snack,1,16000,16000,Makassar
+2026-03-20,TRX-0501,Pisang Goreng,Snack,2,11000,22000,Medan
+2026-06-24,TRX-0502,Kue Lapis,Snack,2,15500,31000,Medan
+2026-03-04,TRX-0503,Susu UHT,Minuman,2,7500,15000,Bandung
+2026-03-19,TRX-0504,Kopi Susu,Minuman,4,18000,72000,Bandung
+2026-06-22,TRX-0505,Nasi Goreng,Makanan,1,25500,25500,Makassar
+2026-05-31,TRX-0506,Kopi Susu,Minuman,3,18500,55500,Jakarta
+2026-04-28,TRX-0507,Ayam Geprek,Makanan,4,22500,90000,Bandung
+2026-06-03,TRX-0508,Bakso,Makanan,3,19000,57000,Makassar
+2026-05-03,TRX-0509,Teh Manis,Minuman,1,8000,8000,Makassar
+2026-04-10,TRX-0510,Martabak,Snack,1,35500,35500,Surabaya
+2026-01-11,TRX-0511,Pisang Goreng,Snack,4,10500,42000,Makassar
+2026-05-03,TRX-0512,Kue Lapis,Snack,1,15500,15500,Bandung
+2026-06-16,TRX-0513,Bakso,Makanan,2,18000,36000,Bandung
+2026-01-20,TRX-0514,Es Teh,Minuman,2,7000,14000,Makassar
+2026-04-22,TRX-0515,Susu UHT,Minuman,1,8000,8000,Bandung
+2026-01-07,TRX-0516,Mie Ayam,Makanan,4,20000,80000,Jakarta
+2026-06-10,TRX-0517,Air Mineral,Minuman,1,5000,5000,Medan
+2026-05-11,TRX-0518,Bakso,Makanan,1,18000,18000,Jakarta
+2026-02-02,TRX-0519,Martabak,Snack,2,35500,71000,Medan
+2026-06-20,TRX-0520,Keripik,Snack,2,12500,25000,Surabaya
+2026-05-22,TRX-0521,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-03-06,TRX-0522,Keripik,Snack,4,12500,50000,Surabaya
+2026-05-22,TRX-0523,Es Teh,Minuman,3,6000,18000,Jakarta
+2026-01-06,TRX-0524,Kue Lapis,Snack,1,16000,16000,Jakarta
+2026-01-05,TRX-0525,Kue Lapis,Snack,1,16000,16000,Makassar
+2026-04-30,TRX-0526,Sate Ayam,Makanan,1,31000,31000,Makassar
+2026-02-25,TRX-0527,Kopi Susu,Minuman,2,18500,37000,Bandung
+2026-05-29,TRX-0528,Mie Ayam,Makanan,4,20500,82000,Medan
+2026-05-22,TRX-0529,Mie Ayam,Makanan,4,21000,84000,Surabaya
+2026-06-30,TRX-0530,Bakso,Makanan,1,18500,18500,Surabaya
+2026-02-09,TRX-0531,Susu UHT,Minuman,2,7500,15000,Makassar
+2026-05-26,TRX-0532,Kue Lapis,Snack,4,16000,64000,Medan
+2026-01-04,TRX-0533,Ayam Geprek,Makanan,3,23000,69000,Surabaya
+2026-03-29,TRX-0534,Kue Lapis,Snack,3,15000,45000,Jakarta
+2026-05-26,TRX-0535,Kopi Susu,Minuman,2,19000,38000,Jakarta
+2026-06-12,TRX-0536,Air Mineral,Minuman,1,4000,4000,Medan
+2026-02-02,TRX-0537,Air Mineral,Minuman,4,4500,18000,Bandung
+2026-03-01,TRX-0538,Mie Ayam,Makanan,2,20500,41000,Makassar
+2026-05-30,TRX-0539,Kopi Susu,Minuman,4,19000,76000,Jakarta
+2026-03-08,TRX-0540,Air Mineral,Minuman,3,5000,15000,Bandung
+2026-02-14,TRX-0541,Bakso,Makanan,2,18500,37000,Bandung
+2026-06-13,TRX-0542,Bakso,Makanan,3,18500,55500,Medan
+2026-04-15,TRX-0543,Martabak,Snack,3,35500,106500,Surabaya
+2026-03-14,TRX-0544,Sate Ayam,Makanan,3,31000,93000,Medan
+2026-04-07,TRX-0545,Martabak,Snack,1,35500,35500,Medan
+2026-04-02,TRX-0546,Susu UHT,Minuman,2,7000,14000,Makassar
+2026-03-10,TRX-0547,Keripik,Snack,4,12000,48000,Medan
+2026-01-10,TRX-0548,Kue Lapis,Snack,2,15000,30000,Medan
+2026-06-07,TRX-0549,Bakso,Makanan,4,18000,72000,Jakarta
+2026-05-19,TRX-0550,Nasi Goreng,Makanan,4,25000,100000,Makassar
+2026-04-20,TRX-0551,Bakso,Makanan,2,19000,38000,Bandung
+2026-03-22,TRX-0552,Susu UHT,Minuman,2,7500,15000,Medan
+2026-06-10,TRX-0553,Mie Ayam,Makanan,1,20000,20000,Bandung
+2026-02-15,TRX-0554,Keripik,Snack,2,13000,26000,Makassar
+2026-02-10,TRX-0555,Air Mineral,Minuman,2,4500,9000,Medan
+2026-03-17,TRX-0556,Bakso,Makanan,4,18500,74000,Medan
+2026-02-25,TRX-0557,Mie Ayam,Makanan,2,20000,40000,Bandung
+2026-03-24,TRX-0558,Susu UHT,Minuman,1,7000,7000,Surabaya
+2026-03-08,TRX-0559,Nasi Goreng,Makanan,3,26000,78000,Jakarta
+2026-06-28,TRX-0560,Keripik,Snack,2,12000,24000,Medan
+2026-02-08,TRX-0561,Pisang Goreng,Snack,2,10500,21000,Medan
+2026-01-12,TRX-0562,Air Mineral,Minuman,3,4000,12000,Surabaya
+2026-06-28,TRX-0563,Sate Ayam,Makanan,4,31000,124000,Surabaya
+2026-06-25,TRX-0564,Kopi Susu,Minuman,3,18500,55500,Jakarta
+2026-05-25,TRX-0565,Sate Ayam,Makanan,2,30000,60000,Makassar
+2026-01-01,TRX-0566,Mie Ayam,Makanan,2,20000,40000,Bandung
+2026-06-18,TRX-0567,Susu UHT,Minuman,2,7000,14000,Jakarta
+2026-03-22,TRX-0568,Sate Ayam,Makanan,1,30500,30500,Jakarta
+2026-01-21,TRX-0569,Martabak,Snack,2,35000,70000,Surabaya
+2026-01-02,TRX-0570,Air Mineral,Minuman,1,4500,4500,Medan
+2026-03-24,TRX-0571,Bakso,Makanan,3,19000,57000,Jakarta
+2026-03-24,TRX-0572,Es Teh,Minuman,4,6500,26000,Jakarta
+2026-03-20,TRX-0573,Nasi Goreng,Makanan,4,26000,104000,Surabaya
+2026-03-20,TRX-0574,Susu UHT,Minuman,3,7500,22500,Medan
+2026-06-17,TRX-0575,Mie Ayam,Makanan,3,21000,63000,Jakarta
+2026-02-01,TRX-0576,Susu UHT,Minuman,3,7000,21000,Medan
+2026-05-16,TRX-0577,Pisang Goreng,Snack,2,11000,22000,Bandung
+2026-01-30,TRX-0578,Air Mineral,Minuman,3,5000,15000,Jakarta
+2026-01-14,TRX-0579,Susu UHT,Minuman,4,8000,32000,Surabaya
+2026-05-17,TRX-0580,Ayam Geprek,Makanan,2,22500,45000,Bandung
+2026-02-13,TRX-0581,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-03-25,TRX-0582,Ayam Geprek,Makanan,4,22000,88000,Makassar
+2026-05-18,TRX-0583,Es Teh,Minuman,4,6500,26000,Medan
+2026-05-28,TRX-0584,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-01-11,TRX-0585,Ayam Geprek,Makanan,3,23000,69000,Surabaya
+2026-02-16,TRX-0586,Keripik,Snack,1,12000,12000,Medan
+2026-06-21,TRX-0587,Mie Ayam,Makanan,1,20000,20000,Jakarta
+2026-04-26,TRX-0588,Kue Lapis,Snack,2,15500,31000,Makassar
+2026-06-07,TRX-0589,Kopi Susu,Minuman,4,18000,72000,Jakarta
+2026-03-31,TRX-0590,Keripik,Snack,2,12500,25000,Jakarta
+2026-01-22,TRX-0591,Kue Lapis,Snack,1,15000,15000,Bandung
+2026-01-14,TRX-0592,Nasi Goreng,Makanan,4,25000,100000,Jakarta
+2026-04-17,TRX-0593,Bakso,Makanan,1,19000,19000,Jakarta
+2026-04-06,TRX-0594,Sate Ayam,Makanan,3,30000,90000,Makassar
+2026-06-21,TRX-0595,Pisang Goreng,Snack,2,10500,21000,Medan
+2026-02-10,TRX-0596,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-06-09,TRX-0597,Air Mineral,Minuman,4,4000,16000,Jakarta
+2026-06-01,TRX-0598,Martabak,Snack,3,35500,106500,Makassar
+2026-02-11,TRX-0599,Air Mineral,Minuman,1,4000,4000,Surabaya
+2026-03-30,TRX-0600,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-01-22,TRX-0601,Keripik,Snack,3,13000,39000,Makassar
+2026-03-18,TRX-0602,Ayam Geprek,Makanan,3,22000,66000,Makassar
+2026-01-10,TRX-0603,Nasi Goreng,Makanan,4,25000,100000,Makassar
+2026-03-12,TRX-0604,Mie Ayam,Makanan,4,20500,82000,Makassar
+2026-04-17,TRX-0605,Kopi Susu,Minuman,1,18000,18000,Medan
+2026-06-05,TRX-0606,Keripik,Snack,4,13000,52000,Makassar
+2026-04-11,TRX-0607,Nasi Goreng,Makanan,1,25500,25500,Jakarta
+2026-01-23,TRX-0608,Teh Manis,Minuman,1,8500,8500,Surabaya
+2026-03-15,TRX-0609,Es Teh,Minuman,1,6000,6000,Surabaya
+2026-06-11,TRX-0610,Susu UHT,Minuman,1,7000,7000,Makassar
+2026-06-10,TRX-0611,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-01-21,TRX-0612,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-04-29,TRX-0613,Nasi Goreng,Makanan,4,25500,102000,Jakarta
+2026-03-28,TRX-0614,Bakso,Makanan,3,19000,57000,Makassar
+2026-05-20,TRX-0615,Sate Ayam,Makanan,3,31000,93000,Bandung
+2026-02-11,TRX-0616,Pisang Goreng,Snack,4,10000,40000,Jakarta
+2026-06-01,TRX-0617,Susu UHT,Minuman,4,8000,32000,Bandung
+2026-03-29,TRX-0618,Mie Ayam,Makanan,4,21000,84000,Surabaya
+2026-06-12,TRX-0619,Kue Lapis,Snack,1,15500,15500,Medan
+2026-03-10,TRX-0620,Teh Manis,Minuman,2,9000,18000,Medan
+2026-05-21,TRX-0621,Air Mineral,Minuman,1,5000,5000,Jakarta
+2026-03-08,TRX-0622,Mie Ayam,Makanan,3,20500,61500,Jakarta
+2026-03-14,TRX-0623,Mie Ayam,Makanan,4,20000,80000,Bandung
+2026-04-22,TRX-0624,Mie Ayam,Makanan,4,20000,80000,Makassar
+2026-03-13,TRX-0625,Kopi Susu,Minuman,2,18000,36000,Medan
+2026-05-03,TRX-0626,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-04-20,TRX-0627,Martabak,Snack,3,35500,106500,Jakarta
+2026-01-13,TRX-0628,Mie Ayam,Makanan,4,20500,82000,Bandung
+2026-05-22,TRX-0629,Nasi Goreng,Makanan,2,26000,52000,Bandung
+2026-04-22,TRX-0630,Bakso,Makanan,4,18500,74000,Medan
+2026-05-10,TRX-0631,Nasi Goreng,Makanan,1,26000,26000,Bandung
+2026-06-30,TRX-0632,Kue Lapis,Snack,4,16000,64000,Surabaya
+2026-02-17,TRX-0633,Keripik,Snack,2,12000,24000,Medan
+2026-02-05,TRX-0634,Keripik,Snack,1,12500,12500,Surabaya
+2026-02-10,TRX-0635,Ayam Geprek,Makanan,2,23000,46000,Surabaya
+2026-01-11,TRX-0636,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-03-27,TRX-0637,Air Mineral,Minuman,4,4000,16000,Makassar
+2026-06-05,TRX-0638,Pisang Goreng,Snack,4,10500,42000,Jakarta
+2026-02-25,TRX-0639,Martabak,Snack,2,36000,72000,Surabaya
+2026-05-04,TRX-0640,Keripik,Snack,2,13000,26000,Makassar
+2026-05-20,TRX-0641,Es Teh,Minuman,2,6500,13000,Jakarta
+2026-05-04,TRX-0642,Sate Ayam,Makanan,3,30000,90000,Medan
+2026-04-27,TRX-0643,Kue Lapis,Snack,3,15500,46500,Medan
+2026-04-14,TRX-0644,Bakso,Makanan,3,18500,55500,Surabaya
+2026-06-21,TRX-0645,Kue Lapis,Snack,2,16000,32000,Makassar
+2026-03-30,TRX-0646,Teh Manis,Minuman,1,9000,9000,Bandung
+2026-04-28,TRX-0647,Sate Ayam,Makanan,2,31000,62000,Surabaya
+2026-03-26,TRX-0648,Sate Ayam,Makanan,3,31000,93000,Jakarta
+2026-01-22,TRX-0649,Nasi Goreng,Makanan,3,25000,75000,Surabaya
+2026-02-15,TRX-0650,Es Teh,Minuman,2,7000,14000,Jakarta
+2026-06-28,TRX-0651,Kue Lapis,Snack,3,15000,45000,Makassar
+2026-01-22,TRX-0652,Ayam Geprek,Makanan,2,23000,46000,Jakarta
+2026-01-20,TRX-0653,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-03-08,TRX-0654,Es Teh,Minuman,2,6500,13000,Surabaya
+2026-06-10,TRX-0655,Kopi Susu,Minuman,1,18500,18500,Jakarta
+2026-06-04,TRX-0656,Nasi Goreng,Makanan,3,25000,75000,Medan
+2026-05-04,TRX-0657,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-02-26,TRX-0658,Kue Lapis,Snack,1,16000,16000,Makassar
+2026-06-08,TRX-0659,Bakso,Makanan,2,18500,37000,Bandung
+2026-04-16,TRX-0660,Ayam Geprek,Makanan,2,22500,45000,Bandung
+2026-05-03,TRX-0661,Mie Ayam,Makanan,3,20000,60000,Bandung
+2026-03-20,TRX-0662,Sate Ayam,Makanan,4,30500,122000,Makassar
+2026-05-29,TRX-0663,Pisang Goreng,Snack,3,10500,31500,Makassar
+2026-05-31,TRX-0664,Mie Ayam,Makanan,4,20000,80000,Makassar
+2026-03-24,TRX-0665,Sate Ayam,Makanan,4,30000,120000,Jakarta
+2026-04-06,TRX-0666,Bakso,Makanan,4,18000,72000,Jakarta
+2026-02-19,TRX-0667,Kue Lapis,Snack,2,15000,30000,Jakarta
+2026-05-19,TRX-0668,Teh Manis,Minuman,3,8500,25500,Makassar
+2026-03-26,TRX-0669,Pisang Goreng,Snack,4,10000,40000,Medan
+2026-01-05,TRX-0670,Martabak,Snack,2,36000,72000,Bandung
+2026-03-05,TRX-0671,Kopi Susu,Minuman,2,18000,36000,Bandung
+2026-06-20,TRX-0672,Nasi Goreng,Makanan,1,26000,26000,Medan
+2026-03-19,TRX-0673,Susu UHT,Minuman,4,7500,30000,Makassar
+2026-04-12,TRX-0674,Ayam Geprek,Makanan,4,23000,92000,Jakarta
+2026-01-13,TRX-0675,Kopi Susu,Minuman,2,19000,38000,Medan
+2026-03-12,TRX-0676,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-01-25,TRX-0677,Air Mineral,Minuman,4,5000,20000,Bandung
+2026-02-21,TRX-0678,Mie Ayam,Makanan,2,20000,40000,Jakarta
+2026-06-24,TRX-0679,Ayam Geprek,Makanan,2,22000,44000,Medan
+2026-01-26,TRX-0680,Bakso,Makanan,3,18000,54000,Makassar
+2026-02-01,TRX-0681,Air Mineral,Minuman,1,4500,4500,Jakarta
+2026-06-03,TRX-0682,Keripik,Snack,2,12000,24000,Jakarta
+2026-03-19,TRX-0683,Sate Ayam,Makanan,3,31000,93000,Jakarta
+2026-05-30,TRX-0684,Kue Lapis,Snack,1,15500,15500,Jakarta
+2026-01-08,TRX-0685,Air Mineral,Minuman,1,4500,4500,Surabaya
+2026-01-07,TRX-0686,Kue Lapis,Snack,2,16000,32000,Jakarta
+2026-02-01,TRX-0687,Sate Ayam,Makanan,2,31000,62000,Makassar
+2026-03-03,TRX-0688,Air Mineral,Minuman,1,4000,4000,Jakarta
+2026-06-26,TRX-0689,Es Teh,Minuman,4,6500,26000,Bandung
+2026-03-08,TRX-0690,Es Teh,Minuman,4,6000,24000,Surabaya
+2026-06-19,TRX-0691,Susu UHT,Minuman,4,8000,32000,Medan
+2026-04-13,TRX-0692,Es Teh,Minuman,3,7000,21000,Jakarta
+2026-03-07,TRX-0693,Mie Ayam,Makanan,4,21000,84000,Surabaya
+2026-01-10,TRX-0694,Keripik,Snack,1,12000,12000,Surabaya
+2026-01-21,TRX-0695,Teh Manis,Minuman,3,8500,25500,Medan
+2026-06-12,TRX-0696,Teh Manis,Minuman,4,9000,36000,Bandung
+2026-04-08,TRX-0697,Mie Ayam,Makanan,2,20500,41000,Jakarta
+2026-05-27,TRX-0698,Air Mineral,Minuman,2,5000,10000,Jakarta
+2026-01-22,TRX-0699,Bakso,Makanan,4,18500,74000,Jakarta
+2026-04-09,TRX-0700,Pisang Goreng,Snack,4,10000,40000,Surabaya
+2026-01-08,TRX-0701,Bakso,Makanan,3,18500,55500,Jakarta
+2026-05-05,TRX-0702,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-06-18,TRX-0703,Susu UHT,Minuman,4,8000,32000,Jakarta
+2026-03-04,TRX-0704,Mie Ayam,Makanan,1,21000,21000,Bandung
+2026-05-30,TRX-0705,Mie Ayam,Makanan,3,20000,60000,Surabaya
+2026-03-25,TRX-0706,Martabak,Snack,3,35500,106500,Makassar
+2026-03-21,TRX-0707,Keripik,Snack,2,12500,25000,Surabaya
+2026-05-05,TRX-0708,Kopi Susu,Minuman,1,18000,18000,Jakarta
+2026-06-20,TRX-0709,Keripik,Snack,1,13000,13000,Jakarta
+2026-05-29,TRX-0710,Ayam Geprek,Makanan,2,22000,44000,Surabaya
+2026-05-05,TRX-0711,Ayam Geprek,Makanan,3,22500,67500,Bandung
+2026-06-13,TRX-0712,Sate Ayam,Makanan,2,31000,62000,Medan
+2026-05-09,TRX-0713,Martabak,Snack,2,36000,72000,Jakarta
+2026-02-23,TRX-0714,Bakso,Makanan,4,18000,72000,Surabaya
+2026-02-26,TRX-0715,Nasi Goreng,Makanan,3,25500,76500,Makassar
+2026-01-24,TRX-0716,Sate Ayam,Makanan,4,30000,120000,Jakarta
+2026-01-07,TRX-0717,Nasi Goreng,Makanan,2,25000,50000,Bandung
+2026-03-27,TRX-0718,Sate Ayam,Makanan,2,31000,62000,Surabaya
+2026-03-30,TRX-0719,Martabak,Snack,1,35500,35500,Surabaya
+2026-02-23,TRX-0720,Teh Manis,Minuman,3,8000,24000,Medan
+2026-05-07,TRX-0721,Pisang Goreng,Snack,2,10000,20000,Bandung
+2026-03-21,TRX-0722,Keripik,Snack,2,12500,25000,Surabaya
+2026-05-03,TRX-0723,Pisang Goreng,Snack,3,11000,33000,Surabaya
+2026-05-12,TRX-0724,Air Mineral,Minuman,4,5000,20000,Medan
+2026-02-22,TRX-0725,Pisang Goreng,Snack,3,10500,31500,Surabaya
+2026-03-27,TRX-0726,Kopi Susu,Minuman,1,18500,18500,Jakarta
+2026-01-06,TRX-0727,Ayam Geprek,Makanan,3,22000,66000,Surabaya
+2026-01-07,TRX-0728,Bakso,Makanan,1,18000,18000,Surabaya
+2026-03-01,TRX-0729,Ayam Geprek,Makanan,2,22500,45000,Jakarta
+2026-01-12,TRX-0730,Air Mineral,Minuman,4,5000,20000,Jakarta
+2026-01-29,TRX-0731,Pisang Goreng,Snack,3,11000,33000,Medan
+2026-01-01,TRX-0732,Keripik,Snack,2,13000,26000,Bandung
+2026-04-24,TRX-0733,Kue Lapis,Snack,4,15500,62000,Bandung
+2026-01-09,TRX-0734,Es Teh,Minuman,4,7000,28000,Surabaya
+2026-01-11,TRX-0735,Ayam Geprek,Makanan,3,22500,67500,Jakarta
+2026-06-03,TRX-0736,Susu UHT,Minuman,4,8000,32000,Makassar
+2026-06-26,TRX-0737,Martabak,Snack,2,36000,72000,Surabaya
+2026-06-20,TRX-0738,Susu UHT,Minuman,4,7000,28000,Surabaya
+2026-04-29,TRX-0739,Sate Ayam,Makanan,4,30500,122000,Bandung
+2026-04-09,TRX-0740,Nasi Goreng,Makanan,1,25000,25000,Medan
+2026-02-12,TRX-0741,Martabak,Snack,2,35500,71000,Jakarta
+2026-05-08,TRX-0742,Nasi Goreng,Makanan,4,26000,104000,Makassar
+2026-05-24,TRX-0743,Martabak,Snack,2,35500,71000,Bandung
+2026-02-28,TRX-0744,Teh Manis,Minuman,3,9000,27000,Medan
+2026-01-07,TRX-0745,Ayam Geprek,Makanan,2,22000,44000,Surabaya
+2026-06-26,TRX-0746,Susu UHT,Minuman,1,8000,8000,Medan
+2026-04-04,TRX-0747,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-05-22,TRX-0748,Air Mineral,Minuman,1,4500,4500,Medan
+2026-04-27,TRX-0749,Kue Lapis,Snack,1,15000,15000,Surabaya
+2026-02-03,TRX-0750,Sate Ayam,Makanan,2,31000,62000,Jakarta
+2026-02-26,TRX-0751,Bakso,Makanan,1,18500,18500,Makassar
+2026-06-30,TRX-0752,Nasi Goreng,Makanan,2,25000,50000,Medan
+2026-04-05,TRX-0753,Bakso,Makanan,4,19000,76000,Bandung
+2026-02-15,TRX-0754,Keripik,Snack,1,12000,12000,Makassar
+2026-03-14,TRX-0755,Sate Ayam,Makanan,1,30500,30500,Bandung
+2026-02-23,TRX-0756,Kue Lapis,Snack,2,15500,31000,Medan
+2026-02-19,TRX-0757,Es Teh,Minuman,3,6000,18000,Bandung
+2026-05-30,TRX-0758,Kue Lapis,Snack,3,15000,45000,Jakarta
+2026-03-16,TRX-0759,Keripik,Snack,3,13000,39000,Bandung
+2026-05-16,TRX-0760,Sate Ayam,Makanan,3,30000,90000,Jakarta
+2026-02-19,TRX-0761,Martabak,Snack,1,35000,35000,Jakarta
+2026-03-24,TRX-0762,Bakso,Makanan,1,18000,18000,Bandung
+2026-05-23,TRX-0763,Sate Ayam,Makanan,1,30500,30500,Medan
+2026-02-19,TRX-0764,Mie Ayam,Makanan,3,20000,60000,Bandung
+2026-02-03,TRX-0765,Keripik,Snack,1,12500,12500,Makassar
+2026-03-07,TRX-0766,Pisang Goreng,Snack,2,10500,21000,Jakarta
+2026-04-30,TRX-0767,Martabak,Snack,1,35000,35000,Jakarta
+2026-06-21,TRX-0768,Sate Ayam,Makanan,4,30000,120000,Surabaya
+2026-03-16,TRX-0769,Air Mineral,Minuman,2,4500,9000,Jakarta
+2026-04-14,TRX-0770,Kue Lapis,Snack,2,15500,31000,Jakarta
+2026-04-11,TRX-0771,Sate Ayam,Makanan,3,30000,90000,Bandung
+2026-01-29,TRX-0772,Martabak,Snack,3,36000,108000,Makassar
+2026-03-12,TRX-0773,Keripik,Snack,2,12000,24000,Medan
+2026-06-03,TRX-0774,Pisang Goreng,Snack,4,10000,40000,Makassar
+2026-03-05,TRX-0775,Keripik,Snack,4,12500,50000,Surabaya
+2026-05-20,TRX-0776,Bakso,Makanan,2,19000,38000,Jakarta
+2026-04-05,TRX-0777,Martabak,Snack,2,35000,70000,Makassar
+2026-04-07,TRX-0778,Susu UHT,Minuman,1,7500,7500,Makassar
+2026-03-23,TRX-0779,Sate Ayam,Makanan,4,31000,124000,Makassar
+2026-05-13,TRX-0780,Keripik,Snack,1,12500,12500,Surabaya
+2026-03-27,TRX-0781,Ayam Geprek,Makanan,4,22500,90000,Makassar
+2026-03-08,TRX-0782,Teh Manis,Minuman,4,9000,36000,Bandung
+2026-03-05,TRX-0783,Kopi Susu,Minuman,4,19000,76000,Surabaya
+2026-02-25,TRX-0784,Susu UHT,Minuman,4,7000,28000,Medan
+2026-03-23,TRX-0785,Keripik,Snack,1,12000,12000,Bandung
+2026-02-05,TRX-0786,Teh Manis,Minuman,2,8500,17000,Surabaya
+2026-03-27,TRX-0787,Susu UHT,Minuman,2,8000,16000,Jakarta
+2026-06-13,TRX-0788,Keripik,Snack,1,13000,13000,Surabaya
+2026-05-01,TRX-0789,Susu UHT,Minuman,1,7500,7500,Surabaya
+2026-02-20,TRX-0790,Nasi Goreng,Makanan,2,26000,52000,Makassar
+2026-03-05,TRX-0791,Bakso,Makanan,3,19000,57000,Jakarta
+2026-01-23,TRX-0792,Kopi Susu,Minuman,3,18500,55500,Makassar
+2026-03-03,TRX-0793,Es Teh,Minuman,3,6000,18000,Makassar
+2026-01-18,TRX-0794,Pisang Goreng,Snack,4,10000,40000,Makassar
+2026-05-22,TRX-0795,Ayam Geprek,Makanan,4,22500,90000,Makassar
+2026-03-16,TRX-0796,Kopi Susu,Minuman,4,19000,76000,Surabaya
+2026-05-26,TRX-0797,Keripik,Snack,2,13000,26000,Medan
+2026-02-23,TRX-0798,Bakso,Makanan,3,18000,54000,Bandung
+2026-01-27,TRX-0799,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-01-25,TRX-0800,Keripik,Snack,3,13000,39000,Makassar
+2026-05-30,TRX-0801,Martabak,Snack,2,36000,72000,Surabaya
+2026-04-23,TRX-0802,Pisang Goreng,Snack,1,10000,10000,Jakarta
+2026-06-28,TRX-0803,Kue Lapis,Snack,3,16000,48000,Jakarta
+2026-01-23,TRX-0804,Teh Manis,Minuman,3,8000,24000,Makassar
+2026-02-05,TRX-0805,Ayam Geprek,Makanan,1,22500,22500,Bandung
+2026-01-25,TRX-0806,Teh Manis,Minuman,1,8500,8500,Makassar
+2026-03-05,TRX-0807,Nasi Goreng,Makanan,1,26000,26000,Bandung
+2026-02-09,TRX-0808,Nasi Goreng,Makanan,3,26000,78000,Jakarta
+2026-02-04,TRX-0809,Kopi Susu,Minuman,2,18500,37000,Surabaya
+2026-03-10,TRX-0810,Kue Lapis,Snack,4,15000,60000,Medan
+2026-02-10,TRX-0811,Keripik,Snack,1,12000,12000,Bandung
+2026-01-18,TRX-0812,Teh Manis,Minuman,3,8000,24000,Bandung
+2026-02-05,TRX-0813,Pisang Goreng,Snack,2,11000,22000,Surabaya
+2026-04-12,TRX-0814,Kopi Susu,Minuman,4,18000,72000,Bandung
+2026-04-05,TRX-0815,Sate Ayam,Makanan,1,31000,31000,Surabaya
+2026-05-07,TRX-0816,Mie Ayam,Makanan,3,20000,60000,Makassar
+2026-02-28,TRX-0817,Kue Lapis,Snack,1,15500,15500,Surabaya
+2026-06-23,TRX-0818,Bakso,Makanan,1,18500,18500,Medan
+2026-06-12,TRX-0819,Pisang Goreng,Snack,2,10000,20000,Jakarta
+2026-03-21,TRX-0820,Susu UHT,Minuman,1,7500,7500,Medan
+2026-06-26,TRX-0821,Susu UHT,Minuman,1,8000,8000,Jakarta
+2026-05-27,TRX-0822,Pisang Goreng,Snack,3,10500,31500,Bandung
+2026-03-11,TRX-0823,Air Mineral,Minuman,1,5000,5000,Surabaya
+2026-03-12,TRX-0824,Teh Manis,Minuman,2,9000,18000,Medan
+2026-04-07,TRX-0825,Es Teh,Minuman,3,7000,21000,Medan
+2026-06-27,TRX-0826,Kopi Susu,Minuman,1,18500,18500,Makassar
+2026-04-18,TRX-0827,Es Teh,Minuman,1,6000,6000,Surabaya
+2026-03-23,TRX-0828,Air Mineral,Minuman,4,5000,20000,Medan
+2026-06-20,TRX-0829,Es Teh,Minuman,2,6500,13000,Jakarta
+2026-02-18,TRX-0830,Ayam Geprek,Makanan,3,22500,67500,Bandung
+2026-06-30,TRX-0831,Sate Ayam,Makanan,4,30500,122000,Jakarta
+2026-02-11,TRX-0832,Es Teh,Minuman,1,6000,6000,Medan
+2026-04-18,TRX-0833,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-01-02,TRX-0834,Bakso,Makanan,2,18000,36000,Bandung
+2026-05-12,TRX-0835,Bakso,Makanan,2,19000,38000,Bandung
+2026-06-17,TRX-0836,Keripik,Snack,3,12500,37500,Medan
+2026-04-26,TRX-0837,Nasi Goreng,Makanan,4,26000,104000,Surabaya
+2026-01-13,TRX-0838,Kopi Susu,Minuman,4,19000,76000,Makassar
+2026-05-03,TRX-0839,Es Teh,Minuman,3,6500,19500,Bandung
+2026-06-09,TRX-0840,Susu UHT,Minuman,2,7000,14000,Surabaya
+2026-05-14,TRX-0841,Air Mineral,Minuman,2,4000,8000,Surabaya
+2026-03-01,TRX-0842,Ayam Geprek,Makanan,1,23000,23000,Jakarta
+2026-02-07,TRX-0843,Es Teh,Minuman,4,6000,24000,Jakarta
+2026-04-08,TRX-0844,Keripik,Snack,1,13000,13000,Jakarta
+2026-01-05,TRX-0845,Es Teh,Minuman,1,7000,7000,Bandung
+2026-03-13,TRX-0846,Susu UHT,Minuman,4,7500,30000,Medan
+2026-04-11,TRX-0847,Air Mineral,Minuman,3,4000,12000,Makassar
+2026-04-23,TRX-0848,Kue Lapis,Snack,4,15500,62000,Bandung
+2026-05-07,TRX-0849,Sate Ayam,Makanan,4,31000,124000,Medan
+2026-05-21,TRX-0850,Air Mineral,Minuman,1,4500,4500,Makassar
+2026-01-13,TRX-0851,Susu UHT,Minuman,1,7000,7000,Surabaya
+2026-04-05,TRX-0852,Es Teh,Minuman,2,7000,14000,Bandung
+2026-02-18,TRX-0853,Nasi Goreng,Makanan,2,25000,50000,Jakarta
+2026-02-11,TRX-0854,Air Mineral,Minuman,2,4000,8000,Surabaya
+2026-05-25,TRX-0855,Nasi Goreng,Makanan,1,25500,25500,Bandung
+2026-03-11,TRX-0856,Pisang Goreng,Snack,4,10000,40000,Makassar
+2026-06-24,TRX-0857,Sate Ayam,Makanan,4,31000,124000,Makassar
+2026-04-08,TRX-0858,Nasi Goreng,Makanan,1,25000,25000,Bandung
+2026-04-21,TRX-0859,Mie Ayam,Makanan,1,20500,20500,Makassar
+2026-05-30,TRX-0860,Pisang Goreng,Snack,3,11000,33000,Makassar
+2026-03-23,TRX-0861,Nasi Goreng,Makanan,2,26000,52000,Surabaya
+2026-06-20,TRX-0862,Air Mineral,Minuman,3,5000,15000,Bandung
+2026-01-01,TRX-0863,Sate Ayam,Makanan,4,30500,122000,Surabaya
+2026-05-10,TRX-0864,Martabak,Snack,3,36000,108000,Bandung
+2026-03-25,TRX-0865,Sate Ayam,Makanan,3,30000,90000,Jakarta
+2026-05-04,TRX-0866,Martabak,Snack,1,35500,35500,Surabaya
+2026-03-19,TRX-0867,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-06-16,TRX-0868,Pisang Goreng,Snack,1,10000,10000,Bandung
+2026-03-09,TRX-0869,Pisang Goreng,Snack,3,10500,31500,Bandung
+2026-02-17,TRX-0870,Kopi Susu,Minuman,1,18500,18500,Makassar
+2026-01-17,TRX-0871,Sate Ayam,Makanan,1,30000,30000,Medan
+2026-02-20,TRX-0872,Air Mineral,Minuman,3,4000,12000,Bandung
+2026-04-09,TRX-0873,Es Teh,Minuman,4,6500,26000,Surabaya
+2026-02-21,TRX-0874,Sate Ayam,Makanan,3,31000,93000,Surabaya
+2026-05-02,TRX-0875,Pisang Goreng,Snack,1,10000,10000,Makassar
+2026-03-01,TRX-0876,Nasi Goreng,Makanan,4,25500,102000,Jakarta
+2026-02-11,TRX-0877,Kopi Susu,Minuman,2,18000,36000,Makassar
+2026-05-09,TRX-0878,Es Teh,Minuman,2,6000,12000,Bandung
+2026-01-15,TRX-0879,Nasi Goreng,Makanan,3,25500,76500,Medan
+2026-01-03,TRX-0880,Pisang Goreng,Snack,2,11000,22000,Jakarta
+2026-04-30,TRX-0881,Mie Ayam,Makanan,1,20000,20000,Surabaya
+2026-01-27,TRX-0882,Kue Lapis,Snack,4,15000,60000,Medan
+2026-06-06,TRX-0883,Bakso,Makanan,2,18500,37000,Jakarta
+2026-01-27,TRX-0884,Bakso,Makanan,3,18500,55500,Medan
+2026-06-04,TRX-0885,Bakso,Makanan,4,18000,72000,Medan
+2026-06-07,TRX-0886,Es Teh,Minuman,1,6500,6500,Makassar
+2026-04-05,TRX-0887,Pisang Goreng,Snack,2,10000,20000,Jakarta
+2026-05-18,TRX-0888,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-05-01,TRX-0889,Pisang Goreng,Snack,1,10000,10000,Jakarta
+2026-05-03,TRX-0890,Teh Manis,Minuman,4,8000,32000,Medan
+2026-03-04,TRX-0891,Bakso,Makanan,3,18000,54000,Bandung
+2026-02-25,TRX-0892,Ayam Geprek,Makanan,4,22000,88000,Jakarta
+2026-02-15,TRX-0893,Mie Ayam,Makanan,3,20000,60000,Bandung
+2026-06-15,TRX-0894,Kue Lapis,Snack,1,15500,15500,Makassar
+2026-02-04,TRX-0895,Keripik,Snack,2,12000,24000,Surabaya
+2026-06-14,TRX-0896,Es Teh,Minuman,4,7000,28000,Bandung
+2026-01-24,TRX-0897,Pisang Goreng,Snack,4,10500,42000,Surabaya
+2026-05-10,TRX-0898,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-05-20,TRX-0899,Keripik,Snack,2,12500,25000,Jakarta
+2026-02-06,TRX-0900,Ayam Geprek,Makanan,1,22500,22500,Jakarta
+2026-06-01,TRX-0901,Kopi Susu,Minuman,3,18500,55500,Bandung
+2026-02-10,TRX-0902,Sate Ayam,Makanan,1,30500,30500,Medan
+2026-05-18,TRX-0903,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-04-15,TRX-0904,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-03-22,TRX-0905,Ayam Geprek,Makanan,2,22500,45000,Surabaya
+2026-02-18,TRX-0906,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-06-14,TRX-0907,Bakso,Makanan,1,18500,18500,Surabaya
+2026-01-28,TRX-0908,Bakso,Makanan,1,18000,18000,Bandung
+2026-06-08,TRX-0909,Ayam Geprek,Makanan,3,22500,67500,Surabaya
+2026-05-03,TRX-0910,Kopi Susu,Minuman,1,18000,18000,Jakarta
+2026-06-21,TRX-0911,Mie Ayam,Makanan,1,20000,20000,Makassar
+2026-05-07,TRX-0912,Es Teh,Minuman,1,6500,6500,Bandung
+2026-01-29,TRX-0913,Air Mineral,Minuman,4,4000,16000,Bandung
+2026-05-19,TRX-0914,Nasi Goreng,Makanan,1,25500,25500,Surabaya
+2026-05-21,TRX-0915,Susu UHT,Minuman,1,7000,7000,Bandung
+2026-02-03,TRX-0916,Sate Ayam,Makanan,3,30000,90000,Bandung
+2026-01-19,TRX-0917,Pisang Goreng,Snack,3,10500,31500,Bandung
+2026-02-04,TRX-0918,Air Mineral,Minuman,3,4500,13500,Bandung
+2026-05-11,TRX-0919,Keripik,Snack,3,12000,36000,Bandung
+2026-02-05,TRX-0920,Nasi Goreng,Makanan,1,25000,25000,Surabaya
+2026-02-13,TRX-0921,Martabak,Snack,1,35500,35500,Bandung
+2026-03-03,TRX-0922,Bakso,Makanan,3,18500,55500,Medan
+2026-04-12,TRX-0923,Air Mineral,Minuman,3,4000,12000,Makassar
+2026-01-29,TRX-0924,Sate Ayam,Makanan,4,30000,120000,Bandung
+2026-06-28,TRX-0925,Air Mineral,Minuman,4,4000,16000,Jakarta
+2026-01-26,TRX-0926,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-02-04,TRX-0927,Es Teh,Minuman,2,6500,13000,Makassar
+2026-01-11,TRX-0928,Susu UHT,Minuman,4,7000,28000,Surabaya
+2026-06-29,TRX-0929,Air Mineral,Minuman,3,4500,13500,Makassar
+2026-03-16,TRX-0930,Mie Ayam,Makanan,2,20500,41000,Surabaya
+2026-04-11,TRX-0931,Sate Ayam,Makanan,4,30500,122000,Bandung
+2026-05-04,TRX-0932,Martabak,Snack,1,35500,35500,Bandung
+2026-04-18,TRX-0933,Nasi Goreng,Makanan,3,25500,76500,Jakarta
+2026-03-08,TRX-0934,Kopi Susu,Minuman,2,18500,37000,Medan
+2026-03-09,TRX-0935,Susu UHT,Minuman,3,7000,21000,Bandung
+2026-03-18,TRX-0936,Es Teh,Minuman,1,7000,7000,Surabaya
+2026-01-25,TRX-0937,Es Teh,Minuman,2,6500,13000,Medan
+2026-01-12,TRX-0938,Martabak,Snack,4,36000,144000,Makassar
+2026-02-18,TRX-0939,Mie Ayam,Makanan,1,21000,21000,Surabaya
+2026-03-06,TRX-0940,Es Teh,Minuman,1,6500,6500,Medan
+2026-01-19,TRX-0941,Es Teh,Minuman,2,7000,14000,Surabaya
+2026-03-12,TRX-0942,Keripik,Snack,4,12500,50000,Jakarta
+2026-05-16,TRX-0943,Bakso,Makanan,1,18500,18500,Makassar
+2026-02-16,TRX-0944,Sate Ayam,Makanan,1,30500,30500,Jakarta
+2026-05-14,TRX-0945,Ayam Geprek,Makanan,4,22500,90000,Makassar
+2026-01-13,TRX-0946,Teh Manis,Minuman,4,8500,34000,Surabaya
+2026-06-27,TRX-0947,Mie Ayam,Makanan,2,20500,41000,Medan
+2026-04-21,TRX-0948,Martabak,Snack,4,35500,142000,Surabaya
+2026-06-22,TRX-0949,Pisang Goreng,Snack,1,10500,10500,Medan
+2026-03-13,TRX-0950,Martabak,Snack,1,35500,35500,Makassar
+2026-05-11,TRX-0951,Mie Ayam,Makanan,2,21000,42000,Surabaya
+2026-04-10,TRX-0952,Es Teh,Minuman,1,6500,6500,Bandung
+2026-05-12,TRX-0953,Air Mineral,Minuman,4,5000,20000,Jakarta
+2026-02-02,TRX-0954,Pisang Goreng,Snack,2,10000,20000,Bandung
+2026-06-20,TRX-0955,Air Mineral,Minuman,1,4000,4000,Makassar
+2026-03-23,TRX-0956,Susu UHT,Minuman,4,7500,30000,Makassar
+2026-01-31,TRX-0957,Kopi Susu,Minuman,1,18500,18500,Medan
+2026-02-09,TRX-0958,Keripik,Snack,4,13000,52000,Medan
+2026-04-25,TRX-0959,Kue Lapis,Snack,1,15500,15500,Surabaya
+2026-06-14,TRX-0960,Bakso,Makanan,2,19000,38000,Surabaya
+2026-05-15,TRX-0961,Kue Lapis,Snack,2,15500,31000,Medan
+2026-05-10,TRX-0962,Pisang Goreng,Snack,1,11000,11000,Makassar
+2026-01-27,TRX-0963,Kopi Susu,Minuman,4,18500,74000,Jakarta
+2026-03-30,TRX-0964,Susu UHT,Minuman,1,7000,7000,Medan
+2026-05-13,TRX-0965,Pisang Goreng,Snack,2,10500,21000,Medan
+2026-04-22,TRX-0966,Teh Manis,Minuman,4,8500,34000,Bandung
+2026-05-15,TRX-0967,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-06-18,TRX-0968,Teh Manis,Minuman,2,8500,17000,Surabaya
+2026-05-14,TRX-0969,Kue Lapis,Snack,4,15000,60000,Surabaya
+2026-01-29,TRX-0970,Kopi Susu,Minuman,2,18000,36000,Makassar
+2026-03-27,TRX-0971,Air Mineral,Minuman,2,4000,8000,Jakarta
+2026-04-06,TRX-0972,Es Teh,Minuman,4,6000,24000,Bandung
+2026-02-24,TRX-0973,Pisang Goreng,Snack,2,10500,21000,Makassar
+2026-01-12,TRX-0974,Teh Manis,Minuman,1,8500,8500,Makassar
+2026-01-02,TRX-0975,Nasi Goreng,Makanan,1,25000,25000,Makassar
+2026-06-07,TRX-0976,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-06-28,TRX-0977,Mie Ayam,Makanan,4,21000,84000,Medan
+2026-01-04,TRX-0978,Keripik,Snack,2,12000,24000,Bandung
+2026-05-16,TRX-0979,Kopi Susu,Minuman,1,18000,18000,Medan
+2026-01-14,TRX-0980,Nasi Goreng,Makanan,2,26000,52000,Medan
+2026-03-09,TRX-0981,Air Mineral,Minuman,3,4500,13500,Bandung
+2026-06-09,TRX-0982,Nasi Goreng,Makanan,3,25000,75000,Medan
+2026-03-26,TRX-0983,Teh Manis,Minuman,2,9000,18000,Makassar
+2026-04-27,TRX-0984,Keripik,Snack,1,13000,13000,Medan
+2026-04-04,TRX-0985,Martabak,Snack,3,36000,108000,Bandung
+2026-04-18,TRX-0986,Sate Ayam,Makanan,3,31000,93000,Makassar
+2026-04-21,TRX-0987,Pisang Goreng,Snack,4,10500,42000,Medan
+2026-05-26,TRX-0988,Ayam Geprek,Makanan,1,22500,22500,Surabaya
+2026-02-04,TRX-0989,Kopi Susu,Minuman,3,19000,57000,Jakarta
+2026-04-15,TRX-0990,Nasi Goreng,Makanan,2,25000,50000,Surabaya
+2026-05-05,TRX-0991,Kopi Susu,Minuman,3,19000,57000,Bandung
+2026-01-23,TRX-0992,Keripik,Snack,2,13000,26000,Medan
+2026-02-27,TRX-0993,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-02-12,TRX-0994,Martabak,Snack,1,36000,36000,Bandung
+2026-03-15,TRX-0995,Bakso,Makanan,1,19000,19000,Bandung
+2026-04-20,TRX-0996,Keripik,Snack,3,12500,37500,Bandung
+2026-02-01,TRX-0997,Kue Lapis,Snack,2,15500,31000,Makassar
+2026-01-22,TRX-0998,Kue Lapis,Snack,3,15000,45000,Bandung
+2026-04-04,TRX-0999,Es Teh,Minuman,2,6000,12000,Makassar
+2026-03-22,TRX-1000,Martabak,Snack,1,35000,35000,Bandung
+2026-04-10,TRX-1001,Susu UHT,Minuman,1,8000,8000,Bandung
+2026-01-18,TRX-1002,Pisang Goreng,Snack,4,10000,40000,Jakarta
+2026-05-10,TRX-1003,Mie Ayam,Makanan,2,20000,40000,Medan
+2026-02-08,TRX-1004,Nasi Goreng,Makanan,4,25000,100000,Surabaya
+2026-05-15,TRX-1005,Ayam Geprek,Makanan,1,22500,22500,Bandung
+2026-02-09,TRX-1006,Sate Ayam,Makanan,4,30000,120000,Makassar
+2026-01-06,TRX-1007,Pisang Goreng,Snack,3,10500,31500,Medan
+2026-06-18,TRX-1008,Keripik,Snack,4,13000,52000,Jakarta
+2026-03-01,TRX-1009,Pisang Goreng,Snack,1,11000,11000,Medan
+2026-01-26,TRX-1010,Bakso,Makanan,3,18000,54000,Medan
+2026-02-07,TRX-1011,Susu UHT,Minuman,3,8000,24000,Medan
+2026-04-25,TRX-1012,Kopi Susu,Minuman,4,19000,76000,Medan
+2026-02-08,TRX-1013,Keripik,Snack,2,12000,24000,Bandung
+2026-05-26,TRX-1014,Keripik,Snack,3,12500,37500,Jakarta
+2026-01-28,TRX-1015,Pisang Goreng,Snack,4,10500,42000,Jakarta
+2026-02-05,TRX-1016,Teh Manis,Minuman,3,9000,27000,Medan
+2026-01-30,TRX-1017,Ayam Geprek,Makanan,1,22500,22500,Bandung
+2026-04-09,TRX-1018,Teh Manis,Minuman,4,8000,32000,Jakarta
+2026-01-28,TRX-1019,Ayam Geprek,Makanan,1,22000,22000,Medan
+2026-03-31,TRX-1020,Martabak,Snack,4,35500,142000,Bandung
+2026-01-15,TRX-1021,Keripik,Snack,2,12500,25000,Jakarta
+2026-02-06,TRX-1022,Sate Ayam,Makanan,4,30500,122000,Jakarta
+2026-06-12,TRX-1023,Keripik,Snack,1,12500,12500,Bandung
+2026-05-06,TRX-1024,Susu UHT,Minuman,4,8000,32000,Medan
+2026-01-28,TRX-1025,Air Mineral,Minuman,3,4000,12000,Medan
+2026-03-24,TRX-1026,Keripik,Snack,4,12000,48000,Makassar
+2026-02-02,TRX-1027,Sate Ayam,Makanan,2,30500,61000,Makassar
+2026-04-18,TRX-1028,Ayam Geprek,Makanan,1,22500,22500,Makassar
+2026-06-24,TRX-1029,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-05-18,TRX-1030,Nasi Goreng,Makanan,4,25500,102000,Makassar
+2026-02-25,TRX-1031,Teh Manis,Minuman,1,8000,8000,Makassar
+2026-01-10,TRX-1032,Pisang Goreng,Snack,3,10500,31500,Medan
+2026-03-26,TRX-1033,Martabak,Snack,1,35000,35000,Jakarta
+2026-05-20,TRX-1034,Martabak,Snack,2,36000,72000,Bandung
+2026-03-28,TRX-1035,Nasi Goreng,Makanan,4,25000,100000,Surabaya
+2026-06-17,TRX-1036,Kopi Susu,Minuman,1,19000,19000,Jakarta
+2026-02-16,TRX-1037,Sate Ayam,Makanan,4,31000,124000,Bandung
+2026-02-19,TRX-1038,Air Mineral,Minuman,1,4500,4500,Bandung
+2026-02-18,TRX-1039,Air Mineral,Minuman,3,5000,15000,Makassar
+2026-02-18,TRX-1040,Susu UHT,Minuman,4,7500,30000,Makassar
+2026-04-30,TRX-1041,Ayam Geprek,Makanan,2,22500,45000,Medan
+2026-01-01,TRX-1042,Teh Manis,Minuman,4,8500,34000,Jakarta
+2026-01-09,TRX-1043,Pisang Goreng,Snack,3,11000,33000,Bandung
+2026-05-21,TRX-1044,Air Mineral,Minuman,4,4500,18000,Medan
+2026-06-26,TRX-1045,Keripik,Snack,2,13000,26000,Makassar
+2026-04-03,TRX-1046,Susu UHT,Minuman,4,7500,30000,Jakarta
+2026-04-26,TRX-1047,Keripik,Snack,1,12000,12000,Surabaya
+2026-03-24,TRX-1048,Mie Ayam,Makanan,2,20000,40000,Jakarta
+2026-06-23,TRX-1049,Kopi Susu,Minuman,2,18500,37000,Surabaya
+2026-05-10,TRX-1050,Mie Ayam,Makanan,1,20000,20000,Medan
+2026-01-10,TRX-1051,Bakso,Makanan,1,18000,18000,Makassar
+2026-05-14,TRX-1052,Kue Lapis,Snack,4,16000,64000,Jakarta
+2026-05-14,TRX-1053,Keripik,Snack,4,12500,50000,Surabaya
+2026-01-04,TRX-1054,Es Teh,Minuman,2,7000,14000,Surabaya
+2026-05-03,TRX-1055,Mie Ayam,Makanan,3,20000,60000,Medan
+2026-03-12,TRX-1056,Nasi Goreng,Makanan,2,25000,50000,Jakarta
+2026-05-24,TRX-1057,Es Teh,Minuman,3,6500,19500,Medan
+2026-06-20,TRX-1058,Es Teh,Minuman,3,7000,21000,Medan
+2026-01-31,TRX-1059,Martabak,Snack,4,35500,142000,Jakarta
+2026-05-27,TRX-1060,Pisang Goreng,Snack,2,10000,20000,Bandung
+2026-02-08,TRX-1061,Martabak,Snack,1,35000,35000,Makassar
+2026-06-12,TRX-1062,Pisang Goreng,Snack,3,10500,31500,Jakarta
+2026-04-14,TRX-1063,Teh Manis,Minuman,4,8000,32000,Bandung
+2026-04-04,TRX-1064,Air Mineral,Minuman,3,4500,13500,Jakarta
+2026-06-07,TRX-1065,Nasi Goreng,Makanan,2,25000,50000,Makassar
+2026-05-05,TRX-1066,Susu UHT,Minuman,1,8000,8000,Jakarta
+2026-04-05,TRX-1067,Teh Manis,Minuman,3,8500,25500,Jakarta
+2026-01-21,TRX-1068,Keripik,Snack,4,12000,48000,Jakarta
+2026-02-16,TRX-1069,Kue Lapis,Snack,4,16000,64000,Makassar
+2026-02-06,TRX-1070,Es Teh,Minuman,3,7000,21000,Medan
+2026-04-13,TRX-1071,Susu UHT,Minuman,4,7500,30000,Medan
+2026-06-27,TRX-1072,Air Mineral,Minuman,1,4500,4500,Surabaya
+2026-06-07,TRX-1073,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-06-23,TRX-1074,Mie Ayam,Makanan,4,20500,82000,Bandung
+2026-05-06,TRX-1075,Keripik,Snack,3,12500,37500,Jakarta
+2026-05-24,TRX-1076,Susu UHT,Minuman,2,8000,16000,Surabaya
+2026-04-15,TRX-1077,Pisang Goreng,Snack,1,10500,10500,Makassar
+2026-06-15,TRX-1078,Bakso,Makanan,2,19000,38000,Surabaya
+2026-06-03,TRX-1079,Nasi Goreng,Makanan,2,25000,50000,Surabaya
+2026-02-15,TRX-1080,Bakso,Makanan,3,18500,55500,Jakarta
+2026-06-21,TRX-1081,Teh Manis,Minuman,4,9000,36000,Bandung
+2026-02-10,TRX-1082,Mie Ayam,Makanan,1,20500,20500,Jakarta
+2026-03-07,TRX-1083,Martabak,Snack,3,36000,108000,Jakarta
+2026-05-10,TRX-1084,Nasi Goreng,Makanan,3,25000,75000,Jakarta
+2026-03-29,TRX-1085,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-06-27,TRX-1086,Mie Ayam,Makanan,3,20000,60000,Medan
+2026-05-28,TRX-1087,Sate Ayam,Makanan,3,30000,90000,Medan
+2026-05-03,TRX-1088,Martabak,Snack,3,35500,106500,Makassar
+2026-04-23,TRX-1089,Sate Ayam,Makanan,4,30500,122000,Bandung
+2026-02-24,TRX-1090,Bakso,Makanan,1,18000,18000,Surabaya
+2026-05-10,TRX-1091,Bakso,Makanan,1,18500,18500,Surabaya
+2026-06-20,TRX-1092,Kue Lapis,Snack,2,16000,32000,Bandung
+2026-06-10,TRX-1093,Nasi Goreng,Makanan,2,25000,50000,Bandung
+2026-04-05,TRX-1094,Martabak,Snack,1,35000,35000,Surabaya
+2026-01-25,TRX-1095,Bakso,Makanan,3,18500,55500,Jakarta
+2026-03-06,TRX-1096,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-06-06,TRX-1097,Kopi Susu,Minuman,2,18000,36000,Jakarta
+2026-04-11,TRX-1098,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-04-16,TRX-1099,Keripik,Snack,2,12000,24000,Medan
+2026-04-05,TRX-1100,Susu UHT,Minuman,1,7500,7500,Medan
+2026-06-26,TRX-1101,Mie Ayam,Makanan,2,20000,40000,Surabaya
+2026-01-13,TRX-1102,Teh Manis,Minuman,4,8000,32000,Makassar
+2026-06-17,TRX-1103,Martabak,Snack,2,35500,71000,Medan
+2026-02-08,TRX-1104,Es Teh,Minuman,2,6500,13000,Surabaya
+2026-02-22,TRX-1105,Ayam Geprek,Makanan,4,23000,92000,Medan
+2026-06-07,TRX-1106,Pisang Goreng,Snack,4,11000,44000,Bandung
+2026-04-14,TRX-1107,Kopi Susu,Minuman,1,18500,18500,Makassar
+2026-03-09,TRX-1108,Nasi Goreng,Makanan,4,25000,100000,Surabaya
+2026-06-03,TRX-1109,Air Mineral,Minuman,2,4000,8000,Jakarta
+2026-02-21,TRX-1110,Ayam Geprek,Makanan,3,22000,66000,Surabaya
+2026-03-23,TRX-1111,Bakso,Makanan,3,18500,55500,Medan
+2026-06-05,TRX-1112,Susu UHT,Minuman,2,8000,16000,Makassar
+2026-02-11,TRX-1113,Kopi Susu,Minuman,4,19000,76000,Jakarta
+2026-05-31,TRX-1114,Ayam Geprek,Makanan,1,23000,23000,Makassar
+2026-02-06,TRX-1115,Nasi Goreng,Makanan,2,25000,50000,Surabaya
+2026-02-11,TRX-1116,Ayam Geprek,Makanan,1,22500,22500,Jakarta
+2026-01-17,TRX-1117,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-05-31,TRX-1118,Susu UHT,Minuman,2,7500,15000,Makassar
+2026-04-02,TRX-1119,Kopi Susu,Minuman,3,18000,54000,Makassar
+2026-04-11,TRX-1120,Kue Lapis,Snack,1,15000,15000,Surabaya
+2026-02-26,TRX-1121,Kue Lapis,Snack,1,16000,16000,Bandung
+2026-03-14,TRX-1122,Kopi Susu,Minuman,2,19000,38000,Jakarta
+2026-02-25,TRX-1123,Keripik,Snack,4,13000,52000,Jakarta
+2026-04-23,TRX-1124,Martabak,Snack,4,36000,144000,Bandung
+2026-05-24,TRX-1125,Martabak,Snack,4,35000,140000,Medan
+2026-01-04,TRX-1126,Susu UHT,Minuman,1,7000,7000,Surabaya
+2026-03-25,TRX-1127,Ayam Geprek,Makanan,4,23000,92000,Surabaya
+2026-01-26,TRX-1128,Kopi Susu,Minuman,2,18000,36000,Bandung
+2026-01-18,TRX-1129,Sate Ayam,Makanan,1,30500,30500,Surabaya
+2026-02-16,TRX-1130,Es Teh,Minuman,2,7000,14000,Medan
+2026-03-05,TRX-1131,Keripik,Snack,3,12000,36000,Bandung
+2026-06-02,TRX-1132,Keripik,Snack,1,12000,12000,Makassar
+2026-06-10,TRX-1133,Martabak,Snack,1,35000,35000,Surabaya
+2026-01-20,TRX-1134,Susu UHT,Minuman,2,7000,14000,Surabaya
+2026-03-30,TRX-1135,Kue Lapis,Snack,1,15000,15000,Medan
+2026-06-27,TRX-1136,Susu UHT,Minuman,4,7500,30000,Bandung
+2026-03-14,TRX-1137,Sate Ayam,Makanan,3,30500,91500,Medan
+2026-03-01,TRX-1138,Keripik,Snack,1,12500,12500,Bandung
+2026-01-27,TRX-1139,Kopi Susu,Minuman,1,19000,19000,Medan
+2026-06-14,TRX-1140,Susu UHT,Minuman,1,7500,7500,Surabaya
+2026-05-07,TRX-1141,Kue Lapis,Snack,4,15000,60000,Makassar
+2026-03-22,TRX-1142,Teh Manis,Minuman,1,8500,8500,Jakarta
+2026-03-17,TRX-1143,Keripik,Snack,4,12500,50000,Bandung
+2026-03-21,TRX-1144,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-05-26,TRX-1145,Ayam Geprek,Makanan,4,23000,92000,Jakarta
+2026-01-22,TRX-1146,Kue Lapis,Snack,3,16000,48000,Bandung
+2026-01-18,TRX-1147,Sate Ayam,Makanan,2,30500,61000,Makassar
+2026-02-03,TRX-1148,Air Mineral,Minuman,1,4500,4500,Medan
+2026-03-31,TRX-1149,Air Mineral,Minuman,2,4500,9000,Bandung
+2026-01-31,TRX-1150,Martabak,Snack,1,35500,35500,Bandung
+2026-03-01,TRX-1151,Martabak,Snack,2,36000,72000,Medan
+2026-05-04,TRX-1152,Kopi Susu,Minuman,2,18000,36000,Medan
+2026-03-16,TRX-1153,Bakso,Makanan,4,18500,74000,Surabaya
+2026-04-12,TRX-1154,Es Teh,Minuman,1,7000,7000,Bandung
+2026-04-08,TRX-1155,Mie Ayam,Makanan,3,20000,60000,Surabaya
+2026-04-28,TRX-1156,Air Mineral,Minuman,1,4000,4000,Jakarta
+2026-03-01,TRX-1157,Bakso,Makanan,4,19000,76000,Medan
+2026-01-17,TRX-1158,Susu UHT,Minuman,3,8000,24000,Makassar
+2026-05-16,TRX-1159,Sate Ayam,Makanan,2,31000,62000,Jakarta
+2026-02-26,TRX-1160,Keripik,Snack,4,12000,48000,Bandung
+2026-03-05,TRX-1161,Kue Lapis,Snack,1,15000,15000,Jakarta
+2026-04-28,TRX-1162,Nasi Goreng,Makanan,2,26000,52000,Bandung
+2026-03-25,TRX-1163,Susu UHT,Minuman,2,7000,14000,Jakarta
+2026-04-15,TRX-1164,Pisang Goreng,Snack,3,11000,33000,Medan
+2026-06-10,TRX-1165,Keripik,Snack,1,13000,13000,Medan
+2026-06-13,TRX-1166,Pisang Goreng,Snack,2,11000,22000,Medan
+2026-05-17,TRX-1167,Es Teh,Minuman,1,6000,6000,Medan
+2026-05-14,TRX-1168,Pisang Goreng,Snack,1,10500,10500,Bandung
+2026-06-02,TRX-1169,Bakso,Makanan,3,19000,57000,Surabaya
+2026-02-08,TRX-1170,Mie Ayam,Makanan,1,21000,21000,Makassar
+2026-05-18,TRX-1171,Nasi Goreng,Makanan,4,25500,102000,Medan
+2026-01-30,TRX-1172,Ayam Geprek,Makanan,3,22000,66000,Medan
+2026-06-19,TRX-1173,Es Teh,Minuman,1,6500,6500,Jakarta
+2026-06-22,TRX-1174,Martabak,Snack,4,36000,144000,Surabaya
+2026-01-03,TRX-1175,Es Teh,Minuman,2,7000,14000,Makassar
+2026-01-04,TRX-1176,Es Teh,Minuman,3,6000,18000,Jakarta
+2026-02-09,TRX-1177,Pisang Goreng,Snack,3,11000,33000,Jakarta
+2026-06-28,TRX-1178,Nasi Goreng,Makanan,3,25000,75000,Jakarta
+2026-06-10,TRX-1179,Sate Ayam,Makanan,4,30000,120000,Medan
+2026-02-24,TRX-1180,Nasi Goreng,Makanan,4,26000,104000,Surabaya
+2026-03-23,TRX-1181,Mie Ayam,Makanan,1,20500,20500,Jakarta
+2026-04-01,TRX-1182,Susu UHT,Minuman,2,7500,15000,Jakarta
+2026-03-04,TRX-1183,Keripik,Snack,1,12000,12000,Bandung
+2026-03-08,TRX-1184,Teh Manis,Minuman,3,8000,24000,Makassar
+2026-06-18,TRX-1185,Es Teh,Minuman,4,7000,28000,Bandung
+2026-06-14,TRX-1186,Keripik,Snack,1,13000,13000,Makassar
+2026-02-28,TRX-1187,Bakso,Makanan,1,18000,18000,Bandung
+2026-02-25,TRX-1188,Teh Manis,Minuman,1,8000,8000,Medan
+2026-02-11,TRX-1189,Susu UHT,Minuman,3,8000,24000,Jakarta
+2026-05-18,TRX-1190,Mie Ayam,Makanan,2,20000,40000,Makassar
+2026-04-22,TRX-1191,Martabak,Snack,2,35000,70000,Makassar
+2026-05-24,TRX-1192,Pisang Goreng,Snack,4,11000,44000,Makassar
+2026-06-10,TRX-1193,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-01-30,TRX-1194,Sate Ayam,Makanan,1,30500,30500,Bandung
+2026-03-05,TRX-1195,Kue Lapis,Snack,4,15000,60000,Makassar
+2026-06-25,TRX-1196,Es Teh,Minuman,2,6000,12000,Bandung
+2026-02-27,TRX-1197,Ayam Geprek,Makanan,1,22000,22000,Surabaya
+2026-05-07,TRX-1198,Susu UHT,Minuman,3,7000,21000,Jakarta
+2026-04-28,TRX-1199,Martabak,Snack,3,36000,108000,Makassar
+2026-06-08,TRX-1200,Nasi Goreng,Makanan,1,26000,26000,Makassar
+2026-06-22,TRX-1201,Keripik,Snack,3,13000,39000,Jakarta
+2026-05-02,TRX-1202,Susu UHT,Minuman,4,7000,28000,Medan
+2026-06-11,TRX-1203,Martabak,Snack,3,35000,105000,Bandung
+2026-05-20,TRX-1204,Martabak,Snack,2,36000,72000,Bandung
+2026-03-10,TRX-1205,Kopi Susu,Minuman,4,18000,72000,Bandung
+2026-05-11,TRX-1206,Keripik,Snack,2,12000,24000,Surabaya
+2026-01-26,TRX-1207,Susu UHT,Minuman,2,7000,14000,Jakarta
+2026-02-11,TRX-1208,Ayam Geprek,Makanan,3,23000,69000,Makassar
+2026-02-19,TRX-1209,Kopi Susu,Minuman,4,18500,74000,Makassar
+2026-05-04,TRX-1210,Es Teh,Minuman,1,7000,7000,Makassar
+2026-04-05,TRX-1211,Martabak,Snack,1,36000,36000,Makassar
+2026-04-14,TRX-1212,Martabak,Snack,4,35500,142000,Makassar
+2026-01-23,TRX-1213,Kopi Susu,Minuman,3,19000,57000,Jakarta
+2026-01-22,TRX-1214,Kue Lapis,Snack,1,15000,15000,Makassar
+2026-05-27,TRX-1215,Sate Ayam,Makanan,2,30500,61000,Bandung
+2026-04-02,TRX-1216,Bakso,Makanan,4,19000,76000,Surabaya
+2026-01-07,TRX-1217,Bakso,Makanan,4,18000,72000,Jakarta
+2026-04-10,TRX-1218,Sate Ayam,Makanan,1,30000,30000,Surabaya
+2026-04-05,TRX-1219,Ayam Geprek,Makanan,4,23000,92000,Surabaya
+2026-06-01,TRX-1220,Air Mineral,Minuman,3,5000,15000,Jakarta
+2026-06-12,TRX-1221,Teh Manis,Minuman,3,8000,24000,Makassar
+2026-01-11,TRX-1222,Pisang Goreng,Snack,3,10500,31500,Bandung
+2026-04-29,TRX-1223,Ayam Geprek,Makanan,1,22000,22000,Medan
+2026-06-11,TRX-1224,Nasi Goreng,Makanan,1,25500,25500,Jakarta
+2026-03-08,TRX-1225,Martabak,Snack,4,35500,142000,Bandung
+2026-06-06,TRX-1226,Martabak,Snack,2,35000,70000,Bandung
+2026-05-12,TRX-1227,Sate Ayam,Makanan,2,30500,61000,Surabaya
+2026-04-19,TRX-1228,Air Mineral,Minuman,1,4500,4500,Medan
+2026-03-24,TRX-1229,Bakso,Makanan,1,18500,18500,Surabaya
+2026-02-11,TRX-1230,Keripik,Snack,2,12500,25000,Jakarta
+2026-02-06,TRX-1231,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-01-24,TRX-1232,Martabak,Snack,2,36000,72000,Surabaya
+2026-02-04,TRX-1233,Kopi Susu,Minuman,4,19000,76000,Medan
+2026-05-01,TRX-1234,Kue Lapis,Snack,3,15000,45000,Surabaya
+2026-04-11,TRX-1235,Susu UHT,Minuman,3,7000,21000,Surabaya
+2026-06-04,TRX-1236,Pisang Goreng,Snack,4,10000,40000,Makassar
+2026-03-09,TRX-1237,Es Teh,Minuman,2,6000,12000,Bandung
+2026-01-22,TRX-1238,Bakso,Makanan,4,18000,72000,Surabaya
+2026-02-06,TRX-1239,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-06-14,TRX-1240,Keripik,Snack,3,12000,36000,Medan
+2026-03-01,TRX-1241,Air Mineral,Minuman,3,5000,15000,Jakarta
+2026-06-13,TRX-1242,Teh Manis,Minuman,4,8500,34000,Makassar
+2026-06-06,TRX-1243,Susu UHT,Minuman,2,7000,14000,Makassar
+2026-04-28,TRX-1244,Ayam Geprek,Makanan,4,23000,92000,Makassar
+2026-05-24,TRX-1245,Susu UHT,Minuman,1,8000,8000,Bandung
+2026-04-23,TRX-1246,Pisang Goreng,Snack,2,10000,20000,Jakarta
+2026-04-06,TRX-1247,Es Teh,Minuman,1,7000,7000,Bandung
+2026-04-06,TRX-1248,Es Teh,Minuman,4,6000,24000,Makassar
+2026-04-24,TRX-1249,Teh Manis,Minuman,1,8500,8500,Jakarta
+2026-03-01,TRX-1250,Nasi Goreng,Makanan,2,25000,50000,Bandung
+2026-04-13,TRX-1251,Kopi Susu,Minuman,3,18500,55500,Surabaya
+2026-03-08,TRX-1252,Susu UHT,Minuman,2,8000,16000,Makassar
+2026-01-29,TRX-1253,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-05-21,TRX-1254,Sate Ayam,Makanan,3,30500,91500,Jakarta
+2026-05-27,TRX-1255,Kopi Susu,Minuman,1,18500,18500,Bandung
+2026-05-18,TRX-1256,Keripik,Snack,1,13000,13000,Bandung
+2026-03-28,TRX-1257,Susu UHT,Minuman,3,7500,22500,Surabaya
+2026-03-24,TRX-1258,Mie Ayam,Makanan,2,20500,41000,Jakarta
+2026-05-26,TRX-1259,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-06-01,TRX-1260,Pisang Goreng,Snack,4,11000,44000,Bandung
+2026-05-05,TRX-1261,Pisang Goreng,Snack,4,10500,42000,Medan
+2026-02-16,TRX-1262,Kopi Susu,Minuman,1,18500,18500,Surabaya
+2026-01-05,TRX-1263,Air Mineral,Minuman,2,4000,8000,Makassar
+2026-04-05,TRX-1264,Bakso,Makanan,3,19000,57000,Surabaya
+2026-01-16,TRX-1265,Bakso,Makanan,1,19000,19000,Bandung
+2026-04-28,TRX-1266,Keripik,Snack,4,13000,52000,Makassar
+2026-01-17,TRX-1267,Es Teh,Minuman,1,6000,6000,Bandung
+2026-03-27,TRX-1268,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-06-01,TRX-1269,Teh Manis,Minuman,3,9000,27000,Jakarta
+2026-06-28,TRX-1270,Kopi Susu,Minuman,2,18500,37000,Medan
+2026-06-05,TRX-1271,Kopi Susu,Minuman,4,18000,72000,Medan
+2026-03-29,TRX-1272,Pisang Goreng,Snack,1,10500,10500,Surabaya
+2026-04-22,TRX-1273,Bakso,Makanan,1,18000,18000,Medan
+2026-05-31,TRX-1274,Nasi Goreng,Makanan,4,26000,104000,Medan
+2026-03-19,TRX-1275,Nasi Goreng,Makanan,1,25500,25500,Makassar
+2026-05-23,TRX-1276,Teh Manis,Minuman,3,8500,25500,Makassar
+2026-04-23,TRX-1277,Teh Manis,Minuman,3,8500,25500,Bandung
+2026-04-23,TRX-1278,Sate Ayam,Makanan,1,30500,30500,Medan
+2026-06-03,TRX-1279,Nasi Goreng,Makanan,3,25000,75000,Makassar
+2026-06-05,TRX-1280,Teh Manis,Minuman,1,8500,8500,Medan
+2026-02-07,TRX-1281,Martabak,Snack,3,35000,105000,Jakarta
+2026-04-03,TRX-1282,Bakso,Makanan,2,19000,38000,Bandung
+2026-05-28,TRX-1283,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-02-09,TRX-1284,Ayam Geprek,Makanan,2,22000,44000,Makassar
+2026-06-25,TRX-1285,Martabak,Snack,4,35000,140000,Surabaya
+2026-06-22,TRX-1286,Es Teh,Minuman,1,6500,6500,Makassar
+2026-01-25,TRX-1287,Es Teh,Minuman,1,7000,7000,Jakarta
+2026-02-15,TRX-1288,Martabak,Snack,4,35000,140000,Medan
+2026-01-02,TRX-1289,Sate Ayam,Makanan,4,30500,122000,Jakarta
+2026-03-19,TRX-1290,Ayam Geprek,Makanan,4,22500,90000,Surabaya
+2026-02-26,TRX-1291,Pisang Goreng,Snack,1,11000,11000,Makassar
+2026-03-28,TRX-1292,Pisang Goreng,Snack,4,11000,44000,Jakarta
+2026-02-24,TRX-1293,Bakso,Makanan,3,18500,55500,Medan
+2026-02-11,TRX-1294,Kopi Susu,Minuman,4,19000,76000,Bandung
+2026-03-05,TRX-1295,Es Teh,Minuman,4,7000,28000,Bandung
+2026-04-25,TRX-1296,Pisang Goreng,Snack,3,11000,33000,Medan
+2026-06-09,TRX-1297,Air Mineral,Minuman,3,4500,13500,Makassar
+2026-04-16,TRX-1298,Bakso,Makanan,1,18000,18000,Jakarta
+2026-04-29,TRX-1299,Nasi Goreng,Makanan,3,26000,78000,Bandung
+2026-03-02,TRX-1300,Ayam Geprek,Makanan,1,23000,23000,Makassar
+2026-04-02,TRX-1301,Martabak,Snack,2,35000,70000,Bandung
+2026-05-02,TRX-1302,Nasi Goreng,Makanan,3,25500,76500,Bandung
+2026-05-14,TRX-1303,Bakso,Makanan,1,18000,18000,Jakarta
+2026-06-26,TRX-1304,Susu UHT,Minuman,4,7000,28000,Jakarta
+2026-05-06,TRX-1305,Kue Lapis,Snack,2,16000,32000,Bandung
+2026-03-29,TRX-1306,Teh Manis,Minuman,3,8500,25500,Jakarta
+2026-06-11,TRX-1307,Air Mineral,Minuman,3,5000,15000,Medan
+2026-06-08,TRX-1308,Pisang Goreng,Snack,2,11000,22000,Medan
+2026-05-02,TRX-1309,Susu UHT,Minuman,4,7000,28000,Jakarta
+2026-01-27,TRX-1310,Keripik,Snack,3,12500,37500,Jakarta
+2026-02-15,TRX-1311,Ayam Geprek,Makanan,1,22500,22500,Makassar
+2026-04-11,TRX-1312,Kue Lapis,Snack,4,16000,64000,Bandung
+2026-06-12,TRX-1313,Es Teh,Minuman,3,6500,19500,Makassar
+2026-03-01,TRX-1314,Sate Ayam,Makanan,1,31000,31000,Jakarta
+2026-04-13,TRX-1315,Nasi Goreng,Makanan,3,25500,76500,Surabaya
+2026-03-29,TRX-1316,Susu UHT,Minuman,3,8000,24000,Bandung
+2026-02-03,TRX-1317,Martabak,Snack,3,35500,106500,Makassar
+2026-03-14,TRX-1318,Keripik,Snack,2,13000,26000,Jakarta
+2026-02-05,TRX-1319,Air Mineral,Minuman,2,4000,8000,Makassar
+2026-05-31,TRX-1320,Mie Ayam,Makanan,2,20500,41000,Jakarta
+2026-02-22,TRX-1321,Kopi Susu,Minuman,2,19000,38000,Jakarta
+2026-05-07,TRX-1322,Air Mineral,Minuman,4,4500,18000,Jakarta
+2026-03-29,TRX-1323,Es Teh,Minuman,3,6500,19500,Makassar
+2026-05-29,TRX-1324,Susu UHT,Minuman,4,8000,32000,Jakarta
+2026-01-09,TRX-1325,Keripik,Snack,2,12000,24000,Medan
+2026-04-20,TRX-1326,Keripik,Snack,2,12500,25000,Bandung
+2026-01-13,TRX-1327,Bakso,Makanan,3,19000,57000,Jakarta
+2026-02-03,TRX-1328,Nasi Goreng,Makanan,1,26000,26000,Makassar
+2026-01-30,TRX-1329,Es Teh,Minuman,4,6000,24000,Bandung
+2026-04-04,TRX-1330,Kopi Susu,Minuman,1,19000,19000,Medan
+2026-02-15,TRX-1331,Kopi Susu,Minuman,2,18000,36000,Jakarta
+2026-05-06,TRX-1332,Susu UHT,Minuman,1,7500,7500,Jakarta
+2026-06-14,TRX-1333,Ayam Geprek,Makanan,1,22500,22500,Makassar
+2026-06-12,TRX-1334,Ayam Geprek,Makanan,2,23000,46000,Medan
+2026-06-18,TRX-1335,Bakso,Makanan,4,18000,72000,Surabaya
+2026-01-03,TRX-1336,Pisang Goreng,Snack,1,10500,10500,Jakarta
+2026-01-19,TRX-1337,Susu UHT,Minuman,4,8000,32000,Jakarta
+2026-03-01,TRX-1338,Air Mineral,Minuman,2,4000,8000,Bandung
+2026-05-22,TRX-1339,Mie Ayam,Makanan,3,20000,60000,Jakarta
+2026-06-07,TRX-1340,Kopi Susu,Minuman,3,18500,55500,Bandung
+2026-04-14,TRX-1341,Pisang Goreng,Snack,4,10000,40000,Jakarta
+2026-01-06,TRX-1342,Ayam Geprek,Makanan,3,22000,66000,Surabaya
+2026-05-25,TRX-1343,Sate Ayam,Makanan,2,31000,62000,Surabaya
+2026-04-08,TRX-1344,Martabak,Snack,2,35000,70000,Surabaya
+2026-05-30,TRX-1345,Bakso,Makanan,3,19000,57000,Medan
+2026-03-27,TRX-1346,Kopi Susu,Minuman,1,18500,18500,Makassar
+2026-05-12,TRX-1347,Ayam Geprek,Makanan,1,23000,23000,Jakarta
+2026-02-27,TRX-1348,Bakso,Makanan,4,18500,74000,Medan
+2026-03-18,TRX-1349,Bakso,Makanan,1,18500,18500,Bandung
+2026-04-16,TRX-1350,Susu UHT,Minuman,2,7500,15000,Jakarta
+2026-06-01,TRX-1351,Martabak,Snack,2,36000,72000,Jakarta
+2026-03-19,TRX-1352,Mie Ayam,Makanan,3,20000,60000,Makassar
+2026-06-17,TRX-1353,Teh Manis,Minuman,3,9000,27000,Surabaya
+2026-03-01,TRX-1354,Teh Manis,Minuman,2,8500,17000,Surabaya
+2026-06-21,TRX-1355,Nasi Goreng,Makanan,1,26000,26000,Jakarta
+2026-02-13,TRX-1356,Es Teh,Minuman,4,6000,24000,Jakarta
+2026-01-21,TRX-1357,Kue Lapis,Snack,4,15500,62000,Medan
+2026-04-01,TRX-1358,Susu UHT,Minuman,3,8000,24000,Bandung
+2026-03-30,TRX-1359,Martabak,Snack,3,35000,105000,Bandung
+2026-05-25,TRX-1360,Nasi Goreng,Makanan,3,26000,78000,Bandung
+2026-04-29,TRX-1361,Teh Manis,Minuman,2,8500,17000,Bandung
+2026-04-13,TRX-1362,Sate Ayam,Makanan,4,30500,122000,Makassar
+2026-05-18,TRX-1363,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-01-12,TRX-1364,Sate Ayam,Makanan,4,30000,120000,Medan
+2026-02-05,TRX-1365,Martabak,Snack,1,35500,35500,Makassar
+2026-01-28,TRX-1366,Bakso,Makanan,4,19000,76000,Jakarta
+2026-04-08,TRX-1367,Kue Lapis,Snack,1,15500,15500,Medan
+2026-02-25,TRX-1368,Sate Ayam,Makanan,2,30000,60000,Jakarta
+2026-01-21,TRX-1369,Pisang Goreng,Snack,3,10500,31500,Medan
+2026-03-11,TRX-1370,Es Teh,Minuman,1,7000,7000,Jakarta
+2026-02-19,TRX-1371,Nasi Goreng,Makanan,1,25000,25000,Makassar
+2026-05-19,TRX-1372,Sate Ayam,Makanan,3,30000,90000,Surabaya
+2026-04-11,TRX-1373,Teh Manis,Minuman,1,9000,9000,Bandung
+2026-02-15,TRX-1374,Keripik,Snack,4,13000,52000,Bandung
+2026-03-16,TRX-1375,Keripik,Snack,1,12500,12500,Jakarta
+2026-05-02,TRX-1376,Teh Manis,Minuman,3,8000,24000,Jakarta
+2026-01-10,TRX-1377,Martabak,Snack,1,35000,35000,Bandung
+2026-01-28,TRX-1378,Pisang Goreng,Snack,4,10500,42000,Makassar
+2026-03-04,TRX-1379,Es Teh,Minuman,3,7000,21000,Jakarta
+2026-03-07,TRX-1380,Teh Manis,Minuman,4,9000,36000,Medan
+2026-05-22,TRX-1381,Pisang Goreng,Snack,4,10000,40000,Bandung
+2026-05-27,TRX-1382,Es Teh,Minuman,2,6000,12000,Makassar
+2026-01-03,TRX-1383,Ayam Geprek,Makanan,1,23000,23000,Bandung
+2026-01-02,TRX-1384,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-05-19,TRX-1385,Bakso,Makanan,1,18000,18000,Makassar
+2026-05-16,TRX-1386,Es Teh,Minuman,2,6500,13000,Makassar
+2026-04-07,TRX-1387,Es Teh,Minuman,2,7000,14000,Surabaya
+2026-04-22,TRX-1388,Ayam Geprek,Makanan,1,22500,22500,Medan
+2026-04-19,TRX-1389,Sate Ayam,Makanan,4,30000,120000,Makassar
+2026-01-09,TRX-1390,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-04-09,TRX-1391,Ayam Geprek,Makanan,2,23000,46000,Surabaya
+2026-03-19,TRX-1392,Martabak,Snack,1,35000,35000,Bandung
+2026-04-17,TRX-1393,Es Teh,Minuman,3,7000,21000,Surabaya
+2026-04-17,TRX-1394,Air Mineral,Minuman,1,5000,5000,Medan
+2026-03-23,TRX-1395,Teh Manis,Minuman,3,8500,25500,Bandung
+2026-01-25,TRX-1396,Air Mineral,Minuman,3,5000,15000,Jakarta
+2026-02-10,TRX-1397,Pisang Goreng,Snack,3,11000,33000,Medan
+2026-06-23,TRX-1398,Pisang Goreng,Snack,3,10500,31500,Jakarta
+2026-02-14,TRX-1399,Air Mineral,Minuman,4,4500,18000,Jakarta
+2026-04-18,TRX-1400,Pisang Goreng,Snack,4,11000,44000,Medan
+2026-01-14,TRX-1401,Teh Manis,Minuman,3,8500,25500,Jakarta
+2026-02-24,TRX-1402,Es Teh,Minuman,1,7000,7000,Jakarta
+2026-03-10,TRX-1403,Teh Manis,Minuman,3,8500,25500,Medan
+2026-06-21,TRX-1404,Pisang Goreng,Snack,3,10500,31500,Medan
+2026-04-22,TRX-1405,Martabak,Snack,4,36000,144000,Medan
+2026-03-05,TRX-1406,Kopi Susu,Minuman,2,18000,36000,Jakarta
+2026-05-13,TRX-1407,Pisang Goreng,Snack,3,11000,33000,Medan
+2026-03-03,TRX-1408,Mie Ayam,Makanan,3,21000,63000,Jakarta
+2026-01-01,TRX-1409,Kopi Susu,Minuman,3,18000,54000,Jakarta
+2026-03-04,TRX-1410,Nasi Goreng,Makanan,1,26000,26000,Medan
+2026-04-29,TRX-1411,Mie Ayam,Makanan,2,20500,41000,Medan
+2026-06-14,TRX-1412,Bakso,Makanan,1,18000,18000,Bandung
+2026-06-01,TRX-1413,Bakso,Makanan,1,18000,18000,Medan
+2026-06-14,TRX-1414,Keripik,Snack,1,13000,13000,Medan
+2026-01-16,TRX-1415,Mie Ayam,Makanan,3,20500,61500,Jakarta
+2026-01-23,TRX-1416,Susu UHT,Minuman,3,7000,21000,Medan
+2026-02-25,TRX-1417,Mie Ayam,Makanan,1,20500,20500,Jakarta
+2026-02-02,TRX-1418,Nasi Goreng,Makanan,4,25500,102000,Bandung
+2026-01-06,TRX-1419,Teh Manis,Minuman,4,8500,34000,Medan
+2026-02-04,TRX-1420,Kue Lapis,Snack,1,16000,16000,Makassar
+2026-02-19,TRX-1421,Sate Ayam,Makanan,1,31000,31000,Bandung
+2026-06-18,TRX-1422,Kue Lapis,Snack,2,15500,31000,Medan
+2026-06-18,TRX-1423,Air Mineral,Minuman,3,4000,12000,Makassar
+2026-06-09,TRX-1424,Keripik,Snack,3,13000,39000,Medan
+2026-03-09,TRX-1425,Sate Ayam,Makanan,4,31000,124000,Medan
+2026-03-08,TRX-1426,Nasi Goreng,Makanan,3,25000,75000,Medan
+2026-04-18,TRX-1427,Kopi Susu,Minuman,2,18000,36000,Bandung
+2026-03-30,TRX-1428,Martabak,Snack,1,36000,36000,Surabaya
+2026-05-29,TRX-1429,Bakso,Makanan,4,19000,76000,Medan
+2026-02-09,TRX-1430,Es Teh,Minuman,3,6000,18000,Medan
+2026-05-18,TRX-1431,Ayam Geprek,Makanan,2,22000,44000,Bandung
+2026-06-20,TRX-1432,Susu UHT,Minuman,4,8000,32000,Surabaya
+2026-05-31,TRX-1433,Susu UHT,Minuman,1,8000,8000,Makassar
+2026-04-16,TRX-1434,Pisang Goreng,Snack,2,10500,21000,Surabaya
+2026-06-01,TRX-1435,Kue Lapis,Snack,3,15000,45000,Surabaya
+2026-01-18,TRX-1436,Kopi Susu,Minuman,4,18500,74000,Jakarta
+2026-02-02,TRX-1437,Teh Manis,Minuman,1,8000,8000,Surabaya
+2026-03-26,TRX-1438,Ayam Geprek,Makanan,2,23000,46000,Bandung
+2026-02-11,TRX-1439,Ayam Geprek,Makanan,3,22500,67500,Makassar
+2026-04-12,TRX-1440,Susu UHT,Minuman,2,8000,16000,Medan
+2026-01-17,TRX-1441,Sate Ayam,Makanan,4,30500,122000,Surabaya
+2026-04-10,TRX-1442,Mie Ayam,Makanan,1,21000,21000,Makassar
+2026-02-28,TRX-1443,Mie Ayam,Makanan,4,20000,80000,Makassar
+2026-03-19,TRX-1444,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-04-13,TRX-1445,Martabak,Snack,4,35000,140000,Makassar
+2026-04-04,TRX-1446,Air Mineral,Minuman,3,4500,13500,Surabaya
+2026-05-12,TRX-1447,Keripik,Snack,3,12000,36000,Surabaya
+2026-04-27,TRX-1448,Pisang Goreng,Snack,3,10500,31500,Surabaya
+2026-06-16,TRX-1449,Kue Lapis,Snack,3,15000,45000,Bandung
+2026-01-22,TRX-1450,Ayam Geprek,Makanan,2,22000,44000,Surabaya
+2026-03-19,TRX-1451,Bakso,Makanan,3,18000,54000,Medan
+2026-05-15,TRX-1452,Sate Ayam,Makanan,1,30000,30000,Surabaya
+2026-05-17,TRX-1453,Nasi Goreng,Makanan,3,26000,78000,Jakarta
+2026-06-11,TRX-1454,Keripik,Snack,2,12000,24000,Makassar
+2026-05-16,TRX-1455,Sate Ayam,Makanan,3,30500,91500,Makassar
+2026-06-27,TRX-1456,Air Mineral,Minuman,1,4000,4000,Bandung
+2026-06-22,TRX-1457,Bakso,Makanan,2,19000,38000,Makassar
+2026-01-04,TRX-1458,Susu UHT,Minuman,2,8000,16000,Makassar
+2026-04-25,TRX-1459,Pisang Goreng,Snack,4,10500,42000,Surabaya
+2026-04-21,TRX-1460,Teh Manis,Minuman,4,8500,34000,Makassar
+2026-05-20,TRX-1461,Martabak,Snack,4,36000,144000,Surabaya
+2026-05-06,TRX-1462,Nasi Goreng,Makanan,4,25000,100000,Jakarta
+2026-04-30,TRX-1463,Nasi Goreng,Makanan,3,25500,76500,Bandung
+2026-06-13,TRX-1464,Kopi Susu,Minuman,3,18000,54000,Bandung
+2026-01-24,TRX-1465,Nasi Goreng,Makanan,2,25500,51000,Makassar
+2026-05-23,TRX-1466,Teh Manis,Minuman,4,8000,32000,Surabaya
+2026-05-10,TRX-1467,Es Teh,Minuman,1,7000,7000,Makassar
+2026-02-05,TRX-1468,Pisang Goreng,Snack,1,10000,10000,Surabaya
+2026-04-09,TRX-1469,Teh Manis,Minuman,3,9000,27000,Jakarta
+2026-03-08,TRX-1470,Sate Ayam,Makanan,2,31000,62000,Jakarta
+2026-02-23,TRX-1471,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-04-11,TRX-1472,Kopi Susu,Minuman,4,18000,72000,Jakarta
+2026-05-21,TRX-1473,Pisang Goreng,Snack,2,10500,21000,Surabaya
+2026-02-14,TRX-1474,Teh Manis,Minuman,4,8000,32000,Medan
+2026-01-18,TRX-1475,Air Mineral,Minuman,3,5000,15000,Bandung
+2026-02-05,TRX-1476,Keripik,Snack,1,12000,12000,Surabaya
+2026-05-26,TRX-1477,Teh Manis,Minuman,1,8500,8500,Medan
+2026-06-03,TRX-1478,Kopi Susu,Minuman,2,18000,36000,Jakarta
+2026-06-10,TRX-1479,Susu UHT,Minuman,2,7000,14000,Jakarta
+2026-06-09,TRX-1480,Sate Ayam,Makanan,2,30000,60000,Medan
+2026-02-19,TRX-1481,Kopi Susu,Minuman,3,18000,54000,Bandung
+2026-02-07,TRX-1482,Nasi Goreng,Makanan,3,25500,76500,Surabaya
+2026-06-25,TRX-1483,Air Mineral,Minuman,4,4500,18000,Bandung
+2026-02-02,TRX-1484,Es Teh,Minuman,2,6000,12000,Surabaya
+2026-05-23,TRX-1485,Martabak,Snack,2,36000,72000,Bandung
+2026-01-25,TRX-1486,Teh Manis,Minuman,2,9000,18000,Medan
+2026-02-07,TRX-1487,Nasi Goreng,Makanan,4,26000,104000,Medan
+2026-03-20,TRX-1488,Teh Manis,Minuman,4,8500,34000,Makassar
+2026-06-04,TRX-1489,Mie Ayam,Makanan,3,20000,60000,Bandung
+2026-04-27,TRX-1490,Es Teh,Minuman,2,7000,14000,Medan
+2026-06-23,TRX-1491,Keripik,Snack,3,13000,39000,Jakarta
+2026-04-07,TRX-1492,Bakso,Makanan,2,18000,36000,Bandung
+2026-05-29,TRX-1493,Pisang Goreng,Snack,2,11000,22000,Makassar
+2026-05-14,TRX-1494,Mie Ayam,Makanan,2,20500,41000,Makassar
+2026-02-16,TRX-1495,Martabak,Snack,3,36000,108000,Jakarta
+2026-01-29,TRX-1496,Teh Manis,Minuman,4,8500,34000,Bandung
+2026-04-22,TRX-1497,Mie Ayam,Makanan,3,20500,61500,Makassar
+2026-05-14,TRX-1498,Kue Lapis,Snack,1,15000,15000,Medan
+2026-05-14,TRX-1499,Air Mineral,Minuman,2,4000,8000,Medan
+2026-04-16,TRX-1500,Keripik,Snack,1,12500,12500,Medan
+2026-03-21,TRX-1501,Bakso,Makanan,4,18500,74000,Bandung
+2026-02-19,TRX-1502,Bakso,Makanan,3,18500,55500,Jakarta
+2026-03-05,TRX-1503,Nasi Goreng,Makanan,1,25000,25000,Bandung
+2026-04-27,TRX-1504,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-02-08,TRX-1505,Keripik,Snack,1,12500,12500,Surabaya
+2026-01-24,TRX-1506,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-05-25,TRX-1507,Bakso,Makanan,1,18000,18000,Bandung
+2026-02-02,TRX-1508,Es Teh,Minuman,3,6500,19500,Surabaya
+2026-01-06,TRX-1509,Es Teh,Minuman,3,6000,18000,Medan
+2026-04-27,TRX-1510,Pisang Goreng,Snack,2,10500,21000,Surabaya
+2026-04-12,TRX-1511,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-05-20,TRX-1512,Nasi Goreng,Makanan,4,26000,104000,Makassar
+2026-01-07,TRX-1513,Mie Ayam,Makanan,2,21000,42000,Surabaya
+2026-05-30,TRX-1514,Keripik,Snack,4,12000,48000,Surabaya
+2026-02-06,TRX-1515,Kopi Susu,Minuman,2,19000,38000,Jakarta
+2026-02-23,TRX-1516,Bakso,Makanan,3,18500,55500,Medan
+2026-03-02,TRX-1517,Martabak,Snack,2,36000,72000,Medan
+2026-02-26,TRX-1518,Keripik,Snack,1,12500,12500,Jakarta
+2026-01-12,TRX-1519,Martabak,Snack,1,35000,35000,Bandung
+2026-01-04,TRX-1520,Kopi Susu,Minuman,3,18500,55500,Surabaya
+2026-02-21,TRX-1521,Susu UHT,Minuman,3,7500,22500,Medan
+2026-01-05,TRX-1522,Bakso,Makanan,1,18500,18500,Makassar
+2026-05-11,TRX-1523,Ayam Geprek,Makanan,1,22000,22000,Makassar
+2026-06-03,TRX-1524,Susu UHT,Minuman,2,8000,16000,Surabaya
+2026-01-16,TRX-1525,Ayam Geprek,Makanan,2,22500,45000,Surabaya
+2026-04-27,TRX-1526,Sate Ayam,Makanan,2,30000,60000,Makassar
+2026-04-07,TRX-1527,Es Teh,Minuman,2,6500,13000,Makassar
+2026-03-14,TRX-1528,Martabak,Snack,3,35000,105000,Medan
+2026-06-19,TRX-1529,Mie Ayam,Makanan,4,20500,82000,Makassar
+2026-06-19,TRX-1530,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-02-15,TRX-1531,Ayam Geprek,Makanan,3,22000,66000,Medan
+2026-05-05,TRX-1532,Sate Ayam,Makanan,4,31000,124000,Medan
+2026-04-29,TRX-1533,Pisang Goreng,Snack,2,11000,22000,Bandung
+2026-04-29,TRX-1534,Air Mineral,Minuman,2,5000,10000,Medan
+2026-04-24,TRX-1535,Bakso,Makanan,2,18500,37000,Medan
+2026-06-03,TRX-1536,Kopi Susu,Minuman,4,18000,72000,Surabaya
+2026-01-08,TRX-1537,Ayam Geprek,Makanan,1,22500,22500,Medan
+2026-04-04,TRX-1538,Pisang Goreng,Snack,4,10000,40000,Bandung
+2026-05-15,TRX-1539,Sate Ayam,Makanan,3,31000,93000,Bandung
+2026-05-09,TRX-1540,Nasi Goreng,Makanan,3,25000,75000,Surabaya
+2026-02-23,TRX-1541,Bakso,Makanan,3,18000,54000,Medan
+2026-02-01,TRX-1542,Kue Lapis,Snack,2,15500,31000,Jakarta
+2026-05-28,TRX-1543,Susu UHT,Minuman,3,7000,21000,Bandung
+2026-03-19,TRX-1544,Es Teh,Minuman,1,6000,6000,Jakarta
+2026-02-14,TRX-1545,Es Teh,Minuman,1,7000,7000,Medan
+2026-04-21,TRX-1546,Nasi Goreng,Makanan,4,25500,102000,Jakarta
+2026-03-24,TRX-1547,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-02-08,TRX-1548,Keripik,Snack,2,12000,24000,Jakarta
+2026-04-06,TRX-1549,Kue Lapis,Snack,3,15000,45000,Bandung
+2026-03-11,TRX-1550,Nasi Goreng,Makanan,2,26000,52000,Bandung
+2026-03-24,TRX-1551,Bakso,Makanan,2,19000,38000,Bandung
+2026-05-02,TRX-1552,Susu UHT,Minuman,4,7500,30000,Surabaya
+2026-04-13,TRX-1553,Teh Manis,Minuman,1,8500,8500,Medan
+2026-05-03,TRX-1554,Sate Ayam,Makanan,1,30500,30500,Medan
+2026-03-23,TRX-1555,Es Teh,Minuman,1,7000,7000,Makassar
+2026-04-24,TRX-1556,Keripik,Snack,1,12000,12000,Makassar
+2026-04-19,TRX-1557,Kopi Susu,Minuman,1,18000,18000,Jakarta
+2026-01-04,TRX-1558,Keripik,Snack,2,13000,26000,Makassar
+2026-01-15,TRX-1559,Pisang Goreng,Snack,4,10500,42000,Surabaya
+2026-03-07,TRX-1560,Kopi Susu,Minuman,4,18500,74000,Jakarta
+2026-03-09,TRX-1561,Kopi Susu,Minuman,3,19000,57000,Medan
+2026-05-24,TRX-1562,Air Mineral,Minuman,3,5000,15000,Makassar
+2026-03-27,TRX-1563,Keripik,Snack,1,12500,12500,Makassar
+2026-01-29,TRX-1564,Es Teh,Minuman,4,6000,24000,Jakarta
+2026-04-27,TRX-1565,Martabak,Snack,4,36000,144000,Bandung
+2026-02-05,TRX-1566,Ayam Geprek,Makanan,2,23000,46000,Surabaya
+2026-06-05,TRX-1567,Susu UHT,Minuman,3,7000,21000,Jakarta
+2026-03-15,TRX-1568,Kopi Susu,Minuman,4,18000,72000,Surabaya
+2026-04-11,TRX-1569,Mie Ayam,Makanan,1,20000,20000,Bandung
+2026-04-17,TRX-1570,Mie Ayam,Makanan,2,20000,40000,Bandung
+2026-06-29,TRX-1571,Es Teh,Minuman,1,6500,6500,Bandung
+2026-06-04,TRX-1572,Pisang Goreng,Snack,3,10500,31500,Medan
+2026-06-05,TRX-1573,Susu UHT,Minuman,3,7500,22500,Jakarta
+2026-04-11,TRX-1574,Nasi Goreng,Makanan,3,25000,75000,Medan
+2026-02-24,TRX-1575,Susu UHT,Minuman,3,7500,22500,Surabaya
+2026-02-13,TRX-1576,Mie Ayam,Makanan,2,20000,40000,Bandung
+2026-04-01,TRX-1577,Susu UHT,Minuman,4,7500,30000,Medan
+2026-05-30,TRX-1578,Sate Ayam,Makanan,2,31000,62000,Makassar
+2026-01-22,TRX-1579,Ayam Geprek,Makanan,3,22000,66000,Makassar
+2026-03-18,TRX-1580,Martabak,Snack,4,35000,140000,Bandung
+2026-02-11,TRX-1581,Bakso,Makanan,3,19000,57000,Medan
+2026-02-16,TRX-1582,Teh Manis,Minuman,3,8500,25500,Bandung
+2026-06-29,TRX-1583,Keripik,Snack,4,12000,48000,Bandung
+2026-02-16,TRX-1584,Keripik,Snack,4,13000,52000,Surabaya
+2026-01-18,TRX-1585,Martabak,Snack,1,36000,36000,Surabaya
+2026-01-11,TRX-1586,Nasi Goreng,Makanan,3,25500,76500,Surabaya
+2026-04-03,TRX-1587,Bakso,Makanan,1,19000,19000,Bandung
+2026-06-28,TRX-1588,Sate Ayam,Makanan,1,31000,31000,Jakarta
+2026-03-24,TRX-1589,Keripik,Snack,4,12000,48000,Bandung
+2026-02-15,TRX-1590,Air Mineral,Minuman,4,4500,18000,Makassar
+2026-03-20,TRX-1591,Ayam Geprek,Makanan,2,23000,46000,Makassar
+2026-06-26,TRX-1592,Kopi Susu,Minuman,3,18500,55500,Medan
+2026-05-29,TRX-1593,Martabak,Snack,2,36000,72000,Bandung
+2026-04-28,TRX-1594,Sate Ayam,Makanan,4,30000,120000,Surabaya
+2026-02-18,TRX-1595,Kopi Susu,Minuman,1,19000,19000,Surabaya
+2026-04-14,TRX-1596,Susu UHT,Minuman,3,7500,22500,Bandung
+2026-04-02,TRX-1597,Teh Manis,Minuman,2,9000,18000,Makassar
+2026-05-09,TRX-1598,Pisang Goreng,Snack,3,10500,31500,Makassar
+2026-03-06,TRX-1599,Mie Ayam,Makanan,1,21000,21000,Makassar
+2026-02-20,TRX-1600,Keripik,Snack,3,12500,37500,Bandung
+2026-02-06,TRX-1601,Es Teh,Minuman,3,6500,19500,Bandung
+2026-03-26,TRX-1602,Air Mineral,Minuman,1,5000,5000,Surabaya
+2026-03-10,TRX-1603,Keripik,Snack,1,12000,12000,Surabaya
+2026-01-17,TRX-1604,Kopi Susu,Minuman,3,18500,55500,Makassar
+2026-04-18,TRX-1605,Air Mineral,Minuman,1,4000,4000,Jakarta
+2026-06-17,TRX-1606,Nasi Goreng,Makanan,2,25000,50000,Makassar
+2026-04-11,TRX-1607,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-03-02,TRX-1608,Kue Lapis,Snack,3,16000,48000,Medan
+2026-03-29,TRX-1609,Kue Lapis,Snack,1,15000,15000,Medan
+2026-03-07,TRX-1610,Teh Manis,Minuman,4,8000,32000,Surabaya
+2026-01-17,TRX-1611,Nasi Goreng,Makanan,4,25500,102000,Surabaya
+2026-01-26,TRX-1612,Nasi Goreng,Makanan,2,25500,51000,Makassar
+2026-03-22,TRX-1613,Nasi Goreng,Makanan,3,25500,76500,Surabaya
+2026-04-12,TRX-1614,Nasi Goreng,Makanan,2,26000,52000,Makassar
+2026-01-22,TRX-1615,Susu UHT,Minuman,1,8000,8000,Makassar
+2026-06-01,TRX-1616,Air Mineral,Minuman,4,4500,18000,Surabaya
+2026-03-02,TRX-1617,Es Teh,Minuman,4,7000,28000,Jakarta
+2026-06-04,TRX-1618,Kue Lapis,Snack,4,16000,64000,Makassar
+2026-01-29,TRX-1619,Mie Ayam,Makanan,3,21000,63000,Jakarta
+2026-03-12,TRX-1620,Kopi Susu,Minuman,2,18000,36000,Medan
+2026-02-28,TRX-1621,Bakso,Makanan,2,18500,37000,Bandung
+2026-01-10,TRX-1622,Sate Ayam,Makanan,2,31000,62000,Bandung
+2026-03-02,TRX-1623,Susu UHT,Minuman,2,8000,16000,Medan
+2026-04-15,TRX-1624,Sate Ayam,Makanan,3,31000,93000,Bandung
+2026-01-19,TRX-1625,Sate Ayam,Makanan,2,31000,62000,Medan
+2026-03-11,TRX-1626,Ayam Geprek,Makanan,3,23000,69000,Medan
+2026-05-26,TRX-1627,Mie Ayam,Makanan,2,20000,40000,Bandung
+2026-05-04,TRX-1628,Susu UHT,Minuman,3,8000,24000,Bandung
+2026-01-19,TRX-1629,Sate Ayam,Makanan,4,31000,124000,Surabaya
+2026-02-27,TRX-1630,Teh Manis,Minuman,3,8500,25500,Surabaya
+2026-03-14,TRX-1631,Keripik,Snack,4,12000,48000,Jakarta
+2026-04-15,TRX-1632,Pisang Goreng,Snack,1,10000,10000,Medan
+2026-04-08,TRX-1633,Es Teh,Minuman,3,6000,18000,Bandung
+2026-03-16,TRX-1634,Nasi Goreng,Makanan,1,26000,26000,Makassar
+2026-05-01,TRX-1635,Kue Lapis,Snack,2,16000,32000,Makassar
+2026-04-22,TRX-1636,Sate Ayam,Makanan,1,30000,30000,Surabaya
+2026-04-17,TRX-1637,Mie Ayam,Makanan,2,21000,42000,Surabaya
+2026-04-11,TRX-1638,Keripik,Snack,3,13000,39000,Medan
+2026-01-17,TRX-1639,Mie Ayam,Makanan,1,20500,20500,Bandung
+2026-04-09,TRX-1640,Ayam Geprek,Makanan,3,22500,67500,Bandung
+2026-01-06,TRX-1641,Kopi Susu,Minuman,2,18500,37000,Medan
+2026-03-29,TRX-1642,Kue Lapis,Snack,2,16000,32000,Surabaya
+2026-02-27,TRX-1643,Pisang Goreng,Snack,1,11000,11000,Jakarta
+2026-05-30,TRX-1644,Pisang Goreng,Snack,3,10500,31500,Surabaya
+2026-01-04,TRX-1645,Kue Lapis,Snack,1,15000,15000,Surabaya
+2026-04-06,TRX-1646,Air Mineral,Minuman,2,4500,9000,Makassar
+2026-01-03,TRX-1647,Ayam Geprek,Makanan,3,23000,69000,Makassar
+2026-05-22,TRX-1648,Kopi Susu,Minuman,3,18500,55500,Bandung
+2026-01-10,TRX-1649,Air Mineral,Minuman,1,5000,5000,Surabaya
+2026-05-23,TRX-1650,Es Teh,Minuman,1,6500,6500,Bandung
+2026-02-24,TRX-1651,Bakso,Makanan,2,18500,37000,Medan
+2026-02-27,TRX-1652,Bakso,Makanan,1,18500,18500,Makassar
+2026-03-19,TRX-1653,Pisang Goreng,Snack,3,11000,33000,Makassar
+2026-05-04,TRX-1654,Kue Lapis,Snack,4,15000,60000,Jakarta
+2026-05-19,TRX-1655,Sate Ayam,Makanan,2,30000,60000,Makassar
+2026-05-29,TRX-1656,Nasi Goreng,Makanan,1,25500,25500,Medan
+2026-04-08,TRX-1657,Es Teh,Minuman,2,6500,13000,Jakarta
+2026-01-12,TRX-1658,Es Teh,Minuman,4,7000,28000,Medan
+2026-05-25,TRX-1659,Nasi Goreng,Makanan,3,26000,78000,Medan
+2026-05-13,TRX-1660,Susu UHT,Minuman,1,8000,8000,Surabaya
+2026-02-26,TRX-1661,Kue Lapis,Snack,3,15000,45000,Surabaya
+2026-06-17,TRX-1662,Susu UHT,Minuman,2,8000,16000,Jakarta
+2026-05-25,TRX-1663,Kue Lapis,Snack,3,16000,48000,Jakarta
+2026-04-07,TRX-1664,Susu UHT,Minuman,3,8000,24000,Medan
+2026-04-28,TRX-1665,Nasi Goreng,Makanan,1,26000,26000,Medan
+2026-03-09,TRX-1666,Keripik,Snack,3,12500,37500,Jakarta
+2026-04-04,TRX-1667,Nasi Goreng,Makanan,4,25000,100000,Medan
+2026-04-10,TRX-1668,Keripik,Snack,1,13000,13000,Medan
+2026-01-26,TRX-1669,Nasi Goreng,Makanan,4,26000,104000,Bandung
+2026-02-13,TRX-1670,Pisang Goreng,Snack,1,11000,11000,Makassar
+2026-02-18,TRX-1671,Keripik,Snack,1,12500,12500,Makassar
+2026-03-10,TRX-1672,Susu UHT,Minuman,1,8000,8000,Surabaya
+2026-03-02,TRX-1673,Nasi Goreng,Makanan,2,26000,52000,Surabaya
+2026-03-24,TRX-1674,Pisang Goreng,Snack,3,10000,30000,Jakarta
+2026-03-04,TRX-1675,Sate Ayam,Makanan,3,30500,91500,Jakarta
+2026-02-26,TRX-1676,Kopi Susu,Minuman,1,19000,19000,Bandung
+2026-03-19,TRX-1677,Mie Ayam,Makanan,3,20500,61500,Surabaya
+2026-01-26,TRX-1678,Susu UHT,Minuman,2,7000,14000,Bandung
+2026-02-27,TRX-1679,Pisang Goreng,Snack,4,10500,42000,Jakarta
+2026-02-15,TRX-1680,Nasi Goreng,Makanan,3,25500,76500,Makassar
+2026-03-26,TRX-1681,Es Teh,Minuman,2,6500,13000,Makassar
+2026-06-18,TRX-1682,Air Mineral,Minuman,3,4500,13500,Jakarta
+2026-02-05,TRX-1683,Air Mineral,Minuman,4,4000,16000,Makassar
+2026-01-04,TRX-1684,Es Teh,Minuman,3,7000,21000,Surabaya
+2026-02-07,TRX-1685,Susu UHT,Minuman,3,8000,24000,Bandung
+2026-03-21,TRX-1686,Mie Ayam,Makanan,2,21000,42000,Makassar
+2026-02-03,TRX-1687,Ayam Geprek,Makanan,1,23000,23000,Medan
+2026-05-19,TRX-1688,Martabak,Snack,2,36000,72000,Jakarta
+2026-04-19,TRX-1689,Sate Ayam,Makanan,1,30000,30000,Bandung
+2026-04-24,TRX-1690,Ayam Geprek,Makanan,3,22500,67500,Medan
+2026-04-17,TRX-1691,Mie Ayam,Makanan,4,20000,80000,Surabaya
+2026-03-06,TRX-1692,Bakso,Makanan,2,19000,38000,Bandung
+2026-06-08,TRX-1693,Pisang Goreng,Snack,4,10000,40000,Surabaya
+2026-02-15,TRX-1694,Nasi Goreng,Makanan,1,26000,26000,Surabaya
+2026-05-19,TRX-1695,Pisang Goreng,Snack,2,10000,20000,Bandung
+2026-04-05,TRX-1696,Teh Manis,Minuman,2,8500,17000,Surabaya
+2026-04-04,TRX-1697,Teh Manis,Minuman,2,9000,18000,Bandung
+2026-03-12,TRX-1698,Air Mineral,Minuman,4,5000,20000,Makassar
+2026-05-24,TRX-1699,Susu UHT,Minuman,1,7500,7500,Surabaya
+2026-06-08,TRX-1700,Air Mineral,Minuman,2,5000,10000,Bandung
+2026-02-26,TRX-1701,Ayam Geprek,Makanan,4,22500,90000,Jakarta
+2026-03-01,TRX-1702,Es Teh,Minuman,2,6000,12000,Medan
+2026-02-20,TRX-1703,Nasi Goreng,Makanan,4,25500,102000,Jakarta
+2026-05-23,TRX-1704,Bakso,Makanan,4,18500,74000,Makassar
+2026-04-06,TRX-1705,Bakso,Makanan,2,19000,38000,Medan
+2026-06-13,TRX-1706,Es Teh,Minuman,4,6000,24000,Medan
+2026-03-18,TRX-1707,Ayam Geprek,Makanan,1,22000,22000,Bandung
+2026-05-03,TRX-1708,Es Teh,Minuman,2,6000,12000,Bandung
+2026-01-25,TRX-1709,Bakso,Makanan,2,18500,37000,Bandung
+2026-04-14,TRX-1710,Martabak,Snack,1,36000,36000,Makassar
+2026-03-24,TRX-1711,Martabak,Snack,3,35500,106500,Jakarta
+2026-04-27,TRX-1712,Es Teh,Minuman,4,6500,26000,Surabaya
+2026-03-29,TRX-1713,Sate Ayam,Makanan,2,31000,62000,Jakarta
+2026-03-24,TRX-1714,Susu UHT,Minuman,2,7500,15000,Surabaya
+2026-01-28,TRX-1715,Keripik,Snack,3,13000,39000,Jakarta
+2026-04-30,TRX-1716,Air Mineral,Minuman,1,4000,4000,Bandung
+2026-05-29,TRX-1717,Ayam Geprek,Makanan,1,22000,22000,Jakarta
+2026-04-08,TRX-1718,Susu UHT,Minuman,4,7000,28000,Makassar
+2026-05-21,TRX-1719,Ayam Geprek,Makanan,4,22000,88000,Medan
+2026-03-28,TRX-1720,Teh Manis,Minuman,2,8500,17000,Medan
+2026-06-24,TRX-1721,Kue Lapis,Snack,2,15000,30000,Makassar
+2026-06-06,TRX-1722,Es Teh,Minuman,2,6000,12000,Jakarta
+2026-01-04,TRX-1723,Kopi Susu,Minuman,4,19000,76000,Surabaya
+2026-05-17,TRX-1724,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-05-13,TRX-1725,Mie Ayam,Makanan,4,21000,84000,Bandung
+2026-06-08,TRX-1726,Kue Lapis,Snack,3,15500,46500,Bandung
+2026-03-06,TRX-1727,Air Mineral,Minuman,3,4000,12000,Surabaya
+2026-06-22,TRX-1728,Kue Lapis,Snack,2,15000,30000,Surabaya
+2026-03-28,TRX-1729,Ayam Geprek,Makanan,3,22500,67500,Jakarta
+2026-02-17,TRX-1730,Sate Ayam,Makanan,2,30000,60000,Jakarta
+2026-03-13,TRX-1731,Es Teh,Minuman,1,7000,7000,Bandung
+2026-06-22,TRX-1732,Keripik,Snack,1,13000,13000,Surabaya
+2026-03-10,TRX-1733,Martabak,Snack,3,35500,106500,Jakarta
+2026-01-20,TRX-1734,Ayam Geprek,Makanan,1,22500,22500,Bandung
+2026-02-18,TRX-1735,Es Teh,Minuman,1,6500,6500,Jakarta
+2026-04-11,TRX-1736,Nasi Goreng,Makanan,3,25500,76500,Bandung
+2026-05-16,TRX-1737,Ayam Geprek,Makanan,2,23000,46000,Medan
+2026-02-28,TRX-1738,Nasi Goreng,Makanan,1,25000,25000,Bandung
+2026-02-11,TRX-1739,Air Mineral,Minuman,2,4000,8000,Medan
+2026-06-21,TRX-1740,Mie Ayam,Makanan,1,20000,20000,Bandung
+2026-05-27,TRX-1741,Pisang Goreng,Snack,4,11000,44000,Makassar
+2026-01-23,TRX-1742,Keripik,Snack,1,12500,12500,Medan
+2026-04-15,TRX-1743,Nasi Goreng,Makanan,4,26000,104000,Bandung
+2026-02-17,TRX-1744,Martabak,Snack,1,35500,35500,Medan
+2026-03-06,TRX-1745,Kue Lapis,Snack,1,15500,15500,Medan
+2026-03-26,TRX-1746,Mie Ayam,Makanan,2,21000,42000,Makassar
+2026-02-19,TRX-1747,Air Mineral,Minuman,4,4500,18000,Surabaya
+2026-02-15,TRX-1748,Nasi Goreng,Makanan,2,26000,52000,Medan
+2026-01-05,TRX-1749,Air Mineral,Minuman,1,5000,5000,Bandung
+2026-01-26,TRX-1750,Martabak,Snack,4,36000,144000,Jakarta
+2026-03-06,TRX-1751,Es Teh,Minuman,3,7000,21000,Bandung
+2026-06-05,TRX-1752,Pisang Goreng,Snack,1,10000,10000,Bandung
+2026-02-20,TRX-1753,Martabak,Snack,1,35500,35500,Bandung
+2026-02-14,TRX-1754,Nasi Goreng,Makanan,2,26000,52000,Surabaya
+2026-06-16,TRX-1755,Pisang Goreng,Snack,1,10500,10500,Bandung
+2026-01-04,TRX-1756,Martabak,Snack,4,35500,142000,Jakarta
+2026-02-12,TRX-1757,Ayam Geprek,Makanan,2,23000,46000,Bandung
+2026-04-07,TRX-1758,Bakso,Makanan,3,18500,55500,Jakarta
+2026-05-18,TRX-1759,Air Mineral,Minuman,2,4000,8000,Jakarta
+2026-02-28,TRX-1760,Mie Ayam,Makanan,1,20500,20500,Jakarta
+2026-02-06,TRX-1761,Ayam Geprek,Makanan,3,23000,69000,Medan
+2026-04-12,TRX-1762,Nasi Goreng,Makanan,1,26000,26000,Bandung
+2026-04-18,TRX-1763,Martabak,Snack,4,36000,144000,Bandung
+2026-04-16,TRX-1764,Nasi Goreng,Makanan,1,25500,25500,Surabaya
+2026-05-12,TRX-1765,Keripik,Snack,2,12500,25000,Medan
+2026-05-07,TRX-1766,Mie Ayam,Makanan,4,20000,80000,Bandung
+2026-03-07,TRX-1767,Pisang Goreng,Snack,4,11000,44000,Surabaya
+2026-01-19,TRX-1768,Kopi Susu,Minuman,3,19000,57000,Bandung
+2026-01-22,TRX-1769,Susu UHT,Minuman,1,7500,7500,Surabaya
+2026-05-27,TRX-1770,Ayam Geprek,Makanan,4,22500,90000,Makassar
+2026-05-31,TRX-1771,Mie Ayam,Makanan,4,20500,82000,Surabaya
+2026-02-12,TRX-1772,Mie Ayam,Makanan,4,20500,82000,Surabaya
+2026-06-06,TRX-1773,Air Mineral,Minuman,1,4500,4500,Makassar
+2026-01-08,TRX-1774,Mie Ayam,Makanan,1,20000,20000,Makassar
+2026-04-23,TRX-1775,Air Mineral,Minuman,3,4000,12000,Surabaya
+2026-02-27,TRX-1776,Kue Lapis,Snack,3,16000,48000,Bandung
+2026-05-20,TRX-1777,Mie Ayam,Makanan,1,20000,20000,Makassar
+2026-03-06,TRX-1778,Ayam Geprek,Makanan,3,23000,69000,Bandung
+2026-06-04,TRX-1779,Susu UHT,Minuman,1,7000,7000,Makassar
+2026-05-12,TRX-1780,Bakso,Makanan,4,19000,76000,Medan
+2026-05-26,TRX-1781,Susu UHT,Minuman,4,8000,32000,Makassar
+2026-06-16,TRX-1782,Kopi Susu,Minuman,3,18000,54000,Surabaya
+2026-03-15,TRX-1783,Pisang Goreng,Snack,3,10500,31500,Jakarta
+2026-06-14,TRX-1784,Keripik,Snack,4,13000,52000,Surabaya
+2026-01-31,TRX-1785,Es Teh,Minuman,2,6000,12000,Surabaya
+2026-04-12,TRX-1786,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-02-16,TRX-1787,Sate Ayam,Makanan,1,30500,30500,Jakarta
+2026-05-06,TRX-1788,Bakso,Makanan,3,18500,55500,Makassar
+2026-05-06,TRX-1789,Kue Lapis,Snack,4,16000,64000,Medan
+2026-05-30,TRX-1790,Kue Lapis,Snack,1,15000,15000,Jakarta
+2026-03-25,TRX-1791,Bakso,Makanan,4,18500,74000,Surabaya
+2026-06-19,TRX-1792,Sate Ayam,Makanan,2,30500,61000,Medan
+2026-03-05,TRX-1793,Susu UHT,Minuman,2,7000,14000,Makassar
+2026-04-21,TRX-1794,Mie Ayam,Makanan,3,21000,63000,Surabaya
+2026-04-01,TRX-1795,Air Mineral,Minuman,4,4500,18000,Jakarta
+2026-06-23,TRX-1796,Es Teh,Minuman,3,6000,18000,Jakarta
+2026-01-17,TRX-1797,Ayam Geprek,Makanan,1,22500,22500,Bandung
+2026-06-01,TRX-1798,Pisang Goreng,Snack,1,10500,10500,Bandung
+2026-04-16,TRX-1799,Ayam Geprek,Makanan,4,22000,88000,Jakarta
+2026-03-10,TRX-1800,Bakso,Makanan,2,19000,38000,Medan
+2026-06-02,TRX-1801,Mie Ayam,Makanan,2,20000,40000,Medan
+2026-01-18,TRX-1802,Ayam Geprek,Makanan,2,22000,44000,Makassar
+2026-04-26,TRX-1803,Mie Ayam,Makanan,3,20500,61500,Surabaya
+2026-06-27,TRX-1804,Bakso,Makanan,2,18500,37000,Bandung
+2026-01-25,TRX-1805,Susu UHT,Minuman,4,8000,32000,Jakarta
+2026-01-08,TRX-1806,Es Teh,Minuman,3,7000,21000,Bandung
+2026-02-15,TRX-1807,Nasi Goreng,Makanan,4,25000,100000,Makassar
+2026-05-21,TRX-1808,Kue Lapis,Snack,4,16000,64000,Medan
+2026-01-23,TRX-1809,Ayam Geprek,Makanan,2,23000,46000,Makassar
+2026-03-25,TRX-1810,Kopi Susu,Minuman,3,18500,55500,Surabaya
+2026-05-10,TRX-1811,Mie Ayam,Makanan,4,20000,80000,Jakarta
+2026-05-09,TRX-1812,Teh Manis,Minuman,4,8500,34000,Makassar
+2026-04-12,TRX-1813,Susu UHT,Minuman,2,7000,14000,Bandung
+2026-04-12,TRX-1814,Bakso,Makanan,4,18500,74000,Makassar
+2026-06-18,TRX-1815,Air Mineral,Minuman,3,4000,12000,Makassar
+2026-03-30,TRX-1816,Keripik,Snack,3,13000,39000,Bandung
+2026-01-09,TRX-1817,Nasi Goreng,Makanan,3,26000,78000,Surabaya
+2026-06-20,TRX-1818,Susu UHT,Minuman,3,7000,21000,Jakarta
+2026-04-26,TRX-1819,Bakso,Makanan,3,18000,54000,Surabaya
+2026-02-16,TRX-1820,Pisang Goreng,Snack,2,11000,22000,Makassar
+2026-03-04,TRX-1821,Kopi Susu,Minuman,4,18000,72000,Makassar
+2026-05-23,TRX-1822,Air Mineral,Minuman,1,4500,4500,Makassar
+2026-05-16,TRX-1823,Sate Ayam,Makanan,4,31000,124000,Jakarta
+2026-02-19,TRX-1824,Air Mineral,Minuman,1,5000,5000,Bandung
+2026-03-20,TRX-1825,Bakso,Makanan,4,18500,74000,Surabaya
+2026-05-29,TRX-1826,Martabak,Snack,3,36000,108000,Surabaya
+2026-03-01,TRX-1827,Martabak,Snack,2,35000,70000,Bandung
+2026-02-17,TRX-1828,Es Teh,Minuman,2,6000,12000,Jakarta
+2026-06-20,TRX-1829,Ayam Geprek,Makanan,3,22000,66000,Surabaya
+2026-04-15,TRX-1830,Bakso,Makanan,4,18500,74000,Surabaya
+2026-05-30,TRX-1831,Martabak,Snack,4,35500,142000,Surabaya
+2026-02-20,TRX-1832,Sate Ayam,Makanan,2,31000,62000,Surabaya
+2026-04-17,TRX-1833,Kue Lapis,Snack,1,16000,16000,Bandung
+2026-05-05,TRX-1834,Teh Manis,Minuman,3,9000,27000,Makassar
+2026-05-31,TRX-1835,Sate Ayam,Makanan,4,30000,120000,Makassar
+2026-06-05,TRX-1836,Keripik,Snack,3,13000,39000,Surabaya
+2026-06-01,TRX-1837,Nasi Goreng,Makanan,2,25500,51000,Surabaya
+2026-06-09,TRX-1838,Mie Ayam,Makanan,1,20500,20500,Jakarta
+2026-05-01,TRX-1839,Keripik,Snack,3,12000,36000,Bandung
+2026-03-04,TRX-1840,Bakso,Makanan,4,18000,72000,Medan
+2026-02-05,TRX-1841,Martabak,Snack,1,35500,35500,Surabaya
+2026-03-01,TRX-1842,Kopi Susu,Minuman,2,18500,37000,Surabaya
+2026-06-05,TRX-1843,Sate Ayam,Makanan,4,30000,120000,Bandung
+2026-03-10,TRX-1844,Susu UHT,Minuman,4,8000,32000,Bandung
+2026-01-18,TRX-1845,Mie Ayam,Makanan,1,21000,21000,Medan
+2026-05-18,TRX-1846,Ayam Geprek,Makanan,3,23000,69000,Jakarta
+2026-04-01,TRX-1847,Mie Ayam,Makanan,3,20500,61500,Jakarta
+2026-04-28,TRX-1848,Keripik,Snack,3,12500,37500,Surabaya
+2026-01-16,TRX-1849,Kue Lapis,Snack,4,15500,62000,Surabaya
+2026-05-08,TRX-1850,Es Teh,Minuman,1,7000,7000,Medan
+2026-04-27,TRX-1851,Keripik,Snack,1,13000,13000,Surabaya
+2026-02-15,TRX-1852,Es Teh,Minuman,4,6500,26000,Jakarta
+2026-04-27,TRX-1853,Nasi Goreng,Makanan,1,25500,25500,Bandung
+2026-04-18,TRX-1854,Ayam Geprek,Makanan,4,22000,88000,Bandung
+2026-02-10,TRX-1855,Mie Ayam,Makanan,3,20000,60000,Bandung
+2026-02-07,TRX-1856,Martabak,Snack,1,35500,35500,Jakarta
+2026-06-17,TRX-1857,Keripik,Snack,2,12000,24000,Makassar
+2026-05-07,TRX-1858,Ayam Geprek,Makanan,1,22500,22500,Jakarta
+2026-03-31,TRX-1859,Sate Ayam,Makanan,1,31000,31000,Medan
+2026-03-13,TRX-1860,Ayam Geprek,Makanan,1,22000,22000,Jakarta
+2026-01-17,TRX-1861,Keripik,Snack,4,13000,52000,Jakarta
+2026-04-19,TRX-1862,Martabak,Snack,4,36000,144000,Medan
+2026-05-23,TRX-1863,Martabak,Snack,3,35000,105000,Surabaya
+2026-06-21,TRX-1864,Kue Lapis,Snack,1,15000,15000,Bandung
+2026-02-16,TRX-1865,Susu UHT,Minuman,1,7500,7500,Bandung
+2026-01-04,TRX-1866,Teh Manis,Minuman,3,9000,27000,Jakarta
+2026-01-17,TRX-1867,Ayam Geprek,Makanan,2,23000,46000,Makassar
+2026-01-05,TRX-1868,Kopi Susu,Minuman,2,18000,36000,Surabaya
+2026-02-06,TRX-1869,Teh Manis,Minuman,3,8000,24000,Bandung
+2026-06-02,TRX-1870,Martabak,Snack,1,35000,35000,Jakarta
+2026-05-30,TRX-1871,Air Mineral,Minuman,2,5000,10000,Medan
+2026-06-08,TRX-1872,Susu UHT,Minuman,2,8000,16000,Jakarta
+2026-04-30,TRX-1873,Bakso,Makanan,4,18500,74000,Surabaya
+2026-04-14,TRX-1874,Kue Lapis,Snack,2,15000,30000,Medan
+2026-02-03,TRX-1875,Es Teh,Minuman,2,6500,13000,Bandung
+2026-03-24,TRX-1876,Air Mineral,Minuman,4,4000,16000,Medan
+2026-06-26,TRX-1877,Mie Ayam,Makanan,2,20000,40000,Jakarta
+2026-01-22,TRX-1878,Keripik,Snack,2,12500,25000,Makassar
+2026-02-18,TRX-1879,Es Teh,Minuman,3,6500,19500,Bandung
+2026-01-07,TRX-1880,Susu UHT,Minuman,3,7500,22500,Bandung
+2026-01-15,TRX-1881,Ayam Geprek,Makanan,3,22500,67500,Jakarta
+2026-01-18,TRX-1882,Ayam Geprek,Makanan,2,22000,44000,Jakarta
+2026-02-15,TRX-1883,Martabak,Snack,2,35000,70000,Jakarta
+2026-06-29,TRX-1884,Es Teh,Minuman,2,7000,14000,Makassar
+2026-03-02,TRX-1885,Teh Manis,Minuman,3,8000,24000,Bandung
+2026-01-31,TRX-1886,Kue Lapis,Snack,2,16000,32000,Surabaya
+2026-06-15,TRX-1887,Martabak,Snack,2,35500,71000,Jakarta
+2026-06-01,TRX-1888,Sate Ayam,Makanan,4,30500,122000,Makassar
+2026-01-20,TRX-1889,Teh Manis,Minuman,2,8000,16000,Makassar
+2026-01-03,TRX-1890,Mie Ayam,Makanan,4,20500,82000,Makassar
+2026-02-20,TRX-1891,Bakso,Makanan,4,18500,74000,Medan
+2026-03-02,TRX-1892,Susu UHT,Minuman,4,7500,30000,Surabaya
+2026-06-29,TRX-1893,Martabak,Snack,1,36000,36000,Bandung
+2026-05-14,TRX-1894,Teh Manis,Minuman,2,8000,16000,Bandung
+2026-04-10,TRX-1895,Bakso,Makanan,4,19000,76000,Makassar
+2026-05-30,TRX-1896,Keripik,Snack,3,12500,37500,Medan
+2026-03-21,TRX-1897,Keripik,Snack,4,12000,48000,Medan
+2026-03-19,TRX-1898,Sate Ayam,Makanan,2,30000,60000,Surabaya
+2026-04-20,TRX-1899,Mie Ayam,Makanan,2,20000,40000,Makassar
+2026-05-03,TRX-1900,Pisang Goreng,Snack,2,10000,20000,Medan
+2026-04-02,TRX-1901,Kue Lapis,Snack,1,15500,15500,Bandung
+2026-04-23,TRX-1902,Teh Manis,Minuman,4,9000,36000,Medan
+2026-03-26,TRX-1903,Kopi Susu,Minuman,2,18500,37000,Jakarta
+2026-02-25,TRX-1904,Nasi Goreng,Makanan,3,25500,76500,Makassar
+2026-02-25,TRX-1905,Nasi Goreng,Makanan,2,25500,51000,Makassar
+2026-05-05,TRX-1906,Mie Ayam,Makanan,3,21000,63000,Makassar
+2026-01-20,TRX-1907,Es Teh,Minuman,2,7000,14000,Makassar
+2026-04-27,TRX-1908,Kue Lapis,Snack,1,16000,16000,Makassar
+2026-05-10,TRX-1909,Air Mineral,Minuman,2,5000,10000,Bandung
+2026-04-14,TRX-1910,Sate Ayam,Makanan,3,30000,90000,Jakarta
+2026-02-27,TRX-1911,Martabak,Snack,3,35500,106500,Bandung
+2026-02-15,TRX-1912,Nasi Goreng,Makanan,2,25500,51000,Medan
+2026-05-27,TRX-1913,Bakso,Makanan,2,19000,38000,Jakarta
+2026-01-04,TRX-1914,Air Mineral,Minuman,3,5000,15000,Makassar
+2026-05-07,TRX-1915,Kue Lapis,Snack,1,16000,16000,Medan
+2026-06-20,TRX-1916,Pisang Goreng,Snack,3,11000,33000,Makassar
+2026-04-03,TRX-1917,Kue Lapis,Snack,1,15000,15000,Medan
+2026-05-05,TRX-1918,Kue Lapis,Snack,1,15000,15000,Jakarta
+2026-04-05,TRX-1919,Ayam Geprek,Makanan,2,22000,44000,Surabaya
+2026-05-22,TRX-1920,Es Teh,Minuman,1,7000,7000,Medan
+2026-01-17,TRX-1921,Ayam Geprek,Makanan,2,22500,45000,Medan
+2026-02-15,TRX-1922,Kue Lapis,Snack,3,15500,46500,Surabaya
+2026-02-07,TRX-1923,Keripik,Snack,2,13000,26000,Medan
+2026-05-24,TRX-1924,Kue Lapis,Snack,4,16000,64000,Makassar
+2026-03-07,TRX-1925,Teh Manis,Minuman,4,8000,32000,Makassar
+2026-01-01,TRX-1926,Pisang Goreng,Snack,4,11000,44000,Surabaya
+2026-01-24,TRX-1927,Teh Manis,Minuman,1,9000,9000,Jakarta
+2026-01-14,TRX-1928,Mie Ayam,Makanan,1,21000,21000,Makassar
+2026-03-24,TRX-1929,Teh Manis,Minuman,4,9000,36000,Bandung
+2026-04-22,TRX-1930,Kopi Susu,Minuman,2,18500,37000,Bandung
+2026-03-10,TRX-1931,Nasi Goreng,Makanan,3,26000,78000,Makassar
+2026-04-22,TRX-1932,Es Teh,Minuman,1,6000,6000,Medan
+2026-02-23,TRX-1933,Sate Ayam,Makanan,1,30500,30500,Bandung
+2026-04-19,TRX-1934,Es Teh,Minuman,2,7000,14000,Jakarta
+2026-01-08,TRX-1935,Sate Ayam,Makanan,2,30500,61000,Jakarta
+2026-01-06,TRX-1936,Ayam Geprek,Makanan,2,22000,44000,Jakarta
+2026-05-27,TRX-1937,Es Teh,Minuman,1,6000,6000,Makassar
+2026-01-27,TRX-1938,Kopi Susu,Minuman,3,18500,55500,Medan
+2026-01-21,TRX-1939,Es Teh,Minuman,4,6500,26000,Bandung
+2026-05-05,TRX-1940,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-04-03,TRX-1941,Martabak,Snack,4,35500,142000,Bandung
+2026-05-19,TRX-1942,Susu UHT,Minuman,1,7500,7500,Medan
+2026-02-28,TRX-1943,Es Teh,Minuman,3,7000,21000,Medan
+2026-05-08,TRX-1944,Susu UHT,Minuman,3,8000,24000,Bandung
+2026-03-15,TRX-1945,Martabak,Snack,4,36000,144000,Surabaya
+2026-01-12,TRX-1946,Nasi Goreng,Makanan,1,26000,26000,Bandung
+2026-01-09,TRX-1947,Air Mineral,Minuman,3,5000,15000,Surabaya
+2026-06-21,TRX-1948,Teh Manis,Minuman,4,8000,32000,Medan
+2026-05-10,TRX-1949,Kue Lapis,Snack,3,16000,48000,Bandung
+2026-01-07,TRX-1950,Air Mineral,Minuman,3,4500,13500,Surabaya
+2026-04-03,TRX-1951,Sate Ayam,Makanan,3,30500,91500,Surabaya
+2026-01-20,TRX-1952,Kopi Susu,Minuman,3,18500,55500,Surabaya
+2026-01-06,TRX-1953,Ayam Geprek,Makanan,2,22500,45000,Bandung
+2026-06-30,TRX-1954,Martabak,Snack,4,35000,140000,Surabaya
+2026-04-07,TRX-1955,Nasi Goreng,Makanan,4,26000,104000,Makassar
+2026-06-03,TRX-1956,Kue Lapis,Snack,2,15500,31000,Medan
+2026-02-21,TRX-1957,Martabak,Snack,2,35500,71000,Makassar
+2026-04-10,TRX-1958,Teh Manis,Minuman,2,9000,18000,Surabaya
+2026-06-02,TRX-1959,Ayam Geprek,Makanan,2,23000,46000,Surabaya
+2026-05-21,TRX-1960,Air Mineral,Minuman,4,5000,20000,Makassar
+2026-05-19,TRX-1961,Ayam Geprek,Makanan,2,23000,46000,Bandung
+2026-06-19,TRX-1962,Keripik,Snack,2,12500,25000,Medan
+2026-02-23,TRX-1963,Es Teh,Minuman,3,6500,19500,Makassar
+2026-01-20,TRX-1964,Kue Lapis,Snack,4,16000,64000,Bandung
+2026-06-01,TRX-1965,Teh Manis,Minuman,4,9000,36000,Surabaya
+2026-05-29,TRX-1966,Susu UHT,Minuman,2,7500,15000,Bandung
+2026-02-18,TRX-1967,Kue Lapis,Snack,1,16000,16000,Medan
+2026-01-26,TRX-1968,Kue Lapis,Snack,1,15000,15000,Bandung
+2026-02-08,TRX-1969,Es Teh,Minuman,1,6500,6500,Surabaya
+2026-02-16,TRX-1970,Keripik,Snack,3,12000,36000,Medan
+2026-01-01,TRX-1971,Nasi Goreng,Makanan,1,25000,25000,Medan
+2026-05-19,TRX-1972,Bakso,Makanan,1,19000,19000,Bandung
+2026-04-17,TRX-1973,Kopi Susu,Minuman,1,18000,18000,Medan
+2026-01-18,TRX-1974,Air Mineral,Minuman,1,4000,4000,Bandung
+2026-03-07,TRX-1975,Bakso,Makanan,4,18500,74000,Bandung
+2026-03-16,TRX-1976,Pisang Goreng,Snack,3,10500,31500,Makassar
+2026-06-06,TRX-1977,Kue Lapis,Snack,2,16000,32000,Surabaya
+2026-06-29,TRX-1978,Pisang Goreng,Snack,2,10500,21000,Makassar
+2026-01-04,TRX-1979,Bakso,Makanan,2,18500,37000,Medan
+2026-03-12,TRX-1980,Mie Ayam,Makanan,3,21000,63000,Surabaya
+2026-03-18,TRX-1981,Sate Ayam,Makanan,3,31000,93000,Jakarta
+2026-06-01,TRX-1982,Martabak,Snack,1,35000,35000,Surabaya
+2026-05-14,TRX-1983,Martabak,Snack,1,36000,36000,Makassar
+2026-01-06,TRX-1984,Susu UHT,Minuman,2,7000,14000,Makassar
+2026-04-28,TRX-1985,Kue Lapis,Snack,2,15500,31000,Bandung
+2026-05-20,TRX-1986,Mie Ayam,Makanan,2,20500,41000,Medan
+2026-05-30,TRX-1987,Bakso,Makanan,3,18500,55500,Bandung
+2026-05-04,TRX-1988,Kopi Susu,Minuman,4,19000,76000,Bandung
+2026-03-16,TRX-1989,Martabak,Snack,4,36000,144000,Surabaya
+2026-01-20,TRX-1990,Keripik,Snack,4,12000,48000,Surabaya
+2026-05-17,TRX-1991,Keripik,Snack,3,12500,37500,Medan
+2026-02-03,TRX-1992,Kopi Susu,Minuman,1,18000,18000,Jakarta
+2026-04-28,TRX-1993,Sate Ayam,Makanan,4,30000,120000,Jakarta
+2026-03-27,TRX-1994,Ayam Geprek,Makanan,1,23000,23000,Surabaya
+2026-03-14,TRX-1995,Bakso,Makanan,3,18500,55500,Surabaya
+2026-04-24,TRX-1996,Nasi Goreng,Makanan,3,26000,78000,Surabaya
+2026-04-19,TRX-1997,Keripik,Snack,1,13000,13000,Bandung
+2026-06-17,TRX-1998,Air Mineral,Minuman,2,4500,9000,Surabaya
+2026-02-20,TRX-1999,Air Mineral,Minuman,3,4000,12000,Bandung
+2026-06-28,TRX-2000,Pisang Goreng,Snack,2,11000,22000,Bandung

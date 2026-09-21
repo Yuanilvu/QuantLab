@@ -369,3 +369,11 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
    1356px di /soal/p28-1). Kunci: item grid boleh menyusut + pre membungkus. */
 .io > div { min-width: 0; }
 .io pre.block-code { white-space: pre-wrap; overflow-wrap: anywhere; }
+
+/* ── Kotak "📂 Data untuk soal ini" + tips editor halaman soal (21 Sep 2026) ─ */
+.databox .datalist { margin: 6px 0 10px; padding-left: 20px; }
+.databox .datalist li { margin: 5px 0; }
+.databox .datalist code { font-family: var(--mono); font-size: .86rem; color: #7dd3fc;
+  background: rgba(125, 211, 252, .08); border: 1px solid rgba(125, 211, 252, .25);
+  border-radius: 6px; padding: 1px 7px; }
+.editortip { font-size: .82rem; color: var(--dim); }

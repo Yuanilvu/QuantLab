@@ -30,6 +30,21 @@
   </div>
   {% endif %}
 
+  {% if data_files %}
+  <div class="casebox databox">
+    <h3>📂 Data untuk soal ini <span class="meta">(langsung bisa dibaca dari kodemu)</span></h3>
+    <ul class="datalist">
+      {% for d in data_files %}
+      <li>
+        <code>{{ d.path }}</code>
+        {% if d.rows is not none %}<span class="meta">— {{ d.rows }} baris × {{ d.cols }} kolom</span>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="note">Contoh baca: <code>df = pd.read_csv("{{ data_files[0].path }}")</code> · Semua dataset latihan bisa dilihat di <a href="{{ url_for('notebook_datasets') }}">📦 halaman Dataset</a>.</p>
+  </div>
+  {% endif %}
+
   <div class="casebox">
     <h3>📐 Format Soal</h3>
     <div class="io">
@@ -79,7 +94,8 @@
     <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
     <h3>💻 Giliranmu — tulis kode</h3>
     {% if q.starter and not code %}<p class="note">✏️ Kode awal sudah dipasang — lengkapi bagian bertanda <code># TODO</code>, lalu tekan <b>▶ Jalankan &amp; Uji</b>.</p>{% endif %}
-    <textarea name="code" rows="12" spellcheck="false" aria-label="Editor kode Python" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code if code else (q.starter or '') }}</textarea>
+    <p class="note editortip">⌨️ Editor pintar: kurung &amp; kutip menutup otomatis · Tab = 4 spasi · Enter ikut indentasi.</p>
+    <textarea name="code" rows="12" spellcheck="false" data-editor="python" aria-label="Editor kode Python" placeholder="# tulis kode di sini&#10;n = int(input())&#10;print(n * 2)">{{ code if code else (q.starter or '') }}</textarea>
     <div class="scenactions">
       <button class="btn primary" type="submit">▶ Jalankan & Uji</button>
       <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
@@ -91,4 +107,8 @@
     {% for h in q.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
   </div>
 </section>
+{% endblock %}
+
+{% block scripts_extra %}
+<script src="{{ url_for('static', filename='js/editor.js') }}?v=1"></script>
 {% endblock %}
