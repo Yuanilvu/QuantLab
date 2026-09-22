@@ -94,6 +94,15 @@
   {% endfor %}
 </section>
 
+<section class="scenlist" aria-label="Materi bootcamp">
+  <h3>📦 Materi Bootcamp — video &amp; slide</h3>
+  <a class="scenrow" href="{{ url_for('data_science_materi') }}">
+    <span class="scenemoji" aria-hidden="true">🎓</span>
+    <span class="scenmain"><b>Pacmann + Rakamin</b><span class="meta">{{ n_materi.n }} berkas ({{ n_materi.size }}) — video, slide &amp; reading bootcamp asli. Tersusun urut, tinggal klik untuk putar/baca.</span></span>
+    <span class="arrow" aria-hidden="true">→</span>
+  </a>
+</section>
+
 <section class="scenlist" aria-label="Kompetisi simulasi">
   <h3>🏁 Uji Nyali — Kompetisi Simulasi</h3>
   <a class="scenrow" href="{{ url_for('kompetisi') }}">

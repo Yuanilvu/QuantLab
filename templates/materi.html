@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Materi Bootcamp — QuantLab{% endblock %}
+{% block content %}
+{% macro berkas_li(f, slug) %}
+<li>
+  <a class="scenrow" href="{{ url_for('materi_berkas', slug=slug, rel=f.rel) }}" target="_blank" rel="noopener">
+    <span class="scenemoji" aria-hidden="true">{{ f.emoji }}</span>
+    <span class="scenmain"><b>{{ f.nama }}</b><span class="meta">{{ f.ukuran }} · klik untuk {{ 'putar' if f.emoji == '🎬' else 'buka' }}</span></span>
+    <span class="arrow" aria-hidden="true">{{ '▶' if f.emoji == '🎬' else '↗' }}</span>
+  </a>
+</li>
+{% endmacro %}
+
+{% macro folder_node(n, slug, lvl) %}
+<details class="matfold{{ ' matnest' if lvl > 0 }}">
+  <summary class="scenrow">
+    <span class="scenemoji" aria-hidden="true">{{ n.emoji }}</span>
+    <span class="scenmain"><b>{{ n.nama }}</b><span class="meta">{{ n.n }} berkas · {{ n.sizeh }}</span></span>
+    <span class="marcaret" aria-hidden="true">▾</span>
+  </summary>
+  {% if n.files %}
+  <ul class="matlist">
+    {% for f in n.files %}{{ berkas_li(f, slug) }}{% endfor %}
+  </ul>
+  {% endif %}
+  {% for s in n.sub %}{{ folder_node(s, slug, lvl + 1) }}{% endfor %}
+</details>
+{% endmacro %}
+
+<section class="pagehead">
+  <span class="kicker">Data Science</span>
+  <h1>📦 Materi Bootcamp</h1>
+  <p class="sub">Video &amp; slide dari bootcamp <b>Pacmann + Rakamin</b> milikmu — tersusun urut, tinggal klik untuk putar/baca. 💡 Di rumah pakai <b>http://192.168.1.6:5200</b> biar video lancar lewat LAN.</p>
+</section>
+
+<div class="casebox">
+  <h3>🧭 Nyambungin ke bab QuantLab</h3>
+  <p class="meta">
+    <b>Bab 28 · Bersihin Data</b> → Rakamin <i>04 Data Processing</i> + <i>07.3 Data Pre-processing</i><br>
+    <b>Bab 29 · EDA</b> → Rakamin <i>07.2 Exploratory Data Analysis</i> + <i>05 Statistics</i> / <i>06 Data Visualization</i><br>
+    <b>Bab 30 · Feature Engineering</b> → Rakamin <i>07.1 Feature Extraction</i> + Pacmann <i>Variable Selection</i><br>
+    <b>Bab 31 · ML Dasar</b> → Rakamin <i>08 Supervised Learning</i> + Pacmann <i>Basic ML</i> (Linear/Logistic/Decision Tree/dll)<br>
+    <b>Bab 32 · Evaluasi &amp; Validasi</b> → Rakamin <i>08.1 Model Evaluation</i> + Pacmann <i>Resampling Method</i><br>
+    <b>Bab 33 · Deep Learning</b> → Rakamin <i>10 Deep Learning</i> + Pacmann <i>Multilayer Perceptron</i>
+  </p>
+</div>
+
+{% for b in katalog %}
+<section class="scenlist" aria-label="{{ b.nama }}">
+  <h3>{{ b.emoji }} {{ b.nama }}</h3>
+  <p class="note">{{ b.deskripsi }} <b>{{ b.n }} berkas · {{ b.size }}</b> — klik folder untuk membuka isinya.</p>
+  {% if b.files %}
+  <ul class="matlist">
+    {% for f in b.files %}{{ berkas_li(f, b.slug) }}{% endfor %}
+  </ul>
+  {% endif %}
+  {% for g in b.grup %}{{ folder_node(g, b.slug, 0) }}{% endfor %}
+</section>
+{% endfor %}
+
+<p class="note">🔒 Hanya bisa dibuka setelah login. Semua berkas dibaca langsung dari folder materi aslinya (read-only) — nggak dobel, selalu sinkron dengan rak Pustaka.</p>
+{% endblock %}

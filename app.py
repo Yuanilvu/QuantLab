@@ -23,6 +23,7 @@ import curriculum
 import db
 import chartgen
 import judge
+import materi as matlib
 import notebook as nblib
 
 # ── Output contoh kode pelajaran (dihitung sekali per proses, sandbox) ─────
@@ -911,7 +912,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v19';
+    sw = """const CACHE = 'quantlab-v20';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1327,7 +1328,24 @@ def data_science():
         datasets=nblib.list_datasets(),
         uploads_n=len(nblib.list_uploads(user["username"])),
         best_komp=best_komp,
+        n_materi=matlib.ringkas(),
         nsub_komp=db.submission_count(user["id"], "kredit_umkm"))
+
+
+# ---------- Materi Bootcamp (Pacmann + Rakamin) di hub Data Science ----------
+
+@app.route("/data-science/materi")
+@login_required
+def data_science_materi():
+    """Katalog materi bootcamp (Pacmann + Rakamin) — video & slide siap putar/baca."""
+    return render_template("materi.html", katalog=matlib.katalog())
+
+
+@app.route("/data-science/materi/<slug>/<path:rel>")
+@login_required
+def materi_berkas(slug, rel):
+    """Penyaji berkas materi (inline; Range didukung untuk video)."""
+    return matlib.ambil(slug, rel)
 
 
 # ---------- Kompetisi Simulasi (nilai /work/submission.csv vs kunci) ----------

@@ -377,3 +377,14 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
   background: rgba(125, 211, 252, .08); border: 1px solid rgba(125, 211, 252, .25);
   border-radius: 6px; padding: 1px 7px; }
 .editortip { font-size: .82rem; color: var(--dim); }
+
+/* ── Materi Bootcamp halaman /data-science/materi (22 Sep 2026) ─ */
+.matfold { margin: 10px 0; }
+.matfold > summary.scenrow { cursor: pointer; list-style: none; }
+.matfold > summary.scenrow::-webkit-details-marker { display: none; }
+.matfold > summary.scenrow::marker { content: ""; }
+.matfold .matlist { list-style: none; margin: 8px 0 2px; padding: 0 0 0 16px; display: grid; gap: 7px; }
+.matfold .matlist .scenrow { padding: 9px 13px; border-radius: 10px; }
+.matfold .marcaret { transition: transform .16s ease; opacity: .7; flex: 0 0 auto; }
+.matfold[open] > summary .marcaret { transform: rotate(180deg); }
+.matfold.matnest { margin-left: 14px; border-left: 2px solid var(--line); padding-left: 10px; }

@@ -62,6 +62,9 @@ dinilai otomatis, dapat skor & medali).
   `submission.csv`), kartu **Ujian & Sertifikat**, panduan **Cara Belajar** urut 6 langkah, dan dataset
  latihan (kredit UMKM **sintetis, sengaja kotor** + **sample submission** ala kompetisi;
  read-only di `/datasets`).
+- **📦 Materi Bootcamp (`/data-science/materi`)** — katalog video (🎬), slide (📄/📊)
+  & reading dari bootcamp **Pacmann + Rakamin**, dibaca LANGSUNG dari folder materi
+  (read-only, tanpa salin) — video didukung HTTP Range; tersusun urut siap putar/baca.
 - Fitur lain: tantangan harian, radar kemampuan, ujian per track, ulasan cerdas
   (spaced repetition), jurnal + export CSV, leaderboard, badge, sertifikat, PWA.
 
