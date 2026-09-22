@@ -624,3 +624,59 @@ soal:
       # TODO: bagi data dengan train_test_split(test_size=0.25, random_state=1, stratify=y)
       # TODO: buat pipeline StandardScaler + MLPClassifier(hidden_layer_sizes=(neuron,), max_iter=400, random_state=1)
       # TODO: latih model, lalu cetak round(model.score(X_uji, y_uji), 2) dengan 2 desimal
+
+panduan:
+  intro: Jaringan saraf = lanjutan dari semua yang sudah kamu pelajari. Materi ini menunjukkan dari mana asalnya.
+  materi:
+  - label: '📄 Slide: Rakamin 10.1 — Fundamentals of Deep Learning'
+    slug: rakamin
+    path: 10 - Deep Learning & Deployment/1 - Fundamentals of Deep Learning.pdf
+  - label: '📄 Slide: Rakamin 10.2 — Deep Learning Application'
+    slug: rakamin
+    path: 10 - Deep Learning & Deployment/2 - Deep Learning Application.pdf
+  - label: '📄 Slide: Rakamin 10.3 — Deployment & Monitoring'
+    slug: rakamin
+    path: 10 - Deep Learning & Deployment/3 - Deployment & Monitoring.pdf
+  - label: '📄 Slide: Pacmann — Neural Network Optimization'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Gradient Descent/03 Neural Network Optimization.pdf
+  - label: '📄 Slide: Pacmann — Neural Network Hyperparameters'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Gradient Descent/04 Neural Network Hyperparameters.pdf
+  teori:
+  - Jaringan saraf = lapisan-lapisan kecil yang bertumpuk; tiap lapisan belajar pola, makin dalam makin rumit yang bisa ditangkap.
+  - 'Pacmann: belajar = menuruni lereng error (**gradient descent**); jumlah neuron/lapisan = **hyperparameter** — kamu yang memilih, model yang belajar.'
+  - 'Slide Rakamin 10.3 mengingatkan: setelah model jadi ada **deployment & monitoring** — model bisa menua kalau data dunia berubah.'
+  - Untuk data tabel kecil (kasus UMKM), keunggulan DL tipis — DL bersinar di gambar, teks, dan suara. Buktikan sendiri di soal p33!
+  praktek:
+  - Baca Rakamin 10.1 (Dasar-dasar) + 10.3 (Deployment) — masing-masing bagian ringkasnya saja.
+  - Intip slide Pacmann Hyperparameters — catat istilah neuron, learning rate, epoch.
+  - Buka 📓 Notebook Latihan bab ini → jalankan MLP, ubah jumlah neuron, amati akurasinya.
+  - Kerjakan soal **p33-1 & p33-2** di Tahap 2.
+  - Selesaikan 10 skenario keputusan di Tahap 3 — tamat! 🎓
+  coba: 'import pandas as pd
+
+    from sklearn.model_selection import train_test_split
+
+    from sklearn.preprocessing import StandardScaler
+
+    from sklearn.neural_network import MLPClassifier
+
+    from sklearn.pipeline import make_pipeline
+
+
+    df = pd.read_csv("/datasets/kredit_umkm_bersih.csv")
+
+    fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+
+    X = df[fitur]
+
+    y = (df["status"] == "Macet").astype(int)
+
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.25, random_state=1, stratify=y)
+
+    model = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(8,), max_iter=400, random_state=1))
+
+    model.fit(X_tr, y_tr)
+
+    print(f"Akurasi MLP: {model.score(X_te, y_te):.2f}")'

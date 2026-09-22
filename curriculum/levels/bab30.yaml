@@ -605,3 +605,38 @@ soal:
       # TODO: buat kolom npwp_num dari punya_npwp ("Ya" -> 1, "Tidak" -> 0)
       # TODO: ambil baris yang npwp_num-nya sesuai "grup"
       # TODO: cetak jumlah baris, rata-rata skor_kredit (2 desimal), rata-rata rasio pinjaman/omzet (2 desimal)
+
+panduan:
+  intro: Fitur yang baik bikin model pintar; fitur asal-asalan bikin model menghafal. Ini panduan memilih & merakitnya.
+  materi:
+  - label: '📄 Slide: Rakamin 07.1 — Feature Extraction'
+    slug: rakamin
+    path: 07 - Machine Learning Preparation/1 - Feature Extraction.pdf
+  - label: '📄 Slide: Pacmann — Variable Selection Intuition'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Variable Selection/02 Variable Selection Intuition.pdf
+  - label: '📄 Slide: Pacmann — Ridge & Lasso (penyusutan fitur)'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Variable Selection/08 Ridge-Lasso Comparison.pdf
+  teori:
+  - 'Dua syarat fitur: **sudah ada sebelum keputusan dibuat** dan benar-benar menjelaskan barisnya. Nomor urut/tanggal/id = jebakan klasik.'
+  - 'Fitur turunan sering paling berguna: rasio (pinjaman ÷ omzet), frekuensi, selisih tanggal — lihat daftar di slide Rakamin 07.1.'
+  - Fitur yang saling berkorelasi membawa informasi dobel — Pacmann menunjukkan **Ridge** menyusutkan koefisien lemah dan **Lasso** bisa menghapusnya total.
+  - 'Tambah fitur selalu diuji: bikin model baru → bandingkan di data validasi, jangan dikira-kira.'
+  praktek:
+  - Baca slide Rakamin 07.1 — perhatikan contoh fitur turunan.
+  - Intip slide Pacmann tentang Ridge/Lasso (cukup bagian intuisi & kesimpulannya).
+  - Buka 📓 Notebook Latihan bab ini → rakit 2-3 fitur turunan sendiri.
+  - Kerjakan soal **p30-1 & p30-2** di Tahap 2.
+  - Tutup dengan 10 skenario keputusan di Tahap 3.
+  coba: 'import pandas as pd
+
+    df = pd.read_csv("/datasets/kredit_umkm_bersih.csv")
+
+    df["rasio_pinjaman_cek"] = (df["pinjaman_diajukan_juta"] / df["omzet_bulanan_juta"]).round(2)
+
+    print(df.groupby("status")["rasio_pinjaman_cek"].mean().round(2))
+
+    y = (df["status"] == "Macet").astype(int)
+
+    print(df[["omzet_bulanan_juta", "skor_kredit", "riwayat_telat_12m"]].corrwith(y).round(3))'

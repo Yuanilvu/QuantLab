@@ -633,3 +633,50 @@ soal:
       # TODO: hitung skor CV LogisticRegression(max_iter=1000) -> skor_logreg
       # TODO: hitung skor CV DecisionTreeClassifier(max_depth=4, random_state=1) -> skor_pohon
       # TODO: cetak skor_logreg lalu skor_pohon dengan 3 desimal, satu per baris
+
+panduan:
+  intro: Model jadi itu gampang — membuktikan dia benar-benar bagus itu seninya. Ini panduannya.
+  materi:
+  - label: '📄 Slide: Rakamin 08.1 — Model Evaluation'
+    slug: rakamin
+    path: 08 - Supervised Learning/1 - Model Evaluation.pdf
+  - label: '📄 Slide: Pacmann — Validation Set Approach'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Resampling Method/06 Validation Set Approach.pdf
+  - label: '📄 Slide: Pacmann — Cross Validation'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Resampling Method/07 Cross Validation.pdf
+  - label: '📄 Slide: Pacmann — Bias-Variance Tradeoff'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Theoretical Supervised Learning/08 Bias Variance Trade off.pdf
+  teori:
+  - 'Akurasi saja bisa menipu saat kelas tak seimbang — slide Rakamin 08.1: pakai **presisi, recall, F1, dan ROC-AUC**; AUC paling jujur untuk kasus imbalance.'
+  - 'Satu split bisa keberuntungan: **cross-validation** (k=5/10) menguji di beberapa potongan data sekaligus → skor lebih stabil dan bisa dipercaya.'
+  - 'Overfit = hafal data latih, gagal di data baru (bias-variance tradeoff — obatnya: data uji terpisah, CV, model lebih sederhana).'
+  - Di dataset kredit ini, tebakan mayoritas saja sudah ±0,76 — modelmu harus lewat itu dulu baru boleh bangga.
+  praktek:
+  - Baca Rakamin 08.1 bagian metrik klasifikasi & kasus imbalance.
+  - Lihat slide Pacmann Cross Validation — pahami kenapa 5 lipatan lebih kredibel dari 1 test set.
+  - Buka 📓 Notebook Latihan bab ini → bandingkan akurasi vs F1 vs AUC.
+  - Kerjakan soal **p32-1 & p32-2** di Tahap 2.
+  - Tutup dengan 10 skenario keputusan di Tahap 3.
+  coba: 'import pandas as pd
+
+    from sklearn.model_selection import cross_val_score
+
+    from sklearn.linear_model import LogisticRegression
+
+
+    df = pd.read_csv("/datasets/kredit_umkm_bersih.csv")
+
+    fitur = ["riwayat_telat_12m", "skor_kredit", "pinjaman_diajukan_juta"]
+
+    X = df[fitur]
+
+    y = (df["status"] == "Macet").astype(int)
+
+    skor = cross_val_score(LogisticRegression(max_iter=1000), X, y, cv=5)
+
+    print(f"CV rata-rata: {skor.mean():.3f}")
+
+    print([round(float(s), 3) for s in skor])'

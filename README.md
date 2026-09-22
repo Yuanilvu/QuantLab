@@ -65,6 +65,9 @@ dinilai otomatis, dapat skor & medali).
 - **📦 Materi Bootcamp (`/data-science/materi`)** — katalog video (🎬), slide (📄/📊)
   & reading dari bootcamp **Pacmann + Rakamin**, dibaca LANGSUNG dari folder materi
   (read-only, tanpa salin) — video didukung HTTP Range; tersusun urut siap putar/baca.
+- **🎥 Panduan Belajar per bab DS** — tiap bab 28-33 menyandingkan **video/slide bootcamp**
+  (deep-link ke berkas asli), **ringkasan inti teori**, **praktek terpandu**, dan snippet
+  **coba sendiri** (semua snippet diuji jalan) — alur bab: panduan → teori → coding → skenario.
 - Fitur lain: tantangan harian, radar kemampuan, ujian per track, ulasan cerdas
   (spaced repetition), jurnal + export CSV, leaderboard, badge, sertifikat, PWA.
 

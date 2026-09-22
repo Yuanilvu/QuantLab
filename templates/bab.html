@@ -11,8 +11,43 @@
 <section class="pagehead">
   <h1>{{ bab.emoji }} Bab {{ bab.bab }}: {{ bab.judul }}</h1>
   <p class="sub">{{ bab.deskripsi }}</p>
-  <p class="sub">🧭 Alur bab: 1️⃣ Teori → 2️⃣ Coding (kamu disuruh kerjakan) → 3️⃣ Uji keputusan</p>
+  <p class="sub">🧭 Alur bab: 1️⃣ Panduan materi (video/slide) → 2️⃣ Teori → 3️⃣ Coding → 4️⃣ Uji keputusan</p>
 </section>
+
+{% if panduan %}
+<section class="pgbox" aria-label="Panduan materi bootcamp">
+  <h3>🎥 Panduan Belajar — pakai materi bootcamp</h3>
+  {% if panduan.intro %}<p class="note">{{ panduan.intro }}</p>{% endif %}
+  <div class="pggrid">
+    <div class="pgcol">
+      <h4>📺 Tonton / baca dulu</h4>
+      <ul class="pgmateri">
+        {% for m in panduan.materi %}
+        <li><a href="{{ url_for('materi_berkas', slug=m.slug, rel=m.path) }}" target="_blank" rel="noopener">{{ m.label }}</a></li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="pgcol">
+      <h4>💡 Inti teori (ringkas dari materi)</h4>
+      <ul class="pgteori">
+        {% for t in panduan.teori %}<li>{{ t | safe }}</li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+  {% if panduan.praktek %}
+  <h4>🛠️ Praktek terpandu</h4>
+  <ol class="pgpraktek">
+    {% for p in panduan.praktek %}<li>{{ p | safe }}</li>{% endfor %}
+  </ol>
+  {% endif %}
+  {% if panduan.coba %}
+  <details class="pgcoba">
+    <summary>🧪 Coba sendiri — tempel di notebook</summary>
+    {{ render_md(panduan.coba) | safe }}
+  </details>
+  {% endif %}
+</section>
+{% endif %}
 
 {% if lessons %}
 {% set ldone = lessons | selectattr('id', 'in', lessons_done) | list | length %}

@@ -442,6 +442,25 @@ def soal_page(qid):
                            render_md=curriculum.render_markdown)
 
 
+def _panduan_render(pd):
+    """Field `panduan` bab DS (materi bootcamp) → siap tampil di bab.html."""
+    def _md(items):
+        hasil = []
+        for it in (items or []):
+            h = curriculum.render_markdown(str(it))
+            if h.startswith("<p>") and h.endswith("</p>") and h.count("<p>") == 1:
+                h = h[3:-4]
+            hasil.append(h)
+        return hasil
+    return {
+        "intro": pd.get("intro", ""),
+        "materi": pd.get("materi") or [],
+        "teori": _md(pd.get("teori")),
+        "praktek": _md(pd.get("praktek")),
+        "coba": pd.get("coba", ""),
+    }
+
+
 @app.route("/bab/<int:n>")
 @login_required
 def bab_page(n):
@@ -461,10 +480,12 @@ def bab_page(n):
     lessons_done = db.get_lesson_done(user["id"])
     soals = bab.get("soal") or []
     soal_solved_set = db.get_soal_solved(user["id"])
+    panduan = _panduan_render(bab.get("panduan")) if bab.get("panduan") else None
     return render_template("bab.html", bab=bab, scens=scens,
                            lessons=lessons, lessons_done=lessons_done,
                            soals=soals, soal_solved=soal_solved_set,
                            nb_ready=nblib.bab_template_key(n) is not None,
+                           panduan=panduan,
                            render_md=curriculum.render_markdown)
 
 
@@ -912,7 +933,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v20';
+    sw = """const CACHE = 'quantlab-v21';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));

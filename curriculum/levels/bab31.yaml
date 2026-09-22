@@ -638,3 +638,56 @@ soal:
       # TODO: y = 1 kalau status "Lancar", 0 kalau "Macet"
       # TODO: split test_size=ukuran_uji random_state=42, latih LogisticRegression(max_iter=1000)
       # TODO: cetak akurasi data uji dalam persen dengan 2 desimal
+
+panduan:
+  intro: Model pertamamu. Materi di bawah menunjukkan cara berpikirnya — di sini kamu langsung mempraktekkannya.
+  materi:
+  - label: '📄 Slide: Rakamin 08.2 — Regression'
+    slug: rakamin
+    path: 08 - Supervised Learning/2 - Regression.pdf
+  - label: '📄 Slide: Rakamin 08.3 — Classification'
+    slug: rakamin
+    path: 08 - Supervised Learning/3 - Classification.pdf
+  - label: '📄 Slide: Rakamin 08.4 — Ensemble Methods'
+    slug: rakamin
+    path: 08 - Supervised Learning/4 - Ensemble Methods.pdf
+  - label: '📄 Slide: Pacmann — Linear Regression 1 (dasar)'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Linear Model/02 Linear Regression - 1.pdf
+  - label: '📄 Slide: Pacmann — Logistic Model'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Logistic Model/03 Logistic Model.pdf
+  - label: '📄 Slide: Pacmann — Decision Tree: How to Split a Node'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Decision Tree/04 How to Split a Node.pdf
+  teori:
+  - 'Tiga langkah wajib: pisahkan **fitur X** vs **target y** → pisah **data latih & uji** (80/20, `stratify=y`) → baru `.fit()` dan nilai dengan data uji.'
+  - 'Keluarga model (slide Rakamin 08): **regresi** (menebak angka) · **klasifikasi** (menebak kelas) · **ensemble** (gabungan pohon — Random Forest/boosting, biasanya paling kuat).'
+  - 'Decision Tree memilih pemisah yang paling merapikan kelas (Pacmann: How to Split a Node); terlalu dalam = **overfit**, jadi dibatasi `max_depth`.'
+  - Selalu tulis `random_state` — supaya hasilmu bisa diulang (dan tidak dituduh curang saat lomba 😄).
+  praktek:
+  - Baca ringkas 3 slide Rakamin 08 (regresi/klasifikasi/ensemble) — cukup pahami “kapan pakai apa”.
+  - Lihat slide Pacmann Logistic Model bagian output peluang 0-1.
+  - Buka 📓 Notebook Latihan bab ini → latih model pertama & ubah fiturnya.
+  - Kerjakan soal **p31-1 & p31-2** di Tahap 2.
+  - Tutup dengan 10 skenario keputusan di Tahap 3.
+  coba: 'import pandas as pd
+
+    from sklearn.model_selection import train_test_split
+
+    from sklearn.linear_model import LogisticRegression
+
+
+    df = pd.read_csv("/datasets/kredit_umkm_bersih.csv")
+
+    fitur = ["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]
+
+    X = df[fitur]
+
+    y = (df["status"] == "Lancar").astype(int)
+
+    X_tr, X_te, y_tr, y_te = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+
+    model = LogisticRegression(max_iter=1000).fit(X_tr, y_tr)
+
+    print(f"Akurasi uji: {model.score(X_te, y_te):.3f}")'

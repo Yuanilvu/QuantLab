@@ -663,3 +663,37 @@ soal:
       # TODO: konversi kolom ke angka dengan errors="coerce"
       # TODO: isi nilai kosong dengan median kolom itu
       # TODO: cetak jumlah baris, lalu median dan rata-rata (1 desimal), satu per baris
+
+panduan:
+  intro: Materi aslinya dari bootcamp — tonton/baca dulu biar teori di bawah lebih nempel, lalu buktikan di praktek.
+  materi:
+  - label: '🎬 Video: Data Preparation (Pacmann · ML Workflow)'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Machine Learning Workflow/03_06. Data Preparation.mp4
+  - label: '🎬 Video: Data Preprocessing (Pacmann · ML Workflow)'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Machine Learning Workflow/03_09. Data Preprocessing.mp4
+  - label: '📄 Slide: Rakamin 04 — Data Processing (Pandas)'
+    slug: rakamin
+    path: 04 - Data Processing/1 - Introduction to Pandas DataFrame & Transformation.pdf
+  - label: '📄 Slide: Rakamin 07.3 — Data Pre-processing'
+    slug: rakamin
+    path: 07 - Machine Learning Preparation/3 - Data Pre-processing.pdf
+  teori:
+  - 'Urutan aman: **ukur dulu** (`isna()`, `duplicated()`, `describe()`), baru perbaiki bertahap — bukan langsung hapus baris.'
+  - 'Alur bersih-bersih: buang kembar → paksa tipe angka (`errors="coerce"`) → isi kosong dengan **median** (tahan outlier) → seragamkan teks → potong nilai mustahil.'
+  - Median bisa jauh beda dari mean gara-gara satu nilai ekstrem — bukti dari slide Rakamin (46,5 vs 26,7).
+  - Slide 07.3 melanjutkan ke encoding kategori, transformasi fitur, dan class imbalance (over/under-sampling) — bahan bab-bab berikutnya.
+  praktek:
+  - Tonton 2 video Pacmann di atas (±10 menit) — perhatikan urutan langkahnya.
+  - Baca bagian “Handling Missing / Duplicated Data” di slide Rakamin 07.3.
+  - Buka 📓 Notebook Latihan bab ini (tombol di bawah) → jalankan semua sel, ubah angkanya.
+  - Kerjakan soal **p28-1 & p28-2** di Tahap 2 — kodemu diuji otomatis.
+  - Tutup dengan 10 skenario keputusan di Tahap 3.
+  coba: 'import pandas as pd
+
+    df = pd.read_csv("/datasets/kredit_umkm.csv")
+
+    print(df.isna().sum().sort_values(ascending=False).head(4))
+
+    print(f"Baris kembar: {df.duplicated().sum()}")'

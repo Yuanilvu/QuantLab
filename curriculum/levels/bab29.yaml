@@ -650,3 +650,37 @@ soal:
       # TODO: ambil rata-rata kelompok Macet dan kelompok Lancar
       # TODO: cetak rata-rata Macet, lalu Lancar, lalu selisihnya (Macet - Lancar)
       #       semuanya dengan 2 angka desimal
+
+panduan:
+  intro: EDA = ngobrol dengan data sebelum memodelkan. Materi Pacmann & Rakamin di bawah adalah contoh percakapannya.
+  materi:
+  - label: '🎬 Video: Data Understanding (Pacmann · ML Workflow)'
+    slug: pacmann
+    path: Basic Machine Learning Algorithm/Machine Learning Workflow/03_08. Data Understanding.mp4
+  - label: '📄 Slide: Rakamin 07.2 — Exploratory Data Analysis'
+    slug: rakamin
+    path: 07 - Machine Learning Preparation/2 - Exploratory Data Analysis.pdf
+  - label: '📄 Slide: Rakamin 05.1 — Descriptive Statistics'
+    slug: rakamin
+    path: 05 - Statistics/1 - Descriptive Statistics.pdf
+  - label: '📄 Slide: Rakamin 06.1 — Basic Plots'
+    slug: rakamin
+    path: 06 - Data Visualization/1 - Basic Plots.pdf
+  teori:
+  - 'Tiga pertanyaan EDA: **lihat bentuknya** (histogram/boxplot), **hitung ringkasannya** (mean/median/kuantil), **cari hubungan** (korelasi & groupby ke target).'
+  - Hitung dulu `skor_kredit` per kelompok `status` — beda rata-rata antar kelompok = sinyal awal fitur berguna.
+  - 'Slide Rakamin memakai studi kasus pengiriman makanan: kelompok berbeda = pola berbeda — pisahkan dulu sebelum menyimpulkan.'
+  - Korelasi ≠ sebab-akibat, dan angka ekstrem harus dicek dulu sebelum dipercaya.
+  praktek:
+  - Tonton video Data Understanding (~8 menit) — catat pertanyaan yang diajukan ke data.
+  - Baca slide Rakamin 07.2 bagian “How to EDA” + 06.1 jenis-jenis plot.
+  - Buka 📓 Notebook Latihan bab ini → jalankan eksplorasi per kolom.
+  - Kerjakan soal **p29-1 & p29-2** di Tahap 2.
+  - Lanjut 10 skenario keputusan di Tahap 3.
+  coba: 'import pandas as pd
+
+    df = pd.read_csv("/datasets/kredit_umkm_bersih.csv")
+
+    print(df[["omzet_bulanan_juta", "skor_kredit"]].describe().round(2))
+
+    print(df["sektor"].value_counts().head(3))'
