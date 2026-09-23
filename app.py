@@ -67,6 +67,7 @@ app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # notebook + upload CSV (mak
 app.config["SESSION_COOKIE_HTTPONLY"] = True
 app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_NAME"] = "ql_session"
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=395)  # login awet — jangan login mulu
 
 db.init_db()
 
@@ -261,6 +262,7 @@ def login():
             if user:
                 db.login_failures_reset(key)
                 session.clear()  # anti session-fixation
+                session.permanent = True
                 session["_csrf"] = secrets.token_hex(16)
                 session["uid"] = user["id"]
                 return redirect(request.args.get("next") or url_for("index"))
@@ -280,6 +282,7 @@ def register():
         ok, msg = db.register_user(u, p)
         if ok:
             session.clear()  # anti session-fixation
+            session.permanent = True
             session["_csrf"] = secrets.token_hex(16)
             session["uid"] = db.get_user_by_name(u.strip())["id"]
             return redirect(url_for("index"))
