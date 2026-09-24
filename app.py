@@ -69,6 +69,15 @@ app.config["SESSION_COOKIE_SAMESITE"] = "Lax"
 app.config["SESSION_COOKIE_NAME"] = "ql_session"
 app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=395)  # login awet — jangan login mulu
 
+# gzip: halaman materi/kurikulum besar → ±6x lebih kecil (penting lewat funnel).
+from flask_compress import Compress  # noqa: E402
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 86400  # static: cukup sekali unduh
+app.config["COMPRESS_MIMETYPES"] = [
+    "text/html", "text/css", "text/plain", "text/xml", "application/json",
+    "application/javascript", "application/xml", "image/svg+xml",
+]
+Compress(app)
+
 db.init_db()
 
 LESSON_XP = db.LESSON_XP
