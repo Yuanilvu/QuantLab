@@ -4,6 +4,7 @@ Flask app: auth (CSRF + anti brute-force DB-backed), kurikulum YAML,
 XP/streak/badges, leaderboard, notebook ala Kaggle, fitur Data Science.
 """
 import csv
+import gzip
 import json
 import math
 import os
@@ -76,6 +77,7 @@ app.config["COMPRESS_MIMETYPES"] = [
     "text/html", "text/css", "text/plain", "text/xml", "application/json",
     "application/javascript", "application/xml", "image/svg+xml",
 ]
+app.config["COMPRESS_ALGORITHM_STREAMING"] = ["gzip", "deflate"]  # static (stream) ikut gzip
 Compress(app)
 
 db.init_db()
@@ -1724,46 +1726,69 @@ class SubPathMiddleware:
                 environ["SCRIPT_NAME"] = (environ.get("SCRIPT_NAME", "") + self.prefix).rstrip("/")
                 environ["PATH_INFO"] = path[len(self.prefix):] or "/"
 
-        content_type = [None]
+        tangkap = {}
 
         def start_response_wrapper(status, headers, exc_info=None):
-            for k, v in headers:
-                if k.lower() == "content-type" and content_type[0] is None:
-                    content_type[0] = v
-            if via_funnel:
-                headers = [
-                    (k, self.prefix + v)
-                    if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
-                    else (k, v)
-                    for k, v in headers
-                ]
-            # Security headers (semua respons)
-            has = {k.lower() for k, _ in headers}
-            for name, val in (
-                ("X-Content-Type-Options", "nosniff"),
-                ("X-Frame-Options", "DENY"),
-                ("Referrer-Policy", "strict-origin-when-cross-origin"),
-                ("Permissions-Policy", "camera=(), microphone=(), geolocation=()"),
-            ):
-                if name.lower() not in has:
-                    headers = headers + [(name, val)]
-            # Cookie session hanya via HTTPS funnel diberi flag Secure
-            if via_funnel:
-                headers = [
-                    (k, v + "; Secure") if (k.lower() == "set-cookie" and "secure" not in v.lower()) else (k, v)
-                    for k, v in headers
-                ]
-            return start_response(status, headers, exc_info)
+            # Tunda start_response asli — header masih bisa berubah (rewrite/gzip/Content-Length).
+            tangkap["status"] = status
+            tangkap["headers"] = list(headers)
+            tangkap["exc_info"] = exc_info
+            return lambda _b: None  # stub write() — Flask tidak memakainya
 
         app_iter = self.app(environ, start_response_wrapper)
-        if via_funnel and content_type[0] and "text/html" in content_type[0]:
-            # Buffer + rewrite path absolut hardcoded (fetch, href, src, action)
+        status = tangkap.get("status", "500 Internal Server Error")
+        headers = tangkap.get("headers", [])
+        ctype = next((v for k, v in headers if k.lower() == "content-type"), "") or ""
+        cenc = next((v for k, v in headers if k.lower() == "content-encoding"), "") or ""
+
+        if (via_funnel and "text/html" in ctype and cenc.lower() in ("", "gzip")
+                and environ.get("REQUEST_METHOD", "GET") != "HEAD"):
+            # Buffer + rewrite path absolut hardcoded (fetch, href, src, action).
+            # NB: badan bisa datang ter-gzip (flask-compress) → buka dulu, bungkus ulang.
             body = b"".join(app_iter)
+            if "gzip" in cenc.lower():
+                try:
+                    body = gzip.decompress(body)
+                except Exception:
+                    pass
             text = body.decode("utf-8", "replace")
             text = re.sub(r"""(fetch\(\s*['"])/""", r"\g<1>" + self.prefix + "/", text)
             text = re.sub(r"""(href|src|action)="/(?!quant/|pykode/|buku-kas/)""",
                           r"\g<1>=\"" + self.prefix + "/", text)
-            return [text.encode("utf-8")]
+            body = text.encode("utf-8")
+            headers = [(k, v) for k, v in headers if k.lower() != "content-length"]
+            if "gzip" in cenc.lower():
+                body = gzip.compress(body, 6)
+                headers = [(k, v) for k, v in headers if k.lower() != "content-encoding"]
+                headers.append(("Content-Encoding", "gzip"))
+            headers.append(("Content-Length", str(len(body))))
+            app_iter = [body]
+
+        # ── Header bersama (semua respons; dulu di wrapper) ──
+        if via_funnel:
+            headers = [
+                (k, self.prefix + v)
+                if (k.lower() == "location" and v.startswith("/") and not v.startswith(self.prefix))
+                else (k, v)
+                for k, v in headers
+            ]
+        # Security headers (semua respons)
+        has = {k.lower() for k, _ in headers}
+        for name, val in (
+            ("X-Content-Type-Options", "nosniff"),
+            ("X-Frame-Options", "DENY"),
+            ("Referrer-Policy", "strict-origin-when-cross-origin"),
+            ("Permissions-Policy", "camera=(), microphone=(), geolocation=()"),
+        ):
+            if name.lower() not in has:
+                headers = headers + [(name, val)]
+        # Cookie session hanya via HTTPS funnel diberi flag Secure
+        if via_funnel:
+            headers = [
+                (k, v + "; Secure") if (k.lower() == "set-cookie" and "secure" not in v.lower()) else (k, v)
+                for k, v in headers
+            ]
+        start_response(status, headers, tangkap.get("exc_info"))
         return app_iter
 
 
