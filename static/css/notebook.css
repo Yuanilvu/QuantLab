@@ -118,6 +118,16 @@
 .nbcell.nbmdc:not(.md-preview) .mdview { display: none; }
 .nbcell.md-preview .mdview { cursor: text; }
 
+/* --- Editor Abyss utk SEL KODE (overlay hl.js/hl_editor.js, 25 Sep 2026) ---
+   ⚠️ .hl-wrap warisan halaman soal punya border/sudut sendiri — di notebook
+   border & sudut tetap milik .nbmain, jadi semua gaya kotak .hl-wrap dinetralkan.
+   Aturan selaras: .hl-pre & textarea.hl-ta wajib sama font/ukuran (di sini .85rem
+   menyesuaikan .nbtext notebook; di halaman soal polanya .86rem). */
+.nbcell .hl-wrap { border: 0; border-radius: 0; background: transparent; }
+.nbcell .hl-wrap:hover, .nbcell .hl-wrap:focus-within { border-color: transparent; box-shadow: none; }
+.nbcell .hl-wrap .hl-pre { font-size: .85rem; }
+.nbcell .hl-wrap textarea.hl-ta { font-size: .85rem; min-height: 74px; }
+
 /* --- rail --- */
 .nbrail { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 14px 16px; }
 .nbrail h3 { font-size: .92rem; margin: 10px 0 6px; }

@@ -146,8 +146,19 @@
     cellsEl.innerHTML = html;
     for (var j = 0; j < cells.length; j++) {
       if (cells[j].type === 'md') { updateMdView(j); }
+      else { pasangHL(j); }
       paintOutput(j, cells[j].output);
     }
+  }
+
+  // Editor berwarna tema Abyss utk sel KODE (overlay hl_editor.js + hl.js).
+  // Dipanggil tiap renderCells(): sel dirender ulang dari nol (elemen baru),
+  // jadi overlay harus dipasang ulang; pasang() sendiri aman (guard __hl).
+  function pasangHL(i) {
+    if (!root.QL_HL_EDITOR) { return; }
+    var el = cellAt(i);
+    var ta = el ? el.querySelector('.nbtext') : null;
+    if (ta) { root.QL_HL_EDITOR.pasang(ta); }
   }
 
   function updateMdView(i) {
