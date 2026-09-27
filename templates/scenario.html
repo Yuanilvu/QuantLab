@@ -7,7 +7,7 @@
   <a href="{{ url_for('bab_page', n=bab.bab) }}">Bab {{ bab.bab }}: {{ bab.judul }}</a>
 </nav>
 
-<section class="scenario">
+<section class="scenario scenluas">
   <div class="scenhead">
     <span class="badge {{ scen.sulit }}">{{ scen.sulit }}</span>
     {% if is_challenge %}<span class="badge challenge">⚡ tantangan harian +{{ bonus }} XP</span>{% endif %}
@@ -15,33 +15,55 @@
     <span class="meta">{{ scen.xp }} XP{% if is_challenge %} + {{ bonus }} bonus{% endif %} · ±{{ scen.menit }} menit</span>
   </div>
 
-  <p class="note">🧭 <b>Cara main:</b> baca situasi pasar di bawah → pilih 1 keputusan → klik <b>“Lihat Hasil Keputusan”</b>. Kamu langsung lihat hasil tiap pilihan + kenapa keputusan terbaik itu yang benar.</p>
+  <p class="note">🧭 <b>Cara main:</b> baca situasi pasar di bawah → butuh cek cepat? pakai panel <b>🧪 Coba di sini</b> di sampingnya → pilih 1 keputusan → klik <b>“Lihat Hasil Keputusan”</b>. Kamu langsung lihat hasil tiap pilihan + kenapa keputusan terbaik itu yang benar.</p>
 
-  <div class="casebox">
-    <h3>📋 Situasi Pasar</h3>
-    <div class="case">{{ scen.cerita | replace('\n', '<br>') | safe }}</div>
-  </div>
-
-  <form method="post" id="scenform">
-    <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
-    <h3>🤔 Keputusanmu?</h3>
-    <p class="note">Pilih satu dari {{ scen.pilihan | length }} keputusan — tidak ada pilihan yang “bodoh”, semuanya jadi pelajaran.</p>
-    <div class="opts" role="radiogroup" aria-label="Pilihan keputusan">
-      {% for p in scen.pilihan %}
-      <label class="opt">
-        <input type="radio" name="choice" value="{{ loop.index0 }}" required>
-        <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
-      </label>
-      {% endfor %}
+  <div class="scengrid">
+    <div class="scenstory">
+      <div class="casebox">
+        <h3>📋 Situasi Pasar</h3>
+        <div class="case">{{ scen.cerita | replace('\n', '<br>') | safe }}</div>
+      </div>
     </div>
-    <div class="scenactions">
-      <button class="btn primary" type="submit">Lihat Hasil Keputusan →</button>
-      <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
-    </div>
-  </form>
 
-  <div class="hints hidden" id="hints" aria-live="polite">
-    {% for h in scen.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+    <aside class="scenmini" id="mini" data-csrf="{{ csrf_token() }}">
+      <h3>🧪 Coba di sini</h3>
+      <p class="note">Console kecil, langsung di halaman ini — data &amp; variabel <b>nyambung dengan Notebook-mu</b> (mesin sama). <kbd>Ctrl</kbd>+<kbd>Enter</kbd> = jalankan.</p>
+      <textarea id="miniCode" class="mini-ta" spellcheck="false" placeholder="# tulis Python di sini — mis.&#10;print((4200 - 4000) / 4000 * 100)">{{ scen.kode or "" }}</textarea>
+      <div class="mini-actions">
+        <button class="btn primary small" type="button" id="miniRun">▶ Jalankan</button>
+        <button class="btn ghost small" type="button" id="miniClear">🧹 Bersihkan</button>
+        <span class="mini-status" id="miniStatus">⚪ memeriksa…</span>
+      </div>
+      <div class="mini-out" id="miniOut" aria-live="polite"></div>
+      <p class="note mini-foot">Mau lebih panjang (banyak sel + tersimpan)? <a href="{{ url_for('notebook_list') }}">Buka 📓 Notebook</a> — mesin yang sama, variabelnya ikut.</p>
+    </aside>
+
+    <div class="scenask">
+      <form method="post" id="scenform">
+        <input type="hidden" name="_csrf" value="{{ csrf_token() }}">
+        <h3>🤔 Keputusanmu?</h3>
+        <p class="note">Pilih satu dari {{ scen.pilihan | length }} keputusan — tidak ada pilihan yang “bodoh”, semuanya jadi pelajaran.</p>
+        <div class="opts" role="radiogroup" aria-label="Pilihan keputusan">
+          {% for p in scen.pilihan %}
+          <label class="opt">
+            <input type="radio" name="choice" value="{{ loop.index0 }}" required>
+            <span class="optlabel"><b>{{ loop.index0 + 1 }}.</b> {{ p }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        <div class="scenactions">
+          <button class="btn primary" type="submit">Lihat Hasil Keputusan →</button>
+          <button class="btn ghost" type="button" id="hintbtn">💡 Petunjuk</button>
+        </div>
+      </form>
+
+      <div class="hints hidden" id="hints" aria-live="polite">
+        {% for h in scen.petunjuk %}<p>💡 {{ h }}</p>{% endfor %}
+      </div>
+    </div>
   </div>
 </section>
+{% endblock %}
+{% block scripts_extra %}
+<script src="{{ url_for('static', filename='js/mini.js') }}?v=1"></script>
 {% endblock %}

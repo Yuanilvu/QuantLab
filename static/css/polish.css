@@ -451,3 +451,40 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
 .hl-wrap textarea.hl-ta:focus { outline: none; border-color: transparent; box-shadow: none; }
 .hl-wrap textarea.hl-ta::placeholder { color: #3c5a86; opacity: 1; }
 .hl-wrap textarea.hl-ta::selection { background: rgba(119, 8, 17, .6); }
+
+/* ── Console mini halaman skenario (25 Sep 2026) ───────────────────────────
+   Panel "🧪 Coba di sini" di /skenario/<sid>: menjalankan cuplikan kode di
+   KERNEL notebook yang sama (variabel nyambung dua arah — bukan salinan).
+   Highlight kode = overlay hl.js/hl_editor.js (Abyss). Desktop: kolom kanan
+   sticky; HP/tablet kecil: di bawah cerita, sebelum pilihan keputusan. */
+.scengrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+@media (min-width: 1120px) {
+  .scenario.scenluas { max-width: 1120px; }
+  .scengrid { grid-template-columns: minmax(0, 1fr) 380px; align-items: start; }
+  .scenstory { grid-column: 1; grid-row: 1; }
+  .scenask { grid-column: 1; grid-row: 2; }
+  .scenmini { grid-column: 2; grid-row: 1 / span 2; position: sticky; top: 74px; }
+}
+.scenmini { background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 14px 16px; }
+.scenmini h3 { margin: 0 0 4px; font-size: 1rem; }
+.scenmini .note { font-size: .78rem; }
+.scenmini kbd { font-family: var(--mono); font-size: .74rem; background: var(--panel2, #1a2330);
+  border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 4px; }
+.scenmini .hl-wrap textarea.hl-ta { min-height: 120px; }
+.mini-actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin: 8px 0 4px; }
+.mini-actions .btn { width: auto; margin-top: 0; }
+.mini-status { font-size: .74rem; color: var(--dim); margin-left: auto; }
+.mini-out { font-family: var(--mono); font-size: .82rem; margin: 6px 0 0; }
+.mini-out:empty { display: none; }
+.mini-out pre { margin: 4px 0; padding: 8px 10px; border-radius: 8px;
+  white-space: pre-wrap; word-break: break-word; font-family: var(--mono); font-size: .82rem; }
+.mini-out .m-std { color: var(--txt); background: var(--bg); border: 1px solid var(--line); }
+.mini-out .m-err { color: #ff9d9d; background: rgba(239, 68, 68, .07); border: 1px solid #4d2020; }
+.mini-out .m-res { color: var(--blue); background: var(--bg); border: 1px solid var(--line); }
+.mini-out .m-ms { color: var(--dim); font-size: .72rem; margin-top: 4px; }
+.mini-out .m-spin { color: var(--yellow); font-size: .82rem; }
+.mini-out .m-empty { color: var(--dim); font-size: .8rem; font-style: italic; }
+.mini-out .m-img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line);
+  background: #fff; margin-top: 6px; }
+.mini-foot { margin-top: 10px !important; }

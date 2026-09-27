@@ -947,7 +947,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v23';
+    sw = """const CACHE = 'quantlab-v24';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1673,6 +1673,29 @@ def notebook_hapus(nid):
     user = _user()
     n = db.notebook_delete(nid, user["id"])
     return {"ok": bool(n)}
+
+
+# ---------- Console mini halaman skenario (kernel notebook yang sama) ----------
+# Dipakai static/js/mini.js di /skenario/<sid>: jalankan cuplikan kode tanpa
+# pindah tab. Kernel per USER → variabel NYAMBUNG dengan Notebook milik user.
+@app.route("/api/mini/jalankan", methods=["POST"])
+@login_required
+def mini_jalankan():
+    user = _user()
+    code = request.form.get("code", "")
+    if len(code) > nblib.CODE_CAP:
+        return {"status": "error", "error_type": "toolong",
+                "error": f"Kode terlalu panjang (maks {nblib.CODE_CAP} karakter).",
+                "stdout": "", "stderr": "", "result": None}
+    result = nblib.run_cell(user["username"], code)
+    result["ok"] = result.get("status") in ("ok", "error")
+    return result
+
+
+@app.route("/api/mini/status")
+@login_required
+def mini_status():
+    return nblib.kernel_status(_user()["username"])
 
 
 # ---------- Upload CSV user (data latihan/lomba) ----------
