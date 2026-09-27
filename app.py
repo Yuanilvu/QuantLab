@@ -25,6 +25,7 @@ import db
 import chartgen
 import judge
 import materi as matlib
+import kelas as kelib
 import notebook as nblib
 
 # ── Output contoh kode pelajaran (dihitung sekali per proses, sandbox) ─────
@@ -243,7 +244,10 @@ def csrf_protect():
 
 def login_required(fn):
     def wrap(*args, **kwargs):
-        if not session.get("uid"):
+        # Sesi bisa menunjuk user yang sudah tidak ada (mis. user dihapus) —
+        # bersihkan sesi & minta login ulang, jangan biarkan halaman 500.
+        if not session.get("uid") or _user() is None:
+            session.clear()
             return redirect(url_for("login", next=request.path))
         return fn(*args, **kwargs)
     wrap.__name__ = fn.__name__
@@ -947,7 +951,7 @@ def manifest_route():
 
 @app.route("/sw.js")
 def sw_js():
-    sw = """const CACHE = 'quantlab-v24';
+    sw = """const CACHE = 'quantlab-v25';
 self.addEventListener('install', e => self.skipWaiting());
 self.addEventListener('activate', e => e.waitUntil(caches.keys().then(ks =>
   Promise.all(ks.filter(k => k !== CACHE).map(k => caches.delete(k))))));
@@ -1364,6 +1368,7 @@ def data_science():
         uploads_n=len(nblib.list_uploads(user["username"])),
         best_komp=best_komp,
         n_materi=matlib.ringkas(),
+        n_kelas=kelib.ringkas(),
         nsub_komp=db.submission_count(user["id"], "kredit_umkm"))
 
 
@@ -1381,6 +1386,25 @@ def data_science_materi():
 def materi_berkas(slug, rel):
     """Penyaji berkas materi (inline; Range didukung untuk video)."""
     return matlib.ambil(slug, rel)
+
+
+# ---------- Rangkuman Kelas (materi Rakamin & Pacmann ditulis ulang) ----------
+
+@app.route("/data-science/kelas")
+@login_required
+def kelas_index():
+    """Indeks rangkuman kelas bootcamp — materi asli ditulis ulang jadi bahan baca."""
+    return render_template("kelas.html", katalog=kelib.katalog())
+
+
+@app.route("/data-science/kelas/<path:sub>")
+@login_required
+def kelas_lesson(sub):
+    """Satu halaman rangkuman kelas (markdown → HTML + navigasi)."""
+    item = kelib.muat(sub)
+    if not item:
+        abort(404)
+    return render_template("kelas_lesson.html", item=item)
 
 
 # ---------- Kompetisi Simulasi (nilai /work/submission.csv vs kunci) ----------

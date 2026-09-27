@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block title %}Rangkuman Kelas — QuantLab{% endblock %}
+{% block content %}
+<section class="pagehead">
+  <span class="kicker">Data Science</span>
+  <h1>📖 Rangkuman Kelas</h1>
+  <p class="sub">Materi bootcamp asli (Rakamin &amp; Pacmann — ±4.600 halaman slide) sudah <b>ditulis ulang lengkap</b> di sini dengan bahasa yang mudah. Nggak perlu buka file-nya lagi — baca di sini sampai paham. 💡</p>
+</section>
+
+<p class="note">Tiap halaman menyebutkan <b>berkas sumbernya</b> (tetap bisa dibuka kalau mau lihat aslinya). Urutannya mengikuti kurikulum: baca dari atas ke bawah, atau lompat ke topik yang kamu butuhkan. 👇</p>
+
+{% for g in katalog %}
+<section class="scenlist" aria-label="{{ g.nama }}">
+  <h3>{{ g.emoji }} {{ g.nama }} <span class="mut small">· {{ g.n }} rangkuman</span></h3>
+  <p class="note">{{ g.desc }}</p>
+  {% for k in g.kursus %}
+  <h4 class="kelaskursus">{{ k.emoji }} {{ k.nama }}</h4>
+  <div class="kelaslist">
+    {% for l in k.lessons %}
+    <a class="kelasrow" href="{{ url_for('kelas_lesson', sub=l.sub) }}">
+      <span class="scenemoji" aria-hidden="true">{{ l.emoji }}</span>
+      <span class="scenmain"><b>{{ l.judul }}</b>{% if l.singkat %}<span class="meta">{{ l.singkat }}</span>{% endif %}</span>
+      <span class="mut small">±{{ l.menit }} mnt</span>
+      <span class="arrow" aria-hidden="true">→</span>
+    </a>
+    {% endfor %}
+  </div>
+  {% endfor %}
+</section>
+{% endfor %}
+
+{% if not katalog %}
+<section class="card"><p>Rangkuman sedang disiapkan… 🚧</p></section>
+{% endif %}
+
+<p class="note">📦 Mau lihat/putar materi aslinya (video + slide)? <a href="{{ url_for('data_science_materi') }}">Buka Materi Bootcamp →</a></p>
+{% endblock %}

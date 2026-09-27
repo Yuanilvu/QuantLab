@@ -7,4 +7,6 @@ data/*.db-wal
 data/notebook_work/
 *.pyc
 data/kompetisi/
+content/kelas/
+data/kelas_teks/
 backups/

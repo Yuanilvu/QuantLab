@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}{{ item.judul }} — Rangkuman Kelas{% endblock %}
+{% block content %}
+<nav class="crumb" aria-label="Breadcrumb">
+  <a href="{{ url_for('index') }}">Dashboard</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('data_science') }}">Data Science</a>
+  <span aria-hidden="true"> › </span>
+  <a href="{{ url_for('kelas_index') }}">📖 Rangkuman Kelas</a>
+</nav>
+
+<section class="kelaswrap">
+  <div class="scenhead">
+    <span class="badge">{{ item.grup_emoji }} {{ item.grup_nama }}</span>
+    <h1>{{ item.emoji }} {{ item.judul }}</h1>
+    <span class="meta">{{ item.pos }}/{{ item.n_kursus }} di {{ item.kursus }} · ±{{ item.menit }} menit baca</span>
+  </div>
+
+  <div class="kelasless card">
+    {{ item.isi_html | safe }}
+  </div>
+
+  {% if item.sumber %}
+  <section class="card kelassumber">
+    <h3>📄 Sumber asli (materi bootcamp)</h3>
+    <ul>
+      {% for s in item.sumber %}
+      <li><a href="{{ url_for('materi_berkas', slug=item.track, rel=s) }}" target="_blank" rel="noopener">{{ s }}</a></li>
+      {% endfor %}
+    </ul>
+    <p class="mut small">Halaman ini = rangkuman yang ditulis ulang dari berkas-berkas di atas. Materi asli tetap tersimpan (read-only) — buka kalau mau lihat versi lengkapnya.</p>
+  </section>
+  {% endif %}
+
+  <div class="kelasnav">
+    {% if item.prev %}
+    <a class="btn ghost" href="{{ url_for('kelas_lesson', sub=item.prev.sub) }}">← {{ item.prev.judul }}</a>
+    {% else %}<span></span>{% endif %}
+    {% if item.next %}
+    <a class="btn ghost" href="{{ url_for('kelas_lesson', sub=item.next.sub) }}">{{ item.next.judul }} →</a>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

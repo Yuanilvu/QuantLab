@@ -488,3 +488,41 @@ pre.block-code.out { margin: 0; color: #e6edf3; border: 1px dashed #233647;
 .mini-out .m-img { max-width: 100%; border-radius: 8px; border: 1px solid var(--line);
   background: #fff; margin-top: 6px; }
 .mini-foot { margin-top: 10px !important; }
+
+/* ── Rangkuman Kelas (25 Sep 2026) — halaman baca hasil tulis-ulang materi ── */
+.kelaskursus { margin: 14px 0 6px; font-size: .98rem; color: var(--txt); }
+.kelaslist { display: flex; flex-direction: column; gap: 8px; }
+.kelasrow { display: flex; align-items: center; gap: 12px; text-decoration: none;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 12px;
+  padding: 12px 14px; color: var(--txt); transition: border-color .15s, transform .15s; }
+.kelasrow:hover { border-color: var(--brand, var(--blue)); transform: translateY(-1px); }
+.kelasrow .scenmain { flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.kelaswrap { max-width: 860px; margin: 0 auto; }
+.kelasless { padding: 22px 26px; line-height: 1.7; }
+.kelasless h2 { margin: 24px 0 8px; font-size: 1.15rem; }
+.kelasless h3 { margin: 18px 0 6px; font-size: 1.02rem; }
+.kelasless h4 { margin: 14px 0 4px; font-size: .95rem; }
+.kelasless p { margin: 8px 0; }
+.kelasless ul, .kelasless ol { margin: 8px 0 8px 22px; }
+.kelasless li { margin: 4px 0; }
+.kelasless code { font-family: var(--mono); font-size: .86em; background: var(--panel2);
+  border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px; }
+.kelasless pre { background: var(--bg); border: 1px solid var(--line); border-radius: 10px;
+  padding: 12px 14px; overflow-x: auto; margin: 12px 0; }
+.kelasless pre code { background: transparent; border: none; padding: 0;
+  font-size: .84rem; line-height: 1.55; }
+.kelasless table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: .88rem; }
+.kelasless th, .kelasless td { border: 1px solid var(--line); padding: 7px 10px;
+  text-align: left; vertical-align: top; }
+.kelasless th { background: var(--panel2); }
+.kelasless blockquote { border-left: 3px solid var(--line); margin: 10px 0;
+  padding: 4px 12px; color: var(--dim); }
+.kelasless hr { border: none; border-top: 1px solid var(--line); margin: 18px 0; }
+.kelasless a { color: var(--blue); }
+.kelassumber ul { margin: 8px 0 8px 20px; }
+.kelassumber li { margin: 4px 0; font-size: .9rem; }
+.kelasnav { display: flex; justify-content: space-between; gap: 10px; margin: 18px 0 8px;
+  flex-wrap: wrap; }
+.kelasnav .btn { width: auto; margin-top: 0; max-width: 48%; overflow: hidden;
+  text-overflow: ellipsis; white-space: nowrap; }
+@media (max-width: 640px) { .kelasnav .btn { max-width: 100%; } }

@@ -55,6 +55,7 @@ def main():
     paths = ["/", "/peta", "/data-science", "/kompetisi", "/jurnal", "/ulas",
              "/leaderboard", "/badges", "/profil", "/cari?q=funding",
              "/notebook", "/notebook/datasets",
+             "/data-science/materi", "/data-science/kelas",
              "/bab/1", "/bab/11", "/bab/27", "/bab/28", "/skenario/s11-1",
              "/skenario/s11-1/hasil", "/soal/p25-1", "/ujian/math", "/sertifikat/math"]
     bad = []
@@ -120,6 +121,13 @@ def main():
     hdrs = c.get("/login").headers
     check("security headers", hdrs.get("X-Content-Type-Options") == "nosniff"
           and hdrs.get("X-Frame-Options") == "DENY")
+
+    # 8b. Sesi menunjuk user yang tidak ada → redirect login, bukan 500
+    with c.session_transaction() as s:
+        s["uid"] = 999999
+    rr = c.get("/")
+    check("sesi hantu → redirect login", rr.status_code in (301, 302, 303),
+          f"(dapat {rr.status_code})")
 
     # Bersihkan user smoke
     import db  # noqa: E402
