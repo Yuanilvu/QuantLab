@@ -10,21 +10,41 @@ deskripsi: "Neuron, lapisan tersembunyi, dan MLP pertamamu. Deep learning bukan 
 pelajaran:
   - id: "33-1"
     judul: "Neuron & Jaringan Saraf"
-    menit: 5
+    menit: 8
     materi: |
-      **Neuron** = mesin hitung kecil dengan dua langkah:
-      1. Jumlahkan semua masukan yang sudah dikali bobot, lalu tambah bias: z = w1·x1 + w2·x2 + w3·x3 + b
-      2. Ubah z jadi angka 0 sampai 1 lewat **aktivasi** (contoh: sigmoid, rumusnya 1 / (1 + e pangkat −z)).
+      **Deep learning** adalah keluarga model yang meniru cara kerja neuron di otak: banyak unit hitung kecil yang saling terhubung. Kedengarannya rumit, tapi satu neuron sebenarnya cuma mesin hitung dengan dua langkah sederhana. Kalau kamu paham satu neuron, sisanya tinggal mengalikan jumlahnya jadi banyak — dan saat itu kamu sudah paham jaringan saraf.
 
-      Analoginya: seorang penilai kredit. Tiap fakta (skor kredit, telat bayar, jumlah pinjaman) diberi timbangan (**bobot**). Fakta bagus menambah nilai, fakta buruk mengurangi. **Bias** = nada dasar si penilai — ada yang gampang curiga, ada yang santai.
+      **Langkah 1 — jumlahkan masukan berbobot, tambah bias.** Neuron menerima beberapa angka masukan (x), mengalikannya dengan timbangan masing-masing (**bobot**, w), menjumlahkan semuanya, lalu menambahkan satu angka penggeser (**bias**, b):
+      z = w1·x1 + w2·x2 + w3·x3 + b
 
-      Contoh angka nyata. Satu pengajuan: skor_kredit 500, telat 1 kali, pinjaman 20 juta. Bobot: +0,01 untuk skor, −0,6 untuk telat, +0,04 untuk pinjaman; bias −4,5.
-      - z = 0,01 x 500 + (−0,6) x 1 + 0,04 x 20 + (−4,5) = 5 − 0,6 + 0,8 − 4,5 = **0,7**
-      - aktivasi = 1 / (1 + e pangkat −0,7) = **0,67** → di atas 0,5, jadi model condong bilang Macet.
+      Analoginya: seorang penilai kredit yang menimbang bukti. Tiap fakta (skor kredit, telat bayar, jumlah pinjaman) diberi timbangan — fakta bagus menambah nilai, fakta buruk mengurangi. **Bias** adalah nada dasar si penilai: ada yang gampang curiga (bias negatif), ada yang santai. Jadi z adalah "skor total bukti" versi si penilai.
 
-      **Lapisan tersembunyi**: satu neuron terlalu sederhana. Jaringan saraf menyusun banyak neuron berlapis-lapis. Lapisan pertama menangkap pola sederhana, lapisan berikutnya menggabungkan pola itu jadi pola yang lebih rumit. Contoh arsitektur kecil: 3 masukan → 4 neuron tersembunyi → 1 keluaran.
+      **Langkah 2 — ubah z lewat fungsi aktivasi.** z bisa bernilai berapa saja: −5, 0, 9. Fungsi aktivasi mengubahnya jadi angka yang lebih mudah dibaca. Untuk keluaran, yang sering dipakai adalah **sigmoid**: dia memampatkan nilai apa pun ke rentang 0 sampai 1 — bahasa peluang. Rumusnya 1 / (1 + e pangkat −z); yang perlu kamu pegang cuma perilakunya: z positif besar mendekati 1, z negatif besar mendekati 0, dan z = 0 memberi tepat 0,5.
 
-      Dua hal yang wajib diingat sebelum masuk deep learning: (1) butuh data lebih banyak daripada model biasa; (2) fitur harus diskalakan — angka ratusan seperti skor kredit akan menenggelamkan angka kecil seperti telat 0-5 kalau tidak disetarakan dulu.
+      **Contoh nyata.** Satu pengajuan: skor_kredit 500, telat 1 kali, pinjaman 20 juta. Bobot: +0,01 untuk skor, −0,6 untuk telat, +0,04 untuk pinjaman; bias −4,5.
+      - z = 5,0 − 0,6 + 0,8 − 4,5 = **0,7**
+      - aktivasi = **0,67** → di atas 0,5, jadi model condong bilang Macet.
+
+      Contoh kedua: skor 450, telat 4 kali, pinjaman 30 juta → z = **−1,2** dan aktivasi **0,23** → condong Lancar. Dua pengajuan ini dibedakan oleh skor dan telat, bukan pinjaman: persis seperti penilai kredit menimbang bukti.
+
+      ```python
+      import numpy as np
+
+      x = np.array([500, 1, 20])          # skor_kredit, telat, pinjaman
+      w = np.array([0.01, -0.6, 0.04])    # bobot tiap fakta
+      z = w @ x - 4.5                     # bias -4,5
+      print(f"z = {z:.2f}  aktivasi = {1 / (1 + np.exp(-z)):.2f}")
+      ```
+
+      **Kenapa aktivasi wajib ada.** Tanpa aktivasi, tiap neuron cuma menjumlahkan perkalian, dan tumpukan lapisan yang semuanya lurus tetap setara dengan satu garis lurus saja. Berapa pun banyaknya lapisan, model tidak bisa membentuk pola berlekuk — persis seperti regresi biasa. Fungsi aktivasi memberi "lekukan" itu. Karena alasan praktis, neuron di lapisan tengah hampir selalu memakai **ReLU** (negatif dijadikan 0, positif dibiarkan): murah dihitung dan bekerja baik; sigmoid disimpan untuk neuron keluaran yang butuh angka 0 sampai 1.
+
+      **Lapisan: dari satu neuron jadi jaringan.** Satu neuron terlalu sederhana, jadi neuron disusun berlapis-lapis. Lapisan pertama (**input layer**) menerima fitur, lapisan tengah (**hidden layer**, lapisan tersembunyi) menangkap pola, lapisan terakhir (**output layer**) mengeluarkan jawaban. Lapisan pertama menangkap pola sederhana; lapisan berikutnya menggabungkan pola itu menjadi pola yang lebih rumit. Contoh arsitektur kecil: 3 masukan → 4 neuron tersembunyi → 1 keluaran — jaringan mungil ini saja sudah punya 21 parameter yang harus dicari. Di kasus kredit UMKM, lapisan masukan berisi 5 neuron — satu untuk tiap fitur (omzet, lama usaha, pinjaman, telat, skor) — dan lapisan keluaran cukup 1 neuron sigmoid yang membaca peluang Macet. "Deep" (dalam) cuma berarti lapisannya banyak.
+
+      **Cara belajar: salah dulu, lalu diperbaiki sedikit demi sedikit.** Bobot tidak muncul langsung benar; awalnya diisi acak. Model lalu membandingkan tebakannya dengan jawaban asli dan menggeser tiap bobot ke arah yang menurunkan kesalahan. Prosesnya bernama **gradient descent**: bayangkan menuruni lembah berkabut — kamu tidak melihat dasarnya, tapi kamu bisa merasakan arah mana yang menurun, lalu melangkah kecil ke sana, berulang-ulang. Contoh nyata: model kecil menebak data y = 2x + 1 mulai dari w = 0 dan b = 0; putaran pertama kesalahannya 57,0, dan setelah 500 putaran kesalahannya hampir 0 dengan w = 2,00 dan b = 0,99 — hampir persis jawaban aslinya. Di jaringan sungguhan yang digeser bukan dua angka, tapi puluhan ribu bobot sekaligus — itulah kenapa butuh komputer. Perhatikan pembagian tugasnya: bobot dicari model saat latihan, sedangkan jumlah neuron dan lapisan kamu pilih sendiri sebelum pelatihan dimulai.
+
+      **Kenapa deep learning kuat.** Setiap neuron boleh menggabungkan fitur dengan timbangan berbeda, dan tiap lapisan menyusun ulang hasil lapisan sebelumnya. Kalimat seperti "skor kredit buruk baru berbahaya kalau telatnya banyak" tidak perlu kamu tuliskan sebagai aturan; jaringan bisa mempelajarinya sendiri dari data. Makin dalam jaringannya, makin majemuk pola yang bisa ditangkap — inilah kekuatannya, sekaligus sumber kelemahannya. Karena itu jaringan saraf dipakai untuk masalah yang aturannya sulit dituliskan manusia, seperti mengenali wajah, suara, atau teks.
+
+      **Dua hal wajib diingat sebelum masuk deep learning:** (1) butuh data lebih banyak daripada model biasa — jaringan punya banyak parameter, dan parameter yang jauh lebih banyak daripada baris data adalah resep menghafal; (2) fitur harus diskalakan — angka ratusan seperti skor kredit akan menenggelamkan angka kecil seperti telat 0 sampai 5 kalau tidak disetarakan dulu. Dua syarat inilah yang langsung kita pakai di pelajaran berikutnya: saat melatih jaringan pertama, pertanyaan pertama bukan seberapa besar jaringannya, tapi apakah skalanya sudah siap.
     kode: |
       import numpy as np
 
@@ -41,18 +61,38 @@ pelajaran:
       z2 = bobot @ x2 + bias
       print(f"z = {z2:.2f}")
       print(f"aktivasi = {1 / (1 + np.exp(-z2)):.2f} (di bawah 0.5 -> cenderung Lancar)")
-    penjelasan: "Neuron = jumlah berbobot + bias, lalu aktivasi. Contoh: z = 5 − 0,6 + 0,8 − 4,5 = 0,7 dan aktivasi 0,67 (condong Macet). Contoh kedua: z = −1,2 dan aktivasi 0,23 (condong Lancar). Jaringan = neuron berlapis-lapis; butuh data banyak dan fitur diskalakan."
+    penjelasan: "Satu neuron = dua langkah: jumlahkan masukan berbobot lalu tambah bias (z), setelah itu ubah lewat aktivasi sigmoid yang memampatkan hasil ke rentang 0 sampai 1. Contoh: z = 5,0 − 0,6 + 0,8 − 4,5 = 0,7 dan aktivasi 0,67 (condong Macet); contoh kedua z = −1,2 dan aktivasi 0,23 (condong Lancar). Aktivasi wajib ada: tanpa itu, lapisan yang ditumpuk tetap setara satu garis lurus saja — ReLU memberi lekukan, sigmoid menyajikan peluang. Belajar = gradient descent: bobot awal acak, lalu digeser sedikit demi sedikit ke arah yang menurunkan kesalahan (model mainan y = 2x + 1 menemukan w = 2,00 dan b = 0,99 setelah 500 putaran). Jaringan = neuron berlapis-lapis — 5 masukan, lalu lapisan tersembunyi, lalu 1 keluaran di kasus kita; butuh data banyak dan fitur diskalakan sebelum dilatih."
   - id: "33-2"
     judul: "MLP Pertamamu"
-    menit: 6
+    menit: 8
     materi: |
-      **MLP** (Multi-Layer Perceptron) = jaringan saraf paling sederhana di sklearn: beberapa neuron di lapisan tersembunyi, semuanya saling terhubung. Melatihnya sama singkatnya dengan logreg.
+      **MLP** (Multi-Layer Perceptron) adalah jaringan saraf paling sederhana di sklearn: beberapa neuron di lapisan tersembunyi, semuanya saling terhubung. Kabar baiknya: melatihnya sama singkatnya dengan regresi logistik. Bedanya, MLP tidak cuma menjumlahkan pengaruh tiap fitur; dia bisa menangkap kombinasi antar fitur, dan itu terasa di data yang punya interaksi seperti skor kredit dengan riwayat telat.
 
-      **Aturan wajib: pakai StandardScaler.** StandardScaler mengubah tiap fitur jadi rata-rata 0 dan sebaran 1, sehingga skor_kredit (400-600) dan riwayat_telat (0-5) punya timbangan sebanding. Buktinya dari data kita: MLP yang sama dilatih tanpa skala → akurasi data uji **0,74** (itu cuma setara baseline 0,735!). Dengan StandardScaler → **0,80**. Di sklearn tulis `make_pipeline(StandardScaler(), MLPClassifier(...))` supaya scaler dan model jadi satu paket; data uji pun otomatis diskalakan dengan cara yang sama.
+      **Aturan wajib: pakai StandardScaler lebih dulu.** Kamu sudah kenal z-score dari bab 30: ubah tiap nilai jadi (nilai − rata-rata) ÷ sebaran. StandardScaler melakukan hal itu untuk semua fitur sekaligus. Contoh pengajuan nyata di dataset kita: skor_kredit 425 (rata-rata 533,10 dan sebaran 86,85) menjadi −1,24; telat 3 kali (rata-rata 2,21 dan sebaran 1,44) menjadi 0,55; pinjaman 8,5 juta (rata-rata 20,08 dan sebaran 14,97) menjadi −0,77. Setelah discalakan, semua fitur berdiri sejajar — tidak ada lagi yang mendominasi hanya karena satuannya lebih besar. Tanpa penyetaraan itu, perbaikan bobot saat pelatihan didominasi fitur berangka besar; bobot untuk telat nyaris tidak bergerak, padahal telat justru sinyal paling kuat di dataset ini.
 
-      Parameter yang perlu kamu tahu: `hidden_layer_sizes=(8,)` artinya satu lapisan tersembunyi berisi 8 neuron; `max_iter` = berapa putaran pelatihan; `random_state=1` supaya hasilnya selalu sama setiap dijalankan. Kalau muncul ConvergenceWarning, artinya pelatihan belum stabil — bisa diabaikan dulu atau `max_iter` dinaikkan.
+      **Bukti dari data kita.** Tanpa skala, MLP 8 neuron yang dilatih pada 465 pengajuan hanya mencapai akurasi uji **0,74** — persis baseline "tebak Lancar semua" (0,735). Modelnya tidak belajar apa-apa; dia menyerah ke tebakan mayoritas. Dengan StandardScaler, konfigurasi yang sama naik ke **0,80**, dan dengan 400 putaran mencapai **0,83**. Menambah neuron tidak otomatis menambah mutu: 16 neuron memberi 0,84, tapi 32 neuron kembali ke 0,83 — inilah kenapa ukuran jaringan dinaikkan hanya kalau memang perlu.
 
-      Untuk kompetisi nyata, orang biasanya pindah ke **PyTorch** atau **TensorFlow** di Google Colab: lebih kuat untuk gambar, teks, dan data besar. Tapi konsepnya SAMA — skala fitur, lapisan, aktivasi, lalu dinilai dengan data uji. Kalau MLP sklearn sudah paham, pindah ke PyTorch cuma soal sintaks.
+      Karena scaler harus diperlakukan sama persis di data latih dan data uji, bungkus keduanya dalam satu paket dengan `make_pipeline(StandardScaler(), MLPClassifier(...))`. Polanya seperti ini:
+
+      ```python
+      model = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(8,), max_iter=400, random_state=1))
+      model.fit(X_latih, y_latih)
+      print(f"akurasi data uji: {model.score(X_uji, y_uji):.2f}")
+      ```
+
+      **Alur latihnya selalu empat langkah:** pisah data latih dan data uji, bungkus scaler dan MLP dalam satu pipeline, latih dengan `.fit(X_latih, y_latih)`, lalu ukur dengan `.score(X_uji, y_uji)`. Akurasi 0,83 misalnya berarti 128 dari 155 pengajuan uji ditebak benar — angka yang bisa langsung kamu ceritakan ke orang bisnis.
+
+      **Parameter yang perlu kamu tahu.** `hidden_layer_sizes=(8,)` artinya satu lapisan tersembunyi berisi 8 neuron; tulis dengan koma supaya dianggap satu lapisan. `max_iter` adalah batas **epoch** (putaran belajar): satu iterasi = satu putaran penuh ketika model menghitung kesalahannya di semua baris latih lalu menggeser seluruh bobot sedikit. `random_state=1` mengunci undian bobot awal supaya hasilmu selalu sama setiap dijalankan. Kalau muncul ConvergenceWarning, artinya pelatihan berhenti karena kehabisan putaran, bukan karena sudah stabil — boleh dinaikkan `max_iter`, boleh juga diabaikan dulu. Ada juga `alpha`: nilai bawaannya 0,0001, dan menaikkannya membuat hukuman untuk bobot besar makin keras.
+
+      **Baca akurasi dengan jujur.** `model.score(X_uji, y_uji)` menghitung akurasi di data yang tidak dipakai melatih — hanya angka itu yang boleh kamu laporkan. Skor latih cenderung lebih tinggi dan bisa menipu: model yang lebih besar, (32, 32) neuron, dilatih 2.000 putaran pada data kita mencetak akurasi latih **0,98** tapi akurasi uji cuma **0,70**. Selisih 0,28 itu **overfitting**: jaringan yang parameternya jauh lebih banyak daripada data akan menghafal baris-baris latih, bukan mempelajari pola. Mengenalinya mudah: lihat skor latih dan skor uji berbarengan; kalau jaraknya melebar, berhenti menambah epoch.
+
+      **Epoch = lama belajar.** Satu epoch berarti model melihat seluruh data latih sekali. Terlalu sedikit, model belum sempat belajar — jaringan 8 neuron bahkan baru naik dari 0,80 ke 0,83 ketika batas putaran dinaikkan dari 300 ke 400. Terlalu banyak, model mulai menghafal: skor latih terus naik sementara skor uji berbalik turun. Cara memperbaikinya, dari yang paling murah: kecilkan jaringan, kurangi `max_iter`, atau tambah data; di level berikutnya tambahkan regularisasi lewat parameter `alpha` (hukuman untuk bobot yang terlalu besar, versi scikit-learn dari penalti L2).
+
+      **Kapan ML tidak cocok?** Di data 620 baris ini, MLP berskala punya rata-rata CV 5 lipatan **0,786** — masih sedikit di bawah regresi logistik yang cuma **0,797** dan selesai dalam waktu kurang dari satu detik. Di tabel yang kecil, model sederhana sering menang. Deep learning baru bersinar saat empat ciri ini terpenuhi: datanya tidak terstruktur (gambar, teks, suara), volumenya besar, eksplanasi bukan prioritas, dan polanya sulit dituliskan sebagai aturan. Jadi urutan kerjamu: logreg atau pohon dulu, perbaiki fitur, baru naik kelas kalau model sederhana sudah mentok.
+
+      **Tiga jebakan umum.** Pertama, **fitur tak diskalakan** — kesalahan paling mahal, gejalanya akurasi nempel persis di baseline (0,74 tadi). Kedua, **data uji bocor** — scaler atau pemilihan fitur yang dihitung dari seluruh data sebelum dipisah membuat data uji "kenal" data latih; pipeline menutup celah ini karena scaler hanya belajar dari data latih. Ketiga, **menyetel parameter ke skor uji** — kalau kamu mencoba 20 konfigurasi lalu memilih yang skor ujinya tertinggi, skor itu jadi terlalu optimistis; pilihlah lewat CV, dan simpan data uji untuk sekali penilaian akhir.
+
+      **Untuk kompetisi nyata**, orang biasanya pindah ke **PyTorch** atau **TensorFlow** di Google Colab: lebih kuat untuk gambar, teks, dan data besar. Tapi konsepnya sama persis — skala fitur, lapisan, aktivasi, lalu dinilai dengan data uji. Kalau MLP sklearn sudah paham, pindah ke PyTorch cuma soal sintaks. Di soal p33-2 kamu melatih MLP dengan jumlah neuron pilihanmu sendiri dan melihat akurasi ujinya bergerak — cara tercepat memahami semua istilah di pelajaran ini.
     kode: |
       import pandas as pd
       from sklearn.model_selection import train_test_split
@@ -73,7 +113,7 @@ pelajaran:
       pakai_skala = make_pipeline(StandardScaler(), MLPClassifier(hidden_layer_sizes=(8,), max_iter=300, random_state=1))
       pakai_skala.fit(X_latih, y_latih)
       print(f"Pakai StandardScaler: akurasi {pakai_skala.score(X_uji, y_uji):.2f}")
-    penjelasan: "StandardScaler = penyetara skala, wajib untuk MLP. Bukti nyata: tanpa skala 0,74 (setara baseline 0,735), dengan skala 0,80. random_state=1 supaya hasil selalu sama. Untuk kompetisi, orang lanjut ke PyTorch/TensorFlow di Colab — konsepnya sama."
+    penjelasan: "StandardScaler = penyetara skala (z-score dari bab 30), wajib untuk MLP. Bukti nyata: tanpa skala 0,74 — persis baseline 0,735 karena model menyerah ke tebakan Lancar semua; dengan skala 0,80 (300 putaran) dan 0,83 (400 putaran). max_iter = batas epoch: kurang putaran memunculkan ConvergenceWarning, kelebihan putaran berujung overfitting (jaringan (32, 32) dengan 2.000 putaran: latih 0,98, uji 0,70). random_state=1 supaya hasil selalu sama. Di 620 baris, model sederhana masih menang (CV logreg 0,797 vs MLP 0,786) — mulai sederhana, pilih lewat CV, nilai sekali di data uji. Untuk kompetisi, orang lanjut ke PyTorch/TensorFlow di Colab; konsepnya sama."
 skenario:
   - id: "s33-1"
     judul: "Baca Kode: Satu Neuron"
@@ -644,10 +684,16 @@ panduan:
     slug: pacmann
     path: Basic Machine Learning Algorithm/Gradient Descent/04 Neural Network Hyperparameters.pdf
   teori:
-  - Jaringan saraf = lapisan-lapisan kecil yang bertumpuk; tiap lapisan belajar pola, makin dalam makin rumit yang bisa ditangkap.
-  - 'Pacmann: belajar = menuruni lereng error (**gradient descent**); jumlah neuron/lapisan = **hyperparameter** — kamu yang memilih, model yang belajar.'
-  - 'Slide Rakamin 10.3 mengingatkan: setelah model jadi ada **deployment & monitoring** — model bisa menua kalau data dunia berubah.'
-  - Untuk data tabel kecil (kasus UMKM), keunggulan DL tipis — DL bersinar di gambar, teks, dan suara. Buktikan sendiri di soal p33!
+  - "Jaringan saraf adalah lapisan-lapisan kecil yang bertumpuk; tiap lapisan belajar pola, dan makin dalam makin rumit pola yang bisa ditangkap. Kekuatan utamanya: interaksi antar fitur. Kalimat seperti skor kredit buruk baru berbahaya kalau telatnya banyak tidak perlu kamu tuliskan — jaringan mempelajarinya sendiri dari data."
+  - "Satu neuron bekerja dua langkah: jumlahkan masukan berbobot lalu tambah bias (z = w·x + b), kemudian ubah lewat fungsi aktivasi. Contoh nyata: z = 5,0 − 0,6 + 0,8 − 4,5 = 0,7 dan aktivasi sigmoid 0,67, jadi model condong bilang Macet. Kuncinya konsisten: jumlah berbobot dulu, bias terakhir, baru aktivasi."
+  - Fungsi aktivasi wajib ada karena tanpa itu jaringan sedalam apa pun setara satu persamaan linear — pola berlekuk tidak mungkin terbentuk. ReLU (negatif jadi 0, positif dibiarkan) adalah default lapisan tersembunyi karena murah dan cepat; sigmoid dipakai di keluaran karena memampatkan hasil ke rentang 0 sampai 1, bahasa peluang.
+  - "Pacmann: belajar = menuruni lereng error (**gradient descent**); jumlah neuron dan lapisan = **hyperparameter** — kamu yang memilih, model yang belajar. Bobot berawal acak, lalu digeser sedikit demi sedikit ke arah yang menurunkan kesalahan. Analogi yang berguna: menuruni lembah berkabut, satu langkah kecil setiap kali."
+  - "Skala fitur wajib untuk jaringan: tanpa StandardScaler, MLP 8 neuron hanya mencapai akurasi uji 0,74 — persis baseline. Dengan scaler naik ke 0,80 (300 putaran) dan 0,83 (400 putaran). Z-score berarti (nilai − rata-rata) ÷ sebaran, sama seperti yang kamu pakai di bab 30."
+  - "Epoch (di sklearn bernama max_iter) adalah jumlah putaran belajar. Terlalu banyak membuat model menghafal: jaringan (32, 32) yang dilatih 2.000 putaran mencetak akurasi latih 0,98 tapi akurasi uji cuma 0,70. Selisih lebar antara skor latih dan skor uji adalah tanda overfitting — kecilkan jaringan atau kurangi epoch."
+  - "random_state=1 mengunci undian bobot awal supaya hasil selalu sama; ConvergenceWarning berarti pelatihan belum stabil, boleh dinaikkan max_iter. MLP tidak punya keistimewaan apa pun: dia wajib dinilai di data uji seperti model lain, bukan dari skor latih."
+  - "Ada dua jenis angka di dalam model: parameter (bobot) yang dicari mesin, dan hyperparameter (learning rate, jumlah epoch, arsitektur) yang kamu tentukan sebelum latih. Ukuran jaringan dinaikkan hanya kalau skor CV masih naik, bukan karena lebih besar terdengar lebih hebat."
+  - "Kapan DL tepat dipakai: data besar dan tidak terstruktur (gambar, teks, suara), masalah kompleks, serta penjelasan model bukan prioritas. Untuk 620 baris tabel, CV MLP 0,786 masih di bawah regresi logistik 0,797 — jadi mulai dari model sederhana dulu. Buktikan sendiri di soal p33!"
+  - "Slide Rakamin 10.3 mengingatkan: setelah model jadi ada **deployment & monitoring** — model bisa menua kalau data dunia berubah. Untuk lomba atau data besar, orang lanjut ke PyTorch atau TensorFlow di Colab; konsepnya sama, bedanya cuma sintaks."
   praktek:
   - Baca Rakamin 10.1 (Dasar-dasar) + 10.3 (Deployment) — masing-masing bagian ringkasnya saja.
   - Intip slide Pacmann Hyperparameters — catat istilah neuron, learning rate, epoch.

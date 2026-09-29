@@ -11,53 +11,91 @@ deskripsi: "Fitur = kolom masukan untuk model. Ubah kolom mentah (omzet, pinjama
 pelajaran:
   - id: "30-1"
     judul: "Dari Kolom Mentah ke Fitur Berguna"
-    menit: 5
+    menit: 9
     materi: |
-      **Fitur** = kolom yang dipakai model untuk belajar: omzet, pinjaman, telat. Kolom mentah belum tentu berguna apa adanya.
+      **Fitur** adalah kolom masukan untuk model: omzet, pinjaman, riwayat telat, skor kredit. Targetnya status pengajuan: **Lancar** atau **Macet**. Model belajar dari pasangan fitur dan target di 620 pengajuan, lalu dipakai menebak pengajuan baru. Kualitas fitur menentukan seberapa pintar model yang bisa dilatih — kalau kolomnya tumpul, model terbaik pun tidak bisa menebak dengan baik. Karena itu, alih-alih langsung melatih model, data scientist lebih dulu merakit kolomnya. Pekerjaan itu disebut **feature engineering** — dan kalau nanti kamu merasa model "bodoh" padahal datanya banyak, sering kali penyebabnya bukan modelnya, melainkan fitur yang dipakai.
 
-      Dua pengajuan:
+      **Contoh kecil: beban utang.** Dua pengajuan:
       - A: pinjaman 8,5 juta, omzet 16,6 juta → 8,5 ÷ 16,6 = **0,51**
       - B: pinjaman 16 juta, omzet 40 juta → 16 ÷ 40 = **0,40**
 
-      Pinjaman B lebih besar, tapi bebannya lebih ringan. Angka 0,51 dan 0,40 disebut **rasio** (perbandingan): dibuat dengan membagi dua kolom.
+      Pinjaman B hampir dua kali pinjaman A, tapi bebannya justru lebih ringan. Bagi manusia itu langsung terbaca; tidak begitu bagi model, yang hanya melihat dua kolom angka dan harus menyusun sendiri hubungan keduanya lewat latihan. Angka 0,51 dan 0,40 adalah **rasio**: satu kolom baru hasil pembagian dua kolom, yang menyerahkan jawabannya langsung dalam satu angka. Dengan 620 contoh, satu angka bermakna jauh lebih mudah dipakai daripada dua angka mentah.
 
-      Hitungan dari 620 data bersih: rata-rata rasio pinjaman ÷ omzet adalah **Lancar 0,59** dan **Macet 0,76**.
+      **Buktinya di data kita.** Rata-rata rasio pinjaman ÷ omzet: **Lancar 0,59** vs **Macet 0,76**. Kalau pengajuan diurutkan menurut rasio lalu dibagi 5 kelompok sama besar, rasio Macet naik rapi: **8,1% → 14,5% → 25,0% → 37,9% → 46,8%**. Bandingkan dengan kolom mentahnya: rata-rata omzet Macet 31,7 juta vs Lancar 31,3 juta — nyaris tidak memisahkan. Kolom mentahnya boleh tetap ada, tapi rasio inilah yang memberi sinyal paling jelas. Rasio ini juga punya arti bisnis yang gamblang: **beban utang** terhadap penghasilan bulanan.
 
-      Pola fitur yang sering dipakai:
-      - **Rasio**: pinjaman ÷ omzet (beban utang), pinjaman ÷ jumlah karyawan.
-      - **Satuan baru**: lama usaha 90 bulan ÷ 12 = **7,5 tahun**.
-      - **Binning** (dibuat dua tingkat): telat 0-5 → "sering" kalau telat ≥ 3.
-      - **Interaksi**: dua kolom digabung jadi satu angka baru.
+      **Keluarga fitur turunan** yang sering dipakai:
+      - **Rasio** — pinjaman ÷ omzet (beban utang), pinjaman ÷ jumlah karyawan.
+      - **Agregasi** — meringkas beberapa kolom sejenis jadi satu ringkasan: rata-rata, nilai maksimum, nilai minimum.
+      - **Satuan baru** — lama usaha 96,6 bulan ÷ 12 = **8,05 tahun**; lebih mudah dibayangkan, dan kelompok Macet (6,9 tahun) vs Lancar (8,4 tahun) jadi cepat dibandingkan.
+      - **Binning** (dibuat beberapa tingkat) — nilai telat 0-5 diringkas jadi dua tingkat: "sering telat" kalau telatnya ≥ 3.
+      - **Interaksi** — dua kolom digabung jadi satu angka baru (rasio adalah bentuk paling sederhana).
 
-      Aturan praktis: satu fitur baru harus bisa dijelaskan dalam satu kalimat. Kalau tidak bisa, jangan dibuat.
+      Tapi hati-hati: **tidak semua fitur turunan berguna**. Uji tiga rasio ke data: pinjaman ÷ omzet memberi jarak rata-rata Lancar-Macet 0,17 dengan sebaran kecil; pinjaman ÷ karyawan memberi jarak 1,88 tapi sebarannya besar; omzet ÷ karyawan hanya beda 0,02 — praktis nol informasi, meskipun kedengaran wajar sebagai "produktivitas karyawan". Fitur yang masuk akal secara bisnis tetap harus lulus uji angka.
+
+      **Binning telat, angka lengkapnya.** Telat ≥ 3 kali: 280 pengajuan, 118 Macet = **42,1%**. Telat < 3: 340 pengajuan, 46 Macet = **13,5%**. Bedanya lebih dari tiga kali lipat, dan cukup satu kolom bernilai 0/1. Sebelum dibinning, kolom telat punya enam nilai (0 sampai 5) — model harus menebak pola dari enam tingkat yang jarang-jarang; dengan satu ambang (≥ 3) polanya jauh lebih mudah ditangkap dan lebih kecil risiko hafalan. Angka pembanding lain: telat 5 kali berujung Macet 72,7%, tapi kelompoknya cuma 22 pengajuan — terlalu sedikit untuk dijadikan patokan.
+
+      **Fitur waktu: harus diuji dulu.** Kolom tanggal tidak bisa dihitung model, jadi dipecah: ambil bulan (1-12) dan tahunnya. Tapi jangan langsung dipakai — periksa dulu apakah ada pola. Di data ini rasio Macet per bulan: Maret 35,4%, Juni 13,6%, Desember 18,0% — kelihatan berbeda jauh, padahal tiap bulan hanya sekitar 50 pengajuan, jadi bisa kebetulan belaka. Per tahun: 2024 27,9% · 2025 24,1% · 2026 30,3% — tidak ada tren yang jelas. Kesimpulan: bulan/tahun berguna kalau polanya nyata; kalau tidak, cukup disimpan untuk audit data.
+
+      **Selalu ada pembanding: baseline.** Kalau model menebak "semua Lancar", ia sudah benar **73,55%** (456 dari 620). Data kita tidak seimbang — Macet hanya 26,45% (164 dari 620) — jadi akurasi tinggi bisa datang dari sekadar ikut menebak kelas mayoritas. Setiap fitur atau model baru harus mengalahkan baseline itu di data uji, bukan di data latih.
+
+      **Jebakan: kolom sampah dan "makin banyak makin baik"?** Kolom yang tidak menjelaskan apa pun bisa dihafal model: 500 kolom acak murni dengan data latih 60 baris menghasilkan akurasi latih 100% tapi akurasi uji 72,3% — di bawah baseline 73,2%. Dan menambah fitur belum tentu memperbaiki: dengan hanya 80 baris latih, 17 fitur (5 angka + hasil one-hot sektor & kota) memberi akurasi latih 85,0% tapi uji 76,1%, lebih buruk dari model 5 fitur (latih 83,8%, uji 79,1%). Jujur saja: di data latih yang lebih besar (465 baris), 17 fitur yang sama justru menaikkan akurasi uji sedikit, 78,7% → 80,0%. Jadi kesimpulannya bukan "sedikit fitur selalu lebih baik", melainkan: **tambahan fitur harus diuji di data uji, jangan dipercaya dari akurasi latih**. Aturan sehat: mulai dari sedikit fitur, tambah satu per satu sambil diuji.
+
+      Dua pertanyaan untuk setiap calon fitur: (1) apakah angkanya **sudah diketahui sebelum keputusan dibuat**? (2) apakah dia benar-benar **menjelaskan** pengajuan itu? Nomor pengajuan lolos pertanyaan pertama tapi gagal yang kedua — korelasinya dengan status cuma 0,017. Aturan praktis terakhir: satu fitur baru harus bisa kamu jelaskan dalam satu kalimat. Kalau tidak bisa, jangan dibuat.
+
+      ```python
+      df["rasio_pinjaman"] = df["pinjaman_diajukan_juta"] / df["omzet_bulanan_juta"]
+      df["telat_sering"] = (df["riwayat_telat_12m"] >= 3).astype(int)
+      print(df.groupby("status")[["rasio_pinjaman", "telat_sering"]].mean().round(2))
+      ```
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
       df["rasio_pinjaman"] = df["pinjaman_diajukan_juta"] / df["omzet_bulanan_juta"]
       print(df.groupby("status")["rasio_pinjaman"].mean().round(2).to_dict())
-    penjelasan: "Fitur baru = kolom hasil hitungan. Beban utang = pinjaman ÷ omzet (A 0,51 vs B 0,40). Di 620 data bersih: Lancar 0,59 vs Macet 0,76 — pemisahan jelas, model dapat sinyal."
+    penjelasan: "Fitur baru = kolom hasil hitungan dari kolom yang sudah ada. Beban utang = pinjaman ÷ omzet (A 0,51 vs B 0,40), dan di 620 data bersih rasio ini memisahkan jelas: Lancar 0,59 vs Macet 0,76 — kuintilnya naik rapi 8,1% → 46,8% Macet. Bandingkan dengan kolom mentahnya: omzet Macet 31,7 vs Lancar 31,3 juta, nyaris sama. Sinyal sejelas ini yang memudahkan model belajar."
   - id: "30-2"
     judul: "Ubah Kategori & Skala"
-    menit: 6
+    menit: 8
     materi: |
-      Model hanya mengerti **angka**. Kolom teks harus diubah dulu:
-      - **Peta angka (map)**: "Ya" → 1, "Tidak" → 0. Contoh: punya_npwp.
-      - **One-hot (get_dummies)**: satu kolom per kategori, isi 0/1. Untuk kategori TANPA urutan.
+      Model pada dasarnya hanya mengerti **angka**: rumusnya berisi perkalian dan penjumlahan, tidak ada tempat untuk kata seperti "Kuliner" atau "Ya". Jadi kolom teks seperti sektor, kota, dan punya_npwp harus diubah dulu menjadi angka. Setelah itu masih ada satu masalah lagi: satuan antar kolom angka tidak seragam (juta, bulan, poin). Dua pekerjaan itulah isi pelajaran ini: **encoding** dan **skala**.
 
-      Kenapa sektor tidak diberi nomor 1-6? Karena model membaca Fashion (6) seperti "enam kali Retail (1)" — padahal tidak ada artinya.
+      **Kategori jadi angka: dua cara.**
+      1. **Peta angka (map)** — cocok untuk kolom dengan dua nilai, atau kategori yang benar-benar berurutan. Contoh: punya_npwp "Ya" jadi 1, "Tidak" jadi 0 (406 Ya, 214 Tidak). Untuk kolom dua nilai, map tidak menimbulkan urutan palsu: 1 dan 0 memang cuma berarti "ada" dan "tidak ada". Contoh berurutan: telat 0-5 (5 lebih buruk dari 1) atau pendidikan SMA, S1, S2, S3.
+      2. **One-hot (get_dummies)** — satu kolom baru per kategori, isinya 0/1. Untuk kategori TANPA urutan.
 
-      **Skala** juga penting. Bandingkan dua kolom:
-      - skor_kredit: rata-rata 533, sebaran 86,9 (nilai sekitar 400-700)
-      - omzet: rata-rata 31,4 juta, sebaran 19,5 (nilai 4,5-166)
+      Kenapa sektor tidak boleh diberi nomor 1-6? Karena model membaca angka sebagai besaran: Fashion (6) akan dianggap "enam kali" Retail (1), padahal enam sektor itu setara — tidak ada yang lebih tinggi. One-hot membuat tiap sektor berdiri sendiri: 6 kolom 0/1. Bedanya juga terasa waktu membaca koefisien model: nomor 1-6 menghasilkan satu koefisien sektor yang menyesatkan, sedangkan one-hot memberi tiap sektor koefisiennya sendiri. Urutan abjad atau "kesepakatan tim" juga tidak menyelamatkan: urutan yang dikarang tetap dikarang. Satu pengecualian yang sering membingungkan: kolom yang sudah berurutan secara alami (telat 0-5) justru lebih baik dibiarkan satu kolom angka, bukan dipecah one-hot. Aturan praktis: map untuk 2 nilai atau yang berurutan; selain itu one-hot.
 
-      Selisih 1 poin skor dan selisih 1 juta omzet itu beda jauh. Cara menyeragamkan (z-score): **z = (nilai - rata-rata) ÷ sebaran**. Contoh omzet 16,6: (16,6 - 31,4) ÷ 19,5 = **-0,76**. Artinya 0,76 sebaran di bawah rata-rata.
+      Perhatikan konsekuensinya: sektor (6 kategori) + kota (6 kategori) berubah jadi 12 kolom baru. Jumlah kolom bisa meledak, dan itu mengubah keseimbangan data — alasan lain kenapa "tambah fitur harus diuji" juga berlaku untuk hasil one-hot.
+
+      **Kenapa skala beda-beda jadi masalah.** Bandingkan dua kolom:
+      - omzet_bulanan_juta: rata-rata 31,4 · sebaran 19,5 (nilai 4,5-166,3)
+      - lama_usaha_bulan: rata-rata 96,6 · sebaran 51,4 (nilai 6-179)
+
+      Satuan "1 juta" dan "1 bulan" tidak sebanding. Bagi model yang menghitung jarak antar baris atau garis pemisah, kolom berangka besar bisa "bersuara lebih keras" hanya karena satuannya — bukan karena lebih penting. Cara menyeragamkan: **z-score**, z = (nilai - rata-rata) ÷ sebaran. Contoh omzet 16,6: (16,6 - 31,4) ÷ 19,5 = **-0,76**, artinya 0,76 sebaran di bawah rata-rata. Hasil z-score selalu punya rata-rata 0 dan sebaran 1, sehingga tiap nilai dibaca sebagai "jarak dari rata-rata dalam satuan sebaran": angka -0,76 dan +2,0 dari kolom mana pun bisa dibandingkan. (Ada juga normalisasi min-max ke rentang 0-1; tujuannya sama, menyeragamkan skala.) Contoh nyata kenapa perlu: satu langkah omzet (sebaran 19,5 juta) dan satu langkah lama usaha (sebaran 51,4 bulan) jelas bukan peristiwa yang sama besar; z-score membuat keduanya dihitung dengan ukuran langkahnya masing-masing.
+
+      **Kapan standardisasi tidak perlu.** Model berbasis pohon (decision tree, random forest) memilih pemisah dengan membandingkan urutan nilai, jadi mengganti skala hampir tidak mengubah hasilnya — untuk model itu standardisasi biasanya tidak wajib. Model yang memakai jarak atau garis lurus (misalnya KNN dan regresi logistik) yang lebih membutuhkannya. Karena hanya urutan nilai yang dipakai, pohon juga lebih tahan terhadap nilai ekstrem (pencilan). Kalau ragu, seragamkan saja; aman untuk hampir semua model.
+
+      **Koefisien model: jangan dibaca mentah.** Model memberi koefisien per satu satuan fitur: omzet +0,0762 · lama +0,0095 · pinjaman -0,1041 · telat -0,5547 · skor +0,0034. Terlihat seolah "skor kredit hampir tidak penting" — koefisiennya cuma 0,0034. Tapi itu untuk kenaikan 1 poin skor, dan satu langkah wajar skor adalah 86,9 poin. Kalikan koefisien dengan sebaran masing-masing fitur: omzet +1,49 · pinjaman -1,56 · telat -0,80 · lama +0,49 · skor +0,30. Sekarang perbandingannya adil: telat -0,80 dampaknya lebih besar dari lama +0,49 maupun skor +0,30, dan skor kredit ternyata jauh dari "nol". Kalau semua fitur di-z-score lebih dulu, koefisiennya bisa dibandingkan apa adanya. Cara cepat: koefisien × sebaran = dampak satu "langkah wajar" naik atau turun.
+
+      **Jebakan umum.**
+      - **Kolom kembar / dummy trap.** One-hot 6 kolom untuk 6 sektor menyimpan kelebihan: kalau lima kolom bernilai 0, sudah pasti kolom keenam isinya 1 — satu kolom bisa disimpulkan dari sisanya. Informasi dobel juga muncul dari fitur yang berkorelasi kuat (telat vs skor: -0,77). Model tetap jalan, tapi tafsir koefisiennya jadi kabur; sebagian orang membuang satu kolom dummy (drop_first) untuk merapikan. Aturan amannya: satu kolom menyimpan satu informasi.
+      - **Menyamakan skala sebelum eksplorasi.** Kalau omzet langsung diubah ke z-score, kamu kehilangan satuan aslinya: "nasabah ini -0,76" tidak sejelas "omzetnya 16,6 juta". Eksplorasi dulu di satuan asli (bab EDA), transformasi belakangan — dan hitung rata-rata serta sebarannya dari data latih saja, lalu pakai angka itu untuk data uji.
+
+      Ringkasnya: kategori jadi angka lewat map (2 nilai / berurutan) atau one-hot (tanpa urutan); kolom angka diseragamkan skalanya kalau modelnya butuh; koefisien dibaca setelah dikalikan sebaran fiturnya.
+
+      ```python
+      df["npwp_num"] = df["punya_npwp"].map({"Ya": 1, "Tidak": 0})
+      sektor_oh = pd.get_dummies(df["sektor"])          # 6 kolom 0/1
+      df["omzet_z"] = (df["omzet_bulanan_juta"] - df["omzet_bulanan_juta"].mean()) / df["omzet_bulanan_juta"].std()
+      print(sektor_oh.shape)                            # (620, 6)
+      ```
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
       df["npwp_num"] = df["punya_npwp"].map({"Ya": 1, "Tidak": 0})
       print(f"npwp_num = 1: {df['npwp_num'].sum()} dari {len(df)} pengajuan")
       print(df["sektor"].value_counts().to_dict())
-    penjelasan: "Teks jadi angka: map untuk ya/tidak (406 Ya, 214 Tidak), get_dummies untuk kategori tanpa urutan (6 sektor jadi 6 kolom 0/1). Skala: z = (x - rata-rata) ÷ sebaran, contoh omzet 16,6 jadi -0,76."
+    penjelasan: "Teks jadi angka: map untuk ya/tidak (406 Ya, 214 Tidak), get_dummies untuk kategori tanpa urutan (6 sektor jadi 6 kolom 0/1). Skala: z = (nilai - rata-rata) ÷ sebaran — omzet 16,6 jadi -0,76, artinya 0,76 sebaran di bawah rata-rata. Koefisien model baru bisa dibandingkan adil setelah dikalikan sebaran fiturnya."
 skenario:
   - id: "s30-1"
     judul: "Rasio atau Kolom Mentah?"
@@ -619,10 +657,15 @@ panduan:
     slug: pacmann
     path: Basic Machine Learning Algorithm/Variable Selection/08 Ridge-Lasso Comparison.pdf
   teori:
-  - 'Dua syarat fitur: **sudah ada sebelum keputusan dibuat** dan benar-benar menjelaskan barisnya. Nomor urut/tanggal/id = jebakan klasik.'
-  - 'Fitur turunan sering paling berguna: rasio (pinjaman ÷ omzet), frekuensi, selisih tanggal — lihat daftar di slide Rakamin 07.1.'
-  - Fitur yang saling berkorelasi membawa informasi dobel — Pacmann menunjukkan **Ridge** menyusutkan koefisien lemah dan **Lasso** bisa menghapusnya total.
-  - 'Tambah fitur selalu diuji: bikin model baru → bandingkan di data validasi, jangan dikira-kira.'
+  - "**Fitur** adalah kolom masukan untuk model; kualitasnya menentukan seberapa pintar model yang bisa dilatih. Dua syarat sebelum sebuah kolom dipakai: sudah diketahui sebelum keputusan dibuat, dan benar-benar menjelaskan barisnya. Nomor urut, id, dan kolom bocor adalah jebakan klasik — akurasi bagus di data latih tidak menyelamatkannya."
+  - "Fitur turunan sering paling berguna: rasio (pinjaman ÷ omzet — Lancar 0,59 vs Macet 0,76), satuan baru (bulan jadi tahun), binning, dan pecahan tanggal. Slide Rakamin 07.1 memuat daftar contohnya. Tapi setiap kandidat harus lulus uji angka: omzet ÷ karyawan yang kedengaran wajar ternyata nyaris nol informasi."
+  - "Binning menyederhanakan kolom bernilai banyak: telat 0-5 dijadikan dua tingkat, dan bedanya langsung terlihat — Macet 42,1% (telat ≥ 3) vs 13,5% (telat < 3). Fitur waktu (bulan, tahun) harus diuji dulu: Maret 35,4% vs Juni 13,6% kelihatan besar, tapi tiap bulan hanya sekitar 50 pengajuan, jadi bisa kebetulan."
+  - "Selalu bandingkan dengan **baseline**: menebak \"semua Lancar\" saja sudah 73,55% benar, jadi akurasi 74% belum berarti apa-apa. Tambahan fitur dinilai di data uji, bukan data latih — dan 'lebih banyak fitur' belum tentu lebih baik: 17 fitur dengan 80 baris latih memberi uji 76,1% vs 5 fitur 79,1%."
+  - "Kategori harus jadi angka: **map** untuk kolom dua nilai (Ya/Tidak) atau yang benar-benar berurutan (telat 0-5), dan **one-hot** untuk kategori tanpa urutan (sektor, kota). Memberi nomor 1-6 pada sektor membuat model menganggap ada urutan yang tidak nyata."
+  - "Skala antar kolom berbeda-beda (omzet: sebaran 19,5; lama usaha: 51,4) sehingga model bisa berat sebelah. **z-score** = (nilai - rata-rata) ÷ sebaran menyeragamkannya — omzet 16,6 menjadi -0,76. Model berbasis pohon biasanya tidak peduli skala; model yang memakai jarak atau garis pemisah yang lebih butuh."
+  - "Koefisien model berlaku per satu satuan fiturnya, jadi jangan dibandingkan mentah: kalikan dengan sebaran lebih dulu — telat -0,80 vs skor +0,30. Setelah itu baru adil, dan skor kredit ternyata bukan \"hampir nol\". Kalau semua fitur di-z-score, koefisiennya bisa dibaca langsung."
+  - "Fitur yang saling berkorelasi membawa informasi dobel — Pacmann menunjukkan **Ridge** menyusutkan koefisien lemah dan **Lasso** bisa menghapusnya total. Redundansi serupa muncul di one-hot: satu kolom bisa disimpulkan dari kolom-kolom sisanya (dummy trap)."
+  - "Jebakan urutan kerja: jangan menyamakan skala sebelum eksplorasi — satuan asli hilang dan \"omzet 16,6 juta\" berubah jadi \"-0,76\" yang lebih sulit ditafsirkan. Eksplor dulu, transformasi belakangan, dan hitung parameternya dari data latih saja. Tambah fitur selalu diuji: bikin model baru, bandingkan di data uji, jangan dikira-kira."
   praktek:
   - Baca slide Rakamin 07.1 — perhatikan contoh fitur turunan.
   - Intip slide Pacmann tentang Ridge/Lasso (cukup bagian intuisi & kesimpulannya).

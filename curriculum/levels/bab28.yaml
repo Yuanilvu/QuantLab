@@ -10,19 +10,46 @@ deskripsi: "Data nyata selalu kotor: sel kosong, baris kembar, angka mustahil, f
 pelajaran:
   - id: "28-1"
     judul: "Kenali Data Kotor"
-    menit: 5
+    menit: 8
     materi: |
-      Data kompetisi hampir selalu kotor. Lima jenis kotoran yang paling sering muncul:
+      Data nyata hampir selalu kotor. Bukan karena ada yang ceroboh, tapi karena data diketik manusia dari banyak cabang dengan kebiasaan berbeda. Bayangkan alurnya: tiap cabang mengisi form yang sama, tapi ada yang melengkapi semua kolom dan ada yang melewati kolom opsional. Sistem lama juga ikut menyumbang kotoran — ia mengekspor tanggal dengan format sendiri, dan file pernah diimpor dua kali. Kotor itu normal; tugasmu bukan menghakimi data, tapi mengenali kotorannya lebih dulu.
 
-      - **Nilai kosong** (missing): sel yang tidak diisi.
-      - **Baris kembar** (duplikat): satu pengajuan tercatat dua kali.
-      - **Nilai ekstrem** (outlier): angka kelewat besar atau mustahil, mis. omzet 9.000 juta atau -50 juta.
-      - **Format campur**: tanggal ditulis tiga cara berbeda.
-      - **Kategori tidak konsisten**: "Jakarta", "jakarta", dan "JKT" — satu kota, tiga nama.
+      Contoh nyatanya ada di `/soaldata/kredit_umkm.csv`: 636 pengajuan kredit UMKM dengan 12 kolom, jadi totalnya 7.632 sel. Dari jumlah itu, 295 sel kosong dan 16 baris kembar. Ada juga versi bersihnya, `/soaldata/kredit_umkm_bersih.csv` (620 baris, 0 sel kosong, 0 kembar). Porsi sel kosongnya 3,9% — terlihat kecil, tapi tersebar dan cukup untuk memelintir laporan. Simpan file bersih itu sebagai pembanding hasil kerjamu nanti.
 
-      File `/soaldata/kredit_umkm.csv` = data pengajuan kredit UMKM yang belum dibersihkan: 636 baris, 295 sel kosong, 16 baris kembar.
+      Kenali lima jenis kotoran yang paling sering muncul di data nyata:
 
-      Cara memeriksa: `df.isna().sum()` menghitung sel kosong tiap kolom. `df.duplicated().sum()` menghitung baris kembar. Langkah pertama setiap proyek data: ukur dulu kotornya, baru bersihkan.
+      **1. Nilai kosong (missing).** Sel yang tidak diisi sama sekali. Nasabah belum membawa catatan omzet, atau petugas melewati kolom yang tidak wajib. Di file ini, kolom `omzet_bulanan_juta` kosong di 53 sel, `skor_kredit` di 50 sel, dan `lama_usaha_bulan` di 44 sel. Totalnya, 236 baris (37%) punya minimal satu sel kosong — hampir 4 dari 10 pengajuan belum lengkap. Sebaliknya, `id_pengajuan` dan `tanggal_pengajuan` tidak pernah kosong — tidak semua kolom bocor. Cara deteksi: `df.isna().sum()` menghitung sel kosong tiap kolom, lalu `.sort_values(ascending=False)` menaruh kolom paling bocor di urutan atas.
+
+      **2. Baris kembar (duplikat).** Satu pengajuan tercatat dua kali, biasanya karena file diimpor ulang. Contohnya, baris K-0071 muncul dua kali dengan isi yang identik. Di proyek nyata, kembar sering muncul setelah dua file digabung — satu pengajuan masuk dari dua sumber. Bahayanya halus: satu nasabah dihitung dua kali, persentase macet dan rata-rata jadi miring. Cara deteksi: `df.duplicated().sum()` menghasilkan 16. Bandingkan juga `len(df)` (636 baris) dengan `len(df.drop_duplicates())` (620 baris) — selisihnya baris kembar.
+
+      **3. Nilai ekstrem (outlier).** Angka yang kelewat besar atau mustahil. Di file ini ada omzet 9.000 juta — 337 kali nilai tengah (median) 26,7 juta — dan omzet -50 juta, padahal omzet tidak mungkin negatif. Dua nilai itu menarik rata-rata (mean) naik ke 46,5 juta, padahal separuh nasabah beromzet di bawah 26,7 juta. Cara deteksi: `df["omzet_bulanan_juta"].describe()`, lalu bandingkan mean dan median. Selisih yang lebar adalah tanda ada nilai ekstrem.
+
+      **4. Format tanggal campur.** Satu kolom ditulis dengan tiga cara: `2025-01-14` (369 baris), `14/01/2025` (169 baris), dan `Jan 14, 2025` (98 baris). Komputer membaca tanggal sebagai teks, jadi urutan dan selisih hari ikut kacau. Ada jebakan tambahan: 59 tanggal `dd/mm` berhari ≤12 (mis. `02/12/2025`) bisa saja terbaca sebagai 2 Desember atau 12 Februari. Cara deteksi: lihat sampel dengan `df["tanggal_pengajuan"].head()`, lalu pisahkan pola tiap format. Langkah lengkapnya kamu latih di skenario bab ini.
+
+      **5. Kategori tidak konsisten.** Satu kota, banyak tulisan. Jakarta muncul sebagai `Jakarta` (90 baris), `' Jakarta '` (27 baris, ada spasi), `JKT` (25 baris), `jakarta` (19 baris), dan `jkt` (18 baris) — total 179 baris. Komputer membandingkan huruf per huruf, jadi lima tulisan itu dianggap lima kota berbeda. Padahal seluruh file hanya berisi 6 kota; tulisan uniknya 21. Cara deteksi: `df["kota"].value_counts()` menampilkan hitungan tiap tulisan, dan `df["kota"].nunique()` menghitung jumlah tulisan unik.
+
+      Tingkat bahaya kelimanya berbeda-beda. Nilai kosong dan baris kembar paling sering muncul, tapi paling kelihatan. Format tanggal dan kategori tidak konsisten justru paling licin: data tampak rapi, padahal urutan tanggal bisa salah dan satu kota terpecah jadi lima. Karena itu kamu perlu memeriksa semua jenis, bukan cuma yang pertama kelihatan.
+
+      Merangkum deteksinya dalam satu skrip:
+
+      ```python
+      import pandas as pd
+
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+
+      sel_kosong = df.isna().sum().sort_values(ascending=False)
+      print(f"Total sel kosong: {sel_kosong.sum()}")
+      print(f"Kolom paling bocor: {sel_kosong.index[0]} dengan {sel_kosong.iloc[0]} sel kosong")
+      print(f"Baris kembar: {df.duplicated().sum()}")
+      ```
+
+      Skrip itu mencetak 295 sel kosong, kolom terparah `omzet_bulanan_juta` (53 sel), dan 16 baris kembar. Perhatikan: ketiga angka itu kamu dapat sebelum menyentuh satu sel pun.
+
+      **Prinsip nomor satu: ukur dulu, baru bersihkan.** Sebelum mengubah apa pun, hitung dulu kotornya. Setiap langkah bersih-bersih sebaiknya berpola: hitung sebelum, kerjakan, hitung sesudah. Tanpa pola itu, kamu tidak akan tahu apakah datamu benar-benar membaik. Satu langkah, satu catatan angka.
+
+      **Jebakan: jangan langsung hapus.** `df.dropna()` membuang semua baris yang punya sel kosong — di file ini 236 baris (37% data) melayang percuma. `drop_duplicates()` yang dijalankan tanpa mencatat angkanya membuat 16 baris hilang diam-diam. Kehilangan data seperti ini baru terasa belakangan: laporan salah, tanpa jejak penyebabnya. Bersihkan yang masih bisa diperbaiki; buang hanya yang benar-benar tak terselamatkan.
+
+      Ingat juga mengapa ini penting: angka dari data inilah yang dipakai menilai pengajuan kredit. Satu nilai dari 636 baris saja sudah cukup memutar rata-rata omzet. Di pelajaran berikutnya, lima kotoran ini kita bersihkan satu per satu — dengan urutan yang aman. Setelah itu, di skenario, kamu sendiri yang memutuskan langkah mana yang dipakai.
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm.csv")
@@ -31,25 +58,54 @@ pelajaran:
     penjelasan: "`isna()` menandai sel kosong, `.sum()` menjumlahkannya per kolom — kelihatan kolom mana yang paling bocor. `duplicated()` menandai baris kembar dan `.sum()` menghitungnya: 16 baris. Urutkan dari terbesar supaya tahu mulai dari kolom mana."
   - id: "28-2"
     judul: "Bersihin Langkah demi Langkah"
-    menit: 6
+    menit: 8
     materi: |
-      Urutan bersih-bersih yang aman:
+      Sekarang saatnya membersihkan — langkah demi langkah. Kuncinya bukan cuma tahu perintahnya, tapi tahu urutannya dan alasannya. Urutan yang aman: buang kembar dulu, paksa tipe angka, isi yang kosong dengan median, rapikan teks, satukan singkatan, baru potong nilai mustahil. Di sela-sela langkah, cetak jumlah baris dan sel kosong — biar tidak ada perubahan yang lolos tanpa kamu sadari.
+
+      **1. Buang baris kembar paling awal.** `df.drop_duplicates()` membuang baris yang seluruh isinya sama: 636 menjadi 620 baris. Kenapa ditaruh paling awal? Karena semua hitungan untuk langkah berikutnya harus berasal dari data yang sudah bersih. Buktinya dari angka: median omzet 26,7 (masih ada 16 kembar) vs 26,8 sesudah dedupe. Median itu yang kamu pakai untuk mengisi sel kosong di langkah 3 — kalau data masih berisi kembar, selisihnya menular ke semua isian. Dedupe juga paling murah: satu perintah, sekali jalan, beres.
+
+      **2. Paksa kolom angka jadi tipe angka (`to_numeric` + `errors="coerce"`).** Hasil ekspor sistem sering mencampur angka dengan teks, sehingga sel berisi hal seperti `"26,7"` atau tanda lain. `pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")` memaksa tiap sel jadi angka; sel yang gagal diubah menjadi kosong dan kode tetap berjalan. Kewajibanmu sesudahnya: cetak berapa sel yang jadi kosong. Di file ini 53 sel kosong sebelum konversi dan tetap 53 sesudahnya — tidak ada data yang hilang diam-diam. Kalau angkanya bertambah, berarti ada sel rusak yang harus kamu periksa dulu sebelum diisi.
+
+      **3. Isi sel kosong dengan median.** Isi 53 sel omzet yang kosong dengan median kolom: 26,8 juta. Kenapa median, bukan mean? Karena mean file ini 46,5 juta — tertarik oleh satu omzet 9.000 juta. Median adalah nilai tengah setelah data diurutkan, jadi kebal terhadap nilai ekstrem, dan memang separuh nasabah beromzet di bawah 26,8 juta. Kalau diisi dengan mean, 53 sel isian sekaligus ketularan pengaruh outlier. Aturan praktisnya: kolom dengan nilai ekstrem diisi median.
+
+      **4. Rapikan teks dengan `str.strip().str.lower()`.** Kolom kota punya spasi berlebih di 92 baris dan campuran huruf besar-kecil. `.str.strip()` membuang spasi di depan-belakang; `.str.lower()` menyeragamkan huruf. Contohnya `' Jakarta '` (27 baris) dan `jakarta` (19 baris) akhirnya ikut terhitung sebagai Jakarta. Tulisan unik kota turun dari 21 ke 13. Tanpa langkah ini, `'Jakarta '` dan `'Jakarta'` tetap dianggap dua kota berbeda.
+
+      **5. Satukan singkatan dengan `replace`.** `df["kota"].replace({"jkt": "jakarta"})` mengubah semua `jkt` menjadi `jakarta`: 43 baris ikut bergabung (JKT 25 baris yang sudah jadi `jkt` lewat lower, plus `jkt` 18 baris). Jakarta pun berjumlah 179 baris — tadinya tercerai jadi lima tulisan. Pola yang sama dipakai untuk singkatan lain: SBY, BDG, MDN, YOG, MKS. Sesudah replace, cek lagi `df["kota"].nunique()`: penulisan yang tersisa harus makin sedikit. Jangan pakai `.map()` untuk ini: map mengubah nilai yang tidak ada di dict menjadi kosong, jadi kota lain bisa terhapus. `replace` mempertahankan nilai lain, jadi aman.
+
+      **6. Potong nilai di luar batas wajar dengan `clip`.** `df["lama_usaha_bulan"].clip(upper=300)` memotong nilai di atas 300 bulan menjadi 300. Di file ini ada satu baris berisi 999 bulan — lebih dari 80 tahun, jelas mustahil. Batas wajar ditentukan dari konteks bisnis: usaha berumur 25 tahun itu masuk akal, 83 tahun tidak. Nilai yang mustahil total (omzet -50 juta) jangan dipotong jadi 0: jadikan kosong dulu, lalu isi median. Omzet 9.000 juta dipotong atau ditandai sampai batas wajar (mis. 200 juta). Barisnya tetap dipakai, karena informasi kota, sektor, dan skornya masih lengkap.
+
+      Kalau urutannya dibalik, hasilnya meleset halus. Isi sel kosong sebelum dedupe? Isianmu memakai median 26,7 dari data yang masih berisi kembar. Angka dipaksa jadi angka setelah diisi? Sel rusak terlanjur ikut diisi. Dedupe di paling akhir tidak fatal, tapi semua ringkasan sementara terlanjur miring. Itulah kenapa urutan ini disebut urutan aman.
+
+      Rangkaian utuhnya seperti ini:
 
       ```python
-      df = df.drop_duplicates()                                 # 1. buang baris kembar
-      angka = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")   # 2. paksa jadi angka
-      df["omzet_bulanan_juta"] = angka.fillna(angka.median())    # 3. isi kosong dengan median
-      df["kota"] = df["kota"].str.strip().str.lower()            # 4. rapikan teks
-      df["kota"] = df["kota"].replace({"jkt": "jakarta"})        # 5. satukan singkatan
+      import pandas as pd
+
+      df = pd.read_csv("/soaldata/kredit_umkm.csv")
+
+      df = df.drop_duplicates()
+      omzet = pd.to_numeric(df["omzet_bulanan_juta"], errors="coerce")
+      df["omzet_bulanan_juta"] = omzet.fillna(omzet.median())
+      df["kota"] = df["kota"].str.strip().str.lower()
+      df["kota"] = df["kota"].replace({"jkt": "jakarta"})
+      df["lama_usaha_bulan"] = df["lama_usaha_bulan"].clip(upper=300)
+      print(f"Setelah dibersihkan: {len(df)} baris")
       ```
 
-      **`errors="coerce"`** = sel yang gagal jadi angka diubah jadi kosong, kode tidak mati. Setelah itu wajib cetak berapa sel yang jadi kosong — jangan kehilangan data diam-diam.
+      **Cek hasil di akhir.** Setelah membersihkan, pastikan tiga angka ini: 620 baris, 0 sel kosong, 0 baris kembar. Tiga cek yang sama bisa kamu jalankan pada file bersih untuk melihat bentuk hasil jadi:
 
-      **`fillna(median)`** = isi sel kosong dengan nilai tengah. Median tidak tertarik nilai ekstrem: mean omzet 46,5 juta, median 26,7 juta — jauh berbeda gara-gara satu outlier 9.000 juta.
+      ```python
+      import pandas as pd
 
-      **`clip(upper=...)`** memotong nilai di luar batas wajar, mis. `df["lama_usaha_bulan"].clip(upper=300)`.
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      print(f"Baris: {len(df)}")
+      print(f"Sel kosong: {df.isna().sum().sum()}")
+      print(f"Baris kembar: {df.duplicated().sum()}")
+      ```
 
-      Dedupe dulu, baru hitung statistik: median omzet 26,7 (masih ada kembar) vs 26,8 (sesudah bersih).
+      Skrip itu mencetak 620, 0, dan 0 — persis angka yang kamu targetkan. Bandingkan hasil bersih-bersihmu dengan `/soaldata/kredit_umkm_bersih.csv`; file itu kunci jawabannya. Nanti di skenario, kamu juga berlatih menilai: kolom dengan sedikit sel kosong (mis. 3,5%) masih aman diisi, tapi kolom yang kosongnya mayoritas (61%) lebih jujur dibuang daripada dikarang isinya.
+
+      Terakhir, lihat dampaknya pada angka. Rata-rata omzet di data kotor 46,5 juta, sementara mediannya 26,7 juta — selisihnya lebar. Di file bersih, rata-rata 31,4 juta dan median 26,8 juta: kedua angka jauh lebih dekat. Itulah wajah data yang sudah rapi — dan keputusan kredit yang dibangun di atasnya jauh lebih bisa dipercaya.
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm.csv")
@@ -680,10 +736,16 @@ panduan:
     slug: rakamin
     path: 07 - Machine Learning Preparation/3 - Data Pre-processing.pdf
   teori:
-  - 'Urutan aman: **ukur dulu** (`isna()`, `duplicated()`, `describe()`), baru perbaiki bertahap — bukan langsung hapus baris.'
-  - 'Alur bersih-bersih: buang kembar → paksa tipe angka (`errors="coerce"`) → isi kosong dengan **median** (tahan outlier) → seragamkan teks → potong nilai mustahil.'
-  - Median bisa jauh beda dari mean gara-gara satu nilai ekstrem — bukti dari slide Rakamin (46,5 vs 26,7).
-  - Slide 07.3 melanjutkan ke encoding kategori, transformasi fitur, dan class imbalance (over/under-sampling) — bahan bab-bab berikutnya.
+  - "Data nyata selalu kotor: diketik manusia dari banyak cabang, sebagian kolom opsional, dan sistem lama mengekspor dengan format sendiri. Karena itu kotor bukan tanda kegagalan — kenali dulu polanya sebelum menghapus apa pun."
+  - "Ukur dulu sebelum bersihkan: `df.isna().sum()` menghitung sel kosong per kolom, `df.duplicated().sum()` menghitung baris kembar, dan `df.describe()` memunculkan nilai ekstrem. Setiap langkah bersih-bersih sebaiknya berpola: hitung sebelum, kerjakan, hitung sesudah."
+  - "Lima kotoran bab ini: nilai kosong (295 sel dari 7.632), baris kembar (16), nilai ekstrem (omzet 9.000 juta dan -50 juta), tanggal tiga format, serta kategori tidak konsisten (Jakarta lima tulisan, total 179 baris). Semuanya sekadar tidak seragam — tugasmu menyeragamkannya, bukan menghukum datanya."
+  - "Urutan aman: buang kembar → paksa angka (`errors=\"coerce\"`) → isi kosong dengan median → rapikan teks (strip + lower) → satukan singkatan (`replace`) → potong nilai mustahil (`clip`). Dedupe selalu paling awal, karena semua angka isian harus dihitung dari data yang sudah bersih."
+  - "`errors=\"coerce\"` mengubah sel yang gagal jadi angka menjadi kosong tanpa menghentikan kode. Wajib cetak jumlah kosong sesudah konversi: di file ini 53 sebelum = 53 sesudah; kalau bertambah, ada sel rusak yang perlu diperiksa."
+  - "Median mengisi sel kosong karena tahan nilai ekstrem: mean omzet 46,5 juta tertarik omzet 9.000 juta, sedangkan median 26,7 juta (26,8 sesudah dedupe) tetap mewakili nasabah tipikal. Isi dengan mean berarti menularkan pengaruh outlier ke semua sel isian."
+  - "Satukan kategori dengan `replace(dict)`, bukan `map(dict)`: map mengubah nilai di luar dict menjadi kosong sehingga kota lain bisa terhapus. Gejalanya khas — jumlah penulisan unik kolaps, dan hanya ketahuan dengan menguji hasilnya."
+  - "`clip` memotong nilai di luar batas wajar (lama usaha 999 bulan dipotong ke 300). Nilai mustahil seperti omzet -50 juta tidak dipotong jadi 0, tapi dijadikan kosong lalu diisi median; barisnya tetap dipakai selama info lain lengkap."
+  - "Ukuran keberhasilan: 620 baris, 0 sel kosong, 0 baris kembar — cocokkan dengan `kredit_umkm_bersih.csv`. Sel kosong sedikit (3,5%) masih aman diisi, tapi kalau kosongnya mayoritas (61%) lebih jujur kolomnya dibuang atau dicari sumber datanya."
+  - Slide Rakamin 07.3 melanjutkan dari sini ke encoding kategori dan transformasi fitur. Setelah itu ada class imbalance (over/under-sampling) yang dibahas di bab-bab berikutnya.
   praktek:
   - Tonton 2 video Pacmann di atas (±10 menit) — perhatikan urutan langkahnya.
   - Baca bagian “Handling Missing / Duplicated Data” di slide Rakamin 07.3.

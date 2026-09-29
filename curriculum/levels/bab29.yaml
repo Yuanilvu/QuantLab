@@ -10,49 +10,175 @@ deskripsi: "Sebelum model, kenalan dulu sama datanya: ringkasan angka, sebaran n
 pelajaran:
   - id: "29-1"
     judul: "Ringkasan & Distribusi"
-    menit: 5
+    menit: 9
     materi: |
-      Sebelum menghitung apa pun, kenali datamu. Tiga alat utama:
+      Sebelum model apa pun dibuat, kamu perlu kenalan dulu dengan datanya. Pekerjaan ini disebut **EDA** (Exploratory Data Analysis) — menjelajah data sebelum mengolahnya. Bayangkan 620 baris pengajuan kredit UMKM di depanmu: mustahil dibaca satu per satu. EDA meringkasnya jadi beberapa angka dan pola, supaya kamu tahu di mana masalahnya dan apa yang harus dibereskan.
 
-      1. **`describe()`** — ringkasan satu kolom angka: count, mean, std, min, 25%, 50%, 75%, max.
-      2. **Kuartil** — 25% berarti seperempat data di bawahnya; 50% = median (nilai tengah); 75% = tiga perempat di bawahnya.
-      3. **`value_counts()`** — jumlah kemunculan tiap nilai pada kolom kategori (kota, sektor, status).
+      Panduan Rakamin menyebut EDA menjawab tiga hal: bagaimana sebaran nilainya, apakah kolom-kolommu cukup berguna untuk memprediksi target, dan persiapan apa yang dibutuhkan sebelum masuk model. Anggap EDA seperti check-up dokter: memeriksa dan mencatat temuan, bukan langsung mengoperasi.
 
-      Contoh dari data bersih (620 baris): omzet min 4,5 · Q1 18,2 · median 26,8 · Q3 40,1 · max 166,3 juta. Jadi separuh nasabah beromzet antara 18,2 dan 40,1 juta.
+      **Dua jenis kolom, dua alat**
 
-      **Mean** (rata-rata) omzet 31,4 juta; **median** 26,8 juta. Beda 4,6 juta itu petunjuk ada beberapa nilai besar di ekor kanan.
+      Langkah pertama: kenali jenis tiap kolom.
 
-      Pekerjaan ini disebut **EDA** (Exploratory Data Analysis) = menjelajah data sebelum mengolahnya.
+      - **Kolom angka** (numerik): berisi bilangan yang bisa dihitung — `omzet_bulanan_juta`, `skor_kredit`, `lama_usaha_bulan`.
+      - **Kolom kategori** (teks): berisi label yang diulang-ulang — `kota`, `sektor`, `status`.
+
+      Kolom angka diringkas dengan `describe()`. Kolom kategori dihitung dengan `value_counts()`. Memakai alat yang salah bikin bingung: "rata-rata kota" tidak ada artinya. Perhatikan juga: `describe()` secara default hanya menyentuh kolom angka — kolom teks dilewati.
+
+      **`describe()`: delapan angka ringkasan**
+
+      ```python
+      omzet = df["omzet_bulanan_juta"]
+      print(omzet.describe().round(1))
+      ```
+
+      Untuk kolom omzet, hasilnya: count 620 · mean 31,4 · std 19,5 · min 4,5 · 25% 18,2 · 50% 26,8 · 75% 40,1 · max 166,3. Ini arti tiap baris:
+
+      - **count 620** — banyak data yang terisi. Kalau angkanya kurang dari jumlah baris, berarti ada sel kosong.
+      - **mean 31,4** — rata-rata: semua nilai dijumlahkan, lalu dibagi count.
+      - **std 19,5** — ukuran sebaran: besar-kecilnya jarak nilai dari rata-ratanya. Angka 19,5 juta itu lebar dibanding rata-ratanya sendiri (31,4 juta) — omzet nasabah memang beragam.
+      - **min 4,5** — nilai terkecil. Cek kewajarannya: min/max yang mustahil itu tanda salah input.
+      - **25% · 50% · 75%** — kuartil, yaitu batas seperempat, setengah, dan tiga perempat data (di bawah).
+      - **max 166,3** — nilai terbesar.
+
+      **Kuartil & median: pakai analogi antrean**
+
+      Urutkan 620 nasabah dari omzet terkecil ke terbesar — seperti antrean panjang. Lalu potong antrean itu jadi empat bagian sama banyak:
+
+      - **Q1 = 18,2 juta** (baris 25%): seperempat nasabah beromzet di bawah angka ini, yaitu 155 orang.
+      - **Median = Q2 = 26,8 juta** (baris 50%): orang tepat di tengah antrean. Setengah nasabah (310 orang) di bawahnya, setengah di atas.
+      - **Q3 = 40,1 juta** (baris 75%): tiga perempat nasabah (465 orang) di bawahnya.
+
+      Dari sini muncul kebiasaan membaca yang penting: rentang Q1 sampai Q3, yaitu 18,2 hingga 40,1 juta, memuat separuh nasabah (310 orang). Inilah "kotak tengah" data — tempat mayoritas nilai berada.
+
+      Kok tidak pakai min dan max saja? Karena keduanya gampang diwarnai satu-dua nilai ekstrem. Kuartil lebih stabil: Q1 dan Q3 menggambarkan di mana "kebanyakan" nasabah berada. Saat membandingkan kelompok di pelajaran berikutnya, kuartil per kelompok jadi sangat berguna.
+
+      **Mean vs median: kenapa beda, kapan pakai yang mana**
+
+      Omzet: mean 31,4 juta, median 26,8 juta. Selisih 4,6 juta. Kok bisa beda? Karena mean ikut menghitung semua nilai, termasuk tiga omzet raksasa: 123,2 · 133,6 · 166,3 juta. Median hanya peduli posisi tengah antrean, jadi tidak tersentuh nilai ekstrem itu.
+
+      Kembali ke antrean: kalau satu orang di antrean diganti orang super kaya, orang di posisi tengah tidak pindah, tapi rata-rata seluruh antrean naik. Itulah bedanya.
+
+      Bentuk data seperti ini disebut **ekor kanan**: nilai kecil (min 4,5) tidak jauh dari Q1 18,2, tapi sisi besarnya menjulur jauh sampai 166,3. Aturan praktisnya:
+
+      - Kalimat "nasabah biasanya beromzet berapa" → pakai **median** (26,8 juta): tipikal dan kebal nilai ekstrem.
+      - Kalimat "total omzet semua nasabah" → pakai **mean** (31,4 juta): semua nilai ikut dihitung.
+
+      **`value_counts()`: untuk kolom kategori**
+
+      Kolom teks tidak punya mean, jadi jangan pakai `describe()`. Yang masuk akal: hitung berapa kali tiap nilai muncul.
+
+      ```python
+      print(df["kota"].value_counts())
+      print(df["status"].value_counts())
+      ```
+
+      Hasil kota: Jakarta 189 · Surabaya 121 · Bandung 118 · Medan 75 · Yogyakarta 64 · Makassar 53. Totalnya 620 — semua baris terhitung. Jakarta = 189 / 620 = **30,5%** dari data.
+
+      Hasil status: Lancar 456 (73,5%) · Macet 164 (26,5%). Untuk kolom target, `value_counts()` adalah pemeriksaan pertama: langsung kelihatan target kita timpang atau tidak. Ketimpangan itu nanti berdampak besar saat menilai model — makanya bab berikutnya memakai pembanding "tebak mayoritas", bukan akurasi mentah.
+
+      **Jebakan umum pemula**
+
+      1. **Pakai mean untuk kata "tipikal".** Di data ini mean 31,4 dan median 26,8 — beda 4,6 juta. Kalau ada nilai ekstrem, median lebih jujur untuk menggambarkan yang tipikal.
+      2. **Lupa cek count.** Kalau count kurang dari jumlah baris, ada sel kosong yang harus dibereskan dulu.
+      3. **Menghitung kategori yang belum dirapikan.** Di data kotor, "Jakarta" hanya terhitung 90 baris karena penulisannya terpecah lima gaya: "Jakarta", " Jakarta", "JKT", "jakarta", "jkt". Setelah dirapikan jadi 189.
+      4. **Mempercayai satu angka ringkasan.** Mean saja bisa menipu; min, max, dan kuartil bisa membongkar masalahnya. Biasakan membaca delapan angka `describe()` sekaligus.
+      5. **Menyimpulkan dari segelintir nilai.** Satu nilai ekstrem bisa menggeser mean tanpa mengubah median. Jadi jangan pernah mengandalkan satu ukuran saja.
+
+      EDA bukan sekali jalan: temuanmu di sini menentukan langkah berikutnya. Count kurang? Bersihkan dulu. Distribusi miring? Ingat memakai median. Target timpang? Siapkan cara menilai model yang adil.
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
       print(df[["omzet_bulanan_juta", "pinjaman_diajukan_juta"]].describe().round(1))
-    penjelasan: "`describe()` langsung memberi 8 angka ringkasan. Lihat kolom omzet: mean 31,4 tapi median 26,8 — selisih 4,6 juta tanda ada ekor kanan. Kolom pinjaman berpola sama: mean 20,1 dan median 15,8. Bandingkan mean vs median lebih dulu; kalau jauh berbeda, distribusinya tidak simetris."
+    penjelasan: "`describe()` langsung memberi 8 angka ringkasan untuk dua kolom sekaligus, jadi bisa dibandingkan. Pola kolom omzet dan pinjaman sama: mean di atas median (omzet 31,4 vs 26,8; pinjaman 20,1 vs 15,8) — tanda ada ekor kanan. Kebiasaan membaca: mulai dari count (ada sel kosong?), lanjut mean vs median (miring atau simetris?), cek min/max (nilai mustahil?), lalu lihat kuartil (di mana mayoritas data berada?)"
   - id: "29-2"
     judul: "Cari Pola & Hubungan"
-    menit: 6
+    menit: 9
     materi: |
-      EDA naik satu tingkat: bandingkan kelompok dan lihat hubungan antar kolom.
+      Di pelajaran sebelumnya kamu melihat satu kolom sekaligus. Sekarang naik satu tingkat: bandingkan kelompok, lalu cari hubungan antar kolom. Di sinilah petunjuk untuk model biasanya muncul — misalnya kolom apa yang bisa memisahkan nasabah Macet dari Lancar.
 
-      **groupby** memecah data per kelompok lalu meringkasnya:
+      Tujuan akhirnya: menemukan kolom mana yang layak masuk model. Kolom yang tidak memisahkan apa pun — contohnya omzet vs jumlah_karyawan, korelasinya hanya 0,03 — kemungkinan besar tidak banyak membantu.
+
+      **Kenapa harus pisah kelompok dulu**
+
+      Kalau kamu rata-ratakan seluruh 620 nasabah, kelompok Macet dan Lancar tercampur jadi satu angka. Perbedaan yang sebenarnya justru hilang. `groupby` memecah data per kelompok, baru menghitung ringkasannya:
 
       ```python
-      df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100)
+      tingkat_macet = df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100)
+      for nama, persen in tingkat_macet.sort_values(ascending=False).items():
+          print(f"Macet {nama}: {persen:.1f}%")
       ```
 
-      Hasilnya tingkat Macet per sektor: Kuliner 33,3% · Pertanian 29,0% · Fashion 28,0% · Jasa 24,5% · Kerajinan 23,0% · Retail 22,3%.
+      Cara kerja `groupby` dalam bahasa manusia: pisahkan baris jadi beberapa tumpukan sesuai nilai kolomnya, hitung ringkasan tiap tumpukan, lalu gabungkan hasilnya jadi tabel kecil. Di contoh ini terbentuk 6 tumpukan sektor, masing-masing dihitung persentase Macetnya.
 
-      **Bandingkan kelompok**: rata-rata riwayat_telat_12m kelompok Macet 3,02 vs kelompok Lancar 1,91 — Macet lebih sering telat.
+      Tingkat Macet per sektor: Kuliner 33,3% · Pertanian 29,0% · Fashion 28,0% · Jasa 24,5% · Kerajinan 23,0% · Retail 22,3%.
 
-      **Korelasi** (`.corr()`) mengukur gerak bersama, nilainya -1 sampai +1. Contoh: riwayat_telat vs skor_kredit = **-0,77** — makin sering telat, makin rendah skornya.
+      Cara membaca: `(s == "Macet")` mengubah status jadi Benar/Salah (Benar dihitung 1, Salah 0), lalu `.mean()` mengambil proporsinya, dikali 100 jadi persen. Jadi Kuliner berarti 31 dari 93 nasabahnya Macet.
 
-      Ingat: korelasi bukan sebab-akibat. Ia hanya bilang keduanya bergerak bersama.
+      Bandingkan dengan tingkat Macet keseluruhan, 26,5% (164 dari 620). Kuliner 33,3% ada di atas garis itu, Retail 22,3% di bawah. Membandingkan hasil antar sektor dengan angka keseluruhan membuat selisihnya lebih bermakna.
+
+      Kenapa membandingkan persen, bukan jumlah? Kerajinan punya nasabah terbanyak (113), tapi tingkat Macetnya 23,0% — bukan yang paling berisiko. Jasa dan Retail sama-sama punya 25 nasabah Macet, tapi dari 102 vs 112 orang, jadi persennya beda (24,5% vs 22,3%). Jumlah mentah tidak sebanding kalau penyebutnya berbeda.
+
+      **Bandingkan dua kelompok**
+
+      Cara tercepat menguji "apakah kolom ini berguna": bandingkan rata-ratanya antar kelompok target.
+
+      ```python
+      rata_telat = df.groupby("status")["riwayat_telat_12m"].mean()
+      print(f"Telat Macet: {rata_telat['Macet']:.2f}")
+      print(f"Telat Lancar: {rata_telat['Lancar']:.2f}")
+      ```
+
+      Hasilnya: kelompok Macet 3,02, kelompok Lancar 1,91. Selisih 1,10 — kelompok Macet memang lebih sering telat. Contoh lain dari data yang sama: skor_kredit Macet 487,9 vs Lancar 549,4 (selisih 61,4 poin). Kedua kolom ini memisahkan kelompok dengan rapi — calon fitur bagus.
+
+      Ukuran selisihnya juga penting, bukan cuma arahnya. Selisih skor 61,4 poin itu besar dibanding sebaran skornya (std sekitar 87 poin), jadi pemisahannya jelas. Kalau selisihnya kecil dibanding sebaran, jangan buru-buru percaya.
+
+      Satu peringatan: 3,02 dan 487,9 itu **rata-rata kelompok**, bukan aturan per orang. Banyak nasabah Macet yang skornya di atas 487,9. Rata-rata merangkum kelompok, bukan mengunci tiap orang.
+
+      **Korelasi: mengukur gerak bersama**
+
+      Untuk dua kolom angka, pertanyaannya: kalau yang satu naik, yang lain ikut naik? Itulah yang diukur korelasi. Nilainya selalu antara -1 dan +1:
+
+      - **+1** = naik bersama sempurna (searah).
+      - **0** = tidak ada pola yang jelas.
+      - **-1** = selalu berlawanan arah.
+
+      Contoh dari data kredit UMKM (dihitung dengan `df["a"].corr(df["b"])`):
+
+      - `riwayat_telat_12m` vs `skor_kredit` = **-0,77**: makin sering telat, makin rendah skornya. Berlawanan arah, dan kuat.
+      - `omzet_bulanan_juta` vs `pinjaman_diajukan_juta` = **0,82**: makin besar omzet, cenderung makin besar pinjaman yang diajukan. Searah, kuat.
+      - `omzet_bulanan_juta` vs `jumlah_karyawan` = 0,03: hampir tidak ada hubungan.
+
+      Aturan kasar membaca kekuatan: di atas 0,7 kuat · 0,3 sampai 0,7 sedang · di bawah 0,3 lemah. Tanda minus menunjukkan arah, bukan kesalahan hitung.
+
+      Korelasi juga hanya menangkap pola garis lurus. Dua kolom dengan hubungan melengkung bisa punya korelasi mendekati 0 — padahal jelas berhubungan. Jadi angka kecil bukan bukti "tidak ada apa-apa"; itu tanda polanya tidak lurus.
+
+      **Korelasi bukan sebab-akibat**
+
+      0,82 hanya bilang "keduanya bergerak bersama". Belum tentu omzet besar MENYEBABKAN pinjaman besar. Bisa jadi keduanya digerakkan hal ketiga: usaha yang memang lebih besar. Bisa juga hubungannya kebetulan. Untuk membuktikan sebab-akibat perlu eksperimen atau data waktu (bandingkan sebelum-sesudah), bukan satu angka korelasi. Menyimpulkan sebab dari korelasi adalah kesalahan klasik pemula.
+
+      **Urutan EDA yang runtut**
+
+      Supaya tidak melompat-lompat, ikuti empat langkah ini:
+
+      1. **Bentuk** — lihat sebaran tiap kolom (histogram = batang frekuensi tiap rentang; boxplot = gambar ringkas kuartil): di mana nilainya menumpuk, ada ekor atau tidak.
+      2. **Ringkasan** — `describe()` untuk kolom angka, `value_counts()` untuk kolom kategori.
+      3. **Kelompok** — `groupby`: bandingkan target per sektor, kota, atau kelompok lain.
+      4. **Hubungan** — `.corr()` antar kolom angka: cari yang bisa memisahkan kelas.
+
+      **Jebakan yang harus kamu hindari**
+
+      - **Kelompok kecil menipu.** Kuliner hanya berisi 93 nasabah. Kalau 6 orang yang Macet ternyata Lancar, tingkat Macetnya jadi 26,9% — hampir sama dengan Retail 22,3%. Kesimpulan bisa berubah hanya karena beberapa orang. Sebelum mengubah kebijakan besar, tanya dulu ukuran kelompoknya, lalu cek apakah polanya bertahan di potongan lain (per kota atau per tahun).
+      - **Data timpang.** Lancar 456 vs Macet 164. Menebak "semua Lancar" saja sudah 73,5% benar. Jadi aturan baru harus dibandingkan dulu dengan angka itu sebelum disebut bagus.
+      - **Rata-rata bukan per orang.** 3,02 dan 487,9 adalah ringkasan kelompok; selalu ada pengecualian di dalamnya.
+
+      Setelah empat langkah ini, kamu punya bekal untuk bercerita dengan data: kolom mana yang bersih, kolom mana yang berguna, dan kelompok mana yang berisiko. Bab berikutnya memakai temuan EDA ini untuk memilih fitur dan melatih model.
     kode: |
       import pandas as pd
       df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
       print(df.groupby("sektor")["status"].apply(lambda s: (s == "Macet").mean() * 100).round(1).sort_values(ascending=False))
       print(df.groupby("status")["riwayat_telat_12m"].mean().round(2))
-    penjelasan: "`groupby` = pisah data per kelompok lalu hitung ringkasannya. Dua contoh: tingkat Macet tiap sektor, dan perbandingan rata-rata telat antara Macet dan Lancar. Perhatikan arah angkanya: Macet 3,02 vs Lancar 1,91. Untuk gerak bersama antar dua kolom angka, pakai `.corr()`."
+    penjelasan: "`groupby` = pisah data per kelompok lalu hitung ringkasannya. Contoh pertama menghitung tingkat Macet tiap sektor dalam persen; contoh kedua membandingkan rata-rata telat kelompok Macet vs Lancar. Perhatikan arah angkanya: Macet 3,02 vs Lancar 1,91. Untuk gerak bersama antar dua kolom angka, pakai `.corr()` — angkanya -1 sampai +1, dan tanda minus bukan kesalahan hitung"
 skenario:
   - id: "s29-1"
     judul: "Baca Kode: Tabel Ringkasan"
@@ -667,10 +793,16 @@ panduan:
     slug: rakamin
     path: 06 - Data Visualization/1 - Basic Plots.pdf
   teori:
-  - 'Tiga pertanyaan EDA: **lihat bentuknya** (histogram/boxplot), **hitung ringkasannya** (mean/median/kuantil), **cari hubungan** (korelasi & groupby ke target).'
-  - Hitung dulu `skor_kredit` per kelompok `status` — beda rata-rata antar kelompok = sinyal awal fitur berguna.
-  - 'Slide Rakamin memakai studi kasus pengiriman makanan: kelompok berbeda = pola berbeda — pisahkan dulu sebelum menyimpulkan.'
-  - Korelasi ≠ sebab-akibat, dan angka ekstrem harus dicek dulu sebelum dipercaya.
+  - "EDA = ngobrol dengan data sebelum memodelkan, dengan tiga pertanyaan: **lihat bentuknya** (histogram/boxplot), **hitung ringkasannya** (`describe()` & `value_counts()`), lalu **cari hubungan** (`groupby` & korelasi). Tanpa langkah ini, model dibangun di atas tebakan."
+  - "`describe()` merangkum satu kolom angka dalam 8 baris: count, mean, std, min, 25%, 50%, 75%, max. count harus sama dengan jumlah baris (di sini 620); kalau kurang, berarti ada sel kosong. Mulai membacanya dari mean vs median — kalau jauh berbeda, distribusinya miring (ada ekor)."
+  - "Kuartil membelah data yang sudah diurutkan jadi empat bagian sama banyak, dan 50% = median = nilai tengah yang tipikal. Contoh dari data omzet: Q1 18,2 dan Q3 40,1 juta memuat separuh nasabah (310 dari 620). Nilai ekstrem 4,5 dan 166,3 juta berada di luar rentang itu."
+  - "Mean itu tidak tahan nilai ekstrem: omzet mean 31,4 juta vs median 26,8 juta, selisih 4,6 juta gara-gara tiga omzet besar (123,2 · 133,6 · 166,3). Laporan \"tipikal\" pakai median; laporan \"total\" pakai mean. Angka ekstrem harus dicek dulu sebelum dipercaya."
+  - "`value_counts()` menghitung jumlah tiap nilai di kolom kategori (kota, sektor, status). Cek dulu kategorinya sudah rapi: di data kotor \"Jakarta\" cuma terhitung 90 baris karena penulisannya terpecah, setelah dirapikan jadi 189. Untuk kolom target, hasilnya langsung memperlihatkan ketimpangan kelas: Lancar 456 vs Macet 164."
+  - "Pisahkan kelompok dulu sebelum menyimpulkan — beda rata-rata antar kelompok adalah sinyal awal fitur berguna. Hitung dulu `skor_kredit` per kelompok `status`: Macet 487,9 vs Lancar 549,4 (selisih 61,4 poin), dan telat Macet 3,02 vs Lancar 1,91. Ingat, itu rata-rata kelompok, bukan batas per orang."
+  - "`groupby` memecah data per kelompok lalu meringkasnya; bandingkan PERSENTASE, bukan jumlah mentah, karena penyebutnya berbeda. Kuliner 33,3% (31 dari 93) vs Retail 22,3% (25 dari 112) — padahal Jasa dan Retail sama-sama punya 25 nasabah Macet. Slide Rakamin memakai studi kasus pengiriman makanan: kelompok berbeda = pola berbeda."
+  - "Korelasi mengukur gerak bersama dua kolom angka, nilainya -1 sampai +1: telat vs skor -0,77 (berlawanan arah, kuat), omzet vs pinjaman 0,82 (searah, kuat), omzet vs karyawan 0,03 (hampir tidak ada). Aturan kasar: di atas 0,7 kuat, 0,3 sampai 0,7 sedang, di bawah 0,3 lemah."
+  - Korelasi ≠ sebab-akibat. 0,82 omzet vs pinjaman hanya bilang keduanya bergerak bersama; bisa keduanya akibat ukuran usaha, bukan omzet yang "menyebabkan" pinjaman. Untuk membuktikan sebab butuh eksperimen atau data waktu, bukan satu angka korelasi.
+  - "Pada data timpang, akurasi bisa menipu: Macet hanya 164 dari 620 (26,5%), jadi menebak \"semua Lancar\" sudah 73,5% benar. Kelompok kecil (93-112 nasabah) juga bisa membalik kesimpulan karena beberapa orang saja. Cek pola di potongan data lain sebelum mengubah kebijakan."
   praktek:
   - Tonton video Data Understanding (~8 menit) — catat pertanyaan yang diajukan ke data.
   - Baca slide Rakamin 07.2 bagian “How to EDA” + 06.1 jenis-jenis plot.

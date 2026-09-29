@@ -10,26 +10,47 @@ deskripsi: "Model sudah dilatih — tapi apakah benar-benar bagus? Pelajari conf
 pelajaran:
   - id: "32-1"
     judul: "Confusion Matrix: Kenapa Akurasi Menipu"
-    menit: 5
+    menit: 8
     materi: |
-      Data kita: **620 pengajuan pinjaman UMKM**. Hasil akhirnya: **164 Macet** dan **456 Lancar**. Jadi Macet hanya 164/620 = **26,5%** dari data.
+      Model sudah dilatih dan akurasinya kelihatan bagus. Tapi pertanyaan yang benar bukan "berapa akurasinya?", melainkan "apakah model ini benar-benar layak dipercaya?" Menjawabnya butuh alat ukur yang jujur, dan di pelajaran ini kamu akan memasang alat itu sendiri.
 
-      Sekarang perhatikan: model yang tidak belajar apa pun dan SELALU menebak "Lancar" sudah benar 456 dari 620 → akurasi **0,735**. Angka ini disebut **baseline** — batas yang wajib dikalahkan. Kalau modelmu cuma 0,74, dia tidak lebih pintar dari tebakan buta.
+      Datanya: **620 pengajuan pinjaman UMKM**. Hasil akhirnya: **456 Lancar** dan **164 Macet**. Jadi Macet hanya 164/620 = **26,5%** dari seluruh data. Ketimpangan ini penting, simpan angkanya di kepala.
 
-      **Akurasi** = (tebakan benar) / (semua data). Masalahnya: akurasi tidak bilang kesalahan JENIS APA yang terjadi.
+      **Akurasi** = jumlah tebakan benar ÷ jumlah semua data. Sesederhana itu. Masalahnya, akurasi punya titik buta besar. Perhatikan model yang tidak belajar apa pun dan selalu menebak "Lancar": dia benar 456 kali dari 620, akurasi **0,7355**. Angka ini disebut **baseline** — lantai yang wajib kamu kalahkan. Model dengan akurasi 0,74 belum tentu pintar; dia bisa jadi cuma menebak Lancar terus.
 
-      **Confusion matrix** = tabel 4 kotak:
-      - **TP** (True Positive): aslinya Macet, ditebak Macet → tertangkap.
-      - **TN** (True Negative): aslinya Lancar, ditebak Lancar → aman.
-      - **FP** (False Positive): aslinya Lancar, ditebak Macet → alarm palsu.
-      - **FN** (False Negative): aslinya Macet, ditebak Lancar → LOLOS. Ini yang paling mahal bagi bank.
+      ```python
+      lancar, total = 456, 620
+      akurasi_buta = lancar / total
+      print(f"Selalu tebak Lancar -> akurasi {akurasi_buta:.4f}")
+      ```
 
-      Contoh nyata: model logreg (5 fitur) diuji pada 155 pengajuan → TP = 22, TN = 106, FP = 8, FN = 19.
-      - Akurasi = (22 + 106) / 155 = 128/155 = **0,83**. Terlihat bagus!
-      - **Precision** = dari yang DITANGKAP, berapa yang benar Macet = TP / (TP + FP) = 22 / 30 = **0,73**.
-      - **Recall** = dari SEMUA Macet asli, berapa yang tertangkap = TP / (TP + FN) = 22 / 41 = **0,54**.
+      **Confusion matrix** menutup titik buta itu. Bayangkan petugas penjaga pintu di kantor kredit: untuk setiap pengajuan dia harus memutuskan apakah bilang "Lancar" (persilakan lewat) atau "Macet" (tahan dulu). Setelah semua pengajuan lewat, ada empat kemungkinan hasil:
 
-      Recall 0,54 artinya 19 dari 41 Macet lolos dari deteksi. Akurasi 0,83 tidak memberi tahu itu. Di kelas tidak seimbang (26,5% vs 73,5%), precision dan recall lebih jujur daripada akurasi.
+      - **TP** (benar positif): dia menahan, dan ternyata memang Macet → tangkapan benar.
+      - **TN** (benar negatif): dia melewatkan, dan ternyata memang Lancar → aman, keputusan benar.
+      - **FP** (salah positif): dia menahan, padahal orangnya Lancar → alarm palsu; calon nasabah baik jadi kena tolak.
+      - **FN** (salah negatif): dia melewatkan, padahal Macet → LOLOS. Ini lubang paling mahal: pinjaman cair, uang tidak kembali.
+
+      Cara gampang membaca namanya: huruf kedua (P/N) menunjukkan apa yang DIUCAPKAN model — P = bilang "Macet", N = bilang "Lancar". Huruf pertama (T/F) menunjukkan apakah ucapan itu benar (True) atau salah (False).
+
+      Kenapa harus empat kotak, bukan sekadar "benar atau salah"? Karena dua jenis kesalahan tidak sama mahalnya. FN membuat uang bank benar-benar hilang, sedangkan FP membuat bank kehilangan calon nasabah. Petugas yang menahan semua orang tidak punya FN, tapi alarm palsunya merajalela; petugas yang melewatkan semua orang punya akurasi tinggi, tapi FN-nya mengerikan. Confusion matrix memaksa kedua kesalahan itu terlihat terpisah.
+
+      Contoh nyata. Model logreg 5 fitur diuji pada 155 pengajuan, dan di dalamnya ada 41 Macet asli. Hasilnya: TP = 22, TN = 106, FP = 8, FN = 19.
+
+      - Akurasi = (TP + TN) ÷ total = (22 + 106) ÷ 155 = 128 ÷ 155 = **0,83**. Terlihat bagus, bukan?
+      - Tapi lihat kotak FN: **19 Macet lolos** — hampir separuh dari 41 Macet yang seharusnya ditangkap.
+
+      **Precision** menjawab pertanyaan: dari semua yang DITAHAN petugas, berapa yang benar-benar Macet? Petugas menahan 22 + 8 = 30 pengajuan; yang benar-benar Macet 22. Jadi precision = TP ÷ (TP + FP) = 22 ÷ 30 = **0,73**. Artinya 8 orang baik ikut kena tolak — itulah harga dari pengetatan; kalau ambang penolakan terlalu galak, precision jatuh karena alarm palsu bertambah.
+
+      **Recall** menjawab pertanyaan yang berbeda: dari semua Macet yang benar-benar ada, berapa yang berhasil ditangkap? Ada 41 Macet asli, dan yang tertangkap 22. Jadi recall = TP ÷ (TP + FN) = 22 ÷ 41 = **0,54**. Artinya **19 peminjam yang akhirnya gagal lolos dari pemeriksaan**. Recall rendah = banyak nasabah gagal yang tidak terdeteksi — inilah lubang yang paling mahal bagi bank.
+
+      Satu tabel confusion matrix yang sama melahirkan tiga angka: akurasi 0,83, precision 0,73, recall 0,54. Ketiganya benar sekaligus karena ketiganya menjawab pertanyaan berbeda. Akurasi bertanya "berapa yang benar dari seluruh data?", precision bertanya "seberapa bersih hasil tangkapan?", recall bertanya "berapa banyak Macet yang tertangkap?". Kalau laporanmu cuma menulis 0,83, pembaca tidak akan tahu ada 19 Macet lolos — padahal itu informasi yang paling bank butuhkan. Kalau butuh satu angka rangkuman, ada **F1** yang menggabungkan precision dan recall, tapi biasakan mulai dari tabelnya.
+
+      Dan ada lapisan lebih pahit: angka-angka itu juga bergantung pada cara membagi data. Di pelajaran berikutnya kamu akan lihat pembagian 25% yang lain memberi akurasi 0,787 (122 benar dari 155 data uji) dan hanya 19 dari 44 Macet yang tertangkap, alias **43,2%**. Model sama, data sama, cuma cara membaginya yang berganti.
+
+      Kapan peduli precision, kapan peduli recall? Untuk kasus kredit UMKM, ingat harga dua jenis kesalahan. Satu Macet lolos = pinjaman 25 juta yang uangnya tidak kembali. Satu calon baik yang keliru ditolak = kehilangan margin sekitar 2 juta. Karena itu FN **12,5 kali lebih mahal** daripada FP, dan banyak tim kredit rela menurunkan ambang penolakan supaya lebih banyak Macet tertangkap (recall naik) meskipun sedikit orang baik ikut tertolak (precision turun). Sebaliknya, kalau alarm palsu yang lebih mahal — misalnya tim pemasaran yang tidak mau kehilangan nasabah — precision yang kamu jaga. Di kelas timpang seperti 26,5% Macet ini, akurasi hampir selalu jadi metrik terakhir yang boleh dipercaya.
+
+      Jebakan paling sering: **memilih model hanya dari akurasi**. Dua model bisa sama-sama akurat di atas 0,8, tapi yang satu menangkap hampir semua Macet dan yang lain membiarkan mayoritas Macet lolos. Sebelum melapor, buka dulu keempat kotak, lalu tanya: kesalahan jenis mana yang paling merugikan di kasusku? Di sini jawabannya FN. Di pelajaran berikutnya kamu belajar memilih model dengan skor yang tidak bergantung pada satu kali pembagian data.
     kode: |
       import pandas as pd
       from sklearn.model_selection import train_test_split
@@ -50,20 +71,45 @@ pelajaran:
       print(f"FN = {fn} -- Macet, ditebak Lancar (LOLOS)")
       print(f"Akurasi = {(tp + tn) / len(y_uji):.2f}")
       print(f"Precision = {tp / (tp + fp):.2f} | Recall = {tp / (tp + fn):.2f}")
-    penjelasan: "Akurasi 0,83 terdengar bagus, padahal 26,5% data Macet dan model bodoh sudah dapat 0,735. Precision 0,73 = 22 dari 30 tangkapan benar. Recall 0,54 = baru 22 dari 41 Macet tertangkap, 19 lolos. Di kelas tidak seimbang, precision dan recall lebih penting daripada akurasi."
+    penjelasan: "Akurasi 0,83 terdengar bagus, padahal 73,55% data memang Lancar dan model bodoh yang selalu menebak Lancar sudah dapat 0,7355. Model 5 fitur ini benar 128 dari 155: TP 22, TN 106, FP 8, FN 19. Precision 0,73 = dari 30 tangkapan, 22 benar Macet dan 8 alarm palsu. Recall 0,54 = baru 22 dari 41 Macet tertangkap, 19 peminjam gagal lolos. Di pembagian data lain malah lebih pahit: akurasi 0,787 dan hanya 19 dari 44 Macet tertangkap (43,2%). Satu tabel melahirkan tiga angka berbeda; di kelas tidak seimbang, recall kelas Macet yang paling perlu dipantau karena satu Macet lolos 12,5 kali lebih mahal daripada satu orang baik yang ditolak."
   - id: "32-2"
     judul: "Cross-Validation & Overfitting"
-    menit: 6
+    menit: 9
     materi: |
-      Satu kali split bisa hoki atau sial. Buktinya dari data kita: model dan data sama, cuma `random_state` split yang diganti → akurasi data uji 0,774; 0,781; 0,794; 0,806; 0,813; 0,826. Mau melapor yang mana? Kalau kebetulan dapat 0,826, laporanmu terlalu bagus. Kalau dapat 0,774, terlalu jelek.
+      Pelajaran 32-1 memberi satu set angka yang rapi: akurasi 0,83, precision 0,73, recall 0,54 — semua dari satu data uji. Tapi data uji itu cuma SATU potongan dari cerita. Kalau potongannya berbeda, angkanya juga berbeda. Pelajaran ini mengajarkan cara mengukur model supaya hasilnya tidak bergantung pada keberuntungan pembagian data.
 
-      Obatnya: **cross-validation** (CV). Data dipotong jadi 5 bagian. Tiap bagian pernah jadi data uji, lalu hasilnya dirata-rata. Contoh nyata untuk logreg: lipatan 0,782; 0,815; 0,839; 0,766; 0,782 → CV-5 = **0,797**. Semua data kebagian jadi uji, tidak ada yang terbuang, dan hasilnya jauh lebih stabil.
+      Buktinya dari data kita sendiri: model dan data sama persis, yang diganti cuma `random_state` pada split 25%, dan akurasi data uji muncul di rentang **0,774 sampai 0,826**. Di 32-1 kamu melihat pembagian lain memberi 0,787 dengan hanya 43,2% Macet tertangkap. Mau melaporkan yang mana? Kalau kebetulan dapat 0,826, laporanmu terlalu bagus; kalau dapat 0,774, terlalu jelek. Satu split = satu lemparan dadu — apalagi kalau datanya sedikit, karena satu baris bernilai besar dan satu pembagian bisa menghapus atau menumpuk baris-baris sulit.
 
-      **Overfitting** = model menghafal data latih, bukan belajar pola. Contoh nyata: pohon keputusan tanpa batas kedalaman → akurasi LATIH 1,000 (sempurna!), tapi CV-3 cuma 0,689. Pohon itu hafal 620 baris, tapi di data baru sering salah. Bandingkan `max_depth=4`: latih 0,792, CV-3 0,752. Aturan praktis: **selisih latih vs CV yang besar = tanda overfitting**.
+      Obatnya: **cross-validation** (CV). Idenya sederhana — jangan menyerahkan penilaian pada satu potongan. Data dipotong jadi 5 bagian sama besar yang disebut fold (lipatan), lalu:
 
-      Sebaliknya **underfitting**: latih dan CV sama-sama rendah (misal 0,65 dan 0,64) → model terlalu sederhana, tambah fitur atau kompleksitas.
+      1. Lipatan 1 jadi data uji, empat lipatan lainnya jadi data latih.
+      2. Model dilatih di data latih, diuji di lipatan itu, catat skornya.
+      3. Ganti giliran: lipatan 2 yang jadi uji, sisanya jadi latih. Ulangi sampai kelima lipatan pernah jadi uji.
+      4. Rata-ratakan kelima skor → itulah skor CV-5.
 
-      Jadi: pilih model dari skor **CV**, bukan skor latih. Data uji disimpan untuk penilaian terakhir, sekali saja.
+      Karena setiap baris kebagian jadi data uji tepat satu kali, tidak ada data yang menganggur, dan hasilnya jauh lebih stabil daripada satu split.
+
+      ```python
+      lipatan = [0.7823, 0.8145, 0.8387, 0.7661, 0.7823]
+      cv5 = sum(lipatan) / len(lipatan)
+      print(f"CV-5 = {cv5:.4f} (rentang {min(lipatan):.3f}-{max(lipatan):.3f})")
+      ```
+
+      Untuk model logreg 5 fitur di data kredit ini, skor kelima lipatannya: 0,7823 · 0,8145 · 0,8387 · 0,7661 · 0,7823, rata-rata **0,7968**. Perhatikan sebarannya, bukan cuma rata-ratanya. Kalau kebetulan lipatan 0,7661 yang jadi data ujimu, kamu akan melapor "modelku 0,77" padahal di lipatan lain dia 0,84. Jarak 0,766-0,839 (sekitar 7 poin) adalah ukuran kestabilan: sebaran sempit = model konsisten, sebaran lebar = model sensitif terhadap potongan data yang dipakai menguji. Rata-rata lima lipatan jauh lebih adil daripada satu angka.
+
+      **Overfitting** = model menghafal data latih, bukan belajar pola yang berlaku umum. Contoh nyata: pohon keputusan tanpa batas kedalaman dibiarkan tumbuh sangat dalam sampai akurasi data latihnya **1,000** — sempurna, seolah tidak ada satu pun yang salah. Tapi begitu diuji lewat CV-3, skornya **0,689**, lebih buruk daripada pohon yang dangkal. Pohon itu hafal 620 baris latih; di data yang belum pernah dilihat dia bingung. Bandingkan dengan pohon yang dibatasi `max_depth=4`: akurasi latih 0,792, CV-3 0,752 — tidak ada yang 1,000, tapi tidak ada juga yang jatuh.
+
+      **Aturan praktis: selisih akurasi latih dan akurasi CV adalah alarm overfit.** Pohon bebas: 1,000 - 0,689 = 0,311, selisih besar = menghafal. Pohon `max_depth=4`: 0,792 - 0,752 = 0,040, selisih kecil = belajar pola. Semakin lebar jurang antara nilai sekolah dan nilai ujian, semakin perlu kamu curiga.
+
+      Kebalikannya juga ada: **underfitting** — model terlalu sederhana sampai tidak bisa menangkap pola. Gejalanya berbeda: akurasi latih dan CV sama-sama rendah. Contoh nyata: logreg yang hanya memakai fitur omzet memberi akurasi latih 0,735 dan CV-5 0,735, persis baseline tebak-buta. Omzet memang nyaris tidak memisahkan Lancar dan Macet. Begitu lima fitur informatif (telat, skor, pinjaman, dan kawan-kawan) dipakai, CV-5 naik ke 0,797. Obatnya: tambah fitur yang benar-benar relevan atau tambah kompleksitas model — bukan menambah data uji.
+
+      Bahaya serupa muncul kalau fitur bertambah tapi baris latihnya sedikit. Contoh ekstrem: 500 kolom angka acak murni ditambahkan ke 5 fitur asli, lalu model dilatih hanya dengan 60 baris. Akurasi latih **1,000** — sempurna! — tapi akurasi uji **0,723**, di bawah baseline 73,2%. Model menemukan pola yang kebetulan cocok untuk 60 baris itu saja; di data baru pola itu lenyap. Kasus lebih realistis: 17 fitur (5 angka + hasil one-hot sektor dan kota) dengan 80 baris latih memberi akurasi latih 85,0% tapi uji 76,1%. Fitur kategorinya tidak buruk; masalahnya 17 fitur untuk 80 baris berarti kurang dari 5 baris per fitur, jadi model punya terlalu banyak kesempatan menghafal.
+
+      Cara menekan overfit: (1) tambah data latih — paling ampuh, tapi sering tidak mungkin; (2) kurangi atau pilih fitur — buang kolom yang tidak membantu; (3) pakai regularisasi — penalti supaya koefisien model tidak boleh terlalu ekstrem (di logreg ada parameter C: C kecil = penalti kuat = model lebih hati-hati); (4) batasi kompleksitas, misalnya `max_depth` pada pohon. Yang TIDAK menyembuhkan overfit: menambah kedalaman atau menambah fitur asal-asalan.
+
+      Dua jebakan terakhir. Pertama, **jangan memakai data uji berkali-kali untuk memilih model**. Kalau kamu mencoba 20 kombinasi, semuanya dinilai di data uji yang sama, lalu kamu mengambil yang terbaik, data uji itu sudah ikut mengajari keputusanmu — skor terbaiknya sebagian keberuntungan. Urutan yang benar: pilih model dan parameter memakai CV di data latih, lalu simpan data uji rapat-rapat dan buka sekali saja di akhir, seperti ujian akhir, bukan latihan harian. Kedua, CV mengandaikan baris-baris data bisa diacak. Kalau data punya urutan waktu (baris lama di atas, baris baru di bawah) atau urutan lain yang bermakna, potongan acak bisa membuat model mengintip "masa depan". Untuk data seperti itu, pisahkan data menurut waktu, bukan acak.
+
+      Ringkasnya: satu split itu satu lemparan dadu; CV-5 merata-ratakan lima lemparan supaya laporanmu jujur; selisih latih vs CV adalah alarm overfit; latih dan CV yang sama-sama rendah adalah tanda underfit; dan apa pun metriknya, data uji hanya boleh dibuka sekali di akhir.
     kode: |
       import pandas as pd
       from sklearn.model_selection import cross_val_score
@@ -80,7 +126,7 @@ pelajaran:
       pohon_batas = DecisionTreeClassifier(max_depth=4, random_state=1)
       cv_batas = cross_val_score(pohon_batas, X, y, cv=3).mean()
       print(f"max_depth=4: latih {pohon_batas.fit(X, y).score(X, y):.3f} | CV-3 {cv_batas:.3f}")
-    penjelasan: "Satu split = satu lemparan dadu. Model sama, data sama, cuma random_state ganti → 0,774 sampai 0,826. CV-5 memotong data jadi 5, tiap potongan pernah jadi uji → 0,797 lebih stabil. Pohon tanpa batas: latih 1,000 tapi CV-3 0,689 = overfitting (hafal). max_depth=4: latih 0,792, CV-3 0,752."
+    penjelasan: "Satu split = satu lemparan dadu: model dan data sama, hanya random_state berganti, akurasi uji muncul di rentang 0,774-0,826. CV-5 memotong data jadi 5, tiap potongan pernah jadi uji: lipatan 0,7823 · 0,8145 · 0,8387 · 0,7661 · 0,7823, rata-rata 0,7968 lebih stabil, dan sebaran antar lipatan menunjukkan kestabilan model. Overfit: pohon tanpa batas latih 1,000 tapi CV-3 0,689 (selisih 0,311 = menghafal); max_depth=4 latih 0,792, CV-3 0,752 (selisih 0,040 = wajar). Underfit: latih dan CV sama-sama rendah (model omzet-only 0,735 dan 0,735, sama seperti baseline). Pilih model dari skor CV, dan buka data uji sekali saja di akhir."
 skenario:
   - id: "s32-1"
     judul: "Baca Kode: Akurasi dari Confusion Matrix"
@@ -253,7 +299,7 @@ skenario:
         win: 30
         note: "Melaporkan recall tidak menutup kerugian — modelnya tetap dipakai."
       - ret: -2.0
-        dd: 4.0
+        dd: 8.0
         win: 20
         note: "Menunggu bisa kelamaan; dan akurasi tinggi belum tentu recall tinggi."
     petunjuk:
@@ -650,10 +696,16 @@ panduan:
     slug: pacmann
     path: Basic Machine Learning Algorithm/Theoretical Supervised Learning/08 Bias Variance Trade off.pdf
   teori:
-  - 'Akurasi saja bisa menipu saat kelas tak seimbang — slide Rakamin 08.1: pakai **presisi, recall, F1, dan ROC-AUC**; AUC paling jujur untuk kasus imbalance.'
-  - 'Satu split bisa keberuntungan: **cross-validation** (k=5/10) menguji di beberapa potongan data sekaligus → skor lebih stabil dan bisa dipercaya.'
-  - 'Overfit = hafal data latih, gagal di data baru (bias-variance tradeoff — obatnya: data uji terpisah, CV, model lebih sederhana).'
-  - Di dataset kredit ini, tebakan mayoritas saja sudah ±0,76 — modelmu harus lewat itu dulu baru boleh bangga.
+  - "**Confusion matrix** = tabel 4 kotak untuk menguji model klasifikasi: TP (asli Macet, ditebak Macet), TN (asli Lancar, ditebak Lancar), FP (asli Lancar, ditebak Macet — alarm palsu), FN (asli Macet, ditebak Lancar — lolos). Di contoh data uji 155 pengajuan: TP 22, TN 106, FP 8, FN 19, dengan 41 Macet asli. Kotak inilah bahan mentah semua metrik klasifikasi (slide Rakamin 08.1)."
+  - "**Akurasi = tebakan benar ÷ semua data**, dan di dataset ini tebakan buta (selalu menjawab Lancar) sudah benar 456/620 = **0,7355**. Angka itu baseline: lantai yang wajib dilewati sebelum modelmu boleh disebut berguna. Model berakurasi 0,74 umumnya memang cuma menebak kelas mayoritas — tidak belajar apa pun."
+  - "Akurasi **menipu saat kelas tidak seimbang**: model contoh kita tampak aman dengan akurasi 0,83, padahal 19 dari 41 Macet lolos. Karena itu slide Rakamin 08.1 menganjurkan **presisi, recall, F1, dan ROC-AUC**; untuk kasus imbalance, AUC sering paling jujur karena mengukur kemampuan memisahkan dua kelas tanpa terpaku satu ambang."
+  - "**Precision** menjawab dari semua yang ditahan, berapa yang benar Macet = TP ÷ (TP + FP) = 22 ÷ 30 = 0,73. **Recall** menjawab dari semua Macet asli, berapa yang tertangkap = TP ÷ (TP + FN) = 22 ÷ 41 = 0,54. Satu tabel yang sama melahirkan tiga angka berbeda (akurasi 0,83, precision 0,73, recall 0,54) karena masing-masing menjawab pertanyaan yang berbeda."
+  - "**Kapan peduli yang mana:** lihat harga tiap jenis kesalahan. Di kasus kredit, satu Macet lolos merugikan 25 juta sedangkan satu calon baik yang ditolak hanya 2 juta — FN 12,5 kali lebih mahal, jadi recall yang dijaga. Di kasus spam atau skrining penyakit, arahnya bisa terbalik. Metrik dipilih dari biaya kesalahan, bukan dari angka yang paling bagus."
+  - "**Satu split bisa keberuntungan:** model dan data sama, hanya `random_state` diganti, akurasi data uji bergerak dari 0,774 sampai 0,826. **Cross-validation** (k = 5 atau 10) memotong data, tiap potongan bergiliran jadi data uji, lalu skornya dirata-rata — di sini CV-5 = 0,7968 dari lipatan 0,7823 · 0,8145 · 0,8387 · 0,7661 · 0,7823. Sebaran antar lipatan juga penting: rentang sempit berarti model stabil (slide Pacmann Cross Validation)."
+  - "**CV untuk memilih, data uji sekali saja.** Pilih model dan parameter dari skor CV di data latih, latih ulang model final dengan seluruh data latih, lalu buka data uji SEKALI di akhir sebagai ujian akhir. Menilai 20 percobaan di data uji yang sama lalu mengambil yang terbaik membuat data uji bocor ke proses pemilihan dan skornya jadi terlalu optimistis."
+  - "**Overfit = hafal data latih, gagal di data baru** (bias-variance tradeoff): pohon tanpa batas memberi akurasi latih 1,000 tapi CV-3 hanya 0,689 — selisih 0,311, alarm menghafal. Pohon `max_depth=4` memberi latih 0,792 dan CV-3 0,752 — selisih 0,040, wajar. Obatnya: data latih lebih banyak, fitur lebih sedikit, regularisasi, atau kompleksitas dibatasi (slide Pacmann Bias-Variance Tradeoff)."
+  - "**Underfit = model terlalu sederhana:** akurasi latih dan CV sama-sama rendah, seperti logreg yang hanya memakai omzet (latih 0,735, CV-5 0,735 — persis baseline). Obatnya kebalikan overfit: tambah fitur yang relevan atau tambah kompleksitas model. Selisih latih vs CV yang kecil bukan berarti sehat kalau keduanya rendah."
+  - Di dataset kredit ini, tebakan mayoritas saja sudah ±0,76, jadi mulailah laporan dari perbandingan terhadap baseline itu. Sertakan confusion matrix, precision, dan recall kelas Macet — bukan hanya akurasi — lalu jelaskan metrik mana yang kamu pilih dan alasannya; juri menilai kualitas pertimbanganmu, bukan cuma angka terbesarnya.
   praktek:
   - Baca Rakamin 08.1 bagian metrik klasifikasi & kasus imbalance.
   - Lihat slide Pacmann Cross Validation — pahami kenapa 5 lipatan lebih kredibel dari 1 test set.

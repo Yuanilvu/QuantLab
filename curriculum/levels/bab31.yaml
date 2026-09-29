@@ -11,20 +11,42 @@ deskripsi: "Model belajar dari contoh. Bab ini melatih model pertama: memisah da
 pelajaran:
   - id: "31-1"
     judul: "Konsep ML & Memisah Data"
-    menit: 5
+    menit: 9
     materi: |
-      **Model** = aturan yang belajar dari contoh. Bedanya dengan aturan biasa: model menemukan sendiri polanya dari data.
+      **Machine learning** adalah cara membuat program yang belajar dari contoh, bukan dari aturan yang ditulis manusia satu per satu. Bandingkan dua cara memutuskan pengajuan kredit. Cara pertama, aturan manual: "tolak kalau skor kredit di bawah 500" — kaku, dan kombinasi seperti "skor lumayan tapi telat empat kali" tidak tertangkap aturan sesederhana itu. Cara kedua, model: ia diberi 620 contoh yang jawabannya sudah diketahui, lalu mencari sendiri pola yang memisahkan Lancar dan Macet. **Model** adalah aturan yang ditemukan mesin dari data — bukan ditulis manusia. Kamu tetap memegang kendali: memilih kolom, menguji, dan menilai hasilnya.
 
-      Istilah yang dipakai:
-      - **Fitur (X)** = kolom masukan: omzet, lama usaha, pinjaman, telat, skor.
-      - **Target (y)** = kolom jawaban yang mau diprediksi: status (Lancar = 1, Macet = 0).
-      - **Latih (train)** = bagian data untuk belajar. **Uji (test)** = bagian untuk menguji.
+      **Fitur dan target.** Dua sisi data ini harus kamu bedakan sejak awal:
+      - **Fitur (X)** = kolom masukan yang sudah ada sebelum keputusan dibuat: omzet bulanan, lama usaha, pinjaman diajukan, riwayat telat, skor kredit.
+      - **Target (y)** = kolom jawaban yang mau diprediksi: status pengajuan — Lancar = 1, Macet = 0.
 
-      Kenapa harus dipisah? Karena model bisa menghafal. Kalau ia diuji di data yang sudah dihafalnya, nilainya selalu bagus — seperti murid yang diberi soal latihan sebagai ujian. Jadi latih di satu bagian, uji di bagian lain yang belum pernah dilihat.
+      Bentuk datanya sederhana: X adalah tabel 620 baris × 5 kolom angka, sedangkan y adalah satu deret 620 nilai 0/1 yang sejajar dengan baris-baris itu. Model hanya boleh belajar dari X untuk menebak y. Kalau status ikut dimasukkan ke dalam X, model mencontek jawabannya sendiri: akurasi latih langsung 100%, tapi begitu dipakai untuk pengajuan baru ia tidak bisa diandalkan.
 
-      **Baseline** = tebakan paling sederhana: "semua Lancar". Dari 620 data, 456 Lancar → 456 ÷ 620 = **73,5%** benar. Model harus mengalahkan angka ini, kalau tidak, ia tidak menambah apa pun.
+      **Kenapa data dipisah latih & uji.** Model bisa menghafal baris data, bukan cuma memahami polanya. Kalau ia diuji pada baris yang sudah dihafalnya, nilainya selalu bagus. Analoginya seperti ujian sekolah: kalau soal ujiannya persis soal latihan yang sudah kamu hafal, nilai 100 tidak membuktikan apa-apa — yang membuktikan pemahaman adalah soal yang belum pernah kamu lihat. Karena itu data dibagi dua: **latih (train)** untuk belajar dan **uji (test)** untuk menguji, dan bagian uji tidak boleh ikut dipakai saat belajar. Hasilnya empat potong data: X latih, y latih, X uji, y uji — model hanya melihat pasangan latih, lalu dinilai pada pasangan uji.
 
-      Latihan pertama: `train_test_split` dengan test_size 0,25 → 465 baris latih, 155 baris uji.
+      **Proporsi split menentukan ukuran kedua bagian.** `train_test_split` dengan `test_size=0,25` pada 620 data memberi 465 baris latih dan 155 baris uji (random_state 42). Ukuran lain yang sering dipakai:
+      - test_size 0,20 → 496 latih / 124 uji; baseline data uji 73,39%
+      - test_size 0,25 → 465 latih / 155 uji; baseline data uji 71,61%
+      - test_size 0,30 → 434 latih / 186 uji; baseline data uji 74,19%
+      - test_size 0,15 → 527 latih / 93 uji; baseline data uji 73,12%
+
+      Perhatikan: yang berubah bukan cuma jumlah baris, tapi juga baseline data ujinya — karena split acak kebetulan menaruh porsi Lancar yang berbeda-beda di bagian uji. Kalau komposisi kelas ingin dijaga sama persis antara latih dan uji, tambahkan `stratify=y`. Data uji kecil juga lebih berisik: di 93 baris uji, satu tebakan bernilai sekitar 1,1 poin akurasi, sedangkan di 155 baris satu tebakan hanya 0,65 poin. Karena itu proporsi 0,2-0,3 pilihan aman: cukup besar untuk dipercaya, cukup kecil sehingga data latih tidak habis.
+
+      **Baseline: pembanding yang wajib ada.** **Baseline** = nilai yang bisa dicapai tanpa model sama sekali. Di sini tebakan terbodoh — "semua pengajuan Lancar" — sudah benar 456 dari 620 = **73,55%**, karena Lancar memang mayoritas (Macet cuma 26,45%). Jadi akurasi tinggi belum tentu hebat: model berakurasi 72% justru **lebih buruk** dari tebakan bodoh itu, walau angkanya kelihatan lumayan. Setiap laporan model yang jujur memuat dua angka: baseline dan hasil model. Patokannya sederhana — model berguna kalau mengalahkan baseline di data uji.
+
+      **Jebakan pertama: split tidak acak dan data bocor.** Kalau data dipisah berdasarkan urutan — misalnya 465 baris pertama jadi data latih, 155 sisanya jadi data uji, tanpa diacak — bagian uji bisa berisi baris yang sifatnya berbeda dari latihan. Buktinya di data ini: split berurutan memberi baseline uji 75,48% (bukan 71,61%) dan akurasi uji 77,42%, padahal split acak memberi 78,71%. Karena itu `train_test_split` selalu mengacak, dan `random_state` dipasang supaya acakannya bisa diulang persis. Versi lain masalah yang sama adalah **data bocor** (data leak): kalau rata-rata dan sebaran untuk standardisasi dihitung dari **seluruh** data sebelum split, informasi dari data uji ikut terpakai saat latihan. Urutan yang benar: split dulu, baru olah — hitung angka skala dari data latih saja, lalu pakai angka itu untuk data uji.
+
+      **Jebakan kedua: menyimpulkan dari akurasi latih.** Akurasi latih hampir selalu lebih tinggi, karena model sudah melihat baris-baris itu. Pada model 5 fitur di pelajaran berikutnya, latih 0,7957 vs uji 0,7871 — selisihnya kecil, jadi sehat. Tapi kalau model diberi 500 kolom acak dan cuma 60 baris latih, akurasi latih bisa 100% sementara akurasi uji 72,3% — malah di bawah baseline 73,2%. Jarak jauh antara latih dan uji adalah tanda **overfit**: model menghafal, bukan paham. Dengan data sekecil 620 baris, selisih wajar antara latih dan uji memang tidak besar — tapi justru karena itu model harus dibaca dengan pembanding, bukan dari satu angka saja.
+
+      ```python
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      y = (df["status"] == "Lancar").astype(int)
+      ytr, yte = train_test_split(y, test_size=0.25, random_state=42)
+      print(f"latih {len(ytr)} | uji {len(yte)} | baseline uji {yte.mean() * 100:.2f}%")
+      ```
+
+      Ringkas alurnya: siapkan X dan y, pisah latih dan uji secara acak, catat baseline-nya, baru bicara model.
     kode: |
       import pandas as pd
       from sklearn.model_selection import train_test_split
@@ -32,26 +54,57 @@ pelajaran:
       y = (df["status"] == "Lancar").astype(int)
       ytr, yte = train_test_split(y, test_size=0.25, random_state=42)
       print(len(ytr), len(yte), round(yte.mean(), 2))
-    penjelasan: "Fitur (X) vs target (y). Split: 465 latih, 155 uji. Baseline 'semua Lancar' di data uji = 71,6% (dibulatkan 72%). Model hanya berguna kalau lebih tinggi dari itu."
+    penjelasan: "Fitur (X) vs target (y). Split acak 0,25 → 465 latih, 155 uji (random_state 42). Baseline 'semua Lancar' 456 dari 620 = 73,55%; di data uji sendiri 71,61% karena komposisinya bergeser. Model hanya berguna kalau mengalahkan baseline di data uji. Jebakan utamanya dua: split tanpa acak membuat data uji tidak mewakili (77,42% vs 78,71%), dan nilai dari akurasi latih selalu terlalu optimistis."
   - id: "31-2"
     judul: "Model Pertama: Logistic Regression"
-    menit: 6
+    menit: 8
     materi: |
-      **Regresi logistik** = model klasifikasi paling dasar. Ia memberi setiap baris sebuah peluang antara 0 dan 1: peluang statusnya Lancar.
+      **Target kelas, bukan angka.** Kalau yang diprediksi adalah omzet bulan depan atau harga saham, itu pekerjaan **regresi**: keluarannya angka. Di sini targetnya kelas — Lancar atau Macet — jadi pekerjaannya **klasifikasi**. Model tetap butuh ukuran yang halus, karena tebakan "Lancar/Macet" sebenarnya adalah keputusan di ujung sebuah perhitungan. **Regresi logistik** menghitung **peluang** tiap baris berada di kelas Lancar: angka antara 0 dan 1. Kalau memakai garis lurus biasa, hasilnya bisa keluar dari rentang 0-1 (misalnya 1,4) dan tidak lagi masuk akal sebagai peluang; karena itu hasil garisnya dilipat lewat kurva S. Peluang 0,95 artinya baris itu sangat mungkin Lancar; peluang 0,10 artinya kemungkinan besar Macet. Keputusan akhir diambil dengan **ambang 0,5**: peluang ≥ 0,5 → tebak Lancar, di bawahnya → Macet. Istilah "regresi" tetap dipakai karena asal-usul hitungannya mirip regresi biasa; rumusnya tidak perlu kamu hafal untuk memakainya dengan benar.
 
-      Tiga perintah intinya:
+      **Peluang membuat hasil model lebih jujur.** Ambang 0,5 kelihatan sepele, tapi peluang inilah yang membuat model bisa menimbang lebih halus daripada ya/tidak. Pada data uji, hanya 11 dari 155 baris yang peluangnya di area ragu (0,45-0,55); sisanya model tegas. Contoh tiga baris pertama: peluang 0,816 · 0,947 · 0,766 — semuanya di atas ambang, jadi tebakannya Lancar; 49 dari 155 baris bahkan berpeluang ≥ 0,9. Salah tebak dengan peluang 0,51 (ragu-ragu) berbeda kualitasnya dengan salah tebak berpeluang 0,95 (yakin tapi keliru) — dan untuk kasus kredit, bedanya penting.
+
+      **Tiga perintah intinya.**
       - `fit` → belajar dari data latih.
-      - `predict` → menebak jawaban.
-      - `score` → akurasi (berapa persen tebakan yang benar).
+      - `predict` → menebak kelas (menjadi 0/1 setelah melewati ambang 0,5).
+      - `predict_proba` → menampilkan peluangnya, misalnya 0,947 untuk baris di atas.
+      - `score` → akurasi: berapa persen tebakan yang benar.
 
-      Hasil nyata dengan 5 fitur angka (omzet, lama usaha, pinjaman, telat, skor) pada 620 data bersih:
-      - Akurasi data LATIH: **79,6%**
-      - Akurasi data UJI: **78,7%** (test_size 0,25, random_state 42)
-      - Baseline "semua Lancar": **73,5%**
+      Parameter kecil di contoh nanti, `max_iter=1000`, hanya menaikkan batas langkah hitungan; di data ini nilainya tidak mengubah hasil, tapi aman dipakai karena data dengan skala campur kadang butuh langkah lebih banyak.
 
-      Jadi model menambah sekitar 5 poin di atas baseline. Tidak spektakuler, dan itu wajar untuk data kredit yang berisik.
+      **Hasil nyata dengan 5 fitur angka** (omzet, lama usaha, pinjaman, telat, skor) pada 620 data bersih:
+      - Akurasi data **latih**: 0,7957 (79,57%)
+      - Akurasi data **uji**: **0,7871** (78,71%) — test_size 0,25, random_state 42
+      - **Baseline** "semua Lancar": 73,55%
+      - Rata-rata **cross-validation 5 lipatan**: 0,7968, dengan lipatan terendah 0,7661 dan tertinggi 0,8387
 
-      Membaca **koefisien** (bobot tiap fitur per satu satuan): telat -0,5547 (makin sering telat, makin kecil peluang Lancar); pinjaman -0,1041 per juta; omzet +0,0762 per juta. Koefisien jangan dibandingkan mentah-mentah, karena satuannya beda: skor +0,0034 itu per 1 POIN, sedangkan telat -0,5547 per 1 KALI.
+      Bacanya begini. Selisih latih dan uji cuma 0,86 poin, jadi model belum menghafal. Di atas baseline, model menambah 78,71 − 73,55 = **5,16 poin** — itulah keunggulan nyatanya, dan untuk data kredit yang berisik angka segitu tetap berarti. Rata-rata CV yang lebih tinggi dari uji tunggal juga wajar: hasil satu split 155 baris itu berisik karena satu tebakan bernilai 0,65 poin, sedangkan CV menguji lima kali di bagian data yang berbeda. Model pertama yang sederhana begini sudah cukup untuk dijadikan patokan: setelah punya angka pembanding, model yang lebih rumit baru layak dicoba.
+
+      **Membaca koefisien.** Koefisien adalah bobot tiap fitur per **satu satuan**:
+      - telat -0,5547 → tiap tambahan 1 kali telat menurunkan skor peluang Lancar
+      - pinjaman -0,1041 → tambahan 1 juta pinjaman juga menurunkan
+      - omzet +0,0762 → tambahan 1 juta omzet menaikkan
+      - lama +0,0095 · skor +0,0034 → sama-sama menaikkan, tapi per satuannya kecil
+
+      Tanda menunjukkan arah, besar angkanya menunjukkan kuatnya. Tapi jangan membandingkan koefisien mentah-mentah, karena satuannya berbeda: 0,0034 itu per 1 **poin** skor, sedangkan 0,5547 itu per 1 **kali** telat — dan satu langkah wajar skor kredit adalah puluhan poin. Cara adil: kalikan koefisien dengan sebaran fiturnya. Hasilnya: omzet +1,49 · pinjaman -1,56 · telat -0,80 · lama +0,49 · skor +0,30. Sekarang terbaca: omzet dan skor kredit sama-sama berperan, telat tetap penalti terbesar per langkah wajar, dan lama usaha pengaruhnya paling kecil. Angka koefisien bergeser sedikit kalau model dilatih pada data berbeda — misalnya pada seluruh 620 baris, telat memberi -0,4788 — tapi arah dan urutan besarnya tidak berubah; yang penting cara membacanya, bukan angka persisnya.
+
+      **Jebakan umum.**
+      - **Fitur tak diskalakan.** Tanpa standardisasi, koefisien tiap fitur "berbicara" dalam satuannya masing-masing, sehingga peringkat kepentingan fitur bisa menyesatkan. Kalikan dengan sebaran fiturnya (cara di atas) sebelum menyimpulkan apa pun.
+      - **Hanya melihat akurasi.** Akurasi uji 78,71% terdengar aman, tapi dari 44 pengajuan Macet di data uji hanya 19 yang tertangkap (43,2%) — sisanya lolos. Padahal baseline "semua Lancar" sudah 73,55%, jadi akurasi tanpa pembanding hampir tak bermakna; lihat juga perilaku model pada kelas minoritasnya.
+      - **Menilai model di data latih.** Skor latih selalu lebih tinggi dan tidak membuktikan apa-apa tentang pengajuan baru. Latih di data latih, nilai di data uji.
+
+      ```python
+      import pandas as pd
+      from sklearn.model_selection import train_test_split
+      from sklearn.linear_model import LogisticRegression
+      df = pd.read_csv("/soaldata/kredit_umkm_bersih.csv")
+      X = df[["omzet_bulanan_juta", "lama_usaha_bulan", "pinjaman_diajukan_juta", "riwayat_telat_12m", "skor_kredit"]]
+      y = (df["status"] == "Lancar").astype(int)
+      Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=42)
+      model = LogisticRegression(max_iter=1000).fit(Xtr, ytr)
+      print(f"latih {model.score(Xtr, ytr):.4f} | uji {model.score(Xte, yte):.4f}")
+      ```
+
+      Pelajaran 31-1 menyiapkan data dan pembandingnya; pelajaran ini melatih model pertamamu dan membacanya dengan jujur.
     kode: |
       import pandas as pd
       from sklearn.model_selection import train_test_split
@@ -61,7 +114,7 @@ pelajaran:
       y = (df["status"] == "Lancar").astype(int)
       Xtr, Xte, ytr, yte = train_test_split(X, y, test_size=0.25, random_state=42)
       print(round(LogisticRegression(max_iter=1000).fit(Xtr, ytr).score(Xte, yte), 4))
-    penjelasan: "fit, predict, score. Lima fitur angka: akurasi uji 0,7871 (78,7%), latih 79,6%, baseline 73,5%. Koefisien telat -0,5547 = penalti terbesar per satuan."
+    penjelasan: "fit, predict, predict_proba, score. Lima fitur angka: latih 0,7957 · uji 0,7871 · CV-5 0,7968, sedangkan baseline 73,55% — keunggulan nyatanya +5,16 poin. Koefisien telat -0,5547 per kali (terbesar per satuan); setelah dikali sebaran fiturnya: telat -0,80, pinjaman -1,56, omzet +1,49, lama +0,49, skor +0,30. Akurasi saja tidak cukup — hanya 19 dari 44 Macet tertangkap."
 skenario:
   - id: "s31-1"
     judul: "Kenapa Data Dipisah?"
@@ -661,10 +714,16 @@ panduan:
     slug: pacmann
     path: Basic Machine Learning Algorithm/Decision Tree/04 How to Split a Node.pdf
   teori:
-  - 'Tiga langkah wajib: pisahkan **fitur X** vs **target y** → pisah **data latih & uji** (80/20, `stratify=y`) → baru `.fit()` dan nilai dengan data uji.'
-  - 'Keluarga model (slide Rakamin 08): **regresi** (menebak angka) · **klasifikasi** (menebak kelas) · **ensemble** (gabungan pohon — Random Forest/boosting, biasanya paling kuat).'
-  - 'Decision Tree memilih pemisah yang paling merapikan kelas (Pacmann: How to Split a Node); terlalu dalam = **overfit**, jadi dibatasi `max_depth`.'
-  - Selalu tulis `random_state` — supaya hasilmu bisa diulang (dan tidak dituduh curang saat lomba 😄).
+  - "Tiga langkah wajib: pisahkan **fitur X** vs **target y** → pisah **data latih & uji** (80/20, `stratify=y`) → baru `.fit()` dan nilai dengan data uji. Di bab ini latihan memakai test_size 0,25 supaya angkanya bisa dihitung ulang persis; proporsi 0,2-0,3 sama-sama wajar. Yang tidak boleh: melihat data uji berkali-kali atau memakai hasilnya untuk menyetel model."
+  - "Keluarga model (slide Rakamin 08): **regresi** (menebak angka) · **klasifikasi** (menebak kelas — isi bab ini) · **ensemble** (gabungan pohon — Random Forest dan boosting, biasanya paling kuat). Pilih berdasarkan tipe target: status Lancar/Macet adalah kelas, jadi modelnya klasifikasi seperti regresi logistik di pelajaran 31-2."
+  - "Decision Tree memilih pemisah yang paling merapikan kelas (Pacmann: How to Split a Node); terlalu dalam = **overfit**, jadi dibatasi `max_depth`. Pohon mudah dibaca manusia, tapi di data kecil ia paling cepat hafal derau — ingat demo 500 kolom acak: akurasi latih 100% tapi uji 72,3%."
+  - Selalu tulis `random_state` — supaya hasilmu bisa diulang (dan tidak dituduh curang saat lomba 😄). Tanpa itu, tiap kali dijalankan split-nya berbeda, dan angka 78,71% milikmu tidak bisa direproduksi orang lain.
+  - "**Baseline** adalah pembanding wajib: tebak semua Lancar sudah benar 456 dari 620 = **73,55%**. Model 5 fitur memberi 78,71% di data uji, jadi keunggulan nyatanya +5,16 poin — bukan angka 78,71% yang berdiri sendiri. Tanpa baseline, akurasi tinggi tidak bisa dinilai hebat atau biasa saja."
+  - "Proporsi split menggeser angka: test 0,25 → 465/155 dengan baseline uji 71,61% · 0,2 → 496/124/73,39% · 0,3 → 434/186/74,19% · 0,15 → 527/93/73,12%. Data uji kecil lebih berisik: 1 tebakan berarti sekitar 1,1 poin di 93 baris, tapi hanya 0,65 poin di 155 baris. Karena itu ukuran split selalu disebut saat melaporkan akurasi."
+  - "Model dinilai dari data uji, bukan data latih: pada model 5 fitur latih 0,7957 vs uji 0,7871 (selisih kecil = sehat). Jarak jauh antara keduanya adalah tanda **overfit** — contoh ekstremnya akurasi latih 100% tapi uji 72,3%, di bawah baseline 73,2%."
+  - "**Cross-validation** (CV-5) menguji lima kali di bagian data berbeda: rata-rata 0,7968 dengan lipatan 0,7661-0,8387. Satu angka uji tunggal mudah menyesatkan, jadi laporan yang jujur menyebut rata-rata dan rentangnya. Data uji tetap dipakai sekali saja; CV dipakai untuk memilih model, bukan untuk memamerkan angka tertinggi."
+  - "Koefisien dibaca sebagai arah dan besaran per satu satuan fitur: telat -0,5547 (per 1 kali) vs skor +0,0034 (per 1 poin). Karena satuannya berbeda, kalikan dulu dengan sebaran fiturnya: telat -0,80 · pinjaman -1,56 · omzet +1,49 · lama +0,49 · skor +0,30 — barulah perbandingan antar fitur jadi adil."
+  - "Banyak jebakan ada di sekitar pemisahan data: split berurutan tanpa acak membuat data uji tidak mewakili (akurasi 77,42% vs 78,71% pada split acak), dan **data bocor** terjadi kalau standardisasi atau encoding dihitung dari seluruh data sebelum split (Pacmann: lakukan preprocessing SETELAH split). Hitung semua angka skala dari data latih, lalu pakai angka itu ke data uji."
   praktek:
   - Baca ringkas 3 slide Rakamin 08 (regresi/klasifikasi/ensemble) — cukup pahami “kapan pakai apa”.
   - Lihat slide Pacmann Logistic Model bagian output peluang 0-1.
